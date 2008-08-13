@@ -1,0 +1,37 @@
+- PUT OPTION PANEL THE OTHER SIDE
+
+- Faire cryptage
+- Faire effet "mouse down" sur les icones
+
+- "+" button to add an application
+- Right-click on icon to delete or rename
+- Drag to move
+- Add separator
+- Icones dossiers spéciaux
+
+- Fenêtre "à propos"
+
+- Boite de confirmation - cryptage: OK / Cancel / Settings... / Checkbox: Do not ask me
+
+- Separator between Close and Eject button in Option Panel
+
+
+========== ONGLETS CONFIG:
+
+* CRYPAGE
+
+- Include these items
+- Exclude these items
+- Disable bar when my files are crypted
+- Ask me to encrypt my files when I close the bar
+- Ask me to decrypt my files when I open the bar
+
+
+* GENERAL
+
+- Auto-detect applications
+
+
+* QUICK LAUNCH
+
+- When clicking on the QuickLaunch button, start these applications:

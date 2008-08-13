@@ -1,0 +1,2 @@
+Global.Error = Error
+MainForm.LaunchFileError = This file doesn't exist or has been deleted (Error %0%)
