@@ -8,19 +8,33 @@ uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
 
 const
 
-	VERSION = '0.5.1';
   DATA_FOLDER_NAME = 'Data';
 
 	SETTING_FOLDER_PATH = DATA_FOLDER_NAME + '\Settings';
   SKIN_FOLDER_PATH = DATA_FOLDER_NAME + '\Skin';
   LOCALE_FOLDER_PATH = DATA_FOLDER_NAME + '\Locales';
-
   EXCLUSION_FILE_PATH = SETTING_FOLDER_PATH + '\Exclusions.txt';
   INI_FILE_PATH = SETTING_FOLDER_PATH + '\Config.ini';
+
   DEBUG = true;
 
 
+
 type
+
+	TIniProperty = class
+  	public
+      name: String[255];
+      value: String[255];
+      constructor Create(const name:String; const value:String);      
+  end;
+
+  TIniSection = class
+  	public
+      name: String[255];
+      properties: Array of TIniProperty;
+      procedure AddProperty(const iniProperty: TIniProperty);
+  end;
 
   TBarMainPanelStyle = record
     paddingLeft: Integer;
@@ -76,6 +90,7 @@ type
 
   private  
     pIniFile: TIniFile;
+    pDefaultUserSettings: Array of TIniSection;
 
     procedure OpenIniFile();
 
@@ -125,8 +140,18 @@ end;
 
 
 
+constructor TIniProperty.Create(const name:String; const value:String);
+begin
+	self.name := name;
+  self.value := value;
+end;
 
 
+procedure TIniSection.AddProperty(const iniProperty: TIniProperty);
+begin
+  SetLength(properties, Length(properties) + 1);
+	properties[Length(properties) - 1] := iniProperty;
+end;
 
 
 
@@ -177,15 +202,23 @@ end;
 
 
 function TMain.GetDefaultUserSetting(const section: String; const key: String): String;
+var sectionIndex, keyIndex: Word;
+	iniSection: TIniSection;
 begin
-  if section = 'Global' then begin
-  	if key = 'Locale' then begin
-    	result := 'en';
-    end else begin
+	result := '';
 
+	for sectionIndex := 0 to Length(pDefaultUserSettings) - 1 do begin
+  	iniSection := pDefaultUserSettings[sectionIndex];
+
+    if AnsiLowerCase(iniSection.name) <> AnsiLowerCase(section) then continue;
+    
+  	for keyIndex := 0 to Length(iniSection.properties) - 1 do begin
+    	if AnsiLowerCase(iniSection.properties[keyIndex].name) = AnsiLowerCase(key) then begin
+        result := iniSection.properties[keyIndex].value;
+        Exit;
+      end;
     end;
-  end else begin
-
+    
   end;
 end;
 
@@ -216,7 +249,10 @@ end;
 
 
 constructor TMain.Create();
+var iniSection: TIniSection;
+  iniProperty: TIniProperty;
 begin
+
 	if DEBUG then begin
     debugWindow := TDebugWindow.Create(nil);
     debugWindow.Left := 20;
@@ -224,13 +260,23 @@ begin
     debugWindow.Visible := true;
   end;
 
-  skinPath := SKIN_FOLDER_PATH + '\Default';
-  
   ilog('Version: ' + GetFmtFileVersion(ParamStr(0)));
 
-	ilog('Settings folder: ' + SETTING_FOLDER_PATH);
-  ilog('Skin folder: ' + skinPath);
-  ilog('Locale folder: ' + LOCALE_FOLDER_PATH);
+  // ---------------------------------------------------------------------------
+  // Initialize INI default settings
+  // ---------------------------------------------------------------------------
+
+  iniSection := TIniSection.Create();
+  iniSection.name := 'Global';
+  iniSection.AddProperty(TIniProperty.Create('Locale', 'en'));
+  iniSection.AddProperty(TIniProperty.Create('PortableAppsPath', 'd:\temp\Clef USB\PortableApps'));
+
+  SetLength(pDefaultUserSettings, Length(pDefaultUserSettings) + 1);
+  pDefaultUserSettings[Length(pDefaultUserSettings) - 1] := iniSection;
+  
+  // ---------------------------------------------------------------------------
+  // Initialize localization manager
+  // ---------------------------------------------------------------------------
 
 	loc := TLocalizationUtils.Create();
   loc.LoadLocale('en', LOCALE_FOLDER_PATH);
@@ -242,6 +288,8 @@ begin
   // ---------------------------------------------------------------------------
   // Initialize style
   // ---------------------------------------------------------------------------
+
+  skinPath := SKIN_FOLDER_PATH + '\Default';
 
 	style.barMainPanel.paddingTop := 8;
   style.barMainPanel.paddingBottom := 8;
@@ -263,6 +311,10 @@ begin
   style.optionPanel.paddingRight := 7;
   style.optionPanel.paddingH := style.optionPanel.paddingLeft + style.optionPanel.paddingRight;
   style.optionPanel.paddingV := style.optionPanel.paddingTop + style.optionPanel.paddingBottom;
+
+	ilog('Settings folder: ' + SETTING_FOLDER_PATH);
+  ilog('Skin folder: ' + skinPath);
+  ilog('Locale folder: ' + LOCALE_FOLDER_PATH);
 end;
 
 
@@ -286,11 +338,11 @@ begin
 
   exclusions := TStringList.Create();
 
-  if FileExists(EXCLUSION_FILE_PATH) then begin
- 		AssignFile(exclusionFile, EXCLUSION_FILE_PATH);
-    Reset(exclusionFile);
+  AssignFile(exclusionFile, EXCLUSION_FILE_PATH);
+  {$I-} Reset(exclusionFile); {$I+}
 
-  	while not Eof(exclusionFile) do begin
+  if IOResult = 0 then begin
+    while not Eof(exclusionFile) do begin
       ReadLn(exclusionFile, s);
       s := Trim(s);
       if s <> '' then exclusions.Add(s);
@@ -298,8 +350,6 @@ begin
 
     CloseFile(exclusionFile);
   end;
-
-
 
   for i := 1 to Length(folderItems) do begin
     if folderItems[i] = nil then break;

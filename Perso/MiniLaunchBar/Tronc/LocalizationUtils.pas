@@ -87,10 +87,11 @@ var localeFile: TextFile;
 begin
 	if LocaleLoaded(localeCode) then Exit;
 
-	locale := TLocale.Create(localeCode);
-
   AssignFile(localeFile, localeFolderPath + '/' + localeCode + '.txt');
-  Reset(localeFile);
+  {$I-} Reset(localeFile); {$I+}
+  if IOResult <> 0 then Exit;
+
+  locale := TLocale.Create(localeCode);
 
   currentString := '';
 
