@@ -32,3 +32,5 @@ App\toucan\7za.exe
 App\toucan\Toucan.exe
 App\toucan\burp.exe
 App\toucan\ccrypt.exe
+Uninstall.exe
+App\Pidgin\pidgin-portable.exe

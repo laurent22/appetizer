@@ -16,11 +16,12 @@ type
   end;
 
 
-  TOptionButtonDatum = class
-  	public
+  TOptionButtonDatum = class public
     ID: Integer;
     Name: String;
     IconFilePath: String;
+    Separator: Boolean;
+		SeparatorObject: TWNineSlicesPanel;
   end;
 
   
@@ -63,6 +64,9 @@ type
 
       function OptionPanelTotalWidth():Word;
       function AddOptionButtonData():TOptionButtonDatum;
+      function GetButtonDataByID(ID: Integer): TOptionButtonDatum;
+      procedure UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
+      procedure CalculateOptionPanelOpenWidth();
     public
       { Public declarations }
       
@@ -195,6 +199,19 @@ begin
 end;
 
 
+function TMainForm.GetButtonDataByID(ID: Integer): TOptionButtonDatum;
+var i: Byte;
+begin
+	result := nil;
+  for i := 0 to Length(optionButtonData) - 1 do begin
+  	if optionButtonData[i].ID = ID then begin
+    	result := optionButtonData[i];
+      break;
+    end;
+  end;
+end;
+
+
 procedure TMainForm.optionButton_Click(Sender: TObject);
 var d: TOptionButtonDatum;
   button: TWImageButton;
@@ -202,16 +219,9 @@ var d: TOptionButtonDatum;
 begin
 	button := sender as TWImageButton;
 
-  d.ID := 0;
+  d := GetButtonDataByID(button.Tag);
 
-  for i := 0 to Length(optionButtonData) - 1 do begin
-  	if optionButtonData[i].ID = button.Tag then begin
-    	d := optionButtonData[i];
-      break;
-    end;
-  end;
-
-  if d.ID = 0 then Exit;
+  if d = nil then Exit;
 
   TMain.Instance.ilog('Option button click: ' + d.Name);
 
@@ -283,7 +293,8 @@ begin
     icon := TWFileIcon.Create(self);
     icon.Tag := folderItem.ID;
     icon.FilePath := folderItem.filePath;
-    icon.OverlayImagePath := TMain.instance.skinPath + '\IconOverlay.png';
+    icon.OverlayImageUpPath := TMain.instance.skinPath + '\IconOverlayUp.png';
+    icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
     icon.Width := iconSize;
     icon.Height := iconSize;
     icon.Parent := self;
@@ -308,30 +319,119 @@ begin
 end;
 
 
+procedure TMainForm.CalculateOptionPanelOpenWidth();
+var buttonX, buttonY: Integer;
+	buttonData: TOptionButtonDatum;
+	button: TWImageButton;
+  i: Byte;
+  maxX: Integer;
+  vButtonCount: Integer;
+begin
+	buttonX := 0;
+  vButtonCount := 0;
+
+  for i := 0 to Length(optionButtons) - 1 do begin
+    button := optionButtons[i];
+
+    buttonData := GetButtonDataByID(button.Tag);
+    if buttonData = nil then continue;
+
+    if buttonData.Separator then begin
+
+      buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 6;
+      vButtonCount := 0;
+
+    end else begin
+
+    	vButtonCount := vButtonCount + 1;
+
+      if vButtonCount > 3  then begin
+        buttonX := buttonX + button.Width + optionButtonGap;
+        vButtonCount := 0;
+      end;
+
+    end;
+
+    optionPanelOpenWidth := buttonX + button.Width;
+
+  end;
+
+  optionPanelOpenWidth := optionPanelOpenWidth + TMain.Instance.Style.OptionPanel.PaddingH;
+
+end;
+
+
+procedure TMainForm.UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
+var buttonX, buttonY, previousX: Integer;
+	buttonData: TOptionButtonDatum;
+	button: TWImageButton;
+  i: Byte;
+  maxX: Integer;
+begin
+  buttonX := cornerX;
+  buttonY := cornerY;
+
+  for i := 0 to Length(optionButtons) - 1 do begin
+    button := optionButtons[i];
+
+    buttonData := GetButtonDataByID(button.Tag);
+    if buttonData = nil then continue;
+
+    if buttonData.Separator then begin
+
+    	buttonY := optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop;
+
+    	buttonData.SeparatorObject.Left := buttonX + optionButtons[i - 1].Width;
+      buttonData.SeparatorObject.Top := buttonY;
+      buttonData.SeparatorObject.Width := 4;
+      buttonData.SeparatorObject.Height := optionPanel.Height - TMain.Instance.style.optionPanel.paddingV;
+
+
+      buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 6;
+
+      buttonData.SeparatorObject.Left := Round(buttonData.SeparatorObject.Left + (buttonX - buttonData.SeparatorObject.Left) / 2) - 1;
+      buttonData.SeparatorObject.Visible := true;
+
+    end else begin
+
+      button.Visible := true;
+      button.Left := buttonX;
+      button.Top := buttonY;
+
+      if button.Top + button.Height >= optionPanel.Height then begin
+        buttonY := optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop;
+        buttonX := buttonX + button.Width + optionButtonGap;
+        button.Left := buttonX;
+        button.Top := buttonY;
+      end;
+
+      buttonY := buttonY + optionButtons[i].Height + optionButtonGap;
+
+    end;
+
+  end;
+
+end;
+
+
 procedure TMainForm.UpdateOptionPanel();
 var i: Byte;
-	buttonX, buttonY: Integer;
+	buttonX, buttonY, newX, newY: Integer;
+  buttonData: TOptionButtonDatum;
+  button: TWImageButton;
 begin
 	TMain.Instance.ilog('Updating option panel');
 
 	if optionPanel.Visible then begin
+
   	optionPanel.Left := optionPanelOpenWidth - optionPanelCurrentWidth + arrowButton.Width;
     arrowButton.Left := optionPanel.Left - arrowButton.Width;
 
-    buttonX := optionPanel.Left + TMain.Instance.Style.OptionPanel.PaddingLeft;
-    buttonY := optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop;
+  	UpdateOptionButtonsLayout(
+    	optionPanel.Left + TMain.Instance.Style.OptionPanel.PaddingLeft,
+      optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop
+    );
 
-    for i := 0 to Length(optionButtons) - 1 do begin
-      optionButtons[i].Visible := true;
-      optionButtons[i].Left := buttonX;
-      optionButtons[i].Top := buttonY;
-      if ((i + 1) mod 3) = 0 then begin
-      	buttonY := optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop;
-        buttonX := buttonX + optionButtons[i].Width + optionButtonGap;
-      end else begin
-      	buttonY := buttonY + optionButtons[i].Height + optionButtonGap;
-      end;
-    end;
   end else begin
 		arrowButton.Left := optionPanelOpenWidth - optionPanelCurrentWidth;
   end;
@@ -455,24 +555,47 @@ begin
   // ---------------------------------------------------------------------------
 
   d := AddOptionButtonData();
+  d.ID := 4;
+  d.Name := 'Close';
+  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+  d.Separator := false;
+
+  d := AddOptionButtonData();
+  d.ID := 5;
+  d.Name := 'Close';
+  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+  d.Separator := false;
+
+  d := AddOptionButtonData();
+  d.ID := 6;
+  d.Name := 'Close';
+  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+  d.Separator := false;
+
+  d := AddOptionButtonData();
+  d.Separator := true;
+
+  d := AddOptionButtonData();
   d.ID := 1;
   d.Name := 'Encrypt';
   d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Key.png';
+  d.Separator := false;
 
   d := AddOptionButtonData();
   d.ID := 2;
   d.Name := 'Config';
   d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Config.png';
+	d.Separator := false;
 
   d := AddOptionButtonData();
   d.ID := 3;
   d.Name := 'Help';
   d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Help.png';
+  d.Separator := false;
 
-  d := AddOptionButtonData();
-  d.ID := 4;
-  d.Name := 'Close';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+
+
+
 
   // ---------------------------------------------------------------------------
   // Create form controls
@@ -496,13 +619,23 @@ begin
 
   for i := 0 to Length(optionButtonData) - 1 do begin
     optionButton := TWImageButton.Create(self);
-    optionButton.ImagePathPrefix := TMain.instance.skinPath + '\OptionButton';
-    optionButton.Visible := false;
-    optionButton.Parent := self;
-    optionButton.IconImagePath := optionButtonData[i].IconFilePath;
-    optionButton.Cursor := crHandPoint;
     optionButton.Tag := optionButtonData[i].ID;
-    optionButton.OnClick := optionButton_Click;
+
+  	if not optionButtonData[i].Separator then begin
+      optionButton := TWImageButton.Create(self);
+      optionButton.ImagePathPrefix := TMain.instance.skinPath + '\OptionButton';
+      optionButton.Visible := false;
+      optionButton.Parent := self;
+      optionButton.IconImagePath := optionButtonData[i].IconFilePath;
+      optionButton.Cursor := crHandPoint;
+      optionButton.Tag := optionButtonData[i].ID;
+      optionButton.OnClick := optionButton_Click;
+    end else begin
+    	optionButtonData[i].SeparatorObject := TWNineSlicesPanel.Create(self);
+      optionButtonData[i].SeparatorObject.ImagePathPrefix := TMain.instance.skinPath + '\VerticalSeparator';
+      optionButtonData[i].SeparatorObject.Parent := self;
+      optionButtonData[i].SeparatorObject.Visible := false;
+    end;
 
     SetLength(optionButtons, Length(optionButtons) + 1);
     optionButtons[Length(optionButtons) - 1] := optionButton;
@@ -514,6 +647,8 @@ begin
   	optionButtons[0].Width * optionButtonsCol +
     optionButtonGap * (optionButtonsCol - 1) +
     TMain.Instance.Style.OptionPanel.PaddingH;
+
+  CalculateOptionPanelOpenWidth();
 
   optionPanel.Width := optionPanelOpenWidth;
 
@@ -559,6 +694,8 @@ begin
   // ---------------------------------------------------------------------------
   // Draw and update layout
   // ---------------------------------------------------------------------------
+
+
 
   TMain.Instance.RefreshFolderItems();
   CreateIconsFromFolderItems();

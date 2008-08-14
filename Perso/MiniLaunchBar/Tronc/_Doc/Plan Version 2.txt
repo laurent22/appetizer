@@ -1,0 +1,4 @@
+* PORTABLE APPS
+
+- Auto-detect applications
+- Exclusion list (enabled only if above option is ticked)

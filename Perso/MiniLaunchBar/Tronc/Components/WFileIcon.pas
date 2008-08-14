@@ -12,12 +12,16 @@ type
     { Private declarations }
     pFilePath: String;
     pFileIcon: TIcon;
-    pOverlayImage: TPNGObject;
-    pOverlayImagePath: String;
+
+    pOverlayImageUp: TPNGObject;
+    pOverlayImageUpPath: String;
+    pOverlayImageDown: TPNGObject;
+    pOverlayImageDownPath: String;
     pOnFileIconClick: TNotifyEvent;
 
     procedure SetFilePath(const Value: String);
-    procedure SetOverlayImagePath(const Value: String);
+    procedure SetOverlayImageUpPath(const Value: String);
+    procedure SetOverlayImageDownPath(const Value: String);
 
   protected
     { Protected declarations }
@@ -34,7 +38,8 @@ type
   published
     { Published declarations }
     property FilePath: String read pFilePath write SetFilePath;
-    property OverlayImagePath: String read pOverlayImagePath write SetOverlayImagePath;
+    property OverlayImageUpPath: String read pOverlayImageUpPath write SetOverlayImageUpPath;
+    property OverlayImageDownPath: String read pOverlayImageDownPath write SetOverlayImageDownPath;
     property OnFileIconClick: TNotifyEvent read pOnFileIconClick write pOnFileIconClick;
   end;
 
@@ -53,7 +58,7 @@ begin
   {Calls ancestor}
   inherited Create(AOwner);
 
-  pOverlayImagePath := '';
+  pOverlayImageUpPath := '';
   Width := 32;
   Height := 32;
 end;
@@ -70,29 +75,54 @@ end;
 procedure TWFileIcon.Paint();
 var
 	rect: TRect;
+  overlayToDraw: TPNGObject;
 begin
-  if pFileIcon <> nil then begin
 
-  	if (IsMouseOver) and (pOverlayImagePath <> '') then begin
-    	if pOverlayImage = nil then begin
-      	pOverlayImage := TPNGObject.Create();
-        pOverlayImage.LoadFromFile(pOverlayImagePath);
+	overlayToDraw := nil;
+
+  if ButtonState = pbsDown then begin
+    if (pOverlayImageDownPath <> '') then begin
+      if pOverlayImageDown = nil then begin
+        pOverlayImageDown := TPNGObject.Create();
+        pOverlayImageDown.LoadFromFile(pOverlayImageDownPath);
       end;
 
-      Canvas.Draw(0, 0, pOverlayImage);
+      overlayToDraw := pOverlayImageDown;
     end;
+  end else begin
+    if (IsMouseOver) and (pOverlayImageUpPath <> '') then begin
+      if pOverlayImageUp = nil then begin
+        pOverlayImageUp := TPNGObject.Create();
+        pOverlayImageUp.LoadFromFile(pOverlayImageUpPath);
+      end;
 
- 	 Canvas.Draw(Round((Width - pFileIcon.Width) / 2), Round((Height - pFileIcon.Height) / 2), pFileIcon);
+      overlayToDraw := pOverlayImageUp;
+    end;
+  end;
 
+  if overlayToDraw <> nil then begin
+  	Canvas.Draw(0, 0, overlayToDraw);
+  end;
 
+  
+
+  if pFileIcon <> nil then begin
+
+    Canvas.Draw(Round((Width - pFileIcon.Width) / 2), Round((Height - pFileIcon.Height) / 2), pFileIcon);
 
   end;
 end;
 
 
-procedure TWFileIcon.SetOverlayImagePath(const value: String);
+procedure TWFileIcon.SetOverlayImageUpPath(const value: String);
 begin
-	pOverlayImagePath := value;
+	pOverlayImageUpPath := value;
+end;
+
+
+procedure TWFileIcon.SetOverlayImageDownPath(const Value: String);
+begin
+	pOverlayImageDownPath := value;
 end;
 
 
@@ -113,7 +143,7 @@ end;
 procedure TWFileIcon.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   inherited MouseDown(Button, Shift, X, Y);
-	//Repaint();
+	Repaint();
 end;
 
 
@@ -127,6 +157,7 @@ end;
 procedure TWFileIcon.Click();
 begin
 	inherited Click;
+  Repaint();
 end;
 
 

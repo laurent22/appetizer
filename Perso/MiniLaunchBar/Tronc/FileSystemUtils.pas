@@ -13,7 +13,7 @@ function GetExecutableSmallIcon(const filePath: String):TIcon;
 function GetExecutableLargeIcon(const filePath: String):TIcon;
 function GetApplicationDirectory():String;
 function IsDirectory(const filePath: String): Boolean;
-function GetDirectoryContents(const filePath: String; const recurse: Boolean): TStringList ;
+function GetDirectoryContents(const filePath: String; const depth: Integer; const fileExtension: String): TStringList ;
 function GetFmtFileVersion(const FileName: String = '';
   const Fmt: String = '%d.%d.%d.%d'): String;
 
@@ -29,12 +29,13 @@ begin
 end;
 
 
-function GetDirectoryContents(const filePath: String; const recurse: Boolean): TStringList ;
+function GetDirectoryContents(const filePath: String; const depth: Integer; const fileExtension: String): TStringList ;
 var
 	rec : TSearchRec;
 	foundFilePath: String;
   tempResult: TStringList;
   i: Word;
+  itemIsDirectory: Boolean;
 begin
 	result := TStringList.Create();
   
@@ -44,20 +45,25 @@ begin
     try
 
       repeat
-        if (rec.name <> '.') and (rec.name <> '..') then begin
+        if (rec.name = '.') or (rec.name = '..') then continue;
 
-          foundFilePath := filePath + '\' + rec.name;
+        foundFilePath := filePath + '\' + rec.name;
 
-          result.Add(foundFilePath);
+        itemIsDirectory := IsDirectory(foundFilePath);
 
-          if IsDirectory(foundFilePath) and recurse then begin
-            tempResult := GetDirectoryContents(foundFilePath, recurse);
-            if tempResult.Count > 0 then begin
-              for i := 0 to tempResult.Count - 1 do begin
-              	result.Add(tempResult[i]);
-              end;
+        if ((fileExtension <> '*') and (not itemIsDirectory)) then begin
+        	if (ExtractFileExt(rec.name) <> '.' + fileExtension) then continue;
+        end;
+
+        result.Add(foundFilePath);
+
+        if (itemIsDirectory) and (depth <> 0) then begin
+          tempResult := GetDirectoryContents(foundFilePath, depth - 1, fileExtension);
+          if tempResult.Count > 0 then begin
+            for i := 0 to tempResult.Count - 1 do begin
+              result.Add(tempResult[i]);
             end;
-          end;     
+          end;
         end;
 
       until findNext(rec) <> 0;

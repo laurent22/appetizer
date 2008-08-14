@@ -225,6 +225,7 @@ end;
 
 function TMain.GetUserSetting(const section: String; const key: String; const closeFileNow: Boolean = false): String;
 begin
+	// TODO: Implement caching
   OpenIniFile();
   result := pIniFile.ReadString(section, key, GetDefaultUserSetting(section, key));
   if closeFileNow then SaveUserSettings();
@@ -233,6 +234,7 @@ end;
 
 procedure TMain.SetUserSetting(const section: String; const key: String; const value: String; const closeFileNow: Boolean = false);
 begin
+	// TODO: Implement caching
 	OpenIniFile();
   pIniFile.WriteString(section, key, value);
   if closeFileNow then SaveUserSettings();
@@ -269,7 +271,7 @@ begin
   iniSection := TIniSection.Create();
   iniSection.name := 'Global';
   iniSection.AddProperty(TIniProperty.Create('Locale', 'en'));
-  iniSection.AddProperty(TIniProperty.Create('PortableAppsPath', 'd:\temp\Clef USB\PortableApps'));
+  iniSection.AddProperty(TIniProperty.Create('PortableAppsPath', 'PortableApps'));
 
   SetLength(pDefaultUserSettings, Length(pDefaultUserSettings) + 1);
   pDefaultUserSettings[Length(pDefaultUserSettings) - 1] := iniSection;
@@ -359,7 +361,7 @@ begin
 
   folderItemIndex := 1;
 
-	directoryContents := GetDirectoryContents('.', true);
+	directoryContents := GetDirectoryContents(GetUserSetting('Global', 'PortableAppsPath'), 1, 'exe');
 
   if directoryContents.Count > 0 then begin
   	for i := 0 to directoryContents.Count - 1 do begin

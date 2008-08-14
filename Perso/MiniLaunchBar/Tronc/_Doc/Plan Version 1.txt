@@ -1,5 +1,3 @@
-- PUT OPTION PANEL THE OTHER SIDE
-
 - Faire cryptage
 - Faire effet "mouse down" sur les icones
 
@@ -14,6 +12,11 @@
 - Boite de confirmation - cryptage: OK / Cancel / Settings... / Checkbox: Do not ask me
 
 - Separator between Close and Eject button in Option Panel
+
+- Lorsqu'on rafraichi les icones : enlever celles qui ne sont plus valides mais ne pas toucher aux autres
+				puis, si option 'automatique' - chercher les .exe
+				
+- Tooltip sur les icones
 
 
 ========== ONGLETS CONFIG:
@@ -30,6 +33,7 @@
 * GENERAL
 
 - Auto-detect applications
+- Exclusion list (enabled only if above option is ticked)
 
 
 * QUICK LAUNCH
