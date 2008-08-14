@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<FileZilla3>
+    <Layout Builddate="2008-07-05" Buildtime="14:27:39">
+        <Resources>
+            <xrc file="dialogs.xrc" date="1215282780" />
+            <xrc file="menus.xrc" date="1215282780" />
+            <xrc file="netconfwizard.xrc" date="1215282780" />
+            <xrc file="quickconnectbar.xrc" date="1215282780" />
+            <xrc file="toolbar.xrc" date="1215282780" />
+        </Resources>
+        <Language id="en_GB" date="">
+            <Font font="0;-11;0;0;0;400;0;0;0;0;0;0;0;0;MS Shell Dlg 2" width="622" height="13" />
+            <Dialog name="UpdateCheck" width="455" />
+        </Language>
+    </Layout>
+</FileZilla3>

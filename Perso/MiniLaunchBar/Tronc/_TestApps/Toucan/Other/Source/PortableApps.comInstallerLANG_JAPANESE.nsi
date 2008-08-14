@@ -1,0 +1,7 @@
+LangString welcome ${LANG_JAPANESE} "このウィザードでは${NAME}のインストールをご案内します。\r\n\r\n${NAME}のアップグレードをご希望の場合には、そのすでにお持ちの${NAME}を終了してから進んでください。\r\n\r\n［次へ］をクリックすると進みます。"
+LangString finish ${LANG_JAPANESE} "${NAME}は無事にインストールされました。\r\n\r\n［終了］をクリックしてウィザードを終了します。"
+LangString runwarning ${LANG_JAPANESE} "他の動作しているプログラムをすべて終了し、${CLOSENAME}をクリックしてください。それが終わるまで${NAME}のアップグレードは行われません。"
+LangString invaliddirectory ${LANG_JAPANESE} "指定したフォルダが見つかりません。正しいフォルダを指定してください。"
+LangString notenoughspace ${LANG_JAPANESE} "指定したデバイスにはインストールに十分な空き容量がありません。"
+LangString checkforplatform ${LANG_JAPANESE} "PortableApps.com Platformをチェックしています。"
+LangString refreshmenu ${LANG_JAPANESE} "PortableApps.com Menuの更新"

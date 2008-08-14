@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<FileZilla3>
+<Settings>
+<Setting name="Config Location">$FILEZILLA_PORTABLE_SETTINGS</Setting>
+</Settings>
+</FileZilla3>
