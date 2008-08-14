@@ -1,1 +1,0 @@
-The source for the base application in this package can be obtained from the application's homepage mentioned in the help.html file.

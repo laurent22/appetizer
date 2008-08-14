@@ -1,5 +1,0 @@
-The source code for Toucan, 7-Zip BURP & CCrypt are available from the Toucan homepage:
-http://portableapps.com/Toucan
-
-All of the icons apart from the 'Add Portable Variable' icon (which is a mash-up of two of the other icons) are Copyright Silvestre Herrera and are from the Dropline NEU icon set which is also released under the GNU GPL2 see them here:
-http://www.silvestre.com.ar/

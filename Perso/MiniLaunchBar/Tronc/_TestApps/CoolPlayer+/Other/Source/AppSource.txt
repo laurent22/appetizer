@@ -1,1 +1,0 @@
-The base app's source is available from the portable app's homepage mentioned in help.html.

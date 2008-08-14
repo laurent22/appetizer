@@ -1,1 +1,0 @@
-This directory contains files used by the portable app.  They do not normally need to be accessed directly.
