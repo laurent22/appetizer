@@ -30,5 +30,10 @@
     <Transaction>2008/08/10 17:37:22.531.pas,s:\Docs\PROGS\Delphi\MiniLaunchBar\Unit1.pas=S:\Docs\PROGS\Delphi\MiniLaunchBar\DebugWindow.pas</Transaction>
     <Transaction>2008/08/10 17:37:22.546.dfm,s:\Docs\PROGS\Delphi\MiniLaunchBar\Unit1.dfm=S:\Docs\PROGS\Delphi\MiniLaunchBar\DebugWindow.dfm</Transaction>
     <Transaction>2008/08/10 19:04:07.093.pas,s:\Docs\PROGS\Delphi\MiniLaunchBar\Unit1.pas=S:\Docs\PROGS\Delphi\MiniLaunchBar\LocalizationUtils.pas</Transaction>
+    <Transaction>2008/08/15 21:16:29.828.pas,s:\Docs\PROGS\Delphi\MiniLaunchBar\Unit2.pas=S:\Docs\PROGS\Delphi\MiniLaunchBar\ControlTest.pas</Transaction>
+    <Transaction>2008/08/15 21:16:29.828.dfm,s:\Docs\PROGS\Delphi\MiniLaunchBar\Unit2.dfm=S:\Docs\PROGS\Delphi\MiniLaunchBar\ControlTest.dfm</Transaction>
+    <Transaction>2008/08/15 21:38:57.250.pas,s:\Docs\PROGS\Delphi\MiniLaunchBar\Unit1.pas=S:\Docs\PROGS\Delphi\MiniLaunchBar\Components\TWPanel.pas</Transaction>
+    <Transaction>2008/08/15 21:39:04.421.pas,S:\Docs\PROGS\Delphi\MiniLaunchBar\Components\TWPanel.pas=S:\Docs\PROGS\Delphi\MiniLaunchBar\Components\WPanel.pas</Transaction>
+    <Transaction>2008/08/15 21:39:40.234.pas,S:\Docs\PROGS\Delphi\MiniLaunchBar\Components\WPanel.pas=S:\Docs\PROGS\Delphi\MiniLaunchBar\Components\WContainer.pas</Transaction>
   </Transactions>
 </BorlandProject>

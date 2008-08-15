@@ -16,7 +16,7 @@ const
   EXCLUSION_FILE_PATH = SETTING_FOLDER_PATH + '\Exclusions.txt';
   INI_FILE_PATH = SETTING_FOLDER_PATH + '\Config.ini';
 
-  DEBUG = true;
+  DEBUG = false;
 
 
 

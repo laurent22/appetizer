@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
-  FileSystemUtils, WFileIcon, Menus;
+  FileSystemUtils, WFileIcon, Menus, ControlTest;
 
 type
 
@@ -73,7 +73,6 @@ type
   end;
 
 var
-  Form1: TMainForm;
   barBackground: TWNineSlicesPanel;
   barInnerPanel: TWNineSlicesPanel;
   optionPanel: TWNineSlicesPanel;
@@ -86,7 +85,6 @@ var
 implementation
 
 {$R *.dfm}
-
 
 uses Main;
 
@@ -338,7 +336,7 @@ begin
 
     if buttonData.Separator then begin
 
-      buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 6;
+      buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 4;
       vButtonCount := 0;
 
     end else begin
@@ -387,7 +385,7 @@ begin
       buttonData.SeparatorObject.Height := optionPanel.Height - TMain.Instance.style.optionPanel.paddingV;
 
 
-      buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 6;
+      buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 4;
 
       buttonData.SeparatorObject.Left := Round(buttonData.SeparatorObject.Left + (buttonX - buttonData.SeparatorObject.Left) / 2) - 1;
       buttonData.SeparatorObject.Visible := true;
@@ -528,10 +526,18 @@ var optionButton: TWImageButton;
 	i: Word;
 	optionButtonsCol: Byte;
   d: TOptionButtonDatum;
+  freakinPanel: TWNineSlicesPanel;
+  freakinButton: TWImageButton;
+  testwin: TForm2;
 begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
   // ---------------------------------------------------------------------------
+
+    testwin := TForm2.Create(nil);
+    testwin.Left := 20;
+    testwin.Top := 20;
+    testwin.Visible := true;
 
   TMain.Instance.MainForm := self;
 
@@ -690,6 +696,25 @@ begin
   arrowButton.Cursor := crHandPoint;
 
   arrowButton.OnClick := arrowButton_click;
+
+
+//  freakinPanel := TWNineSlicesPanel.Create(self);
+//  freakinPanel.ImagePathPrefix := TMain.instance.skinPath + '\BarInnerPanel';
+//  freakinPanel.Visible := true;
+//  freakinPanel.Parent := self;
+//  freakinPanel.Left := 100 + 200;
+//  freakinPanel.Top := 2;
+//  freakinPanel.Width := 130;
+//  freakinPanel.Height := 50;
+//
+//  freakinButton := TWImageButton.Create(self);
+//  freakinButton.ImagePathPrefix := TMain.instance.skinPath + '\OptionButton';
+//  freakinButton.Left := 0;
+//
+//  freakinButton.Visible := true;
+//  freakinButton.Parent := TWinControl(freakinPanel);
+
+
 
   // ---------------------------------------------------------------------------
   // Draw and update layout

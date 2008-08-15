@@ -1,6 +1,5 @@
 program MiniLaunchBar;
 
-{%File 'MiniLaunchBar.bdsproj'}
 {%TogetherDiagram 'ModelSupport_MiniLaunchBar\default.txaPackage'}
 
 uses
@@ -17,12 +16,15 @@ uses
   Main in 'Main.pas',
   StringUtils in 'StringUtils.pas',
   DebugWindow in 'DebugWindow.pas' {Form1},
-  LocalizationUtils in 'LocalizationUtils.pas';
+  LocalizationUtils in 'LocalizationUtils.pas',
+  ControlTest in 'ControlTest.pas' {Form2},
+  WContainer in 'Components\WContainer.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.CreateForm(TMainForm, Form1);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.

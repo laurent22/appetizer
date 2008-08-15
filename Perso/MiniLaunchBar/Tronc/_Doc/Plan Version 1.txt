@@ -1,5 +1,4 @@
 - Faire cryptage
-- Faire effet "mouse down" sur les icones
 
 - "+" button to add an application
 - Right-click on icon to delete or rename
@@ -11,12 +10,12 @@
 
 - Boite de confirmation - cryptage: OK / Cancel / Settings... / Checkbox: Do not ask me
 
-- Separator between Close and Eject button in Option Panel
-
 - Lorsqu'on rafraichi les icones : enlever celles qui ne sont plus valides mais ne pas toucher aux autres
 				puis, si option 'automatique' - chercher les .exe
 				
 - Tooltip sur les icones
+
+- Find a name / give the app some identity
 
 
 ========== ONGLETS CONFIG:

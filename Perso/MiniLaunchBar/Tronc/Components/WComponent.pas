@@ -18,10 +18,32 @@ type
     FButtonState: TPNGButtonState;
     fMouseOverControl: Boolean;
     fOnMouseEnter, fOnMouseExit: TNotifyEvent;
+
+     pParentContainer: TObject;
+
+    pTop: Integer;
+    pLeft: Integer;
+
+
+
+
+    procedure SetParentContainer(const value: TObject);
     procedure SetButtonState(const Value: TPNGButtonState);
+
   protected
   	fOnClick: TNotifyEvent;
 
+    // Should be TWContainer but can't do that because
+    // of Delphi's stupid circular reference error, so it has to
+    // be type-casted to TWContainer before use.
+    function GetLeft(): Integer;
+    procedure SetLeft(const value: Integer);
+    function GetAbsoluteLeft(): Integer;
+
+    function GetTop(): Integer;
+    procedure SetTop(const value: Integer);
+    function GetAbsoluteTop(): Integer;
+    
     {Clicked}
     procedure Click; override;
     {Mouse pressed}
@@ -39,15 +61,29 @@ type
     {Being enabled or disabled}
     procedure CMEnabledChanged(var Message: TMessage);
       message CM_ENABLEDCHANGED;
+
   public
     Tag: Integer;
 
     {Returns if the mouse is over the control}
     property ButtonState: TPNGButtonState read FButtonState write SetButtonState;
     property IsMouseOver: Boolean read fMouseOverControl;
+
+
   published
     { Published declarations }
     {Default events}
+
+    procedure UpdateLocation();
+
+    property AbsoluteTop: Integer read GetAbsoluteTop;
+    property Top: Integer read GetTop write SetTop;
+
+  	property AbsoluteLeft: Integer read GetAbsoluteLeft;
+    property Left: Integer read GetLeft write SetLeft;
+
+    property ParentContainer: TObject read pParentContainer write SetParentContainer;
+
     property OnMouseDown;
     property OnClick: TNotifyEvent read fOnClick write fOnClick;
     property OnMouseUp;
@@ -58,10 +94,14 @@ type
 
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    
   end;
 
 
 implementation
+
+
+uses WContainer;
 
 
 
@@ -74,6 +114,65 @@ end;
 destructor TWComponent.Destroy();
 begin
   inherited Destroy;
+end;
+
+
+procedure TWComponent.SetParentContainer(const value: TObject);
+begin
+	pParentContainer := value;
+  Parent := TWinControl(Owner);
+	UpdateLocation();
+end;
+
+
+
+procedure TWComponent.UpdateLocation();
+begin
+	if ParentContainer <> nil then begin
+  	inherited Top := pTop + TWContainer(ParentContainer).AbsoluteTop;
+    inherited Left := pLeft + TWContainer(ParentContainer).AbsoluteLeft;
+  end else begin
+		inherited Top := pTop;
+  	inherited Left := pLeft;
+	end;
+end;
+
+
+function TWComponent.GetAbsoluteLeft(): Integer;
+begin
+	result := inherited Left;
+end;
+
+
+procedure TWComponent.SetLeft(const value: Integer);
+begin
+	pLeft := value;
+  UpdateLocation();
+end;
+
+
+function TWComponent.GetLeft(): Integer;
+begin
+	result := pLeft;
+end;
+
+
+function TWComponent.GetAbsoluteTop(): Integer;
+begin
+	result := inherited Top;
+end;
+
+
+procedure TWComponent.SetTop(const value: Integer);
+begin
+	pTop := value;
+  UpdateLocation();
+end;
+
+
+function TWComponent.GetTop(): Integer;
+begin
+	result := pTop;
 end;
 
 
