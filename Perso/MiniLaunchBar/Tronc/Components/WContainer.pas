@@ -16,9 +16,7 @@ type
 
   protected
     { Protected declarations }
-
-    procedure SetLeft(const value: Integer);
-    procedure SetTop(const value: Integer);
+    procedure Paint; override;
 
   public
     { Public declarations }
@@ -46,11 +44,19 @@ begin
 end;
 
 
+procedure TWContainer.Paint;
+begin
+	inherited;
+  UpdateChildrenLocation();
+end;
+
+
 procedure TWContainer.AddChild(const child: TWComponent);
 begin
   child.ParentContainer := self;
   SetLength(children, Length(children) + 1);
   children[Length(children) - 1] := child;
+  Invalidate();
 end;
 
 
@@ -63,21 +69,6 @@ begin
   	children[i].UpdateLocation();	  	
   end;
 end;
-
-
-procedure TWContainer.SetLeft(const value: Integer);
-begin
-	inherited SetLeft(value);
-  UpdateChildrenLocation();
-end;
-
-
-procedure TWContainer.SetTop(const value: Integer);
-begin
-	inherited SetTop(value);
-  UpdateChildrenLocation();
-end;
-
 
 
 end.

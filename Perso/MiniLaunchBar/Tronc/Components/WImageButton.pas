@@ -3,10 +3,11 @@ unit WImageButton;
 interface
 
 uses
-  SysUtils, Classes, Controls, StdCtrls, PNGExtra, PNGImage, Windows, Graphics;
+  SysUtils, Classes, Controls, StdCtrls, WButtonBase, PNGImage, Windows,
+  WComponent;
 
 type
-  TWImageButton = class(TPNGButton)
+  TWImageButton = class(TWButtonBase)
   private
     { Private declarations }
     pImagePathPrefix: String;
@@ -32,6 +33,8 @@ procedure Register;
 
 implementation
 
+
+
 procedure Register;
 begin
   RegisterComponents('Samples', [TWImageButton]);
@@ -53,9 +56,9 @@ begin
   pStateImageDown := TPNGObject.create();
   pStateImageDown.loadFromFile(value + 'Down.png');
 
-  ImageNormal := pStateImageUp;
-  ImageOver := pStateImageOver;
-  ImageDown := pStateImageDown;
+//  ImageNormal := pStateImageUp;
+//  ImageOver := pStateImageOver;
+//  ImageDown := pStateImageDown;
 
   Width := pStateImageUp.Width;
   Height := pStateImageUp.Height;
@@ -64,25 +67,48 @@ end;
 
 procedure TWImageButton.Paint();
 var rect: TRect;
+	imageToDraw: TPNGObject;
 begin
 	inherited Paint();
 
+  if Enabled then begin
+
+    case (ButtonState) of
+
+      pbsNormal: begin
+
+        imageToDraw := pStateImageUp;
+        end;
+
+      pbsOver: begin
+
+        imageToDraw := pStateImageOver;
+        end;
+
+      pbsDown: begin
+
+        imageToDraw := pStateImageDown;
+        end;
+
+    end;
+
+  end else begin
+
+  	imageToDraw := pStateImageUp;
+
+  end;
+
+  Canvas.Draw(0, 0, imageToDraw);
+      
   if pIconImage <> nil then begin
   	Canvas.Draw(Round((Width - pIconImage.Width) / 2), Round((Height - pIconImage.Height) / 2), pIconImage);
   end;
 end;
 
 
-function xyToPos(const x, y, width: Integer):Integer;
-begin
-  result := y * width + x;
-end;
-
-
 procedure TWImageButton.SetIconImagePath(const Value: String);
 var i, j, i2: Integer;
   tempPNG : TPNGObject;
-  c1, c2: TColor;
 begin
 	pIconImagePath := value;
   if pIconImage <> nil then pIconImage.Free();

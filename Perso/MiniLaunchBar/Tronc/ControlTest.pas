@@ -29,6 +29,9 @@ var
  p2: TWNineSlicesPanel;
   freakinButton: TWImageButton;
 begin
+
+	DoubleBuffered := true;
+
   freakinPanel := TWNineSlicesPanel.Create(self);
   freakinPanel.ImagePathPrefix := 'Data\Skin\Default\BarInnerPanel';
   freakinPanel.Visible := true;
@@ -48,7 +51,7 @@ begin
   p2.Top := 10;
 
 
-  freakinPanel.AddChild(p2);
+  //freakinPanel.AddChild(p2);
 
   freakinPanel.Left := 150;
   freakinPanel.Top := 150;
@@ -70,11 +73,12 @@ begin
 //  p2.Parent := self;
 
 
-//  freakinButton := TWImageButton.Create(freakinPanel);
-//  freakinButton.ImagePathPrefix := 'Data\Skin\Default\OptionButton';
-//  freakinButton.Left := 0;
-//  freakinButton.Visible := true;
-//  freakinButton.p
+  freakinButton := TWImageButton.Create(self);
+  freakinButton.ImagePathPrefix := 'Data\Skin\Default\OptionButton';
+  freakinButton.Left := 0;
+  freakinButton.Visible := true;
+
+  freakinPanel.AddChild(freakinButton);
 end;
 
 end.

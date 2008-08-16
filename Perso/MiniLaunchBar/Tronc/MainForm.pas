@@ -171,8 +171,8 @@ begin
   barBackground.Height := barInnerPanel.Height + TMain.instance.style.barMainPanel.paddingV;
 
   barBackground.Left := OptionPanelTotalWidth;
-  barInnerPanel.Left := OptionPanelTotalWidth +  TMain.instance.style.barMainPanel.paddingLeft;
 
+  barInnerPanel.Left := TMain.instance.style.barMainPanel.paddingLeft;
   barInnerPanel.Top := TMain.instance.style.barMainPanel.paddingTop;
 
   //arrowButton.Left := optionPanelCurrentWidth;
@@ -295,10 +295,12 @@ begin
     icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
     icon.Width := iconSize;
     icon.Height := iconSize;
-    icon.Parent := self;
+    //icon.Parent := self;
     icon.Visible := true;
     icon.Cursor := crHandPoint;
     icon.OnClick := icon_click;
+
+    BarInnerPanel.AddChild(icon);
 
     icons[iconIndex] := icon;
     iconIndex := iconIndex + 1;
@@ -426,8 +428,8 @@ begin
     arrowButton.Left := optionPanel.Left - arrowButton.Width;
 
   	UpdateOptionButtonsLayout(
-    	optionPanel.Left + TMain.Instance.Style.OptionPanel.PaddingLeft,
-      optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop
+    	TMain.Instance.Style.OptionPanel.PaddingLeft,
+      TMain.Instance.Style.OptionPanel.PaddingTop
     );
 
   end else begin
@@ -534,10 +536,10 @@ begin
   // Initialize form settings
   // ---------------------------------------------------------------------------
 
-    testwin := TForm2.Create(nil);
-    testwin.Left := 20;
-    testwin.Top := 20;
-    testwin.Visible := true;
+//    testwin := TForm2.Create(nil);
+//    testwin.Left := 20;
+//    testwin.Top := 20;
+//    testwin.Visible := true;
 
   TMain.Instance.MainForm := self;
 
@@ -631,16 +633,20 @@ begin
       optionButton := TWImageButton.Create(self);
       optionButton.ImagePathPrefix := TMain.instance.skinPath + '\OptionButton';
       optionButton.Visible := false;
-      optionButton.Parent := self;
+      //optionButton.Parent := self;
       optionButton.IconImagePath := optionButtonData[i].IconFilePath;
       optionButton.Cursor := crHandPoint;
       optionButton.Tag := optionButtonData[i].ID;
       optionButton.OnClick := optionButton_Click;
+
+      optionPanel.AddChild(optionButton);
     end else begin
     	optionButtonData[i].SeparatorObject := TWNineSlicesPanel.Create(self);
       optionButtonData[i].SeparatorObject.ImagePathPrefix := TMain.instance.skinPath + '\VerticalSeparator';
-      optionButtonData[i].SeparatorObject.Parent := self;
+      //optionButtonData[i].SeparatorObject.Parent := self;
       optionButtonData[i].SeparatorObject.Visible := false;
+
+      optionPanel.AddChild(optionButtonData[i].SeparatorObject);
     end;
 
     SetLength(optionButtons, Length(optionButtons) + 1);
@@ -649,10 +655,10 @@ begin
 
   optionButtonsCol := (Trunc(Length(optionButtons) / 3) + 1);
 
-  optionPanelOpenWidth :=
-  	optionButtons[0].Width * optionButtonsCol +
-    optionButtonGap * (optionButtonsCol - 1) +
-    TMain.Instance.Style.OptionPanel.PaddingH;
+//  optionPanelOpenWidth :=
+//  	optionButtons[0].Width * optionButtonsCol +
+//    optionButtonGap * (optionButtonsCol - 1) +
+//    TMain.Instance.Style.OptionPanel.PaddingH;
 
   CalculateOptionPanelOpenWidth();
 
@@ -678,7 +684,8 @@ begin
   barInnerPanel := TWNineSlicesPanel.Create(self);
   barInnerPanel.ImagePathPrefix := TMain.instance.skinPath + '\BarInnerPanel';
   barInnerPanel.Visible := true;
-  barInnerPanel.Parent := self;
+  //barInnerPanel.Parent := self;
+  barBackground.AddChild(barInnerPanel);
 
   barInnerPanel.OnMouseDown := barBackground_down;
   barInnerPanel.OnMouseUp := barBackground_up;
