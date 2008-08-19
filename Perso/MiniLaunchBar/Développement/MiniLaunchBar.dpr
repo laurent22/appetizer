@@ -1,7 +1,5 @@
 program MiniLaunchBar;
 
-{%TogetherDiagram 'ModelSupport_MiniLaunchBar\default.txaPackage'}
-
 uses
   Forms,
   MainForm in 'MainForm.pas' {MainForm},
@@ -18,7 +16,8 @@ uses
   DebugWindow in 'DebugWindow.pas' {Form1},
   LocalizationUtils in 'LocalizationUtils.pas',
   ControlTest in 'ControlTest.pas' {Form2},
-  WContainer in 'Components\WContainer.pas';
+  WContainer in 'Components\WContainer.pas',
+  WButtonBase in 'Components\WButtonBase.pas';
 
 {$R *.res}
 

@@ -136,14 +136,14 @@ begin
 
   if pFileIcon = nil then pFileIcon := GetExecutableLargeIcon(pFilePath);
 
-  Repaint();
+  Invalidate();
 end;
 
 
 procedure TWFileIcon.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   inherited MouseDown(Button, Shift, X, Y);
-	Repaint();
+	Invalidate();
 end;
 
 
@@ -157,21 +157,21 @@ end;
 procedure TWFileIcon.Click();
 begin
 	inherited Click;
-  Repaint();
+  Invalidate();
 end;
 
 
 procedure TWFileIcon.MouseEnter();
 begin
 	inherited MouseEnter();
-	Repaint();
+	Invalidate();
 end;
 
 
 procedure TWFileIcon.MouseLeave();
 begin
 	inherited MouseLeave();
-	Repaint();
+	Invalidate();
 end;
 
 

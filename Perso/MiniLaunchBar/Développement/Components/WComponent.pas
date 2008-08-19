@@ -119,7 +119,7 @@ end;
 
 procedure TWComponent.Paint;
 begin
-	inherited;
+ //	inherited;
   UpdateLocation();
 end;
 

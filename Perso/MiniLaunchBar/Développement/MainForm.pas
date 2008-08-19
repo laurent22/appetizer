@@ -79,8 +79,8 @@ var
   arrowButton: TWImageButton;
   button: TWImageButton;
   windowDragData: TDragData;
+   testwin: TForm2;
 
-  
 
 implementation
 
@@ -127,6 +127,7 @@ end;
 procedure TMainForm.UpdateFormMask();
 var bmp: TBitmap;
 	 region: THandle;
+   rect: TRect;
 begin
 	TMain.Instance.ilog('Updating form mask...');
 
@@ -138,11 +139,24 @@ begin
   	bmp.Width := Width;
     bmp.Height := Height;
 
+    rect.Top := 0;
+    rect.Left := 0;
+    rect.Bottom := bmp.Height;
+  	rect.Right := bmp.Width;
+
+    bmp.Canvas.Brush := TBrush.Create();
+    bmp.Canvas.Brush.Color := RGB(255,0,255);
+    bmp.Canvas.FillRect(rect);
+
+    // TODO: Right of form is not transparent
+
     DrawNineSlices(bmp.Canvas, TMain.instance.skinPath + '\BarBackgroundRegion', optionPanelOpenWidth - optionPanelCurrentWidth, 0, bmp.Width, bmp.Height);
 
     region := CreateRegion(Bmp);
     SetWindowRGN(Handle, region, True);
-    application.ProcessMessages;
+
+    //Repaint();
+    //application.ProcessMessages;
   finally
     bmp.Free;
   end;
@@ -175,12 +189,10 @@ begin
   barInnerPanel.Left := TMain.instance.style.barMainPanel.paddingLeft;
   barInnerPanel.Top := TMain.instance.style.barMainPanel.paddingTop;
 
-  //arrowButton.Left := optionPanelCurrentWidth;
-
   optionPanel.Height := barBackground.Height;
 
-  iconX := TMain.instance.style.barInnerPanel.paddingLeft + barInnerPanel.Left;
-  iconY := TMain.instance.style.barInnerPanel.paddingTop + barInnerPanel.Top;
+  iconX := TMain.instance.style.barInnerPanel.paddingLeft;
+  iconY := TMain.instance.style.barInnerPanel.paddingTop;
 
   TMain.Instance.ilog('Updating icon positions...');
 
@@ -213,7 +225,6 @@ end;
 procedure TMainForm.optionButton_Click(Sender: TObject);
 var d: TOptionButtonDatum;
   button: TWImageButton;
-	i: Byte;
 begin
 	button := sender as TWImageButton;
 
@@ -253,7 +264,6 @@ end;
 procedure TMainForm.icon_click(sender: TObject);
 var icon: TWFileIcon;
 	folderItem: TFolderItem;
-  ansiCharPath: PAnsiChar;
   r: HINST;
 begin
 	icon := Sender as TWFileIcon;
@@ -295,7 +305,6 @@ begin
     icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
     icon.Width := iconSize;
     icon.Height := iconSize;
-    //icon.Parent := self;
     icon.Visible := true;
     icon.Cursor := crHandPoint;
     icon.OnClick := icon_click;
@@ -320,11 +329,10 @@ end;
 
 
 procedure TMainForm.CalculateOptionPanelOpenWidth();
-var buttonX, buttonY: Integer;
+var buttonX: Integer;
 	buttonData: TOptionButtonDatum;
 	button: TWImageButton;
   i: Byte;
-  maxX: Integer;
   vButtonCount: Integer;
 begin
 	buttonX := 0;
@@ -362,11 +370,10 @@ end;
 
 
 procedure TMainForm.UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
-var buttonX, buttonY, previousX: Integer;
+var buttonX, buttonY: Integer;
 	buttonData: TOptionButtonDatum;
 	button: TWImageButton;
   i: Byte;
-  maxX: Integer;
 begin
   buttonX := cornerX;
   buttonY := cornerY;
@@ -415,10 +422,6 @@ end;
 
 
 procedure TMainForm.UpdateOptionPanel();
-var i: Byte;
-	buttonX, buttonY, newX, newY: Integer;
-  buttonData: TOptionButtonDatum;
-  button: TWImageButton;
 begin
 	TMain.Instance.ilog('Updating option panel');
 
@@ -470,7 +473,6 @@ end;
 
 
 procedure TMainForm.OpenCloseOptionPanel(const iOpen: Boolean);
-var i: Word;
 begin
 	if iOpen and optionPanelOpen then Exit;
   if (not iOpen) and (not optionPanelOpen) then Exit;
@@ -526,11 +528,8 @@ end;
 procedure TMainForm.FormCreate(Sender: TObject);
 var optionButton: TWImageButton;
 	i: Word;
-	optionButtonsCol: Byte;
   d: TOptionButtonDatum;
-  freakinPanel: TWNineSlicesPanel;
-  freakinButton: TWImageButton;
-  testwin: TForm2;
+
 begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
@@ -553,7 +552,7 @@ begin
   optionPanelOpen := false;    
   optionPanelCloseWidth := 0;
   optionPanelAnimationStartTime := 0;
-  optionPanelAnimationDuration := 100;
+  optionPanelAnimationDuration := 200;
   optionPanelCurrentWidth := optionPanelCloseWidth;
 
   optionButtonGap := 3;
@@ -601,10 +600,6 @@ begin
   d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Help.png';
   d.Separator := false;
 
-
-
-
-
   // ---------------------------------------------------------------------------
   // Create form controls
   // ---------------------------------------------------------------------------
@@ -633,7 +628,6 @@ begin
       optionButton := TWImageButton.Create(self);
       optionButton.ImagePathPrefix := TMain.instance.skinPath + '\OptionButton';
       optionButton.Visible := false;
-      //optionButton.Parent := self;
       optionButton.IconImagePath := optionButtonData[i].IconFilePath;
       optionButton.Cursor := crHandPoint;
       optionButton.Tag := optionButtonData[i].ID;
@@ -643,7 +637,6 @@ begin
     end else begin
     	optionButtonData[i].SeparatorObject := TWNineSlicesPanel.Create(self);
       optionButtonData[i].SeparatorObject.ImagePathPrefix := TMain.instance.skinPath + '\VerticalSeparator';
-      //optionButtonData[i].SeparatorObject.Parent := self;
       optionButtonData[i].SeparatorObject.Visible := false;
 
       optionPanel.AddChild(optionButtonData[i].SeparatorObject);
@@ -652,13 +645,6 @@ begin
     SetLength(optionButtons, Length(optionButtons) + 1);
     optionButtons[Length(optionButtons) - 1] := optionButton;
   end;
-
-  optionButtonsCol := (Trunc(Length(optionButtons) / 3) + 1);
-
-//  optionPanelOpenWidth :=
-//  	optionButtons[0].Width * optionButtonsCol +
-//    optionButtonGap * (optionButtonsCol - 1) +
-//    TMain.Instance.Style.OptionPanel.PaddingH;
 
   CalculateOptionPanelOpenWidth();
 
@@ -684,7 +670,6 @@ begin
   barInnerPanel := TWNineSlicesPanel.Create(self);
   barInnerPanel.ImagePathPrefix := TMain.instance.skinPath + '\BarInnerPanel';
   barInnerPanel.Visible := true;
-  //barInnerPanel.Parent := self;
   barBackground.AddChild(barInnerPanel);
 
   barInnerPanel.OnMouseDown := barBackground_down;
@@ -703,25 +688,6 @@ begin
   arrowButton.Cursor := crHandPoint;
 
   arrowButton.OnClick := arrowButton_click;
-
-
-//  freakinPanel := TWNineSlicesPanel.Create(self);
-//  freakinPanel.ImagePathPrefix := TMain.instance.skinPath + '\BarInnerPanel';
-//  freakinPanel.Visible := true;
-//  freakinPanel.Parent := self;
-//  freakinPanel.Left := 100 + 200;
-//  freakinPanel.Top := 2;
-//  freakinPanel.Width := 130;
-//  freakinPanel.Height := 50;
-//
-//  freakinButton := TWImageButton.Create(self);
-//  freakinButton.ImagePathPrefix := TMain.instance.skinPath + '\OptionButton';
-//  freakinButton.Left := 0;
-//
-//  freakinButton.Visible := true;
-//  freakinButton.Parent := TWinControl(freakinPanel);
-
-
 
   // ---------------------------------------------------------------------------
   // Draw and update layout

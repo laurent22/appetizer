@@ -25,21 +25,21 @@ implementation
 procedure TWButtonBase.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   inherited;
-  Repaint();
+  Invalidate();
 end;
 
 
 procedure TWButtonBase.Click();
 begin
 	inherited;
-  Repaint();
+  Invalidate();
 end;
 
 
 procedure TWButtonBase.MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   inherited
-  Repaint();
+  Invalidate();
 end;
 
 
@@ -53,14 +53,14 @@ end;
 procedure TWButtonBase.MouseEnter();
 begin
 	inherited;
-  Repaint();
+  Invalidate();
 end;
 
 
 procedure TWButtonBase.MouseLeave();
 begin
 	inherited;
-  Repaint();
+  Invalidate();
 end;
 
 end.
