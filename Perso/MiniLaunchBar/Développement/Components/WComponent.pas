@@ -57,6 +57,7 @@ type
 
     procedure CMMouseEnter(var Message: TMessage); message CM_MOUSEENTER;
     procedure CMMouseLeave(var Message: TMessage); message CM_MOUSELEAVE;
+    
     {Being enabled or disabled}
     procedure CMEnabledChanged(var Message: TMessage);
       message CM_ENABLEDCHANGED;
@@ -119,7 +120,6 @@ end;
 
 procedure TWComponent.Paint;
 begin
- //	inherited;
   UpdateLocation();
 end;
 

@@ -26,6 +26,10 @@ type
 
   
   TMainForm = class(TForm)
+    iconPopupMenu: TPopupMenu;
+    cddd1: TMenuItem;
+    N1: TMenuItem;
+    Properties1: TMenuItem;
   	procedure icon_click(sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -67,6 +71,9 @@ type
       function GetButtonDataByID(ID: Integer): TOptionButtonDatum;
       procedure UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
       procedure CalculateOptionPanelOpenWidth();
+      procedure icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+
+
     public
       { Public declarations }
       
@@ -79,7 +86,7 @@ var
   arrowButton: TWImageButton;
   button: TWImageButton;
   windowDragData: TDragData;
-   testwin: TForm2;
+  testwin: TForm2;
 
 
 implementation
@@ -128,13 +135,14 @@ procedure TMainForm.UpdateFormMask();
 var bmp: TBitmap;
 	 region: THandle;
    rect: TRect;
+   panel: TPanel;
 begin
 	TMain.Instance.ilog('Updating form mask...');
 
   Width := barBackground.Width + OptionPanelTotalWidth;
   Height := barBackground.Height;
 
-  bmp := TBitmap.Create;
+  bmp := TBitmap.Create();
   try
   	bmp.Width := Width;
     bmp.Height := Height;
@@ -145,18 +153,13 @@ begin
   	rect.Right := bmp.Width;
 
     bmp.Canvas.Brush := TBrush.Create();
-    bmp.Canvas.Brush.Color := RGB(255,0,255);
+    bmp.Canvas.Brush.Color := RGB(255, 0, 255);
     bmp.Canvas.FillRect(rect);
 
-    // TODO: Right of form is not transparent
-
-    DrawNineSlices(bmp.Canvas, TMain.instance.skinPath + '\BarBackgroundRegion', optionPanelOpenWidth - optionPanelCurrentWidth, 0, bmp.Width, bmp.Height);
+    DrawNineSlices(bmp.Canvas, TMain.instance.skinPath + '\BarBackgroundRegion', optionPanelOpenWidth - optionPanelCurrentWidth, 0, bmp.Width - optionPanelOpenWidth + optionPanelCurrentWidth, bmp.Height);
 
     region := CreateRegion(Bmp);
     SetWindowRGN(Handle, region, True);
-
-    //Repaint();
-    //application.ProcessMessages;
   finally
     bmp.Free;
   end;
@@ -308,12 +311,30 @@ begin
     icon.Visible := true;
     icon.Cursor := crHandPoint;
     icon.OnClick := icon_click;
+    icon.OnMouseDown := icon_mouseDown;
 
     BarInnerPanel.AddChild(icon);
 
     icons[iconIndex] := icon;
     iconIndex := iconIndex + 1;
   end;
+end;
+
+
+procedure TMainForm.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var mouseLoc: TPoint;
+	icon: TWFileIcon;
+begin
+	if Button <> mbRight then Exit;
+
+  icon = Sender as TWFileIcon;
+
+  mouseLoc.X := x;
+  mouseLoc.Y := y;
+
+  mouseLoc := icon.ClientToScreen(mouseLoc);
+
+  iconPopupMenu.Popup(mouseLoc.X, mouseLoc.Y);
 end;
 
 

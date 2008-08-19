@@ -177,5 +177,5 @@
       <Excluded_Packages Name="c:\program files\borland\bds\4.0\Bin\dclIndyProtocols100.bpl">Indy 10 Protocols Design Time</Excluded_Packages>
     </Excluded_Packages>
   </Delphi.Personality>
-	<ModelSupport>True</ModelSupport>
+	<ModelSupport>False</ModelSupport>
 </BorlandProject>
