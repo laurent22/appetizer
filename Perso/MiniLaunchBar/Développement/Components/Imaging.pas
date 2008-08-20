@@ -11,6 +11,7 @@ type
 
   procedure DrawNineSlices(const canvas: TCanvas; const filePathPrefix: String; const x, y, targetWidth, targetHeight: Integer);
   function CreateRegion(Bmp: TBitmap): THandle;
+  function ConstraintResize(sourceWidth, sourceHeight, targetWidth, targetHeight: Real; fitSmallerDimensions: Boolean):TSize;
 
 implementation
 
@@ -115,6 +116,50 @@ begin
   end; 
 end;
 
+
+
+
+
+function ConstraintResize(sourceWidth, sourceHeight, targetWidth, targetHeight: Real; fitSmallerDimensions: Boolean):TSize;
+var targetRatio, sourceRatio: Real;
+begin
+  result.cx := Round(sourceWidth);
+  result.cy := Round(sourceHeight);
+
+  if (targetWidth = 0) or (targetHeight = 0) then Exit;
+  if (sourceWidth = 0) or (sourceHeight = 0) then Exit;
+
+	if (sourceWidth <= targetWidth) and (sourceHeight <= targetHeight) then begin
+
+  	if fitSmallerDimensions then begin
+    	targetRatio := targetWidth / targetHeight;
+      sourceRatio := sourceWidth / sourceHeight;
+
+      if sourceRatio < targetRatio then begin
+      	result.cy := Round(targetHeight);
+        result.cx := Round(result.cy * sourceRatio);
+      end else begin
+      	result.cx := Round(targetWidth);
+        result.cy := Round(result.cx / sourceRatio);
+      end;
+    end;
+
+  end else begin
+
+    targetRatio := targetWidth / targetHeight;
+    sourceRatio := sourceWidth / sourceHeight;
+
+    if sourceRatio < targetRatio then begin
+      result.cy := Round(targetHeight);
+      result.cx := Round(result.cy * sourceRatio);
+    end else begin
+      result.cx := Round(targetWidth);
+      result.cy := Round(result.cx / sourceRatio);
+    end;
+    
+  end;
+
+end;
 
 
 
