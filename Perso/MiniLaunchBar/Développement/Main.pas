@@ -63,6 +63,13 @@ type
     paddingV: Integer;
   end;
 
+  TSpecialFolderNames = record
+  	Music: String;
+    Pictures: String;
+    Videos: String;
+    Documents: String;
+  end;
+
   TFolderItem = class
 
   	private
@@ -70,6 +77,7 @@ type
     public
       FilePath: String;
       ID: Integer;
+      IsSeparator: Boolean;
     published
     	constructor Create();
 
@@ -91,6 +99,7 @@ type
   private  
     pIniFile: TIniFile;
     pDefaultUserSettings: Array of TIniSection;
+    pSpecialFolderNames: TSpecialFolderNames;
 
     procedure OpenIniFile();
 
@@ -157,6 +166,7 @@ end;
 
 constructor TFolderItem.Create();
 begin
+	IsSeparator := false;
 	pUniqueID := pUniqueID + 1;
 	ID := pUniqueID; 
 end;
@@ -272,6 +282,7 @@ begin
   iniSection.name := 'Global';
   iniSection.AddProperty(TIniProperty.Create('Locale', 'en'));
   iniSection.AddProperty(TIniProperty.Create('PortableAppsPath', 'PortableApps'));
+  iniSection.AddProperty(TIniProperty.Create('DocumentsPath', 'Documents'));
 
   SetLength(pDefaultUserSettings, Length(pDefaultUserSettings) + 1);
   pDefaultUserSettings[Length(pDefaultUserSettings) - 1] := iniSection;
@@ -286,6 +297,11 @@ begin
   loc.LoadLocale(loc.CurrentLocale, LOCALE_FOLDER_PATH);
 
   ilog('Current locale: ' + loc.CurrentLocale);
+
+  pSpecialFolderNames.Music := 'Music';
+  pSpecialFolderNames.Videos := 'Videos';
+  pSpecialFolderNames.Pictures := 'Pictures';
+  pSpecialFolderNames.Documents := 'Documents';
 
   // ---------------------------------------------------------------------------
   // Initialize style
@@ -336,6 +352,7 @@ var
   exclusionFile: TextFile;
   s: String;
   skipIt: Boolean;
+  documentsPath: String;
 begin
 
   exclusions := TStringList.Create();
@@ -359,7 +376,7 @@ begin
     folderItems[i] := nil;
   end;
 
-  folderItemIndex := 1;
+  folderItemIndex := 0;
 
 	directoryContents := GetDirectoryContents(GetUserSetting('Global', 'PortableAppsPath'), 1, 'exe');
 
@@ -387,6 +404,45 @@ begin
       end;
     end;
   end;
+
+
+  documentsPath := GetUserSetting('Global', 'DocumentsPath');
+
+  if DirectoryExists(documentsPath) then begin
+
+    folderItem := TFolderItem.Create();
+    folderItem.IsSeparator := true;
+    folderItems[folderItemIndex] := folderItem;
+    folderItemIndex := folderItemIndex + 1;
+
+    folderItem := TFolderItem.Create();
+    folderItem.filePath := documentsPath;
+    folderItems[folderItemIndex] := folderItem;
+    folderItemIndex := folderItemIndex + 1;
+
+    if DirectoryExists(documentsPath + '\' + pSpecialFolderNames.Music) then begin
+      folderItem := TFolderItem.Create();
+      folderItem.filePath := documentsPath + '\' + pSpecialFolderNames.Music;
+      folderItems[folderItemIndex] := folderItem;
+      folderItemIndex := folderItemIndex + 1;
+    end;
+
+  	if DirectoryExists(documentsPath + '\' + pSpecialFolderNames.Pictures) then begin
+      folderItem := TFolderItem.Create();
+      folderItem.filePath := documentsPath + '\' + pSpecialFolderNames.Pictures;
+      folderItems[folderItemIndex] := folderItem;
+      folderItemIndex := folderItemIndex + 1;
+    end;
+
+    if DirectoryExists(documentsPath + '\' + pSpecialFolderNames.Videos) then begin
+      folderItem := TFolderItem.Create();
+      folderItem.filePath := documentsPath + '\' + pSpecialFolderNames.Videos;
+      folderItems[folderItemIndex] := folderItem;
+      folderItemIndex := folderItemIndex + 1;
+    end;
+
+  end;
+
 end;
 
 
@@ -414,7 +470,7 @@ function TMain.FolderItemCount(): Word;
 var i: Word;
 begin
 	result := 0;
-	for i := 1 to Length(folderItems) do begin
+	for i := 0 to Length(folderItems) - 1 do begin
   	if folderItems[i] = nil then break;
     result := result + 1;
   end;

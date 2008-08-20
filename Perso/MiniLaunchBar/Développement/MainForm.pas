@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
-  FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent;
+  FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent, WImage;
 
 type
 
@@ -80,6 +80,7 @@ type
   end;
 
 var
+  theMainForm: TMainForm;
   barBackground: TWNineSlicesPanel;
   barInnerPanel: TWNineSlicesPanel;
   optionPanel: TWNineSlicesPanel;
@@ -176,10 +177,40 @@ procedure TMainForm.UpdateLayout();
 var iconAreaWidth: Word;
   i: Word;
   iconX, iconY: Word;
+  currentGap: Integer;
+  iconMaxX: Integer;
 begin
 	TMain.Instance.ilog('Updating layout...');
 
-	iconAreaWidth := IconCount * iconSize + (IconCount - 1) * iconGap;
+  iconX := TMain.instance.style.barInnerPanel.paddingLeft;
+  iconY := TMain.instance.style.barInnerPanel.paddingTop;
+
+  TMain.Instance.ilog('Updating icon positions...');
+
+  currentGap := 0;
+
+  for i := 0 to Length(icons)-1 do begin
+  	if icons[i] = nil then break;
+
+  	icons[i].Left := iconX;
+
+    if icons[i] is TWImage then begin
+    	//icons[i].Left := icons[i].Left + Round(iconSeparatorGap / 2);
+    end;
+
+    icons[i].Top := iconY;
+
+    if icons[i] is TWImage then
+    	currentGap := 0
+    else
+    	currentGap := iconGap;
+
+    iconX := iconX + icons[i].Width + currentGap;
+
+    iconMaxX := icons[i].Left + icons[i].Width;
+  end;
+
+	iconAreaWidth := iconMaxX - TMain.instance.style.barInnerPanel.paddingLeft;
 
   barInnerPanel.Width := iconAreaWidth + TMain.instance.style.barInnerPanel.paddingH;
   barInnerPanel.Height := iconSize + TMain.instance.style.barInnerPanel.paddingV;
@@ -193,19 +224,6 @@ begin
   barInnerPanel.Top := TMain.instance.style.barMainPanel.paddingTop;
 
   optionPanel.Height := barBackground.Height;
-
-  iconX := TMain.instance.style.barInnerPanel.paddingLeft;
-  iconY := TMain.instance.style.barInnerPanel.paddingTop;
-
-  TMain.Instance.ilog('Updating icon positions...');
-
-  for i := 0 to Length(icons)-1 do begin
-  	if icons[i] = nil then break;
-
-  	icons[i].Left := iconX;
-    icons[i].Top := iconY;
-    iconX := iconX + icons[i].Width + iconGap;
-  end;
 
   UpdateOptionPanel();
   UpdateFormMask();
@@ -288,6 +306,7 @@ var i: Word;
   folderItem: TFolderItem;
   icon: TWFileIcon;
   iconIndex : Word;
+  separatorImage: TWImage;
 begin
 	TMain.Instance.ilog('Creating icons');
 
@@ -298,36 +317,59 @@ begin
 
   iconIndex := 0;
 
-  for i := 1 to TMain.instance.FolderItemCount do begin
+  for i := 0 to TMain.instance.FolderItemCount - 1 do begin
   	folderItem := TMain.instance.getFolderItemAt(i);
+
+    if not folderItem.IsSeparator then begin
     
-    icon := TWFileIcon.Create(self);
-    icon.Tag := folderItem.ID;
-    icon.FilePath := folderItem.filePath;
-    icon.OverlayImageUpPath := TMain.instance.skinPath + '\IconOverlayUp.png';
-    icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
-    icon.Width := iconSize;
-    icon.Height := iconSize;
-    icon.Visible := true;
-    icon.Cursor := crHandPoint;
-    icon.OnClick := icon_click;
-    icon.OnMouseDown := icon_mouseDown;
+      icon := TWFileIcon.Create(self);
+      icon.Tag := folderItem.ID;
+      icon.FilePath := folderItem.filePath;
+      icon.OverlayImageUpPath := TMain.instance.skinPath + '\IconOverlayUp.png';
+      icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
+      icon.Width := iconSize;
+      icon.Height := iconSize;
+      icon.Visible := true;
+      icon.Cursor := crHandPoint;
+      icon.OnClick := icon_click;
+      icon.OnMouseDown := icon_mouseDown;
 
-    BarInnerPanel.AddChild(icon);
+      BarInnerPanel.AddChild(icon);
 
-    icons[iconIndex] := icon;
-    iconIndex := iconIndex + 1;
+      icons[iconIndex] := icon;
+      iconIndex := iconIndex + 1;
+
+    end else begin
+
+      separatorImage := TWImage.Create(self);
+      separatorImage.FilePath := TMain.instance.skinPath + '\InnerPanelSeparator.png';
+      separatorImage.Visible := true;
+      separatorImage.FitToContent();
+      separatorImage.Height := iconSize;
+      separatorImage.StretchToFit := true;
+      separatorImage.MaintainAspectRatio := false;
+      separatorImage.OnMouseDown := icon_mouseDown;
+
+      BarInnerPanel.AddChild(separatorImage);
+
+      icons[iconIndex] := separatorImage;
+      iconIndex := iconIndex + 1;
+
+    end;
+
+
+
   end;
 end;
 
 
 procedure TMainForm.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var mouseLoc: TPoint;
-	icon: TWFileIcon;
+	icon: TWComponent;
 begin
 	if Button <> mbRight then Exit;
 
-  icon := Sender as TWFileIcon;
+  icon := Sender as TWComponent;
 
   mouseLoc.X := x;
   mouseLoc.Y := y;
@@ -550,7 +592,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 var optionButton: TWImageButton;
 	i: Word;
   d: TOptionButtonDatum;
-
+  img: TWImage;
 begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
@@ -715,10 +757,29 @@ begin
   // ---------------------------------------------------------------------------
 
 
+//  img := TWimage.Create(self);
+//  img.Visible := true;
+//  img.StretchToFit := false;
+//  img.MaintainAspectRatio := true;
+//  img.Width := 100;
+//  img.Height := 100;
+//  img.FilePath := '_Images\Preview.png';
+//  barBackground.AddChild(img);
+
+
+  //barBackground.AddChild(img);
+  //img.Parent := self;
+  //img.Visible := true;
+  //img.FilePath := '_Images\Preview.png';
+
 
   TMain.Instance.RefreshFolderItems();
   CreateIconsFromFolderItems();
 	UpdateLayout();
+
+
+
+
 end;
 
 

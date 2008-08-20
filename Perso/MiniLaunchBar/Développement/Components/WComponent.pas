@@ -109,6 +109,7 @@ uses WContainer;
 constructor TWComponent.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+
 end;
 
 

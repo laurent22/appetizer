@@ -1,5 +1,7 @@
 program MiniLaunchBar;
 
+{%TogetherDiagram 'ModelSupport_MiniLaunchBar\default.txaPackage'}
+
 uses
   Forms,
   MainForm in 'MainForm.pas' {MainForm},
@@ -17,13 +19,13 @@ uses
   LocalizationUtils in 'LocalizationUtils.pas',
   ControlTest in 'ControlTest.pas' {Form2},
   WContainer in 'Components\WContainer.pas',
-  WButtonBase in 'Components\WButtonBase.pas';
+  WButtonBase in 'Components\WButtonBase.pas',
+  WImage in 'Components\WImage.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TMainForm, Form1);
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TMainForm, theMainForm);
   Application.Run;
 end.

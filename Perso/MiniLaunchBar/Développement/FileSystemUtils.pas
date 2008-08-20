@@ -2,12 +2,31 @@ unit FileSystemUtils;
 
 interface
 
-uses ShellAPI, Graphics, Windows, SysUtils, Dialogs, Classes;
+uses ShellAPI, Graphics, Windows, SysUtils, Dialogs, Classes, IniFiles;
 
 type
 
 	TDirectoryContents = Array of String[255];
 
+//  TFileInfo = record
+//    Icon : hIcon;
+//    Image : Integer;
+//    DisplayName : String;
+//    TypeName : String;
+//    Size : Integer;
+//    SizeDescription : String;
+//    DateTime : TDateTime;
+//    AttrArchive : Boolean;
+//    AttrReadOnly : Boolean;
+//    AttrSystem : Boolean;
+//    AttrHidden : Boolean;
+//    AttrVolume : Boolean;
+//    AttrDirectory : Boolean;
+//  end;
+//
+//
+//function scGetSizeDescription(const IntSize : Int64) : String;
+//procedure scGetFileInfo(StrPath : String; var Info : TFileInfo);
 
 function GetExecutableSmallIcon(const filePath: String):TIcon;
 function GetExecutableLargeIcon(const filePath: String):TIcon;
@@ -15,11 +34,143 @@ function GetApplicationDirectory():String;
 function IsDirectory(const filePath: String): Boolean;
 function GetDirectoryContents(const filePath: String; const depth: Integer; const fileExtension: String): TStringList ;
 function GetFmtFileVersion(const FileName: String = '';
-  const Fmt: String = '%d.%d.%d.%d'): String;
+const Fmt: String = '%d.%d.%d.%d'): String;
+
+function GetFolderIcon (const aFilename : String; b32BitIcon : Boolean) : TIcon;
 
 
 implementation
 
+
+function GetFolderIcon (const aFileName : String; b32BitIcon : Boolean) : TIcon;
+var
+  FileInfo: TSHFileInfo;
+  filename: String;
+  iniFile: TIniFile;
+  iconFilePath: String;
+  savedDir: String;
+  gotIt: Boolean;
+begin
+  Result := TIcon.Create;
+
+  filename := ExcludeTrailingBackslash(aFilename);
+
+  if FileExists(filename + '\Desktop.ini') then begin
+  	iniFile := TIniFile.Create(filename + '\Desktop.ini');
+    iconFilePath := iniFile.ReadString('.ShellClassInfo', 'IconFile', 'NONPAS!');
+    FreeAndNil(iniFile);
+
+    if iconFilePath <> 'NONPAS!' then begin
+      savedDir := GetCurrentDir();
+      SetCurrentDir(filename);
+      try
+      	Result.LoadFromFile(iconFilePath);
+        gotIt := true;
+      except
+      	gotIt := false;
+      end;
+      SetCurrentDir(savedDir);
+
+      if gotIt then Exit;
+    end;
+  end;
+  
+
+  if b32BitIcon then
+    SHGetFileInfo( PChar(aFilename), FILE_ATTRIBUTE_DIRECTORY, FileInfo,
+              SizeOf(TSHFileInfo),
+              SHGFI_ICON OR SHGFI_LARGEICON OR   SHGFI_USEFILEATTRIBUTES)
+  else
+    SHGetFileInfo( PChar(aFilename), FILE_ATTRIBUTE_DIRECTORY, FileInfo,
+              SizeOf(TSHFileInfo),
+              SHGFI_ICON OR SHGFI_SMALLICON OR SHGFI_USEFILEATTRIBUTES);
+ 
+  Result.Handle := FileInfo.hIcon;
+end;
+
+
+//function fnGetFileIcon (const sFileName : String; b32BitIcon : Boolean) : TIcon;
+//  var
+//    FileInfo: TSHFileInfo;
+//  begin
+//    Result := TIcon.Create;
+// 
+//    if b32BitIcon then
+//      SHGetFileInfo( PChar(sFileName), $080, FileInfo,
+//                SizeOf(TSHFileInfo),
+//                SHGFI_ICON OR SHGFI_LARGEICON OR   SHGFI_USEFILEATTRIBUTES)
+//    else
+//      SHGetFileInfo( PChar(sFileName), $080, FileInfo,
+//                SizeOf(TSHFileInfo),
+//                SHGFI_ICON OR SHGFI_SMALLICON OR SHGFI_USEFILEATTRIBUTES);
+// 
+//    Result.Handle := FileInfo.hIcon;
+//end;
+
+//// ----------------------------------------------------------------
+//// Return string with formatted file size (bytes, Kb, Mb or Gb)
+//// ----------------------------------------------------------------
+//function scGetSizeDescription(const IntSize : Int64) : String;
+//begin
+//  if IntSize < 1024 then
+//    Result := IntToStr(IntSize)+' bytes'
+//  else
+//  begin
+//    if IntSize < (1024 * 1024) then
+//      Result := FormatFloat('####0.##',IntSize / 1024)+' Kb'
+//    else
+//      if IntSize < (1024 * 1024 * 1024) then
+//        Result := FormatFloat('####0.##',IntSize / 1024 / 1024)+' Mb'
+//      else
+//        Result := FormatFloat('####0.##',IntSize / 1024 / 1024 / 1024)+' Gb';
+//  end;
+//end;
+//
+//// ----------------------------------------------------------------
+//// Return record with all information about given file
+//// How to use icon : ImageFile.Picture.Icon.Handle:=Info.Icon;
+//// ----------------------------------------------------------------
+//procedure scGetFileInfo(StrPath : String; var Info : TFileInfo);
+//var
+//  SHFileInfo : TSHFileInfo;
+//  SearchRec : TSearchRec;
+//begin
+//  if Trim(StrPath) = '' then
+//    Exit;
+//
+//  ShGetFileInfo(PChar(StrPath), 0, SHFileInfo, SizeOf (TSHFileInfo),
+//    SHGFI_TYPENAME or SHGFI_DISPLAYNAME or SHGFI_SYSICONINDEX or SHGFI_ICON);
+//
+//  with Info do
+//  begin
+//    Icon  := SHFileInfo.hIcon;
+//    Image := SHFileInfo.iIcon;
+//    DisplayName := SHFileInfo.szDisplayName;
+//    TypeName := SHFileInfo.szTypeName;
+//  end;
+//
+//  FindFirst(StrPath, 0, SearchRec);
+//  with Info do
+//  begin
+////    try
+////      DateTime := FileDateToDateTime(SearchRec.Time);
+////    except
+////      DateTime := Now();
+////    end;
+//		DateTime := Now();
+//
+//    AttrReadOnly := ((SearchRec.Attr and faReadOnly) > 0);
+//    AttrSystem := ((SearchRec.Attr and faSysFile) > 0);
+//    AttrHidden := ((SearchRec.Attr and faHidden) > 0);
+//    AttrArchive := ((SearchRec.Attr and faArchive) > 0);
+//    AttrVolume := ((SearchRec.Attr and faVolumeID) > 0);
+//    AttrDirectory := ((SearchRec.Attr and faDirectory) > 0);
+//
+//    Size := SearchRec.Size;
+//
+//    SizeDescription := scGetSizeDescription(Size);
+//  end;
+//end;
 
 
 

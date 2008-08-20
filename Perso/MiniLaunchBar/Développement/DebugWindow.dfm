@@ -22,7 +22,5 @@ object DebugWindow: TDebugWindow
     Align = alClient
     ScrollBars = ssVertical
     TabOrder = 0
-    ExplicitWidth = 216
-    ExplicitHeight = 271
   end
 end

@@ -136,6 +136,10 @@ begin
 
   if pFileIcon = nil then pFileIcon := GetExecutableLargeIcon(pFilePath);
 
+  if pFileIcon = nil then begin
+  	pFileIcon := GetFolderIcon(pFilePath, true);
+  end;
+
   Invalidate();
 end;
 

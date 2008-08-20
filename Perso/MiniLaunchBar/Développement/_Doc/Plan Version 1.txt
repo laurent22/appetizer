@@ -1,10 +1,9 @@
 - Faire cryptage
 
 - "+" button to add an application
+- Mettre bouton d'aide sous bouton "fermer"
 - Right-click on icon to delete or rename
 - Drag to move
-- Add separator
-- Icones dossiers spéciaux
 
 - Fenêtre "à propos"
 
@@ -16,6 +15,23 @@
 - Tooltip sur les icones
 
 - Find a name / give the app some identity
+
+- Eject button
+
+- Right click anywhere within inner panel:
+
+			* option 'Add divider'
+			* option 'Add item'
+
+
+
+========== ICON PROPERTY
+
+- Name / Tooltip
+- File path
+- 'Move right' and 'Move left' buttons
+- Delete button
+
 
 
 ========== ONGLETS CONFIG:

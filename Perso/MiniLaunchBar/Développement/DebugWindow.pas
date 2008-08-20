@@ -17,7 +17,7 @@ type
   end;
 
 var
-  form1: TDebugWindow;
+  debugWindowForm: TDebugWindow;
 
 implementation
 
