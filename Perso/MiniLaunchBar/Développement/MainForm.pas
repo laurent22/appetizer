@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
-  FileSystemUtils, WFileIcon, Menus, ControlTest;
+  FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent;
 
 type
 
@@ -50,7 +50,7 @@ type
 
     private
       { Private declarations }
-      icons: Array[0..255] of TWFileIcon;
+      icons: Array[0..255] of TWComponent;
       iconSize: Byte;
       iconGap: Byte;
 
@@ -327,7 +327,7 @@ var mouseLoc: TPoint;
 begin
 	if Button <> mbRight then Exit;
 
-  icon = Sender as TWFileIcon;
+  icon := Sender as TWFileIcon;
 
   mouseLoc.X := x;
   mouseLoc.Y := y;
