@@ -47,7 +47,7 @@
 
 * GENERAL
 
-- Auto-detect applications
+- Auto-detect new applications
 - Exclusion list (enabled only if above option is ticked)
 
 

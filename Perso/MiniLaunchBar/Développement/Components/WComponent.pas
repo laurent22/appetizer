@@ -3,7 +3,7 @@ unit WComponent;
 interface
 
 uses
-  Controls, Classes, Messages, Dialogs, SysUtils;
+  Controls, Classes, Messages, Dialogs, SysUtils, Logger, Windows;
 
 
 type
@@ -24,11 +24,15 @@ type
     pTop: Integer;
     pLeft: Integer;
 
+    pID: Integer;
+    class var pUniqueID : Integer;
+    
   	procedure SetParentContainer(const value: TObject);
     procedure SetButtonState(const Value: TPNGButtonState);
 
   protected
   	fOnClick: TNotifyEvent;
+    fOnParentChange: TNotifyEvent;
 
     procedure Paint; override;
 
@@ -37,11 +41,12 @@ type
     // be type-casted to TWContainer before use.
     function GetLeft(): Integer;
     procedure SetLeft(const value: Integer);
-    function GetAbsoluteLeft(): Integer;
+    function GetScreenLoc(): TPoint;
+
 
     function GetTop(): Integer;
     procedure SetTop(const value: Integer);
-    function GetAbsoluteTop(): Integer;
+
     
     {Clicked}
     procedure Click; override;
@@ -62,6 +67,11 @@ type
     procedure CMEnabledChanged(var Message: TMessage);
       message CM_ENABLEDCHANGED;
 
+    //function GetParent(): TWinControl;
+    //procedure SetParent(const value: TWinControl);
+
+    //procedure ParentChange();
+
   public
     Tag: Integer;
     Pushed: Boolean;
@@ -70,6 +80,12 @@ type
     property ButtonState: TPNGButtonState read FButtonState write SetButtonState;
     property IsMouseOver: Boolean read fMouseOverControl;
 
+    procedure RemoveFromContainer();
+
+    function GetAbsoluteTop(): Integer;
+    function GetAbsoluteLeft(): Integer;
+
+    procedure ResetButtonState();
 
   published
     { Published declarations }
@@ -82,11 +98,17 @@ type
 
   	property AbsoluteLeft: Integer read GetAbsoluteLeft;
     property Left: Integer read GetLeft write SetLeft;
+    property ScreenLoc: TPoint read GetScreenLoc;
+
+    //property Parent: TWinControl read GetParent write SetParent;
+
+    property ID: Integer read pID;
 
     property ParentContainer: TObject read pParentContainer write SetParentContainer;
 
     property OnMouseDown;
     property OnClick: TNotifyEvent read fOnClick write fOnClick;
+    property OnParentChange: TNotifyEvent read fOnParentChange write fOnParentChange;
     property OnMouseUp;
     property OnMouseMove;
     property OnDblClick;
@@ -110,6 +132,8 @@ constructor TWComponent.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
 
+  pUniqueID := pUniqueID + 1;
+	pID := pUniqueID;
 end;
 
 
@@ -119,19 +143,62 @@ begin
 end;
 
 
-procedure TWComponent.Paint;
+procedure TWComponent.ResetButtonState();
+begin
+	self.buttonState := pbsNormal;
+  Pushed := false;
+  fMouseOverControl := false;
+  Repaint();
+end;
+
+
+//procedure TWComponent.ParentChange();
+//begin
+//	OnParentChange(self);
+//end;
+
+
+//function TWComponent.GetParent(): TWinControl;
+//begin
+//	inherited Parent;
+//end;
+//
+//
+//procedure TWComponent.SetParent(const value: TWinControl);
+//begin
+//	inherited Parent := value;
+//  Invalidate();
+//end;
+
+
+procedure TWComponent.Paint();
 begin
   UpdateLocation();
 end;
 
 
+// Should NOT be called directly. WContainer will call this setter
+// and do some additional tasks in AddChild()
 procedure TWComponent.SetParentContainer(const value: TObject);
 begin
 	pParentContainer := value;
-  Parent := TWinControl(Owner);
+
+  if pParentContainer = nil then begin
+  	Parent := nil;
+  end else begin
+  	Parent := TWinControl(Owner);
+  end;
+
 	UpdateLocation();
 end;
 
+
+procedure TWComponent.RemoveFromContainer();
+begin
+	if ParentContainer = nil then Exit;
+
+  (ParentContainer as TWContainer).RemoveChild(self);
+end;
 
 
 procedure TWComponent.UpdateLocation();
@@ -143,6 +210,33 @@ begin
 		inherited Top := pTop;
   	inherited Left := pLeft;
 	end;
+end;
+
+
+function TWComponent.GetScreenLoc(): TPoint;
+var c: TWContainer;
+begin
+	result.X := Left;
+  result.Y := Top;
+
+  c := ParentContainer as TWContainer;
+
+  while (c <> nil) do begin
+  	result.X := result.X + c.Left;
+    result.Y := result.Y + c.Top;
+
+    c := c.ParentContainer as TWContainer;
+  end;
+
+  if Owner <> nil then begin
+    result.X := result.X + (Owner as TControl).Left;
+    result.Y := result.Y + (Owner as TControl).Top;
+  end;
+
+
+//  if Parent <> nil then begin
+//  	result := Parent.ClientToScreen(result);
+//  end;
 end;
 
 

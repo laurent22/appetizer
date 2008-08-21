@@ -31,12 +31,15 @@ type
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
     procedure MouseEnter(); override;
     procedure MouseLeave(); override;
+    //procedure ParentChange();
   public
     { Public declarations }
+    property Icon: TIcon read pFileIcon;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
   published
     { Published declarations }
+
     property FilePath: String read pFilePath write SetFilePath;
     property OverlayImageUpPath: String read pOverlayImageUpPath write SetOverlayImageUpPath;
     property OverlayImageDownPath: String read pOverlayImageDownPath write SetOverlayImageDownPath;
@@ -64,6 +67,14 @@ begin
 end;
 
 
+
+//procedure TWFileIcon.ParentChange();
+//begin
+//	ButtonState := pbsNormal;
+//  Invalidate();
+//end;
+
+
 destructor TWFileIcon.Destroy();
 begin
   inherited Destroy;
@@ -77,6 +88,7 @@ var
 	rect: TRect;
   overlayToDraw: TPNGObject;
 begin
+	inherited Paint();
 
 	overlayToDraw := nil;
 
@@ -108,6 +120,7 @@ begin
 
   if pFileIcon <> nil then begin
 
+  	Canvas.Brush.Style := bsClear;
     Canvas.Draw(Round((Width - pFileIcon.Width) / 2), Round((Height - pFileIcon.Height) / 2), pFileIcon);
 
   end;

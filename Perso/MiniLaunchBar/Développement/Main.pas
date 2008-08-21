@@ -3,7 +3,7 @@ unit Main;
 interface
 
 uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
-	DebugWindow, LocalizationUtils, IniFiles, Forms, Windows;
+	LocalizationUtils, IniFiles, Forms, Windows, Logger;
 
 
 const
@@ -109,7 +109,6 @@ type
     skinPath: String;
     mainForm : TMainForm;
     folderItems: TFolderItems;
-    debugWindow: TDebugWindow;
 
   	constructor Create();
   	class function Instance: TMain;
@@ -127,10 +126,6 @@ type
     function GetFolderItemByID(const iFolderItemID: Integer): TFolderItem;
     function FolderItemCount(): Word;
 
-    procedure log(const s: String);
-    procedure elog(const s: String);
-    procedure wlog(const s: String);
-    procedure ilog(const s: String);
   end;
 
 implementation
@@ -169,31 +164,6 @@ begin
 	IsSeparator := false;
 	pUniqueID := pUniqueID + 1;
 	ID := pUniqueID; 
-end;
-
-
-
-procedure TMain.log(const s: String);
-begin
-	if debugWindow <> nil then debugWindow.log(s);
-end;
-
-
-procedure TMain.elog(const s: String);
-begin
-	log('[Error] ' + s);
-end;
-
-
-procedure TMain.wlog(const s: String);
-begin
-	log('[Warning] ' + s);
-end;
-
-
-procedure TMain.ilog(const s: String);
-begin
-	log('[Info] ' + s);
 end;
 
 
@@ -266,10 +236,7 @@ var iniSection: TIniSection;
 begin
 
 	if DEBUG then begin
-    debugWindow := TDebugWindow.Create(nil);
-    debugWindow.Left := 20;
-    debugWindow.Top := 20;
-    debugWindow.Visible := true;
+  	ShowLoggerWindow();
   end;
 
   ilog('Version: ' + GetFmtFileVersion(ParamStr(0)));

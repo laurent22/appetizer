@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
-  FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent, WImage;
+  FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent, WImage, MathUtils,
+  Logger;
 
 type
 
@@ -13,6 +14,16 @@ type
     dragging: Boolean;
     startMousePos: TPoint;
     startWindowPos: TPoint;
+  end;
+
+
+  TIconDragData = record
+  	Icon: TWFileIcon;
+  	Timer: TTimer;
+    MouseDownLoc: TPoint;
+    Started: Boolean;
+    StartIconLoc: TPoint;
+    IconForm: TForm;
   end;
 
 
@@ -54,6 +65,8 @@ type
       iconSize: Byte;
       iconGap: Byte;
 
+      iconDragData: TIconDragData;
+
       optionPanelOpen: Boolean;
       optionPanelAnimTimer: TTimer;
       optionPanelOpenWidth: Integer;
@@ -72,7 +85,8 @@ type
       procedure UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
       procedure CalculateOptionPanelOpenWidth();
       procedure icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-
+      procedure icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      procedure iconDragData_timer(Sender: TObject);
 
     public
       { Public declarations }
@@ -101,7 +115,7 @@ procedure TMainForm.barBackground_down(Sender: TObject; Button: TMouseButton; Sh
 var
 	mouse: TMouse;
 begin
-	TMain.Instance.ilog('Form dragging started');
+	ilog('Form dragging started');
 
 	mouse := TMouse.Create();
 	windowDragData.dragging := true;
@@ -114,7 +128,7 @@ end;
 
 procedure TMainForm.barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-	TMain.Instance.ilog('Dragging stopped');
+	ilog('Dragging stopped');
   windowDragData.dragging := false;
 end;
 
@@ -124,7 +138,7 @@ var
 	mouse: TMouse;
 begin
 	if windowDragData.dragging then begin
-  	TMain.Instance.ilog('Dragging...');
+  	ilog('Dragging...');
     mouse := TMouse.Create();
     Left := windowDragData.startWindowPos.X + (mouse.CursorPos.X - windowDragData.startMousePos.X);
     Top := windowDragData.startWindowPos.Y + (mouse.CursorPos.Y - windowDragData.startMousePos.Y);
@@ -138,7 +152,7 @@ var bmp: TBitmap;
    rect: TRect;
    panel: TPanel;
 begin
-	TMain.Instance.ilog('Updating form mask...');
+	ilog('Updating form mask...');
 
   Width := barBackground.Width + OptionPanelTotalWidth;
   Height := barBackground.Height;
@@ -180,12 +194,12 @@ var iconAreaWidth: Word;
   currentGap: Integer;
   iconMaxX: Integer;
 begin
-	TMain.Instance.ilog('Updating layout...');
+	ilog('Updating layout...');
 
   iconX := TMain.instance.style.barInnerPanel.paddingLeft;
   iconY := TMain.instance.style.barInnerPanel.paddingTop;
 
-  TMain.Instance.ilog('Updating icon positions...');
+  ilog('Updating icon positions...');
 
   currentGap := 0;
 
@@ -193,11 +207,6 @@ begin
   	if icons[i] = nil then break;
 
   	icons[i].Left := iconX;
-
-    if icons[i] is TWImage then begin
-    	//icons[i].Left := icons[i].Left + Round(iconSeparatorGap / 2);
-    end;
-
     icons[i].Top := iconY;
 
     if icons[i] is TWImage then
@@ -253,7 +262,7 @@ begin
 
   if d = nil then Exit;
 
-  TMain.Instance.ilog('Option button click: ' + d.Name);
+  ilog('Option button click: ' + d.Name);
 
   if d.Name = 'Close' then begin
   	Close();
@@ -290,7 +299,7 @@ begin
 	icon := Sender as TWFileIcon;
   folderItem := TMain.Instance.GetFolderItemByID(icon.Tag);
 
-  TMain.Instance.ilog('Icon click: ' + folderItem.FilePath);
+  ilog('Icon click: ' + folderItem.FilePath);
 
   r := ShellExecute(Handle, 'open', PChar(folderItem.FilePath), nil, nil, SW_SHOWNORMAL) ;
 	if Integer(r) <= 32 then begin
@@ -308,11 +317,12 @@ var i: Word;
   iconIndex : Word;
   separatorImage: TWImage;
 begin
-	TMain.Instance.ilog('Creating icons');
+	ilog('Creating icons');
 
-	for i := 1 to Length(icons) do begin
+	for i := 0 to Length(icons) - 1 do begin
   	if icons[i] = nil then break;
-    icons[i].Destroy();
+    icons[i].Free();
+    icons[i] := nil;
   end;
 
   iconIndex := 0;
@@ -333,6 +343,7 @@ begin
       icon.Cursor := crHandPoint;
       icon.OnClick := icon_click;
       icon.OnMouseDown := icon_mouseDown;
+      icon.OnMouseUp := icon_mouseUp;
 
       BarInnerPanel.AddChild(icon);
 
@@ -363,20 +374,133 @@ begin
 end;
 
 
-procedure TMainForm.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TMainForm.icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var mouseLoc: TPoint;
 	icon: TWComponent;
 begin
-	if Button <> mbRight then Exit;
+  if iconDragData.Timer <> nil then iconDragData.Timer.Enabled := false;
+  iconDragData.Started := false;
 
-  icon := Sender as TWComponent;
+  if iconDragData.IconForm <> nil then FreeAndNil(iconDragData.IconForm);
+end;
 
-  mouseLoc.X := x;
-  mouseLoc.Y := y;
 
-  mouseLoc := icon.ClientToScreen(mouseLoc);
+procedure TMainForm.iconDragData_timer(Sender: TObject);
+var screenMouseLoc: TPoint;
+	mouse: TMouse;
+  formMask: TBitmap;
+  rect: TRect;
+  region: THandle;
+  mouseOffset: TPoint;
+begin
+	mouse := TMouse.Create();
 
-  iconPopupMenu.Popup(mouseLoc.X, mouseLoc.Y);
+  if not iconDragData.Started then begin
+  	if PointDistance(mouse.CursorPos, iconDragData.MouseDownLoc) >= 5 then begin
+    	ilog('Starting to drag icon...');
+    	iconDragData.Started := true;
+
+      if iconDragData.IconForm = nil then begin
+      	iconDragData.IconForm := TForm.Create(self);
+        iconDragData.IconForm.Hide();
+        iconDragData.IconForm.Width := iconDragData.Icon.Width;
+        iconDragData.IconForm.Height := iconDragData.Icon.Height;  
+        iconDragData.IconForm.BorderStyle := bsNone;
+      end;
+
+      { TODO: Mettre toute la gestion du drag & drop dans sa propre unité }
+      { TODO: Gérer évènement onPaint de la form }
+      { TODO: Cacher la forme jusqu'au prochain évènement Paint }
+
+			iconDragData.IconForm.Left := iconDragData.StartIconLoc.X;
+      iconDragData.IconForm.Top := iconDragData.StartIconLoc.Y;
+
+      iconDragData.IconForm.Show();
+
+      //iconDragData.IconForm.Show();
+
+      iconDragData.Icon.Visible := false;
+      
+      formMask := TBitmap.Create();
+      try
+        formMask.Width := iconDragData.IconForm.Width;
+        formMask.Height := iconDragData.IconForm.Height;
+
+        rect.Top := 0;
+        rect.Left := 0;
+        rect.Bottom := formMask.Height;
+        rect.Right := formMask.Width;
+
+        formMask.Canvas.Brush := TBrush.Create();
+        formMask.Canvas.Brush.Color := RGB(255, 0, 255);
+        formMask.Canvas.FillRect(rect);
+
+        formMask.Canvas.Draw(0, 0, iconDragData.Icon.Icon);
+        
+        region := CreateRegion(formMask);
+        SetWindowRGN(iconDragData.IconForm.Handle, region, True);
+      finally
+        formMask.Free();
+      end;
+
+      iconDragData.IconForm.Canvas.Brush.Style := bsClear;
+      iconDragData.IconForm.Canvas.Draw(0, 0, iconDragData.Icon.Icon);
+
+      
+
+    end;
+  end else begin
+
+  	mouseOffset.X := mouse.CursorPos.X - iconDragData.MouseDownLoc.X;
+    mouseOffset.Y := mouse.CursorPos.Y - iconDragData.MouseDownLoc.Y;
+
+   	iconDragData.IconForm.Left := iconDragData.StartIconLoc.X + mouseOffset.X;
+    iconDragData.IconForm.Top := iconDragData.StartIconLoc.Y + mouseOffset.Y; 
+
+  end;
+	
+
+end;
+
+
+procedure TMainForm.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var screenMouseLoc: TPoint;
+	icon: TWComponent;
+  mouse: TMouse;
+begin
+	icon := Sender as TWComponent;
+
+  mouse := TMouse.Create();
+
+  screenMouseLoc.X := mouse.CursorPos.X;
+  screenMouseLoc.Y := mouse.CursorPos.Y;
+
+	if Button = mbRight then begin
+    ilog('Showing icon popup menu...');
+
+    iconPopupMenu.Popup(screenMouseLoc.X, screenMouseLoc.Y);
+  end else begin
+  	ilog('Initializing drag data...');
+
+  	if iconDragData.Timer = nil then begin
+      iconDragData.Timer := TTimer.Create(self);
+      iconDragData.Timer.Interval := 50;
+      iconDragData.Timer.OnTimer := iconDragData_timer;
+    end;
+
+    iconDragData.MouseDownLoc := screenMouseLoc;
+    iconDragData.Icon := icon as TWFileIcon;
+    iconDragData.Started := false;
+    iconDragData.Timer.Enabled := true;
+
+    iconDragData.StartIconLoc := icon.ScreenLoc;
+
+//    iconDragData.StartIconLoc.X := icon.GetAbsoluteLeft();
+//    iconDragData.StartIconLoc.Y := icon.GetAbsoluteTop();
+//    iconDragData.StartIconLoc := icon.ClientToScreen(iconDragData.StartIconLoc);
+//
+//    iconDragData.StartIconLoc.X := icon.ScreenLeft;
+  end;
 end;
 
 
@@ -486,7 +610,7 @@ end;
 
 procedure TMainForm.UpdateOptionPanel();
 begin
-	TMain.Instance.ilog('Updating option panel');
+	ilog('Updating option panel');
 
 	if optionPanel.Visible then begin
 
@@ -511,7 +635,7 @@ begin
 	percent := (GetTickCount() - optionPanelAnimationStartTime) / optionPanelAnimationDuration;
 
   if percent >= 1.0 then begin
-  	TMain.Instance.ilog('Panel animation complete');
+  	ilog('Panel animation complete');
 
   	percent := 1.0;
     optionPanelAnimTimer.Enabled := false;
@@ -541,7 +665,7 @@ begin
   if (not iOpen) and (not optionPanelOpen) then Exit;
 
   if optionPanelAnimTimer = nil then begin
-  	TMain.Instance.ilog('Creating option panel timer');
+  	ilog('Creating option panel timer');
 
   	optionPanelAnimTimer := TTimer.Create(self);
     optionPanelAnimTimer.Interval := 1;
@@ -551,7 +675,7 @@ begin
   	if optionPanelAnimTimer.Enabled then Exit;
   end;
 
-  TMain.Instance.ilog('Opening / Closing timer');
+  ilog('Opening / Closing timer');
 
   optionPanelAnimTimer.Enabled := true;
   optionPanelAnimationStartTime := GetTickCount();
@@ -605,7 +729,7 @@ begin
 
   TMain.Instance.MainForm := self;
 
-  TMain.Instance.ilog('Initializing form settings');
+  ilog('Initializing form settings');
 
 	DoubleBuffered := true;
   windowDragData.dragging := false;
@@ -667,7 +791,7 @@ begin
   // Create form controls
   // ---------------------------------------------------------------------------
 
-  TMain.Instance.ilog('Creating option panel');
+  ilog('Creating option panel');
 
   { OPTION PANEL }
 
@@ -715,7 +839,7 @@ begin
 
   { BAR BACKGROUND PANEL }
 
-  TMain.Instance.ilog('Creating background panel');
+  ilog('Creating background panel');
 
 	barBackground := TWNineSlicesPanel.Create(self);
   barBackground.ImagePathPrefix := TMain.instance.skinPath + '\BarBackground';
@@ -728,7 +852,7 @@ begin
 
   { BAR INNER PANEL }
 
-  TMain.Instance.ilog('Creating inner panel');
+  ilog('Creating inner panel');
 
   barInnerPanel := TWNineSlicesPanel.Create(self);
   barInnerPanel.ImagePathPrefix := TMain.instance.skinPath + '\BarInnerPanel';
@@ -741,7 +865,7 @@ begin
 
   { ARROW BUTTON }
 
-  TMain.Instance.ilog('Creating arrow button');
+  ilog('Creating arrow button');
 
   arrowButton := TWImageButton.Create(self);
   arrowButton.ImagePathPrefix := TMain.instance.skinPath + '\ArrowButton';
