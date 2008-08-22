@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
   FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent, WImage, MathUtils,
-  Logger;
+  Logger, IconPanel;
 
 type
 
@@ -17,14 +17,7 @@ type
   end;
 
 
-  TIconDragData = record
-  	Icon: TWFileIcon;
-  	Timer: TTimer;
-    MouseDownLoc: TPoint;
-    Started: Boolean;
-    StartIconLoc: TPoint;
-    IconForm: TForm;
-  end;
+
 
 
   TOptionButtonDatum = class public
@@ -41,14 +34,11 @@ type
     cddd1: TMenuItem;
     N1: TMenuItem;
     Properties1: TMenuItem;
-  	procedure icon_click(sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure barBackground_move(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-    procedure CreateIconsFromFolderItems();
     procedure UpdateLayout();
-    function IconCount():Word;
     procedure arrowButton_click(sender: TObject);
     procedure OpenOptionPanel();
     procedure OpenCloseOptionPanel(const iOpen: Boolean);
@@ -61,11 +51,6 @@ type
 
     private
       { Private declarations }
-      icons: Array[0..255] of TWComponent;
-      iconSize: Byte;
-      iconGap: Byte;
-
-      iconDragData: TIconDragData;
 
       optionPanelOpen: Boolean;
       optionPanelAnimTimer: TTimer;
@@ -84,9 +69,6 @@ type
       function GetButtonDataByID(ID: Integer): TOptionButtonDatum;
       procedure UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
       procedure CalculateOptionPanelOpenWidth();
-      procedure icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-      procedure icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-      procedure iconDragData_timer(Sender: TObject);
 
     public
       { Public declarations }
@@ -96,7 +78,7 @@ type
 var
   theMainForm: TMainForm;
   barBackground: TWNineSlicesPanel;
-  barInnerPanel: TWNineSlicesPanel;
+  barInnerPanel: TIconPanel;
   optionPanel: TWNineSlicesPanel;
   arrowButton: TWImageButton;
   button: TWImageButton;
@@ -150,7 +132,6 @@ procedure TMainForm.UpdateFormMask();
 var bmp: TBitmap;
 	 region: THandle;
    rect: TRect;
-   panel: TPanel;
 begin
 	ilog('Updating form mask...');
 
@@ -188,41 +169,10 @@ end;
 
 
 procedure TMainForm.UpdateLayout();
-var iconAreaWidth: Word;
-  i: Word;
-  iconX, iconY: Word;
-  currentGap: Integer;
-  iconMaxX: Integer;
 begin
 	ilog('Updating layout...');
 
-  iconX := TMain.instance.style.barInnerPanel.paddingLeft;
-  iconY := TMain.instance.style.barInnerPanel.paddingTop;
-
-  ilog('Updating icon positions...');
-
-  currentGap := 0;
-
-  for i := 0 to Length(icons)-1 do begin
-  	if icons[i] = nil then break;
-
-  	icons[i].Left := iconX;
-    icons[i].Top := iconY;
-
-    if icons[i] is TWImage then
-    	currentGap := 0
-    else
-    	currentGap := iconGap;
-
-    iconX := iconX + icons[i].Width + currentGap;
-
-    iconMaxX := icons[i].Left + icons[i].Width;
-  end;
-
-	iconAreaWidth := iconMaxX - TMain.instance.style.barInnerPanel.paddingLeft;
-
-  barInnerPanel.Width := iconAreaWidth + TMain.instance.style.barInnerPanel.paddingH;
-  barInnerPanel.Height := iconSize + TMain.instance.style.barInnerPanel.paddingV;
+  barInnerPanel.UpdateLayout();
 
   barBackground.Width := barInnerPanel.Width + TMain.instance.style.barMainPanel.paddingH;
   barBackground.Height := barInnerPanel.Height + TMain.instance.style.barMainPanel.paddingV;
@@ -277,230 +227,6 @@ begin
 
   end; end; end; end;
   
-end;
-
-
-function TMainForm.IconCount():Word;
-var i:Word;
-begin
-	result := 0;
-  for i := 0 to Length(icons) - 1 do begin
-  	if icons[i] = nil then break;
-    result := result + 1;
-  end;
-end;
-
-
-procedure TMainForm.icon_click(sender: TObject);
-var icon: TWFileIcon;
-	folderItem: TFolderItem;
-  r: HINST;
-begin
-	icon := Sender as TWFileIcon;
-  folderItem := TMain.Instance.GetFolderItemByID(icon.Tag);
-
-  ilog('Icon click: ' + folderItem.FilePath);
-
-  r := ShellExecute(Handle, 'open', PChar(folderItem.FilePath), nil, nil, SW_SHOWNORMAL) ;
-	if Integer(r) <= 32 then begin
-  	TMain.Instance.ErrorMessage(
-    	TMain.Instance.Loc.GetString('MainForm.LaunchFileError', IntToStr(r))
-    );
-  end;
-end;
-
-
-procedure TMainForm.CreateIconsFromFolderItems();
-var i: Word;
-  folderItem: TFolderItem;
-  icon: TWFileIcon;
-  iconIndex : Word;
-  separatorImage: TWImage;
-begin
-	ilog('Creating icons');
-
-	for i := 0 to Length(icons) - 1 do begin
-  	if icons[i] = nil then break;
-    icons[i].Free();
-    icons[i] := nil;
-  end;
-
-  iconIndex := 0;
-
-  for i := 0 to TMain.instance.FolderItemCount - 1 do begin
-  	folderItem := TMain.instance.getFolderItemAt(i);
-
-    if not folderItem.IsSeparator then begin
-    
-      icon := TWFileIcon.Create(self);
-      icon.Tag := folderItem.ID;
-      icon.FilePath := folderItem.filePath;
-      icon.OverlayImageUpPath := TMain.instance.skinPath + '\IconOverlayUp.png';
-      icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
-      icon.Width := iconSize;
-      icon.Height := iconSize;
-      icon.Visible := true;
-      icon.Cursor := crHandPoint;
-      icon.OnClick := icon_click;
-      icon.OnMouseDown := icon_mouseDown;
-      icon.OnMouseUp := icon_mouseUp;
-
-      BarInnerPanel.AddChild(icon);
-
-      icons[iconIndex] := icon;
-      iconIndex := iconIndex + 1;
-
-    end else begin
-
-      separatorImage := TWImage.Create(self);
-      separatorImage.FilePath := TMain.instance.skinPath + '\InnerPanelSeparator.png';
-      separatorImage.Visible := true;
-      separatorImage.FitToContent();
-      separatorImage.Height := iconSize;
-      separatorImage.StretchToFit := true;
-      separatorImage.MaintainAspectRatio := false;
-      separatorImage.OnMouseDown := icon_mouseDown;
-
-      BarInnerPanel.AddChild(separatorImage);
-
-      icons[iconIndex] := separatorImage;
-      iconIndex := iconIndex + 1;
-
-    end;
-
-
-
-  end;
-end;
-
-
-procedure TMainForm.icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-var mouseLoc: TPoint;
-	icon: TWComponent;
-begin
-  if iconDragData.Timer <> nil then iconDragData.Timer.Enabled := false;
-  iconDragData.Started := false;
-
-  if iconDragData.IconForm <> nil then FreeAndNil(iconDragData.IconForm);
-end;
-
-
-procedure TMainForm.iconDragData_timer(Sender: TObject);
-var screenMouseLoc: TPoint;
-	mouse: TMouse;
-  formMask: TBitmap;
-  rect: TRect;
-  region: THandle;
-  mouseOffset: TPoint;
-begin
-	mouse := TMouse.Create();
-
-  if not iconDragData.Started then begin
-  	if PointDistance(mouse.CursorPos, iconDragData.MouseDownLoc) >= 5 then begin
-    	ilog('Starting to drag icon...');
-    	iconDragData.Started := true;
-
-      if iconDragData.IconForm = nil then begin
-      	iconDragData.IconForm := TForm.Create(self);
-        iconDragData.IconForm.Hide();
-        iconDragData.IconForm.Width := iconDragData.Icon.Width;
-        iconDragData.IconForm.Height := iconDragData.Icon.Height;  
-        iconDragData.IconForm.BorderStyle := bsNone;
-      end;
-
-      { TODO: Mettre toute la gestion du drag & drop dans sa propre unité }
-      { TODO: Gérer évènement onPaint de la form }
-      { TODO: Cacher la forme jusqu'au prochain évènement Paint }
-
-			iconDragData.IconForm.Left := iconDragData.StartIconLoc.X;
-      iconDragData.IconForm.Top := iconDragData.StartIconLoc.Y;
-
-      iconDragData.IconForm.Show();
-
-      //iconDragData.IconForm.Show();
-
-      iconDragData.Icon.Visible := false;
-      
-      formMask := TBitmap.Create();
-      try
-        formMask.Width := iconDragData.IconForm.Width;
-        formMask.Height := iconDragData.IconForm.Height;
-
-        rect.Top := 0;
-        rect.Left := 0;
-        rect.Bottom := formMask.Height;
-        rect.Right := formMask.Width;
-
-        formMask.Canvas.Brush := TBrush.Create();
-        formMask.Canvas.Brush.Color := RGB(255, 0, 255);
-        formMask.Canvas.FillRect(rect);
-
-        formMask.Canvas.Draw(0, 0, iconDragData.Icon.Icon);
-        
-        region := CreateRegion(formMask);
-        SetWindowRGN(iconDragData.IconForm.Handle, region, True);
-      finally
-        formMask.Free();
-      end;
-
-      iconDragData.IconForm.Canvas.Brush.Style := bsClear;
-      iconDragData.IconForm.Canvas.Draw(0, 0, iconDragData.Icon.Icon);
-
-      
-
-    end;
-  end else begin
-
-  	mouseOffset.X := mouse.CursorPos.X - iconDragData.MouseDownLoc.X;
-    mouseOffset.Y := mouse.CursorPos.Y - iconDragData.MouseDownLoc.Y;
-
-   	iconDragData.IconForm.Left := iconDragData.StartIconLoc.X + mouseOffset.X;
-    iconDragData.IconForm.Top := iconDragData.StartIconLoc.Y + mouseOffset.Y; 
-
-  end;
-	
-
-end;
-
-
-procedure TMainForm.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-var screenMouseLoc: TPoint;
-	icon: TWComponent;
-  mouse: TMouse;
-begin
-	icon := Sender as TWComponent;
-
-  mouse := TMouse.Create();
-
-  screenMouseLoc.X := mouse.CursorPos.X;
-  screenMouseLoc.Y := mouse.CursorPos.Y;
-
-	if Button = mbRight then begin
-    ilog('Showing icon popup menu...');
-
-    iconPopupMenu.Popup(screenMouseLoc.X, screenMouseLoc.Y);
-  end else begin
-  	ilog('Initializing drag data...');
-
-  	if iconDragData.Timer = nil then begin
-      iconDragData.Timer := TTimer.Create(self);
-      iconDragData.Timer.Interval := 50;
-      iconDragData.Timer.OnTimer := iconDragData_timer;
-    end;
-
-    iconDragData.MouseDownLoc := screenMouseLoc;
-    iconDragData.Icon := icon as TWFileIcon;
-    iconDragData.Started := false;
-    iconDragData.Timer.Enabled := true;
-
-    iconDragData.StartIconLoc := icon.ScreenLoc;
-
-//    iconDragData.StartIconLoc.X := icon.GetAbsoluteLeft();
-//    iconDragData.StartIconLoc.Y := icon.GetAbsoluteTop();
-//    iconDragData.StartIconLoc := icon.ClientToScreen(iconDragData.StartIconLoc);
-//
-//    iconDragData.StartIconLoc.X := icon.ScreenLeft;
-  end;
 end;
 
 
@@ -716,16 +442,10 @@ procedure TMainForm.FormCreate(Sender: TObject);
 var optionButton: TWImageButton;
 	i: Word;
   d: TOptionButtonDatum;
-  img: TWImage;
 begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
   // ---------------------------------------------------------------------------
-
-//    testwin := TForm2.Create(nil);
-//    testwin.Left := 20;
-//    testwin.Top := 20;
-//    testwin.Visible := true;
 
   TMain.Instance.MainForm := self;
 
@@ -733,8 +453,6 @@ begin
 
 	DoubleBuffered := true;
   windowDragData.dragging := false;
-  iconSize := 40;
-  iconGap := 0;
   
   optionPanelOpen := false;    
   optionPanelCloseWidth := 0;
@@ -854,8 +572,7 @@ begin
 
   ilog('Creating inner panel');
 
-  barInnerPanel := TWNineSlicesPanel.Create(self);
-  barInnerPanel.ImagePathPrefix := TMain.instance.skinPath + '\BarInnerPanel';
+  barInnerPanel := TIconPanel.Create(self);
   barInnerPanel.Visible := true;
   barBackground.AddChild(barInnerPanel);
 
@@ -880,30 +597,9 @@ begin
   // Draw and update layout
   // ---------------------------------------------------------------------------
 
-
-//  img := TWimage.Create(self);
-//  img.Visible := true;
-//  img.StretchToFit := false;
-//  img.MaintainAspectRatio := true;
-//  img.Width := 100;
-//  img.Height := 100;
-//  img.FilePath := '_Images\Preview.png';
-//  barBackground.AddChild(img);
-
-
-  //barBackground.AddChild(img);
-  //img.Parent := self;
-  //img.Visible := true;
-  //img.FilePath := '_Images\Preview.png';
-
-
   TMain.Instance.RefreshFolderItems();
-  CreateIconsFromFolderItems();
+  barInnerPanel.LoadFolderItems();
 	UpdateLayout();
-
-
-
-
 end;
 
 

@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, Controls, ExtCtrls, PNGImage, Imaging, Graphics, StdCtrls, Types,
-  WComponent, Windows, Forms, Messages, ArrayUtils;
+  WComponent, Windows, Forms, Messages;
   
 type
   TWContainer = class(TWComponent)

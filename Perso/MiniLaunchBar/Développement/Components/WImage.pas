@@ -25,6 +25,7 @@ type
     
     public 
 
+    	property ImageObject: TPNGObject read pPNGObject;
     	property StretchToFit:Boolean read pStretchToFit write SetStretchToFit;
       property MaintainAspectRatio:Boolean read pMaintainAspectRatio write SetMaintainAspectRatio;
       property FilePath:String read pFilePath write SetFilePath;

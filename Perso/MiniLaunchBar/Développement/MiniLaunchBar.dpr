@@ -20,7 +20,8 @@ uses
   ControlTest in 'ControlTest.pas' {Form2},
   WContainer in 'Components\WContainer.pas',
   WButtonBase in 'Components\WButtonBase.pas',
-  WImage in 'Components\WImage.pas';
+  WImage in 'Components\WImage.pas',
+  IconPanel in 'IconPanel.pas';
 
 {$R *.res}
 

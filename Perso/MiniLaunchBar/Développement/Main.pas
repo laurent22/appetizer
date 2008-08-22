@@ -232,7 +232,6 @@ end;
 
 constructor TMain.Create();
 var iniSection: TIniSection;
-  iniProperty: TIniProperty;
 begin
 
 	if DEBUG then begin
@@ -405,7 +404,6 @@ begin
       folderItem := TFolderItem.Create();
       folderItem.filePath := documentsPath + '\' + pSpecialFolderNames.Videos;
       folderItems[folderItemIndex] := folderItem;
-      folderItemIndex := folderItemIndex + 1;
     end;
 
   end;
