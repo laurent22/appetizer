@@ -15,16 +15,25 @@ type
       procedure MouseEnter(); override;
       procedure MouseLeave(); override;
       procedure MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override; 
-      procedure MouseMove(Shift: TShiftState; X, Y: Integer);
+      procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
+      
   end;
 
 
 implementation
 
 
+uses Logger;
+
+
 procedure TWButtonBase.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var mouse: TMouse;
 begin
   inherited;
+
+  //self.MouseCapture := true;
+
+  //ilog('DOWN');
   Invalidate();
 end;
 
@@ -32,13 +41,15 @@ end;
 procedure TWButtonBase.Click();
 begin
 	inherited;
+  //ilog('CLICK');
   Invalidate();
 end;
 
 
 procedure TWButtonBase.MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  inherited
+  inherited;
+	//ilog('UP');
   Invalidate();
 end;
 
@@ -53,6 +64,7 @@ end;
 procedure TWButtonBase.MouseEnter();
 begin
 	inherited;
+  //ilog('ENTER');
   Invalidate();
 end;
 
@@ -60,6 +72,7 @@ end;
 procedure TWButtonBase.MouseLeave();
 begin
 	inherited;
+  //ilog('LEAVE');
   Invalidate();
 end;
 

@@ -23,6 +23,7 @@ type
     procedure Paint; override;
   public
     { Public declarations }
+    procedure FitToContent();
   published
     { Published declarations }
     property ImagePathPrefix: String read pImagePathPrefix write SetImagePathPrefix;
@@ -41,6 +42,18 @@ begin
 end;
 
 
+procedure TWImageButton.FitToContent();
+begin
+	if pStateImageUp = nil then begin
+  	Width := 0;
+    Height := 0;
+  end else begin
+  	Width := pStateImageUp.Width;
+    Height := pStateImageUp.Height;
+  end;
+end;
+
+
 procedure TWImageButton.SetImagePathPrefix(const value: String);
 begin
   if pStateImageUp <> nil then pStateImageUp.Free;
@@ -48,17 +61,31 @@ begin
   if pStateImageOver <> nil then pStateImageOver.Free;
 
   pStateImageUp := TPNGObject.create();
-  pStateImageUp.loadFromFile(value + 'Up.png');
+  try
+  	pStateImageUp.loadFromFile(value + 'Up.png');
+  except
+  	on E: Exception do begin
+  		FreeAndNil(pStateImageUp);
+  	end;
+  end;
 
   pStateImageOver := TPNGObject.create();
-  pStateImageOver.loadFromFile(value + 'Over.png');
+  try
+  	pStateImageOver.loadFromFile(value + 'Over.png');
+  except
+  	on E: Exception do begin
+  		pStateImageOver := pStateImageUp;
+  	end;
+  end;
 
   pStateImageDown := TPNGObject.create();
-  pStateImageDown.loadFromFile(value + 'Down.png');
-
-//  ImageNormal := pStateImageUp;
-//  ImageOver := pStateImageOver;
-//  ImageDown := pStateImageDown;
+  try
+  	pStateImageDown.loadFromFile(value + 'Down.png');
+  except
+  	on E: Exception do begin
+  		pStateImageDown := pStateImageUp;
+  	end;
+  end;
 
   Width := pStateImageUp.Width;
   Height := pStateImageUp.Height;
@@ -98,7 +125,7 @@ begin
 
   end;
 
-  Canvas.Draw(0, 0, imageToDraw);
+  if imageToDraw <> nil then Canvas.Draw(0, 0, imageToDraw);
       
   if pIconImage <> nil then begin
   	Canvas.Draw(Round((Width - pIconImage.Width) / 2), Round((Height - pIconImage.Height) / 2), pIconImage);

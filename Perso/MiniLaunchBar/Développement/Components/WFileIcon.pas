@@ -37,6 +37,7 @@ type
     property Icon: TIcon read pFileIcon;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure DrawToCanvas(const targetCanvas: tCanvas; const x, y: Integer);
   published
     { Published declarations }
 
@@ -83,13 +84,11 @@ begin
 end;
 
 
-procedure TWFileIcon.Paint();
+procedure TWFileIcon.DrawToCanvas(const targetCanvas: tCanvas; const x, y: Integer);
 var
 	rect: TRect;
   overlayToDraw: TPNGObject;
 begin
-	inherited Paint();
-
 	overlayToDraw := nil;
 
   if ButtonState = pbsDown then begin
@@ -113,17 +112,20 @@ begin
   end;
 
   if overlayToDraw <> nil then begin
-  	Canvas.Draw(0, 0, overlayToDraw);
+  	targetCanvas.Draw(x, y, overlayToDraw);
   end;
-
-  
 
   if pFileIcon <> nil then begin
-
-  	Canvas.Brush.Style := bsClear;
-    Canvas.Draw(Round((Width - pFileIcon.Width) / 2), Round((Height - pFileIcon.Height) / 2), pFileIcon);
-
+  	targetCanvas.Brush.Style := bsClear;
+    targetCanvas.Draw(x + Round((Width - pFileIcon.Width) / 2), y + Round((Height - pFileIcon.Height) / 2), pFileIcon);
   end;
+end;
+
+
+procedure TWFileIcon.Paint();
+begin
+	inherited Paint();
+  DrawToCanvas(Canvas, 0, 0);
 end;
 
 
@@ -143,16 +145,10 @@ procedure TWFileIcon.SetFilePath(const value: String);
 begin
 	pFilePath := value;
 
-  if pFileIcon <> nil then pFileIcon.Free();
+  if pFileIcon <> nil then FreeAndNil(pFileIcon);
 
-  pFileIcon := GetExecutableLargeIcon(pFilePath);
-
-  if pFileIcon = nil then pFileIcon := GetExecutableLargeIcon(pFilePath);
-
-  if pFileIcon = nil then begin
-  	pFileIcon := GetFolderIcon(pFilePath, true);
-  end;
-
+  pFileIcon := GetFolderItemIcon(pFilePath, false);
+  
   Invalidate();
 end;
 

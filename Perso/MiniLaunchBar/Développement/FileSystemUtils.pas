@@ -2,32 +2,14 @@ unit FileSystemUtils;
 
 interface
 
-uses ShellAPI, Graphics, Windows, SysUtils, Dialogs, Classes, IniFiles;
+uses ShellAPI, Graphics, Windows, SysUtils, Dialogs, Classes, IniFiles, Registry;
 
 type
 
 	TDirectoryContents = Array of String[255];
 
-//  TFileInfo = record
-//    Icon : hIcon;
-//    Image : Integer;
-//    DisplayName : String;
-//    TypeName : String;
-//    Size : Integer;
-//    SizeDescription : String;
-//    DateTime : TDateTime;
-//    AttrArchive : Boolean;
-//    AttrReadOnly : Boolean;
-//    AttrSystem : Boolean;
-//    AttrHidden : Boolean;
-//    AttrVolume : Boolean;
-//    AttrDirectory : Boolean;
-//  end;
-//
-//
-//function scGetSizeDescription(const IntSize : Int64) : String;
-//procedure scGetFileInfo(StrPath : String; var Info : TFileInfo);
 
+function GetSystemDir(): TFileName;
 function GetExecutableSmallIcon(const filePath: String):TIcon;
 function GetExecutableLargeIcon(const filePath: String):TIcon;
 function GetApplicationDirectory():String;
@@ -36,10 +18,16 @@ function GetDirectoryContents(const filePath: String; const depth: Integer; cons
 function GetFmtFileVersion(const FileName: String = '';
 const Fmt: String = '%d.%d.%d.%d'): String;
 
+function GetDocumentIcon(const filePath: String; const returnSmallIcon: Boolean): TIcon;
+function GetFolderItemIcon(const folderItemPath: String; const returnSmallIcon: Boolean): TIcon;
+
 function GetFolderIcon (const aFilename : String; b32BitIcon : Boolean) : TIcon;
 
 
 implementation
+
+
+
 
 
 function GetFolderIcon (const aFileName : String; b32BitIcon : Boolean) : TIcon;
@@ -57,10 +45,10 @@ begin
 
   if FileExists(filename + '\Desktop.ini') then begin
   	iniFile := TIniFile.Create(filename + '\Desktop.ini');
-    iconFilePath := iniFile.ReadString('.ShellClassInfo', 'IconFile', 'NONPAS!');
+    iconFilePath := iniFile.ReadString('.ShellClassInfo', 'IconFile', 'NON!');
     FreeAndNil(iniFile);
 
-    if iconFilePath <> 'NONPAS!' then begin
+    if iconFilePath <> 'NON!' then begin
       savedDir := GetCurrentDir();
       SetCurrentDir(filename);
       try
@@ -86,91 +74,9 @@ begin
               SHGFI_ICON OR SHGFI_SMALLICON OR SHGFI_USEFILEATTRIBUTES);
  
   Result.Handle := FileInfo.hIcon;
+
+	FreeAndNil(FileInfo);
 end;
-
-
-//function fnGetFileIcon (const sFileName : String; b32BitIcon : Boolean) : TIcon;
-//  var
-//    FileInfo: TSHFileInfo;
-//  begin
-//    Result := TIcon.Create;
-// 
-//    if b32BitIcon then
-//      SHGetFileInfo( PChar(sFileName), $080, FileInfo,
-//                SizeOf(TSHFileInfo),
-//                SHGFI_ICON OR SHGFI_LARGEICON OR   SHGFI_USEFILEATTRIBUTES)
-//    else
-//      SHGetFileInfo( PChar(sFileName), $080, FileInfo,
-//                SizeOf(TSHFileInfo),
-//                SHGFI_ICON OR SHGFI_SMALLICON OR SHGFI_USEFILEATTRIBUTES);
-// 
-//    Result.Handle := FileInfo.hIcon;
-//end;
-
-//// ----------------------------------------------------------------
-//// Return string with formatted file size (bytes, Kb, Mb or Gb)
-//// ----------------------------------------------------------------
-//function scGetSizeDescription(const IntSize : Int64) : String;
-//begin
-//  if IntSize < 1024 then
-//    Result := IntToStr(IntSize)+' bytes'
-//  else
-//  begin
-//    if IntSize < (1024 * 1024) then
-//      Result := FormatFloat('####0.##',IntSize / 1024)+' Kb'
-//    else
-//      if IntSize < (1024 * 1024 * 1024) then
-//        Result := FormatFloat('####0.##',IntSize / 1024 / 1024)+' Mb'
-//      else
-//        Result := FormatFloat('####0.##',IntSize / 1024 / 1024 / 1024)+' Gb';
-//  end;
-//end;
-//
-//// ----------------------------------------------------------------
-//// Return record with all information about given file
-//// How to use icon : ImageFile.Picture.Icon.Handle:=Info.Icon;
-//// ----------------------------------------------------------------
-//procedure scGetFileInfo(StrPath : String; var Info : TFileInfo);
-//var
-//  SHFileInfo : TSHFileInfo;
-//  SearchRec : TSearchRec;
-//begin
-//  if Trim(StrPath) = '' then
-//    Exit;
-//
-//  ShGetFileInfo(PChar(StrPath), 0, SHFileInfo, SizeOf (TSHFileInfo),
-//    SHGFI_TYPENAME or SHGFI_DISPLAYNAME or SHGFI_SYSICONINDEX or SHGFI_ICON);
-//
-//  with Info do
-//  begin
-//    Icon  := SHFileInfo.hIcon;
-//    Image := SHFileInfo.iIcon;
-//    DisplayName := SHFileInfo.szDisplayName;
-//    TypeName := SHFileInfo.szTypeName;
-//  end;
-//
-//  FindFirst(StrPath, 0, SearchRec);
-//  with Info do
-//  begin
-////    try
-////      DateTime := FileDateToDateTime(SearchRec.Time);
-////    except
-////      DateTime := Now();
-////    end;
-//		DateTime := Now();
-//
-//    AttrReadOnly := ((SearchRec.Attr and faReadOnly) > 0);
-//    AttrSystem := ((SearchRec.Attr and faSysFile) > 0);
-//    AttrHidden := ((SearchRec.Attr and faHidden) > 0);
-//    AttrArchive := ((SearchRec.Attr and faArchive) > 0);
-//    AttrVolume := ((SearchRec.Attr and faVolumeID) > 0);
-//    AttrDirectory := ((SearchRec.Attr and faDirectory) > 0);
-//
-//    Size := SearchRec.Size;
-//
-//    SizeDescription := scGetSizeDescription(Size);
-//  end;
-//end;
 
 
 
@@ -234,14 +140,14 @@ function GetExecutableSmallIcon(const filePath: String):TIcon;
 var
   largeIcon : Hicon;
   smallIcon : Hicon;
+  FileInfo: TSHFileInfo;
 begin
-	ExtractIconEx(PChar(filePath), 0, largeIcon, smallIcon, 1);
-
-  if smallIcon <= 1 then begin
-  	result := nil;
-  end else begin
-  	result := TIcon.Create();
-    result.Handle := smallIcon;
+   ExtractIconEx(PChar(filePath), 0, LargeIcon, SmallIcon, 1);
+   if SmallIcon <= 1 then begin
+     Result := nil;
+   end else begin
+   		result := TIcon.Create();
+     result.Handle := SmallIcon;
   end;
 end;
 
@@ -264,10 +170,154 @@ end;
 
 
 
+function GetDocumentIcon(const filePath: String; const returnSmallIcon: Boolean): TIcon;
+var buffer: array[0..2048] of char;
+	hIcon: Windows.HICON;
+  shfi: TShFileInfo;
+begin
+  if returnSmallIcon then begin
+    try
+      FillChar(shfi, SizeOf(TShFileInfo), 0);
+      ShGetFileInfo(PChar(filePath), 0, shfi, SizeOf(TShFileInfo),
+                      SHGFI_ICON or SHGFI_SMALLICON);
+      hIcon := shfi.hIcon;
+    except
+      hIcon := 0;
+    end;
+  end else begin
+    try
+      FillChar(shfi, SizeOf(TShFileInfo), 0);
+      ShGetFileInfo(PChar(filePath), 0, shfi,
+                              SizeOf(TShFileInfo), SHGFI_ICON);
+      hIcon := shfi.hIcon;
+    except
+      hIcon := 0;
+    end;
+  end;
+
+  if hIcon > 1 then begin
+  	result := TIcon.Create();
+    result.Handle := hIcon;
+  end else begin
+  	result := nil;
+  end;
+
+end;
+
+
+{*------------------------------------------------------------------------------
+  This function returns the icon for the path passed as a parameter. It uses
+  the most appropriate method depending on the folder item type, whether
+  it's a directory, executable or document.
+
+  @param filePath Folder item path
+  @param dmDebug Where Debug messages will be written
+  @see   WriteMessage
+-------------------------------------------------------------------------------}
+function GetFolderItemIcon(const folderItemPath: String; const returnSmallIcon: Boolean): TIcon;
+var fileExt: String;
+  hLargeIcon : Hicon;
+  hSmallIcon : Hicon;
+  shell32Path: TFileName;
+  iconIndex: uint;
+begin
+
+  result := nil;
+
+  // ---------------------------------------------------------------------------
+  // If the folder item is a directory
+  // ---------------------------------------------------------------------------
+
+  if IsDirectory(folderItemPath) then begin
+  	result := GetFolderIcon(folderItemPath, not returnSmallIcon);
+  	Exit;
+  end;
+
+  // ---------------------------------------------------------------------------
+  // If it's an executable or icon
+  // ---------------------------------------------------------------------------
+
+  fileExt := UpperCase(ExtractFileExt(folderItemPath));
+
+  if (fileExt = '.EXE') or (fileExt = '.ICO') then begin
+  	if returnSmallIcon then begin
+    	result := GetExecutableSmallIcon(folderItemPath);
+    end else begin
+    	result := GetExecutableLargeIcon(folderItemPath);
+    end;
+  end; 
+
+  // ---------------------------------------------------------------------------
+  // Otherwise assume it's a document and try to get the icon
+  // ---------------------------------------------------------------------------
+
+  if result = nil then begin
+  	result := GetDocumentIcon(folderItemPath, returnSmallIcon);
+  end;
+
+  // ---------------------------------------------------------------------------
+  // If everything has failed so far, try to get the icon from SHELL32.DLL
+  // Ref: http://www.latiumsoftware.com/en/delphi/00014.php
+  // If it fails here as well, just return nil
+  // ---------------------------------------------------------------------------
+
+  if (result = nil) then begin
+    try
+      shell32Path := IncludeTrailingBackslash(GetSystemDir) + 'SHELL32.DLL';
+    except
+      shell32Path := 'C:\WINDOWS\SYSTEM\SHELL32.DLL';
+    end;
+
+    if      (fileExt = '.DOC') then iconIndex := 1
+    else if (fileExt = '.EXE')
+         or (fileExt = '.COM') then iconIndex := 2
+    else if (fileExt = '.HLP') then iconIndex := 23
+    else if (fileExt = '.INI')
+         or (fileExt = '.INF') then iconIndex := 63
+    else if (fileExt = '.TXT') then iconIndex := 64
+    else if (fileExt = '.BAT') then iconIndex := 65
+    else if (fileExt = '.DLL')
+         or (fileExt = '.SYS')
+         or (fileExt = '.VBX')
+         or (fileExt = '.OCX')
+         or (fileExt = '.VXD') then iconIndex := 66
+    else if (fileExt = '.FON') then iconIndex := 67
+    else if (fileExt = '.TTF') then iconIndex := 68
+    else if (fileExt = '.FOT') then iconIndex := 69
+    else iconIndex := 0;
+
+    if ExtractIconEx(pchar(folderItemPath), iconIndex, hSmallIcon, hLargeIcon, 1) > 1 then
+    begin
+      result := TIcon.Create();
+      if returnSmallIcon then begin
+        result.Handle := hSmallIcon;
+      end else begin
+        result.Handle := hLargeIcon;
+      end;
+    end;
+  end;
+  
+  
+end;
+
+
 function GetApplicationDirectory():String;
 begin
 	GetDir(0, result);
 end;
+
+
+function GetSystemDir: TFileName;
+var
+  SysDir: array [0..MAX_PATH-1] of char;
+begin
+  SetString(Result, SysDir, GetSystemDirectory(SysDir, MAX_PATH));
+  if Result = '' then
+    raise Exception.Create(SysErrorMessage(GetLastError));
+end;
+
+
+
 
 
 

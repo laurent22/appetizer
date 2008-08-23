@@ -9,6 +9,7 @@ uses
 
 type
   TForm2 = class(TForm)
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

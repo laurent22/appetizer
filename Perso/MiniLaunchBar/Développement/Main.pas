@@ -3,7 +3,7 @@ unit Main;
 interface
 
 uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
-	LocalizationUtils, IniFiles, Forms, Windows, Logger;
+	LocalizationUtils, IniFiles, Forms, Windows, Logger, Graphics, ShellAPI;
 
 
 const
@@ -73,19 +73,22 @@ type
   TFolderItem = class
 
   	private
+    	pSmallIcon: TIcon;
     	class var pUniqueID : Integer;
+      function GetSmallIcon(): TIcon;
     public
       FilePath: String;
       ID: Integer;
+      Name: String;
       IsSeparator: Boolean;
-    published
+      property SmallIcon:TIcon read GetSmallIcon;
     	constructor Create();
 
   end;
 
 
 
-  TFolderItems = Array[0..255] of TFolderItem;
+  TFolderItems = Array of TFolderItem;
 
   TStyle = record
     barMainPanel: TBarMainPanelStyle;
@@ -164,6 +167,30 @@ begin
 	IsSeparator := false;
 	pUniqueID := pUniqueID + 1;
 	ID := pUniqueID; 
+end;
+
+
+function TFolderItem.GetSmallIcon(): TIcon;
+var largeIcon, smallIcon: Windows.HICON;
+begin
+	result := nil;
+
+	if IsSeparator then Exit;
+
+	if pSmallIcon <> nil then begin
+  	result := pSmallIcon;
+    Exit;
+  end;
+
+  result := GetFolderItemIcon(FilePath, true);
+
+//  if IsDirectory(FilePath) then begin
+//  	pSmallIcon := GetFolderIcon(FilePath, true);
+//  end else begin
+//    pSmallIcon := GetExecutableSmallIcon(FilePath);
+//  end;
+//  
+//  result := pSmallIcon;
 end;
 
 
@@ -336,13 +363,14 @@ begin
     CloseFile(exclusionFile);
   end;
 
-  for i := 1 to Length(folderItems) do begin
-    if folderItems[i] = nil then break;
-  	folderItems[i].Destroy();
-    folderItems[i] := nil;
+  if Length(folderItems) > 0 then begin
+    for i := 0 to Length(folderItems) - 1 do begin
+      folderItems[i].Destroy();
+      folderItems[i] := nil;
+    end;
   end;
 
-  folderItemIndex := 0;
+  SetLength(folderItems, 0);
 
 	directoryContents := GetDirectoryContents(GetUserSetting('Global', 'PortableAppsPath'), 1, 'exe');
 
@@ -363,8 +391,9 @@ begin
         if not skipIt then begin
           folderItem := TFolderItem.Create();
           folderItem.filePath := filePath;
-          folderItems[folderItemIndex] := folderItem;
-          folderItemIndex := folderItemIndex + 1;
+          folderItem.Name := ExtractFileName(filePath);
+          SetLength(folderItems, Length(folderItems) + 1);
+          folderItems[Length(folderItems) - 1] := folderItem;
      		end;
 
       end;
@@ -378,35 +407,47 @@ begin
 
     folderItem := TFolderItem.Create();
     folderItem.IsSeparator := true;
-    folderItems[folderItemIndex] := folderItem;
-    folderItemIndex := folderItemIndex + 1;
+    SetLength(folderItems, Length(folderItems) + 1);
+    folderItems[Length(folderItems) - 1] := folderItem;
 
     folderItem := TFolderItem.Create();
     folderItem.filePath := documentsPath;
-    folderItems[folderItemIndex] := folderItem;
-    folderItemIndex := folderItemIndex + 1;
+    folderItem.Name := pSpecialFolderNames.Documents;
+    SetLength(folderItems, Length(folderItems) + 1);
+    folderItems[Length(folderItems) - 1] := folderItem;
 
     if DirectoryExists(documentsPath + '\' + pSpecialFolderNames.Music) then begin
       folderItem := TFolderItem.Create();
       folderItem.filePath := documentsPath + '\' + pSpecialFolderNames.Music;
-      folderItems[folderItemIndex] := folderItem;
-      folderItemIndex := folderItemIndex + 1;
+      folderItem.Name := pSpecialFolderNames.Music;
+      SetLength(folderItems, Length(folderItems) + 1);
+      folderItems[Length(folderItems) - 1] := folderItem;
     end;
 
   	if DirectoryExists(documentsPath + '\' + pSpecialFolderNames.Pictures) then begin
       folderItem := TFolderItem.Create();
       folderItem.filePath := documentsPath + '\' + pSpecialFolderNames.Pictures;
-      folderItems[folderItemIndex] := folderItem;
-      folderItemIndex := folderItemIndex + 1;
+      folderItem.Name := pSpecialFolderNames.Pictures;
+      SetLength(folderItems, Length(folderItems) + 1);
+      folderItems[Length(folderItems) - 1] := folderItem;
     end;
 
     if DirectoryExists(documentsPath + '\' + pSpecialFolderNames.Videos) then begin
       folderItem := TFolderItem.Create();
       folderItem.filePath := documentsPath + '\' + pSpecialFolderNames.Videos;
-      folderItems[folderItemIndex] := folderItem;
+      folderItem.Name := pSpecialFolderNames.Videos;
+      SetLength(folderItems, Length(folderItems) + 1);
+      folderItems[Length(folderItems) - 1] := folderItem;
     end;
 
   end;
+
+
+  folderItem := TFolderItem.Create();
+  folderItem.FilePath := 'd:\temp\Clef USB\fw8ben signed 2.pdf';
+  folderItem.Name := 'PDF TEST';
+  SetLength(folderItems, Length(folderItems) + 1);
+  folderItems[Length(folderItems) - 1] := folderItem;
 
 end;
 
@@ -421,8 +462,7 @@ function TMain.GetFolderItemByID(const iFolderItemID: Integer): TFolderItem;
 var i: Word;
 begin
 	result := nil;
-	for i := 1 to Length(folderItems) do begin
-  	if folderItems[i] = nil then break;
+	for i := 0 to Length(folderItems) - 1 do begin
     if folderItems[i].ID = iFolderItemID then begin
       result := folderItems[i];
       break;
@@ -434,11 +474,7 @@ end;
 function TMain.FolderItemCount(): Word;
 var i: Word;
 begin
-	result := 0;
-	for i := 0 to Length(folderItems) - 1 do begin
-  	if folderItems[i] = nil then break;
-    result := result + 1;
-  end;
+	result := Length(folderItems);
 end;
 
 
