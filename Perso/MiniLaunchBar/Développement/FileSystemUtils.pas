@@ -74,8 +74,6 @@ begin
               SHGFI_ICON OR SHGFI_SMALLICON OR SHGFI_USEFILEATTRIBUTES);
  
   Result.Handle := FileInfo.hIcon;
-
-	FreeAndNil(FileInfo);
 end;
 
 
@@ -93,6 +91,7 @@ var
   tempResult: TStringList;
   i: Word;
   itemIsDirectory: Boolean;
+  addIt: Boolean;
 begin
 	result := TStringList.Create();
   
@@ -106,13 +105,18 @@ begin
 
         foundFilePath := filePath + '\' + rec.name;
 
-        itemIsDirectory := IsDirectory(foundFilePath);
+        itemIsDirectory := DirectoryExists(foundFilePath);
 
-        if ((fileExtension <> '*') and (not itemIsDirectory)) then begin
-        	if (ExtractFileExt(rec.name) <> '.' + fileExtension) then continue;
+        addIt := true;
+
+        if (fileExtension <> '*') then begin
+          if (ExtractFileExt(rec.name) <> '.' + fileExtension) then begin
+          	addIt := false;
+          	if not DirectoryExists(foundFilePath) then continue;
+          end;
         end;
 
-        result.Add(foundFilePath);
+        if addIt then result.Add(foundFilePath);
 
         if (itemIsDirectory) and (depth <> 0) then begin
           tempResult := GetDirectoryContents(foundFilePath, depth - 1, fileExtension);
