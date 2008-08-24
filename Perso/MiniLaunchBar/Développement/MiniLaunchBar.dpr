@@ -21,7 +21,9 @@ uses
   WContainer in 'Components\WContainer.pas',
   WButtonBase in 'Components\WButtonBase.pas',
   WImage in 'Components\WImage.pas',
-  IconPanel in 'IconPanel.pas';
+  IconPanel in 'IconPanel.pas',
+  User in 'User.pas',
+  MSXML2_TLB in 'MSXML2_TLB.pas';
 
 {$R *.res}
 

@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
   FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent, WImage, MathUtils,
-  Logger, IconPanel;
+  Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc;
 
 type
 
@@ -34,6 +34,7 @@ type
     cddd1: TMenuItem;
     N1: TMenuItem;
     Properties1: TMenuItem;
+    XMLDocument1: TXMLDocument;
     procedure FormCreate(Sender: TObject);
     procedure barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);

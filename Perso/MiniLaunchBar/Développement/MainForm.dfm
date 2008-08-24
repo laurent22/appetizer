@@ -30,4 +30,10 @@ object MainForm: TMainForm
       Caption = 'Properties'
     end
   end
+  object XMLDocument1: TXMLDocument
+    Active = True
+    Left = 96
+    Top = 16
+    DOMVendorDesc = 'MSXML'
+  end
 end

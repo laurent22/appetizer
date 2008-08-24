@@ -147,53 +147,6 @@ begin
 end;
 
 
-//procedure TIconPanel.BrowseButton_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-//var pPopupMenu: TPopupMenu;
-//	menuItem: TMenuItem;
-//	i: Integer;
-//  folderItem: TFolderItem;
-//  component: TWComponent;
-//  mouse: TMouse;
-//  menuItemBitmap: TBitmap;
-//begin
-//	if Button <> mbLeft then Exit;
-//
-//  pPopupMenu := TPopupMenu.Create(self);
-//
-//  for i := pLastVisibleIconIndex + 1 to pIcons.Count - 1 do begin
-//  	if i >= pIcons.Count then break;
-//
-//    component := TWComponent(pIcons[i]);
-//
-//    folderItem := TMain.Instance.GetFolderItemByID(component.Tag);
-//
-//    menuItem := TMenuItem.Create(self);
-//
-//    if folderItem.IsSeparator then begin
-//    	menuItem.Caption := '-';
-//      menuItem.Enabled := false;
-//    end else begin
-//    	menuItem.Caption := folderItem.Name;
-//
-//      if folderItem.SmallIcon <> nil then begin
-//      	menuItemBitmap := TBitmap.Create();
-//        menuItemBitmap.Width := 16;
-//        menuItemBitmap.Height := 16;
-//        menuItemBitmap.Canvas.Draw(0, 0, folderItem.SmallIcon);
-//      	menuItem.Bitmap := menuItemBitmap;
-//      end;
-//
-//    end;
-//
-//    pPopupMenu.Items.Add(menuItem);
-//  end;
-//
-//  mouse := TMouse.Create();
-//
-//  pPopupMenu.Popup(mouse.CursorPos.X, mouse.CursorPos.Y);
-//end;
-
-
 procedure TIconPanel.BrowseButton_Click(Sender: TObject);
 var pPopupMenu: TPopupMenu;
 	menuItem: TMenuItem;
@@ -203,8 +156,6 @@ var pPopupMenu: TPopupMenu;
   mouse: TMouse;
   menuItemBitmap: TBitmap;
 begin
-	//if Button <> mbLeft then Exit;
-
   pPopupMenu := TPopupMenu.Create(self);
 
   for i := pLastVisibleIconIndex + 1 to pIcons.Count - 1 do begin
@@ -314,6 +265,8 @@ begin
 
 	iconAreaWidth := iconMaxX - TMain.instance.style.barInnerPanel.paddingLeft;
 
+  if iconAreaWidth < 10 then iconAreaWidth := 10;
+
   if pAutoSize then
 		Width := iconAreaWidth + TMain.instance.style.barInnerPanel.paddingH;
   Height := pIconSize + TMain.instance.style.barInnerPanel.paddingV;
@@ -330,7 +283,7 @@ end;
 
 
 procedure TIconPanel.LoadFolderItems();
-var i: Word;
+var i: Integer;
   folderItem: TFolderItem;
   icon: TWFileIcon;
   separatorImage: TWImage;

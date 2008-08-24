@@ -3,7 +3,8 @@ unit Main;
 interface
 
 uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
-	LocalizationUtils, IniFiles, Forms, Windows, Logger, Graphics, ShellAPI;
+	LocalizationUtils, IniFiles, Forms, Windows, Logger, Graphics, ShellAPI,
+  User;
 
 
 const
@@ -15,26 +16,13 @@ const
   LOCALE_FOLDER_PATH = DATA_FOLDER_NAME + '\Locales';
   EXCLUSION_FILE_PATH = SETTING_FOLDER_PATH + '\Exclusions.txt';
   INI_FILE_PATH = SETTING_FOLDER_PATH + '\Config.ini';
+  USER_SETTINGS_FILE_PATH = SETTING_FOLDER_PATH + '\MiniLaunchBar.xml';
 
   DEBUG = true;
 
 
 
 type
-
-	TIniProperty = class
-  	public
-      name: String[255];
-      value: String[255];
-      constructor Create(const name:String; const value:String);      
-  end;
-
-  TIniSection = class
-  	public
-      name: String[255];
-      properties: Array of TIniProperty;
-      procedure AddProperty(const iniProperty: TIniProperty);
-  end;
 
   TBarMainPanelStyle = record
     paddingLeft: Integer;
@@ -99,14 +87,13 @@ type
 	TMain = class
 
 
-  private  
-    pIniFile: TIniFile;
-    pDefaultUserSettings: Array of TIniSection;
-    pSpecialFolderNames: TSpecialFolderNames;
+  private
 
-    procedure OpenIniFile();
+    pSpecialFolderNames: TSpecialFolderNames;
+    pUser: TUser;
 
   public
+
   	loc: TLocalizationUtils;
   	style: TStyle;
     skinPath: String;
@@ -119,15 +106,11 @@ type
 
     function ErrorMessage(const text: String; const buttons: TMsgDlgButtons = [mbOk]): Integer;
 
-    function GetUserSetting(const section: String; const key: String; const closeFileNow: Boolean = false): String;
-    procedure SetUserSetting(const section: String; const key: String; const value: String; const closeFileNow: Boolean = false);
-    procedure SaveUserSettings();
-
-    function GetDefaultUserSetting(const section: String; const key: String): String;
-
     function GetFolderItemAt(const iIndex: Word): TFolderItem;
     function GetFolderItemByID(const iFolderItemID: Integer): TFolderItem;
     function FolderItemCount(): Word;
+
+   	property User: TUser read pUser;
 
   end;
 
@@ -143,23 +126,6 @@ begin
   end;
   result := __singletonInstance;
 end;
-
-
-
-
-constructor TIniProperty.Create(const name:String; const value:String);
-begin
-	self.name := name;
-  self.value := value;
-end;
-
-
-procedure TIniSection.AddProperty(const iniProperty: TIniProperty);
-begin
-  SetLength(properties, Length(properties) + 1);
-	properties[Length(properties) - 1] := iniProperty;
-end;
-
 
 
 constructor TFolderItem.Create();
@@ -183,16 +149,7 @@ begin
   end;
 
   result := GetFolderItemIcon(FilePath, true);
-
-//  if IsDirectory(FilePath) then begin
-//  	pSmallIcon := GetFolderIcon(FilePath, true);
-//  end else begin
-//    pSmallIcon := GetExecutableSmallIcon(FilePath);
-//  end;
-//  
-//  result := pSmallIcon;
 end;
-
 
 
 function TMain.ErrorMessage(const text: String; const buttons: TMsgDlgButtons = [mbOk]): Integer;
@@ -201,64 +158,7 @@ begin
 end;
 
 
-procedure TMain.OpenIniFile();
-begin
-	if pIniFile <> nil then Exit;
-	pIniFile := TIniFile.Create(INI_FILE_PATH);
-end;
-
-
-function TMain.GetDefaultUserSetting(const section: String; const key: String): String;
-var sectionIndex, keyIndex: Word;
-	iniSection: TIniSection;
-begin
-	result := '';
-
-	for sectionIndex := 0 to Length(pDefaultUserSettings) - 1 do begin
-  	iniSection := pDefaultUserSettings[sectionIndex];
-
-    if AnsiLowerCase(iniSection.name) <> AnsiLowerCase(section) then continue;
-    
-  	for keyIndex := 0 to Length(iniSection.properties) - 1 do begin
-    	if AnsiLowerCase(iniSection.properties[keyIndex].name) = AnsiLowerCase(key) then begin
-        result := iniSection.properties[keyIndex].value;
-        Exit;
-      end;
-    end;
-    
-  end;
-end;
-
-
-function TMain.GetUserSetting(const section: String; const key: String; const closeFileNow: Boolean = false): String;
-begin
-	// TODO: Implement caching
-  OpenIniFile();
-  result := pIniFile.ReadString(section, key, GetDefaultUserSetting(section, key));
-  if closeFileNow then SaveUserSettings();
-end;
-
-
-procedure TMain.SetUserSetting(const section: String; const key: String; const value: String; const closeFileNow: Boolean = false);
-begin
-	// TODO: Implement caching
-	OpenIniFile();
-  pIniFile.WriteString(section, key, value);
-  if closeFileNow then SaveUserSettings();
-end;
-
-
-
-procedure TMain.SaveUserSettings();
-begin
-	if pIniFile = nil then Exit;
-	pIniFile.Free();
-  pIniFile := nil;
-end;
-
-
 constructor TMain.Create();
-var iniSection: TIniSection;
 begin
 
 	if DEBUG then begin
@@ -271,14 +171,7 @@ begin
   // Initialize INI default settings
   // ---------------------------------------------------------------------------
 
-  iniSection := TIniSection.Create();
-  iniSection.name := 'Global';
-  iniSection.AddProperty(TIniProperty.Create('Locale', 'en'));
-  iniSection.AddProperty(TIniProperty.Create('PortableAppsPath', 'PortableApps'));
-  iniSection.AddProperty(TIniProperty.Create('DocumentsPath', 'Documents'));
-
-  SetLength(pDefaultUserSettings, Length(pDefaultUserSettings) + 1);
-  pDefaultUserSettings[Length(pDefaultUserSettings) - 1] := iniSection;
+  pUser := TUser.Create(USER_SETTINGS_FILE_PATH);
   
   // ---------------------------------------------------------------------------
   // Initialize localization manager
@@ -286,7 +179,7 @@ begin
 
 	loc := TLocalizationUtils.Create();
   loc.LoadLocale('en', LOCALE_FOLDER_PATH);
-  loc.CurrentLocale := GetUserSetting('Global', 'Locale');
+  loc.CurrentLocale := pUser.GetUserSetting('Locale');
   loc.LoadLocale(loc.CurrentLocale, LOCALE_FOLDER_PATH);
 
   ilog('Current locale: ' + loc.CurrentLocale);
@@ -347,7 +240,6 @@ var
   skipIt: Boolean;
   documentsPath: String;
 begin
-
   exclusions := TStringList.Create();
 
   AssignFile(exclusionFile, EXCLUSION_FILE_PATH);
@@ -372,7 +264,7 @@ begin
 
   SetLength(folderItems, 0);
 
-	directoryContents := GetDirectoryContents(GetUserSetting('Global', 'PortableAppsPath'), 1, 'exe');
+	directoryContents := GetDirectoryContents(pUser.GetUserSetting('PortableAppsPath'), 1, 'exe');
 
   if directoryContents.Count > 0 then begin
   	for i := 0 to directoryContents.Count - 1 do begin
@@ -401,7 +293,7 @@ begin
   end;
 
 
-  documentsPath := GetUserSetting('Global', 'DocumentsPath');
+  documentsPath := pUser.GetUserSetting('DocumentsPath');
 
   if DirectoryExists(documentsPath) then begin
 
