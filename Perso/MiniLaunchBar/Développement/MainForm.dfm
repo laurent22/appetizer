@@ -13,6 +13,7 @@ object MainForm: TMainForm
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -29,11 +30,5 @@ object MainForm: TMainForm
     object Properties1: TMenuItem
       Caption = 'Properties'
     end
-  end
-  object XMLDocument1: TXMLDocument
-    Active = True
-    Left = 96
-    Top = 16
-    DOMVendorDesc = 'MSXML'
   end
 end

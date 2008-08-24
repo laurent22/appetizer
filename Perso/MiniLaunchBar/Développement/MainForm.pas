@@ -34,7 +34,6 @@ type
     cddd1: TMenuItem;
     N1: TMenuItem;
     Properties1: TMenuItem;
-    XMLDocument1: TXMLDocument;
     procedure FormCreate(Sender: TObject);
     procedure barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -49,6 +48,7 @@ type
     procedure ToggleOptionPanel();
     procedure UpdateOptionPanel();
     procedure optionButton_Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
     private
       { Private declarations }
@@ -439,6 +439,11 @@ begin
 end;
 
 
+procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  TMain.Instance.User.Save();
+end;
+
 procedure TMainForm.FormCreate(Sender: TObject);
 var optionButton: TWImageButton;
 	i: Word;
@@ -598,7 +603,7 @@ begin
   // Draw and update layout
   // ---------------------------------------------------------------------------
 
-  TMain.Instance.RefreshFolderItems();
+  TMain.Instance.User.RefreshFolderItems();
   barInnerPanel.LoadFolderItems();
 	UpdateLayout();
 end;

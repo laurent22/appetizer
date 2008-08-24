@@ -4,7 +4,7 @@ interface
 
 uses Windows, WNineSlicesPanel, Classes, WFileIcon, WImage, Logger, Contnrs, Controls,
 	Types, WComponent, ExtCtrls, Forms, SysUtils, Graphics, MathUtils, Imaging,
-  ShellAPI, WImageButton, Menus;
+  ShellAPI, WImageButton, Menus, User;
 
 
 type
@@ -38,6 +38,8 @@ type
       procedure icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure icon_click(sender: TObject);
       procedure iconForm_paint(Sender: TObject);
+
+      procedure UpdateFolderItemsFromIcons();
 
       //procedure BrowseButton_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure BrowseButton_Click(Sender: TObject);
@@ -101,9 +103,18 @@ var p: TPoint;
 	i :Integer;
 	c: TWComponent;
 begin
+	result := 0;
   p := ScreenToClient(aPoint);
 
-  result := 0;
+	if pIcons.Count = 0 then begin
+  	result := 0;
+    Exit;
+  end;
+
+  if p.X <= TWComponent(pIcons.Items[0]).Left + TWComponent(pIcons.Items[0]).Width / 2 then begin
+  	result := 0;
+    Exit;
+  end;
 
   for i := 0 to pIcons.Count - 1 do begin
     c := TWComponent(pIcons.Items[i]);
@@ -163,7 +174,7 @@ begin
 
     component := TWComponent(pIcons[i]);
 
-    folderItem := TMain.Instance.GetFolderItemByID(component.Tag);
+    folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
 
     menuItem := TMenuItem.Create(self);
 
@@ -238,7 +249,7 @@ begin
 
     if icon is TWFileIcon then begin
       if icon.FilePath = '' then begin
-        folderItem := TMain.Instance.GetFolderItemByID(icon.Tag);
+        folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
         icon.FilePath := folderItem.filePath;
         icon.OverlayImageUpPath := TMain.instance.skinPath + '\IconOverlayUp.png';
         icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
@@ -298,8 +309,8 @@ begin
 
   pIcons.Clear();
 
-  for i := 0 to TMain.instance.FolderItemCount - 1 do begin
-  	folderItem := TMain.instance.getFolderItemAt(i);
+  for i := 0 to TMain.instance.User.FolderItemCount - 1 do begin
+  	folderItem := TMain.instance.User.getFolderItemAt(i);
 
     if not folderItem.IsSeparator then begin
     
@@ -334,11 +345,20 @@ begin
       pIcons.Add(TObject(separatorImage));
     end;
 
-
-
   end;
 end;
 
+
+procedure TIconPanel.UpdateFolderItemsFromIcons();
+var folderItemIDs: Array of Integer;
+	i: Integer;
+begin
+	SetLength(folderItemIDs, pIcons.Count);
+	for i := 0 to pIcons.Count - 1 do begin
+  	folderItemIDs[i] := TWComponent(pIcons[i]).Tag;
+  end;
+  TMain.Instance.User.SetFolderItemsOrder(folderItemIDs);
+end;
 
 
 procedure TIconPanel.icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -349,6 +369,8 @@ begin
   if pIconDragData.IconForm <> nil then FreeAndNil(pIconDragData.IconForm);
 
   pIconDragData.Icon.Visible := true;
+
+  UpdateFolderItemsFromIcons();
 end;
 
 
@@ -425,6 +447,8 @@ begin
 
     indexUnderCursor := GetInsertionIndexAtPoint(formCenter, pIconDragData.Icon is TWFileIcon);
     currentIndex := pIcons.IndexOf(TObject(pIconDragData.Icon));
+
+   	 
     
     if indexUnderCursor <> currentIndex then begin
 
@@ -506,12 +530,12 @@ end;
 
 
 procedure TIconPanel.icon_click(sender: TObject);
-var icon: TWFileIcon;
-	folderItem: TFolderItem;
-  r: HINST;
+//var icon: TWFileIcon;
+//	folderItem: TFolderItem;
+//  r: HINST;
 begin
-	icon := Sender as TWFileIcon;
-  folderItem := TMain.Instance.GetFolderItemByID(icon.Tag);
+//	icon := Sender as TWFileIcon;
+//  folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
 
   //ilog('Icon click: ' + folderItem.FilePath);
 
