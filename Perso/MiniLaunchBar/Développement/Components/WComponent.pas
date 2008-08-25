@@ -76,6 +76,8 @@ type
     Tag: Integer;
     Pushed: Boolean;
 
+    class function GetComponentByID(const componentID: Integer): TWComponent;
+
     {Returns if the mouse is over the control}
     property ButtonState: TPNGButtonState read FButtonState write SetButtonState;
     property IsMouseOver: Boolean read fMouseOverControl;
@@ -114,6 +116,7 @@ type
     property OnDblClick;
     property OnMouseEnter: TNotifyEvent read fOnMouseEnter write fOnMouseEnter;
     property OnMouseExit:  TNotifyEvent read fOnMouseExit  write fOnMouseExit;
+    property OnResize;
 
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -137,8 +140,16 @@ begin
 end;
 
 
+class function TWComponent.GetComponentByID(const componentID: Integer): TWComponent;
+begin
+  // TODO. But need to keep a reference to every created component
+  // so how do we clear the reference once it's not needed?
+end;
+
+
 destructor TWComponent.Destroy();
 begin
+	RemoveFromContainer();
   inherited Destroy;
 end;
 
@@ -318,14 +329,14 @@ end;
 
 procedure TWComponent.MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
+	inherited;
+
 	Pushed := false;
 
   if IsMouseOver then
   	ButtonState := pbsOver
   else
   	ButtonState := pbsNormal;
-
-  inherited
 end;
 
 
