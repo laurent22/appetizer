@@ -24,14 +24,16 @@ uses
   User in 'User.pas',
   MSXML2_TLB in 'MSXML2_TLB.pas',
   EditFolderItemUnit in 'EditFolderItemUnit.pas' {EditFolderItemForm},
-  VersionInformation in 'VersionInformation.pas';
+  VersionInformation in 'VersionInformation.pas',
+  ConfigFormUnit in 'ConfigFormUnit.pas' {ConfigForm};
 
 {$R *.res}
 {$R WindowsXP\WindowsXP.RES}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TMainForm, theMainForm);
+  Application.CreateForm(TtheMainForm, theMainForm);
+  Application.CreateForm(TConfigForm, ConfigForm);
   //Application.CreateForm(TEditFolderItemForm, EditFolderItemForm);
   Application.Run;
 end.

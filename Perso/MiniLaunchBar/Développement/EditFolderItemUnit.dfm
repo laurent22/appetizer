@@ -12,16 +12,17 @@ object EditFolderItemForm: TEditFolderItemForm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
+  object nameLabel: TLabel
     Left = 16
     Top = 16
     Width = 31
     Height = 13
     Caption = 'Name:'
   end
-  object Label2: TLabel
+  object locationLabel: TLabel
     Left = 16
     Top = 43
     Width = 44

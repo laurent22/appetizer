@@ -45,10 +45,12 @@ type
       procedure BrowseButton_Click(Sender: TObject);
       function GetComponentByID(const componentID: Integer): TWComponent;
       
-      procedure MenuItem_Click_New(Sender: TObject);
+      procedure MenuItem_Click_NewShortcut(Sender: TObject);
+      procedure MenuItem_Click_NewSeparator(Sender: TObject);
       procedure MenuItem_Click_Delete(Sender: TObject);
 			procedure MenuItem_Click_Properties(Sender: TObject);
 
+      function FolderItemToComponent(const folderItem:TFolderItem): TWComponent;
 
   	public
 
@@ -105,21 +107,42 @@ begin
   result := TPopupMenu.Create(self);
 
   menuItem := TMenuItem.Create(result);
-  menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.NewShortcut');
-  menuItem.OnClick := MenuItem_Click_New;
+  menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.NewShortcut');
+  menuItem.OnClick := MenuItem_Click_NewShortcut;
   result.Items.Add(menuItem);
 
   menuItem := TMenuItem.Create(result);
-  menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.NewSeparator');
-  menuItem.OnClick := MenuItem_Click_New;
+  menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.NewSeparator');
+  menuItem.OnClick := MenuItem_Click_NewSeparator;
   result.Items.Add(menuItem);
 end;
 
 
-procedure TIconPanel.MenuItem_Click_New(Sender: TObject);
+procedure TIconPanel.MenuItem_Click_NewShortcut(Sender: TObject);
+var folderItem: TFolderItem;
+	component: TWComponent;
 begin
+ 	folderItem := TMain.Instance.User.EditNewFolderItem();
+  if folderItem <> nil then begin
+  	component := FolderItemToComponent(folderItem);
+    AddChild(component);
+    pIcons.Add(TObject(component));
+  end;
+  UpdateLayout();
+end;
 
-//
+
+procedure TIconPanel.MenuItem_Click_NewSeparator;
+var folderItem: TFolderItem;
+	component: TWComponent;
+begin
+ 	folderItem := TFolderItem.Create();
+  folderItem.IsSeparator := true;
+  TMain.Instance.User.AddFolderItem(folderItem);
+  component := FolderItemToComponent(folderItem);
+  AddChild(component);
+  pIcons.Add(TObject(component));
+  UpdateLayout();
 end;
 
 
@@ -128,7 +151,11 @@ var component: TWComponent;
 	menuItem: TMenuItem;
 	folderItem: TFolderItem;
   exclusions: TStringList;
+	answer: Integer;
 begin
+	answer := TMain.Instance.ConfirmationMessage(TMain.Instance.Loc.GetString('IconPanel.DeleteConfirmation'));
+  if answer <> mrYes then Exit;
+
 	menuItem := Sender as TMenuItem;
 
   component := GetComponentByID(menuItem.Tag);
@@ -139,7 +166,6 @@ begin
 
   folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
   TMain.Instance.User.AddExclusion(folderItem.FilePath);
-  //exclusions := SplitString(',', TMain.Instance.User.GetUserSetting('FolderItemExclusions'));
 
   pIcons.Remove(TObject(component));
 
@@ -389,11 +415,47 @@ begin
 end;
 
 
+function TIconPanel.FolderItemToComponent;
+var icon: TWFileIcon;
+	separatorImage: TWImage;
+begin
+  if not folderItem.IsSeparator then begin
+
+    icon := TWFileIcon.Create(Owner);
+    icon.Tag := folderItem.ID;
+    icon.Width := pIconSize;
+    icon.Height := pIconSize;
+    icon.Visible := false;
+    icon.OnMouseDown := icon_mouseDown;
+    icon.OnMouseUp := icon_mouseUp;
+
+    result := TWComponent(icon);
+
+  end else begin
+
+    separatorImage := TWImage.Create(Owner);
+    separatorImage.FilePath := TMain.instance.skinPath + '\InnerPanelSeparator.png';
+    separatorImage.Visible := false;
+    separatorImage.Tag := folderItem.ID;
+    separatorImage.FitToContent();
+    separatorImage.Height := pIconSize;
+    separatorImage.StretchToFit := true;
+    separatorImage.MaintainAspectRatio := false;
+    separatorImage.OnMouseDown := icon_mouseDown;
+    separatorImage.OnMouseUp := icon_mouseUp;
+
+    result := TWComponent(separatorImage);
+
+  end;
+end;
+
+
 procedure TIconPanel.LoadFolderItems();
 var i: Integer;
   folderItem: TFolderItem;
   icon: TWFileIcon;
   separatorImage: TWImage;
+  component: TWComponent;
 begin
 	ilog('Creating icons');
 
@@ -408,39 +470,10 @@ begin
   for i := 0 to TMain.instance.User.FolderItemCount - 1 do begin
   	folderItem := TMain.instance.User.getFolderItemAt(i);
 
-    if not folderItem.IsSeparator then begin
-    
-      icon := TWFileIcon.Create(Owner);
-      icon.Tag := folderItem.ID;
-      icon.Width := pIconSize;
-      icon.Height := pIconSize;
-      icon.Visible := false;
-      //icon.OnClick := icon_click;
-      icon.OnMouseDown := icon_mouseDown;
-      icon.OnMouseUp := icon_mouseUp;
+    component := FolderItemToComponent(folderItem);
 
-      AddChild(icon);
-
-      pIcons.Add(TObject(icon));
-
-    end else begin
-
-      separatorImage := TWImage.Create(Owner);
-      separatorImage.FilePath := TMain.instance.skinPath + '\InnerPanelSeparator.png';
-      separatorImage.Visible := false;
-      separatorImage.Tag := folderItem.ID;
-      separatorImage.FitToContent();
-      separatorImage.Height := pIconSize;
-      separatorImage.StretchToFit := true;
-      separatorImage.MaintainAspectRatio := false;
-      separatorImage.OnMouseDown := icon_mouseDown;
-      separatorImage.OnMouseUp := icon_mouseUp;
-
-      AddChild(separatorImage);
-
-      pIcons.Add(TObject(separatorImage));
-    end;
-
+    AddChild(component);
+    pIcons.Add(TObject(component));
   end;
 end;
 
@@ -588,12 +621,12 @@ end;
 
 procedure TIconPanel.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var screenMouseLoc: TPoint;
-	icon: TWComponent;
+	component: TWComponent;
   mouse: TMouse;
   popupMenu: TPopupMenu;
   menuItem: TMenuItem;
 begin
-	icon := Sender as TWComponent;
+	component := Sender as TWComponent;
 
   mouse := TMouse.Create();
 
@@ -606,21 +639,28 @@ begin
     popupMenu := CreateFormPopupMenu();
 
     menuItem := TMenuItem.Create(popupMenu);
-    menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.Delete');
-    menuItem.Tag := icon.ID;
-    menuItem.OnClick := MenuItem_Click_Delete;
-    popupMenu.Items.Add(menuItem);
-
-    menuItem := TMenuItem.Create(popupMenu);
     menuItem.Caption := '-';
     menuItem.Enabled := false;
     popupMenu.Items.Add(menuItem);
 
     menuItem := TMenuItem.Create(popupMenu);
-    menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.Properties');
-    menuItem.Tag := icon.ID;
-    menuItem.OnClick := MenuItem_Click_Properties;
+    menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.Delete');
+    menuItem.Tag := component.ID;
+    menuItem.OnClick := MenuItem_Click_Delete;
     popupMenu.Items.Add(menuItem);
+
+    if component is TWFileIcon then begin
+      menuItem := TMenuItem.Create(popupMenu);
+      menuItem.Caption := '-';
+      menuItem.Enabled := false;
+      popupMenu.Items.Add(menuItem);
+
+      menuItem := TMenuItem.Create(popupMenu);
+      menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.Properties');
+      menuItem.Tag := component.ID;
+      menuItem.OnClick := MenuItem_Click_Properties;
+      popupMenu.Items.Add(menuItem);
+    end;
 
 		popupMenu.Popup(screenMouseLoc.X, screenMouseLoc.Y);
   end else begin
@@ -633,11 +673,11 @@ begin
     end;
 
     pIconDragData.MouseDownLoc := screenMouseLoc;
-    pIconDragData.Icon := icon as TWComponent;
+    pIconDragData.Icon := component as TWComponent;
     pIconDragData.Started := false;
     pIconDragData.Timer.Enabled := true;
 
-    pIconDragData.StartIconLoc := icon.ScreenLoc;
+    pIconDragData.StartIconLoc := component.ScreenLoc;
   end;
 end;
 

@@ -67,14 +67,16 @@ type
 
   public
 
-  	loc: TLocalizationUtils;
+  	Loc: TLocalizationUtils;
   	style: TStyle;
     skinPath: String;
     mainForm : TMainForm;
 
   	constructor Create();
-  	class function Instance: TMain;                                                           
+  	class function Instance: TMain;
+
     function ErrorMessage(const text: String; const buttons: TMsgDlgButtons = [mbOk]): Integer;
+    function ConfirmationMessage(const text: String; const buttons: TMsgDlgButtons = [mbYes, mbNo]): Integer;
    	property User: TUser read pUser;
 
   end;
@@ -93,9 +95,15 @@ begin
 end;
 
 
-function TMain.ErrorMessage(const text: String; const buttons: TMsgDlgButtons = [mbOk]): Integer;
+function TMain.ErrorMessage;
 begin
 	result := MessageDlg(text, mtError, buttons, 0);
+end;
+
+
+function TMain.ConfirmationMessage;
+begin
+	result := MessageDlg(text, mtConfirmation, buttons, 0);
 end;
 
 
@@ -118,12 +126,12 @@ begin
   // Initialize localization manager
   // ---------------------------------------------------------------------------
 
-	loc := TLocalizationUtils.Create();
-  loc.LoadLocale('en', LOCALE_FOLDER_PATH);
-  loc.CurrentLocale := pUser.GetUserSetting('Locale');
-  loc.LoadLocale(loc.CurrentLocale, LOCALE_FOLDER_PATH);
+	Loc := TLocalizationUtils.Create();
+  Loc.LoadLocale('en', LOCALE_FOLDER_PATH);
+  Loc.CurrentLocale := pUser.GetUserSetting('Locale');
+  Loc.LoadLocale(Loc.CurrentLocale, LOCALE_FOLDER_PATH);
 
-  ilog('Current locale: ' + loc.CurrentLocale);
+  ilog('Current locale: ' + Loc.CurrentLocale);
 
   // ---------------------------------------------------------------------------
   // Initialize style

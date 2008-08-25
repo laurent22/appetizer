@@ -8,8 +8,8 @@ uses
 
 type
   TEditFolderItemForm = class(TForm)
-    Label1: TLabel;
-    Label2: TLabel;
+    nameLabel: TLabel;
+    locationLabel: TLabel;
     nameEdit: TEdit;
     locationEdit: TEdit;
     Button1: TButton;
@@ -19,6 +19,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     pLoadedFolderItem: TFolderItem;
@@ -58,9 +59,17 @@ procedure TEditFolderItemForm.Button3Click(Sender: TObject);
 begin
 	if OpenDialog1.Execute() then begin
     locationEdit.Text := OpenDialog1.FileName;
-    //pLoadedFolderItem.FilePath :=
   end;
 end;
+
+
+procedure TEditFolderItemForm.FormCreate(Sender: TObject);
+begin
+	Text := TMain.Instance.Loc.GetString('EditFolderItemForm.Title');
+  nameLabel.Caption := TMain.Instance.Loc.GetString('EditFolderItemForm.NameLabel');
+  locationLabel.Caption := TMain.Instance.Loc.GetString('EditFolderItemForm.LocationLabel');
+end;
+
 
 procedure TEditFolderItemForm.LoadFolderItem(const folderItem: TFolderItem);
 begin
