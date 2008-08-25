@@ -5,34 +5,54 @@ interface
 uses
 	Windows, Graphics, PNGImage, SysUtils, Types;
 
+const
+ WS_EX_LAYERED = $80000;
+ LWA_COLORKEY = 1;
+ LWA_ALPHA    = 2;
+
 type
+
+ TSetLayeredWindowAttributes = function (
+     hwnd : HWND;         // handle to the layered window
+     crKey : TColor;      // specifies the color key
+     bAlpha : byte;       // value for the blend function
+     dwFlags : DWORD      // action
+     ): BOOL; stdcall;
+
 	TRGBArray = array[0..32767] of TRGBTriple;
   PRGBArray = ^TRGBArray;
 
   procedure DrawNineSlices(const canvas: TCanvas; const filePathPrefix: String; const x, y, targetWidth, targetHeight: Integer);
   function CreateRegion(Bmp: TBitmap): THandle;
   function ConstraintResize(sourceWidth, sourceHeight, targetWidth, targetHeight: Real; fitSmallerDimensions: Boolean):TSize;
+  procedure SetTransparentForm(AHandle : THandle; AValue : byte = 0);
 
 implementation
 
 
 
-procedure PNGObjectFlipH(var pngObject: TPNGObject);
-var i, j: Integer;
-  tempPNG : TPNGObject;
+// By serge_perevoznyk@hotmail.com
+// http://users.telenet.be/ws36637/transparent1.html
+
+procedure SetTransparentForm(AHandle : THandle; AValue : byte = 0);
+var
+ Info: TOSVersionInfo;
+ SetLayeredWindowAttributes: TSetLayeredWindowAttributes;
 begin
-//  tempPNG := TPNGObject.Create();
-//  tempPNG.loadFromFile(value + 'Up.png');
-//  tempPNG.
-//
-//  for j := 0 to ImageNormal.Height - 1 do begin
-//    for i := 0 to ImageNormal.Width - 1 do begin
-//    	tempPNG.Pixels[(ImageNormal.Width - 1) - i, j] :=
-//      	ImageNormal.Pixels[i, j];
-//    end;
-//  end;
-//
-//  ImageNormal := tempPNG;
+ //Check Windows version
+ Info.dwOSVersionInfoSize := SizeOf(Info);
+ GetVersionEx(Info);
+ if (Info.dwPlatformId = VER_PLATFORM_WIN32_NT) and
+ (Info.dwMajorVersion >= 5) then
+   begin
+     SetLayeredWindowAttributes := GetProcAddress(GetModulehandle(user32), 'SetLayeredWindowAttributes');
+      if Assigned(SetLayeredWindowAttributes) then
+       begin
+        SetWindowLong(AHandle, GWL_EXSTYLE, GetWindowLong(AHandle, GWL_EXSTYLE) or WS_EX_LAYERED);
+        //Make form transparent
+        SetLayeredWindowAttributes(AHandle, 0, AValue, LWA_ALPHA);
+      end;
+   end;
 end;
 
 
@@ -186,7 +206,12 @@ begin
 
       filePath := filePathPrefix + IntToStr(i) + IntToStr(j) + '.png';
       pngImage := TPNGObject.Create();
-      pngImage.LoadFromFile(filePath);
+
+      //try
+      	pngImage.LoadFromFile(filePath);
+      //except
+      	//continue;
+      //end;
 
 
       if (cornerSize = 0) then cornerSize := pngImage.Width;
