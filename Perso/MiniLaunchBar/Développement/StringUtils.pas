@@ -12,10 +12,25 @@ implementation
 
 
 function SplitString(const Delimiter: Char; Input: string): TStringList;
+var i: Integer;
+	c: Char;
+  currentString: String;
 begin
 	result := TStringList.Create();
-  result.Delimiter := Delimiter;
-	result.DelimitedText := Input;
+
+  currentString := '';
+
+  for i := 1 to Length(Input) do begin
+  	c := Input[i];
+    if c = delimiter then begin
+      result.Add(currentString);
+      currentString := '';
+    end else begin
+    	currentString := currentString + c;
+    end;
+  end;
+
+  if currentString <> '' then result.Add(currentString);
 end;
 
 
