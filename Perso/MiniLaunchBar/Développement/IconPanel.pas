@@ -4,10 +4,12 @@ interface
 
 uses Windows, WNineSlicesPanel, Classes, WFileIcon, WImage, Logger, Contnrs, Controls,
 	Types, WComponent, ExtCtrls, Forms, SysUtils, Graphics, MathUtils, Imaging,
-  ShellAPI, WImageButton, Menus, User;
+  ShellAPI, WImageButton, Menus, User, StringUtils, EditFolderItemUnit;
 
 
 type
+
+	//TPopupMenuItemTag = ( miAdd, miDelete, miProperties
 
   TIconDragData = record
   	Icon: TWComponent;
@@ -31,18 +33,22 @@ type
       pBrowseButton: TWImageButton;
       pLastVisibleIconIndex: Integer;
 
+      function CreateFormPopupMenu():TPopupMenu;
       function GetInsertionIndexAtPoint(const aPoint: TPoint; replacementBehavior: Boolean):Integer;
-
       procedure iconDragData_timer(Sender: TObject);
       procedure icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure icon_click(sender: TObject);
-      procedure iconForm_paint(Sender: TObject);
-
-      procedure UpdateFolderItemsFromIcons();
-
-      //procedure BrowseButton_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      procedure iconForm_paint(Sender: TObject);   
+      procedure Self_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      procedure UpdateFolderItemsOrder();
       procedure BrowseButton_Click(Sender: TObject);
+      function GetComponentByID(const componentID: Integer): TWComponent;
+      
+      procedure MenuItem_Click_New(Sender: TObject);
+      procedure MenuItem_Click_Delete(Sender: TObject);
+			procedure MenuItem_Click_Properties(Sender: TObject);
+
 
   	public
 
@@ -75,6 +81,96 @@ begin
 
   pIcons := TObjectList.Create();
   pIcons.OwnsObjects := false;
+
+  self.OnMouseDown := Self_MouseDown;
+end;
+
+
+function TIconPanel.GetComponentByID(const componentID: Integer): TWComponent;
+var i: Integer;
+begin
+	for i := 0 to pIcons.Count do begin
+  	if TWComponent(pIcons[i]).ID = componentID then begin
+      result := TWComponent(pIcons[i]);
+      Exit;
+    end;
+  end;
+  result := nil;
+end;
+
+
+function TIconPanel.CreateFormPopupMenu;
+var menuItem: TMenuItem;
+begin
+  result := TPopupMenu.Create(self);
+
+  menuItem := TMenuItem.Create(result);
+  menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.NewShortcut');
+  menuItem.OnClick := MenuItem_Click_New;
+  result.Items.Add(menuItem);
+
+  menuItem := TMenuItem.Create(result);
+  menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.NewSeparator');
+  menuItem.OnClick := MenuItem_Click_New;
+  result.Items.Add(menuItem);
+end;
+
+
+procedure TIconPanel.MenuItem_Click_New(Sender: TObject);
+begin
+
+//
+end;
+
+
+procedure TIconPanel.MenuItem_Click_Delete(Sender: TObject);
+var component: TWComponent;
+	menuItem: TMenuItem;
+	folderItem: TFolderItem;
+  exclusions: TStringList;
+begin
+	menuItem := Sender as TMenuItem;
+
+  component := GetComponentByID(menuItem.Tag);
+  if component = nil then begin
+  	elog('Couldn''t find component with ID: ' + IntToStr(menuItem.Tag));
+    Exit;
+  end;
+
+  folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
+  TMain.Instance.User.AddExclusion(folderItem.FilePath);
+  //exclusions := SplitString(',', TMain.Instance.User.GetUserSetting('FolderItemExclusions'));
+
+  pIcons.Remove(TObject(component));
+
+	component.Destroy();
+  component := nil;
+
+  UpdateFolderItemsOrder();
+  UpdateLayout();
+end;
+
+
+procedure TIconPanel.MenuItem_Click_Properties(Sender: TObject);
+var folderItem: TFolderItem;
+  component: TWComponent;
+  form: TEditFolderItemForm;
+  hasChanged: Boolean;
+begin
+  component := GetComponentByID(TMenuItem(sender).Tag);
+  folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
+ 	hasChanged := TMain.Instance.User.EditFolderItem(folderItem);
+	if hasChanged then begin
+  	if component is TWFileIcon then begin
+    	TWFileIcon(component).FilePath := folderItem.FilePath;
+    end;
+  end;
+end;
+
+
+procedure TIconPanel.Self_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+	self.PopupMenu := CreateFormPopupMenu();
 end;
 
 
@@ -319,7 +415,7 @@ begin
       icon.Width := pIconSize;
       icon.Height := pIconSize;
       icon.Visible := false;
-      icon.OnClick := icon_click;
+      //icon.OnClick := icon_click;
       icon.OnMouseDown := icon_mouseDown;
       icon.OnMouseUp := icon_mouseUp;
 
@@ -349,7 +445,7 @@ begin
 end;
 
 
-procedure TIconPanel.UpdateFolderItemsFromIcons();
+procedure TIconPanel.UpdateFolderItemsOrder();
 var folderItemIDs: Array of Integer;
 	i: Integer;
 begin
@@ -357,12 +453,14 @@ begin
 	for i := 0 to pIcons.Count - 1 do begin
   	folderItemIDs[i] := TWComponent(pIcons[i]).Tag;
   end;
-  TMain.Instance.User.SetFolderItemsOrder(folderItemIDs);
+  TMain.Instance.User.ReorderAndDeleteFolderItems(folderItemIDs);
 end;
 
 
 procedure TIconPanel.icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
+	if Button <> mbLeft then Exit;
+
   if pIconDragData.Timer <> nil then pIconDragData.Timer.Enabled := false;
   pIconDragData.Started := false;
 
@@ -370,7 +468,7 @@ begin
 
   pIconDragData.Icon.Visible := true;
 
-  UpdateFolderItemsFromIcons();
+  UpdateFolderItemsOrder();
 end;
 
 
@@ -395,9 +493,9 @@ begin
       if pIconDragData.IconForm = nil then begin
       	pIconDragData.IconForm := TForm.Create(self);
         pIconDragData.IconForm.Visible := false;
-
         pIconDragData.IconForm.BorderStyle := bsNone;
         pIconDragData.IconForm.OnPaint := iconForm_paint;
+        SetTransparentForm(pIconDragData.IconForm.Handle, 128);
       end;
 
       pIconDragData.Icon.Visible := false;
@@ -492,6 +590,8 @@ procedure TIconPanel.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift
 var screenMouseLoc: TPoint;
 	icon: TWComponent;
   mouse: TMouse;
+  popupMenu: TPopupMenu;
+  menuItem: TMenuItem;
 begin
 	icon := Sender as TWComponent;
 
@@ -501,9 +601,28 @@ begin
   screenMouseLoc.Y := mouse.CursorPos.Y;
 
 	if Button = mbRight then begin
-//    ilog('Showing icon popup menu...');
-//
-//    iconPopupMenu.Popup(screenMouseLoc.X, screenMouseLoc.Y);
+    ilog('Showing icon popup menu...');
+
+    popupMenu := CreateFormPopupMenu();
+
+    menuItem := TMenuItem.Create(popupMenu);
+    menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.Delete');
+    menuItem.Tag := icon.ID;
+    menuItem.OnClick := MenuItem_Click_Delete;
+    popupMenu.Items.Add(menuItem);
+
+    menuItem := TMenuItem.Create(popupMenu);
+    menuItem.Caption := '-';
+    menuItem.Enabled := false;
+    popupMenu.Items.Add(menuItem);
+
+    menuItem := TMenuItem.Create(popupMenu);
+    menuItem.Caption := TMain.Instance.loc.GetString('IconPanel.PopupMenu.Properties');
+    menuItem.Tag := icon.ID;
+    menuItem.OnClick := MenuItem_Click_Properties;
+    popupMenu.Items.Add(menuItem);
+
+		popupMenu.Popup(screenMouseLoc.X, screenMouseLoc.Y);
   end else begin
   	ilog('Initializing drag data...');
 
