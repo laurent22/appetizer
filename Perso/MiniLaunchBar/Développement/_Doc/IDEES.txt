@@ -1,7 +1,0 @@
-- Notion de menu démarrer (icone: homme qui court)
-- Encrypte lorsqu'on ferme
-- Decrypte lorsqu'on ouvre
-- Editer raccourcis - lancer avec commande
-- TinyWidget
-- Quick search - see mac (+ index)
-- Ouvrir documents, music folder within TC
