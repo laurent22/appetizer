@@ -35,6 +35,7 @@ type
   public
     { Public declarations }
     property Icon: TIcon read pFileIcon;
+    procedure ReloadIcon();
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure DrawToCanvas(const targetCanvas: tCanvas; const x, y: Integer);
@@ -74,6 +75,14 @@ end;
 //	ButtonState := pbsNormal;
 //  Invalidate();
 //end;
+
+
+procedure TWFileIcon.ReloadIcon();
+begin
+  if pFileIcon <> nil then FreeAndNil(pFileIcon);
+  pFileIcon := GetFolderItemIcon(pFilePath, false);  
+  Invalidate();
+end;
 
 
 destructor TWFileIcon.Destroy();
@@ -148,7 +157,7 @@ begin
   if pFileIcon <> nil then FreeAndNil(pFileIcon);
 
   pFileIcon := GetFolderItemIcon(pFilePath, false);
-  
+
   Invalidate();
 end;
 
