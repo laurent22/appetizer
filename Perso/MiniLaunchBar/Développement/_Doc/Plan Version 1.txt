@@ -8,9 +8,6 @@
 - Fenêtre "à propos"
 
 - Boite de confirmation - cryptage: OK / Cancel / Settings... / Checkbox: Do not ask me
-
-- Lorsqu'on rafraichi les icones : enlever celles qui ne sont plus valides mais ne pas toucher aux autres
-				puis, si option 'automatique' - chercher les .exe
 				
 - Tooltip sur les icones
 

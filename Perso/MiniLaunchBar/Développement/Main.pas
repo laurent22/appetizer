@@ -112,7 +112,7 @@ begin
   // Initialize INI default settings
   // ---------------------------------------------------------------------------
 
-  pUser := TUser.Create(USER_SETTINGS_FILE_PATH);
+  pUser := TUser.Create(GetApplicationDirectory() + '\' + USER_SETTINGS_FILE_PATH);
   
   // ---------------------------------------------------------------------------
   // Initialize localization manager
@@ -129,7 +129,7 @@ begin
   // Initialize style
   // ---------------------------------------------------------------------------
 
-  skinPath := SKIN_FOLDER_PATH + '\Default';
+  skinPath := GetApplicationDirectory() + '\' + SKIN_FOLDER_PATH + '\Default';
 
 	style.barMainPanel.paddingTop := 8;
   style.barMainPanel.paddingBottom := 8;

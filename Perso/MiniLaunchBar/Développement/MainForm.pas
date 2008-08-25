@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
-  FileSystemUtils, WFileIcon, Menus, ControlTest, WComponent, WImage, MathUtils,
+  FileSystemUtils, WFileIcon, Menus, WComponent, WImage, MathUtils,
   Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc;
 
 type
@@ -70,6 +70,7 @@ type
       function GetButtonDataByID(ID: Integer): TOptionButtonDatum;
       procedure UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
       procedure CalculateOptionPanelOpenWidth();
+      procedure barInnerPanel_Resize(Sender: TObject);
 
     public
       { Public declarations }
@@ -84,7 +85,6 @@ var
   arrowButton: TWImageButton;
   button: TWImageButton;
   windowDragData: TDragData;
-  testwin: TForm2;
 
 
 implementation
@@ -98,6 +98,8 @@ procedure TMainForm.barBackground_down(Sender: TObject; Button: TMouseButton; Sh
 var
 	mouse: TMouse;
 begin
+	if Button <> mbLeft then Exit;
+
 	ilog('Form dragging started');
 
 	mouse := TMouse.Create();
@@ -111,6 +113,8 @@ end;
 
 procedure TMainForm.barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
+	if Button <> mbLeft then Exit;
+
 	ilog('Dragging stopped');
   windowDragData.dragging := false;
 end;
@@ -136,6 +140,8 @@ var bmp: TBitmap;
 begin
 	ilog('Updating form mask...');
 
+  if (csDestroying in ComponentState) then Exit;
+
   Width := barBackground.Width + OptionPanelTotalWidth;
   Height := barBackground.Height;
 
@@ -156,6 +162,7 @@ begin
     DrawNineSlices(bmp.Canvas, TMain.instance.skinPath + '\BarBackgroundRegion', optionPanelOpenWidth - optionPanelCurrentWidth, 0, bmp.Width - optionPanelOpenWidth + optionPanelCurrentWidth, bmp.Height);
 
     region := CreateRegion(Bmp);
+    
     SetWindowRGN(Handle, region, True);
   finally
     bmp.Free;
@@ -169,11 +176,9 @@ begin
 end;
 
 
-procedure TMainForm.UpdateLayout();
+procedure TMainForm.barInnerPanel_Resize;
 begin
-	ilog('Updating layout...');
-
-  barInnerPanel.UpdateLayout();
+	if (csDestroying in ComponentState) then Exit;
 
   barBackground.Width := barInnerPanel.Width + TMain.instance.style.barMainPanel.paddingH;
   barBackground.Height := barInnerPanel.Height + TMain.instance.style.barMainPanel.paddingV;
@@ -187,6 +192,17 @@ begin
 
   UpdateOptionPanel();
   UpdateFormMask();
+end;
+
+
+procedure TMainForm.UpdateLayout();
+begin
+	ilog('Updating layout...');
+
+  // Once barInnerPanel.UpdateLayout() has been called
+  // its OnResize event should be called, which in turns is going
+  // to trigger the update of the rest of the form
+  barInnerPanel.UpdateLayout();
 end;
 
 
@@ -580,11 +596,8 @@ begin
 
   barInnerPanel := TIconPanel.Create(self);
   barInnerPanel.Visible := true;
+  barInnerPanel.OnResize := barInnerPanel_Resize;
   barBackground.AddChild(barInnerPanel);
-
-  barInnerPanel.OnMouseDown := barBackground_down;
-  barInnerPanel.OnMouseUp := barBackground_up;
-  barInnerPanel.OnMouseMove := barBackground_move;
 
   { ARROW BUTTON }
 
