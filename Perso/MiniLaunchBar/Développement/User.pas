@@ -65,11 +65,13 @@ type
     	function GetUserSetting(const name: String): String;
       procedure SetUserSetting(const name: String; const value: String);
       procedure RefreshFolderItems();
+      procedure AddFolderItem(const folderItem: TFolderItem);
       function GetFolderItemAt(const iIndex: Word): TFolderItem;
       function GetFolderItemByID(const iFolderItemID: Integer): TFolderItem;
       function FolderItemCount(): Word;
       procedure ReorderAndDeleteFolderItems(const folderItemIDs: Array of Integer);
       constructor Create(const filePath: String);
+      function EditNewFolderItem(): TFolderItem;
       function EditFolderItem(const folderItem: TFolderItem): Boolean;
       procedure InvalidateFolderItems();
       procedure AddExclusion(const filePath: String);
@@ -215,6 +217,13 @@ begin
 end;
 
 
+procedure TUser.AddFolderItem;
+begin
+  pFolderItems.Add(TObject(folderItem));
+  InvalidateFolderItems();
+end;
+
+
 procedure TUser.InvalidateFolderItems();
 begin
   pSaveFolderItemsFlag := true;
@@ -332,6 +341,22 @@ begin
 
   pSaveFolderItemsFlag := true;
   ScheduleSave();
+end;
+
+
+function TUser.EditNewFolderItem(): TFolderItem;
+var folderItem: TFolderItem;
+	hasSaved: Boolean;
+begin
+	result := nil;
+	folderItem := TFolderItem.Create();
+
+  if EditFolderItem(folderItem) then begin
+    pFolderItems.Add(TObject(folderItem));
+    result := folderItem;
+  end else begin
+    FreeAndNil(folderItem);
+  end;
 end;
 
 
