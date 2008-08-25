@@ -8,7 +8,6 @@ type
 
 	TDirectoryContents = Array of String[255];
 
-
 function GetSystemDir(): TFileName;
 function GetExecutableSmallIcon(const filePath: String):TIcon;
 function GetExecutableLargeIcon(const filePath: String):TIcon;
@@ -89,7 +88,7 @@ var
 	rec : TSearchRec;
 	foundFilePath: String;
   tempResult: TStringList;
-  i: Word;
+  i: Integer;
   itemIsDirectory: Boolean;
   addIt: Boolean;
 begin
@@ -290,7 +289,7 @@ begin
     else if (fileExt = '.FOT') then iconIndex := 69
     else iconIndex := 0;
 
-    if ExtractIconEx(pchar(folderItemPath), iconIndex, hSmallIcon, hLargeIcon, 1) > 1 then
+    if ExtractIconEx(pchar(shell32Path), iconIndex, hLargeIcon, hSmallIcon, 1) > 1 then
     begin
       result := TIcon.Create();
       if returnSmallIcon then begin
