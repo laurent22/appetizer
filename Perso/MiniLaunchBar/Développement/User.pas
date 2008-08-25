@@ -3,7 +3,7 @@ unit User;
 interface
 
 uses XMLDoc, Logger, ComObj, MSXML2_TLB, SysUtils, ExtCtrls, Graphics, Classes,
-	FileSystemUtils, Windows, Contnrs, StringUtils;
+	FileSystemUtils, Windows, Contnrs, StringUtils, Forms, VersionInformation;
 
 
 
@@ -26,7 +26,8 @@ type
       IsSeparator: Boolean;
       property SmallIcon:TIcon read GetSmallIcon;
       property ResolvedFilePath:String read GetResolvedFilePath;
-
+      
+      procedure ClearCachedIcons();
       class function ResolveFilePath(const filePath: String):String;
     	constructor Create();
 
@@ -51,9 +52,12 @@ type
       pFolderItems: TObjectList;
       pSpecialFolderNames: TSpecialFolderNames;
       pSaveFolderItemsFlag: Boolean;
+      pEditFolderItemForm: TObject;
 
       procedure ScheduleSave();
       procedure ScheduleSave_Timer(Sender: TObject);
+      procedure SetExclusions(const value: TStringList);
+      function GetExclusions(): TStringList;
 
   	public
 
@@ -64,26 +68,32 @@ type
       function GetFolderItemAt(const iIndex: Word): TFolderItem;
       function GetFolderItemByID(const iFolderItemID: Integer): TFolderItem;
       function FolderItemCount(): Word;
-      procedure SetFolderItemsOrder(const folderItemIDs: Array of Integer);
+      procedure ReorderAndDeleteFolderItems(const folderItemIDs: Array of Integer);
       constructor Create(const filePath: String);
+      function EditFolderItem(const folderItem: TFolderItem): Boolean;
+      procedure InvalidateFolderItems();
+      procedure AddExclusion(const filePath: String);
+      property Exclusions: TStringList read GetExclusions write SetExclusions;
+
 
   end;
 
 
 const
 
-	DEFAULT_SETTINGS: Array[0..3] of Array[0..1] of String = (
+	DEFAULT_SETTINGS: Array[0..4] of Array[0..1] of String = (
 		('PortableAppsPath', 'd:\temp\Clef USB\PortableApps SMALL'),
     ('DocumentsPath', 'd:\temp\test portableapp\Documents'),
     ('Locale', 'en'),
-    ('isFirstFolderItemRefresh', 'true')
+    ('IsFirstFolderItemRefresh', 'true'),
+    ('FolderItemExclusions', '')
   );
 
 
 implementation
 
 
-
+uses Main, EditFolderItemUnit;
 
 
 
@@ -97,7 +107,14 @@ constructor TFolderItem.Create();
 begin
 	IsSeparator := false;
 	pUniqueID := pUniqueID + 1;
-	ID := pUniqueID; 
+	ID := pUniqueID;
+end;
+
+
+procedure TFolderItem.ClearCachedIcons();
+begin
+	if pSmallIcon = nil then Exit;
+  FreeAndNil(pSmallIcon);
 end;
 
 
@@ -198,29 +215,108 @@ begin
 end;
 
 
-procedure TUser.SetFolderItemsOrder(const folderItemIDs: Array of Integer);
-var newFolderItems: TObjectList;
-	i: Integer;
-	folderItem: TFolderItem;
-  doIt: Boolean;
+procedure TUser.InvalidateFolderItems();
 begin
-	if Length(folderItemIDs) <> pFolderItems.Count then begin
-    elog('TUser.SetFolderItemsOrder: number of IDs must match number of folder items.');
-    Exit;
-  end;
+  pSaveFolderItemsFlag := true;
+  ScheduleSave();
+end;
 
-  doIt := false;
-	for i := 0 to Length(folderItemIDs) - 1 do begin
-  	if folderItemIDs[i] <> TFolderItem(pFolderItems[i]).ID then begin
-    	doIt := true;
-      break;
+
+procedure TUser.SetExclusions(const value: TStringList);
+var s: String;
+	i: Integer;
+begin
+	s := '';
+	for i := 0 to value.Count - 1 do begin
+  	if s <> '' then s := s + ',';
+    s := s + value[i];
+  end;
+  
+  SetUserSetting('FolderItemExclusions', s);
+end;
+
+
+function TUser.GetExclusions(): TStringList;
+begin
+  result := SplitString(',', GetUserSetting('FolderItemExclusions'));
+end;
+
+
+procedure TUser.AddExclusion(const filePath: String);
+var exclusions: TStringList;
+	i: Integer;
+begin
+	exclusions := GetExclusions();
+
+  for i := 0 to exclusions.Count - 1 do begin
+  	if TFolderItem.ResolveFilePath(exclusions[i]) = TFolderItem.ResolveFilePath(filePath) then begin
+    	ilog('This file path is already in the exclusion list: ' + filePath);
+      Exit;
     end;
   end;
 
+  exclusions.Add(filePath);
+
+  SetExclusions(exclusions);  
+end;
+
+
+procedure TUser.ReorderAndDeleteFolderItems(const folderItemIDs: Array of Integer);
+var newFolderItems: TObjectList;
+	i, j: Integer;
+	folderItem: TFolderItem;
+  doIt, foundIt: Boolean;
+begin
+	doIt := false;
+
+  // ---------------------------------------------------------------------------
+  // Check if something needs to be updated
+  // ---------------------------------------------------------------------------
+	if Length(folderItemIDs) <> pFolderItems.Count then begin
+  	// If the number of folder items is different from the number of
+    // provided IDs - do the update
+  	doIt := true;
+  end else begin
+  	// If the order of the folder items is different from the order
+    // of the provided folder IDs - do the update
+    for i := 0 to Length(folderItemIDs) - 1 do begin
+      if folderItemIDs[i] <> TFolderItem(pFolderItems[i]).ID then begin
+        doIt := true;
+        break;
+      end;
+    end;
+  end;
+
+  // Quick exit if there's nothing to do
   if not doIt then Exit;
 
+  // Create the list that is going to hold the new folder items
 	newFolderItems := TObjectList.Create(false);
 
+  // ---------------------------------------------------------------------------
+  // Check if we need to delete some of the folder items (i.e. those that
+  // are missing from the list of IDs)
+  // ---------------------------------------------------------------------------
+  for i := pFolderItems.Count - 1 downto 0 do begin
+  	folderItem := TFolderItem(pFolderItems[i]);
+		foundIt := false;
+  	for j := 0 to Length(folderItemIDs) - 1 do begin
+    	if folderItem.ID = folderItemIDs[j] then begin
+      	foundIt := true;
+        break;
+      end;
+    end;
+
+    if not foundIt then begin
+    	// If we couldn't find it, remove the folder item from the list
+    	folderItem.Free();
+      pFolderItems.Remove(TObject(folderItem));
+    end;
+  end;
+
+  // ---------------------------------------------------------------------------
+  // Update the order of the folder items
+  // ---------------------------------------------------------------------------
 	for i := 0 to Length(folderItemIDs) - 1 do begin
   	folderItem := GetFolderItemByID(folderItemIDs[i]);
     if folderItem = nil then begin
@@ -236,6 +332,29 @@ begin
 
   pSaveFolderItemsFlag := true;
   ScheduleSave();
+end;
+
+
+function TUser.EditFolderItem(const folderItem: TFolderItem): Boolean;
+var form: TEditFolderItemForm;
+begin
+	if pEditFolderItemForm = nil then begin
+  	pEditFolderItemForm := TObject(TEditFolderItemForm.Create(TMain.Instance.mainForm));
+  end;
+
+  form := TEditFolderItemForm(pEditFolderItemForm);
+
+  form.Left := Round(Screen.Width / 2 - form.Width / 2);
+  form.Top := Round(Screen.Height / 2 - form.Height / 2);
+  form.LoadFolderItem(folderItem);
+  form.ShowModal();
+
+  if form.SaveButtonClicked then begin
+  	folderItem.ClearCachedIcons();
+    InvalidateFolderItems();
+  end;
+
+  result := form.SaveButtonClicked;
 end;
 
 
@@ -279,6 +398,7 @@ var
   documentFolderContent: TStringList;
   isFirstFolderItemRefresh: Boolean;
   documentPath: String;
+  versionInfo: TVersionInfo;
 begin
 	ilog('Refreshing folder items...');
 
@@ -289,29 +409,29 @@ begin
   // Get the list of excluded folder items
   // ---------------------------------------------------------------------------
 
-  SetUserSetting('folderItemExclusions', '');
-  exclusions := SplitString(',', GetUserSetting('folderItemExclusions'));
+  //SetUserSetting('FolderItemExclusions', '');
+  exclusions := SplitString(',', GetUserSetting('FolderItemExclusions'));
 
   // ---------------------------------------------------------------------------
   // Check if it's the first time that the application is launched
   // ---------------------------------------------------------------------------
 
-  isFirstFolderItemRefresh := GetUserSetting('isFirstFolderItemRefresh') = 'true';
-  if isFirstFolderItemRefresh then SetUserSetting('isFirstFolderItemRefresh', 'false');
+  isFirstFolderItemRefresh := GetUserSetting('IsFirstFolderItemRefresh') = 'true';
+  if isFirstFolderItemRefresh then SetUserSetting('IsFirstFolderItemRefresh', 'false');
 
   // ---------------------------------------------------------------------------
   // Remove files that no longer exist
   // ---------------------------------------------------------------------------
 
-	for i := pFolderItems.Count - 1 downto 0 do begin
-  	folderItem := TFolderItem(pFolderItems[i]);
-    if folderItem.IsSeparator then continue;
-    if (not FileExists(folderItem.FilePath)) and (not DirectoryExists(folderItem.FilePath)) then begin
-      wlog('Folder item doesn''t exist - removing it from the list: ' + folderItem.FilePath);
-      pFolderItems.Remove(TObject(folderItem));
-      changeFlag := true;
-    end;
-  end;
+//	for i := pFolderItems.Count - 1 downto 0 do begin
+//  	folderItem := TFolderItem(pFolderItems[i]);
+//    if folderItem.IsSeparator then continue;
+//    if (not FileExists(folderItem.FilePath)) and (not DirectoryExists(folderItem.FilePath)) then begin
+//      wlog('Folder item doesn''t exist - removing it from the list: ' + folderItem.FilePath);
+//      pFolderItems.Remove(TObject(folderItem));
+//      changeFlag := true;
+//    end;
+//  end;
 
 	// ---------------------------------------------------------------------------
   // Get content of PortableApps folder. We only lookup for executable files
@@ -382,9 +502,21 @@ begin
     if not skipIt then begin
     	// Creating the folder item and adding it to the list
       ilog('Adding new folder item: ' + filePath);
+
       folderItem := TFolderItem.Create();
-      folderItem.filePath := filePath;
+
       folderItem.Name := ExtractFileName(filePath);
+
+      try
+      	versionInfo := TVersionInfo.CreateFile(filePath);
+        if versionInfo.FileDescription <> '' then begin
+        	folderItem.Name := versionInfo.FileDescription;
+        end;
+      finally
+      	FreeAndNil(versionInfo);
+      end;    
+
+      folderItem.filePath := filePath;
       pFolderItems.Add(TObject(folderItem));
       changeFlag := true;
     end;
