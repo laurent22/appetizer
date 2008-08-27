@@ -12,6 +12,7 @@ function GetSystemDir(): TFileName;
 function GetExecutableSmallIcon(const filePath: String):TIcon;
 function GetExecutableLargeIcon(const filePath: String):TIcon;
 function GetApplicationDirectory():String;
+function GetApplicationDrive():String;
 function IsDirectory(const filePath: String): Boolean;
 function GetDirectoryContents(const filePath: String; const depth: Integer; const fileExtension: String): TStringList ;
 function GetFmtFileVersion(const FileName: String = '';
@@ -304,9 +305,16 @@ begin
 end;
 
 
-function GetApplicationDirectory():String;
+function GetApplicationDirectory;
 begin
 	GetDir(0, result);
+end;
+
+
+function GetApplicationDrive;
+begin
+	GetDir(0, result);
+  result := Copy(result, 0, 2);
 end;
 
 

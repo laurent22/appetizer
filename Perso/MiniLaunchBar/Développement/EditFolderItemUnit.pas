@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, User;
+  Dialogs, StdCtrls, User, FileCtrl;
 
 type
   TEditFolderItemForm = class(TForm)

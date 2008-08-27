@@ -4,7 +4,7 @@ interface
 
 uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
 	LocalizationUtils, IniFiles, Forms, Windows, Logger, Graphics, ShellAPI,
-  User;
+  User, FileCtrl, CmdLineParam;
 
 
 const
@@ -17,8 +17,6 @@ const
   EXCLUSION_FILE_PATH = SETTING_FOLDER_PATH + '\Exclusions.txt';
   INI_FILE_PATH = SETTING_FOLDER_PATH + '\Config.ini';
   USER_SETTINGS_FILE_PATH = SETTING_FOLDER_PATH + '\MiniLaunchBar.xml';
-
-  DEBUG = true;
 
 
 
@@ -61,20 +59,23 @@ type
 	TMain = class   
 
   private
-
     
     pUser: TUser;
 
   public
 
+  	Debug: Boolean;
   	Loc: TLocalizationUtils;
   	style: TStyle;
     skinPath: String;
     mainForm : TMainForm;
 
+    CommandLineArgs: TCmdLineParam;
+
   	constructor Create();
   	class function Instance: TMain;
 
+    procedure EjectDrive();
     function ErrorMessage(const text: String; const buttons: TMsgDlgButtons = [mbOk]): Integer;
     function ConfirmationMessage(const text: String; const buttons: TMsgDlgButtons = [mbYes, mbNo]): Integer;
    	property User: TUser read pUser;
@@ -107,20 +108,35 @@ begin
 end;
 
 
+procedure TMain.EjectDrive;
+begin
+	ShellExecute(0, 'open', PChar('RunDll32.exe'), 'shell32.dll,Control_RunDLL hotplug.dll', nil, SW_SHOWNORMAL) ;
+end;
+
+
 constructor TMain.Create();
+var applicationDirectory: String;
 begin
 
-	if DEBUG then begin
+	CommandLineArgs := TCmdLineParam.Create();
+
+  Debug := CommandLineArgs.HasArgument('debug');
+
+	if Debug then begin
   	ShowLoggerWindow();
   end;
 
+  applicationDirectory := GetApplicationDirectory();
+
   ilog('Version: ' + GetFmtFileVersion(ParamStr(0)));
+  ilog('Application directory: ' + applicationDirectory);
 
   // ---------------------------------------------------------------------------
   // Initialize INI default settings
   // ---------------------------------------------------------------------------
 
-  pUser := TUser.Create(GetApplicationDirectory() + '\' + USER_SETTINGS_FILE_PATH);
+  ForceDirectories(SETTING_FOLDER_PATH);
+  pUser := TUser.Create(applicationDirectory + '\' + USER_SETTINGS_FILE_PATH);
   
   // ---------------------------------------------------------------------------
   // Initialize localization manager
@@ -137,7 +153,7 @@ begin
   // Initialize style
   // ---------------------------------------------------------------------------
 
-  skinPath := GetApplicationDirectory() + '\' + SKIN_FOLDER_PATH + '\Default';
+  skinPath := applicationDirectory + '\' + SKIN_FOLDER_PATH + '\Default';
 
 	style.barMainPanel.paddingTop := 8;
   style.barMainPanel.paddingBottom := 8;
@@ -164,9 +180,6 @@ begin
   ilog('Skin folder: ' + skinPath);
   ilog('Locale folder: ' + LOCALE_FOLDER_PATH);
 end;
-
-
-
 
 
 end.

@@ -65,15 +65,21 @@ type
       optionButtonGap: Byte;
       optionButtonData: Array of TOptionButtonDatum;
 
+      pOptionButtonDataID: Integer;
+
       function OptionPanelTotalWidth():Word;
       function AddOptionButtonData():TOptionButtonDatum;
       function GetButtonDataByID(ID: Integer): TOptionButtonDatum;
       procedure UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
       procedure CalculateOptionPanelOpenWidth();
       procedure barInnerPanel_Resize(Sender: TObject);
+      function GetMaxWidth():Integer;
+      function GetIconPanelMaxWidth(): Integer;
 
     public
       { Public declarations }
+      property MaxWidth: Integer read GetMaxWidth;
+      property IconPanelMaxWidth: Integer read GetIconPanelMaxWidth;
       
   end;
 
@@ -125,7 +131,6 @@ var
 	mouse: TMouse;
 begin
 	if windowDragData.dragging then begin
-  	ilog('Dragging...');
     mouse := TMouse.Create();
     Left := windowDragData.startWindowPos.X + (mouse.CursorPos.X - windowDragData.startMousePos.X);
     Top := windowDragData.startWindowPos.Y + (mouse.CursorPos.Y - windowDragData.startMousePos.Y);
@@ -219,6 +224,23 @@ begin
 end;
 
 
+function TMainForm.GetIconPanelMaxWidth: Integer;
+begin
+	result := MaxWidth;
+  result := result - arrowButton.Width;
+  result := result - TMain.Instance.style.barMainPanel.paddingH;
+end;
+
+
+function TMainForm.GetMaxWidth: Integer;
+begin
+	result := Screen.WorkAreaWidth;
+  result := result - optionPanelOpenWidth - arrowButton.Width; 
+end;
+
+
+
+
 procedure TMainForm.optionButton_Click(Sender: TObject);
 var d: TOptionButtonDatum;
   button: TWImageButton;
@@ -233,16 +255,14 @@ begin
 
   if d.Name = 'Close' then begin
   	Close();
-  end else begin
-  if d.Name = 'Config' then begin
+  	Exit;
+  end;
 
-  end else begin
-  if d.Name = 'Help' then begin
-
-  end else begin
-  if d.Name = 'Encrypt' then begin
-
-  end; end; end; end;
+  if d.Name = 'Eject' then begin
+  	TMain.Instance.EjectDrive();
+    Close();
+    Exit;
+  end;
   
 end;
 
@@ -451,6 +471,9 @@ function TMainForm.AddOptionButtonData():TOptionButtonDatum;
 begin
 	SetLength(optionButtonData, Length(optionButtonData) + 1);
   result := TOptionButtonDatum.Create();
+  result.ID := pOptionButtonDataID;
+  result.Separator := false;
+  pOptionButtonDataID := pOptionButtonDataID + 1;
   optionButtonData[Length(optionButtonData) - 1] := result;
 end;
 
@@ -475,6 +498,7 @@ begin
 
 	DoubleBuffered := true;
   windowDragData.dragging := false;
+  pOptionButtonDataID := 1;
   
   optionPanelOpen := false;    
   optionPanelCloseWidth := 0;
@@ -489,43 +513,35 @@ begin
   // ---------------------------------------------------------------------------
 
   d := AddOptionButtonData();
-  d.ID := 4;
   d.Name := 'Close';
   d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
-  d.Separator := false;
 
   d := AddOptionButtonData();
-  d.ID := 5;
-  d.Name := 'Close';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
-  d.Separator := false;
+  d.Name := 'Eject';
+  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Eject.png';
 
-  d := AddOptionButtonData();
-  d.ID := 6;
-  d.Name := 'Close';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
-  d.Separator := false;
+//  d := AddOptionButtonData();
+//  d.Name := 'Close';
+//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+//
+//  d := AddOptionButtonData();
+//  d.Name := 'Close';
+//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
 
-  d := AddOptionButtonData();
-  d.Separator := true;
+//  d := AddOptionButtonData();
+//  d.Separator := true;
 
-  d := AddOptionButtonData();
-  d.ID := 1;
-  d.Name := 'Encrypt';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Key.png';
-  d.Separator := false;
+//  d := AddOptionButtonData();
+//  d.Name := 'Encrypt';
+//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Key.png';
 
-  d := AddOptionButtonData();
-  d.ID := 2;
-  d.Name := 'Config';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Config.png';
-	d.Separator := false;
+//  d := AddOptionButtonData();
+//  d.Name := 'Config';
+//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Config.png';
 
-  d := AddOptionButtonData();
-  d.ID := 3;
-  d.Name := 'Help';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Help.png';
-  d.Separator := false;
+//  d := AddOptionButtonData();
+//  d.Name := 'Help';
+//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Help.png';
 
   // ---------------------------------------------------------------------------
   // Create form controls
@@ -616,9 +632,10 @@ begin
   // Draw and update layout
   // ---------------------------------------------------------------------------
 
-  TMain.Instance.User.RefreshFolderItems();
+  TMain.Instance.User.AutomaticallyAddNewApps();
   barInnerPanel.LoadFolderItems();
 	UpdateLayout();
+  TMain.Instance.User.DoQuickLaunch();
 end;
 
 

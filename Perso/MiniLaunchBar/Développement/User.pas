@@ -3,7 +3,8 @@ unit User;
 interface
 
 uses XMLDoc, Logger, ComObj, MSXML2_TLB, SysUtils, ExtCtrls, Graphics, Classes,
-	FileSystemUtils, Windows, Contnrs, StringUtils, Forms, VersionInformation;
+	FileSystemUtils, Windows, Contnrs, StringUtils, Forms, VersionInformation,
+  ShellApi;
 
 
 
@@ -14,20 +15,28 @@ type
   	private
 
     	pSmallIcon: TIcon;
+      pFilePath: String;
     	class var pUniqueID : Integer;
       function GetSmallIcon(): TIcon;
       function GetResolvedFilePath(): String;
+      procedure SetFilePath(const value:String);
 
     public
 
-      FilePath: String;
+      WasAutomaticallyAdded: Boolean;
       ID: Integer;
       Name: String;
       IsSeparator: Boolean;
+      QuickLaunch: Boolean;
       property SmallIcon:TIcon read GetSmallIcon;
       property ResolvedFilePath:String read GetResolvedFilePath;
+      property FilePath:String read pFilePath write SetFilePath;
+      procedure AutoSetName();
+      procedure Launch(const silentErrors: Boolean = false);
       
       procedure ClearCachedIcons();
+      procedure AppendToXML(const xmlDoc:IXMLDomDocument; const parentElement:IXMLDOMElement);
+      procedure LoadFromXML(const xmlElement:IXMLDOMElement);
       class function ResolveFilePath(const filePath: String):String;
     	constructor Create();
 
@@ -57,14 +66,16 @@ type
       procedure ScheduleSave();
       procedure ScheduleSave_Timer(Sender: TObject);
       procedure SetExclusions(const value: TStringList);
-      function GetExclusions(): TStringList;
+      function GetAutoAddExclusions(): TStringList;
+      procedure RemoveAutoAddExclusion(const filePath:String);
 
   	public
 
     	procedure Save();
+      procedure DoQuickLaunch();
     	function GetUserSetting(const name: String): String;
       procedure SetUserSetting(const name: String; const value: String);
-      procedure RefreshFolderItems();
+      procedure AutomaticallyAddNewApps();
       procedure AddFolderItem(const folderItem: TFolderItem);
       function GetFolderItemAt(const iIndex: Word): TFolderItem;
       function GetFolderItemByID(const iFolderItemID: Integer): TFolderItem;
@@ -74,8 +85,10 @@ type
       function EditNewFolderItem(): TFolderItem;
       function EditFolderItem(const folderItem: TFolderItem): Boolean;
       procedure InvalidateFolderItems();
-      procedure AddExclusion(const filePath: String);
-      property Exclusions: TStringList read GetExclusions write SetExclusions;
+      procedure RemoveFolderItem(const folderItem: TFolderItem);
+      procedure AddAutoAddExclusion(const filePath: String);
+      property Exclusions: TStringList read GetAutoAddExclusions write SetExclusions;
+
 
 
   end;
@@ -88,7 +101,7 @@ const
     ('DocumentsPath', 'd:\temp\test portableapp\Documents'),
     ('Locale', 'en'),
     ('IsFirstFolderItemRefresh', 'true'),
-    ('FolderItemExclusions', '')
+    ('AutoAddExclusions', '')
   );
 
 
@@ -107,9 +120,13 @@ uses Main, EditFolderItemUnit;
 
 constructor TFolderItem.Create();
 begin
+	{ TODO: Clear icon cache when changing file path }
+
 	IsSeparator := false;
 	pUniqueID := pUniqueID + 1;
 	ID := pUniqueID;
+  WasAutomaticallyAdded := false;
+  QuickLaunch := false;
 end;
 
 
@@ -117,6 +134,29 @@ procedure TFolderItem.ClearCachedIcons();
 begin
 	if pSmallIcon = nil then Exit;
   FreeAndNil(pSmallIcon);
+end;
+
+
+procedure TFolderItem.AutoSetName;
+begin
+  Name := ExtractFileName(FilePath);
+
+  try
+    versionInfo := TVersionInfo.CreateFile(FilePath);
+    if versionInfo.FileDescription <> '' then begin
+      Name := versionInfo.FileDescription;
+    end;
+  finally
+    FreeAndNil(versionInfo);
+  end;
+end;
+
+
+procedure TFolderItem.SetFilePath;
+begin
+	if pFilePath = value then Exit;
+  pFilePath := value;
+  ClearCachedIcons();
 end;
 
 
@@ -137,7 +177,7 @@ end;
 
 class function TFolderItem.ResolveFilePath(const filePath: String):String;
 begin
-	// TODO: Convert special variables
+	{ TODO: Convert special variables }
 	result := filePath;
 end;
 
@@ -147,6 +187,41 @@ begin
 	result := ResolveFilePath(FilePath);
 end;
 
+
+procedure TFolderItem.AppendToXML;
+var eFolderItem: IXMLDOMElement;
+begin
+  eFolderItem := xmlDoc.createElement('FolderItem');
+  parentElement.appendChild(eFolderItem);
+
+  eFolderItem.setAttribute('name', Name);
+  eFolderItem.setAttribute('filePath', FilePath);
+  eFolderItem.setAttribute('isSeparator', StringConv(IsSeparator));
+  eFolderItem.setAttribute('wasAutomaticallyAdded', StringConv(WasAutomaticallyAdded));
+  eFolderItem.setAttribute('quickLaunch', StringConv(QuickLaunch));
+end;
+
+
+procedure TFolderItem.Launch;
+var r: Cardinal;
+begin
+  r := ShellExecute(Application.Handle, 'open', PChar(FilePath), nil, nil, SW_SHOWNORMAL);
+
+  if Integer(r) <= 32 then begin
+  	if not silentErrors then
+      TMain.Instance.ErrorMessage(TMain.Instance.Loc.GetString('FolderItem.LaunchFileError', IntToStr(r)));
+    elog('#' + IntToStr(r) + ': Couldn''t launch: ' + FilePath);
+  end;  
+end;
+
+procedure TFolderItem.LoadFromXML;
+begin
+  Name := xmlElement.getAttribute('name');
+  FilePath := xmlElement.getAttribute('filePath');
+  IsSeparator := xmlElement.getAttribute('isSeparator') = 'true';
+  WasAutomaticallyAdded := xmlElement.getAttribute('wasAutomaticallyAdded') = 'true';
+  QuickLaunch := xmlElement.getAttribute('quickLaunch') = 'true';
+end;
 
 
 
@@ -178,8 +253,10 @@ begin
   success := false;
 
  	pXML := CreateOleObject('Microsoft.XMLDOM') as IXMLDomDocument;
+
   if FileExists(filePath) then begin
   	success := pXML.Load(filePath);
+    
     if success then begin
     	ilog('Settings loaded successfully from: ' + pFilePath);
       ilog('Creating folder items...');
@@ -193,10 +270,8 @@ begin
           if eFolderItem.nodeName <> 'FolderItem' then continue;
 
           folderItem := TFolderItem.Create();
-          folderItem.Name := eFolderItem.getAttribute('name');
-          folderItem.FilePath := eFolderItem.getAttribute('filePath');
-          folderItem.IsSeparator := eFolderItem.getAttribute('isSeparator') = 'true';
-
+          folderItem.LoadFromXML(eFolderItem);
+          
           pFolderItems.Add(TObject(folderItem));
         end;
 
@@ -217,10 +292,35 @@ begin
 end;
 
 
+procedure TUser.DoQuickLaunch;
+var i: Integer;
+	folderItem: TFolderItem;
+  r: Cardinal;
+begin
+	for i := 0 to pFolderItems.Count - 1 do begin
+  	folderItem := TFolderItem(pFolderItems[i]);
+
+    if folderItem.QuickLaunch then begin
+    	folderItem.Launch();
+    end;
+
+  end;
+end;
+
 procedure TUser.AddFolderItem;
 begin
   pFolderItems.Add(TObject(folderItem));
   InvalidateFolderItems();
+end;
+
+
+procedure TUser.RemoveFolderItem;
+begin
+  if folderItem.WasAutomaticallyAdded then begin
+  	AddAutoAddExclusion(folderItem.FilePath);
+  end;                                       
+	pFolderItems.Remove(TObject(folderItem));
+  folderItem.Free();
 end;
 
 
@@ -241,21 +341,21 @@ begin
     s := s + value[i];
   end;
   
-  SetUserSetting('FolderItemExclusions', s);
+  SetUserSetting('AutoAddExclusions', s);
 end;
 
 
-function TUser.GetExclusions(): TStringList;
+function TUser.GetAutoAddExclusions;
 begin
-  result := SplitString(',', GetUserSetting('FolderItemExclusions'));
+  result := SplitString(',', GetUserSetting('AutoAddExclusions'));
 end;
 
 
-procedure TUser.AddExclusion(const filePath: String);
+procedure TUser.AddAutoAddExclusion;
 var exclusions: TStringList;
 	i: Integer;
 begin
-	exclusions := GetExclusions();
+	exclusions := GetAutoAddExclusions();
 
   for i := 0 to exclusions.Count - 1 do begin
   	if TFolderItem.ResolveFilePath(exclusions[i]) = TFolderItem.ResolveFilePath(filePath) then begin
@@ -266,7 +366,27 @@ begin
 
   exclusions.Add(filePath);
 
-  SetExclusions(exclusions);  
+  SetExclusions(exclusions);
+end;
+
+
+procedure TUser.RemoveAutoAddExclusion;
+var exclusions: TStringList;
+	i: Integer;
+  modified: Boolean;
+begin
+	exclusions := GetAutoAddExclusions();
+
+  modified := false;
+
+  for i := exclusions.Count - 1 downto 0 do begin
+  	if TFolderItem.ResolveFilePath(exclusions[i]) = TFolderItem.ResolveFilePath(filePath) then begin
+    	exclusions.Delete(i);
+      modified := true;
+    end;
+  end;
+
+  if modified then SetExclusions(exclusions);
 end;
 
 
@@ -318,8 +438,9 @@ begin
 
     if not foundIt then begin
     	// If we couldn't find it, remove the folder item from the list
-    	folderItem.Free();
-      pFolderItems.Remove(TObject(folderItem));
+      RemoveFolderItem(folderItem);
+    	//folderItem.Free();
+      //pFolderItems.Remove(TObject(folderItem));
     end;
   end;
 
@@ -352,7 +473,7 @@ begin
 	folderItem := TFolderItem.Create();
 
   if EditFolderItem(folderItem) then begin
-    pFolderItems.Add(TObject(folderItem));
+  	AddFolderItem(folderItem);
     result := folderItem;
   end else begin
     FreeAndNil(folderItem);
@@ -410,7 +531,7 @@ begin
 end;
 
 
-procedure TUser.RefreshFolderItems();
+procedure TUser.AutomaticallyAddNewApps();
 var
 	directoryContents: TStringList;
   i, j: Integer;
@@ -425,7 +546,7 @@ var
   documentPath: String;
   versionInfo: TVersionInfo;
 begin
-	ilog('Refreshing folder items...');
+	ilog('Looking for new applications..');
 
   // Set this flag to true whenever the FolderItems list is modified
   changeFlag := false;
@@ -435,7 +556,7 @@ begin
   // ---------------------------------------------------------------------------
 
   //SetUserSetting('FolderItemExclusions', '');
-  exclusions := SplitString(',', GetUserSetting('FolderItemExclusions'));
+  exclusions := SplitString(',', GetUserSetting('AutoAddExclusions'));
 
   // ---------------------------------------------------------------------------
   // Check if it's the first time that the application is launched
@@ -484,6 +605,7 @@ begin
   end;
 
 	// ---------------------------------------------------------------------------
+  // Automatically add new applications.
   // Process the list of folders and files, creating FolderItems objects
   // as needed.
   // ---------------------------------------------------------------------------
@@ -518,30 +640,21 @@ begin
 
     // Check if the file or folder is in the exclusion list
     for j := 0 to exclusions.Count - 1 do begin
-      if AnsiPos(exclusions[j], filePath) >= 1 then begin
+      if TFolderItem.ResolveFilePath(exclusions[j]) = TFolderItem.ResolveFilePath(filePath) then begin
         skipIt := true;
         break;
       end;
     end;
 
     if not skipIt then begin
-    	// Creating the folder item and adding it to the list
+    	// Create the folder item and add it to the list
       ilog('Adding new folder item: ' + filePath);
 
       folderItem := TFolderItem.Create();
 
-      folderItem.Name := ExtractFileName(filePath);
-
-      try
-      	versionInfo := TVersionInfo.CreateFile(filePath);
-        if versionInfo.FileDescription <> '' then begin
-        	folderItem.Name := versionInfo.FileDescription;
-        end;
-      finally
-      	FreeAndNil(versionInfo);
-      end;    
-
+      folderItem.WasAutomaticallyAdded := true;
       folderItem.filePath := filePath;
+      folderItem.AutoSetName();
       pFolderItems.Add(TObject(folderItem));
       changeFlag := true;
     end;
@@ -553,19 +666,19 @@ begin
   // exclusion list.
   // ---------------------------------------------------------------------------
 
-	for i := pFolderItems.Count - 1 downto 0 do begin
-  	folderItem := TFolderItem(pFolderItems[i]);
-    if folderItem.IsSeparator then continue;
-
-    for j := 0 to exclusions.Count - 1 do begin
-      if AnsiPos(exclusions[j], folderItem.FilePath) >= 1 then begin
-      	ilog('Folder item in exclusion list, so removing it: ' + folderItem.FilePath);
-        pFolderItems.Remove(TObject(folderItem));
-        changeFlag := true;
-      end;
-    end;
-
-  end;
+//	for i := pFolderItems.Count - 1 downto 0 do begin
+//  	folderItem := TFolderItem(pFolderItems[i]);
+//    if folderItem.IsSeparator then continue;
+//
+//    for j := 0 to exclusions.Count - 1 do begin
+//      if AnsiPos(exclusions[j], folderItem.FilePath) >= 1 then begin
+//      	ilog('Folder item in exclusion list, so removing it: ' + folderItem.FilePath);
+//        pFolderItems.Remove(TObject(folderItem));
+//        changeFlag := true;
+//      end;
+//    end;
+//
+//  end;
 
   // ---------------------------------------------------------------------------
   // If the FolderItems list has been changed, schedule a save operation
@@ -617,14 +730,8 @@ begin
     pXML.documentElement.appendChild(eFolderItems);
 
     for i := 0 to pFolderItems.Count - 1 do begin
-    	folderItem := TFolderItem(pFolderItems[i]);
-
-      eFolderItem := pXML.createElement('FolderItem');
-      eFolderItems.appendChild(eFolderItem);
-
-      eFolderItem.setAttribute('name', folderItem.Name);
-      eFolderItem.setAttribute('filePath', folderItem.FilePath);
-      eFolderItem.setAttribute('isSeparator', StringConv(folderItem.IsSeparator));
+    	folderItem := TFolderItem(pFolderItems[i]); 
+      folderItem.AppendToXML(pXML, eFolderItems);
     end;
 
   	pSaveFolderItemsFlag := false;

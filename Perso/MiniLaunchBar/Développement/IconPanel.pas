@@ -4,12 +4,11 @@ interface
 
 uses Windows, WNineSlicesPanel, Classes, WFileIcon, WImage, Logger, Contnrs, Controls,
 	Types, WComponent, ExtCtrls, Forms, SysUtils, Graphics, MathUtils, Imaging,
-  ShellAPI, WImageButton, Menus, User, StringUtils, EditFolderItemUnit;
+  ShellAPI, WImageButton, Menus, User, StringUtils, EditFolderItemUnit, SystemUtils;
 
 
 type
 
-	//TPopupMenuItemTag = ( miAdd, miDelete, miProperties
 
   TIconDragData = record
   	Icon: TWComponent;
@@ -44,13 +43,20 @@ type
       procedure UpdateFolderItemsOrder();
       procedure BrowseButton_Click(Sender: TObject);
       function GetComponentByID(const componentID: Integer): TWComponent;
+      procedure SizeChanged();
+
+      procedure BrowseButtonPopupMenu_Click(Sender: TObject);
       
       procedure MenuItem_Click_NewShortcut(Sender: TObject);
       procedure MenuItem_Click_NewSeparator(Sender: TObject);
       procedure MenuItem_Click_Delete(Sender: TObject);
 			procedure MenuItem_Click_Properties(Sender: TObject);
+      procedure MenuItem_Click_AddItToQuickLaunch(Sender: TObject);
 
       function FolderItemToComponent(const folderItem:TFolderItem): TWComponent;
+
+      procedure SetAutoSize(const value:Boolean);
+      function GetPotentialWidth():Integer;
 
   	public
 
@@ -58,6 +64,8 @@ type
       procedure LoadFolderItems();
       function IconCount():Word;
       procedure UpdateLayout();
+      property AutoSize:Boolean read pAutoSize write SetAutoSize;
+      property PotentialWidth:Integer read GetPotentialWidth;
 
 
   end;
@@ -118,17 +126,24 @@ begin
 end;
 
 
-procedure TIconPanel.MenuItem_Click_NewShortcut(Sender: TObject);
+procedure TIconPanel.MenuItem_Click_NewShortcut;
 var folderItem: TFolderItem;
 	component: TWComponent;
+  filePath: String;
 begin
- 	folderItem := TMain.Instance.User.EditNewFolderItem();
-  if folderItem <> nil then begin
-  	component := FolderItemToComponent(folderItem);
+	filePath := '';
+  if OpenSaveFileDialog(Application.Handle, '', TMain.Instance.Loc.GetString('Global.OpenDialog.AllFiles') + '|*.*', '', TMain.Instance.Loc.GetString('IconPanel.NewShorcut.OpenDialog'), filePath, true) then begin
+  	folderItem := TFolderItem.Create();
+    folderItem.FilePath := filePath;
+    folderItem.AutoSetName();
+    TMain.Instance.User.AddFolderItem(folderItem);
+
+    component := FolderItemToComponent(folderItem);
     AddChild(component);
     pIcons.Add(TObject(component));
+
+    UpdateLayout();
   end;
-  UpdateLayout();
 end;
 
 
@@ -143,6 +158,20 @@ begin
   AddChild(component);
   pIcons.Add(TObject(component));
   UpdateLayout();
+end;
+
+
+procedure TIconPanel.MenuItem_Click_AddItToQuickLaunch;
+var component: TWComponent;
+	menuItem: TMenuItem;
+	folderItem: TFolderItem;
+begin
+	menuItem := Sender as TMenuItem;
+	component := GetComponentByID(menuItem.Tag);
+  folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
+
+  folderItem.QuickLaunch := not folderItem.QuickLaunch;
+  TMain.Instance.User.InvalidateFolderItems();
 end;
 
 
@@ -163,9 +192,6 @@ begin
   	elog('Couldn''t find component with ID: ' + IntToStr(menuItem.Tag));
     Exit;
   end;
-
-  folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
-  TMain.Instance.User.AddExclusion(folderItem.FilePath);
 
   pIcons.Remove(TObject(component));
 
@@ -197,6 +223,21 @@ end;
 procedure TIconPanel.Self_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
 	self.PopupMenu := CreateFormPopupMenu();
+end;
+
+
+procedure TIconPanel.SetAutoSize;
+begin
+  if pAutoSize = value then Exit;
+
+	pAutoSize := value;
+	UpdateLayout();
+end;
+
+
+procedure TIconPanel.SizeChanged;
+begin
+ 
 end;
 
 
@@ -280,6 +321,37 @@ begin
 end;
 
 
+function TIconPanel.GetPotentialWidth;
+var i, iconX, iconY, iconMaxX: Integer;
+	component: TWComponent;
+begin
+	iconX := TMain.instance.style.barInnerPanel.paddingLeft;
+  iconY := TMain.instance.style.barInnerPanel.paddingTop;
+  iconMaxX := 0;
+
+  for i := 0 to (pIcons.Count - 1) do begin
+    component := TWComponent(pIcons[i]);
+
+  	component.Left := iconX;
+    component.Top := iconY;
+
+    iconX := iconX + component.Width;
+
+    iconMaxX := component.Left + component.Width;
+  end;
+
+  result := iconMaxX + TMain.Instance.style.barInnerPanel.paddingRight;
+end;
+
+
+procedure TIconPanel.BrowseButtonPopupMenu_Click(Sender: TObject);
+var folderItem: TFolderItem;
+begin
+	folderItem := TMain.Instance.User.GetFolderItemByID((Sender as TMenuItem).Tag);
+  folderItem.Launch();
+end;
+
+
 procedure TIconPanel.BrowseButton_Click(Sender: TObject);
 var pPopupMenu: TPopupMenu;
 	menuItem: TMenuItem;
@@ -305,12 +377,14 @@ begin
       menuItem.Enabled := false;
     end else begin
     	menuItem.Caption := folderItem.Name;
+      menuItem.Tag := folderItem.ID;
 
       if folderItem.SmallIcon <> nil then begin
       	menuItemBitmap := TBitmap.Create();
         menuItemBitmap.Width := 16;
         menuItemBitmap.Height := 16;
         menuItemBitmap.Canvas.Draw(0, 0, folderItem.SmallIcon);
+        menuItem.OnClick := BrowseButtonPopupMenu_Click;
       	menuItem.Bitmap := menuItemBitmap;
       end;
 
@@ -327,11 +401,12 @@ end;
 
 procedure TIconPanel.UpdateLayout();
 var iconX, iconY: Word;
-	i:Word;
+	i:Integer;
   icon: TWFileIcon;
   iconMaxX, iconAreaWidth: Integer;
   folderItem: TFolderItem;
   component: TWComponent;
+  potentialWidth: Integer;
 begin
   iconX := TMain.instance.style.barInnerPanel.paddingLeft;
   iconY := TMain.instance.style.barInnerPanel.paddingTop;
@@ -342,7 +417,6 @@ begin
     pBrowseButton.ImagePathPrefix := TMain.instance.skinPath + '\BrowseArrowButton';
     pBrowseButton.FitToContent();
     pBrowseButton.OnClick := BrowseButton_Click;
-    //pBrowseButton.OnMouseDown := BrowseButton_MouseDown;
     AddChild(pBrowseButton);
   end;
 
@@ -400,8 +474,10 @@ begin
 
   if iconAreaWidth < 10 then iconAreaWidth := 10;
 
+  potentialWidth := self.PotentialWidth;
+
   if pAutoSize then
-		Width := iconAreaWidth + TMain.instance.style.barInnerPanel.paddingH;
+		Width := potentialWidth;
   Height := pIconSize + TMain.instance.style.barInnerPanel.paddingV;
 
 
@@ -412,6 +488,17 @@ begin
   end else begin
   	pBrowseButton.Visible := false;
   end;
+
+
+  if (potentialWidth > TMain.Instance.mainForm.IconPanelMaxWidth) and (AutoSize) then begin
+  	Width := TMain.Instance.mainForm.IconPanelMaxWidth + 1;
+    AutoSize := false;
+  end else begin
+  	if (potentialWidth <= TMain.Instance.mainForm.IconPanelMaxWidth) and (not AutoSize) then begin
+    	AutoSize := true;
+    end;
+  end;
+  
 end;
 
 
@@ -428,6 +515,7 @@ begin
     icon.Visible := false;
     icon.OnMouseDown := icon_mouseDown;
     icon.OnMouseUp := icon_mouseUp;
+    icon.OnClick := icon_click;
 
     result := TWComponent(icon);
 
@@ -492,14 +580,14 @@ end;
 
 procedure TIconPanel.icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-	if Button <> mbLeft then Exit;
+	if Button <> mbLeft then Exit;  
+  if not pIconDragData.Started then Exit;
 
   if pIconDragData.Timer <> nil then pIconDragData.Timer.Enabled := false;
   pIconDragData.Started := false;
 
   if pIconDragData.IconForm <> nil then FreeAndNil(pIconDragData.IconForm);
-
-  pIconDragData.Icon.Visible := true;
+  if pIconDragData.Icon <> nil then pIconDragData.Icon.Visible := true;
 
   UpdateFolderItemsOrder();
 end;
@@ -625,6 +713,7 @@ var screenMouseLoc: TPoint;
   mouse: TMouse;
   popupMenu: TPopupMenu;
   menuItem: TMenuItem;
+  folderItem: TFolderItem;
 begin
 	component := Sender as TWComponent;
 
@@ -650,9 +739,18 @@ begin
     popupMenu.Items.Add(menuItem);
 
     if component is TWFileIcon then begin
+    	folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
+
       menuItem := TMenuItem.Create(popupMenu);
       menuItem.Caption := '-';
       menuItem.Enabled := false;
+      popupMenu.Items.Add(menuItem);
+
+      menuItem := TMenuItem.Create(popupMenu);
+      menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.AddToQuickLaunch');
+      menuItem.Tag := component.ID;
+      menuItem.Checked := folderItem.QuickLaunch;
+      menuItem.OnClick := MenuItem_Click_AddItToQuickLaunch;
       popupMenu.Items.Add(menuItem);
 
       menuItem := TMenuItem.Create(popupMenu);
@@ -689,25 +787,24 @@ end;
 
 
 procedure TIconPanel.icon_click(sender: TObject);
-//var icon: TWFileIcon;
-//	folderItem: TFolderItem;
-//  r: HINST;
+var icon: TWFileIcon;
+	folderItem: TFolderItem;
+  r: HINST;
 begin
-//	icon := Sender as TWFileIcon;
-//  folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
+  if pIconDragData.Started then Exit;
 
-  //ilog('Icon click: ' + folderItem.FilePath);
+	icon := Sender as TWFileIcon;
+  folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
 
-//  r := ShellExecute(Handle, 'open', PChar(folderItem.FilePath), nil, nil, SW_SHOWNORMAL) ;
-//	if Integer(r) <= 32 then begin
-//  	TMain.Instance.ErrorMessage(
-//    	TMain.Instance.Loc.GetString('MainForm.LaunchFileError', IntToStr(r))
-//    );
-//  end;
+  if folderItem = nil then begin
+  	elog('No FolderItem with ID: ' + IntToStr(icon.Tag));
+    Exit;
+  end;
+
+  ilog('Icon click: ' + folderItem.FilePath);
+
+  folderItem.Launch(); 
 end;
-
-
-
 
 
 end.

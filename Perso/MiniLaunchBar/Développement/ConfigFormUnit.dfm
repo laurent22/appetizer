@@ -18,19 +18,10 @@ object ConfigForm: TConfigForm
     Top = 8
     Width = 521
     Height = 329
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ExplicitWidth = 521
-      ExplicitHeight = 345
-      object Label1: TLabel
-        Left = 16
-        Top = 47
-        Width = 130
-        Height = 13
-        Caption = 'Always exclude these files:'
-      end
       object CheckBox1: TCheckBox
         Left = 16
         Top = 16
@@ -39,21 +30,10 @@ object ConfigForm: TConfigForm
         Caption = 'Auto-detect new applications'
         TabOrder = 0
       end
-      object Memo1: TMemo
-        Left = 16
-        Top = 72
-        Width = 480
-        Height = 209
-        Lines.Strings = (
-          'Memo1')
-        TabOrder = 1
-      end
     end
     object TabSheet3: TTabSheet
       Caption = 'Quick Launch'
       ImageIndex = 2
-      ExplicitWidth = 521
-      ExplicitHeight = 345
       object Label2: TLabel
         Left = 16
         Top = 16
