@@ -43,7 +43,6 @@ type
       procedure UpdateFolderItemsOrder();
       procedure BrowseButton_Click(Sender: TObject);
       function GetComponentByID(const componentID: Integer): TWComponent;
-      procedure SizeChanged();
 
       procedure BrowseButtonPopupMenu_Click(Sender: TObject);
       
@@ -134,7 +133,7 @@ begin
 	filePath := '';
   if OpenSaveFileDialog(Application.Handle, '', TMain.Instance.Loc.GetString('Global.OpenDialog.AllFiles') + '|*.*', '', TMain.Instance.Loc.GetString('IconPanel.NewShorcut.OpenDialog'), filePath, true) then begin
   	folderItem := TFolderItem.Create();
-    folderItem.FilePath := filePath;
+    folderItem.FilePath := TFolderItem.ConvertToRelativePath(filePath);
     folderItem.AutoSetName();
     TMain.Instance.User.AddFolderItem(folderItem);
 
@@ -178,8 +177,6 @@ end;
 procedure TIconPanel.MenuItem_Click_Delete(Sender: TObject);
 var component: TWComponent;
 	menuItem: TMenuItem;
-	folderItem: TFolderItem;
-  exclusions: TStringList;
 	answer: Integer;
 begin
 	answer := TMain.Instance.ConfirmationMessage(TMain.Instance.Loc.GetString('IconPanel.DeleteConfirmation'));
@@ -196,7 +193,6 @@ begin
   pIcons.Remove(TObject(component));
 
 	component.Destroy();
-  component := nil;
 
   UpdateFolderItemsOrder();
   UpdateLayout();
@@ -206,7 +202,6 @@ end;
 procedure TIconPanel.MenuItem_Click_Properties(Sender: TObject);
 var folderItem: TFolderItem;
   component: TWComponent;
-  form: TEditFolderItemForm;
   hasChanged: Boolean;
 begin
   component := GetComponentByID(TMenuItem(sender).Tag);
@@ -232,12 +227,6 @@ begin
 
 	pAutoSize := value;
 	UpdateLayout();
-end;
-
-
-procedure TIconPanel.SizeChanged;
-begin
- 
 end;
 
 
@@ -403,7 +392,7 @@ procedure TIconPanel.UpdateLayout();
 var iconX, iconY: Word;
 	i:Integer;
   icon: TWFileIcon;
-  iconMaxX, iconAreaWidth: Integer;
+  iconMaxX: Integer;
   folderItem: TFolderItem;
   component: TWComponent;
   potentialWidth: Integer;
@@ -426,8 +415,6 @@ begin
     component.Visible := false;
   end;
 
-  iconMaxX := 0;
-
   for i := 0 to (pIcons.Count - 1) do begin
   	if (i >= pIcons.Count) then break;
 
@@ -446,7 +433,7 @@ begin
     if icon is TWFileIcon then begin
       if icon.FilePath = '' then begin
         folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
-        icon.FilePath := folderItem.filePath;
+        icon.FilePath := folderItem.ResolvedFilePath;
         icon.OverlayImageUpPath := TMain.instance.skinPath + '\IconOverlayUp.png';
         icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
       end;
@@ -469,10 +456,6 @@ begin
 
   if pAutoSize then pLastVisibleIconIndex := pIcons.Count - 1;
 
-
-	iconAreaWidth := iconMaxX - TMain.instance.style.barInnerPanel.paddingLeft;
-
-  if iconAreaWidth < 10 then iconAreaWidth := 10;
 
   potentialWidth := self.PotentialWidth;
 
@@ -542,7 +525,6 @@ procedure TIconPanel.LoadFolderItems();
 var i: Integer;
   folderItem: TFolderItem;
   icon: TWFileIcon;
-  separatorImage: TWImage;
   component: TWComponent;
 begin
 	ilog('Creating icons');
@@ -789,9 +771,10 @@ end;
 procedure TIconPanel.icon_click(sender: TObject);
 var icon: TWFileIcon;
 	folderItem: TFolderItem;
-  r: HINST;
 begin
   if pIconDragData.Started then Exit;
+
+  pIconDragData.Timer.Enabled := false;
 
 	icon := Sender as TWFileIcon;
   folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);

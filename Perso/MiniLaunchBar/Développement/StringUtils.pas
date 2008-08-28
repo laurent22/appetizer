@@ -7,8 +7,29 @@ uses Classes, SysUtils, Variants;
 function IsInStringList(const iStringList: TStringList; const iString: String):Boolean;
 function StringConv(const v:Variant):String;
 function SplitString(const Delimiter: Char; Input: string): TStringList;
+function SearchAndReplace(sSrc, sLookFor, sReplaceWith: string): string;
 
 implementation
+
+
+
+// From http://www.chami.com/tips/delphi/010197D.html
+
+function SearchAndReplace;
+var
+  nPos,
+  nLenLookFor : integer;
+begin
+  nPos        := Pos( sLookFor, sSrc );
+  nLenLookFor := Length( sLookFor );
+  while(nPos > 0)do
+  begin
+    Delete( sSrc, nPos, nLenLookFor );
+    Insert( sReplaceWith, sSrc, nPos );
+    nPos := Pos( sLookFor, sSrc );
+  end;
+  Result := sSrc;
+end;
 
 
 function SplitString(const Delimiter: Char; Input: string): TStringList;

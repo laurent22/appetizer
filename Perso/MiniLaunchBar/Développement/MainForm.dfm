@@ -17,18 +17,12 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object iconPopupMenu: TPopupMenu
-    Left = 8
+  object trayIconPopupMenu: TPopupMenu
+    Left = 16
     Top = 8
-    object cddd1: TMenuItem
-      Caption = 'Remove'
-    end
-    object N1: TMenuItem
-      Caption = '-'
-      Enabled = False
-    end
-    object Properties1: TMenuItem
-      Caption = 'Properties'
+    object trayIconPopupMenuClose: TMenuItem
+      Caption = 'Close'
+      OnClick = trayIconPopupMenuCloseClick
     end
   end
 end

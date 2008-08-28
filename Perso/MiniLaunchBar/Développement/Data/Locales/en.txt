@@ -5,6 +5,7 @@ Global.Yes = Yes
 Global.No = No
 Global.Save = Save
 Global.OpenDialog.AllFiles = All files
+Global.Close = Close
 
 FolderItem.LaunchFileError = This file doesn't exist or has been deleted (Error %0%)
 

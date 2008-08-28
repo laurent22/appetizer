@@ -11,7 +11,6 @@ type
   private
     { Private declarations }
     pImagePathPrefix: String;
-    pBackgroundBitmap: TBitmap;
     pUpdateBitmap: Boolean;
     procedure SetImagePathPrefix(const Value: String);
 
@@ -47,7 +46,6 @@ end;
 
 
 procedure TWNineSlicesPanel.Paint();
-var bitmapRect: TRect;
 begin
 	inherited Paint;
 

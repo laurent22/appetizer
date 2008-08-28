@@ -69,6 +69,7 @@ type
   	style: TStyle;
     skinPath: String;
     mainForm : TMainForm;
+    IconsPath: String;
 
     CommandLineArgs: TCmdLineParam;
 
@@ -131,6 +132,10 @@ begin
   ilog('Version: ' + GetFmtFileVersion(ParamStr(0)));
   ilog('Application directory: ' + applicationDirectory);
 
+  if CommandLineArgs.HasArgument('logToFile') then begin
+  	LogToFile(SETTING_FOLDER_PATH + '\Log.txt');
+  end;
+
   // ---------------------------------------------------------------------------
   // Initialize INI default settings
   // ---------------------------------------------------------------------------
@@ -154,6 +159,7 @@ begin
   // ---------------------------------------------------------------------------
 
   skinPath := applicationDirectory + '\' + SKIN_FOLDER_PATH + '\Default';
+  IconsPath := skinPath + '\Icons';
 
 	style.barMainPanel.paddingTop := 8;
   style.barMainPanel.paddingBottom := 8;

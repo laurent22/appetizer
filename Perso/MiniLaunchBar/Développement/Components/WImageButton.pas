@@ -93,10 +93,11 @@ end;
 
 
 procedure TWImageButton.Paint();
-var rect: TRect;
-	imageToDraw: TPNGObject;
+var imageToDraw: TPNGObject;
 begin
 	inherited Paint();
+
+  imageToDraw := nil;
 
   if Enabled then begin
 
@@ -134,8 +135,6 @@ end;
 
 
 procedure TWImageButton.SetIconImagePath(const Value: String);
-var i, j, i2: Integer;
-  tempPNG : TPNGObject;
 begin
 	pIconImagePath := value;
   if pIconImage <> nil then pIconImage.Free();

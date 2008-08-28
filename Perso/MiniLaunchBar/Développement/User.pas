@@ -38,6 +38,7 @@ type
       procedure AppendToXML(const xmlDoc:IXMLDomDocument; const parentElement:IXMLDOMElement);
       procedure LoadFromXML(const xmlElement:IXMLDOMElement);
       class function ResolveFilePath(const filePath: String):String;
+      class function ConvertToRelativePath(const filePath: String): String;
     	constructor Create();
 
   end;
@@ -67,7 +68,6 @@ type
       procedure ScheduleSave_Timer(Sender: TObject);
       procedure SetExclusions(const value: TStringList);
       function GetAutoAddExclusions(): TStringList;
-      procedure RemoveAutoAddExclusion(const filePath:String);
 
   	public
 
@@ -87,6 +87,7 @@ type
       procedure InvalidateFolderItems();
       procedure RemoveFolderItem(const folderItem: TFolderItem);
       procedure AddAutoAddExclusion(const filePath: String);
+      procedure RemoveAutoAddExclusion(const filePath: String);
       property Exclusions: TStringList read GetAutoAddExclusions write SetExclusions;
 
 
@@ -97,8 +98,8 @@ type
 const
 
 	DEFAULT_SETTINGS: Array[0..4] of Array[0..1] of String = (
-		('PortableAppsPath', 'd:\temp\Clef USB\PortableApps SMALL'),
-    ('DocumentsPath', 'd:\temp\test portableapp\Documents'),
+		('PortableAppsPath', '%DRIVE%\PortableApps'),
+    ('DocumentsPath', '%DRIVE%\Documents'),
     ('Locale', 'en'),
     ('IsFirstFolderItemRefresh', 'true'),
     ('AutoAddExclusions', '')
@@ -137,12 +138,21 @@ begin
 end;
 
 
+class function TFolderItem.ConvertToRelativePath;
+begin
+  result := Trim(filePath);
+  if UpperCase(Copy(result, 1, 2)) = UpperCase(GetApplicationDrive()) then begin
+  	result := '%DRIVE%' + Copy(result, 3, Length(result));
+  end;
+end;
+
+
 procedure TFolderItem.AutoSetName;
 begin
-  Name := ExtractFileName(FilePath);
+  Name := ExtractFileName(ResolvedFilePath);
 
   try
-    versionInfo := TVersionInfo.CreateFile(FilePath);
+    versionInfo := TVersionInfo.CreateFile(ResolvedFilePath);
     if versionInfo.FileDescription <> '' then begin
       Name := versionInfo.FileDescription;
     end;
@@ -171,14 +181,14 @@ begin
     Exit;
   end;
 
-  result := GetFolderItemIcon(FilePath, true);
+  result := GetFolderItemIcon(ResolvedFilePath, true);
 end;
 
 
 class function TFolderItem.ResolveFilePath(const filePath: String):String;
 begin
-	{ TODO: Convert special variables }
 	result := filePath;
+  result := SearchAndReplace(filePath, '%DRIVE%', GetApplicationDrive());
 end;
 
 
@@ -205,7 +215,7 @@ end;
 procedure TFolderItem.Launch;
 var r: Cardinal;
 begin
-  r := ShellExecute(Application.Handle, 'open', PChar(FilePath), nil, nil, SW_SHOWNORMAL);
+  r := ShellExecute(Application.Handle, 'open', PChar(ResolvedFilePath), nil, nil, SW_SHOWNORMAL);
 
   if Integer(r) <= 32 then begin
   	if not silentErrors then
@@ -295,7 +305,6 @@ end;
 procedure TUser.DoQuickLaunch;
 var i: Integer;
 	folderItem: TFolderItem;
-  r: Cardinal;
 begin
 	for i := 0 to pFolderItems.Count - 1 do begin
   	folderItem := TFolderItem(pFolderItems[i]);
@@ -467,7 +476,6 @@ end;
 
 function TUser.EditNewFolderItem(): TFolderItem;
 var folderItem: TFolderItem;
-	hasSaved: Boolean;
 begin
 	result := nil;
 	folderItem := TFolderItem.Create();
@@ -544,7 +552,6 @@ var
   documentFolderContent: TStringList;
   isFirstFolderItemRefresh: Boolean;
   documentPath: String;
-  versionInfo: TVersionInfo;
 begin
 	ilog('Looking for new applications..');
 
@@ -584,19 +591,19 @@ begin
   // in the subfolders of the PortableApps folder
   // ---------------------------------------------------------------------------
 
-	directoryContents := GetDirectoryContents(GetUserSetting('PortableAppsPath'), 1, 'exe');
+	directoryContents := GetDirectoryContents(TFolderItem.ResolveFilePath(GetUserSetting('PortableAppsPath')), 1, 'exe');
 
 	// ---------------------------------------------------------------------------
   // Check if the document folder exists and if so, gets its subfolders
   // and add them to the list of folder items to process
   // ---------------------------------------------------------------------------
 
-  documentPath := GetUserSetting('DocumentsPath');
+  documentPath := TFolderItem.ResolveFilePath(GetUserSetting('DocumentsPath'));
 
   if DirectoryExists(documentPath) then begin
-    documentFolderContent := GetDirectoryContents(GetUserSetting('DocumentsPath'), 0, '*');
+    documentFolderContent := GetDirectoryContents(documentPath, 0, '*');
 
-    directoryContents.Add(GetUserSetting('DocumentsPath'));
+    directoryContents.Add(documentPath);
 
     for i := 0 to documentFolderContent.Count - 1 do begin
       if not DirectoryExists(documentFolderContent[i]) then continue;
@@ -614,7 +621,7 @@ begin
     filePath := directoryContents[i];
     fileExtension := ExtractFileExt(filePath);
 
-    if (isFirstFolderItemRefresh) and (filePath = GetUserSetting('DocumentsPath')) then begin
+    if (isFirstFolderItemRefresh) and (filePath = documentPath) then begin
     	// The first time the application is launched, we add a separator between
       // the executables and the document folders. The separator can be removed
       // and won't be added.
@@ -653,7 +660,7 @@ begin
       folderItem := TFolderItem.Create();
 
       folderItem.WasAutomaticallyAdded := true;
-      folderItem.filePath := filePath;
+      folderItem.FilePath := TFolderItem.ConvertToRelativePath(filePath);
       folderItem.AutoSetName();
       pFolderItems.Add(TObject(folderItem));
       changeFlag := true;
@@ -709,7 +716,7 @@ end;
 
 
 procedure TUser.Save();
-var eFolderItems, eFolderItem: IXMLDOMElement;
+var eFolderItems: IXMLDOMElement;
 	i: Integer;
   folderItem: TFolderItem;
 begin

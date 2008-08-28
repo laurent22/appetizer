@@ -27,13 +27,8 @@ uses Logger;
 
 
 procedure TWButtonBase.MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-var mouse: TMouse;
 begin
   inherited;
-
-  //self.MouseCapture := true;
-
-  //ilog('DOWN');
   Invalidate();
 end;
 

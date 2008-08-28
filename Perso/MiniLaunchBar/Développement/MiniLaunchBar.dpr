@@ -27,13 +27,15 @@ uses
   VersionInformation in 'VersionInformation.pas',
   ConfigFormUnit in 'ConfigFormUnit.pas' {ConfigForm},
   SystemUtils in 'SystemUtils.pas',
-  CmdLineParam in 'CmdLineParam.pas';
+  CmdLineParam in 'CmdLineParam.pas',
+  Logger in 'Logger.pas';
 
 {$R *.res}
 {$R WindowsXP\WindowsXP.RES}
 
 begin
   Application.Initialize;
+  Application.Title := 'Mini Launch Bar';
   Application.CreateForm(TMainForm, theMainForm);
   Application.Run;
 end.

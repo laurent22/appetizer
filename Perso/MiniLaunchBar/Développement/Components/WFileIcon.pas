@@ -94,9 +94,7 @@ end;
 
 
 procedure TWFileIcon.DrawToCanvas(const targetCanvas: tCanvas; const x, y: Integer);
-var
-	rect: TRect;
-  overlayToDraw: TPNGObject;
+var overlayToDraw: TPNGObject;
 begin
 	overlayToDraw := nil;
 

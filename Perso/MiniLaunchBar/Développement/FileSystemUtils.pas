@@ -13,7 +13,6 @@ function GetExecutableSmallIcon(const filePath: String):TIcon;
 function GetExecutableLargeIcon(const filePath: String):TIcon;
 function GetApplicationDirectory():String;
 function GetApplicationDrive():String;
-function IsDirectory(const filePath: String): Boolean;
 function GetDirectoryContents(const filePath: String; const depth: Integer; const fileExtension: String): TStringList ;
 function GetFmtFileVersion(const FileName: String = '';
 const Fmt: String = '%d.%d.%d.%d'): String;
@@ -41,7 +40,7 @@ var
 begin
   Result := TIcon.Create;
 
-  filename := ExcludeTrailingBackslash(aFilename);
+  filename := ExcludeTrailingPathDelimiter(aFilename);
 
   if FileExists(filename + '\Desktop.ini') then begin
   	iniFile := TIniFile.Create(filename + '\Desktop.ini');
@@ -77,13 +76,6 @@ begin
 end;
 
 
-
-function IsDirectory(const filePath: String): Boolean;
-begin
-	result := DirectoryExists(filePath);
-end;
-
-
 function GetDirectoryContents(const filePath: String; const depth: Integer; const fileExtension: String): TStringList ;
 var
 	rec : TSearchRec;
@@ -95,7 +87,7 @@ var
 begin
 	result := TStringList.Create();
   
-  if not IsDirectory(filePath) then Exit;
+  if not DirectoryExists(filePath) then Exit;
 
   if findFirst(filePath + '\*.*', faAnyFile, rec) = 0 then begin
     try
@@ -144,7 +136,6 @@ function GetExecutableSmallIcon(const filePath: String):TIcon;
 var
   largeIcon : Hicon;
   smallIcon : Hicon;
-  FileInfo: TSHFileInfo;
 begin
    ExtractIconEx(PChar(filePath), 0, LargeIcon, SmallIcon, 1);
    if SmallIcon <= 1 then begin
@@ -175,8 +166,7 @@ end;
 
 
 function GetDocumentIcon(const filePath: String; const returnSmallIcon: Boolean): TIcon;
-var buffer: array[0..2048] of char;
-	hIcon: Windows.HICON;
+var hIcon: Windows.HICON;
   shfi: TShFileInfo;
 begin
   if returnSmallIcon then begin
@@ -232,7 +222,7 @@ begin
   // If the folder item is a directory
   // ---------------------------------------------------------------------------
 
-  if IsDirectory(folderItemPath) then begin
+  if DirectoryExists(folderItemPath) then begin
   	result := GetFolderIcon(folderItemPath, not returnSmallIcon);
   	Exit;
   end;
@@ -267,7 +257,7 @@ begin
 
   if (result = nil) then begin
     try
-      shell32Path := IncludeTrailingBackslash(GetSystemDir) + 'SHELL32.DLL';
+      shell32Path := IncludeTrailingPathDelimiter(GetSystemDir) + 'SHELL32.DLL';
     except
       shell32Path := 'C:\WINDOWS\SYSTEM\SHELL32.DLL';
     end;
@@ -307,14 +297,13 @@ end;
 
 function GetApplicationDirectory;
 begin
-	GetDir(0, result);
+	result := ExcludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
 end;
 
 
 function GetApplicationDrive;
 begin
-	GetDir(0, result);
-  result := Copy(result, 0, 2);
+	result := ExtractFileDrive(ParamStr(0));
 end;
 
 

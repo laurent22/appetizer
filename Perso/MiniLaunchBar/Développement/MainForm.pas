@@ -8,6 +8,13 @@ uses
   FileSystemUtils, WFileIcon, Menus, WComponent, WImage, MathUtils,
   Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc;
 
+
+const
+
+	Wm_CallBackMessage = wm_user + 1;
+  APPLICATION_TITLE = 'Mini Launch Bar';
+
+
 type
 
   TDragData = record
@@ -30,10 +37,8 @@ type
 
   
   TMainForm = class(TForm)
-    iconPopupMenu: TPopupMenu;
-    cddd1: TMenuItem;
-    N1: TMenuItem;
-    Properties1: TMenuItem;
+    trayIconPopupMenu: TPopupMenu;
+    trayIconPopupMenuClose: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -49,6 +54,7 @@ type
     procedure UpdateOptionPanel();
     procedure optionButton_Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure trayIconPopupMenuCloseClick(Sender: TObject);
 
     private
       { Private declarations }
@@ -67,6 +73,10 @@ type
 
       pOptionButtonDataID: Integer;
 
+      pNotifyIconData : TNotifyIconData;
+
+      procedure ShowPopupMenu(f : TForm; p : TPopupMenu);
+      procedure AppHideInTrayIcon(sender: TObject);
       function OptionPanelTotalWidth():Word;
       function AddOptionButtonData():TOptionButtonDatum;
       function GetButtonDataByID(ID: Integer): TOptionButtonDatum;
@@ -75,6 +85,7 @@ type
       procedure barInnerPanel_Resize(Sender: TObject);
       function GetMaxWidth():Integer;
       function GetIconPanelMaxWidth(): Integer;
+      procedure WMCallBackMessage(var msg : TMessage); message Wm_CallBackMessage;
 
     public
       { Public declarations }
@@ -97,7 +108,7 @@ implementation
 
 {$R *.dfm}
 
-uses Main;
+uses Main, DebugWindow;
 
 
 procedure TMainForm.barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -319,6 +330,12 @@ begin
 end;
 
 
+procedure TMainForm.trayIconPopupMenuCloseClick(Sender: TObject);
+begin
+	Close();
+end;
+
+
 procedure TMainForm.UpdateOptionButtonsLayout(const cornerX, cornerY: Integer);
 var buttonX, buttonY: Integer;
 	buttonData: TOptionButtonDatum;
@@ -478,8 +495,60 @@ begin
 end;
 
 
+procedure TMainForm.AppHideInTrayIcon;
+begin
+  Visible := FALSE;
+end;
+
+
+procedure TMainForm.ShowPopupMenu(f : TForm; p : TPopupMenu);
+var
+  pt : TPoint;
+begin
+  GetCursorPos(pt);
+  SetForegroundWindow(f.handle);
+  p.Popup(pt.x, pt.y);
+end;
+
+
+
+procedure TMainForm.WMCallBackMessage;
+var Owner : HWND;
+begin
+  case msg.lParam of
+
+    Wm_RButtonDown : begin
+    	ShowPopupMenu(self, trayIconPopupMenu);
+    end;
+
+    Wm_LButtonDown : begin
+      if not Application.Active then begin
+        Visible := TRUE;
+        Application.Restore;
+        Application.BringToFront;
+      end else begin
+        Visible := not Visible;
+        if Visible then begin
+          Application.Restore;
+          Application.BringToFront;
+        end else begin
+          Application.Minimize;
+          Visible := FALSE;
+        end;
+      end;
+      Owner := GetWindow(Handle, GW_OWNER);
+      ShowWindow(Owner, SW_HIDE);
+    end;
+
+    Wm_LButtonDblClk : ;
+    Wm_MouseMove : ;
+  end;
+end;
+
+
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+	Shell_NotifyIcon(NIM_DELETE, @pNotifyIconData);
   TMain.Instance.User.Save();
 end;
 
@@ -487,6 +556,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
 var optionButton: TWImageButton;
 	i: Word;
   d: TOptionButtonDatum;
+  applicationIcon: TIcon;
 begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
@@ -507,6 +577,47 @@ begin
   optionPanelCurrentWidth := optionPanelCloseWidth;
 
   optionButtonGap := 3;
+
+  applicationIcon := TIcon.Create();
+  applicationIcon.LoadFromFile(TMain.Instance.IconsPath + '\Application.ico');
+  Icon := applicationIcon;
+  Application.Icon := applicationIcon;
+
+  // ---------------------------------------------------------------------------
+  // Hide form in tray
+  // ---------------------------------------------------------------------------
+    
+  Application.OnMinimize := AppHideInTrayIcon;
+
+  // on initialise la structure TNotifyIconData
+  with pNotifyIconData do begin
+    cbSize := sizeof(pNotifyIconData);                       // taille de la structure
+    wnd := handle;                               // fenêtre du Tray Icon
+    uID := 1;
+    uCallBackMessage := wm_CallBackMessage;      // message envoyé par le système
+    hIcon := applicationIcon.handle;                        // l'îcône du Tray Icon
+    szTip := APPLICATION_TITLE;                   // Message d'aide
+    uFlags := nif_message or nif_Icon or nif_tip;// Indique que notre Tray Icon
+                                               	// reçoit un message,
+                                               // a une icône et un conseil
+  end;
+  
+  // enregistre le Tray Icon
+  Shell_NotifyIcon(NIM_ADD, @pNotifyIconData);
+
+	// cache l'application
+  //if not TMain.Instance.CommandLineArgs.HasArgument('showInTaskBar') then
+  //	ShowWindow(Application.Handle, SW_HIDE);
+
+  { TODO: A corriger }
+  ShowWindow(GetWindow(Application.Handle, GW_OWNER), SW_HIDE);
+
+
+  // ---------------------------------------------------------------------------
+  // Localization
+  // ---------------------------------------------------------------------------
+
+  trayIconPopupMenuClose.Caption := TMain.Instance.Loc.GetString('Global.Close');
 
   // ---------------------------------------------------------------------------
   // Initialize option buttons' data

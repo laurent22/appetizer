@@ -185,15 +185,12 @@ end;
 
 procedure DrawNineSlices(const canvas: TCanvas; const filePathPrefix: String; const x, y, targetWidth, targetHeight: Integer);
 var
+	cornerSize: Integer;
 	i, j: Byte;
   filePath: String;
   pngImage: TPNGObject;
-  bmpImage: TBitmap;
   targetRect: TRect;
-  cornerSize: Word;
 begin
-
-	cornerSize := targetWidth;
 
 	cornerSize := 0;
 	targetRect.Left := 0;

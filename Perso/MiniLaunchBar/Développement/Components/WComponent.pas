@@ -144,6 +144,7 @@ class function TWComponent.GetComponentByID(const componentID: Integer): TWCompo
 begin
   // TODO. But need to keep a reference to every created component
   // so how do we clear the reference once it's not needed?
+  result := nil;
 end;
 
 
