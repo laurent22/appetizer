@@ -522,20 +522,7 @@ begin
     end;
 
     Wm_LButtonDown : begin
-      if not Application.Active then begin
-        Visible := TRUE;
-        Application.Restore;
-        Application.BringToFront;
-      end else begin
-        Visible := not Visible;
-        if Visible then begin
-          Application.Restore;
-          Application.BringToFront;
-        end else begin
-          Application.Minimize;
-          Visible := FALSE;
-        end;
-      end;
+    	Visible := not Visible;
       Owner := GetWindow(Handle, GW_OWNER);
       ShowWindow(Owner, SW_HIDE);
     end;
@@ -604,14 +591,6 @@ begin
   
   // enregistre le Tray Icon
   Shell_NotifyIcon(NIM_ADD, @pNotifyIconData);
-
-	// cache l'application
-  //if not TMain.Instance.CommandLineArgs.HasArgument('showInTaskBar') then
-  //	ShowWindow(Application.Handle, SW_HIDE);
-
-  { TODO: A corriger }
-  ShowWindow(GetWindow(Application.Handle, GW_OWNER), SW_HIDE);
-
 
   // ---------------------------------------------------------------------------
   // Localization
@@ -747,6 +726,9 @@ begin
   barInnerPanel.LoadFolderItems();
 	UpdateLayout();
   TMain.Instance.User.DoQuickLaunch();
+
+  Visible := true;
+  ShowWindow(Application.Handle, SW_HIDE);
 end;
 
 
