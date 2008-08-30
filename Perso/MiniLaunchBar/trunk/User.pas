@@ -97,7 +97,7 @@ type
 
 const
 
-	DEFAULT_SETTINGS: Array[0..4] of Array[0..1] of String = (
+	DEFAULT_SETTINGS: Array[0..5] of Array[0..1] of String = (
 		('PortableAppsPath', '%DRIVE%\PortableApps'),
     ('DocumentsPath', '%DRIVE%\Documents'),
     ('Locale', 'en'),
