@@ -56,10 +56,22 @@ type
     paddingV: Integer;
   end;
 
+  TIconTooltipStyle = record
+    paddingLeft: Integer;
+    paddingRight: Integer;
+    paddingTop: Integer;
+    paddingBottom: Integer;
+    paddingH: Integer;
+    paddingV: Integer;
+    FontColor: TColor;
+    FontStyles: TFontStyles;
+  end;
+
   TStyle = record
     barMainPanel: TBarMainPanelStyle;
     barInnerPanel: TBarInnerPanelStyle;
     optionPanel: TOptionPanelStyle;
+    IconTooltip: TIconTooltipStyle;
   end;
 
 
@@ -182,6 +194,15 @@ begin
   Style.optionPanel.paddingRight := 7;
   Style.optionPanel.paddingH := Style.optionPanel.paddingLeft + Style.optionPanel.paddingRight;
   Style.optionPanel.paddingV := Style.optionPanel.paddingTop + Style.optionPanel.paddingBottom;
+
+	Style.IconTooltip.paddingTop := 4;
+  Style.IconTooltip.paddingBottom := 4;
+  Style.IconTooltip.paddingLeft := 6;
+  Style.IconTooltip.paddingRight := 6;
+  Style.IconTooltip.paddingH := Style.IconTooltip.paddingLeft + Style.IconTooltip.paddingRight;
+  Style.IconTooltip.paddingV := Style.IconTooltip.paddingTop + Style.IconTooltip.paddingBottom;
+  Style.IconTooltip.FontColor := clBlack;
+  Style.IconTooltip.FontStyles := [fsBold];
 
 	ilog('Settings folder: ' + FilePaths.SettingsDirectory);
   ilog('Skin folder: ' + FilePaths.SkinDirectory);

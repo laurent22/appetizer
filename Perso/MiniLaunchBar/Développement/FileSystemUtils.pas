@@ -76,6 +76,7 @@ begin
 end;
 
 
+
 function GetDirectoryContents(const filePath: String; const depth: Integer; const fileExtension: String): TStringList ;
 var
 	rec : TSearchRec;
@@ -204,9 +205,9 @@ end;
   the most appropriate method depending on the folder item type, whether
   it's a directory, executable or document.
 
-  @param filePath Folder item path
-  @param dmDebug Where Debug messages will be written
-  @see   WriteMessage
+  @param folderItemPath Folder item path
+  @param returnSmallIcon Set this to true to get the file small icon
+  @return The folder item icon
 -------------------------------------------------------------------------------}
 function GetFolderItemIcon(const folderItemPath: String; const returnSmallIcon: Boolean): TIcon;
 var fileExt: String;
@@ -290,8 +291,6 @@ begin
       end;
     end;
   end;
-  
-  
 end;
 
 
@@ -315,10 +314,6 @@ begin
   if Result = '' then
     raise Exception.Create(SysErrorMessage(GetLastError));
 end;
-
-
-
-
 
 
 /// <summary>

@@ -1,10 +1,18 @@
+{*------------------------------------------------------------------------------
+  This class handle the panel that contains the icons.
+
+  @Author Laurent Cozic
+-------------------------------------------------------------------------------}
+
+
 unit IconPanel;
 
 interface
 
 uses Windows, WNineSlicesPanel, Classes, WFileIcon, WImage, Logger, Contnrs, Controls,
 	Types, WComponent, ExtCtrls, Forms, SysUtils, Graphics, MathUtils, Imaging,
-  ShellAPI, WImageButton, Menus, User, StringUtils, EditFolderItemUnit, SystemUtils;
+  ShellAPI, WImageButton, Menus, User, StringUtils, EditFolderItemUnit, SystemUtils,
+  IconToolTipUnit;
 
 
 type
@@ -31,6 +39,7 @@ type
       pAutoSize: Boolean;
       pBrowseButton: TWImageButton;
       pLastVisibleIconIndex: Integer;
+      pTooltipForm: TIconTooltipForm;
 
       function CreateFormPopupMenu():TPopupMenu;
       function GetInsertionIndexAtPoint(const aPoint: TPoint; replacementBehavior: Boolean):Integer;
@@ -38,7 +47,9 @@ type
       procedure icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure icon_click(sender: TObject);
-      procedure iconForm_paint(Sender: TObject);   
+      procedure Icon_MouseEnter(sender: TObject);
+      procedure Icon_MouseExit(sender: TObject);
+      procedure iconForm_paint(Sender: TObject);
       procedure Self_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure UpdateFolderItemsOrder();
       procedure BrowseButton_Click(Sender: TObject);
@@ -74,6 +85,7 @@ implementation
 
 
 uses Main;
+
 
 
 constructor TIconPanel.Create(AOwner: TComponent);
@@ -499,6 +511,8 @@ begin
     icon.OnMouseDown := icon_mouseDown;
     icon.OnMouseUp := icon_mouseUp;
     icon.OnClick := icon_click;
+    icon.OnMouseEnter := Icon_MouseEnter;
+    icon.OnMouseExit := Icon_MouseExit;
 
     result := TWComponent(icon);
 
@@ -759,6 +773,26 @@ begin
 
     pIconDragData.StartIconLoc := component.ScreenLoc;
   end;
+end;
+
+
+procedure TIconPanel.Icon_MouseEnter(sender: TObject);
+var icon: TWFileIcon;
+	folderItem: TFolderItem;
+begin
+	icon := TWFileIcon(sender);
+  folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
+
+  if pTooltipForm = nil then begin
+  	pTooltipForm := TIconTooltipForm.Create(Self);
+  end;
+  pTooltipForm.ShowAbove(icon, folderItem.Name);
+end;
+
+
+procedure TIconPanel.Icon_MouseExit(sender: TObject);
+begin
+	pTooltipForm.Hide();
 end;
 
 

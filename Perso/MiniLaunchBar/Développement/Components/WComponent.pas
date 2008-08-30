@@ -30,6 +30,13 @@ type
   	procedure SetParentContainer(const value: TObject);
     procedure SetButtonState(const Value: TPNGButtonState);
 
+    function GetAbsoluteTop(): Integer;
+    function GetAbsoluteLeft(): Integer;
+
+    function GetScreenLeft(): Integer;
+    function GetScreenTop(): Integer;
+
+
   protected
   	fOnClick: TNotifyEvent;
     fOnParentChange: TNotifyEvent;
@@ -46,7 +53,6 @@ type
 
     function GetTop(): Integer;
     procedure SetTop(const value: Integer);
-
     
     {Clicked}
     procedure Click; override;
@@ -67,12 +73,8 @@ type
     procedure CMEnabledChanged(var Message: TMessage);
       message CM_ENABLEDCHANGED;
 
-    //function GetParent(): TWinControl;
-    //procedure SetParent(const value: TWinControl);
-
-    //procedure ParentChange();
-
   public
+  
     Tag: Integer;
     Pushed: Boolean;
 
@@ -83,16 +85,7 @@ type
     property IsMouseOver: Boolean read fMouseOverControl;
 
     procedure RemoveFromContainer();
-
-    function GetAbsoluteTop(): Integer;
-    function GetAbsoluteLeft(): Integer;
-
-    procedure ResetButtonState();
-
-  published
-    { Published declarations }
-    {Default events}
-
+    procedure ResetButtonState();  
     procedure UpdateLocation();
 
     property AbsoluteTop: Integer read GetAbsoluteTop;
@@ -102,7 +95,8 @@ type
     property Left: Integer read GetLeft write SetLeft;
     property ScreenLoc: TPoint read GetScreenLoc;
 
-    //property Parent: TWinControl read GetParent write SetParent;
+    property ScreenLeft: Integer read GetScreenLeft;
+    property ScreenTop: Integer read GetScreenTop;
 
     property ID: Integer read pID;
 
@@ -225,6 +219,16 @@ begin
 end;
 
 
+function TWComponent.GetScreenLeft: Integer;
+begin
+	result := ScreenLoc.X;
+end;
+
+function TWComponent.GetScreenTop: Integer;
+begin
+	result := ScreenLoc.Y;
+end;
+
 function TWComponent.GetScreenLoc(): TPoint;
 var c: TWContainer;
 begin
@@ -244,11 +248,6 @@ begin
     result.X := result.X + (Owner as TControl).Left;
     result.Y := result.Y + (Owner as TControl).Top;
   end;
-
-
-//  if Parent <> nil then begin
-//  	result := Parent.ClientToScreen(result);
-//  end;
 end;
 
 

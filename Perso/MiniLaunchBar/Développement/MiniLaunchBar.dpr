@@ -28,14 +28,17 @@ uses
   ConfigFormUnit in 'ConfigFormUnit.pas' {ConfigForm},
   SystemUtils in 'SystemUtils.pas',
   CmdLineParam in 'CmdLineParam.pas',
-  Logger in 'Logger.pas';
+  Logger in 'Logger.pas',
+  IconTooltipUnit in 'IconTooltipUnit.pas' {IconTooltipForm};
 
 {$R *.res}
 {$R WindowsXP\WindowsXP.RES}
 
 begin
   Application.Initialize;
+  Application.ShowMainForm := false;
   Application.Title := 'Mini Launch Bar';
   Application.CreateForm(TMainForm, theMainForm);
+  Application.CreateForm(TIconTooltipForm, IconTooltipForm);
   Application.Run;
 end.

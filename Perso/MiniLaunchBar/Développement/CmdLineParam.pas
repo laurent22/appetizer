@@ -1,3 +1,22 @@
+{*------------------------------------------------------------------------------
+  Some utilities to easily manage the command line arguments.
+  The arguments must be in this format:
+
+  -name [value]
+
+  For example, if the application is launched this way:
+
+  App.exe -output "myfile.txt" -debug
+
+  Use this code to handle the arguments:
+
+  var cmdLine := TCmdLineParam.Create();
+  ShowMessage('Output file is ' + cmdLine.getValue('output'));
+  if cmdLine.HasArgument('debug') then showMessage('This is the debug version')
+
+  @Author Laurent Cozic
+-------------------------------------------------------------------------------}
+
 unit CmdLineParam;
 
 interface
@@ -17,16 +36,20 @@ type TCmdLineParam = class(TObject)
     constructor Create();
     function GetValue(const paramName : string) : string;
     function HasArgument(const argName : string) : boolean;
-    function print() : string;
   end;
 
 implementation
 
+
 constructor TCmdLineParam.Create();
 begin
-  self.MakeParamList();
+  MakeParamList();
 end;
 
+
+{*------------------------------------------------------------------------------
+  Build the list of name / value pairs for the current application
+-------------------------------------------------------------------------------}
 procedure TCmdLineParam.MakeParamList();
 var currentParam : ^TParameter;
     i : word;
@@ -49,6 +72,13 @@ begin
   end;
 end;
 
+
+{*------------------------------------------------------------------------------
+  Get the value of an argument or an empty string if none exist. Use
+  HasArgument() to check if an argument exists.
+  @param paramName Name of argument
+  @return Value of argument
+-------------------------------------------------------------------------------}
 function TCmdLineParam.getValue(const paramName : string) : string;
 var i : word;
 begin
@@ -62,6 +92,11 @@ begin
 end;
 
 
+{*------------------------------------------------------------------------------
+  Returns TRUE if the given argument exists
+  @param paramName Name of argument
+  @param argName Name of argument
+-------------------------------------------------------------------------------}
 function TCmdLineParam.HasArgument;
 var i : Integer;
 begin
@@ -75,18 +110,5 @@ begin
   result := false;
 end;
 
-
-function TCmdLineParam.print() : string;
-var i : word;
-begin
-  i := 0;
-  result := '';
-  while i < length(pParamList) do begin
-    if i > 0 then result := result + #13#10;
-    result := result + 'Name : ' + pParamList[i].Name + #13#10;
-    result := result + 'Value : ' + pParamList[i].Value;
-    i := i + 1;
-  end;
-end;
 
 end.

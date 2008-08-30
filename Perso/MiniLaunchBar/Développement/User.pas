@@ -102,7 +102,8 @@ const
     ('DocumentsPath', '%DRIVE%\Documents'),
     ('Locale', 'en'),
     ('IsFirstFolderItemRefresh', 'true'),
-    ('AutoAddExclusions', '')
+    ('AutoAddExclusions', ''),
+    ('AnimationsEnabled', 'true')
   );
 
 

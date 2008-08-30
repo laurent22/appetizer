@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
   FileSystemUtils, WFileIcon, Menus, WComponent, WImage, MathUtils,
-  Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc;
+  Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc, StringUtils;
 
 
 const
@@ -522,7 +522,27 @@ begin
     end;
 
     Wm_LButtonDown : begin
-    	Visible := not Visible;
+
+      Application.BringToFront();
+
+    	//Visible := not Visible;
+
+      //if Visible then Application.BringToFront();
+
+//    	ilog(StringConv(Application.Active));
+//
+//      if not Application.Active then begin
+//        Visible := true;
+//        Application.BringToFront;
+//      end else begin
+//        Visible := not Visible;
+//        if Visible then begin
+//          //Application.BringToFront;
+//        end else begin
+//          //Visible := false;
+//        end;
+//      end;
+
       Owner := GetWindow(Handle, GW_OWNER);
       ShowWindow(Owner, SW_HIDE);
     end;
