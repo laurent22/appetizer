@@ -175,7 +175,7 @@ begin
     bmp.Canvas.Brush.Color := RGB(255, 0, 255);
     bmp.Canvas.FillRect(rect);
 
-    DrawNineSlices(bmp.Canvas, TMain.instance.skinPath + '\BarBackgroundRegion', optionPanelOpenWidth - optionPanelCurrentWidth, 0, bmp.Width - optionPanelOpenWidth + optionPanelCurrentWidth, bmp.Height);
+    DrawNineSlices(bmp.Canvas, TMain.Instance.FilePaths.SkinDirectory + '\BarBackgroundRegion', optionPanelOpenWidth - optionPanelCurrentWidth, 0, bmp.Width - optionPanelOpenWidth + optionPanelCurrentWidth, bmp.Height);
 
     region := CreateRegion(Bmp);
     
@@ -196,13 +196,13 @@ procedure TMainForm.barInnerPanel_Resize;
 begin
 	if (csDestroying in ComponentState) then Exit;
 
-  barBackground.Width := barInnerPanel.Width + TMain.instance.style.barMainPanel.paddingH;
-  barBackground.Height := barInnerPanel.Height + TMain.instance.style.barMainPanel.paddingV;
+  barBackground.Width := barInnerPanel.Width + TMain.instance.Style.barMainPanel.paddingH;
+  barBackground.Height := barInnerPanel.Height + TMain.instance.Style.barMainPanel.paddingV;
 
   barBackground.Left := OptionPanelTotalWidth;
 
-  barInnerPanel.Left := TMain.instance.style.barMainPanel.paddingLeft;
-  barInnerPanel.Top := TMain.instance.style.barMainPanel.paddingTop;
+  barInnerPanel.Left := TMain.instance.Style.barMainPanel.paddingLeft;
+  barInnerPanel.Top := TMain.instance.Style.barMainPanel.paddingTop;
 
   optionPanel.Height := barBackground.Height;
 
@@ -239,7 +239,7 @@ function TMainForm.GetIconPanelMaxWidth: Integer;
 begin
 	result := MaxWidth;
   result := result - arrowButton.Width;
-  result := result - TMain.Instance.style.barMainPanel.paddingH;
+  result := result - TMain.Instance.Style.barMainPanel.paddingH;
 end;
 
 
@@ -358,7 +358,7 @@ begin
     	buttonData.SeparatorObject.Left := buttonX + optionButtons[i - 1].Width;
       buttonData.SeparatorObject.Top := buttonY;
       buttonData.SeparatorObject.Width := 4;
-      buttonData.SeparatorObject.Height := optionPanel.Height - TMain.Instance.style.optionPanel.paddingV;
+      buttonData.SeparatorObject.Height := optionPanel.Height - TMain.Instance.Style.optionPanel.paddingV;
 
 
       buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 4;
@@ -421,9 +421,9 @@ begin
     optionPanelAnimTimer.Enabled := false;
     if not optionPanelOpen then optionPanel.Visible := false;
     if optionPanelOpen then begin
-    	arrowButton.IconImagePath := TMain.instance.skinPath + '\ArrowButtonIconRight.png';
+    	arrowButton.IconImagePath := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButtonIconRight.png';
     end else begin
-     	arrowButton.IconImagePath := TMain.instance.skinPath + '\ArrowButtonIconLeft.png';
+     	arrowButton.IconImagePath := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButtonIconLeft.png';
 
       for i := 0 to Length(optionButtons) - 1 do begin
         optionButtons[i].Visible := false;
@@ -579,7 +579,7 @@ begin
   optionButtonGap := 3;
 
   applicationIcon := TIcon.Create();
-  applicationIcon.LoadFromFile(TMain.Instance.IconsPath + '\Application.ico');
+  applicationIcon.LoadFromFile(TMain.Instance.FilePaths.IconsDirectory + '\Application.ico');
   Icon := applicationIcon;
   Application.Icon := applicationIcon;
 
@@ -625,34 +625,34 @@ begin
 
   d := AddOptionButtonData();
   d.Name := 'Close';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
 
   d := AddOptionButtonData();
   d.Name := 'Eject';
-  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Eject.png';
+  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Eject.png';
 
 //  d := AddOptionButtonData();
 //  d.Name := 'Close';
-//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
 //
 //  d := AddOptionButtonData();
 //  d.Name := 'Close';
-//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Close.png';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
 
 //  d := AddOptionButtonData();
 //  d.Separator := true;
 
 //  d := AddOptionButtonData();
 //  d.Name := 'Encrypt';
-//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Key.png';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Key.png';
 
 //  d := AddOptionButtonData();
 //  d.Name := 'Config';
-//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Config.png';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Config.png';
 
 //  d := AddOptionButtonData();
 //  d.Name := 'Help';
-//  d.IconFilePath := TMain.instance.skinPath + '\ButtonIcon_Help.png';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Help.png';
 
   // ---------------------------------------------------------------------------
   // Create form controls
@@ -663,7 +663,7 @@ begin
   { OPTION PANEL }
 
   optionPanel := TWNineSlicesPanel.Create(self);
-  optionPanel.ImagePathPrefix := TMain.instance.skinPath + '\OptionPanel';
+  optionPanel.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\OptionPanel';
   optionPanel.Width := optionPanelOpenWidth;
   optionPanel.Visible := false;
   optionPanel.Parent := self;
@@ -680,7 +680,7 @@ begin
 
   	if not optionButtonData[i].Separator then begin
       optionButton := TWImageButton.Create(self);
-      optionButton.ImagePathPrefix := TMain.instance.skinPath + '\OptionButton';
+      optionButton.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\OptionButton';
       optionButton.Visible := false;
       optionButton.IconImagePath := optionButtonData[i].IconFilePath;
       optionButton.Cursor := crHandPoint;
@@ -690,7 +690,7 @@ begin
       optionPanel.AddChild(optionButton);
     end else begin
     	optionButtonData[i].SeparatorObject := TWNineSlicesPanel.Create(self);
-      optionButtonData[i].SeparatorObject.ImagePathPrefix := TMain.instance.skinPath + '\VerticalSeparator';
+      optionButtonData[i].SeparatorObject.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\VerticalSeparator';
       optionButtonData[i].SeparatorObject.Visible := false;
 
       optionPanel.AddChild(optionButtonData[i].SeparatorObject);
@@ -709,7 +709,7 @@ begin
   ilog('Creating background panel');
 
 	barBackground := TWNineSlicesPanel.Create(self);
-  barBackground.ImagePathPrefix := TMain.instance.skinPath + '\BarBackground';
+  barBackground.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BarBackground';
   barBackground.Visible := true;
   barBackground.Parent := self;
 
@@ -731,10 +731,10 @@ begin
   ilog('Creating arrow button');
 
   arrowButton := TWImageButton.Create(self);
-  arrowButton.ImagePathPrefix := TMain.instance.skinPath + '\ArrowButton';
+  arrowButton.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButton';
   arrowButton.Visible := true;
   arrowButton.Parent := self;
-  arrowButton.IconImagePath := TMain.instance.skinPath + '\ArrowButtonIconLeft.png';
+  arrowButton.IconImagePath := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButtonIconLeft.png';
   arrowButton.Cursor := crHandPoint;
 
   arrowButton.OnClick := arrowButton_click;

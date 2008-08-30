@@ -214,8 +214,14 @@ end;
 
 procedure TFolderItem.Launch;
 var r: Cardinal;
+	fileDirectory: String;
 begin
-  r := ShellExecute(Application.Handle, 'open', PChar(ResolvedFilePath), nil, nil, SW_SHOWNORMAL);
+	fileDirectory := ResolveFilePath(ExtractFilePath(FilePath));
+
+	ilog('Launching: ' + ExtractFileName(FilePath));
+  ilog('In directory: ' + fileDirectory);
+
+  r := ShellExecute(Application.Handle, 'open', PChar(ResolvedFilePath), nil, PChar(fileDirectory), SW_SHOWNORMAL);
 
   if Integer(r) <= 32 then begin
   	if not silentErrors then

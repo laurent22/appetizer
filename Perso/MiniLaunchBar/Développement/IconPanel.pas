@@ -86,7 +86,7 @@ begin
 
   pAutoSize := not false;
   pIconSize := 40;
-  ImagePathPrefix := TMain.instance.skinPath + '\BarInnerPanel';
+  ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BarInnerPanel';
 
   pIcons := TObjectList.Create();
   pIcons.OwnsObjects := false;
@@ -314,8 +314,8 @@ function TIconPanel.GetPotentialWidth;
 var i, iconX, iconY, iconMaxX: Integer;
 	component: TWComponent;
 begin
-	iconX := TMain.instance.style.barInnerPanel.paddingLeft;
-  iconY := TMain.instance.style.barInnerPanel.paddingTop;
+	iconX := TMain.instance.Style.barInnerPanel.paddingLeft;
+  iconY := TMain.instance.Style.barInnerPanel.paddingTop;
   iconMaxX := 0;
 
   for i := 0 to (pIcons.Count - 1) do begin
@@ -329,7 +329,7 @@ begin
     iconMaxX := component.Left + component.Width;
   end;
 
-  result := iconMaxX + TMain.Instance.style.barInnerPanel.paddingRight;
+  result := iconMaxX + TMain.Instance.Style.barInnerPanel.paddingRight;
 end;
 
 
@@ -397,13 +397,13 @@ var iconX, iconY: Word;
   component: TWComponent;
   potentialWidth: Integer;
 begin
-  iconX := TMain.instance.style.barInnerPanel.paddingLeft;
-  iconY := TMain.instance.style.barInnerPanel.paddingTop;
+  iconX := TMain.instance.Style.barInnerPanel.paddingLeft;
+  iconY := TMain.instance.Style.barInnerPanel.paddingTop;
 
   if pBrowseButton = nil then begin
     pBrowseButton := TWImageButton.Create(Owner);
     pBrowseButton.Visible := true;
-    pBrowseButton.ImagePathPrefix := TMain.instance.skinPath + '\BrowseArrowButton';
+    pBrowseButton.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BrowseArrowButton';
     pBrowseButton.FitToContent();
     pBrowseButton.OnClick := BrowseButton_Click;
     AddChild(pBrowseButton);
@@ -434,8 +434,8 @@ begin
       if icon.FilePath = '' then begin
         folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
         icon.FilePath := folderItem.ResolvedFilePath;
-        icon.OverlayImageUpPath := TMain.instance.skinPath + '\IconOverlayUp.png';
-        icon.OverlayImageDownPath := TMain.instance.skinPath + '\IconOverlayDown.png';
+        icon.OverlayImageUpPath := TMain.Instance.FilePaths.SkinDirectory + '\IconOverlayUp.png';
+        icon.OverlayImageDownPath := TMain.Instance.FilePaths.SkinDirectory + '\IconOverlayDown.png';
       end;
     end;
 
@@ -461,7 +461,7 @@ begin
 
   if pAutoSize then
 		Width := potentialWidth;
-  Height := pIconSize + TMain.instance.style.barInnerPanel.paddingV;
+  Height := pIconSize + TMain.instance.Style.barInnerPanel.paddingV;
 
 
   if not pAutoSize then begin
@@ -505,7 +505,7 @@ begin
   end else begin
 
     separatorImage := TWImage.Create(Owner);
-    separatorImage.FilePath := TMain.instance.skinPath + '\InnerPanelSeparator.png';
+    separatorImage.FilePath := TMain.Instance.FilePaths.SkinDirectory + '\InnerPanelSeparator.png';
     separatorImage.Visible := false;
     separatorImage.Tag := folderItem.ID;
     separatorImage.FitToContent();
@@ -616,7 +616,7 @@ begin
           rect.Bottom := formMask.Height;
           rect.Right := formMask.Width;
 
-          formMask.LoadFromFile(TMain.Instance.skinPath + '/IconOverlayMask.bmp');
+          formMask.LoadFromFile(TMain.Instance.FilePaths.SkinDirectory + '/IconOverlayMask.bmp');
 
           region := CreateRegion(formMask);
           SetWindowRGN(pIconDragData.IconForm.Handle, region, True);

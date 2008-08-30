@@ -10,17 +10,24 @@ uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
 const
 
   DATA_FOLDER_NAME = 'Data';
-
-	SETTING_FOLDER_PATH = DATA_FOLDER_NAME + '\Settings';
-  SKIN_FOLDER_PATH = DATA_FOLDER_NAME + '\Skin';
-  LOCALE_FOLDER_PATH = DATA_FOLDER_NAME + '\Locales';
-  EXCLUSION_FILE_PATH = SETTING_FOLDER_PATH + '\Exclusions.txt';
-  INI_FILE_PATH = SETTING_FOLDER_PATH + '\Config.ini';
-  USER_SETTINGS_FILE_PATH = SETTING_FOLDER_PATH + '\MiniLaunchBar.xml';
+  SETTING_FOLDER_NAME = 'Settings';
+  SKIN_FOLDER_NAME = 'Skin';
+  LOCALES_FOLDER_NAME = 'Locales';
+  USER_SETTINGS_FILE_NAME = 'MiniLaunchBar.xml';
+  ICONS_FOLDER_NAME = 'Icons';
 
 
 
 type
+
+	TFilePaths = record
+    DataDirectory: String;
+    SettingsDirectory: String;
+    SkinDirectory: String;
+    LocalesDirectory: String;
+    UserSettingsFile: String;
+    IconsDirectory: String;
+  end;
 
   TBarMainPanelStyle = record
     paddingLeft: Integer;
@@ -64,12 +71,10 @@ type
 
   public
 
-  	Debug: Boolean;
   	Loc: TLocalizationUtils;
-  	style: TStyle;
-    skinPath: String;
-    mainForm : TMainForm;
-    IconsPath: String;
+  	Style: TStyle;
+    MainForm : TMainForm;
+    FilePaths: TFilePaths;
 
     CommandLineArgs: TCmdLineParam;
 
@@ -118,39 +123,38 @@ end;
 constructor TMain.Create();
 var applicationDirectory: String;
 begin
+	applicationDirectory := GetApplicationDirectory();
+
+	FilePaths.DataDirectory := applicationDirectory + '\' + DATA_FOLDER_NAME;
+  FilePaths.SettingsDirectory := FilePaths.DataDirectory + '\' + SETTING_FOLDER_NAME;
+  FilePaths.SkinDirectory := FilePaths.DataDirectory + '\' + SKIN_FOLDER_NAME + '\Default';
+  FilePaths.LocalesDirectory := FilePaths.DataDirectory + '\' + LOCALES_FOLDER_NAME;
+  FilePaths.UserSettingsFile := FilePaths.SettingsDirectory + '\' + USER_SETTINGS_FILE_NAME;
+  FilePaths.IconsDirectory := FilePaths.SkinDirectory + '\' + ICONS_FOLDER_NAME;
 
 	CommandLineArgs := TCmdLineParam.Create();
 
-  Debug := CommandLineArgs.HasArgument('debug');
-
-	if Debug then begin
-  	ShowLoggerWindow();
-  end;
-
-  applicationDirectory := GetApplicationDirectory();
+	if CommandLineArgs.HasArgument('showDebugWindow') then ShowLoggerWindow();
+  if CommandLineArgs.HasArgument('logToFile') then LogToFile(FilePaths.SettingsDirectory + '\Log.txt');
 
   ilog('Version: ' + GetFmtFileVersion(ParamStr(0)));
   ilog('Application directory: ' + applicationDirectory);
-
-  if CommandLineArgs.HasArgument('logToFile') then begin
-  	LogToFile(SETTING_FOLDER_PATH + '\Log.txt');
-  end;
 
   // ---------------------------------------------------------------------------
   // Initialize INI default settings
   // ---------------------------------------------------------------------------
 
-  ForceDirectories(SETTING_FOLDER_PATH);
-  pUser := TUser.Create(applicationDirectory + '\' + USER_SETTINGS_FILE_PATH);
+  ForceDirectories(FilePaths.SettingsDirectory);
+  pUser := TUser.Create(FilePaths.UserSettingsFile);
   
   // ---------------------------------------------------------------------------
   // Initialize localization manager
   // ---------------------------------------------------------------------------
 
 	Loc := TLocalizationUtils.Create();
-  Loc.LoadLocale('en', LOCALE_FOLDER_PATH);
+  Loc.LoadLocale('en', FilePaths.LocalesDirectory);
   Loc.CurrentLocale := pUser.GetUserSetting('Locale');
-  Loc.LoadLocale(Loc.CurrentLocale, LOCALE_FOLDER_PATH);
+  Loc.LoadLocale(Loc.CurrentLocale, FilePaths.LocalesDirectory);
 
   ilog('Current locale: ' + Loc.CurrentLocale);
 
@@ -158,33 +162,30 @@ begin
   // Initialize style
   // ---------------------------------------------------------------------------
 
-  skinPath := applicationDirectory + '\' + SKIN_FOLDER_PATH + '\Default';
-  IconsPath := skinPath + '\Icons';
+	Style.barMainPanel.paddingTop := 8;
+  Style.barMainPanel.paddingBottom := 8;
+  Style.barMainPanel.paddingLeft := 8;
+  Style.barMainPanel.paddingRight := 8;
+  Style.barMainPanel.paddingH := Style.barMainPanel.paddingLeft + Style.barMainPanel.paddingRight;
+  Style.barMainPanel.paddingV := Style.barMainPanel.paddingTop + Style.barMainPanel.paddingBottom;
 
-	style.barMainPanel.paddingTop := 8;
-  style.barMainPanel.paddingBottom := 8;
-  style.barMainPanel.paddingLeft := 8;
-  style.barMainPanel.paddingRight := 8;
-  style.barMainPanel.paddingH := style.barMainPanel.paddingLeft + style.barMainPanel.paddingRight;
-  style.barMainPanel.paddingV := style.barMainPanel.paddingTop + style.barMainPanel.paddingBottom;
+	Style.barInnerPanel.paddingTop := 4;
+  Style.barInnerPanel.paddingBottom := 4;
+  Style.barInnerPanel.paddingLeft := 8;
+  Style.barInnerPanel.paddingRight := 8;
+  Style.barInnerPanel.paddingH := Style.barInnerPanel.paddingLeft + Style.barInnerPanel.paddingRight;
+  Style.barInnerPanel.paddingV := Style.barInnerPanel.paddingTop + Style.barInnerPanel.paddingBottom;
 
-	style.barInnerPanel.paddingTop := 4;
-  style.barInnerPanel.paddingBottom := 4;
-  style.barInnerPanel.paddingLeft := 8;
-  style.barInnerPanel.paddingRight := 8;
-  style.barInnerPanel.paddingH := style.barInnerPanel.paddingLeft + style.barInnerPanel.paddingRight;
-  style.barInnerPanel.paddingV := style.barInnerPanel.paddingTop + style.barInnerPanel.paddingBottom;
+	Style.optionPanel.paddingTop := 5;
+  Style.optionPanel.paddingBottom := 5;
+  Style.optionPanel.paddingLeft := 7;
+  Style.optionPanel.paddingRight := 7;
+  Style.optionPanel.paddingH := Style.optionPanel.paddingLeft + Style.optionPanel.paddingRight;
+  Style.optionPanel.paddingV := Style.optionPanel.paddingTop + Style.optionPanel.paddingBottom;
 
-	style.optionPanel.paddingTop := 5;
-  style.optionPanel.paddingBottom := 5;
-  style.optionPanel.paddingLeft := 7;
-  style.optionPanel.paddingRight := 7;
-  style.optionPanel.paddingH := style.optionPanel.paddingLeft + style.optionPanel.paddingRight;
-  style.optionPanel.paddingV := style.optionPanel.paddingTop + style.optionPanel.paddingBottom;
-
-	ilog('Settings folder: ' + SETTING_FOLDER_PATH);
-  ilog('Skin folder: ' + skinPath);
-  ilog('Locale folder: ' + LOCALE_FOLDER_PATH);
+	ilog('Settings folder: ' + FilePaths.SettingsDirectory);
+  ilog('Skin folder: ' + FilePaths.SkinDirectory);
+  ilog('Locale folder: ' + FilePaths.LocalesDirectory);
 end;
 
 
