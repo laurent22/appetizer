@@ -24,6 +24,11 @@ type
     pTop: Integer;
     pLeft: Integer;
 
+    pMinWidth: Integer;
+    pMinHeight: Integer;
+    pMaxWidth: Integer;
+    pMaxHeight: Integer;
+
     pID: Integer;
     class var pUniqueID : Integer;
     
@@ -35,6 +40,10 @@ type
 
     function GetScreenLeft(): Integer;
     function GetScreenTop(): Integer;
+    function GetHeight: Integer;
+    function GetWidth: Integer;
+    procedure SetHeight(const Value: Integer);
+    procedure SetWidth(const Value: Integer);
 
 
   protected
@@ -53,34 +62,23 @@ type
 
     function GetTop(): Integer;
     procedure SetTop(const value: Integer);
-    
-    {Clicked}
+
     procedure Click; override;
-    {Mouse pressed}
-    procedure MouseDown(Button: TMouseButton; Shift: TShiftState;
-      X, Y: Integer); override;
-    procedure MouseUp(Button: TMouseButton; Shift: TShiftState;
-      X, Y: Integer); override;
+    procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
+    procedure MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
     procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
-    {Mouse entering or leaving}
     procedure MouseEnter(); virtual;
     procedure MouseLeave(); virtual;
-
     procedure CMMouseEnter(var Message: TMessage); message CM_MOUSEENTER;
     procedure CMMouseLeave(var Message: TMessage); message CM_MOUSELEAVE;
-    
-    {Being enabled or disabled}
-    procedure CMEnabledChanged(var Message: TMessage);
-      message CM_ENABLEDCHANGED;
+
+    procedure CMEnabledChanged(var Message: TMessage); message CM_ENABLEDCHANGED;
 
   public
   
     Tag: Integer;
     Pushed: Boolean;
 
-    class function GetComponentByID(const componentID: Integer): TWComponent;
-
-    {Returns if the mouse is over the control}
     property ButtonState: TPNGButtonState read FButtonState write SetButtonState;
     property IsMouseOver: Boolean read fMouseOverControl;
 
@@ -97,6 +95,14 @@ type
 
     property ScreenLeft: Integer read GetScreenLeft;
     property ScreenTop: Integer read GetScreenTop;
+
+    property Width: Integer read GetWidth write SetWidth;
+    property Height: Integer read GetHeight write SetHeight;
+
+    property MaxWidth: Integer read pMaxWidth write pMaxWidth;
+    property MaxHeight: Integer read pMaxHeight write pMaxHeight;
+    property MinWidth: Integer read pMinWidth write pMinWidth;
+    property MinHeight: Integer read pMinHeight write pMinHeight;
 
     property ID: Integer read pID;
 
@@ -131,16 +137,18 @@ begin
 
   pUniqueID := pUniqueID + 1;
 	pID := pUniqueID;
+
+  pMinWidth := -999;
+  pMinHeight := -999;
+  pMaxWidth := -999;
+  pMaxHeight := -999;
 end;
 
 
-class function TWComponent.GetComponentByID(const componentID: Integer): TWComponent;
+function TWComponent.GetHeight: Integer;
 begin
-  // TODO. But need to keep a reference to every created component
-  // so how do we clear the reference once it's not needed?
-  result := nil;
+ result := 	inherited Height;
 end;
-
 
 destructor TWComponent.Destroy();
 begin
@@ -158,24 +166,6 @@ begin
 end;
 
 
-//procedure TWComponent.ParentChange();
-//begin
-//	OnParentChange(self);
-//end;
-
-
-//function TWComponent.GetParent(): TWinControl;
-//begin
-//	inherited Parent;
-//end;
-//
-//
-//procedure TWComponent.SetParent(const value: TWinControl);
-//begin
-//	inherited Parent := value;
-//  Invalidate();
-//end;
-
 
 procedure TWComponent.Paint();
 begin
@@ -192,7 +182,7 @@ begin
   if pParentContainer = nil then begin
   	Parent := nil;
   end else begin
-  	Parent := TWinControl(Owner);
+  	Parent := TWinControl(Owner);//TWinControl(Owner);
   end;
 
 	UpdateLocation();
@@ -210,8 +200,8 @@ end;
 procedure TWComponent.UpdateLocation();
 begin
 	if ParentContainer <> nil then begin
-  	inherited Top := pTop + TWContainer(ParentContainer).AbsoluteTop;
-    inherited Left := pLeft + TWContainer(ParentContainer).AbsoluteLeft;
+    inherited Top := pTop + TWContainer(ParentContainer).AbsoluteTop;
+    inherited Left := pLeft + TWContainer(ParentContainer).AbsoluteLeft;  
   end else begin
 		inherited Top := pTop;
   	inherited Left := pLeft;
@@ -283,11 +273,29 @@ begin
 end;
 
 
+procedure TWComponent.SetWidth(const Value: Integer);
+var w: Integer;
+begin
+	w := value;
+	if pMinWidth > 0 then begin
+  	if value < pMinWidth then w := pMinWidth;
+  end;
+  if pMaxWidth > 0 then begin
+  	if value > pMaxWidth then w := pMaxWidth;
+  end;
+  inherited Width := w;
+end;
+
 function TWComponent.GetTop(): Integer;
 begin
 	result := pTop;
 end;
 
+
+function TWComponent.GetWidth: Integer;
+begin
+	result := inherited Width;
+end;
 
 procedure TWComponent.CMEnabledChanged(var Message: TMessage);
 begin
@@ -300,6 +308,19 @@ begin
   FButtonState := Value;
 end;
 
+
+procedure TWComponent.SetHeight(const Value: Integer);
+var h: Integer;
+begin
+	h := value;
+	if pMinHeight > 0 then begin
+  	if value < pMinHeight then h := pMinHeight;
+  end;
+  if pMaxHeight > 0 then begin
+  	if value > pMaxHeight then h := pMaxHeight;
+  end;
+  inherited Height := h;
+end;
 
 procedure TWComponent.MouseDown(Button: TMouseButton; Shift: TShiftState; X,
   Y: Integer);

@@ -1,10 +1,3 @@
-{*------------------------------------------------------------------------------
-  This class handle the panel that contains the icons.
-
-  @Author Laurent Cozic
--------------------------------------------------------------------------------}
-
-
 unit IconPanel;
 
 interface
@@ -14,72 +7,63 @@ uses Windows, WNineSlicesPanel, Classes, WFileIcon, WImage, Logger, Contnrs, Con
   ShellAPI, WImageButton, Menus, User, StringUtils, EditFolderItemUnit, SystemUtils,
   IconToolTipUnit;
 
-
 type
 
-
-  TIconDragData = record
-  	Icon: TWComponent;
+  TComponentDragData = record
+  	Component: TWComponent;
   	Timer: TTimer;
     MouseDownLoc: TPoint;
     Started: Boolean;
     StartIconLoc: TPoint;
     IconForm: TForm;
+    InsertionCursor: TWImage;
   end;
 
 
 	TIconPanel = class(TWNineSlicesPanel)
 
+  private
 
-  	private
+    pComponents: TObjectList;
+    pIconSize: Word;
+    pIconDragData: TComponentDragData;
+    pTooltipForm: TIconTooltipForm;
+    pBrowseButton: TWImageButton;
+    pLastVisibleIconIndex: Integer;
 
-    	pIcons: TObjectList;
-      pIconSize: Word;
-      pIconDragData: TIconDragData;
-      pAutoSize: Boolean;
-      pBrowseButton: TWImageButton;
-      pLastVisibleIconIndex: Integer;
-      pTooltipForm: TIconTooltipForm;
+    function FolderItemToComponent(const folderItem:TFolderItem): TWComponent;
+    function CreateFormPopupMenu():TPopupMenu;
+    procedure Icon_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure Icon_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure IconDragData_timer(Sender: TObject);
+    procedure IconForm_Paint(Sender: TObject);
 
-      function CreateFormPopupMenu():TPopupMenu;
-      function GetInsertionIndexAtPoint(const aPoint: TPoint; replacementBehavior: Boolean):Integer;
-      procedure iconDragData_timer(Sender: TObject);
-      procedure icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-      procedure icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-      procedure icon_click(sender: TObject);
-      procedure Icon_MouseEnter(sender: TObject);
-      procedure Icon_MouseExit(sender: TObject);
-      procedure iconForm_paint(Sender: TObject);
-      procedure Self_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-      procedure UpdateFolderItemsOrder();
-      procedure BrowseButton_Click(Sender: TObject);
-      function GetComponentByID(const componentID: Integer): TWComponent;
+    procedure MenuItem_Click_NewShortcut(Sender: TObject);
+    procedure MenuItem_Click_NewSeparator(Sender: TObject);
+    procedure MenuItem_Click_Delete(Sender: TObject);
+    procedure MenuItem_Click_Properties(Sender: TObject);
+    procedure MenuItem_Click_AddItToQuickLaunch(Sender: TObject);
 
-      procedure BrowseButtonPopupMenu_Click(Sender: TObject);
-      
-      procedure MenuItem_Click_NewShortcut(Sender: TObject);
-      procedure MenuItem_Click_NewSeparator(Sender: TObject);
-      procedure MenuItem_Click_Delete(Sender: TObject);
-			procedure MenuItem_Click_Properties(Sender: TObject);
-      procedure MenuItem_Click_AddItToQuickLaunch(Sender: TObject);
+    procedure UpdateFolderItemsOrder();
 
-      function FolderItemToComponent(const folderItem:TFolderItem): TWComponent;
+    function GetInsertionIndexAtPoint(const aPoint: TPoint): Integer;
+    procedure Icon_Click(sender: TObject);
+    procedure Icon_MouseEnter(sender: TObject);
+    procedure Icon_MouseExit(sender: TObject);
+    procedure Self_MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    function GetComponentByID(const componentID: Integer): TWComponent;
+    procedure BrowseButton_Click(Sender: TObject);
+    procedure BrowseButtonPopupMenu_Click(Sender: TObject);
+    procedure FitToContent;
 
-      procedure SetAutoSize(const value:Boolean);
-      function GetPotentialWidth():Integer;
+  public
 
-  	public
-
-    	constructor Create(AOwner: TComponent); override;
-      procedure LoadFolderItems();
-      function IconCount():Word;
-      procedure UpdateLayout();
-      property AutoSize:Boolean read pAutoSize write SetAutoSize;
-      property PotentialWidth:Integer read GetPotentialWidth;
-
+  	constructor Create(AOwner: TComponent); override;
+  	procedure LoadFolderItems();
+    procedure UpdateLayout();
 
   end;
-
 
 implementation
 
@@ -90,33 +74,95 @@ uses Main;
 
 constructor TIconPanel.Create(AOwner: TComponent);
 begin
-  inherited Create(AOwner);
-
-  Width := 200;
+  inherited;
 
   pLastVisibleIconIndex := -1;
 
-  pAutoSize := not false;
   pIconSize := 40;
   ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BarInnerPanel';
 
-  pIcons := TObjectList.Create();
-  pIcons.OwnsObjects := false;
+  pComponents := TObjectList.Create();
+  pComponents.OwnsObjects := false;
 
+  MinWidth := pIconSize + TMain.Instance.Style.barInnerPanel.paddingH;
+  MinHeight := pIconSize + TMain.Instance.Style.barInnerPanel.paddingV;
+  
   self.OnMouseDown := Self_MouseDown;
 end;
+
+
+procedure TIconPanel.BrowseButton_Click(Sender: TObject);
+var pPopupMenu: TPopupMenu;
+	menuItem: TMenuItem;
+	i: Integer;
+  folderItem: TFolderItem;
+  component: TWComponent;
+  mouse: TMouse;
+  menuItemBitmap: TBitmap;
+begin
+  pPopupMenu := TPopupMenu.Create(self);
+
+  for i := pLastVisibleIconIndex + 1 to pComponents.Count - 1 do begin
+  	if i >= pComponents.Count then break;
+
+    component := TWComponent(pComponents[i]);
+
+    folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
+
+    menuItem := TMenuItem.Create(self);
+
+    if folderItem.IsSeparator then begin
+    	menuItem.Caption := '-';
+      menuItem.Enabled := false;
+    end else begin
+    	menuItem.Caption := folderItem.Name;
+      menuItem.Tag := folderItem.ID;
+
+      if folderItem.SmallIcon <> nil then begin
+      	menuItemBitmap := TBitmap.Create();
+        menuItemBitmap.Width := 16;
+        menuItemBitmap.Height := 16;
+        menuItemBitmap.Canvas.Draw(0, 0, folderItem.SmallIcon);
+        menuItem.OnClick := BrowseButtonPopupMenu_Click;
+      	menuItem.Bitmap := menuItemBitmap;
+      end;
+
+    end;
+
+    pPopupMenu.Items.Add(menuItem);
+  end;
+
+  mouse := TMouse.Create();
+
+  pPopupMenu.Popup(mouse.CursorPos.X, mouse.CursorPos.Y);
+end;
+
+
+procedure TIconPanel.BrowseButtonPopupMenu_Click(Sender: TObject);
+var folderItem: TFolderItem;
+begin
+	folderItem := TMain.Instance.User.GetFolderItemByID((Sender as TMenuItem).Tag);
+  folderItem.Launch();
+end;
+
 
 
 function TIconPanel.GetComponentByID(const componentID: Integer): TWComponent;
 var i: Integer;
 begin
-	for i := 0 to pIcons.Count do begin
-  	if TWComponent(pIcons[i]).ID = componentID then begin
-      result := TWComponent(pIcons[i]);
+	for i := 0 to pComponents.Count do begin
+  	if TWComponent(pComponents[i]).ID = componentID then begin
+      result := TWComponent(pComponents[i]);
       Exit;
     end;
   end;
   result := nil;
+end;
+
+
+procedure TIconPanel.Self_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+	self.PopupMenu := CreateFormPopupMenu();
 end;
 
 
@@ -130,10 +176,10 @@ begin
   menuItem.OnClick := MenuItem_Click_NewShortcut;
   result.Items.Add(menuItem);
 
-  menuItem := TMenuItem.Create(result);
-  menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.NewSeparator');
-  menuItem.OnClick := MenuItem_Click_NewSeparator;
-  result.Items.Add(menuItem);
+//  menuItem := TMenuItem.Create(result);
+//  menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.NewSeparator');
+//  menuItem.OnClick := MenuItem_Click_NewSeparator;
+//  result.Items.Add(menuItem);
 end;
 
 
@@ -151,7 +197,7 @@ begin
 
     component := FolderItemToComponent(folderItem);
     AddChild(component);
-    pIcons.Add(TObject(component));
+    pComponents.Add(TObject(component));
 
     UpdateLayout();
   end;
@@ -167,7 +213,7 @@ begin
   TMain.Instance.User.AddFolderItem(folderItem);
   component := FolderItemToComponent(folderItem);
   AddChild(component);
-  pIcons.Add(TObject(component));
+  pComponents.Add(TObject(component));
   UpdateLayout();
 end;
 
@@ -202,7 +248,7 @@ begin
     Exit;
   end;
 
-  pIcons.Remove(TObject(component));
+  pComponents.Remove(TObject(component));
 
 	component.Destroy();
 
@@ -227,276 +273,6 @@ begin
 end;
 
 
-procedure TIconPanel.Self_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-	self.PopupMenu := CreateFormPopupMenu();
-end;
-
-
-procedure TIconPanel.SetAutoSize;
-begin
-  if pAutoSize = value then Exit;
-
-	pAutoSize := value;
-	UpdateLayout();
-end;
-
-
-procedure TIconPanel.iconForm_paint(Sender: TObject);
-var rect:TRect;
-begin
-	if pIconDragData.IconForm = nil then Exit;
-
-  if pIconDragData.Icon is TWFileIcon then begin
-  	pIconDragData.IconForm.Canvas.Brush.Style := bsClear;
-    TWFileIcon(pIconDragData.Icon).DrawToCanvas(pIconDragData.IconForm.Canvas, 0, 0);
-
-		//pIconDragData.IconForm.Canvas.Draw(0, 0, TWFileIcon(pIconDragData.Icon).Icon);
-  end else begin
-  	rect.Top := 0;
-    rect.Left := 0;
-    rect.Bottom := pIconDragData.IconForm.Height;
-    rect.Right := pIconDragData.IconForm.Width;
-    pIconDragData.IconForm.Canvas.StretchDraw(rect, TWImage(pIconDragData.Icon).ImageObject);
-  end;
-end;
-
-
-function TIconPanel.GetInsertionIndexAtPoint(const aPoint: TPoint; replacementBehavior: Boolean):Integer;
-var p: TPoint;
-	i :Integer;
-	c: TWComponent;
-begin
-	result := 0;
-  p := ScreenToClient(aPoint);
-
-	if pIcons.Count = 0 then begin
-  	result := 0;
-    Exit;
-  end;
-
-  if p.X <= TWComponent(pIcons.Items[0]).Left + TWComponent(pIcons.Items[0]).Width / 2 then begin
-  	result := 0;
-    Exit;
-  end;
-
-  for i := 0 to pIcons.Count - 1 do begin
-    c := TWComponent(pIcons.Items[i]);
-
-    if replacementBehavior then begin
-
-    	if i = pIcons.Count - 1 then begin
-      	result := i;
-        break;
-      end;
-
-      if (p.X >= c.Left) and (p.X < (c.Left + c.Width)) then begin
-        result := i;
-        break;
-      end;
-
-    end else begin
-
-      if (p.X >= c.Left) and (p.X < c.Left + c.Width / 2) then begin
-        result := i;
-        break;
-      end else begin
-      	if i = pIcons.Count - 1 then begin
-        	result := i + 1;
-          break;
-        end else begin
-          if (p.X >= c.Left + c.Width / 2) and (p.X < c.Left + c.Width) then begin
-            result := i + 1;
-            break;
-          end;
-        end;
-      end;
-
-    end;
-
-  end;
-
-  if not pAutoSize then
-  	if result > pLastVisibleIconIndex then result := pLastVisibleIconIndex;
-
-end;
-
-
-function TIconPanel.GetPotentialWidth;
-var i, iconX, iconY, iconMaxX: Integer;
-	component: TWComponent;
-begin
-	iconX := TMain.instance.Style.barInnerPanel.paddingLeft;
-  iconY := TMain.instance.Style.barInnerPanel.paddingTop;
-  iconMaxX := 0;
-
-  for i := 0 to (pIcons.Count - 1) do begin
-    component := TWComponent(pIcons[i]);
-
-  	component.Left := iconX;
-    component.Top := iconY;
-
-    iconX := iconX + component.Width;
-
-    iconMaxX := component.Left + component.Width;
-  end;
-
-  result := iconMaxX + TMain.Instance.Style.barInnerPanel.paddingRight;
-end;
-
-
-procedure TIconPanel.BrowseButtonPopupMenu_Click(Sender: TObject);
-var folderItem: TFolderItem;
-begin
-	folderItem := TMain.Instance.User.GetFolderItemByID((Sender as TMenuItem).Tag);
-  folderItem.Launch();
-end;
-
-
-procedure TIconPanel.BrowseButton_Click(Sender: TObject);
-var pPopupMenu: TPopupMenu;
-	menuItem: TMenuItem;
-	i: Integer;
-  folderItem: TFolderItem;
-  component: TWComponent;
-  mouse: TMouse;
-  menuItemBitmap: TBitmap;
-begin
-  pPopupMenu := TPopupMenu.Create(self);
-
-  for i := pLastVisibleIconIndex + 1 to pIcons.Count - 1 do begin
-  	if i >= pIcons.Count then break;
-
-    component := TWComponent(pIcons[i]);
-
-    folderItem := TMain.Instance.User.GetFolderItemByID(component.Tag);
-
-    menuItem := TMenuItem.Create(self);
-
-    if folderItem.IsSeparator then begin
-    	menuItem.Caption := '-';
-      menuItem.Enabled := false;
-    end else begin
-    	menuItem.Caption := folderItem.Name;
-      menuItem.Tag := folderItem.ID;
-
-      if folderItem.SmallIcon <> nil then begin
-      	menuItemBitmap := TBitmap.Create();
-        menuItemBitmap.Width := 16;
-        menuItemBitmap.Height := 16;
-        menuItemBitmap.Canvas.Draw(0, 0, folderItem.SmallIcon);
-        menuItem.OnClick := BrowseButtonPopupMenu_Click;
-      	menuItem.Bitmap := menuItemBitmap;
-      end;
-
-    end;
-
-    pPopupMenu.Items.Add(menuItem);
-  end;
-
-  mouse := TMouse.Create();
-
-  pPopupMenu.Popup(mouse.CursorPos.X, mouse.CursorPos.Y);
-end;
-
-
-procedure TIconPanel.UpdateLayout();
-var iconX, iconY: Word;
-	i:Integer;
-  icon: TWFileIcon;
-  iconMaxX: Integer;
-  folderItem: TFolderItem;
-  component: TWComponent;
-  potentialWidth: Integer;
-begin
-  iconX := TMain.instance.Style.barInnerPanel.paddingLeft;
-  iconY := TMain.instance.Style.barInnerPanel.paddingTop;
-
-  if pBrowseButton = nil then begin
-    pBrowseButton := TWImageButton.Create(Owner);
-    pBrowseButton.Visible := true;
-    pBrowseButton.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BrowseArrowButton';
-    pBrowseButton.FitToContent();
-    pBrowseButton.OnClick := BrowseButton_Click;
-    AddChild(pBrowseButton);
-  end;
-
-  for i := 0 to (pIcons.Count - 1) do begin
-  	if (i >= pIcons.Count) then break;
-    component := TWComponent(pIcons[i]);
-    component.Visible := false;
-  end;
-
-  for i := 0 to (pIcons.Count - 1) do begin
-  	if (i >= pIcons.Count) then break;
-
-    icon := TWFileIcon(pIcons[i]);
-
-  	icon.Left := iconX;
-    icon.Top := iconY;
-
-    if not pAutoSize then begin
-    	if icon.Left + icon.Width >= Width - pBrowseButton.Width then begin
-      	pLastVisibleIconIndex := i - 1;
-      	break;
-      end;
-    end;
-
-    if icon is TWFileIcon then begin
-      if icon.FilePath = '' then begin
-        folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
-        icon.FilePath := folderItem.ResolvedFilePath;
-        icon.OverlayImageUpPath := TMain.Instance.FilePaths.SkinDirectory + '\IconOverlayUp.png';
-        icon.OverlayImageDownPath := TMain.Instance.FilePaths.SkinDirectory + '\IconOverlayDown.png';
-      end;
-    end;
-
-    if (pIconDragData.Started) and (pIconDragData.Icon = TWComponent(icon)) then begin
-    end else begin
-    	icon.Visible := true;
-    end;
-
-    iconX := iconX + icon.Width;
-
-    iconMaxX := icon.Left + icon.Width;
-
-    if not pAutoSize then begin
-      if iconMaxX > Width then break;
-    end;
-  end;
-
-
-  if pAutoSize then pLastVisibleIconIndex := pIcons.Count - 1;
-
-
-  potentialWidth := self.PotentialWidth;
-
-  if pAutoSize then
-		Width := potentialWidth;
-  Height := pIconSize + TMain.instance.Style.barInnerPanel.paddingV;
-
-
-  if not pAutoSize then begin
-    pBrowseButton.Visible := true;
-    pBrowseButton.Left := Width - pBrowseButton.Width;
-    pBrowseButton.Top := Round(Height / 2 - pBrowseButton.Height / 2);
-  end else begin
-  	pBrowseButton.Visible := false;
-  end;
-
-
-  if (potentialWidth > TMain.Instance.mainForm.IconPanelMaxWidth) and (AutoSize) then begin
-  	Width := TMain.Instance.mainForm.IconPanelMaxWidth + 1;
-    AutoSize := false;
-  end else begin
-  	if (potentialWidth <= TMain.Instance.mainForm.IconPanelMaxWidth) and (not AutoSize) then begin
-    	AutoSize := true;
-    end;
-  end;
-  
-end;
-
-
 function TIconPanel.FolderItemToComponent;
 var icon: TWFileIcon;
 	separatorImage: TWImage;
@@ -510,7 +286,7 @@ begin
     icon.Visible := false;
     icon.OnMouseDown := icon_mouseDown;
     icon.OnMouseUp := icon_mouseUp;
-    icon.OnClick := icon_click;
+    icon.OnClick := Icon_Click;
     icon.OnMouseEnter := Icon_MouseEnter;
     icon.OnMouseExit := Icon_MouseExit;
 
@@ -518,78 +294,54 @@ begin
 
   end else begin
 
-    separatorImage := TWImage.Create(Owner);
-    separatorImage.FilePath := TMain.Instance.FilePaths.SkinDirectory + '\InnerPanelSeparator.png';
-    separatorImage.Visible := false;
-    separatorImage.Tag := folderItem.ID;
-    separatorImage.FitToContent();
-    separatorImage.Height := pIconSize;
-    separatorImage.StretchToFit := true;
-    separatorImage.MaintainAspectRatio := false;
-    separatorImage.OnMouseDown := icon_mouseDown;
-    separatorImage.OnMouseUp := icon_mouseUp;
+//    separatorImage := TWImage.Create(Owner);
+//    separatorImage.FilePath := TMain.Instance.FilePaths.SkinDirectory + '\InnerPanelSeparator.png';
+//    separatorImage.Visible := false;
+//    separatorImage.Tag := folderItem.ID;
+//    separatorImage.FitToContent();
+//    separatorImage.Height := pIconSize;
+//    separatorImage.StretchToFit := true;
+//    separatorImage.MaintainAspectRatio := false;
+//    separatorImage.OnMouseDown := icon_mouseDown;
+//    separatorImage.OnMouseUp := icon_mouseUp;
 
-    result := TWComponent(separatorImage);
+//    result := TWComponent(separatorImage);
 
   end;
 end;
 
 
-procedure TIconPanel.LoadFolderItems();
-var i: Integer;
-  folderItem: TFolderItem;
-  icon: TWFileIcon;
-  component: TWComponent;
+function TIconPanel.GetInsertionIndexAtPoint(const aPoint: TPoint): Integer;
+var i:Integer;
+	component: TWComponent;
+  point: TPoint;
 begin
-	ilog('Creating icons');
+	point.X := aPoint.X;
+  point.Y := aPoint.Y;
 
-	for i := 0 to (pIcons.Count - 1) do begin
-  	if (i >= pIcons.Count) then break;
-    icon := TWFileIcon(pIcons.Items[i]);
-    icon.Free();
-  end;
+	result := -1;
 
-  pIcons.Clear();
+	for i := 0 to pComponents.Count - 1 do begin
+  	component := TWComponent(pComponents[i]);
 
-  for i := 0 to TMain.instance.User.FolderItemCount - 1 do begin
-  	folderItem := TMain.instance.User.getFolderItemAt(i);
+    // Early exits
+    if point.Y < component.ScreenTop then Continue;
+    if point.Y >= component.ScreenTop + component.Height then Continue;
+    if point.X < component.ScreenLeft then Continue;
+    if point.X >= component.ScreenLeft + component.Width then Continue;
 
-    component := FolderItemToComponent(folderItem);
+    if point.X < component.ScreenLeft + Round(component.Width / 2) then begin
+    	result := i;
+      Exit;
+    end;
 
-    AddChild(component);
-    pIcons.Add(TObject(component));
-  end;
+    result := i + 1;
+    Exit;
+  end;	
 end;
 
 
-procedure TIconPanel.UpdateFolderItemsOrder();
-var folderItemIDs: Array of Integer;
-	i: Integer;
-begin
-	SetLength(folderItemIDs, pIcons.Count);
-	for i := 0 to pIcons.Count - 1 do begin
-  	folderItemIDs[i] := TWComponent(pIcons[i]).Tag;
-  end;
-  TMain.Instance.User.ReorderAndDeleteFolderItems(folderItemIDs);
-end;
-
-
-procedure TIconPanel.icon_mouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-	if Button <> mbLeft then Exit;  
-  if not pIconDragData.Started then Exit;
-
-  if pIconDragData.Timer <> nil then pIconDragData.Timer.Enabled := false;
-  pIconDragData.Started := false;
-
-  if pIconDragData.IconForm <> nil then FreeAndNil(pIconDragData.IconForm);
-  if pIconDragData.Icon <> nil then pIconDragData.Icon.Visible := true;
-
-  UpdateFolderItemsOrder();
-end;
-
-
-procedure TIconPanel.iconDragData_timer(Sender: TObject);
+procedure TIconPanel.IconDragData_timer(Sender: TObject);
 var mouse: TMouse;
   formMask: Graphics.TBitmap;
   rect: TRect;
@@ -599,6 +351,7 @@ var mouse: TMouse;
   indexUnderCursor: Integer;
   currentIndex: Integer;
   saveItem: TWComponent;
+  componentUnderCursor: TWComponent;
 begin
 	mouse := TMouse.Create();
 
@@ -612,12 +365,24 @@ begin
         pIconDragData.IconForm.Visible := false;
         pIconDragData.IconForm.BorderStyle := bsNone;
         pIconDragData.IconForm.OnPaint := iconForm_paint;
-        SetTransparentForm(pIconDragData.IconForm.Handle, 128);
+        SetTransparentForm(pIconDragData.IconForm.Handle, 100);
       end;
 
-      pIconDragData.Icon.Visible := false;
+      if pIconDragData.InsertionCursor = nil then begin
+      	pIconDragData.InsertionCursor := TWImage.Create(Owner);
+        pIconDragData.InsertionCursor.FilePath := TMain.Instance.FilePaths.SkinDirectory + '\InsertionCursor.png';
+        pIconDragData.InsertionCursor.StretchToFit := true;
+        pIconDragData.InsertionCursor.MaintainAspectRatio := false;
+        pIconDragData.InsertionCursor.FitToContent();
+        pIconDragData.InsertionCursor.Height := pIconSize;
+        AddChild(pIconDragData.InsertionCursor);
+      end;
 
-      if pIconDragData.Icon is TWFileIcon then begin
+      pIconDragData.InsertionCursor.Visible := true;
+
+      pIconDragData.Component.Visible := false;
+
+      if pIconDragData.Component is TWFileIcon then begin
 
         formMask := Graphics.TBitmap.Create();
 
@@ -640,8 +405,8 @@ begin
 
       end;
 
-      pIconDragData.IconForm.Width := pIconDragData.Icon.Width;
-    	pIconDragData.IconForm.Height := pIconDragData.Icon.Height;
+      pIconDragData.IconForm.Width := pIconDragData.Component.Width;
+    	pIconDragData.IconForm.Height := pIconDragData.Component.Height;
 
     end;
   end else begin
@@ -655,46 +420,22 @@ begin
     formCenter.X := pIconDragData.IconForm.Left + Round(pIconDragData.IconForm.Width / 2);
     formCenter.Y := pIconDragData.IconForm.Top + Round(pIconDragData.IconForm.Height / 2);
 
-    if not (pIconDragData.Icon is TWFileIcon) then begin
-    	formCenter.X := pIconDragData.IconForm.Left;
-    end;
+    indexUnderCursor := GetInsertionIndexAtPoint(formCenter);
 
-
-    indexUnderCursor := GetInsertionIndexAtPoint(formCenter, pIconDragData.Icon is TWFileIcon);
-    currentIndex := pIcons.IndexOf(TObject(pIconDragData.Icon));
-
-   	 
-    
-    if indexUnderCursor <> currentIndex then begin
-
-    	if pIconDragData.Icon is TWFileIcon then begin
-
-      	saveItem := TWComponent(pIcons.Items[indexUnderCursor]);
-        pIcons.Items[indexUnderCursor] := TObject(pIconDragData.Icon);
-        pIcons.Items[currentIndex] := saveItem;
-
+    if indexUnderCursor < 0 then begin
+    	componentUnderCursor := TWComponent(pComponents[0]);
+      pIconDragData.InsertionCursor.Left := componentUnderCursor.Left;
+    end else begin
+    	if indexUnderCursor >= pComponents.Count then begin
+        componentUnderCursor := TWComponent(pComponents[pComponents.Count - 1]);
+        pIconDragData.InsertionCursor.Left := componentUnderCursor.Left + componentUnderCursor.Width;
       end else begin
-
-      	if (indexUnderCursor >= pIcons.Count) and (currentIndex = pIcons.Count - 1) then begin
-
-        end else begin
-
-          pIcons.Remove(TObject(pIconDragData.Icon));
-
-          if currentIndex > indexUnderCursor then begin
-            pIcons.Insert(indexUnderCursor, TObject(pIconDragData.Icon));
-          end else begin
-            pIcons.Insert(indexUnderCursor-1, TObject(pIconDragData.Icon));
-          end;
-
-        end;
-
-      end;
-      
-      UpdateLayout();
+        componentUnderCursor := TWComponent(pComponents[indexUnderCursor]);
+        pIconDragData.InsertionCursor.Left := componentUnderCursor.Left;
+    	end;
     end;
 
-
+    pIconDragData.InsertionCursor.Top := componentUnderCursor.Top;
 
     pIconDragData.IconForm.Visible := true;
 
@@ -703,7 +444,26 @@ begin
 end;
 
 
-procedure TIconPanel.icon_mouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TIconPanel.IconForm_Paint(Sender: TObject);
+var rect:TRect;
+begin
+	if pIconDragData.IconForm = nil then Exit;
+
+  if pIconDragData.Component is TWFileIcon then begin
+  	pIconDragData.IconForm.Canvas.Brush.Style := bsClear;
+    TWFileIcon(pIconDragData.Component).DrawToCanvas(pIconDragData.IconForm.Canvas, 0, 0);
+  end else begin
+  	rect.Top := 0;
+    rect.Left := 0;
+    rect.Bottom := pIconDragData.IconForm.Height;
+    rect.Right := pIconDragData.IconForm.Width;
+    pIconDragData.IconForm.Canvas.StretchDraw(rect, TWImage(pIconDragData.Component).ImageObject);
+  end;
+end;
+
+
+procedure TIconPanel.Icon_MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
 var screenMouseLoc: TPoint;
 	component: TWComponent;
   mouse: TMouse;
@@ -767,12 +527,34 @@ begin
     end;
 
     pIconDragData.MouseDownLoc := screenMouseLoc;
-    pIconDragData.Icon := component as TWComponent;
+    pIconDragData.Component := component as TWComponent;
     pIconDragData.Started := false;
     pIconDragData.Timer.Enabled := true;
 
     pIconDragData.StartIconLoc := component.ScreenLoc;
   end;
+end;
+
+
+procedure TIconPanel.Icon_Click(sender: TObject);
+var icon: TWFileIcon;
+	folderItem: TFolderItem;
+begin
+  if pIconDragData.Started then Exit;
+
+  pIconDragData.Timer.Enabled := false;
+
+	icon := Sender as TWFileIcon;
+  folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
+
+  if folderItem = nil then begin
+  	elog('No FolderItem with ID: ' + IntToStr(icon.Tag));
+    Exit;
+  end;
+
+  ilog('Icon click: ' + folderItem.FilePath);
+
+  folderItem.Launch(); 
 end;
 
 
@@ -796,32 +578,192 @@ begin
 end;
 
 
-function TIconPanel.IconCount():Word;
+procedure TIconPanel.Icon_MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+var insertionIndex: Integer;
+	formCenter: TPoint;
+  i: Integer;
+	component: TWComponent;
+  added: Boolean;
+  tempList: TObjectList;
 begin
-	result := pIcons.Count;
-end;
+	if Button <> mbLeft then Exit;
+  if not pIconDragData.Started then Exit;
 
+  formCenter.X := pIconDragData.IconForm.Left + Round(pIconDragData.IconForm.Width / 2);
+  formCenter.Y := pIconDragData.IconForm.Top + Round(pIconDragData.IconForm.Height / 2);
 
-procedure TIconPanel.icon_click(sender: TObject);
-var icon: TWFileIcon;
-	folderItem: TFolderItem;
-begin
-  if pIconDragData.Started then Exit;
+  insertionIndex := GetInsertionIndexAtPoint(formCenter);
 
-  pIconDragData.Timer.Enabled := false;
+  if insertionIndex >= 0 then begin
 
-	icon := Sender as TWFileIcon;
-  folderItem := TMain.Instance.User.GetFolderItemByID(icon.Tag);
+  	added := false;
 
-  if folderItem = nil then begin
-  	elog('No FolderItem with ID: ' + IntToStr(icon.Tag));
-    Exit;
+    tempList := TObjectList.Create(false);
+
+    for i := 0 to pComponents.Count - 1 do begin
+      component := TWComponent(pComponents[i]);
+
+      if component.ID = pIconDragData.Component.ID then Continue;
+
+      if i = insertionIndex then begin
+        tempList.Add(TObject(pIconDragData.Component));
+        added := true;
+      end;
+
+      tempList.Add(pComponents[i]);
+      
+    end;
+
+    if not added then tempList.Add(TObject(pIconDragData.Component));
+
+    FreeAndNil(pComponents);
+
+    pComponents := tempList;
+
+    UpdateFolderItemsOrder();
+    UpdateLayout();
   end;
 
-  ilog('Icon click: ' + folderItem.FilePath);
 
-  folderItem.Launch(); 
+  pIconDragData.Started := false;
+
+  if pIconDragData.Timer <> nil then pIconDragData.Timer.Enabled := false;
+  if pIconDragData.IconForm <> nil then FreeAndNil(pIconDragData.IconForm);
+  if pIconDragData.Component <> nil then pIconDragData.Component.Visible := true;
+  if pIconDragData.InsertionCursor <> nil then pIconDragData.InsertionCursor.Visible := false;
+
 end;
 
+
+procedure TIconPanel.UpdateFolderItemsOrder();
+var folderItemIDs: Array of Integer;
+	i: Integer;
+begin
+	SetLength(folderItemIDs, pComponents.Count);
+	for i := 0 to pComponents.Count - 1 do begin
+  	folderItemIDs[i] := TWComponent(pComponents[i]).Tag;
+  end;
+  TMain.Instance.User.ReorderAndDeleteFolderItems(folderItemIDs);
+end;
+
+
+procedure TIconPanel.LoadFolderItems();
+var i: Integer;
+  folderItem: TFolderItem;
+  component: TWComponent;
+begin
+	ilog('Creating icons');
+
+	for i := 0 to (pComponents.Count - 1) do begin
+    component := TWComponent(pComponents.Items[i]);
+    component.Free();
+  end;
+
+  pComponents.Clear();
+
+  for i := 0 to TMain.instance.User.FolderItemCount - 1 do begin
+  	folderItem := TMain.instance.User.getFolderItemAt(i);
+    if folderItem.IsSeparator then Continue;
+
+    component := FolderItemToComponent(folderItem);
+
+		AddChild(component);
+    pComponents.Add(TObject(component));
+  end;
+end;
+
+
+procedure TIconPanel.FitToContent();
+begin
+  UpdateLayout();
+  
+end;
+
+
+procedure TIconPanel.UpdateLayout;
+var i: Integer;
+  componentX, componentY: Integer;
+  component: TWComponent;
+  maxRight: Integer;
+  lastIconBottom: Integer;
+  lastIconRight: Integer;
+  isWrapping: Boolean;
+  folderItem: TFolderItem;
+begin
+
+	if pBrowseButton = nil then begin
+    pBrowseButton := TWImageButton.Create(Owner);
+    pBrowseButton.Visible := true;
+    pBrowseButton.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BrowseArrowButton';
+    pBrowseButton.FitToContent();
+    pBrowseButton.OnClick := BrowseButton_Click;
+    AddChild(pBrowseButton);
+  end;
+
+	componentX := TMain.Instance.Style.barInnerPanel.paddingLeft;
+  componentY := TMain.Instance.Style.barInnerPanel.paddingTop;
+
+  pLastVisibleIconIndex := -1;
+
+  isWrapping := false;
+
+  maxRight := Width - TMain.Instance.Style.barInnerPanel.paddingRight;
+
+	for i := 0 to pComponents.Count - 1 do begin
+    component := TWComponent(pComponents[i]);
+
+    if component is TWFileIcon then begin
+      with TWFileIcon(component) do begin
+      	if FilePath = '' then begin
+          folderItem := TMain.Instance.User.GetFolderItemByID(Tag);
+          FilePath := folderItem.ResolvedFilePath;
+          OverlayImageUpPath := TMain.Instance.FilePaths.SkinDirectory + '\IconOverlayUp.png';
+          OverlayImageDownPath := TMain.Instance.FilePaths.SkinDirectory + '\IconOverlayDown.png';
+        end;
+      end;
+    end;
+
+    component.Left := componentX;
+    component.Top := componentY;
+    component.Visible := true;
+
+    if (componentX + component.Width >= maxRight) and (i <> 0) then begin
+    	componentX := TMain.Instance.Style.barInnerPanel.paddingLeft;
+      componentY := componentY + component.Height;
+      component.Left := componentX;
+      component.Top := componentY;
+      isWrapping := true;
+    end;
+
+    componentX := component.Left + component.Width;
+
+    if component.Top + component.Height > Height then begin
+      if pLastVisibleIconIndex < 0 then pLastVisibleIconIndex := i - 1;
+    	component.Visible := false;
+    end;
+
+    lastIconBottom := component.Top + component.Height;
+    lastIconRight := component.Left + component.Width;
+  end;
+
+
+  if pLastVisibleIconIndex >= 0 then begin
+    pBrowseButton.Visible := true;
+    pBrowseButton.Left := Width - pBrowseButton.Width;
+    pBrowseButton.Top := Height - pBrowseButton.Height;
+  end else begin
+  	pBrowseButton.Visible := false;
+  end;
+
+  MaxHeight := lastIconBottom + TMain.Instance.Style.barInnerPanel.paddingBottom;
+
+//  if isWrapping then begin
+//    MaxWidth := -1;
+//  end else begin
+//  	MaxWidth := lastIconRight + TMain.Instance.Style.barInnerPanel.paddingRight;
+//  end;
+  
+end;
 
 end.

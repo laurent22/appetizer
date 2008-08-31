@@ -1,13 +1,13 @@
-unit WNineSlicesPanel;
+unit WNineSlicesImage;
 
 interface
 
 uses
   SysUtils, Classes, Controls, ExtCtrls, PNGImage, Imaging, Graphics, StdCtrls, Types,
-  WComponent, Windows, Forms, Messages, WContainer, Logger;
-  
+  WComponent, Windows, Forms, Messages, WContainer;
+
 type
-  TWNineSlicesPanel = class(TWContainer)
+  TWNineSlicesImage = class(TWContainer)
   private
     { Private declarations }
     pImagePathPrefix: String;
@@ -33,11 +33,11 @@ implementation
 
 procedure Register;
 begin
-  RegisterComponents('Samples', [TWNineSlicesPanel]);
+  RegisterComponents('Samples', [TWNineSlicesImage]);
 end;
 
 
-constructor TWNineSlicesPanel.Create(AOwner: TComponent);
+constructor TWNineSlicesImage.Create(AOwner: TComponent);
 begin
   {Calls ancestor}
   inherited Create(AOwner);
@@ -45,11 +45,9 @@ begin
 end;
 
 
-procedure TWNineSlicesPanel.Paint();
+procedure TWNineSlicesImage.Paint();
 begin
 	inherited Paint;
-
-  if pImagePathPrefix = '' then Exit;
 
 	if (pUpdateBitmap) then begin
     pUpdateBitmap := false;
@@ -61,7 +59,7 @@ end;
 
 
 
-procedure TWNineSlicesPanel.SetImagePathPrefix(const value: String);
+procedure TWNineSlicesImage.SetImagePathPrefix(const value: String);
 begin
 	pImagePathPrefix := value;
   pUpdateBitmap := true;

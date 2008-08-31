@@ -87,8 +87,6 @@ end;
 procedure TWContainer.UpdateChildrenLocation();
 var i: Integer;
 begin
-	if Length(children) = 0 then Exit;
-
   for i := 0 to Length(children) - 1 do begin
   	children[i].UpdateLocation();
   end;

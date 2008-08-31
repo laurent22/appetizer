@@ -20,7 +20,6 @@ uses
   WContainer in 'Components\WContainer.pas',
   WButtonBase in 'Components\WButtonBase.pas',
   WImage in 'Components\WImage.pas',
-  IconPanel in 'IconPanel.pas',
   User in 'User.pas',
   MSXML2_TLB in 'MSXML2_TLB.pas',
   EditFolderItemUnit in 'EditFolderItemUnit.pas' {EditFolderItemForm},
@@ -29,7 +28,10 @@ uses
   SystemUtils in 'SystemUtils.pas',
   CmdLineParam in 'CmdLineParam.pas',
   Logger in 'Logger.pas',
-  IconTooltipUnit in 'IconTooltipUnit.pas' {IconTooltipForm};
+  IconTooltipUnit in 'IconTooltipUnit.pas' {IconTooltipForm},
+  WNineSlicesButton in 'Components\WNineSlicesButton.pas',
+  WNineSlicesImage in 'Components\WNineSlicesImage.pas',
+  IconPanel in 'IconPanel.pas';
 
 {$R *.res}
 {$R WindowsXP\WindowsXP.RES}
@@ -39,6 +41,5 @@ begin
   Application.ShowMainForm := false;
   Application.Title := 'Mini Launch Bar';
   Application.CreateForm(TMainForm, theMainForm);
-  Application.CreateForm(TIconTooltipForm, IconTooltipForm);
   Application.Run;
 end.

@@ -198,18 +198,12 @@ begin
 
   for j := 0 to 2 do begin
 
-  	for i := 0 to 2 do begin
-
+  	for i := 0 to 2 do begin   
 
       filePath := filePathPrefix + IntToStr(i) + IntToStr(j) + '.png';
       pngImage := TPNGObject.Create();
 
-      //try
-      	pngImage.LoadFromFile(filePath);
-      //except
-      	//continue;
-      //end;
-
+      pngImage.LoadFromFile(filePath);
 
       if (cornerSize = 0) then cornerSize := pngImage.Width;
 

@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
   Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
   FileSystemUtils, WFileIcon, Menus, WComponent, WImage, MathUtils,
-  Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc, StringUtils;
+  Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc, StringUtils, WNineSlicesButton;
 
 
 const
@@ -19,10 +19,12 @@ type
 
   TDragData = record
     dragging: Boolean;
+    draggingType: String;
     startMousePos: TPoint;
     startWindowPos: TPoint;
+    startPanelWidth: Integer;
+    startPanelHeight: Integer;
   end;
-
 
 
 
@@ -55,9 +57,12 @@ type
     procedure optionButton_Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure trayIconPopupMenuCloseClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
 
     private
       { Private declarations }
+
+      resizer: TWImage; 
 
       optionPanelOpen: Boolean;
       optionPanelAnimTimer: TTimer;
@@ -72,7 +77,7 @@ type
       optionButtonData: Array of TOptionButtonDatum;
 
       pOptionButtonDataID: Integer;
-
+      pFirstShown: Boolean;
       pNotifyIconData : TNotifyIconData;
 
       procedure ShowPopupMenu(f : TForm; p : TPopupMenu);
@@ -87,6 +92,10 @@ type
       function GetIconPanelMaxWidth(): Integer;
       procedure WMCallBackMessage(var msg : TMessage); message Wm_CallBackMessage;
 
+      procedure Resizer_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      procedure Resizer_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      procedure Resizer_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+
     public
       { Public declarations }
       property MaxWidth: Integer read GetMaxWidth;
@@ -99,7 +108,7 @@ var
   barBackground: TWNineSlicesPanel;
   barInnerPanel: TIconPanel;
   optionPanel: TWNineSlicesPanel;
-  arrowButton: TWImageButton;
+  arrowButton: TWNineSlicesButton;
   button: TWImageButton;
   windowDragData: TDragData;
 
@@ -109,6 +118,47 @@ implementation
 {$R *.dfm}
 
 uses Main, DebugWindow;
+
+
+procedure TMainForm.Resizer_MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+	if Button <> mbLeft then Exit;
+
+	ilog('Form resizing started');
+
+	mouse := TMouse.Create();
+	windowDragData.dragging := true;
+  windowDragData.draggingType := 'resize';
+	windowDragData.startMousePos.X := mouse.CursorPos.X;
+  windowDragData.startMousePos.Y := mouse.CursorPos.Y;
+  windowDragData.startWindowPos.X := Left;
+  windowDragData.startWindowPos.Y := Top;
+  windowDragData.startPanelWidth := barInnerPanel.Width;
+  windowDragData.startPanelHeight := barInnerPanel.Height;
+end;
+
+procedure TMainForm.Resizer_MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+var newWidth, newHeight: Integer;
+begin
+	if (windowDragData.dragging) and (windowDragData.draggingType = 'resize') then begin
+    mouse := TMouse.Create();
+    barInnerPanel.Width := windowDragData.startPanelWidth + (mouse.CursorPos.X - windowDragData.startMousePos.X);
+    barInnerPanel.Height := windowDragData.startPanelHeight + (mouse.CursorPos.y - windowDragData.startMousePos.Y);
+    UpdateLayout();
+    Repaint();
+  end;
+end;
+
+procedure TMainForm.Resizer_MouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+	if Button <> mbLeft then Exit;
+
+	ilog('Dragging stopped');
+  windowDragData.dragging := false;
+end;
 
 
 procedure TMainForm.barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -121,6 +171,7 @@ begin
 
 	mouse := TMouse.Create();
 	windowDragData.dragging := true;
+  windowDragData.draggingType := 'move';
 	windowDragData.startMousePos.X := mouse.CursorPos.X;
   windowDragData.startMousePos.Y := mouse.CursorPos.Y;
   windowDragData.startWindowPos.X := Left;
@@ -138,10 +189,9 @@ end;
 
 
 procedure TMainForm.barBackground_move(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-var
-	mouse: TMouse;
+var mouse: TMouse;
 begin
-	if windowDragData.dragging then begin
+	if (windowDragData.dragging) and (windowDragData.draggingType = 'move') then begin
     mouse := TMouse.Create();
     Left := windowDragData.startWindowPos.X + (mouse.CursorPos.X - windowDragData.startMousePos.X);
     Top := windowDragData.startWindowPos.Y + (mouse.CursorPos.Y - windowDragData.startMousePos.Y);
@@ -192,9 +242,34 @@ begin
 end;
 
 
+
+
 procedure TMainForm.barInnerPanel_Resize;
 begin
-	if (csDestroying in ComponentState) then Exit;
+//	if (csDestroying in ComponentState) then Exit;
+//
+//  barBackground.Width := barInnerPanel.Width + TMain.instance.Style.barMainPanel.paddingH;
+//  barBackground.Height := barInnerPanel.Height + TMain.instance.Style.barMainPanel.paddingV;
+//
+//  barBackground.Left := OptionPanelTotalWidth;
+//
+//  barInnerPanel.Left := TMain.instance.Style.barMainPanel.paddingLeft;
+//  barInnerPanel.Top := TMain.instance.Style.barMainPanel.paddingTop;
+//
+//  optionPanel.Height := barBackground.Height;
+//
+//  UpdateOptionPanel();
+//  UpdateFormMask();
+end;
+
+
+procedure TMainForm.UpdateLayout();
+begin
+	ilog('Updating layout...');
+
+  if (csDestroying in ComponentState) then Exit;
+  
+  barInnerPanel.UpdateLayout();
 
   barBackground.Width := barInnerPanel.Width + TMain.instance.Style.barMainPanel.paddingH;
   barBackground.Height := barInnerPanel.Height + TMain.instance.Style.barMainPanel.paddingV;
@@ -204,21 +279,13 @@ begin
   barInnerPanel.Left := TMain.instance.Style.barMainPanel.paddingLeft;
   barInnerPanel.Top := TMain.instance.Style.barMainPanel.paddingTop;
 
+  resizer.Left := barBackground.Width - resizer.Width;
+  resizer.Top := barBackground.Height - resizer.Height;
+
   optionPanel.Height := barBackground.Height;
 
   UpdateOptionPanel();
   UpdateFormMask();
-end;
-
-
-procedure TMainForm.UpdateLayout();
-begin
-	ilog('Updating layout...');
-
-  // Once barInnerPanel.UpdateLayout() has been called
-  // its OnResize event should be called, which in turns is going
-  // to trigger the update of the rest of the form
-  barInnerPanel.UpdateLayout();
 end;
 
 
@@ -392,10 +459,13 @@ procedure TMainForm.UpdateOptionPanel();
 begin
 	ilog('Updating option panel');
 
+  arrowButton.Height := barBackground.Height;
+
 	if optionPanel.Visible then begin
 
   	optionPanel.Left := optionPanelOpenWidth - optionPanelCurrentWidth + arrowButton.Width;
-    arrowButton.Left := optionPanel.Left - arrowButton.Width;
+    arrowButton.Left := optionPanel.Left - arrowButton.Width; 
+    optionPanel.Height := arrowButton.Height;
 
   	UpdateOptionButtonsLayout(
     	TMain.Instance.Style.OptionPanel.PaddingLeft,
@@ -412,7 +482,10 @@ procedure TMainForm.optionPanelAnimTimer_timer(sender: TObject);
 var percent: Real;
 	i: Byte;
 begin
-	percent := (GetTickCount() - optionPanelAnimationStartTime) / optionPanelAnimationDuration;
+	if optionPanelAnimationDuration > 0 then
+		percent := (GetTickCount() - optionPanelAnimationStartTime) / optionPanelAnimationDuration
+  else
+  	percent := 1.0;
 
   if percent >= 1.0 then begin
   	ilog('Panel animation complete');
@@ -444,6 +517,22 @@ begin
 	if iOpen and optionPanelOpen then Exit;
   if (not iOpen) and (not optionPanelOpen) then Exit;
 
+  optionPanelOpen := iOpen;
+  optionPanel.Visible := true;
+
+  if TMain.Instance.User.GetUserSetting('AnimationsEnabled') <> 'true' then begin
+  	if iOpen then begin
+    	SetOptionPanelWidth(Round(optionPanelCloseWidth + (optionPanelOpenWidth - optionPanelCloseWidth)));
+      optionPanel.Visible := true;
+      arrowButton.IconImagePath := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButtonIconRight.png';
+    end else begin
+    	SetOptionPanelWidth(0);
+      optionPanel.Visible := false;
+      arrowButton.IconImagePath := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButtonIconLeft.png';
+    end;
+    Exit;
+  end;
+
   if optionPanelAnimTimer = nil then begin
   	ilog('Creating option panel timer');
 
@@ -460,9 +549,10 @@ begin
   optionPanelAnimTimer.Enabled := true;
   optionPanelAnimationStartTime := GetTickCount();
 
-  optionPanelOpen := iOpen;
-  
-  optionPanel.Visible := true;
+  if TMain.Instance.User.GetUserSetting('AnimationsEnabled') <> 'true' then
+		optionPanelAnimationDuration := 0
+	else
+  	optionPanelAnimationDuration := 200;
 end;
 
 
@@ -556,6 +646,10 @@ end;
 procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 	Shell_NotifyIcon(NIM_DELETE, @pNotifyIconData);
+
+  TMain.Instance.User.SetUserSetting('LastWindowSettings',
+    IntToStr(Left) + ',' + IntToStr(Top) + ',' + IntToStr(BarInnerPanel.Width) + ',' + IntToStr(BarInnerPanel.Height));
+
   TMain.Instance.User.Save();
 end;
 
@@ -564,6 +658,7 @@ var optionButton: TWImageButton;
 	i: Word;
   d: TOptionButtonDatum;
   applicationIcon: TIcon;
+  lastWindowSettings: TStringList;
 begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
@@ -572,7 +667,8 @@ begin
   TMain.Instance.MainForm := self;
 
   ilog('Initializing form settings');
-
+                           
+  pFirstShown := true;
 	DoubleBuffered := true;
   windowDragData.dragging := false;
   pOptionButtonDataID := 1;
@@ -721,26 +817,61 @@ begin
   ilog('Creating inner panel');
 
   barInnerPanel := TIconPanel.Create(self);
-  barInnerPanel.Visible := true;
-  barInnerPanel.OnResize := barInnerPanel_Resize;
   barBackground.AddChild(barInnerPanel);
+  barInnerPanel.Visible := true;
+  barInnerPanel.Width := 200;
+  barInnerPanel.Height := 50;
+  barInnerPanel.OnResize := barInnerPanel_Resize;
+
+  ilog('BAR INNER PANEL: ' + IntToStr(barInnerPanel.ID));
 
   { ARROW BUTTON }
 
   ilog('Creating arrow button');
 
-  arrowButton := TWImageButton.Create(self);
+  arrowButton := TWNineSlicesButton.Create(self);
   arrowButton.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButton';
   arrowButton.Visible := true;
   arrowButton.Parent := self;
+  arrowButton.Width := 16;
+  arrowButton.Height := 64;
   arrowButton.IconImagePath := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButtonIconLeft.png';
   arrowButton.Cursor := crHandPoint;
 
   arrowButton.OnClick := arrowButton_click;
 
+  resizer := TWImage.Create(Self);
+  resizer.FilePath := TMain.Instance.FilePaths.SkinDirectory + '\Resizer.png';
+  resizer.StretchToFit := false;
+  resizer.MaintainAspectRatio := true;
+  resizer.FitToContent();
+  resizer.OnMouseDown := Resizer_MouseDown;
+  resizer.OnMouseUp := Resizer_MouseUp;
+  resizer.OnMouseMove := Resizer_MouseMove;
+  barBackground.AddChild(resizer);
+
   // ---------------------------------------------------------------------------
   // Draw and update layout
   // ---------------------------------------------------------------------------
+
+  lastWindowSettings := SplitString(',', TMain.Instance.User.GetUserSetting('LastWindowSettings'));
+  if lastWindowSettings.Count = 4 then begin
+    try
+      Left := StrToInt(lastWindowSettings[0]);
+      Top := StrToInt(lastWindowSettings[1]);
+      BarInnerPanel.Width := StrToInt(lastWindowSettings[2]);
+      BarInnerPanel.Height := StrToInt(lastWindowSettings[3]);
+    except
+      on E: Exception do begin
+        Left := 0;
+        Top := 0;
+      end;
+    end;
+  end;
+
+  // Make sure that the bar is not off-screen
+  if Left >= Screen.DesktopWidth - 64 then Left := Screen.DesktopWidth - 64;
+  if Top >= Screen.DesktopHeight - 64 then Top := Screen.DesktopHeight - 64;
 
   TMain.Instance.User.AutomaticallyAddNewApps();
   barInnerPanel.LoadFolderItems();
@@ -751,5 +882,15 @@ begin
   ShowWindow(Application.Handle, SW_HIDE);
 end;
 
+
+procedure TMainForm.FormShow(Sender: TObject);
+var lastWindowSettings: TStringList;
+begin
+	if pFirstShown then begin
+    pFirstShown := false;
+
+
+  end;
+end;
 
 end.

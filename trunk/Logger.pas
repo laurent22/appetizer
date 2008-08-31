@@ -3,16 +3,16 @@ unit Logger;
 interface
 
 
-uses SysUtils, Windows;
+uses SysUtils, Windows, StringUtils;
 
 
 procedure ShowLoggerWindow();
 procedure HideLoggerWindow();
 procedure LogToFile(const filePath:String);
 procedure log(const s: String);
-procedure elog(const s: String);
-procedure wlog(const s: String);
-procedure ilog(const s: String);
+procedure elog(const s: Variant);
+procedure wlog(const s: Variant);
+procedure ilog(const s: Variant);
 
 
 implementation
@@ -65,24 +65,24 @@ begin
 end;
 
 
-procedure elog(const s: String);
+procedure elog(const s: Variant);
 begin
   if (debugWin = nil) and (logFilePath = '') then Exit;
-	log('[Error ' + TimeToStr(Now) + '] ' + s);
+	log('[Error ' + TimeToStr(Now) + '] ' + StringConv(s));
 end;
 
 
-procedure wlog(const s: String);
+procedure wlog(const s: Variant);
 begin
 	if (debugWin = nil) and (logFilePath = '') then Exit;
-	log('[Warning ' + TimeToStr(Now) + '] ' + s);
+	log('[Warning ' + TimeToStr(Now) + '] ' + StringConv(s));
 end;
 
 
-procedure ilog(const s: String);
+procedure ilog(const s: Variant);
 begin
 	if (debugWin = nil) and (logFilePath = '') then Exit;
-	log('[Info ' + TimeToStr(Now) + '] ' + s);
+	log('[Info ' + TimeToStr(Now) + '] ' + StringConv(s));
 end;
 
 

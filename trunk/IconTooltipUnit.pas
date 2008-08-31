@@ -39,7 +39,7 @@ uses Main;
 
 procedure TIconTooltipForm.FormCreate(Sender: TObject);
 begin
-	pGap := 14;
+	pGap := 4;
 end;
 
 
@@ -77,8 +77,6 @@ begin
 
 	pLabel.Caption := text;
 
-	Show();
-
   Width := pLabel.Width + TMain.Instance.Style.IconTooltip.paddingH;
   Height := pLabel.Height + TMain.Instance.Style.IconTooltip.paddingV;
   pBackgroundPanel.Width := Width;
@@ -88,6 +86,10 @@ begin
 
   Left := Round(component.ScreenLeft + component.Width / 2 - Width / 2);
   Top := component.ScreenTop - Height - pGap;
+
+  Repaint();
+
+  Show();
 end;
 
 end.
