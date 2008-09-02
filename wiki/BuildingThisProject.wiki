@@ -4,4 +4,4 @@
 
 This project is developed and built using Turbo Delphi Explorer, available for free at http://www.turboexplorer.com/delphi
 
-Additionally, MiniLaunchBar requires the Microsoft XML 5 OLE object, which should be installed on most systems. This depency might be removed in a future version in favor of an open source library such as OpenXML.
+Additionally, MiniLaunchBar requires the Microsoft XML 5 OLE object, which should be installed on most systems. This depency might be removed in a futur version in favor of an open source library such as OpenXML.
