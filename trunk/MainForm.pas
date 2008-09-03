@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ShellAPI,
-  Dialogs, StdCtrls, ExtCtrls, PNGExtra, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
+  Dialogs, StdCtrls, ExtCtrls, PNGImage, WImageButton, Imaging, WNineSlicesPanel,
   FileSystemUtils, WFileIcon, Menus, WComponent, WImage, MathUtils,
   Logger, IconPanel, xmldom, XMLIntf, msxmldom, XMLDoc, StringUtils, WNineSlicesButton;
 
@@ -41,6 +41,7 @@ type
   TMainForm = class(TForm)
     trayIconPopupMenu: TPopupMenu;
     trayIconPopupMenuClose: TMenuItem;
+    trayIconPopupMenuHideShow: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -58,6 +59,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure trayIconPopupMenuCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure trayIconPopupMenuHideShowClick(Sender: TObject);
 
     private
       { Private declarations }
@@ -341,6 +343,11 @@ begin
     Close();
     Exit;
   end;
+
+  if d.Name = 'Minimize' then begin
+    Visible := false;
+    Exit;
+  end;
   
 end;
 
@@ -591,6 +598,13 @@ begin
 end;
 
 
+procedure TMainForm.trayIconPopupMenuHideShowClick(Sender: TObject);
+begin
+  Visible := not Visible;
+  if Visible then BringToFront();
+end;
+
+
 procedure TMainForm.ShowPopupMenu(f : TForm; p : TPopupMenu);
 var
   pt : TPoint;
@@ -614,6 +628,7 @@ begin
     Wm_LButtonDown : begin
 
       Application.BringToFront();
+      Visible := true;
 
     	//Visible := not Visible;
 
@@ -712,7 +727,8 @@ begin
   // Localization
   // ---------------------------------------------------------------------------
 
-  trayIconPopupMenuClose.Caption := TMain.Instance.Loc.GetString('Global.Close');
+  trayIconPopupMenuClose.Caption := TMain.Instance.Loc.GetString('TrayIcon.Close');
+  trayIconPopupMenuHideShow.Caption := TMain.Instance.Loc.GetString('TrayIcon.HideShow');
 
   // ---------------------------------------------------------------------------
   // Initialize option buttons' data
@@ -723,12 +739,14 @@ begin
   d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
 
   d := AddOptionButtonData();
+  d.Name := 'Minimize';
+  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Minimize.png';
+
+  d := AddOptionButtonData();
   d.Name := 'Eject';
   d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Eject.png';
 
-//  d := AddOptionButtonData();
-//  d.Name := 'Close';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
+
 //
 //  d := AddOptionButtonData();
 //  d.Name := 'Close';

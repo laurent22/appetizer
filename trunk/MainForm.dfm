@@ -20,6 +20,10 @@ object MainForm: TMainForm
   object trayIconPopupMenu: TPopupMenu
     Left = 16
     Top = 8
+    object trayIconPopupMenuHideShow: TMenuItem
+      Caption = 'Hide / Show'
+      OnClick = trayIconPopupMenuHideShowClick
+    end
     object trayIconPopupMenuClose: TMenuItem
       Caption = 'Close'
       OnClick = trayIconPopupMenuCloseClick
