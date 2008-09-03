@@ -6,7 +6,6 @@ uses
   Forms,
   MainForm in 'MainForm.pas' {MainForm},
   WImageButton in 'Components\WImageButton.pas',
-  pngextra in 'PNGButton\pngextra.pas',
   pngimage in 'PNGButton\pngimage.pas',
   Imaging in 'Components\Imaging.pas',
   WNineSlicesPanel in 'Components\WNineSlicesPanel.pas',
