@@ -64,7 +64,7 @@ type
     private
       { Private declarations }
 
-      resizer: TWImage; 
+      resizer: TWImage;
 
       optionPanelOpen: Boolean;
       optionPanelAnimTimer: TTimer;
@@ -81,6 +81,7 @@ type
       pOptionButtonDataID: Integer;
       pFirstShown: Boolean;
       pNotifyIconData : TNotifyIconData;
+      pFormMaskNineSlices: TPNGNineSlices;
 
       procedure ShowPopupMenu(f : TForm; p : TPopupMenu);
       procedure AppHideInTrayIcon(sender: TObject);
@@ -203,12 +204,25 @@ end;
 
 procedure TMainForm.UpdateFormMask();
 var bmp: TBitmap;
-	 region: THandle;
-   rect: TRect;
+    region: THandle;
+    rect: TRect;
+    sourceImage: TPNGObject;
 begin
 	ilog('Updating form mask...');
 
   if (csDestroying in ComponentState) then Exit;
+
+  if pFormMaskNineSlices[0] = nil then begin
+    sourceImage := TPNGObject.Create();
+    try
+      sourceImage.LoadFromFile(TMain.Instance.FilePaths.SkinDirectory + '\BarBackgroundRegion.png');
+      pFormMaskNineSlices := PNG_ExtractNineSlices(sourceImage);
+    finally
+      FreeAndNil(sourceImage);
+    end;
+  end;
+
+  if pFormMaskNineSlices[0] = nil then Exit;
 
   Width := barBackground.Width + OptionPanelTotalWidth;
   Height := barBackground.Height;
@@ -227,7 +241,14 @@ begin
     bmp.Canvas.Brush.Color := RGB(255, 0, 255);
     bmp.Canvas.FillRect(rect);
 
-    DrawNineSlices(bmp.Canvas, TMain.Instance.FilePaths.SkinDirectory + '\BarBackgroundRegion', optionPanelOpenWidth - optionPanelCurrentWidth, 0, bmp.Width - optionPanelOpenWidth + optionPanelCurrentWidth, bmp.Height);
+    PNG_DrawNineSlices(
+      bmp.Canvas,
+      pFormMaskNineSlices,
+      optionPanelOpenWidth - optionPanelCurrentWidth,
+      0,
+      bmp.Width - optionPanelOpenWidth + optionPanelCurrentWidth,
+      bmp.Height
+    );
 
     region := CreateRegion(Bmp);
     
@@ -670,10 +691,12 @@ end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 var optionButton: TWImageButton;
-	i: Word;
-  d: TOptionButtonDatum;
-  applicationIcon: TIcon;
-  lastWindowSettings: TStringList;
+    i: Word;
+    d: TOptionButtonDatum;
+    applicationIcon: TIcon;
+    lastWindowSettings: TStringList;
+    nineSliceStrings: TStringList;
+    nineSlicesGrid: TRect;
 begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
@@ -776,7 +799,7 @@ begin
   { OPTION PANEL }
 
   optionPanel := TWNineSlicesPanel.Create(self);
-  optionPanel.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\OptionPanel';
+  optionPanel.ImagePath := TMain.Instance.FilePaths.SkinDirectory + '\OptionPanel.png';
   optionPanel.Width := optionPanelOpenWidth;
   optionPanel.Visible := false;
   optionPanel.Parent := self;
@@ -803,7 +826,7 @@ begin
       optionPanel.AddChild(optionButton);
     end else begin
     	optionButtonData[i].SeparatorObject := TWNineSlicesPanel.Create(self);
-      optionButtonData[i].SeparatorObject.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\VerticalSeparator';
+      optionButtonData[i].SeparatorObject.ImagePath := TMain.Instance.FilePaths.SkinDirectory + '\VerticalSeparator.png';
       optionButtonData[i].SeparatorObject.Visible := false;
 
       optionPanel.AddChild(optionButtonData[i].SeparatorObject);
@@ -822,7 +845,7 @@ begin
   ilog('Creating background panel');
 
 	barBackground := TWNineSlicesPanel.Create(self);
-  barBackground.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BarBackground';
+  barBackground.ImagePath := TMain.Instance.FilePaths.SkinDirectory + '\BarBackground.png';
   barBackground.Visible := true;
   barBackground.Parent := self;
 
@@ -841,13 +864,23 @@ begin
   barInnerPanel.Height := 50;
   barInnerPanel.OnResize := barInnerPanel_Resize;
 
-  ilog('BAR INNER PANEL: ' + IntToStr(barInnerPanel.ID));
-
   { ARROW BUTTON }
 
   ilog('Creating arrow button');
 
+  nineSliceStrings := TMain.Instance.GetSkinAttributeAsStringList('ArrowButton', 'nineScaleGrid');
+
   arrowButton := TWNineSlicesButton.Create(self);
+
+  if nineSliceStrings.Count >= 4 then begin
+    nineSlicesGrid.Left := StrToInt(nineSliceStrings[0]);
+    nineSlicesGrid.Top := StrToInt(nineSliceStrings[1]);
+    nineSlicesGrid.Right := nineSlicesGrid.Left + StrToInt(nineSliceStrings[2]);  { -1 ??? }
+    nineSlicesGrid.Bottom := nineSlicesGrid.Top + StrToInt(nineSliceStrings[3]);  { -1 ??? }
+
+    arrowButton.NineSlicesGrid := nineSlicesGrid;
+  end;
+
   arrowButton.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\ArrowButton';
   arrowButton.Visible := true;
   arrowButton.Parent := self;

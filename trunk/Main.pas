@@ -4,7 +4,7 @@ interface
 
 uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
 	LocalizationUtils, IniFiles, Forms, Windows, Logger, Graphics, ShellAPI,
-  User, FileCtrl, CmdLineParam;
+  User, FileCtrl, CmdLineParam, ComObj, MSXML2_TLB;
 
 
 const
@@ -15,6 +15,7 @@ const
   LOCALES_FOLDER_NAME = 'Locales';
   USER_SETTINGS_FILE_NAME = 'MiniLaunchBar.xml';
   ICONS_FOLDER_NAME = 'Icons';
+  SKIN_FILE_NAME = 'Skin.xml';
 
 
 
@@ -80,6 +81,7 @@ type
   private
     
     pUser: TUser;
+    skinXML: IXMLDomDocument;
 
   public
 
@@ -96,6 +98,8 @@ type
     procedure EjectDrive();
     function ErrorMessage(const text: String; const buttons: TMsgDlgButtons = [mbOk]): Integer;
     function ConfirmationMessage(const text: String; const buttons: TMsgDlgButtons = [mbYes, mbNo]): Integer;
+    function GetSkinAttribute(const objectName: String; const attributeName: String): String;
+    function GetSkinAttributeAsStringList(const objectName: String; const attributeName: String): TStringList;
    	property User: TUser read pUser;
 
   end;
@@ -120,6 +124,31 @@ begin
 end;
 
 
+function TMain.GetSkinAttribute(const objectName, attributeName: String): String;
+var i: Integer;
+    elements, element: IXMLDOMElement;
+begin
+  for i := 0 to skinXML.documentElement.childNodes.length - 1 do begin
+    element := skinXML.documentElement.childNodes.item[i] as IXMLDOMElement;
+
+    if element.nodeName <> objectName then continue;
+
+    result := element.getAttribute(attributeName);
+    
+    Exit;
+  end;
+
+  result := '';
+end;
+
+
+function TMain.GetSkinAttributeAsStringList(const objectName, attributeName: String): TStringList;
+var skinAttribute: String;
+begin
+  result := SplitString(',', GetSkinAttribute(objectName, attributeName));
+end;
+
+
 function TMain.ConfirmationMessage;
 begin
 	result := MessageDlg(text, mtConfirmation, buttons, 0);
@@ -132,8 +161,11 @@ begin
 end;
 
 
+
+
 constructor TMain.Create();
 var applicationDirectory: String;
+    success: Boolean;
 begin
 	applicationDirectory := GetApplicationDirectory();
 
@@ -151,6 +183,12 @@ begin
 
   ilog('Version: ' + GetFmtFileVersion(ParamStr(0)));
   ilog('Application directory: ' + applicationDirectory);
+
+  skinXML := CreateOleObject('Microsoft.XMLDOM') as IXMLDomDocument;
+  if FileExists(FilePaths.SkinDirectory + '\' + SKIN_FILE_NAME) then begin
+    success := skinXML.Load(FilePaths.SkinDirectory + '\' + SKIN_FILE_NAME);
+    if not success then elog('Could not load skin description at: ' + FilePaths.SkinDirectory + '\' + SKIN_FILE_NAME);
+  end;
 
   // ---------------------------------------------------------------------------
   // Initialize INI default settings

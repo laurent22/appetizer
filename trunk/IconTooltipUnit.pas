@@ -48,7 +48,7 @@ var labelFont: TFont;
 begin
 	if pBackgroundPanel = nil then begin
   	pBackgroundPanel := TWNineSlicesPanel.Create(Self);
-    pBackgroundPanel.ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\TooltipBackground';
+    pBackgroundPanel.ImagePath := TMain.Instance.FilePaths.SkinDirectory + '\TooltipBackground.png';
     pBackgroundPanel.Visible := true;
     pBackgroundPanel.Parent := Self;
   end;

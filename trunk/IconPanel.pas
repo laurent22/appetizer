@@ -79,7 +79,7 @@ begin
   pLastVisibleIconIndex := -1;
 
   pIconSize := 40;
-  ImagePathPrefix := TMain.Instance.FilePaths.SkinDirectory + '\BarInnerPanel';
+  ImagePath := TMain.Instance.FilePaths.SkinDirectory + '\BarInnerPanel.png';
 
   pComponents := TObjectList.Create();
   pComponents.OwnsObjects := false;

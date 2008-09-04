@@ -8,23 +8,24 @@ uses
   
 type
   TWNineSlicesPanel = class(TWContainer)
+
   private
-    { Private declarations }
-    pImagePathPrefix: String;
-    pUpdateBitmap: Boolean;
-    procedure SetImagePathPrefix(const Value: String);
+
+    pUpdateSlices: Boolean;
+    pNineSlices: TPNGNineSlices;
+    pImagePath: String;
+
+    procedure SetImagePath(const Value: String);
 
   protected
-    { Protected declarations }
+
     procedure Paint; override;
 
-
   public
-    { Public declarations }
+
     constructor Create(AOwner: TComponent); override;
-  published
-    { Published declarations }
-    property ImagePathPrefix: String read pImagePathPrefix write SetImagePathPrefix;    
+    property ImagePath: String read pImagePath write SetImagePath;
+
   end;
 
 procedure Register;
@@ -41,31 +42,53 @@ constructor TWNineSlicesPanel.Create(AOwner: TComponent);
 begin
   {Calls ancestor}
   inherited Create(AOwner);
-  pUpdateBitmap := false;
+  pUpdateSlices := false;
 end;
 
 
 procedure TWNineSlicesPanel.Paint();
+var sourceImage: TPNGObject;
+    i: Integer;
 begin
 	inherited Paint;
 
-  if pImagePathPrefix = '' then Exit;
+  if pImagePath = '' then Exit;
 
-	if (pUpdateBitmap) then begin
-    pUpdateBitmap := false;
+	if (pUpdateSlices) then begin
+
+    for i := 0 to Length(pNineSlices) - 1 do begin
+      FreeAndNil(pNineSlices[i]);
+    end;
+
+    sourceImage := TPNGObject.Create();
+
+    try                                                 
+      sourceImage.LoadFromFile(pImagePath);
+      pNineSlices := PNG_ExtractNineSlices(sourceImage);
+    finally
+      FreeAndNil(sourceImage);
+    end;
+
+    pUpdateSlices := false;
   end;
 
+  if pNineSlices[0] = nil then Exit;
+
   Canvas.Brush.Style := bsClear;
-  DrawNineSlices(Canvas, pImagePathPrefix, 0, 0, Width, Height);
+
+  PNG_DrawNineSlices(Canvas, pNineSlices, 0, 0, Width, Height);
+
+  //DrawNineSlices_OLD(Canvas, pImagePathPrefix, 0, 0, Width, Height);
 end;
 
 
-
-procedure TWNineSlicesPanel.SetImagePathPrefix(const value: String);
+procedure TWNineSlicesPanel.SetImagePath(const Value: String);
 begin
-	pImagePathPrefix := value;
-  pUpdateBitmap := true;
-  Repaint();
+  if pImagePath = value then Exit;
+
+  pImagePath := value;
+  pUpdateSlices := true;
+  Invalidate();
 end;
 
 

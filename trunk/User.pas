@@ -2,7 +2,7 @@ unit User;
 
 interface
 
-uses XMLDoc, Logger, ComObj, MSXML2_TLB, SysUtils, ExtCtrls, Graphics, Classes,
+uses Logger, ComObj, MSXML2_TLB, SysUtils, ExtCtrls, Graphics, Classes,
 	FileSystemUtils, Windows, Contnrs, StringUtils, Forms, VersionInformation,
   ShellApi;
 

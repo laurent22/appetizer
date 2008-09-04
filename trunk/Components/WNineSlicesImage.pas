@@ -54,7 +54,7 @@ begin
   end;
 
   Canvas.Brush.Style := bsClear;
-  DrawNineSlices(Canvas, pImagePathPrefix, 0, 0, Width, Height);
+  DrawNineSlices_OLD(Canvas, pImagePathPrefix, 0, 0, Width, Height);
 end;
 
 
