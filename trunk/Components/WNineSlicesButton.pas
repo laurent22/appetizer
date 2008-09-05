@@ -26,7 +26,6 @@ type
     pIconImagePath: String;
     pIconImage: TPNGObject;
     pImagePath: String;
-    pUpdateNineSlices: Boolean;
     pNineSlices: TStateNineSlices;
     pNineSlicesGrid: TRect;
     pNineSlicesGridExplicitelySet: Boolean;
@@ -124,9 +123,7 @@ end;
 
 
 procedure TWNineSlicesButton.Paint();
-var path: String;
-    i: Integer;
-    sourceImage: TPNGObject;
+var sourceImage: TPNGObject;
     nineSlices: TPNGNineSlices;
     sourceImagePath: String;
 begin

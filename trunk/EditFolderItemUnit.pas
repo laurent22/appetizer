@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, User, FileCtrl;
+  Dialogs, StdCtrls, User, FileCtrl, Logger, SelectFolderOrFileUnit;
 
 type
   TEditFolderItemForm = class(TForm)
@@ -20,12 +20,18 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure locationEditKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure nameEditKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     pLoadedFolderItem: TFolderItem;
   public
     { Public declarations }
     SaveButtonClicked: Boolean;
+    procedure ConfirmForm();
+    procedure CancelForm();
     procedure LoadFolderItem(const folderItem: TFolderItem);
   end;
 
@@ -41,25 +47,46 @@ uses Main;
 
 procedure TEditFolderItemForm.Button1Click(Sender: TObject);
 begin
-	SaveButtonClicked := false;
-	Close();
+  CancelForm();
 end;
 
 
 procedure TEditFolderItemForm.Button2Click(Sender: TObject);
 begin
-	SaveButtonClicked := true;
-	pLoadedFolderItem.Name := nameEdit.Text;
-  pLoadedFolderItem.FilePath := locationEdit.Text;
-  Close();
+  ConfirmForm();
 end;
 
 
 procedure TEditFolderItemForm.Button3Click(Sender: TObject);
+var openDialog: TSelectFolderOrFileForm;
 begin
-	if OpenDialog1.Execute() then begin
-    locationEdit.Text := OpenDialog1.FileName;
+  openDialog := TSelectFolderOrFileForm.Create(Self);
+  openDialog.FilePath := TFolderItem.ResolveFilePath(Trim(locationEdit.Text));
+
+  try
+    if openDialog.ShowModal() <> mrCancel then begin
+      locationEdit.Text := TFolderItem.ConvertToRelativePath(openDialog.FilePath);
+      nameEdit.Text := TFolderItem.GetDisplayNameFromFilePath(openDialog.FilePath);
+    end;
+  finally
+    FreeAndNil(openDialog);
   end;
+end;
+
+
+procedure TEditFolderItemForm.CancelForm;
+begin
+	SaveButtonClicked := false;
+	Close();
+end;
+
+
+procedure TEditFolderItemForm.ConfirmForm;
+begin
+	SaveButtonClicked := true;
+	pLoadedFolderItem.Name := Trim(nameEdit.Text);
+  pLoadedFolderItem.FilePath := Trim(locationEdit.Text);
+  Close();
 end;
 
 
@@ -79,6 +106,23 @@ begin
 end;
 
 
+procedure TEditFolderItemForm.locationEditKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if (key = 10) or (key = 13) then begin
+    ConfirmForm();
+    key := 0;
+  end;
+end;
 
+
+procedure TEditFolderItemForm.nameEditKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (key = 10) or (key = 13) then begin
+    ConfirmForm();
+    key := 0;
+  end;
+end;
 
 end.

@@ -69,7 +69,6 @@ end;
 
 
 procedure TIconTooltipForm.ShowAbove(const component: TWComponent; const text: String);
-var point: TPoint;
 begin
 	if component.Parent = nil then Exit;
 

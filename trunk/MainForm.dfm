@@ -18,11 +18,16 @@ object MainForm: TMainForm
   PixelsPerInch = 96
   TextHeight = 13
   object trayIconPopupMenu: TPopupMenu
+    OnPopup = trayIconPopupMenuPopup
     Left = 16
     Top = 8
     object trayIconPopupMenuHideShow: TMenuItem
       Caption = 'Hide / Show'
       OnClick = trayIconPopupMenuHideShowClick
+    end
+    object N1: TMenuItem
+      Caption = '-'
+      Enabled = False
     end
     object trayIconPopupMenuClose: TMenuItem
       Caption = 'Close'

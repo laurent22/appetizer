@@ -5,7 +5,7 @@ interface
 uses Windows, WNineSlicesPanel, Classes, WFileIcon, WImage, Logger, Contnrs, Controls,
 	Types, WComponent, ExtCtrls, Forms, SysUtils, Graphics, MathUtils, Imaging,
   ShellAPI, WImageButton, Menus, User, StringUtils, EditFolderItemUnit, SystemUtils,
-  IconToolTipUnit;
+  IconToolTipUnit, SelectFolderOrFileUnit;
 
 type
 
@@ -39,7 +39,7 @@ type
     procedure IconForm_Paint(Sender: TObject);
 
     procedure MenuItem_Click_NewShortcut(Sender: TObject);
-    procedure MenuItem_Click_NewSeparator(Sender: TObject);
+    //procedure MenuItem_Click_NewSeparator(Sender: TObject);
     procedure MenuItem_Click_Delete(Sender: TObject);
     procedure MenuItem_Click_Properties(Sender: TObject);
     procedure MenuItem_Click_AddItToQuickLaunch(Sender: TObject);
@@ -186,12 +186,13 @@ end;
 procedure TIconPanel.MenuItem_Click_NewShortcut;
 var folderItem: TFolderItem;
 	component: TWComponent;
-  filePath: String;
+  openDialog: TSelectFolderOrFileForm;
 begin
-	filePath := '';
-  if OpenSaveFileDialog(Application.Handle, '', TMain.Instance.Loc.GetString('Global.OpenDialog.AllFiles') + '|*.*', '', TMain.Instance.Loc.GetString('IconPanel.NewShorcut.OpenDialog'), filePath, true) then begin
+  openDialog := TSelectFolderOrFileForm.Create(Self);
+
+  if openDialog.ShowModal() <> mrCancel then begin
   	folderItem := TFolderItem.Create();
-    folderItem.FilePath := TFolderItem.ConvertToRelativePath(filePath);
+    folderItem.FilePath := TFolderItem.ConvertToRelativePath(openDialog.FilePath);
     folderItem.AutoSetName();
     TMain.Instance.User.AddFolderItem(folderItem);
 
@@ -204,18 +205,18 @@ begin
 end;
 
 
-procedure TIconPanel.MenuItem_Click_NewSeparator;
-var folderItem: TFolderItem;
-	component: TWComponent;
-begin
- 	folderItem := TFolderItem.Create();
-  folderItem.IsSeparator := true;
-  TMain.Instance.User.AddFolderItem(folderItem);
-  component := FolderItemToComponent(folderItem);
-  AddChild(component);
-  pComponents.Add(TObject(component));
-  UpdateLayout();
-end;
+//procedure TIconPanel.MenuItem_Click_NewSeparator;
+//var folderItem: TFolderItem;
+//	component: TWComponent;
+//begin
+// 	folderItem := TFolderItem.Create();
+//  folderItem.IsSeparator := true;
+//  TMain.Instance.User.AddFolderItem(folderItem);
+//  component := FolderItemToComponent(folderItem);
+//  AddChild(component);
+//  pComponents.Add(TObject(component));
+//  UpdateLayout();
+//end;
 
 
 procedure TIconPanel.MenuItem_Click_AddItToQuickLaunch;
@@ -267,7 +268,7 @@ begin
  	hasChanged := TMain.Instance.User.EditFolderItem(folderItem);
 	if hasChanged then begin
   	if component is TWFileIcon then begin
-    	TWFileIcon(component).FilePath := folderItem.FilePath;
+    	TWFileIcon(component).FilePath := folderItem.ResolvedFilePath;
     end;
   end;
 end;
@@ -275,8 +276,10 @@ end;
 
 function TIconPanel.FolderItemToComponent;
 var icon: TWFileIcon;
-	separatorImage: TWImage;
+    //separatorImage: TWImage;
 begin
+  result := nil;
+
   if not folderItem.IsSeparator then begin
 
     icon := TWFileIcon.Create(Owner);
@@ -349,8 +352,6 @@ var mouse: TMouse;
   mouseOffset: TPoint;
   formCenter: Tpoint;
   indexUnderCursor: Integer;
-  currentIndex: Integer;
-  saveItem: TWComponent;
   componentUnderCursor: TWComponent;
 begin
 	mouse := TMouse.Create();
@@ -687,10 +688,9 @@ var i: Integer;
   component: TWComponent;
   maxRight: Integer;
   lastIconBottom: Integer;
-  lastIconRight: Integer;
-  isWrapping: Boolean;
   folderItem: TFolderItem;
 begin
+  lastIconBottom := 0;
 
 	if pBrowseButton = nil then begin
     pBrowseButton := TWImageButton.Create(Owner);
@@ -705,8 +705,6 @@ begin
   componentY := TMain.Instance.Style.barInnerPanel.paddingTop;
 
   pLastVisibleIconIndex := -1;
-
-  isWrapping := false;
 
   maxRight := Width - TMain.Instance.Style.barInnerPanel.paddingRight;
 
@@ -733,7 +731,6 @@ begin
       componentY := componentY + component.Height;
       component.Left := componentX;
       component.Top := componentY;
-      isWrapping := true;
     end;
 
     componentX := component.Left + component.Width;
@@ -744,7 +741,6 @@ begin
     end;
 
     lastIconBottom := component.Top + component.Height;
-    lastIconRight := component.Left + component.Width;
   end;
 
 
@@ -757,13 +753,6 @@ begin
   end;
 
   MaxHeight := lastIconBottom + TMain.Instance.Style.barInnerPanel.paddingBottom;
-
-//  if isWrapping then begin
-//    MaxWidth := -1;
-//  end else begin
-//  	MaxWidth := lastIconRight + TMain.Instance.Style.barInnerPanel.paddingRight;
-//  end;
-  
 end;
 
 end.

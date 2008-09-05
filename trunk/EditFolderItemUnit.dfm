@@ -35,6 +35,7 @@ object EditFolderItemForm: TEditFolderItemForm
     Width = 225
     Height = 21
     TabOrder = 0
+    OnKeyDown = nameEditKeyDown
   end
   object locationEdit: TEdit
     Left = 72
@@ -42,6 +43,7 @@ object EditFolderItemForm: TEditFolderItemForm
     Width = 194
     Height = 21
     TabOrder = 1
+    OnKeyDown = locationEditKeyDown
   end
   object Button1: TButton
     Left = 222

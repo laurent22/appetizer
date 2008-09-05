@@ -40,8 +40,7 @@ implementation
 // By Thany: http://www.thany.org
 function PNG_ExtractRectangularSlice(const sourceImage: TPNGObject; const sourceRect: TRect):TPNGObject;
 var
-   X, Y, ImageX, ImageY, OffsetX, OffsetY: Integer;
-   Width, Height: Integer;
+   X, Y, OffsetX, OffsetY: Integer;
    Bitmap: TBitmap;
    BitmapLine: PRGBLine;
    AlphaLineA, AlphaLineB: pngimage.PByteArray;
@@ -122,11 +121,8 @@ end;
 -------------------------------------------------------------------------------}
 function PNG_ExtractNineSlices(const sourceImage: TPNGObject; const gridRect: TRect): TPNGNineSlices; overload;
 var r: TRect;
-    gridWidth, gridHeight: Integer;
     imgWidth, imgHeight: Integer;
 begin
-  gridWidth := gridRect.Right - gridRect.Left;
-  gridHeight := gridRect.Bottom - gridRect.Top;
   imgWidth := sourceImage.Width;
   imgHeight := sourceImage.Height;
 
@@ -207,7 +203,7 @@ end;
 -------------------------------------------------------------------------------}
 procedure PNG_DrawNineSlices(const canvas: TCanvas; const nineSlices: TPNGNineSlices; const x, y, width, height: Integer);
 var i: Integer;
-    sourceRect, destRect: TRect;
+    destRect: TRect;
     slice: TPNGObject;
 begin
   for i := 0 to Length(nineSlices) - 1 do begin

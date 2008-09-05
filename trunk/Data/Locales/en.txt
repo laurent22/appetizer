@@ -25,4 +25,9 @@ EditFolderItemForm.NameLabel = Name:
 EditFolderItemForm.LocationLabel = Location:
 
 TrayIcon.Close = Close
-TrayIcon.HideShow = Hide / Show
+TrayIcon.Hide = Hide
+TrayIcon.Show = Show
+
+SelectFolderOrFileDialog.Title = Select folder or file
+SelectFolderOrFileDialog.SelectFile = Select file
+SelectFolderOrFileDialog.SelectFolder = Select folder

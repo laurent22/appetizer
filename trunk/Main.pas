@@ -126,7 +126,7 @@ end;
 
 function TMain.GetSkinAttribute(const objectName, attributeName: String): String;
 var i: Integer;
-    elements, element: IXMLDOMElement;
+    element: IXMLDOMElement;
 begin
   for i := 0 to skinXML.documentElement.childNodes.length - 1 do begin
     element := skinXML.documentElement.childNodes.item[i] as IXMLDOMElement;
@@ -143,7 +143,6 @@ end;
 
 
 function TMain.GetSkinAttributeAsStringList(const objectName, attributeName: String): TStringList;
-var skinAttribute: String;
 begin
   result := SplitString(',', GetSkinAttribute(objectName, attributeName));
 end;

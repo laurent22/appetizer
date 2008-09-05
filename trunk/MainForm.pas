@@ -42,6 +42,7 @@ type
     trayIconPopupMenu: TPopupMenu;
     trayIconPopupMenuClose: TMenuItem;
     trayIconPopupMenuHideShow: TMenuItem;
+    N1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure barBackground_down(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure barBackground_up(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -60,6 +61,7 @@ type
     procedure trayIconPopupMenuCloseClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure trayIconPopupMenuHideShowClick(Sender: TObject);
+    procedure trayIconPopupMenuPopup(Sender: TObject);
 
     private
       { Private declarations }
@@ -141,14 +143,20 @@ begin
   windowDragData.startPanelHeight := barInnerPanel.Height;
 end;
 
-procedure TMainForm.Resizer_MouseMove(Sender: TObject; Shift: TShiftState; X,
-  Y: Integer);
+procedure TMainForm.Resizer_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 var newWidth, newHeight: Integer;
 begin
 	if (windowDragData.dragging) and (windowDragData.draggingType = 'resize') then begin
-    mouse := TMouse.Create();
-    barInnerPanel.Width := windowDragData.startPanelWidth + (mouse.CursorPos.X - windowDragData.startMousePos.X);
-    barInnerPanel.Height := windowDragData.startPanelHeight + (mouse.CursorPos.y - windowDragData.startMousePos.Y);
+    //mouse := TMouse.Create();
+
+    newWidth := windowDragData.startPanelWidth + (mouse.CursorPos.X - windowDragData.startMousePos.X);
+    newHeight := windowDragData.startPanelHeight + (mouse.CursorPos.y - windowDragData.startMousePos.Y);
+
+    if (newWidth = barInnerPanel.Width) and (newHeight = barInnerPanel.Height) then Exit;
+
+    barInnerPanel.Width := newWidth;
+    barInnerPanel.Height := newHeight;
+
     UpdateLayout();
     Repaint();
   end;
@@ -454,8 +462,7 @@ begin
       buttonData.SeparatorObject.Top := buttonY;
       buttonData.SeparatorObject.Width := 4;
       buttonData.SeparatorObject.Height := optionPanel.Height - TMain.Instance.Style.optionPanel.paddingV;
-
-
+                                                 
       buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 4;
 
       buttonData.SeparatorObject.Left := Round(buttonData.SeparatorObject.Left + (buttonX - buttonData.SeparatorObject.Left) / 2) - 1;
@@ -479,11 +486,12 @@ begin
     end;
 
   end;
-
 end;
 
 
 procedure TMainForm.UpdateOptionPanel();
+var lastButtonRight: Integer;
+    lastButton: TWImageButton;
 begin
 	ilog('Updating option panel');
 
@@ -499,6 +507,16 @@ begin
     	TMain.Instance.Style.OptionPanel.PaddingLeft,
       TMain.Instance.Style.OptionPanel.PaddingTop
     );
+
+    lastButton := optionButtons[Length(optionButtons) - 1];
+    lastButtonRight := lastButton.Left + lastButton.Width;
+
+    if lastButtonRight + TMain.Instance.Style.optionPanel.paddingRight <> optionPanelOpenWidth then begin
+      optionPanelOpenWidth := lastButtonRight + TMain.Instance.Style.optionPanel.paddingRight;
+      ilog(optionPanelOpenWidth);
+      SetOptionPanelWidth(optionPanelOpenWidth);
+      UpdateLayout();
+    end;
 
   end else begin
 		arrowButton.Left := optionPanelOpenWidth - optionPanelCurrentWidth;
@@ -626,6 +644,15 @@ begin
 end;
 
 
+procedure TMainForm.trayIconPopupMenuPopup(Sender: TObject);
+begin
+  if Visible then
+    trayIconPopupMenuHideShow.Caption := TMain.Instance.Loc.GetString('TrayIcon.Hide')
+  else
+    trayIconPopupMenuHideShow.Caption := TMain.Instance.Loc.GetString('TrayIcon.Show')
+end;
+
+
 procedure TMainForm.ShowPopupMenu(f : TForm; p : TPopupMenu);
 var
   pt : TPoint;
@@ -701,7 +728,6 @@ begin
   // ---------------------------------------------------------------------------
   // Initialize form settings
   // ---------------------------------------------------------------------------
-
   TMain.Instance.MainForm := self;
 
   ilog('Initializing form settings');
@@ -751,7 +777,6 @@ begin
   // ---------------------------------------------------------------------------
 
   trayIconPopupMenuClose.Caption := TMain.Instance.Loc.GetString('TrayIcon.Close');
-  trayIconPopupMenuHideShow.Caption := TMain.Instance.Loc.GetString('TrayIcon.HideShow');
 
   // ---------------------------------------------------------------------------
   // Initialize option buttons' data
@@ -769,14 +794,24 @@ begin
   d.Name := 'Eject';
   d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Eject.png';
 
-
+//   d := AddOptionButtonData();
+//  d.Separator := true;
+//
 //
 //  d := AddOptionButtonData();
 //  d.Name := 'Close';
 //  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
-
 //  d := AddOptionButtonData();
-//  d.Separator := true;
+//  d.Name := 'Close';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
+//  d.Name := 'Close';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
+//  d.Name := 'Close';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
+//  d.Name := 'Close';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
+//  d.Name := 'Close';
+//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
 
 //  d := AddOptionButtonData();
 //  d.Name := 'Encrypt';
@@ -935,7 +970,6 @@ end;
 
 
 procedure TMainForm.FormShow(Sender: TObject);
-var lastWindowSettings: TStringList;
 begin
 	if pFirstShown then begin
     pFirstShown := false;

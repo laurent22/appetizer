@@ -39,6 +39,7 @@ type
       procedure LoadFromXML(const xmlElement:IXMLDOMElement);
       class function ResolveFilePath(const filePath: String):String;
       class function ConvertToRelativePath(const filePath: String): String;
+      class function GetDisplayNameFromFilePath(const filePath: String): String;
     	constructor Create();
 
   end;
@@ -149,18 +150,24 @@ begin
 end;
 
 
-procedure TFolderItem.AutoSetName;
+class function TFolderItem.GetDisplayNameFromFilePath(const filePath: String): String;
 begin
-  Name := ExtractFileName(ResolvedFilePath);
+  result := ExtractFileName(filePath);
 
   try
-    versionInfo := TVersionInfo.CreateFile(ResolvedFilePath);
+    versionInfo := TVersionInfo.CreateFile(filePath);
     if versionInfo.FileDescription <> '' then begin
-      Name := versionInfo.FileDescription;
+      result := versionInfo.FileDescription;
     end;
   finally
     FreeAndNil(versionInfo);
   end;
+end;
+
+
+procedure TFolderItem.AutoSetName();
+begin
+  Name := GetDisplayNameFromFilePath(ResolvedFilePath);
 end;
 
 
