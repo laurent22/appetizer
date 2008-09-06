@@ -96,6 +96,7 @@ type
       function GetMaxWidth():Integer;
       function GetIconPanelMaxWidth(): Integer;
       procedure WMCallBackMessage(var msg : TMessage); message Wm_CallBackMessage;
+      procedure Localize(Sender: TObject);
 
       procedure Resizer_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure Resizer_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -103,6 +104,7 @@ type
 
     public
       { Public declarations }
+      barInnerPanel: TIconPanel;
       property MaxWidth: Integer read GetMaxWidth;
       property IconPanelMaxWidth: Integer read GetIconPanelMaxWidth;
       
@@ -111,7 +113,7 @@ type
 var
   theMainForm: TMainForm;
   barBackground: TWNineSlicesPanel;
-  barInnerPanel: TIconPanel;
+
   optionPanel: TWNineSlicesPanel;
   arrowButton: TWNineSlicesButton;
   button: TWImageButton;
@@ -350,6 +352,12 @@ end;
 
 
 
+procedure TMainForm.Localize;
+begin
+  trayIconPopupMenuClose.Caption := TMain.Instance.Loc.GetString('TrayIcon.Close');
+end;
+
+
 procedure TMainForm.optionButton_Click(Sender: TObject);
 var d: TOptionButtonDatum;
   button: TWImageButton;
@@ -377,7 +385,21 @@ begin
     Visible := false;
     Exit;
   end;
-  
+
+  if d.Name = 'AddShortcut' then begin
+    barInnerPanel.StartAddingFolderItem();
+    Exit;
+  end;
+
+  if d.Name = 'MultiLaunch' then begin
+    TMain.Instance.User.DoQuickLaunch();
+    Exit;
+  end;
+
+  if d.Name = 'Config' then begin
+    TMain.Instance.ShowConfigForm();
+    Exit;
+  end;
 end;
 
 
@@ -393,14 +415,13 @@ end;
 
 
 procedure TMainForm.CalculateOptionPanelOpenWidth();
-var buttonX: Integer;
+var buttonX, buttonY: Integer;
 	buttonData: TOptionButtonDatum;
 	button: TWImageButton;
   i: Byte;
-  vButtonCount: Integer;
 begin
-	buttonX := 0;
-  vButtonCount := 0;
+  buttonX := 0;
+  buttonY := 0;
 
   for i := 0 to Length(optionButtons) - 1 do begin
     button := optionButtons[i];
@@ -410,17 +431,17 @@ begin
 
     if buttonData.Separator then begin
 
+    	buttonY := optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop;
       buttonX := buttonX + optionButtons[i - 1].Width + optionButtonGap * 4;
-      vButtonCount := 0;
 
     end else begin
 
-    	vButtonCount := vButtonCount + 1;
-
-      if vButtonCount > 3  then begin
+      if buttonY + button.Height >= optionPanel.Height then begin
+        buttonY := optionPanel.Top + TMain.Instance.Style.OptionPanel.PaddingTop;
         buttonX := buttonX + button.Width + optionButtonGap;
-        vButtonCount := 0;
       end;
+
+      buttonY := buttonY + optionButtons[i].Height + optionButtonGap;
 
     end;
 
@@ -429,7 +450,6 @@ begin
   end;
 
   optionPanelOpenWidth := optionPanelOpenWidth + TMain.Instance.Style.OptionPanel.PaddingH;
-
 end;
 
 
@@ -776,7 +796,8 @@ begin
   // Localization
   // ---------------------------------------------------------------------------
 
-  trayIconPopupMenuClose.Caption := TMain.Instance.Loc.GetString('TrayIcon.Close');
+  Localize(Self);
+  TMain.Instance.RegisterLocalizableObject(Localize);
 
   // ---------------------------------------------------------------------------
   // Initialize option buttons' data
@@ -794,36 +815,20 @@ begin
   d.Name := 'Eject';
   d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Eject.png';
 
-//   d := AddOptionButtonData();
-//  d.Separator := true;
-//
-//
-//  d := AddOptionButtonData();
-//  d.Name := 'Close';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
-//  d := AddOptionButtonData();
-//  d.Name := 'Close';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
-//  d.Name := 'Close';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
-//  d.Name := 'Close';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
-//  d.Name := 'Close';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';  d := AddOptionButtonData();
-//  d.Name := 'Close';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Close.png';
+  d := AddOptionButtonData();
+  d.Separator := true;
 
-//  d := AddOptionButtonData();
-//  d.Name := 'Encrypt';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Key.png';
+  d := AddOptionButtonData();
+  d.Name := 'Config';
+  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Config.png';
 
-//  d := AddOptionButtonData();
-//  d.Name := 'Config';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Config.png';
+  d := AddOptionButtonData();
+  d.Name := 'AddShortcut';
+  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_AddShortcut.png';
 
-//  d := AddOptionButtonData();
-//  d.Name := 'Help';
-//  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_Help.png';
+  d := AddOptionButtonData();
+  d.Name := 'MultiLaunch';
+  d.IconFilePath := TMain.Instance.FilePaths.SkinDirectory + '\ButtonIcon_MultiLaunch.png';
 
   // ---------------------------------------------------------------------------
   // Create form controls
@@ -880,6 +885,18 @@ begin
   ilog('Creating background panel');
 
 	barBackground := TWNineSlicesPanel.Create(self);
+
+//  nineSliceStrings := TMain.Instance.GetSkinAttributeAsStringList('BarBackground', 'nineScaleGrid');
+//
+//  if nineSliceStrings.Count >= 4 then begin
+//    nineSlicesGrid.Left := StrToInt(nineSliceStrings[0]);
+//    nineSlicesGrid.Top := StrToInt(nineSliceStrings[1]);
+//    nineSlicesGrid.Right := nineSlicesGrid.Left + StrToInt(nineSliceStrings[2]);  { -1 ??? }
+//    nineSlicesGrid.Bottom := nineSlicesGrid.Top + StrToInt(nineSliceStrings[3]);  { -1 ??? }
+//
+//    barBackground.NineSlicesGrid := nineSlicesGrid;
+//  end;
+
   barBackground.ImagePath := TMain.Instance.FilePaths.SkinDirectory + '\BarBackground.png';
   barBackground.Visible := true;
   barBackground.Parent := self;
@@ -962,10 +979,15 @@ begin
   TMain.Instance.User.AutomaticallyAddNewApps();
   barInnerPanel.LoadFolderItems();
 	UpdateLayout();
-  TMain.Instance.User.DoQuickLaunch();
 
   Visible := true;
   ShowWindow(Application.Handle, SW_HIDE);
+
+  { HACK: The size of the window is not calculated correctly at this stage.
+    Opening and closing the option panel fixes the issue, however it would
+    be nice to find out a proper fix }
+  ToggleOptionPanel();
+  ToggleOptionPanel();
 end;
 
 

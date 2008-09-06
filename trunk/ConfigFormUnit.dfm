@@ -1,9 +1,10 @@
 object ConfigForm: TConfigForm
   Left = 0
   Top = 0
+  BorderStyle = bsDialog
   Caption = 'Config form'
-  ClientHeight = 345
-  ClientWidth = 538
+  ClientHeight = 169
+  ClientWidth = 297
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,53 +12,69 @@ object ConfigForm: TConfigForm
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object PageControl1: TPageControl
     Left = 8
     Top = 8
-    Width = 521
-    Height = 329
-    ActivePage = TabSheet1
+    Width = 281
+    Height = 121
+    ActivePage = generalTab
     TabOrder = 0
-    object TabSheet1: TTabSheet
+    object generalTab: TTabSheet
       Caption = 'General'
-      object CheckBox1: TCheckBox
+      object languageLabel: TLabel
         Left = 16
-        Top = 16
-        Width = 257
-        Height = 17
-        Caption = 'Auto-detect new applications'
-        TabOrder = 0
-      end
-    end
-    object TabSheet3: TTabSheet
-      Caption = 'Quick Launch'
-      ImageIndex = 2
-      object Label2: TLabel
-        Left = 16
-        Top = 16
-        Width = 123
+        Top = 19
+        Width = 51
         Height = 13
-        Caption = 'Quick launch applications:'
+        Caption = 'Language:'
       end
-      object Memo2: TMemo
+      object iconSizeLabel: TLabel
         Left = 16
-        Top = 48
-        Width = 480
-        Height = 201
-        Lines.Strings = (
-          'Memo2')
+        Top = 56
+        Width = 46
+        Height = 13
+        Caption = 'Icon size:'
+      end
+      object languageComboBox: TComboBox
+        Left = 121
+        Top = 16
+        Width = 145
+        Height = 21
+        Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 0
       end
-      object Button1: TButton
-        Left = 16
-        Top = 263
-        Width = 75
-        Height = 25
-        Caption = 'Browse...'
+      object iconSizeComboBox: TComboBox
+        Left = 121
+        Top = 56
+        Width = 145
+        Height = 21
+        Style = csDropDownList
+        ItemHeight = 13
         TabOrder = 1
       end
     end
+  end
+  object cancelButton: TButton
+    Left = 214
+    Top = 135
+    Width = 75
+    Height = 25
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 1
+  end
+  object okButton: TButton
+    Left = 133
+    Top = 135
+    Width = 75
+    Height = 25
+    Caption = 'OK'
+    TabOrder = 2
+    OnClick = okButtonClick
   end
 end

@@ -4,7 +4,8 @@ interface
 
 uses Dialogs, MainForm, FileSystemUtils, SysUtils, Classes, StringUtils,
 	LocalizationUtils, IniFiles, Forms, Windows, Logger, Graphics, ShellAPI,
-  User, FileCtrl, CmdLineParam, ComObj, MSXML2_TLB;
+  User, FileCtrl, CmdLineParam, ComObj, MSXML2_TLB, ConfigFormUnit, Contnrs,
+  WComponent;
 
 
 const
@@ -68,20 +69,37 @@ type
     FontStyles: TFontStyles;
   end;
 
+  TIconStyle = record
+    paddingLeft: Integer;
+    paddingRight: Integer;
+    paddingTop: Integer;
+    paddingBottom: Integer;
+    paddingH: Integer;
+    paddingV: Integer;
+  end;
+
   TStyle = record
     barMainPanel: TBarMainPanelStyle;
     barInnerPanel: TBarInnerPanelStyle;
     optionPanel: TOptionPanelStyle;
     IconTooltip: TIconTooltipStyle;
+    Icon: TIconStyle;
   end;
 
 
-	TMain = class   
+  TNotifyEventWrapper = class
+    public
+      Event: TNotifyEvent;
+  end;
+
+
+	TMain = class(TObject)  
 
   private
     
     pUser: TUser;
     skinXML: IXMLDomDocument;
+    pLocalizableHandlers: Array of TNotifyEventWrapper;
 
   public
 
@@ -95,12 +113,18 @@ type
   	constructor Create();
   	class function Instance: TMain;
 
+    procedure Localize();
+
     procedure EjectDrive();
     function ErrorMessage(const text: String; const buttons: TMsgDlgButtons = [mbOk]): Integer;
     function ConfirmationMessage(const text: String; const buttons: TMsgDlgButtons = [mbYes, mbNo]): Integer;
     function GetSkinAttribute(const objectName: String; const attributeName: String): String;
     function GetSkinAttributeAsStringList(const objectName: String; const attributeName: String): TStringList;
    	property User: TUser read pUser;
+    procedure RegisterLocalizableObject(const localizableHandler: TNotifyEvent);
+    procedure UnregisterLocalizableObject(localizableHandler: TNotifyEvent);
+    procedure ShowConfigForm();
+    procedure SetCurrentLocale(const localeCode: String);
 
   end;
 
@@ -116,6 +140,110 @@ begin
   end;
   result := __singletonInstance;
 end;
+
+
+
+procedure TMain.Localize;
+var i: Integer;
+    n: TNotifyEventWrapper;
+begin
+
+//  @func := pLocalizableHandlers[0];
+//  func(nil);
+//  FreeMem(func);
+
+
+  for i := 0 to Length(pLocalizableHandlers) - 1 do begin
+    n := pLocalizableHandlers[i];
+    n.Event(Self);
+  end;
+end;
+
+
+procedure TMain.RegisterLocalizableObject(const localizableHandler: TNotifyEvent);
+var i: Integer;
+    o: TNotifyEventWrapper;
+begin
+  o := TNotifyEventWrapper.Create();
+  o.Event := localizableHandler;
+
+  SetLength(pLocalizableHandlers, Length(pLocalizableHandlers) + 1);
+  pLocalizableHandlers[Length(pLocalizableHandlers) - 1] := o;
+
+  //pLocalizableHandlers.Add(@localizableHandler);
+end;
+
+
+procedure TMain.UnregisterLocalizableObject(localizableHandler: TNotifyEvent);
+var i: Integer;
+begin
+//  for i := 0 to pLocalizableHandlers.Count - 1 do begin
+//    if pLocalizableHandlers[i] = @localizableHandler then begin
+//      pLocalizableHandlers[i] := nil;
+//      Exit;
+//    end;
+//  end;
+end;
+
+
+//procedure TMain.Localize;
+//var i: Integer;
+//    func: TNotifyEvent;
+//begin
+//
+//  @func := pLocalizableHandlers[0];
+//  func(nil);
+//  FreeMem(func);
+//
+//
+////  for i := 0 to pLocalizableHandlers.Count - 1 do begin
+////    @p := pLocalizableHandlers[i];
+////    p(nil);
+////    //FreeAndNil(p);
+////  end;
+//end;
+//
+//
+//procedure TMain.RegisterLocalizableObject(const localizableHandler: TNotifyEvent);
+//var i: Integer;
+//begin
+//  pLocalizableHandlers.Add(@localizableHandler);
+//end;
+//
+//
+//procedure TMain.UnregisterLocalizableObject(localizableHandler: TNotifyEvent);
+//var i: Integer;
+//begin
+//  for i := 0 to pLocalizableHandlers.Count - 1 do begin
+//    if pLocalizableHandlers[i] = @localizableHandler then begin
+//      pLocalizableHandlers[i] := nil;
+//      Exit;
+//    end;
+//  end;
+//end;
+
+
+procedure TMain.SetCurrentLocale(const localeCode: String);
+begin
+  if Loc.CurrentLocale = localeCode then Exit;
+  
+  Loc.CurrentLocale := pUser.GetUserSetting('Locale');
+  Loc.LoadLocale(Loc.CurrentLocale, FilePaths.LocalesDirectory);
+end;
+
+
+procedure TMain.ShowConfigForm;
+var configForm: TConfigForm;
+begin
+  configForm := TConfigForm.Create(MainForm);
+  try
+    configForm.ShowModal();
+  finally
+    FreeAndNil(configForm);
+  end;
+end;
+
+
 
 
 function TMain.ErrorMessage;
@@ -202,9 +330,8 @@ begin
 
 	Loc := TLocalizationUtils.Create();
   Loc.LoadLocale('en', FilePaths.LocalesDirectory);
-  Loc.CurrentLocale := pUser.GetUserSetting('Locale');
-  Loc.LoadLocale(Loc.CurrentLocale, FilePaths.LocalesDirectory);
-
+  SetCurrentLocale(pUser.GetUserSetting('Locale'));
+  
   ilog('Current locale: ' + Loc.CurrentLocale);
 
   // ---------------------------------------------------------------------------
@@ -240,6 +367,13 @@ begin
   Style.IconTooltip.paddingV := Style.IconTooltip.paddingTop + Style.IconTooltip.paddingBottom;
   Style.IconTooltip.FontColor := clBlack;
   Style.IconTooltip.FontStyles := [fsBold];
+
+	Style.Icon.paddingTop := 4;
+  Style.Icon.paddingBottom := 4;
+  Style.Icon.paddingLeft := 4;
+  Style.Icon.paddingRight := 4;
+  Style.Icon.paddingH := Style.Icon.paddingLeft + Style.Icon.paddingRight;
+  Style.Icon.paddingV := Style.Icon.paddingTop + Style.Icon.paddingBottom;
 
 	ilog('Settings folder: ' + FilePaths.SettingsDirectory);
   ilog('Skin folder: ' + FilePaths.SkinDirectory);

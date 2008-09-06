@@ -20,6 +20,8 @@ const Fmt: String = '%d.%d.%d.%d'): String;
 function GetDocumentIcon(const filePath: String; const returnSmallIcon: Boolean): TIcon;
 function GetFolderItemIcon(const folderItemPath: String; const returnSmallIcon: Boolean): TIcon;
 
+function ExtractFileNameNoExt(const aFilePath: String): String;
+
 function GetFolderIcon (const aFilename : String; b32BitIcon : Boolean) : TIcon;
 
 
@@ -27,6 +29,13 @@ implementation
 
 
 
+function ExtractFileNameNoExt(const aFilePath: String): String;
+var ext: String;
+begin
+  result := ExtractFileName(aFilePath);
+  ext := ExtractFileExt(aFilePath);
+  result := Copy(result, 1, Length(result) - Length(ext));
+end;
 
 
 function GetFolderIcon (const aFileName : String; b32BitIcon : Boolean) : TIcon;

@@ -25,7 +25,6 @@ type
   private
 
     pComponents: TObjectList;
-    pIconSize: Word;
     pIconDragData: TComponentDragData;
     pTooltipForm: TIconTooltipForm;
     pBrowseButton: TWImageButton;
@@ -46,6 +45,7 @@ type
 
     procedure UpdateFolderItemsOrder();
 
+
     function GetInsertionIndexAtPoint(const aPoint: TPoint): Integer;
     procedure Icon_Click(sender: TObject);
     procedure Icon_MouseEnter(sender: TObject);
@@ -56,9 +56,14 @@ type
     procedure BrowseButton_Click(Sender: TObject);
     procedure BrowseButtonPopupMenu_Click(Sender: TObject);
     procedure FitToContent;
+    procedure UpdateMinWidthMinHeight();
+    function IconSize(): Integer;
+
 
   public
 
+    procedure ReloadIcons();
+    procedure StartAddingFolderItem();
   	constructor Create(AOwner: TComponent); override;
   	procedure LoadFolderItems();
     procedure UpdateLayout();
@@ -78,16 +83,29 @@ begin
 
   pLastVisibleIconIndex := -1;
 
-  pIconSize := 40;
   ImagePath := TMain.Instance.FilePaths.SkinDirectory + '\BarInnerPanel.png';
 
   pComponents := TObjectList.Create();
   pComponents.OwnsObjects := false;
 
-  MinWidth := pIconSize + TMain.Instance.Style.barInnerPanel.paddingH;
-  MinHeight := pIconSize + TMain.Instance.Style.barInnerPanel.paddingV;
+  UpdateMinWidthMinHeight();
   
   self.OnMouseDown := Self_MouseDown;
+end;
+
+
+procedure TIconPanel.UpdateMinWidthMinHeight;
+var iconSize: Integer;
+begin
+  iconSize := Self.IconSize;
+  MinWidth := iconSize + TMain.Instance.Style.barInnerPanel.paddingH;
+  MinHeight := iconSize + TMain.Instance.Style.barInnerPanel.paddingV;
+end;
+
+
+function TIconPanel.IconSize;
+begin
+  result := StrToInt(TMain.Instance.User.GetUserSetting('ShorcutIconSize')) + TMain.Instance.Style.Icon.PaddingH;
 end;
 
 
@@ -166,6 +184,22 @@ begin
 end;
 
 
+procedure TIconPanel.StartAddingFolderItem;
+var folderItem: TFolderItem;
+	component: TWComponent;
+  openDialog: TSelectFolderOrFileForm;
+begin
+  folderItem := TMain.Instance.User.StartAddingFolderItem();
+  if folderItem = nil then Exit;
+
+  component := FolderItemToComponent(folderItem);
+  AddChild(component);
+  pComponents.Add(TObject(component));
+
+  UpdateLayout();
+end;
+
+
 function TIconPanel.CreateFormPopupMenu;
 var menuItem: TMenuItem;
 begin
@@ -175,48 +209,13 @@ begin
   menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.NewShortcut');
   menuItem.OnClick := MenuItem_Click_NewShortcut;
   result.Items.Add(menuItem);
-
-//  menuItem := TMenuItem.Create(result);
-//  menuItem.Caption := TMain.Instance.Loc.GetString('IconPanel.PopupMenu.NewSeparator');
-//  menuItem.OnClick := MenuItem_Click_NewSeparator;
-//  result.Items.Add(menuItem);
 end;
 
 
 procedure TIconPanel.MenuItem_Click_NewShortcut;
-var folderItem: TFolderItem;
-	component: TWComponent;
-  openDialog: TSelectFolderOrFileForm;
 begin
-  openDialog := TSelectFolderOrFileForm.Create(Self);
-
-  if openDialog.ShowModal() <> mrCancel then begin
-  	folderItem := TFolderItem.Create();
-    folderItem.FilePath := TFolderItem.ConvertToRelativePath(openDialog.FilePath);
-    folderItem.AutoSetName();
-    TMain.Instance.User.AddFolderItem(folderItem);
-
-    component := FolderItemToComponent(folderItem);
-    AddChild(component);
-    pComponents.Add(TObject(component));
-
-    UpdateLayout();
-  end;
+  StartAddingFolderItem();
 end;
-
-
-//procedure TIconPanel.MenuItem_Click_NewSeparator;
-//var folderItem: TFolderItem;
-//	component: TWComponent;
-//begin
-// 	folderItem := TFolderItem.Create();
-//  folderItem.IsSeparator := true;
-//  TMain.Instance.User.AddFolderItem(folderItem);
-//  component := FolderItemToComponent(folderItem);
-//  AddChild(component);
-//  pComponents.Add(TObject(component));
-//  UpdateLayout();
-//end;
 
 
 procedure TIconPanel.MenuItem_Click_AddItToQuickLaunch;
@@ -274,6 +273,20 @@ begin
 end;
 
 
+procedure TIconPanel.ReloadIcons;
+var i: Integer;
+begin
+  for i := 0 to pComponents.Count - 1 do begin
+    if pComponents[i] is TWFileIcon then begin
+      TWFileIcon(pComponents[i]).SetIconSize(StrToInt(TMain.Instance.User.GetUserSetting('ShorcutIconSize')));
+    end;
+  end;
+  UpdateMinWidthMinHeight();
+  UpdateLayout();
+  Invalidate();
+end;
+
+
 function TIconPanel.FolderItemToComponent;
 var icon: TWFileIcon;
     //separatorImage: TWImage;
@@ -284,8 +297,9 @@ begin
 
     icon := TWFileIcon.Create(Owner);
     icon.Tag := folderItem.ID;
-    icon.Width := pIconSize;
-    icon.Height := pIconSize;
+    icon.IconSize := StrToInt(TMain.Instance.User.GetUserSetting('ShorcutIconSize'));
+//    icon.Width := pIconSize;
+//    icon.Height := pIconSize;
     icon.Visible := false;
     icon.OnMouseDown := icon_mouseDown;
     icon.OnMouseUp := icon_mouseUp;
@@ -353,8 +367,10 @@ var mouse: TMouse;
   formCenter: Tpoint;
   indexUnderCursor: Integer;
   componentUnderCursor: TWComponent;
+  iconSize: Integer;
 begin
 	mouse := TMouse.Create();
+  iconSize := Self.IconSize;
 
   if not pIconDragData.Started then begin
   	if PointDistance(mouse.CursorPos, pIconDragData.MouseDownLoc) >= 5 then begin
@@ -375,7 +391,7 @@ begin
         pIconDragData.InsertionCursor.StretchToFit := true;
         pIconDragData.InsertionCursor.MaintainAspectRatio := false;
         pIconDragData.InsertionCursor.FitToContent();
-        pIconDragData.InsertionCursor.Height := pIconSize;
+        pIconDragData.InsertionCursor.Height := iconSize;
         AddChild(pIconDragData.InsertionCursor);
       end;
 

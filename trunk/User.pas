@@ -4,7 +4,7 @@ interface
 
 uses Logger, ComObj, MSXML2_TLB, SysUtils, ExtCtrls, Graphics, Classes,
 	FileSystemUtils, Windows, Contnrs, StringUtils, Forms, VersionInformation,
-  ShellApi;
+  ShellApi, SelectFolderOrFileUnit, Controls;
 
 
 
@@ -33,7 +33,7 @@ type
       property FilePath:String read pFilePath write SetFilePath;
       procedure AutoSetName();
       procedure Launch(const silentErrors: Boolean = false);
-      
+
       procedure ClearCachedIcons();
       procedure AppendToXML(const xmlDoc:IXMLDomDocument; const parentElement:IXMLDOMElement);
       procedure LoadFromXML(const xmlElement:IXMLDOMElement);
@@ -86,6 +86,7 @@ type
       function EditNewFolderItem(): TFolderItem;
       function EditFolderItem(const folderItem: TFolderItem): Boolean;
       procedure InvalidateFolderItems();
+      function StartAddingFolderItem(): TFolderItem;
       procedure RemoveFolderItem(const folderItem: TFolderItem);
       procedure AddAutoAddExclusion(const filePath: String);
       procedure RemoveAutoAddExclusion(const filePath: String);
@@ -98,14 +99,15 @@ type
 
 const
 
-	DEFAULT_SETTINGS: Array[0..6] of Array[0..1] of String = (
+	DEFAULT_SETTINGS: Array[0..7] of Array[0..1] of String = (
 		('PortableAppsPath', '%DRIVE%\PortableApps'),
     ('DocumentsPath', '%DRIVE%\Documents'),
     ('Locale', 'en'),
     ('IsFirstFolderItemRefresh', 'true'),
     ('AutoAddExclusions', ''),
     ('AnimationsEnabled', 'false'),
-    ('LastWindowSettings', '')
+    ('LastWindowSettings', ''),
+    ('ShorcutIconSize', '16')
   );
 
 
@@ -525,6 +527,25 @@ begin
 
   result := form.SaveButtonClicked;
 end;
+
+
+function TUser.StartAddingFolderItem;
+var folderItem: TFolderItem;
+  openDialog: TSelectFolderOrFileForm;
+begin
+  result := nil;
+  openDialog := TSelectFolderOrFileForm.Create(TMain.Instance.MainForm);
+
+  if openDialog.ShowModal() <> mrCancel then begin
+  	folderItem := TFolderItem.Create();
+    folderItem.FilePath := TFolderItem.ConvertToRelativePath(openDialog.FilePath);
+    folderItem.AutoSetName();
+    AddFolderItem(folderItem);
+
+    result := folderItem;
+  end;
+end;
+
 
 
 function TUser.GetFolderItemAt(const iIndex: Word): TFolderItem;

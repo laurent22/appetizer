@@ -31,7 +31,8 @@ uses
   WNineSlicesButton in 'Components\WNineSlicesButton.pas',
   WNineSlicesImage in 'Components\WNineSlicesImage.pas',
   IconPanel in 'IconPanel.pas',
-  SelectFolderOrFileUnit in 'SelectFolderOrFileUnit.pas' {SelectFolderOrFileForm};
+  SelectFolderOrFileUnit in 'SelectFolderOrFileUnit.pas' {SelectFolderOrFileForm},
+  GUIUtils in 'GUIUtils.pas';
 
 {$R *.res}
 {$R WindowsXP\WindowsXP.RES}
@@ -41,6 +42,5 @@ begin
   Application.ShowMainForm := false;
   Application.Title := 'Mini Launch Bar';
   Application.CreateForm(TMainForm, theMainForm);
-  Application.CreateForm(TSelectFolderOrFileForm, SelectFolderOrFileForm);
   Application.Run;
 end.

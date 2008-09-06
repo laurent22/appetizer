@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, FileCtrl;
+  Dialogs, StdCtrls, FileCtrl, GUIUtils;
 
 type
   TSelectFolderOrFileForm = class(TForm)
@@ -118,6 +118,14 @@ begin
   cancelButton.Caption := TMain.Instance.Loc.GetString('Global.Cancel');
   selectFileButton.Caption := TMain.Instance.Loc.GetString('SelectFolderOrFileDialog.SelectFile');
   selectFolderButton.Caption := TMain.Instance.Loc.GetString('SelectFolderOrFileDialog.SelectFolder');
+
+  FitButtonToText(cancelButton, Self);
+  FitButtonToText(selectFileButton, Self);
+  FitButtonToText(selectFolderButton, Self);
+
+  cancelButton.Left := FileListBox1.Left + FileListBox1.Width - cancelButton.Width;
+  selectFileButton.Left := cancelButton.Left - 8 - selectFileButton.Width;
+  selectFolderButton.Left := selectFileButton.Left - 8 - selectFolderButton.Width;
 
   UpdateAll();
 end;

@@ -3,8 +3,8 @@ object MainForm: TMainForm
   Top = 0
   BorderStyle = bsNone
   Caption = 'Mini Launch Bar'
-  ClientHeight = 64
-  ClientWidth = 256
+  ClientHeight = 71
+  ClientWidth = 341
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

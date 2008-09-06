@@ -25,6 +25,7 @@ type
 
   	public
     	CurrentLocale: String;
+      class function GetLanguageName(const localeFilePath: String): String;
       function LocaleLoaded(const localeCode: String): Boolean;
     	procedure LoadLocale(const localeCode: String; const localeFolderPath: String);
       function GetString(const stringID: String; const param1: String = ''; const param2: String = ''; const param3: String = ''; const param4: String = ''; const param5: String = ''): String;
@@ -99,6 +100,9 @@ begin
     ReadLn(localeFile, line);
     if line = '' then continue;
 
+    // Skip comments
+    if (line[1] = '/') and (line[2] = '/') then Continue;
+
     if line[1] = ' ' then begin
 			// Append to the current string
 
@@ -145,6 +149,24 @@ begin
   pLoadedLocales[Length(pLoadedLocales) - 1] := locale;
 
   CloseFile(localeFile);
+end;
+
+
+class function TLocalizationUtils.GetLanguageName(const localeFilePath: String): String;
+var line: AnsiString;
+    localeFile: TextFile;
+begin
+  result := '';
+  AssignFile(localeFile, localeFilePath);
+  try
+    Reset(localeFile);
+    Readln(localeFile, line);
+    if (line[1] = '/') and (line[2] = '/') then begin
+      result := Trim(Copy(line, 3, Length(line)));
+    end;
+  finally
+    CloseFile(localeFile);
+  end;
 end;
 
 

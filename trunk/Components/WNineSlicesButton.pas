@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Classes, Controls, StdCtrls, WButtonBase, PNGImage, Windows,
-  WComponent, Imaging, Graphics;
+  WComponent, Imaging, Graphics, Logger;
 
 type
 
@@ -39,6 +39,7 @@ type
   protected
 
     procedure Paint; override;
+    procedure Resize; override;
 
   public
 
@@ -60,6 +61,13 @@ implementation
 procedure Register;
 begin
   RegisterComponents('Samples', [TWNineSlicesButton]);
+end;
+
+
+procedure TWNineSlicesButton.Resize;
+begin
+  inherited;
+  Invalidate();
 end;
 
 
@@ -103,10 +111,7 @@ var i: Integer;
 begin
   if value = pImagePathPrefix then Exit;
 
-  for i := 0 to Length(pNineSlices.Up) - 1 do FreeAndNil(pNineSlices.Up[i]);
-  for i := 0 to Length(pNineSlices.Over) - 1 do FreeAndNil(pNineSlices.Over[i]);
-  for i := 0 to Length(pNineSlices.Down) - 1 do FreeAndNil(pNineSlices.Down[i]);
-  for i := 0 to Length(pNineSlices.Disabled) - 1 do FreeAndNil(pNineSlices.Disabled[i]);
+  ClearNineSlices();
 
   pImagePathPrefix := value;
   Invalidate();
@@ -156,6 +161,12 @@ begin
           nineSlices := PNG_ExtractNineSlices(sourceImage);
       finally
         FreeAndNil(sourceImage);
+      end;
+
+      case ButtonState of
+        pbsOver: pNineSlices.Over := nineSlices;
+        pbsDown: pNineSlices.Down := nineSlices;
+        else pNineSlices.Up := nineSlices;
       end;
 
     end;

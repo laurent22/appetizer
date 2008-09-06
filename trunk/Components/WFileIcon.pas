@@ -4,7 +4,8 @@ interface
 
 uses
   SysUtils, Classes, Controls, ExtCtrls, Windows, PNGImage,
-  Graphics, StdCtrls, Types, WComponent, FileSystemUtils, Messages, Dialogs;
+  Graphics, StdCtrls, Types, WComponent, FileSystemUtils, Messages, Dialogs,
+  Imaging;
 
 type
   TWFileIcon = class(TWComponent)
@@ -13,15 +14,17 @@ type
     pFilePath: String;
     pFileIcon: TIcon;
 
-    pOverlayImageUp: TPNGObject;
+    pOverlayImageUpSlices: TPNGNineSlices;
     pOverlayImageUpPath: String;
-    pOverlayImageDown: TPNGObject;
+    pOverlayImageDownSlices: TPNGNineSlices;
     pOverlayImageDownPath: String;
     pOnFileIconClick: TNotifyEvent;
+    pIconSize: Integer;
 
     procedure SetFilePath(const Value: String);
     procedure SetOverlayImageUpPath(const Value: String);
     procedure SetOverlayImageDownPath(const Value: String);
+
 
   protected
     { Protected declarations }
@@ -34,23 +37,28 @@ type
     //procedure ParentChange();
   public
     { Public declarations }
+    procedure SetIconSize(const Value: Integer);
     property Icon: TIcon read pFileIcon;
     procedure ReloadIcon();
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure DrawToCanvas(const targetCanvas: tCanvas; const x, y: Integer);
-  published
-    { Published declarations }
-
+    procedure UpdateSize();
     property FilePath: String read pFilePath write SetFilePath;
     property OverlayImageUpPath: String read pOverlayImageUpPath write SetOverlayImageUpPath;
     property OverlayImageDownPath: String read pOverlayImageDownPath write SetOverlayImageDownPath;
     property OnFileIconClick: TNotifyEvent read pOnFileIconClick write pOnFileIconClick;
+    property IconSize: Integer read pIconSize write SetIconSize;
+
   end;
 
 procedure Register;
 
 implementation
+
+
+uses Main;
+
 
 procedure Register;
 begin
@@ -64,24 +72,24 @@ begin
   inherited Create(AOwner);
 
   pOverlayImageUpPath := '';
-  Width := 32;
-  Height := 32;
+  pIconSize := 32;
+
+  UpdateSize();
 end;
-
-
-
-//procedure TWFileIcon.ParentChange();
-//begin
-//	ButtonState := pbsNormal;
-//  Invalidate();
-//end;
 
 
 procedure TWFileIcon.ReloadIcon();
 begin
   if pFileIcon <> nil then FreeAndNil(pFileIcon);
-  pFileIcon := GetFolderItemIcon(pFilePath, false);  
+  pFileIcon := GetFolderItemIcon(pFilePath, pIconSize = 16);
   Invalidate();
+end;
+
+
+procedure TWFileIcon.SetFilePath(const value: String);
+begin
+	pFilePath := value;
+  ReloadIcon();
 end;
 
 
@@ -94,37 +102,28 @@ end;
 
 
 procedure TWFileIcon.DrawToCanvas(const targetCanvas: tCanvas; const x, y: Integer);
-var overlayToDraw: TPNGObject;
+var overlayToDraw: TPNGNineSlices;
+    drawOverlay: Boolean;
 begin
-	overlayToDraw := nil;
+  drawOverlay := false;
 
   if ButtonState = pbsDown then begin
-    if (pOverlayImageDownPath <> '') then begin
-      if pOverlayImageDown = nil then begin
-        pOverlayImageDown := TPNGObject.Create();
-        pOverlayImageDown.LoadFromFile(pOverlayImageDownPath);
-      end;
-
-      overlayToDraw := pOverlayImageDown;
-    end;
+    overlayToDraw := pOverlayImageDownSlices;
+    drawOverlay := true;
   end else begin
-    if (IsMouseOver) and (pOverlayImageUpPath <> '') then begin
-      if pOverlayImageUp = nil then begin
-        pOverlayImageUp := TPNGObject.Create();
-        pOverlayImageUp.LoadFromFile(pOverlayImageUpPath);
-      end;
-
-      overlayToDraw := pOverlayImageUp;
+    if (IsMouseOver) then begin
+      overlayToDraw := pOverlayImageUpSlices;
+      drawOverlay := true;
     end;
   end;
 
-  if overlayToDraw <> nil then begin
-  	targetCanvas.Draw(x, y, overlayToDraw);
+  if drawOverlay then begin
+    PNG_DrawNineSlices(Canvas, overlayToDraw, 0, 0, Width, Height);
   end;
 
   if pFileIcon <> nil then begin
   	targetCanvas.Brush.Style := bsClear;
-    targetCanvas.Draw(x + Round((Width - pFileIcon.Width) / 2), y + Round((Height - pFileIcon.Height) / 2), pFileIcon);
+    targetCanvas.Draw(x + Round((Width - pIconSize) / 2), y + Round((Height - pIconSize) / 2), pFileIcon);
   end;
 end;
 
@@ -137,25 +136,59 @@ end;
 
 
 procedure TWFileIcon.SetOverlayImageUpPath(const value: String);
+var img: TPNGObject;
 begin
+  if pOverlayImageUpPath = value then Exit;
+
 	pOverlayImageUpPath := value;
+  if pOverlayImageUpSlices[0] <> nil then FreeAndNil(pOverlayImageUpSlices);
+
+  img := TPNGObject.Create();
+  try
+    img.LoadFromFile(value);
+    pOverlayImageUpSlices := PNG_ExtractNineSlices(img);
+  except
+    FreeAndNil(img);
+  end;
+
+  Invalidate();
+end;
+
+
+procedure TWFileIcon.UpdateSize;
+begin
+  Width := TMain.Instance.Style.Icon.paddingH + pIconSize;
+  Height := TMain.Instance.Style.Icon.paddingV + pIconSize;
 end;
 
 
 procedure TWFileIcon.SetOverlayImageDownPath(const Value: String);
+var img: TPNGObject;
 begin
+  if pOverlayImageDownPath = value then Exit;
+
 	pOverlayImageDownPath := value;
+  if pOverlayImageDownSlices[0] <> nil then FreeAndNil(pOverlayImageDownSlices);
+
+  img := TPNGObject.Create();
+  try
+    img.LoadFromFile(value);
+    pOverlayImageDownSlices := PNG_ExtractNineSlices(img);
+  except
+    FreeAndNil(img);
+  end;
+
+  Invalidate();
 end;
 
 
-procedure TWFileIcon.SetFilePath(const value: String);
+procedure TWFileIcon.SetIconSize(const Value: Integer);
 begin
-	pFilePath := value;
+  if value = pIconSize then Exit;
 
-  if pFileIcon <> nil then FreeAndNil(pFileIcon);
-
-  pFileIcon := GetFolderItemIcon(pFilePath, false);
-
+  pIconSize := value;
+  ReloadIcon();
+  UpdateSize();
   Invalidate();
 end;
 

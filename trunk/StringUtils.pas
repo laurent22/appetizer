@@ -4,6 +4,14 @@ interface
 
 uses Classes, SysUtils, Variants;
 
+type
+
+  TStringContainer = class(TObject)
+    public
+      Text: String;
+      constructor Create(text: String);
+  end;
+
 function IsInStringList(const iStringList: TStringList; const iString: String):Boolean;
 function StringConv(const v:Variant):String;
 function SplitString(const Delimiter: Char; Input: string): TStringList;
@@ -114,5 +122,12 @@ begin
   result := '<unknown type>';
 end;
 
+
+{ TStringContainer }
+
+constructor TStringContainer.Create(text: String);
+begin
+  Self.text := text;
+end;
 
 end.
