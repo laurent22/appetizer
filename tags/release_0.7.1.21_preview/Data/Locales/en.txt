@@ -1,0 +1,23 @@
+Global.Error = Error
+Global.Cancel = Cancel
+Global.OK = OK
+Global.Yes = Yes
+Global.No = No
+Global.Save = Save
+Global.OpenDialog.AllFiles = All files
+Global.Close = Close
+
+FolderItem.LaunchFileError = This file doesn't exist or has been deleted (Error %0%)
+
+
+IconPanel.PopupMenu.NewShortcut = New shortcut...
+IconPanel.PopupMenu.NewSeparator = New separator...
+IconPanel.PopupMenu.Delete = Delete...
+IconPanel.PopupMenu.Properties = Properties
+IconPanel.PopupMenu.AddToQuickLaunch = Add to Quick Launch group
+IconPanel.DeleteConfirmation = Do you wish to delete this item?
+IconPanel.NewShorcut.OpenDialog = Select a file or a folder
+
+EditFolderItemForm.Title = Shorcut Properties
+EditFolderItemForm.NameLabel = Name:
+EditFolderItemForm.LocationLabel = Location:
