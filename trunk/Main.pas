@@ -147,12 +147,6 @@ procedure TMain.Localize;
 var i: Integer;
     n: TNotifyEventWrapper;
 begin
-
-//  @func := pLocalizableHandlers[0];
-//  func(nil);
-//  FreeMem(func);
-
-
   for i := 0 to Length(pLocalizableHandlers) - 1 do begin
     n := pLocalizableHandlers[i];
     n.Event(Self);
@@ -161,66 +155,28 @@ end;
 
 
 procedure TMain.RegisterLocalizableObject(const localizableHandler: TNotifyEvent);
-var i: Integer;
-    o: TNotifyEventWrapper;
+var o: TNotifyEventWrapper;
 begin
   o := TNotifyEventWrapper.Create();
   o.Event := localizableHandler;
 
   SetLength(pLocalizableHandlers, Length(pLocalizableHandlers) + 1);
   pLocalizableHandlers[Length(pLocalizableHandlers) - 1] := o;
-
-  //pLocalizableHandlers.Add(@localizableHandler);
 end;
 
 
 procedure TMain.UnregisterLocalizableObject(localizableHandler: TNotifyEvent);
-var i: Integer;
+var n: TNotifyEvent;
+    i: Integer;
 begin
-//  for i := 0 to pLocalizableHandlers.Count - 1 do begin
-//    if pLocalizableHandlers[i] = @localizableHandler then begin
-//      pLocalizableHandlers[i] := nil;
-//      Exit;
-//    end;
-//  end;
+  for i := 0 to Length(pLocalizableHandlers) - 1 do begin
+    n := pLocalizableHandlers[i].Event;
+    if @localizableHandler = @n then begin
+      FreeAndNil(pLocalizableHandlers[i]);
+      Exit;
+    end;
+  end;
 end;
-
-
-//procedure TMain.Localize;
-//var i: Integer;
-//    func: TNotifyEvent;
-//begin
-//
-//  @func := pLocalizableHandlers[0];
-//  func(nil);
-//  FreeMem(func);
-//
-//
-////  for i := 0 to pLocalizableHandlers.Count - 1 do begin
-////    @p := pLocalizableHandlers[i];
-////    p(nil);
-////    //FreeAndNil(p);
-////  end;
-//end;
-//
-//
-//procedure TMain.RegisterLocalizableObject(const localizableHandler: TNotifyEvent);
-//var i: Integer;
-//begin
-//  pLocalizableHandlers.Add(@localizableHandler);
-//end;
-//
-//
-//procedure TMain.UnregisterLocalizableObject(localizableHandler: TNotifyEvent);
-//var i: Integer;
-//begin
-//  for i := 0 to pLocalizableHandlers.Count - 1 do begin
-//    if pLocalizableHandlers[i] = @localizableHandler then begin
-//      pLocalizableHandlers[i] := nil;
-//      Exit;
-//    end;
-//  end;
-//end;
 
 
 procedure TMain.SetCurrentLocale(const localeCode: String);

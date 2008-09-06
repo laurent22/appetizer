@@ -25,6 +25,10 @@ object ConfigForm: TConfigForm
     TabOrder = 0
     object generalTab: TTabSheet
       Caption = 'General'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object languageLabel: TLabel
         Left = 16
         Top = 19
@@ -45,7 +49,7 @@ object ConfigForm: TConfigForm
         Width = 145
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
+        ItemHeight = 0
         TabOrder = 0
       end
       object iconSizeComboBox: TComboBox
@@ -54,7 +58,7 @@ object ConfigForm: TConfigForm
         Width = 145
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
+        ItemHeight = 0
         TabOrder = 1
       end
     end

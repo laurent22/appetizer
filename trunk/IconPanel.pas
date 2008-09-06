@@ -55,7 +55,6 @@ type
     function GetComponentByID(const componentID: Integer): TWComponent;
     procedure BrowseButton_Click(Sender: TObject);
     procedure BrowseButtonPopupMenu_Click(Sender: TObject);
-    procedure FitToContent;
     procedure UpdateMinWidthMinHeight();
     function IconSize(): Integer;
 
@@ -187,7 +186,6 @@ end;
 procedure TIconPanel.StartAddingFolderItem;
 var folderItem: TFolderItem;
 	component: TWComponent;
-  openDialog: TSelectFolderOrFileForm;
 begin
   folderItem := TMain.Instance.User.StartAddingFolderItem();
   if folderItem = nil then Exit;
@@ -688,13 +686,6 @@ begin
 		AddChild(component);
     pComponents.Add(TObject(component));
   end;
-end;
-
-
-procedure TIconPanel.FitToContent();
-begin
-  UpdateLayout();
-  
 end;
 
 

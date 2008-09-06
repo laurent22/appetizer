@@ -148,11 +148,11 @@
 			<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
 			<VersionInfo Name="AutoIncBuild">True</VersionInfo>
 			<VersionInfo Name="MajorVer">0</VersionInfo>
-			<VersionInfo Name="MinorVer">8</VersionInfo>
+			<VersionInfo Name="MinorVer">9</VersionInfo>
 			<VersionInfo Name="Release">1</VersionInfo>
-			<VersionInfo Name="Build">25</VersionInfo>
+			<VersionInfo Name="Build">28</VersionInfo>
 			<VersionInfo Name="Debug">False</VersionInfo>
-			<VersionInfo Name="PreRelease">True</VersionInfo>
+			<VersionInfo Name="PreRelease">False</VersionInfo>
 			<VersionInfo Name="Special">False</VersionInfo>
 			<VersionInfo Name="Private">False</VersionInfo>
 			<VersionInfo Name="DLL">False</VersionInfo>
@@ -162,7 +162,7 @@
 		<VersionInfoKeys>
 			<VersionInfoKeys Name="CompanyName"></VersionInfoKeys>
 			<VersionInfoKeys Name="FileDescription"></VersionInfoKeys>
-			<VersionInfoKeys Name="FileVersion">0.8.1.25</VersionInfoKeys>
+			<VersionInfoKeys Name="FileVersion">0.9.1.28</VersionInfoKeys>
 			<VersionInfoKeys Name="InternalName">MiniLaunchBar</VersionInfoKeys>
 			<VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys>
 			<VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>

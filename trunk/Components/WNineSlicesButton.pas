@@ -107,7 +107,6 @@ end;
 
 
 procedure TWNineSlicesButton.SetImagePathPrefix(const value: String);
-var i: Integer;
 begin
   if value = pImagePathPrefix then Exit;
 

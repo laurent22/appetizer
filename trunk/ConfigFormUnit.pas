@@ -39,8 +39,6 @@ uses Main;
 procedure TConfigForm.FormCreate(Sender: TObject);
 var languageFiles: TStringList;
     i: Integer;
-    localeFile: TextFile;
-    line: String;
     languageName: String;
     languageCode: String;
     selectedIndex: Integer;
