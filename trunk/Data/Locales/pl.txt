@@ -1,0 +1,40 @@
+// Polski
+// @author = Michal Trzebiatowski
+// @email.rot13 = uvccvr_1968@ubgznvy.pbz
+
+Global.Error = Blad
+Global.Cancel = Anuluj
+Global.OK = OK
+Global.Yes = Tak
+Global.No = Nie
+Global.Save = Zapisz
+Global.OpenDialog.AllFiles = Wszystkie pliki
+
+FolderItem.LaunchFileError = Nie mozna znalezc pliku lub zostal on usuniety (Blad %0%)
+
+IconPanel.PopupMenu.NewShortcut = Nowy skrót...
+IconPanel.PopupMenu.Delete = Usun...
+IconPanel.PopupMenu.Properties = Wlasciwosci
+IconPanel.PopupMenu.AddToQuickLaunch = Dodaj do grupy wielokrotnego uruchamiania
+IconPanel.DeleteConfirmation = Czy chcesz to usunac?
+IconPanel.NewShorcut.OpenDialog = Wybierz plik lub folder
+
+EditFolderItemForm.Title = Wlasciwosci skrótu
+EditFolderItemForm.NameLabel = Nazwa:
+EditFolderItemForm.LocationLabel = Sciezka:
+
+TrayIcon.Close = Zamknij
+TrayIcon.Hide = Ukryj
+TrayIcon.Show = Pokaz
+
+SelectFolderOrFileDialog.Title = Wybierz folder lub plik
+SelectFolderOrFileDialog.SelectFile = Wybierz folder
+SelectFolderOrFileDialog.SelectFolder = Wybierz plik
+
+Icon.Size16 = Male
+Icon.Size32 = Duze
+
+ConfigDialog.Title = Konfiguracja
+ConfigDialog.GeneralTab = Ogólne
+ConfigDialog.LanguageLabel = Jezyk:
+ConfigDialog.IconSizeLabel = Rozmiar ikon:

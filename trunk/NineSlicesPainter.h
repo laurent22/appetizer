@@ -1,5 +1,7 @@
+#ifndef __NineSlicesPainter_H
+#define __NineSlicesPainter_H
+
 #include "wx/wx.h" 
-#include "wx/dcbuffer.h"
 #include "Imaging.h"
 
 
@@ -21,3 +23,5 @@ class NineSlicesPainter {
     void Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, wxCoord height);
 
 };
+
+#endif

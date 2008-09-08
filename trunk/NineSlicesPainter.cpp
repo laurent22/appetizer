@@ -10,6 +10,7 @@ void NineSlicesPainter::LoadImage(const wxString& filePath) {
   pFilePath = filePath;
   pSourceBitmap = wxBitmap(pFilePath, wxBITMAP_TYPE_PNG);
   pSourceDC.SelectObject(wxNullBitmap);
+  // TODO: Should the previously selected bitmap be explicitely deleted?
   pSourceDC.SelectObject(pSourceBitmap);
 }
 
