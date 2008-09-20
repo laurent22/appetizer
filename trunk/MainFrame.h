@@ -1,6 +1,7 @@
 #include "wx/wx.h" 
 #include "NineSlicesPainter.h"
 #include "ImagePanel.h"
+#include "NineSlicesPanel.h"
 
 
 class MainFrame: public wxFrame {
@@ -14,6 +15,7 @@ class MainFrame: public wxFrame {
     };
 
     wxBitmap pMaskBitmap;
+    NineSlicesPanel *pBackgroundPanel;
     NineSlicesPainter pMaskNineSlices;
     NineSlicesPainter pBackgroundNineSlices;    
     WindowDragDataStruct pWindowDragData;

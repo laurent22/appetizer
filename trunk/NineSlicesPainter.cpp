@@ -6,7 +6,7 @@ NineSlicesPainter::NineSlicesPainter() {
 }
 
 
-void NineSlicesPainter::LoadImage(const wxString& filePath) {
+void NineSlicesPainter::LoadImage(const wxString& filePath) {  
   pFilePath = filePath;
   pSourceBitmap = wxBitmap(pFilePath, wxBITMAP_TYPE_PNG);
   pSourceDC.SelectObject(wxNullBitmap);

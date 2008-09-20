@@ -35,12 +35,7 @@ void ImagePanel::FitToContent() {
 void ImagePanel::OnPaint(wxPaintEvent& evt) {
   wxBufferedPaintDC dc(this);  
 
-
-
-  //SetBackgroundColour(wxTRANSPARENT_BRUSH->GetColour());
-
   dc.SetBackgroundMode(wxTRANSPARENT);
-  //dc.SetBackground(*wxTRANSPARENT_BRUSH);
 
   // TODO: The MemoryDC should be cached
 	wxMemoryDC sourceDC;

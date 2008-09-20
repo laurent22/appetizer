@@ -1,4 +1,4 @@
-#include "Imaging.h";
+#include "Imaging.h"
 
 void Imaging::StretchBlit(wxDC* destDC, wxDC* sourceDC, wxCoord destX, wxCoord destY, wxCoord destWidth, wxCoord destHeight, wxCoord srcX, wxCoord srcY, wxCoord srcWidth, wxCoord srcHeight) {
   double saveScaleX, saveScaleY;

@@ -5,9 +5,9 @@
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_PAINT(MainFrame::OnPaint)
-  EVT_LEFT_DOWN(MainFrame::OnMouseDown)
-  EVT_LEFT_UP(MainFrame::OnMouseUp)
-  EVT_MOTION(MainFrame::OnMouseMove)
+  //EVT_LEFT_DOWN(MainFrame::OnMouseDown)
+  //EVT_LEFT_UP(MainFrame::OnMouseUp)
+  //EVT_MOTION(MainFrame::OnMouseMove)
 END_EVENT_TABLE()
 
 
@@ -29,10 +29,17 @@ MainFrame::MainFrame()
   pBackgroundNineSlices.LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
 
   pResizerPanel = new ImagePanel(this, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
-  pResizerPanel->FitToContent();
+  //pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
+  //pResizerPanel->FitToContent();
 
   pWindowDragData.DraggingStarted = false;
+
+  pBackgroundPanel = new NineSlicesPanel(this, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
+  pBackgroundPanel->LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
+
+  pBackgroundPanel->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
+  pBackgroundPanel->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
+  pBackgroundPanel->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
   UpdateMask();
   UpdateLayout();
@@ -61,23 +68,22 @@ void MainFrame::UpdateMask() {
 
 
 void MainFrame::UpdateLayout() {
-  pResizerPanel->Move(
-    GetClientSize().GetWidth() - pResizerPanel->GetSize().GetWidth(),
-    GetClientSize().GetHeight() - pResizerPanel->GetSize().GetWidth()
+  pBackgroundPanel->SetSize(0, 0,
+    GetClientSize().GetWidth(),
+    GetClientSize().GetHeight()
   );
 }
 
 
 void MainFrame::OnPaint(wxPaintEvent &evt) {
   wxBufferedPaintDC dc(this);
-  
-  // Draw the background nine slices and make it fit within the client area
-  pBackgroundNineSlices.Draw(&dc, 0, 0, GetClientSize().GetWidth(), GetClientSize().GetHeight());
+
 }
 
 
 void MainFrame::OnMouseDown(wxMouseEvent& evt) {
-  CaptureMouse();
+  static_cast<wxWindow*>(evt.GetEventObject())->CaptureMouse();
+
   pWindowDragData.DraggingStarted = true;
   pWindowDragData.InitMousePos = ClientToScreen(evt.GetPosition());
   pWindowDragData.InitWindowPos = GetPosition();
@@ -85,7 +91,8 @@ void MainFrame::OnMouseDown(wxMouseEvent& evt) {
 
 
 void MainFrame::OnMouseUp(wxMouseEvent& evt) {
-  if (HasCapture()) ReleaseMouse();
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  if (w->HasCapture()) w->ReleaseMouse();
   pWindowDragData.DraggingStarted = false;
 }
 
