@@ -4,10 +4,8 @@
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
-  EVT_PAINT(MainFrame::OnPaint)
-  //EVT_LEFT_DOWN(MainFrame::OnMouseDown)
-  //EVT_LEFT_UP(MainFrame::OnMouseUp)
-  //EVT_MOTION(MainFrame::OnMouseMove)
+  EVT_SIZE(MainFrame::OnSize)
+  EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
 END_EVENT_TABLE()
 
 
@@ -17,8 +15,8 @@ MainFrame::MainFrame()
   wxID_ANY,
   wxEmptyString,
   wxDefaultPosition,
-  wxDefaultSize,
-  0 | wxFRAME_SHAPED | wxSIMPLE_BORDER
+  wxDefaultSize /*,
+  0 | wxFRAME_SHAPED | wxSIMPLE_BORDER*/
   ) // 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR | wxSTAY_ON_TOP
 {
   // Necessary because we are going to do the drawing ourselves
@@ -27,10 +25,6 @@ MainFrame::MainFrame()
   // Load the mask and background images
   pMaskNineSlices.LoadImage(wxT("Data/Skin/Default/BarBackgroundRegion.png"));
   pBackgroundNineSlices.LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
-
-  pResizerPanel = new ImagePanel(this, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  //pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
-  //pResizerPanel->FitToContent();
 
   pWindowDragData.DraggingStarted = false;
 
@@ -41,12 +35,21 @@ MainFrame::MainFrame()
   pBackgroundPanel->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   pBackgroundPanel->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
+  //pResizerPanel = new ImagePanel(this, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
+  //pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
+  //pResizerPanel->FitToContent();
+
+  pInnerPanel = new NineSlicesPanel(pBackgroundPanel, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
+  pInnerPanel->LoadImage(wxT("PinkRect.png"));
+
   UpdateMask();
   UpdateLayout();
 } 
 
 
 void MainFrame::UpdateMask() {
+  return;
+
   // Create the bitmap on which the 9-slices scaled mask is going to be drawn
   wxBitmap maskBitmap = wxBitmap(GetClientSize().GetWidth(), GetClientSize().GetHeight());
   
@@ -68,16 +71,20 @@ void MainFrame::UpdateMask() {
 
 
 void MainFrame::UpdateLayout() {
-  pBackgroundPanel->SetSize(0, 0,
-    GetClientSize().GetWidth(),
-    GetClientSize().GetHeight()
-  );
+  //pResizerPanel->Move(GetRect().GetWidth() - pResizerPanel->GetRect().GetWidth(), GetRect().GetHeight() - pResizerPanel->GetRect().GetHeight());
+  pBackgroundPanel->SetSize(0, 0, GetClientSize().GetWidth(), GetClientSize().GetHeight());
+  pInnerPanel->SetSize(10, 10, GetClientSize().GetWidth() - 20, GetClientSize().GetHeight() - 20);
 }
 
 
-void MainFrame::OnPaint(wxPaintEvent &evt) {
-  wxBufferedPaintDC dc(this);
+void MainFrame::OnEraseBackground(wxEraseEvent &evt) {
 
+}
+
+
+void MainFrame::OnSize(wxSizeEvent& evt) {
+  UpdateLayout();
+	Refresh();
 }
 
 

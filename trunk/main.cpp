@@ -21,10 +21,12 @@ bool MiniLaunchBar::OnInit() {
   wxInitAllImageHandlers();
 
   // This line might be needed to enable alpha transparent components - to be checked
+  wxSystemOptions::SetOption(wxT("msw.window.no-clip-children"),wxT("1"));
   //wxSystemOptions::SetOption(wxT("msw.window.no-clip-children"),wxT("1"));
 
   MainFrame *frame = new MainFrame();
   frame->Show(true);
+  frame->SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 
   SetTopWindow(frame);
   return true;

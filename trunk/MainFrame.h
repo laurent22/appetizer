@@ -16,6 +16,7 @@ class MainFrame: public wxFrame {
 
     wxBitmap pMaskBitmap;
     NineSlicesPanel *pBackgroundPanel;
+    NineSlicesPanel *pInnerPanel;
     NineSlicesPainter pMaskNineSlices;
     NineSlicesPainter pBackgroundNineSlices;    
     WindowDragDataStruct pWindowDragData;
@@ -36,6 +37,8 @@ class MainFrame: public wxFrame {
     void OnMouseDown(wxMouseEvent& evt);
     void OnMouseUp(wxMouseEvent& evt);
     void OnMouseMove(wxMouseEvent& evt);
+    void OnSize(wxSizeEvent& evt);
+    void OnEraseBackground(wxEraseEvent &evt);  
 
   DECLARE_EVENT_TABLE()
 

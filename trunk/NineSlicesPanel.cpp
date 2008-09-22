@@ -10,12 +10,13 @@ INITIALIZE_BITMAP_CONTROL_INTERFACE(NineSlicesPanel)
 BEGIN_EVENT_TABLE(NineSlicesPanel, wxPanel)
   EVT_PAINT(NineSlicesPanel::OnPaint)
   EVT_ERASE_BACKGROUND(NineSlicesPanel::OnEraseBackground)
+  EVT_SIZE(NineSlicesPanel::OnSize)
 END_EVENT_TABLE()
 
 
 
 NineSlicesPanel::NineSlicesPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
-wxPanel(owner, id, point, size, 0 | wxFRAME_SHAPED | wxNO_BORDER | wxTRANSPARENT_WINDOW) {
+wxPanel(owner, id, point, size, 0 | wxFRAME_SHAPED | wxNO_BORDER | wxTRANSPARENT_WINDOW ) {
   SetBackgroundStyle(wxBG_STYLE_CUSTOM);
   pNineSlicesPainter = NULL;
 }
@@ -28,6 +29,11 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
   
   pFilePath = filePath;
   InvalidateControlBitmap();
+}
+
+
+void NineSlicesPanel::OnSize(wxSizeEvent& evt) {
+	UpdateControlBitmap();
 }
 
 
@@ -45,18 +51,23 @@ void NineSlicesPanel::UpdateControlBitmap() {
   if (pNineSlicesPainter != NULL) {
     pControlBitmap.~wxBitmap();
     pControlBitmap = wxBitmap(GetClientRect().GetWidth(), GetClientRect().GetHeight());
-    pSourceDC.SelectObjectAsSource(pControlBitmap);	
+    pControlBitmap.UseAlpha();
+    pSourceDC.SelectObject(pControlBitmap);	
     pNineSlicesPainter->Draw(&pSourceDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
-  } else {
-    pSourceDC.SelectObjectAsSource(wxNullBitmap);
+    pSourceDC.SelectObject(wxNullBitmap);
   }
 }
 
 
 void NineSlicesPanel::OnPaint(wxPaintEvent& evt) {
-  wxBufferedPaintDC dc(this);  
+  wxBufferedPaintDC dc(this);
 
+  // Update the bitmap of this control, if it has been invalidated
   UPDATE_CONTROL_BITMAP_IF_NEEDED()
 
-  dc.Blit(0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight(), &pSourceDC, 0, 0);
+  // Draw the subbitmap of its parent
+  DRAW_PARENT_BITMAP(dc)
+
+  // Draw this control bitmap
+  dc.DrawBitmap(pControlBitmap, 0, 0);
 }

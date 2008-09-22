@@ -5,7 +5,7 @@
 #include "NineSlicesPainter.h"
 #include "BitmapControlInterface.h"
 
-class NineSlicesPanel: public wxPanel {
+class NineSlicesPanel: public wxPanel, public IBitmapProvider {
 
   private:
 
@@ -19,6 +19,7 @@ class NineSlicesPanel: public wxPanel {
     void LoadImage(const wxString& filePath);
     void OnPaint(wxPaintEvent& evt);
     void OnEraseBackground(wxEraseEvent &evt);  
+    void OnSize(wxSizeEvent& evt);
 
   DECLARE_BITMAP_CONTROL_INTERFACE()
 
