@@ -6,6 +6,7 @@
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_SIZE(MainFrame::OnSize)
   EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
+  EVT_PAINT(MainFrame::OnPaint)
 END_EVENT_TABLE()
 
 
@@ -20,30 +21,29 @@ MainFrame::MainFrame()
   ) // 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR | wxSTAY_ON_TOP
 {
   // Necessary because we are going to do the drawing ourselves
-  SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+  //SetBackgroundStyle(wxBG_STYLE_CUSTOM);
   
+  pNeedLayoutUpdate = true;
+  pNeedMaskUpdate = true;
+
   // Load the mask and background images
   pMaskNineSlices.LoadImage(wxT("Data/Skin/Default/BarBackgroundRegion.png"));
-  pBackgroundNineSlices.LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
 
   pWindowDragData.DraggingStarted = false;
 
-  pBackgroundPanel = new NineSlicesPanel(this, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
+  pBackgroundPanel = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
   pBackgroundPanel->LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
 
   pBackgroundPanel->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   pBackgroundPanel->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   pBackgroundPanel->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
-  //pResizerPanel = new ImagePanel(this, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  //pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
-  //pResizerPanel->FitToContent();
+  pResizerPanel = new ImagePanel(pBackgroundPanel, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
+  pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
+  pResizerPanel->FitToContent();
 
   pInnerPanel = new NineSlicesPanel(pBackgroundPanel, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
-  pInnerPanel->LoadImage(wxT("PinkRect.png"));
-
-  UpdateMask();
-  UpdateLayout();
+  pInnerPanel->LoadImage(wxT("Data/Skin/Default/BarInnerPanel.png"));
 } 
 
 
@@ -67,13 +67,22 @@ void MainFrame::UpdateMask() {
   // Create the region from the bitmap and assign it to the window
   wxRegion region(maskBitmap, lcMASK_COLOR);
   SetShape(region);
+
+  pNeedMaskUpdate = false;
+}
+
+
+void MainFrame::UpdateLayout(int width, int height) {
+  pResizerPanel->Move(width - pResizerPanel->GetRect().GetWidth(), height - pResizerPanel->GetRect().GetHeight());
+  pBackgroundPanel->SetSize(0, 0, width, height);
+  pInnerPanel->SetSize(10, 10, width - 20, height - 20);
+
+  pNeedLayoutUpdate = false;
 }
 
 
 void MainFrame::UpdateLayout() {
-  //pResizerPanel->Move(GetRect().GetWidth() - pResizerPanel->GetRect().GetWidth(), GetRect().GetHeight() - pResizerPanel->GetRect().GetHeight());
-  pBackgroundPanel->SetSize(0, 0, GetClientSize().GetWidth(), GetClientSize().GetHeight());
-  pInnerPanel->SetSize(10, 10, GetClientSize().GetWidth() - 20, GetClientSize().GetHeight() - 20);
+  UpdateLayout(GetClientRect().GetWidth(), GetClientRect().GetHeight());
 }
 
 
@@ -82,8 +91,17 @@ void MainFrame::OnEraseBackground(wxEraseEvent &evt) {
 }
 
 
+void MainFrame::OnPaint(wxPaintEvent& evt) {
+  wxPaintDC dc(this);
+
+  if (pNeedLayoutUpdate) UpdateLayout();
+  if (pNeedMaskUpdate) UpdateMask();
+}
+
+
 void MainFrame::OnSize(wxSizeEvent& evt) {
-  UpdateLayout();
+  pNeedLayoutUpdate = true;
+  pNeedMaskUpdate = true;
 	Refresh();
 }
 

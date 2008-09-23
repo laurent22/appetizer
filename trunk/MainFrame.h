@@ -13,18 +13,20 @@ class MainFrame: public wxFrame {
       wxPoint InitWindowPos;
       wxPoint InitMousePos;
     };
-
+    
+    bool pNeedLayoutUpdate;
+    bool pNeedMaskUpdate;
     wxBitmap pMaskBitmap;
     NineSlicesPanel *pBackgroundPanel;
     NineSlicesPanel *pInnerPanel;
     NineSlicesPainter pMaskNineSlices;
-    NineSlicesPainter pBackgroundNineSlices;    
     WindowDragDataStruct pWindowDragData;
     wxImage* pResizerImage;
     ImagePanel* pResizerPanel;
 
     void UpdateMask();
     void UpdateLayout();
+    void UpdateLayout(int width, int height);
 
   public:
 

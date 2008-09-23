@@ -1,16 +1,10 @@
 #include "ImagePanel.h"
-#include "wx/dcbuffer.h"
-
-
-BEGIN_EVENT_TABLE(ImagePanel, wxPanel)
-  EVT_PAINT(ImagePanel::OnPaint)
-  EVT_ERASE_BACKGROUND(ImagePanel::OnEraseBackground)
-END_EVENT_TABLE()
+#include "Imaging.h"
 
 
 ImagePanel::ImagePanel(wxWindow *owner, int id, wxPoint point, wxSize size):
-wxPanel(owner, id, point, size, 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxTRANSPARENT_WINDOW) {
-  SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+BitmapControl(owner, id, point, size) {
+
 }
 
 
@@ -18,30 +12,35 @@ void ImagePanel::LoadImage(const wxString& filePath) {
   if (pFilePath == filePath) return;
 
   pFilePath = filePath;
+
+  // FIXME: Currently the loaded image MUST have an alpha channel otherwise the
+  // blit operations will fail.  If the loaded bitmap is fully opaque, the alpha
+  // value of at least one pixel must be set to 254 or less.
   pBitmap = wxBitmap(filePath, wxBITMAP_TYPE_PNG);
+
+  Refresh();
 }
 
 
-void ImagePanel::OnEraseBackground(wxEraseEvent &evt) {
+void ImagePanel::UpdateControlBitmap() {
+  BitmapControl::UpdateControlBitmap();
 
+  wxMemoryDC destDC;
+  destDC.SelectObject(*pControlBitmap);
+
+  if (pBitmap.GetWidth() == GetRect().GetWidth() && pBitmap.GetHeight() == GetRect().GetHeight()) {
+    destDC.DrawBitmap(pBitmap, 0, 0);
+  } else {    
+    wxMemoryDC sourceDC;    
+    sourceDC.SelectObject(pBitmap);    
+    Imaging::StretchBlit(&destDC, &sourceDC, 0, 0, GetRect().GetWidth(), GetRect().GetHeight(), 0, 0, pBitmap.GetWidth(), pBitmap.GetHeight());
+    sourceDC.SelectObject(wxNullBitmap);    
+  }
+
+  destDC.SelectObject(wxNullBitmap);
 }
 
 
 void ImagePanel::FitToContent() {
   SetSize(pBitmap.GetWidth(), pBitmap.GetHeight());
-}
-
-
-void ImagePanel::OnPaint(wxPaintEvent& evt) {
-  wxBufferedPaintDC dc(this);  
-
-  //dc.SetBackgroundMode(wxTRANSPARENT);
-
-  // TODO: The MemoryDC should be cached
-	wxMemoryDC sourceDC;
-	sourceDC.SelectObjectAsSource(pBitmap);	
-
-  dc.Blit(0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight(), &sourceDC, 0, 0);
-
-  sourceDC.SelectObjectAsSource(wxNullBitmap);	
 }
