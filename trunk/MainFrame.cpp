@@ -2,6 +2,9 @@
 #include "Constants.h"
 #include "wx/dcbuffer.h"
 
+#include "Controller.h"
+extern Controller gController;
+
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_SIZE(MainFrame::OnSize)
@@ -19,10 +22,9 @@ MainFrame::MainFrame()
   wxDefaultSize /*,
   0 | wxFRAME_SHAPED | wxSIMPLE_BORDER*/
   ) // 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR | wxSTAY_ON_TOP
-{
-  // Necessary because we are going to do the drawing ourselves
-  //SetBackgroundStyle(wxBG_STYLE_CUSTOM);
-  
+{  
+  gController.SetMainFrame(this);
+
   pNeedLayoutUpdate = true;
   pNeedMaskUpdate = true;
 
@@ -42,9 +44,11 @@ MainFrame::MainFrame()
   pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
   pResizerPanel->FitToContent();
 
-  pInnerPanel = new NineSlicesPanel(pBackgroundPanel, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
-  pInnerPanel->LoadImage(wxT("Data/Skin/Default/BarInnerPanel.png"));
+  pIconPanel = new IconPanel(pBackgroundPanel, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
 } 
+
+
+IconPanel* MainFrame::GetIconPanel() { return pIconPanel; }
 
 
 void MainFrame::UpdateMask() {
@@ -65,7 +69,7 @@ void MainFrame::UpdateMask() {
   maskDC.SelectObject(wxNullBitmap);
 
   // Create the region from the bitmap and assign it to the window
-  wxRegion region(maskBitmap, lcMASK_COLOR);
+  wxRegion region(maskBitmap, MASK_COLOR);
   SetShape(region);
 
   pNeedMaskUpdate = false;
@@ -75,7 +79,7 @@ void MainFrame::UpdateMask() {
 void MainFrame::UpdateLayout(int width, int height) {
   pResizerPanel->Move(width - pResizerPanel->GetRect().GetWidth(), height - pResizerPanel->GetRect().GetHeight());
   pBackgroundPanel->SetSize(0, 0, width, height);
-  pInnerPanel->SetSize(10, 10, width - 20, height - 20);
+  pIconPanel->SetSize(10, 10, width - 20, height - 20);
 
   pNeedLayoutUpdate = false;
 }

@@ -232,15 +232,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\BitmapControl.cpp"
+				RelativePath=".\Controller.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ImagePanel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Imaging.cpp"
+				RelativePath=".\IconPanel.cpp"
 				>
 			</File>
 			<File
@@ -252,13 +248,37 @@
 				>
 			</File>
 			<File
-				RelativePath=".\NineSlicesPainter.cpp"
+				RelativePath=".\StyleSelector.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\NineSlicesPanel.cpp"
+			<Filter
+				Name="BitmapControls"
 				>
-			</File>
+				<File
+					RelativePath=".\BitmapControl.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\ImagePanel.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NineSlicesPanel.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Imaging"
+				>
+				<File
+					RelativePath=".\Imaging.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\NineSlicesPainter.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -266,23 +286,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\BitmapControl.h"
-				>
-			</File>
-			<File
-				RelativePath=".\BitmapControlInterface.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Constants.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ImagePanel.h"
+				RelativePath=".\Controller.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Imaging.h"
+				RelativePath=".\IconPanel.h"
 				>
 			</File>
 			<File
@@ -290,13 +302,37 @@
 				>
 			</File>
 			<File
-				RelativePath=".\NineSlicesPainter.h"
+				RelativePath=".\StyleSelector.h"
 				>
 			</File>
-			<File
-				RelativePath=".\NineSlicesPanel.h"
+			<Filter
+				Name="BitmapControls"
 				>
-			</File>
+				<File
+					RelativePath=".\BitmapControl.h"
+					>
+				</File>
+				<File
+					RelativePath=".\ImagePanel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\NineSlicesPanel.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Imaging"
+				>
+				<File
+					RelativePath=".\Imaging.h"
+					>
+				</File>
+				<File
+					RelativePath=".\NineSlicesPainter.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

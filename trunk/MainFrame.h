@@ -1,8 +1,11 @@
+#ifndef __MainFrame_H
+#define __MainFrame_H
+
 #include "wx/wx.h" 
 #include "NineSlicesPainter.h"
 #include "ImagePanel.h"
 #include "NineSlicesPanel.h"
-
+#include "IconPanel.h"
 
 class MainFrame: public wxFrame {
 
@@ -17,8 +20,8 @@ class MainFrame: public wxFrame {
     bool pNeedLayoutUpdate;
     bool pNeedMaskUpdate;
     wxBitmap pMaskBitmap;
-    NineSlicesPanel *pBackgroundPanel;
-    NineSlicesPanel *pInnerPanel;
+    NineSlicesPanel* pBackgroundPanel;
+    IconPanel* pIconPanel;
     NineSlicesPainter pMaskNineSlices;
     WindowDragDataStruct pWindowDragData;
     wxImage* pResizerImage;
@@ -33,6 +36,8 @@ class MainFrame: public wxFrame {
     // Constructor
     MainFrame();
 
+    IconPanel* GetIconPanel();
+
     // Event handlers
     void OnPaint(wxPaintEvent& evt);
     void OnWindowCreate(wxWindowCreateEvent& evt);
@@ -46,4 +51,4 @@ class MainFrame: public wxFrame {
 
 };
 
-
+#endif

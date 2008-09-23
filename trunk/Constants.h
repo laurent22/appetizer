@@ -1,3 +1,3 @@
 #include "wx/wx.h" 
 
-const wxColor lcMASK_COLOR = wxColor(255, 0, 255);
+const wxColor MASK_COLOR = wxColor(255, 0, 255);
