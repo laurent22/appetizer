@@ -9,7 +9,7 @@ StyleSelector::StyleSelector() {
 wxString StyleSelector::GetStyle(wxString name) {
   list<StyleElement>::iterator iter;
 
-  for (iter = pList.begin(); iter != pList.end(); iter++) {
+  for (iter = list_.begin(); iter != list_.end(); iter++) {
     if (iter->Name == name) {
       return iter->Value;
     }
@@ -22,7 +22,7 @@ wxString StyleSelector::GetStyle(wxString name) {
 void StyleSelector::SetStyle(wxString name, wxString value) {
   list<StyleElement>::iterator iter;
 
-  for (iter = pList.begin(); iter != pList.end(); iter++) {
+  for (iter = list_.begin(); iter != list_.end(); iter++) {
     if (iter->Name == name) {
       iter->Value = value;
       return;
@@ -33,7 +33,7 @@ void StyleSelector::SetStyle(wxString name, wxString value) {
   e.Name = name;
   e.Value = value;
 
-  pList.push_back(e);
+  list_.push_back(e);
 }
 
 

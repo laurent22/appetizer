@@ -9,8 +9,8 @@ class NineSlicesPanel: public BitmapControl {
 
   private:
 
-    wxString pFilePath;
-    NineSlicesPainter* pNineSlicesPainter;
+    wxString filePath_;
+    NineSlicesPainter* nineSlicesPainter_;
 
   public:
 

@@ -9,14 +9,14 @@ BitmapControl(owner, id, point, size) {
 
 
 void ImagePanel::LoadImage(const wxString& filePath) {
-  if (pFilePath == filePath) return;
+  if (filePath_ == filePath) return;
 
-  pFilePath = filePath;
+  filePath_ = filePath;
 
   // FIXME: Currently the loaded image MUST have an alpha channel otherwise the
   // blit operations will fail.  If the loaded bitmap is fully opaque, the alpha
   // value of at least one pixel must be set to 254 or less.
-  pBitmap = wxBitmap(filePath, wxBITMAP_TYPE_PNG);
+  bitmap_ = wxBitmap(filePath, wxBITMAP_TYPE_PNG);
 
   Refresh();
 }
@@ -26,14 +26,14 @@ void ImagePanel::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
 
   wxMemoryDC destDC;
-  destDC.SelectObject(*pControlBitmap);
+  destDC.SelectObject(*controlBitmap_);
 
-  if (pBitmap.GetWidth() == GetRect().GetWidth() && pBitmap.GetHeight() == GetRect().GetHeight()) {
-    destDC.DrawBitmap(pBitmap, 0, 0);
+  if (bitmap_.GetWidth() == GetRect().GetWidth() && bitmap_.GetHeight() == GetRect().GetHeight()) {
+    destDC.DrawBitmap(bitmap_, 0, 0);
   } else {    
     wxMemoryDC sourceDC;    
-    sourceDC.SelectObject(pBitmap);    
-    Imaging::StretchBlit(&destDC, &sourceDC, 0, 0, GetRect().GetWidth(), GetRect().GetHeight(), 0, 0, pBitmap.GetWidth(), pBitmap.GetHeight());
+    sourceDC.SelectObject(bitmap_);    
+    Imaging::StretchBlit(&destDC, &sourceDC, 0, 0, GetRect().GetWidth(), GetRect().GetHeight(), 0, 0, bitmap_.GetWidth(), bitmap_.GetHeight());
     sourceDC.SelectObject(wxNullBitmap);    
   }
 
@@ -42,5 +42,5 @@ void ImagePanel::UpdateControlBitmap() {
 
 
 void ImagePanel::FitToContent() {
-  SetSize(pBitmap.GetWidth(), pBitmap.GetHeight());
+  SetSize(bitmap_.GetWidth(), bitmap_.GetHeight());
 }

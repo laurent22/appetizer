@@ -251,6 +251,10 @@
 				RelativePath=".\StyleSelector.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\User.cpp"
+				>
+			</File>
 			<Filter
 				Name="BitmapControls"
 				>
@@ -303,6 +307,10 @@
 			</File>
 			<File
 				RelativePath=".\StyleSelector.h"
+				>
+			</File>
+			<File
+				RelativePath=".\User.h"
 				>
 			</File>
 			<Filter

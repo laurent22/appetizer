@@ -16,7 +16,7 @@ class StyleSelector {
 
   private:
 
-    list<StyleElement> pList;
+    list<StyleElement> list_;
 
   public:
 

@@ -4,18 +4,18 @@
 #include "Controller.h"
 
 
-Controller gController = Controller();
-
-
-
+// The application class. An instance is created and initialized
+// below in IMPLEMENT_APP()
 class MiniLaunchBar: public wxApp {
   virtual bool OnInit();
 };
 
 
-
 IMPLEMENT_APP(MiniLaunchBar) 
 
+
+// Initialize the global controller
+Controller gController = Controller();
 
 
 bool MiniLaunchBar::OnInit() {

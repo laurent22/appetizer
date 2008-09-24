@@ -14,36 +14,36 @@ BitmapControl::BitmapControl(wxWindow *owner, int id, wxPoint point, wxSize size
 wxPanel(owner, id, point, size) {
   //, 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxTRANSPARENT_WINDOW
   //SetBackgroundStyle(wxBG_STYLE_CUSTOM);
-  pControlBitmap = NULL;
+  controlBitmap_ = NULL;
 }
 
 
-wxBitmap* BitmapControl::GetControlBitmap() { return pControlBitmap; }
+wxBitmap* BitmapControl::GetControlBitmap() { return controlBitmap_; }
 
 void BitmapControl::InvalidateControlBitmap() {
   // TODO? Whenever the bitmap is invalidated, it should probably
   // be destroyed and recreated, so that parts of the old bitmap
   // don't appear in the new one.
-  pControlBitmapInvalidated = true;
+  controlBitmapInvalidated_ = true;
   Refresh();
 }
 
 void BitmapControl::UpdateControlBitmap() {
-  if (!pControlBitmap) {
-    pControlBitmap = new wxBitmap(GetRect().GetWidth(), GetRect().GetHeight(), 32);
+  if (!controlBitmap_) {
+    controlBitmap_ = new wxBitmap(GetRect().GetWidth(), GetRect().GetHeight(), 32);
     // TODO: We need UseAlpha() so that the alpha channel is used when drawing
     // the bitmap. However UseAlpha() is an undocumented method so it would
     // be good to find an alternative.
-    pControlBitmap->UseAlpha();
+    controlBitmap_->UseAlpha();
   }
 
   // Mark the bitmap as invalidated. It will be updated in the next PAINT event
-  pControlBitmapInvalidated = false;
+  controlBitmapInvalidated_ = false;
 }
 
 
 void BitmapControl::OnSize(wxSizeEvent& evt) {
-  wxDELETE(pControlBitmap);
+  wxDELETE(controlBitmap_);
 	InvalidateControlBitmap();
 }
 
@@ -63,9 +63,9 @@ void BitmapControl::OnEraseBackground(wxEraseEvent &evt) {
 void BitmapControl::OnPaint(wxPaintEvent& evt) {
 
   // Update the control bitmap if it has been invalidated
-  if (pControlBitmapInvalidated) {
+  if (controlBitmapInvalidated_) {
     UpdateControlBitmap();
-    pControlBitmapInvalidated = false;
+    controlBitmapInvalidated_ = false;
   }
 
   wxBufferedPaintDC dc(this);
@@ -84,5 +84,5 @@ void BitmapControl::OnPaint(wxPaintEvent& evt) {
   }
 
   // Finally, blit the control bitmap
-  if (pControlBitmap) dc.DrawBitmap(*pControlBitmap, 0, 0);
+  if (controlBitmap_) dc.DrawBitmap(*controlBitmap_, 0, 0);
 }

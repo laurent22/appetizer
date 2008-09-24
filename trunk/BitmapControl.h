@@ -19,8 +19,8 @@ class BitmapControl: public wxPanel {
 
   protected:
 
-    wxBitmap* pControlBitmap;
-    bool pControlBitmapInvalidated;
+    wxBitmap* controlBitmap_;
+    bool controlBitmapInvalidated_;
 
   DECLARE_EVENT_TABLE()
 

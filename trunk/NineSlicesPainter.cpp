@@ -2,16 +2,16 @@
 
 
 NineSlicesPainter::NineSlicesPainter() {
-  pGridIsExplicitelySet = false;
+  gridIsExplicitelySet_ = false;
 }
 
 
 void NineSlicesPainter::LoadImage(const wxString& filePath) {  
-  pFilePath = filePath;
-  pSourceBitmap = wxBitmap(pFilePath, wxBITMAP_TYPE_PNG);
-  pSourceDC.SelectObject(wxNullBitmap);
+  filePath_ = filePath;
+  sourceBitmap_ = wxBitmap(filePath_, wxBITMAP_TYPE_PNG);
+  sourceDC_.SelectObject(wxNullBitmap);
   // TODO: Should the previously selected bitmap be explicitely deleted?
-  pSourceDC.SelectObject(pSourceBitmap);
+  sourceDC_.SelectObject(sourceBitmap_);
 }
 
 
@@ -22,18 +22,18 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
   
   wxRect grid;
 
-  if (pGridIsExplicitelySet) {
-    grid = pGrid;
+  if (gridIsExplicitelySet_) {
+    grid = grid_;
   } else {
-    grid.SetLeft(floor((double)(pSourceBitmap.GetWidth() / 2)));
-    grid.SetTop(floor((double)(pSourceBitmap.GetHeight() / 2)));
+    grid.SetLeft(floor((double)(sourceBitmap_.GetWidth() / 2)));
+    grid.SetTop(floor((double)(sourceBitmap_.GetHeight() / 2)));
     grid.SetWidth(10);
     grid.SetHeight(10);
-    pGrid = grid;
+    grid_ = grid;
   }
 
-  int rightWidth = pSourceBitmap.GetWidth() - grid.GetRight();
-  int bottomHeight = pSourceBitmap.GetHeight() - grid.GetBottom();
+  int rightWidth = sourceBitmap_.GetWidth() - grid.GetRight();
+  int bottomHeight = sourceBitmap_.GetHeight() - grid.GetBottom();
 
   for (int i = 0; i < 9; i++) {
 
@@ -60,7 +60,7 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
         destX = width - rightWidth;
         destWidth = rightWidth;
         sourceX = grid.GetRight();
-        sourceWidth = pSourceBitmap.GetWidth() - grid.GetRight();
+        sourceWidth = sourceBitmap_.GetWidth() - grid.GetRight();
         break;
 
     } // switch
@@ -89,12 +89,12 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
         destY = height - bottomHeight;
         destHeight = bottomHeight;
         sourceY = grid.GetBottom();
-        sourceHeight = pSourceBitmap.GetHeight() - grid.GetBottom();
+        sourceHeight = sourceBitmap_.GetHeight() - grid.GetBottom();
         break;
 
     } // switch
 
-    Imaging::StretchBlit(destDC, &pSourceDC, destX, destY, destWidth, destHeight, sourceX, sourceY, sourceWidth, sourceHeight);
+    Imaging::StretchBlit(destDC, &sourceDC_, destX, destY, destWidth, destHeight, sourceX, sourceY, sourceWidth, sourceHeight);
 
   } // for
 

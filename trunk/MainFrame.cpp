@@ -25,30 +25,30 @@ MainFrame::MainFrame()
 {  
   gController.SetMainFrame(this);
 
-  pNeedLayoutUpdate = true;
-  pNeedMaskUpdate = true;
+  needLayoutUpdate_ = true;
+  needMaskUpdate_ = true;
 
   // Load the mask and background images
-  pMaskNineSlices.LoadImage(wxT("Data/Skin/Default/BarBackgroundRegion.png"));
+  maskNineSlices_.LoadImage(wxT("Data/Skin/Default/BarBackgroundRegion.png"));
 
-  pWindowDragData.DraggingStarted = false;
+  windowDragData_.DraggingStarted = false;
 
-  pBackgroundPanel = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
-  pBackgroundPanel->LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
+  backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
+  backgroundPanel_->LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
 
-  pBackgroundPanel->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
-  pBackgroundPanel->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
-  pBackgroundPanel->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
+  backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
+  backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
+  backgroundPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
-  pResizerPanel = new ImagePanel(pBackgroundPanel, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  pResizerPanel->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
-  pResizerPanel->FitToContent();
+  resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
+  resizerPanel_->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
+  resizerPanel_->FitToContent();
 
-  pIconPanel = new IconPanel(pBackgroundPanel, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
+  iconPanel_ = new IconPanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
 } 
 
 
-IconPanel* MainFrame::GetIconPanel() { return pIconPanel; }
+IconPanel* MainFrame::GetIconPanel() { return iconPanel_; }
 
 
 void MainFrame::UpdateMask() {
@@ -62,7 +62,7 @@ void MainFrame::UpdateMask() {
   maskDC.SelectObject(maskBitmap);
   
   // Draw the nine slices on the DC
-  pMaskNineSlices.Draw(&maskDC, 0, 0, maskBitmap.GetWidth(), maskBitmap.GetHeight());
+  maskNineSlices_.Draw(&maskDC, 0, 0, maskBitmap.GetWidth(), maskBitmap.GetHeight());
 
   // Select NULL to release the bitmap
   // TODO: Should the bitmap be manually deleted at this point or is it handled by wxWidgets?
@@ -72,16 +72,18 @@ void MainFrame::UpdateMask() {
   wxRegion region(maskBitmap, MASK_COLOR);
   SetShape(region);
 
-  pNeedMaskUpdate = false;
+  needMaskUpdate_ = false;
 }
 
 
 void MainFrame::UpdateLayout(int width, int height) {
-  pResizerPanel->Move(width - pResizerPanel->GetRect().GetWidth(), height - pResizerPanel->GetRect().GetHeight());
-  pBackgroundPanel->SetSize(0, 0, width, height);
-  pIconPanel->SetSize(10, 10, width - 20, height - 20);
+  ControllerStyles styles = gController.GetStyles();
 
-  pNeedLayoutUpdate = false;
+  resizerPanel_->Move(width - resizerPanel_->GetRect().GetWidth(), height - resizerPanel_->GetRect().GetHeight());
+  backgroundPanel_->SetSize(0, 0, width, height);
+  iconPanel_->SetSize(styles.MainPanel.PaddingLeft, styles.MainPanel.PaddingRight, width - styles.MainPanel.PaddingWidth, height - styles.MainPanel.PaddingHeight);
+
+  needLayoutUpdate_ = false;
 }
 
 
@@ -98,14 +100,14 @@ void MainFrame::OnEraseBackground(wxEraseEvent &evt) {
 void MainFrame::OnPaint(wxPaintEvent& evt) {
   wxPaintDC dc(this);
 
-  if (pNeedLayoutUpdate) UpdateLayout();
-  if (pNeedMaskUpdate) UpdateMask();
+  if (needLayoutUpdate_) UpdateLayout();
+  if (needMaskUpdate_) UpdateMask();
 }
 
 
 void MainFrame::OnSize(wxSizeEvent& evt) {
-  pNeedLayoutUpdate = true;
-  pNeedMaskUpdate = true;
+  needLayoutUpdate_ = true;
+  needMaskUpdate_ = true;
 	Refresh();
 }
 
@@ -113,23 +115,23 @@ void MainFrame::OnSize(wxSizeEvent& evt) {
 void MainFrame::OnMouseDown(wxMouseEvent& evt) {
   static_cast<wxWindow*>(evt.GetEventObject())->CaptureMouse();
 
-  pWindowDragData.DraggingStarted = true;
-  pWindowDragData.InitMousePos = ClientToScreen(evt.GetPosition());
-  pWindowDragData.InitWindowPos = GetPosition();
+  windowDragData_.DraggingStarted = true;
+  windowDragData_.InitMousePos = ClientToScreen(evt.GetPosition());
+  windowDragData_.InitWindowPos = GetPosition();
 }
 
 
 void MainFrame::OnMouseUp(wxMouseEvent& evt) {
   wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
   if (w->HasCapture()) w->ReleaseMouse();
-  pWindowDragData.DraggingStarted = false;
+  windowDragData_.DraggingStarted = false;
 }
 
 
 void MainFrame::OnMouseMove(wxMouseEvent& evt) {
-  if (pWindowDragData.DraggingStarted && evt.Dragging() && evt.LeftIsDown()) {
+  if (windowDragData_.DraggingStarted && evt.Dragging() && evt.LeftIsDown()) {
     wxPoint mousePos = ClientToScreen(evt.GetPosition());
-    wxPoint mouseOffset = mousePos - pWindowDragData.InitMousePos;
-    Move(mouseOffset.x + pWindowDragData.InitWindowPos.x, mouseOffset.y + pWindowDragData.InitWindowPos.y);
+    wxPoint mouseOffset = mousePos - windowDragData_.InitMousePos;
+    Move(mouseOffset.x + windowDragData_.InitWindowPos.x, mouseOffset.y + windowDragData_.InitWindowPos.y);
   }
 }

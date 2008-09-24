@@ -1,43 +1,58 @@
-#include "Controller.h"
 #include "wx/wx.h" 
-#include "StyleSelector.h"
-
+#include "wx/stdpaths.h"
+#include "wx/filename.h"
+#include "Controller.h"
+#include "Constants.h"
 
 Controller::Controller() {
-  pMainFrame = NULL;
+  mainFrame_ = NULL;
 
-  pStyles = ControllerStyles();
+  wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
+  wxString applicationDirectory = executablePath.GetPath();
 
-  // paddingWidth and paddingHeight are here just as a shortcut to easily 
-  // get the total vertical or horizontal space taken by the padding
+  filePaths_.ApplicationDirectory = applicationDirectory;
+  filePaths_.DataDirectory = applicationDirectory + "/" + DATA_FOLDER_NAME;
+  filePaths_.SettingsDirectory = filePaths_.DataDirectory + "/" + SETTING_FOLDER_NAME;
+  filePaths_.SkinDirectory = filePaths_.DataDirectory + "/" + SKIN_FOLDER_NAME + "/Default";
+  filePaths_.LocalesDirectory = filePaths_.DataDirectory + "/" + LOCALES_FOLDER_NAME;
+  filePaths_.UserSettingsFile = filePaths_.SettingsDirectory + "/" + USER_SETTINGS_FILE_NAME;
+  filePaths_.IconsDirectory = filePaths_.SkinDirectory + "/" + ICONS_FOLDER_NAME;
 
-  pStyles.BackgroundPanel.SetStyleInt(wxT("paddingLeft"), 8);
-  pStyles.BackgroundPanel.SetStyleInt(wxT("paddingRight"), 8);
-  pStyles.BackgroundPanel.SetStyleInt(wxT("paddingTop"), 8);
-  pStyles.BackgroundPanel.SetStyleInt(wxT("paddingBottom"), 8);
-  pStyles.BackgroundPanel.SetStyleInt(wxT("paddingWidth"), pStyles.BackgroundPanel.GetStyleInt(wxT("paddingLeft")) + pStyles.BackgroundPanel.GetStyleInt(wxT("paddingRight")));
-  pStyles.BackgroundPanel.SetStyleInt(wxT("paddingHeight"), pStyles.BackgroundPanel.GetStyleInt(wxT("paddingTop")) + pStyles.BackgroundPanel.GetStyleInt(wxT("paddingBottom")));
+  styles_ = ControllerStyles();
 
-  pStyles.IconPanel.SetStyleInt(wxT("paddingLeft"), 4);
-  pStyles.IconPanel.SetStyleInt(wxT("paddingRight"), 4);
-  pStyles.IconPanel.SetStyleInt(wxT("paddingTop"), 8);
-  pStyles.IconPanel.SetStyleInt(wxT("paddingBottom"), 8);
-  pStyles.IconPanel.SetStyleInt(wxT("paddingWidth"), pStyles.IconPanel.GetStyleInt(wxT("paddingLeft")) + pStyles.IconPanel.GetStyleInt(wxT("paddingRight")));
-  pStyles.IconPanel.SetStyleInt(wxT("paddingHeight"), pStyles.IconPanel.GetStyleInt(wxT("paddingTop")) + pStyles.IconPanel.GetStyleInt(wxT("paddingBottom")));
+  styles_.MainPanel.PaddingLeft = 8;
+  styles_.MainPanel.PaddingRight = 8;
+  styles_.MainPanel.PaddingTop = 8;
+  styles_.MainPanel.PaddingBottom = 8;
+  styles_.MainPanel.PaddingWidth = styles_.MainPanel.PaddingLeft + styles_.MainPanel.PaddingRight;
+  styles_.MainPanel.PaddingHeight = styles_.MainPanel.PaddingTop + styles_.MainPanel.PaddingBottom;
 
+  styles_.InnerPanel.PaddingLeft = 4;
+  styles_.InnerPanel.PaddingRight = 4;
+  styles_.InnerPanel.PaddingTop = 8;
+  styles_.InnerPanel.PaddingBottom = 8;
+  styles_.InnerPanel.PaddingWidth = styles_.InnerPanel.PaddingLeft + styles_.InnerPanel.PaddingRight;
+  styles_.InnerPanel.PaddingHeight = styles_.InnerPanel.PaddingTop + styles_.InnerPanel.PaddingBottom;
 }
 
 
 ControllerStyles Controller::GetStyles() {
-  return pStyles;
+  return styles_;
 }
 
 
 MainFrame* Controller::GetMainFrame() {
-  return pMainFrame;
+  return mainFrame_;
 }
 
 
 void Controller::SetMainFrame(MainFrame* mainFrame) {
-
+  mainFrame_ = mainFrame;
 }
+
+
+User Controller::GetUser() {
+  return user_;
+}
+
+

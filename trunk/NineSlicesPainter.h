@@ -9,11 +9,11 @@ class NineSlicesPainter {
 
   private:
 
-    wxRect pGrid;
-    wxString pFilePath;
-    bool pGridIsExplicitelySet;
-    wxBitmap pSourceBitmap;
-    wxMemoryDC pSourceDC;
+    wxRect grid_;
+    wxString filePath_;
+    bool gridIsExplicitelySet_;
+    wxBitmap sourceBitmap_;
+    wxMemoryDC sourceDC_;
     
   public:
 

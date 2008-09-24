@@ -15,15 +15,8 @@ class ImagePanel: public BitmapControl {
 
   private:
 
-    struct WindowDragDataStruct {
-      bool DraggingStarted;
-      wxPoint InitWindowPos;
-      wxPoint InitMousePos;
-    };
-
-    wxString pFilePath;
-    wxBitmap pBitmap;
-    WindowDragDataStruct pWindowDragData;
+    wxString filePath_;
+    wxBitmap bitmap_;
 
 };
 

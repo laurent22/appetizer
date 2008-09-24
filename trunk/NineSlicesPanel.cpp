@@ -4,16 +4,16 @@
 
 NineSlicesPanel::NineSlicesPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
-  pNineSlicesPainter = NULL;
+  nineSlicesPainter_ = NULL;
 }
 
 
 void NineSlicesPanel::LoadImage(const wxString& filePath) {
-  if (pFilePath == filePath) return;
+  if (filePath_ == filePath) return;
 
-  pFilePath = filePath;
+  filePath_ = filePath;
 
-  wxDELETE(pNineSlicesPainter);
+  wxDELETE(nineSlicesPainter_);
 
   // FIXME: Currently the loaded image MUST have an alpha channel otherwise the
   // blit operations will fail.  If the loaded bitmap is fully opaque, the alpha
@@ -26,16 +26,16 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
 void NineSlicesPanel::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
 
-  if ((pNineSlicesPainter == NULL) && (pFilePath != "")) {
-    pNineSlicesPainter = new NineSlicesPainter();
-    pNineSlicesPainter->LoadImage(pFilePath);
+  if ((nineSlicesPainter_ == NULL) && (filePath_ != "")) {
+    nineSlicesPainter_ = new NineSlicesPainter();
+    nineSlicesPainter_->LoadImage(filePath_);
   }
 
-  if (pNineSlicesPainter != NULL) {
+  if (nineSlicesPainter_ != NULL) {
 
     wxMemoryDC destDC;
-    destDC.SelectObject(*pControlBitmap);    
-    pNineSlicesPainter->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
+    destDC.SelectObject(*controlBitmap_);    
+    nineSlicesPainter_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     destDC.SelectObject(wxNullBitmap);
   }
 }
