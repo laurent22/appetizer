@@ -11,12 +11,12 @@ Controller::Controller() {
   wxString applicationDirectory = executablePath.GetPath();
 
   filePaths_.ApplicationDirectory = applicationDirectory;
-  filePaths_.DataDirectory = applicationDirectory + "/" + DATA_FOLDER_NAME;
-  filePaths_.SettingsDirectory = filePaths_.DataDirectory + "/" + SETTING_FOLDER_NAME;
-  filePaths_.SkinDirectory = filePaths_.DataDirectory + "/" + SKIN_FOLDER_NAME + "/Default";
-  filePaths_.LocalesDirectory = filePaths_.DataDirectory + "/" + LOCALES_FOLDER_NAME;
-  filePaths_.UserSettingsFile = filePaths_.SettingsDirectory + "/" + USER_SETTINGS_FILE_NAME;
-  filePaths_.IconsDirectory = filePaths_.SkinDirectory + "/" + ICONS_FOLDER_NAME;
+  filePaths_.DataDirectory = applicationDirectory + wxT("/") + DATA_FOLDER_NAME;
+  filePaths_.SettingsDirectory = filePaths_.DataDirectory + wxT("/") + SETTING_FOLDER_NAME;
+  filePaths_.SkinDirectory = filePaths_.DataDirectory + wxT("/") + SKIN_FOLDER_NAME + wxT("/Default");
+  filePaths_.LocalesDirectory = filePaths_.DataDirectory + wxT("/") + LOCALES_FOLDER_NAME;
+  filePaths_.UserSettingsFile = filePaths_.SettingsDirectory + wxT("/") + USER_SETTINGS_FILE_NAME;
+  filePaths_.IconsDirectory = filePaths_.SkinDirectory + wxT("/") + ICONS_FOLDER_NAME;
 
   styles_ = ControllerStyles();
 

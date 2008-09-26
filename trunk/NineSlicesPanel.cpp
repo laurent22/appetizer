@@ -26,7 +26,7 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
 void NineSlicesPanel::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
 
-  if ((nineSlicesPainter_ == NULL) && (filePath_ != "")) {
+  if ((nineSlicesPainter_ == NULL) && (filePath_ != wxT(""))) {
     nineSlicesPainter_ = new NineSlicesPainter();
     nineSlicesPainter_->LoadImage(filePath_);
   }

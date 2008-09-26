@@ -15,7 +15,7 @@ wxString StyleSelector::GetStyle(wxString name) {
     }
   }
 
-  return "";
+  return wxT("");
 }
 
 
@@ -39,7 +39,7 @@ void StyleSelector::SetStyle(wxString name, wxString value) {
 
 int StyleSelector::GetStyleInt(wxString name) {
   wxString s = GetStyle(name);
-  if (s == "") return 0;
+  if (s == wxT("")) return 0;
   long value;
   if(!s.ToLong(&value)) {
     // Could not convert
