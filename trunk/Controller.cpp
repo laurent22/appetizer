@@ -6,9 +6,18 @@
 
 Controller::Controller() {
   mainFrame_ = NULL;
+  user_ = new User();
+
+  user_->SetConfig(_T("maprop"), _T("ma val"));
 
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
   wxString applicationDirectory = executablePath.GetPath();
+
+  wxFileName::SplitPath(executablePath.GetPath(), &applicationDrive_, NULL, NULL, NULL, false, wxPATH_NATIVE);
+
+  #ifdef __WIN32__
+  applicationDrive_ += _T(":");
+  #endif // __WIN32__
 
   filePaths_.ApplicationDirectory = applicationDirectory;
   filePaths_.DataDirectory = applicationDirectory + wxT("/") + DATA_FOLDER_NAME;
@@ -51,8 +60,21 @@ void Controller::SetMainFrame(MainFrame* mainFrame) {
 }
 
 
-User Controller::GetUser() {
+wxString Controller::GetApplicationDrive() {
+  return applicationDrive_;
+}
+
+
+User* Controller::GetUser() {
   return user_;
 }
 
 
+void Controller::User_FolderItemCollectionChange() {
+  mainFrame_->GetIconPanel()->ReloadIcons();
+}
+
+
+FilePaths Controller::GetFilePaths() {
+  return filePaths_;
+}

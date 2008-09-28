@@ -19,7 +19,7 @@ class IconGetter {
      * @param iconSize The icon size (only 16 and 32 are currently supported)
      * @return The icon or wxNullIcon in case of error
      */
-    static wxIcon GetFolderItemIcon(const wxString& filePath, int iconSize = 32);
+    static wxIcon* GetFolderItemIcon(const wxString& filePath, int iconSize = 32);
 
     /**
      * Gets the (first) icon within an executable, dll or ico file
@@ -27,7 +27,7 @@ class IconGetter {
      * @param iconSize The icon size (only 16 and 32 are currently supported)
      * @return The icon or wxNullIcon in case of error
      */
-    static wxIcon GetExecutableIcon(const wxString& filePath, int iconSize = 32);
+    static wxIcon* GetExecutableIcon(const wxString& filePath, int iconSize = 32);
     
     /**
      * Gets the icon of a non-executable file, or a default icon if the file
@@ -36,7 +36,7 @@ class IconGetter {
      * @param iconSize The icon size (only 16 and 32 are currently supported)
      * @return The icon or wxNullIcon in case of error
      */
-    static wxIcon GetDocumentIcon(const wxString& filePath, int iconSize = 32);
+    static wxIcon* GetDocumentIcon(const wxString& filePath, int iconSize = 32);
     
     /**
      * Gets the icon of a folder. It makes use of Desktop.ini if available.
@@ -44,7 +44,7 @@ class IconGetter {
      * @param iconSize The icon size (only 16 and 32 are currently supported)
      * @return The icon or wxNullIcon in case of error
      */
-    static wxIcon GetFolderIcon(const wxString& filePath, int iconSize = 32);
+    static wxIcon* GetFolderIcon(const wxString& filePath, int iconSize = 32);
 
 };
 

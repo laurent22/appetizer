@@ -5,12 +5,11 @@
 #include "wx/filename.h"
 
 
-wxIcon IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
-  wxFileName filename(filePath);
-
-  if (filename.DirExists()) {
+wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
+  if (wxFileName::DirExists(filePath)) {
     return GetFolderIcon(filePath, iconSize);
   } else {
+    wxFileName filename(filePath);
 
     if ((filename.GetExt().CmpNoCase(wxT("exe")) == 0) || (filename.GetExt().CmpNoCase(wxT("ico")) == 0)) {
       return GetExecutableIcon(filePath);
@@ -19,11 +18,11 @@ wxIcon IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
     }
   }
 
-  return wxNullIcon;
+  return NULL;
 }
 
 
-wxIcon IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
+wxIcon* IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
   #ifdef __WIN32__
 
   wxString desktopIniFilePath = filePath + wxT("/Desktop.ini");
@@ -62,19 +61,19 @@ wxIcon IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
   }
  
   if (success != 0) {
-    wxIcon icon;
-    icon.SetHICON((WXHICON)fileInfo.hIcon);
-    icon.SetSize(iconSize, iconSize);
+    wxIcon* icon = new wxIcon();
+    icon->SetHICON((WXHICON)fileInfo.hIcon);
+    icon->SetSize(iconSize, iconSize);
     return icon;
   }
 
   #endif // __WIN32__
 
-  return wxNullIcon;
+  return NULL;
 }
 
 
-wxIcon IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
+wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
   #ifdef __WIN32__
 
   // Get the file type from the file extension
@@ -112,18 +111,18 @@ wxIcon IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
   bool success = fileType->GetIcon(&iconLocation);
 
   if (success) {
-    wxIcon icon = wxIcon(iconLocation);
-    icon.SetSize(iconSize, iconSize);
+    wxIcon* icon = new wxIcon(iconLocation);
+    icon->SetSize(iconSize, iconSize);
     return icon;
   }
   
   #endif // __WIN32__
   
-  return wxNullIcon;
+  return NULL;
 }
 
 
-wxIcon IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize) {  
+wxIcon* IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize) {  
   #ifdef __WIN32__
 
   HICON smallIcon;
@@ -137,19 +136,19 @@ wxIcon IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize) {
   }
 
   if (result != 0) {
-    wxIcon icon;
+    wxIcon* icon = new wxIcon();
 
     if (iconSize == 16) {
-      icon.SetHICON((WXHICON)smallIcon);
-      icon.SetSize(16, 16);
+      icon->SetHICON((WXHICON)smallIcon);
+      icon->SetSize(16, 16);
     } else {
-      icon.SetHICON((WXHICON)largeIcon);
-      icon.SetSize(32, 32);
+      icon->SetHICON((WXHICON)largeIcon);
+      icon->SetSize(32, 32);
     }
     return icon;
   }
 
   #endif // __WIN32__
 
-  return wxNullIcon;
+  return NULL;
 }

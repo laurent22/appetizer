@@ -2,17 +2,27 @@
 #define __User_H
 
 #include "wx/wx.h"
+#include "FolderItem.h"
+#include <wx/xml/xml.h>
+#include <vector>
+using namespace std;
 
 
 class User {
 
-  public:
+public:
 
-    User();
+  User();
+  std::vector<FolderItem*> GetFolderItems();
+  void AutomaticallyAddNewApps();
+  void LoadSettings();
+  void SetConfig(const wxString& name, const wxString& value);
+  wxString GetConfig(const wxString& name);
 
-  private:
+private:
 
-    void LoadSettings(const wxString& settingFilePath);
+  std::vector<FolderItem*> folderItems_;
+  //wxXmlDocument configDoc_;
 
 };
 

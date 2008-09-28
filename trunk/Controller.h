@@ -79,14 +79,22 @@ class Controller {
     void SetMainFrame(MainFrame* mainFrame);
     ControllerStyles GetStyles();
     FilePaths GetFilePaths();
-    User GetUser();
+    User* GetUser();
+    wxString GetApplicationDrive();
+
+    /**
+     * GLOBAL EVENTS
+     */
+
+    void User_FolderItemCollectionChange();
 
   private:
       
     MainFrame* mainFrame_;
     ControllerStyles styles_;
     FilePaths filePaths_;
-    User user_;
+    User* user_;
+    wxString applicationDrive_;
 
 };
 

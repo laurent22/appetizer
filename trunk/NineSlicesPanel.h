@@ -20,4 +20,4 @@ class NineSlicesPanel: public BitmapControl {
 
 };
 
-#endif
+#endif // __NineSlicesPanel_H

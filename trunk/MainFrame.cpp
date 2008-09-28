@@ -45,6 +45,8 @@ MainFrame::MainFrame()
   resizerPanel_->FitToContent();
 
   iconPanel_ = new IconPanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
+
+  gController.GetUser()->AutomaticallyAddNewApps();
 } 
 
 
