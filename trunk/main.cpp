@@ -25,6 +25,8 @@ bool MiniLaunchBar::OnInit() {
   // Setting this option to "0" removed the flickering.
   wxSystemOptions::SetOption(wxT("msw.window.no-clip-children"), wxT("0"));
 
+  gController.Initialize();
+
   MainFrame *frame = new MainFrame();
   frame->Show(true);
   frame->SetBackgroundStyle(wxBG_STYLE_CUSTOM);

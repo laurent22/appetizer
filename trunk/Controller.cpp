@@ -6,11 +6,14 @@
 
 Controller::Controller() {
   mainFrame_ = NULL;
-  user_ = new User();
+  user_ = NULL;
 
-  user_->SetConfig(_T("maprop"), _T("ma val"));
+  /****************************************************************************
+   * Initialize paths
+   ***************************************************************************/
 
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
+
   wxString applicationDirectory = executablePath.GetPath();
 
   wxFileName::SplitPath(executablePath.GetPath(), &applicationDrive_, NULL, NULL, NULL, false, wxPATH_NATIVE);
@@ -20,12 +23,16 @@ Controller::Controller() {
   #endif // __WIN32__
 
   filePaths_.ApplicationDirectory = applicationDirectory;
-  filePaths_.DataDirectory = applicationDirectory + wxT("/") + DATA_FOLDER_NAME;
-  filePaths_.SettingsDirectory = filePaths_.DataDirectory + wxT("/") + SETTING_FOLDER_NAME;
-  filePaths_.SkinDirectory = filePaths_.DataDirectory + wxT("/") + SKIN_FOLDER_NAME + wxT("/Default");
-  filePaths_.LocalesDirectory = filePaths_.DataDirectory + wxT("/") + LOCALES_FOLDER_NAME;
-  filePaths_.UserSettingsFile = filePaths_.SettingsDirectory + wxT("/") + USER_SETTINGS_FILE_NAME;
-  filePaths_.IconsDirectory = filePaths_.SkinDirectory + wxT("/") + ICONS_FOLDER_NAME;
+  filePaths_.DataDirectory = applicationDirectory + wxT("\\") + DATA_FOLDER_NAME;
+  filePaths_.SettingsDirectory = filePaths_.DataDirectory + wxT("\\") + SETTING_FOLDER_NAME;
+  filePaths_.SkinDirectory = filePaths_.DataDirectory + wxT("\\") + SKIN_FOLDER_NAME + wxT("\\Default");
+  filePaths_.LocalesDirectory = filePaths_.DataDirectory + wxT("\\") + LOCALES_FOLDER_NAME;
+  filePaths_.ConfigFile = filePaths_.SettingsDirectory + wxT("\\") + CONFIG_FILE_NAME;
+  filePaths_.IconsDirectory = filePaths_.SkinDirectory + wxT("\\") + ICONS_FOLDER_NAME;
+
+  /****************************************************************************
+   * Initialize styles
+   ***************************************************************************/
 
   styles_ = ControllerStyles();
 
@@ -42,6 +49,19 @@ Controller::Controller() {
   styles_.InnerPanel.PaddingBottom = 8;
   styles_.InnerPanel.PaddingWidth = styles_.InnerPanel.PaddingLeft + styles_.InnerPanel.PaddingRight;
   styles_.InnerPanel.PaddingHeight = styles_.InnerPanel.PaddingTop + styles_.InnerPanel.PaddingBottom;
+
+  styles_.Icon.PaddingLeft = 4;
+  styles_.Icon.PaddingRight = 4;
+  styles_.Icon.PaddingTop = 4;
+  styles_.Icon.PaddingBottom = 4;
+  styles_.Icon.PaddingWidth = styles_.Icon.PaddingLeft + styles_.Icon.PaddingRight;
+  styles_.Icon.PaddingHeight = styles_.Icon.PaddingTop + styles_.Icon.PaddingBottom;
+
+}
+
+
+void Controller::Initialize() {
+  user_ = new User();
 }
 
 

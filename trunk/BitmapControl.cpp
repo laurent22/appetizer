@@ -12,8 +12,6 @@ END_EVENT_TABLE()
 
 BitmapControl::BitmapControl(wxWindow *owner, int id, wxPoint point, wxSize size):
 wxPanel(owner, id, point, size) {
-  //, 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxTRANSPARENT_WINDOW
-  //SetBackgroundStyle(wxBG_STYLE_CUSTOM);
   controlBitmap_ = NULL;
 }
 
@@ -21,7 +19,7 @@ wxPanel(owner, id, point, size) {
 wxBitmap* BitmapControl::GetControlBitmap() { return controlBitmap_; }
 
 void BitmapControl::InvalidateControlBitmap() {
-  // TODO? Whenever the bitmap is invalidated, it should probably
+  // @todo Whenever the bitmap is invalidated, it should probably
   // be destroyed and recreated, so that parts of the old bitmap
   // don't appear in the new one.
   controlBitmapInvalidated_ = true;
@@ -31,7 +29,7 @@ void BitmapControl::InvalidateControlBitmap() {
 void BitmapControl::UpdateControlBitmap() {
   if (!controlBitmap_) {
     controlBitmap_ = new wxBitmap(GetRect().GetWidth(), GetRect().GetHeight(), 32);
-    // TODO: We need UseAlpha() so that the alpha channel is used when drawing
+    // @todo We need UseAlpha() so that the alpha channel is used when drawing
     // the bitmap. However UseAlpha() is an undocumented method so it would
     // be good to find an alternative.
     controlBitmap_->UseAlpha();
@@ -78,11 +76,21 @@ void BitmapControl::OnPaint(wxPaintEvent& evt) {
     wxBitmap* parentBitmap = parent->GetControlBitmap();
     // Copy the parent sub bitmap as a background of this control
 
-    // TODO: Check that the rectangle is not off-bounds
-    wxBitmap subBitmap = parentBitmap->GetSubBitmap(this->GetRect());
-    dc.DrawBitmap(subBitmap, 0, 0);
+    // Check that the rectangle is not off-bounds
+    wxRect rect = this->GetRect();
+    if (rect.GetLeft() < 0) rect.SetLeft(0);
+    if (rect.GetTop() < 0) rect.SetTop(0);
+    if (rect.GetRight() >= parentBitmap->GetWidth()) rect.SetRight(parentBitmap->GetWidth() - 1);
+    if (rect.GetBottom() >= parentBitmap->GetHeight()) rect.SetBottom(parentBitmap->GetHeight() - 1);
+
+    if (rect.GetWidth() > 0 && rect.GetHeight() > 0) {
+      wxBitmap subBitmap = parentBitmap->GetSubBitmap(rect);
+      dc.DrawBitmap(subBitmap, 0, 0);
+    }
   }
 
   // Finally, blit the control bitmap
-  if (controlBitmap_) dc.DrawBitmap(*controlBitmap_, 0, 0);
+  if (controlBitmap_->GetWidth() > 0 && controlBitmap_->GetHeight() > 0) {
+    if (controlBitmap_) dc.DrawBitmap(*controlBitmap_, 0, 0);
+  }
 }

@@ -2,8 +2,9 @@
 #define __User_H
 
 #include "wx/wx.h"
+#include <wx/fileconf.h>
 #include "FolderItem.h"
-#include <wx/xml/xml.h>
+#include "UserSettings.h"
 #include <vector>
 using namespace std;
 
@@ -16,13 +17,12 @@ public:
   std::vector<FolderItem*> GetFolderItems();
   void AutomaticallyAddNewApps();
   void LoadSettings();
-  void SetConfig(const wxString& name, const wxString& value);
-  wxString GetConfig(const wxString& name);
+  UserSettings* GetSettings();
 
 private:
 
   std::vector<FolderItem*> folderItems_;
-  //wxXmlDocument configDoc_;
+  UserSettings* settings_;
 
 };
 

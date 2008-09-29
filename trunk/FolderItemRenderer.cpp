@@ -3,6 +3,8 @@
 #include "utilities/IconGetter.h"
 #include <wx/log.h>
 
+#include "Controller.h"
+extern Controller gController;
 
 
 FolderItemRenderer::FolderItemRenderer(wxWindow *owner, int id, wxPoint point, wxSize size):
@@ -12,7 +14,8 @@ BitmapControl(owner, id, point, size) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(32, 32);
+  SetSize(gController.GetUser()->GetSettings()->IconSize + gController.GetStyles().Icon.PaddingWidth,
+          gController.GetUser()->GetSettings()->IconSize + gController.GetStyles().Icon.PaddingHeight);
 }
 
 
@@ -21,12 +24,14 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   if (!folderItem_) return;
 
-  wxIcon* icon = folderItem_->GetIcon(32);
+  wxIcon* icon = folderItem_->GetIcon(gController.GetUser()->GetSettings()->IconSize);
 
   if (icon->IsOk()) {
     wxMemoryDC destDC;
-    destDC.SelectObject(*controlBitmap_);
+    destDC.SelectObject(*controlBitmap_);    
+
     destDC.DrawIcon(*icon, 0, 0);
+
     destDC.SelectObject(wxNullBitmap);
   }
 }

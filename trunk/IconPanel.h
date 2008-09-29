@@ -13,9 +13,14 @@ public:
   
   IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size);
   void ReloadIcons();
+  void UpdateLayout();
+
+  void OnSize(wxSizeEvent& evt);
+  void OnPaint(wxPaintEvent& evt);
 
 private:
 
+  bool layoutInvalidated_;
   std::vector<FolderItemRenderer*> folderItemRenderers_;
 
 };

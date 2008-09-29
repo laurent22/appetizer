@@ -15,6 +15,7 @@ struct FilePaths {
   wxString LocalesDirectory;
   wxString UserSettingsFile;
   wxString IconsDirectory;
+  wxString ConfigFile;
 };
 
 struct MainPanelStyle {
@@ -67,6 +68,7 @@ struct IconStyle {
 struct ControllerStyles {
   MainPanelStyle MainPanel;
   InnerPanelStyle InnerPanel;
+  IconStyle Icon;
 };
 
 
@@ -81,6 +83,7 @@ class Controller {
     FilePaths GetFilePaths();
     User* GetUser();
     wxString GetApplicationDrive();
+    void Initialize();
 
     /**
      * GLOBAL EVENTS

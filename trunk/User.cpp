@@ -1,7 +1,6 @@
 #include "User.h"
 #include <wx/dir.h>
 #include <wx/filename.h>
-#include <wx/xml/xml.h>
 #include "Controller.h"
 #include "FolderItem.h"
 
@@ -9,15 +8,7 @@ extern Controller gController;
 
 
 User::User() {
-  //wxString settingFile = gController.GetFilePaths().UserSettingsFile;
-
-  //if (configDoc_.Load(settingFile)) {
-
-  //} else {
-  //  wxXmlNode* rootNode = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, _T("MiniLaunchBar"));
-  //  configDoc_.SetRoot(rootNode);
-  //  configDoc_.Save(settingFile);
-  //}
+  settings_ = new UserSettings();
 }
 
 
@@ -28,6 +19,11 @@ void User::LoadSettings() {
 
 std::vector<FolderItem*> User::GetFolderItems() {
   return folderItems_;
+}
+
+
+UserSettings* User::GetSettings() {
+  return settings_;
 }
 
 
@@ -63,11 +59,3 @@ void User::AutomaticallyAddNewApps() {
 }
 
 
-void User::SetConfig(const wxString& name, const wxString& value) {
-
-}
-
-
-wxString User::GetConfig(const wxString& name) {
-  return _T("");
-}
