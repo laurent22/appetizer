@@ -3,11 +3,13 @@
 
 #include "wx/wx.h"
 
+
+
 class MathUtil {
 
   public:
 
-    static double GetPointDistance(wxPoint a, wxPoint b);
+    static double GetPointDistance(const wxPoint& a, const wxPoint& b);
 
 };
 

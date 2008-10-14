@@ -7,24 +7,37 @@
 extern Controller gController;
 
 
+int FolderItemRenderer::uniqueID_ = 0;
+
+
 BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
+  EVT_MOTION(FolderItemRenderer::OnMotion)
   EVT_ENTER_WINDOW(FolderItemRenderer::OnEnterWindow)
   EVT_LEAVE_WINDOW(FolderItemRenderer::OnLeaveWindow)
   EVT_LEFT_DOWN(FolderItemRenderer::OnLeftDown)
   EVT_LEFT_UP(FolderItemRenderer::OnLeftUp)
-  EVT_TIMER(PRESS_TIMER_ID, FolderItemRenderer::OnTimer)
 END_EVENT_TABLE()
 
 
 FolderItemRenderer::FolderItemRenderer(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
+
+  // Make sure that each renderer has a unique ID
+  FolderItemRenderer::uniqueID_++;
+  SetId(FolderItemRenderer::uniqueID_);
+
   folderItem_ = NULL;
   iconOverlayPainterUp_ = NULL;
   iconOverlayPainterDown_ = NULL;
-  pressTimer_ = NULL;
   pressPosition_ = NULL;
   mouseInside_ = false;
   mousePressed_ = false;
+  draggingStarted_ = false;
+}
+
+
+FolderItem* FolderItemRenderer::GetFolderItem() {
+  return folderItem_;
 }
 
 
@@ -41,21 +54,14 @@ void FolderItemRenderer::OnLeaveWindow(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::OnLeftDown(wxMouseEvent& evt) {
-   // wxTextDataObject my_data(_T("This text will be dragged."));
-   // wxDropSource dragSource( this );
-	  //dragSource.SetData( my_data );
-	  //wxDragResult result = dragSource.DoDragDrop( TRUE );
-
   if (!HasCapture()) CaptureMouse();
   mousePressed_ = true;
+  draggingStarted_ = false;
 
-  if (!pressTimer_) 
-    pressTimer_ = new wxTimer(this, PRESS_TIMER_ID);
   if (!pressPosition_) pressPosition_ = new wxPoint();
 
   pressPosition_->x = evt.m_x;
   pressPosition_->y = evt.m_y;
-  pressTimer_->Start(50);
 
   InvalidateControlBitmap();
 }
@@ -63,8 +69,6 @@ void FolderItemRenderer::OnLeftDown(wxMouseEvent& evt) {
 
 void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
-
-  pressTimer_->Stop();
 
   if (mouseInside_ && mousePressed_) {
     wxLogDebug(_T("CLICK"));
@@ -76,13 +80,39 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
 }
 
 
-void FolderItemRenderer::OnTimer(wxTimerEvent& evt) {
-  // @todo How can we get the position of the mouse cursor?
-  // Once distance > 10, start dragging
-  
-  //wxMouseEvent t;
-  //wxLogDebug(_T("%d"), t.m_x);
-  //wxLogDebug(_T("%d"), MathUtil::GetPointDistance();
+void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
+  if (!mousePressed_) return;
+
+  if (!draggingStarted_) {
+    wxASSERT(pressPosition_ != NULL);
+
+    wxPoint p(evt.m_x, evt.m_y);
+    double distance = MathUtil::GetPointDistance(p, *pressPosition_);
+
+    if (distance > 5.0) {
+      if (HasCapture()) ReleaseMouse(); 
+      draggingStarted_ = true;
+
+      gController.SetDraggedFolderItem(folderItem_);
+
+      wxFileDataObject fileData;
+      fileData.AddFile(folderItem_->GetResolvedFilePath());
+
+      wxDropSource dragSource(this);
+      dragSource.SetData(fileData);
+      wxDragResult result = dragSource.DoDragDrop(true);
+
+      gController.SetDraggedFolderItem(NULL);
+      mousePressed_ = false;
+      draggingStarted_ = false;
+
+      InvalidateControlBitmap();
+    }
+
+  } else { // Folder item is being dragged
+
+  }
+
 }
 
 

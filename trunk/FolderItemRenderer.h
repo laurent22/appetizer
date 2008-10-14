@@ -7,7 +7,6 @@
 #include "FolderItem.h"
 #include <wx/dataobj.h>
 #include <wx/dnd.h>
-#include <wx/timer.h>
 #include "utilities/MathUtil.h"
 
 
@@ -19,24 +18,25 @@ public:
   void LoadData(FolderItem* folderItem);
   void UpdateControlBitmap();
   void FitToContent();
+  FolderItem* GetFolderItem();
 
 private:
 
-  static const int PRESS_TIMER_ID = 1;
+  static int uniqueID_;
 
   bool mouseInside_;
   bool mousePressed_;
+  bool draggingStarted_;
   FolderItem* folderItem_;
   NineSlicesPainter* iconOverlayPainterUp_;
   NineSlicesPainter* iconOverlayPainterDown_;
   wxPoint* pressPosition_;
-  wxTimer* pressTimer_;
 
   void OnEnterWindow(wxMouseEvent& evt);
   void OnLeaveWindow(wxMouseEvent& evt);
   void OnLeftDown(wxMouseEvent& evt);
   void OnLeftUp(wxMouseEvent& evt);
-  void OnTimer(wxTimerEvent& evt);
+  void OnMotion(wxMouseEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

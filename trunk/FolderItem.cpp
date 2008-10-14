@@ -2,11 +2,21 @@
 #include "utilities/IconGetter.h"
 
 
+int FolderItem::uniqueID_ = 0;
+
+
 FolderItem::FolderItem() {
   filePath_ = _T("");
   icon16_ = NULL;
   icon32_ = NULL;
-  
+
+  FolderItem::uniqueID_++;
+  id_ = FolderItem::uniqueID_;
+}
+
+
+int FolderItem::GetId() const {
+  return id_;
 }
 
 

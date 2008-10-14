@@ -85,6 +85,8 @@ class Controller {
     User* GetUser();
     wxString GetApplicationDrive();
     void Initialize();
+    void SetDraggedFolderItem(FolderItem* folderItem);
+    FolderItem* GetDraggedFolderItem();
 
     /**
      * GLOBAL EVENTS
@@ -99,7 +101,7 @@ class Controller {
     FilePaths filePaths_;
     User* user_;
     wxString applicationDrive_;
-    
+    FolderItem* draggedFolderItem_;
 
 };
 

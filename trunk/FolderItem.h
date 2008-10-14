@@ -8,6 +8,7 @@ class FolderItem {
 public:
 
   FolderItem();
+  int GetId() const;
   wxString GetResolvedFilePath();
   wxString GetFilePath();
   wxIcon* GetIcon(int iconSize);
@@ -17,10 +18,12 @@ public:
 
 private:
 
+  static int uniqueID_;
+
+  int id_;
   wxString filePath_;
   wxIcon* icon16_;
-  wxIcon* icon32_;
-  
+  wxIcon* icon32_;  
 
 };
 

@@ -7,8 +7,7 @@
 Controller::Controller() {
   mainFrame_ = NULL;
   user_ = NULL;
-
-  
+  draggedFolderItem_ = NULL;  
 
   /****************************************************************************
    * Initialize paths
@@ -64,6 +63,16 @@ Controller::Controller() {
 
 void Controller::Initialize() {
   user_ = new User();
+}
+
+
+void Controller::SetDraggedFolderItem(FolderItem* folderItem) {
+  draggedFolderItem_ = folderItem;
+}
+
+
+FolderItem* Controller::GetDraggedFolderItem() {
+  return draggedFolderItem_;
 }
 
 
