@@ -25,6 +25,12 @@ MainFrame::MainFrame()
 {  
   gController.SetMainFrame(this);
 
+  logWindow_ = NULL;
+
+  #ifdef __WXDEBUG__
+    logWindow_ = new wxLogWindow(this, wxEmptyString, true);
+  #endif // __WXDEBUG__
+
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
 

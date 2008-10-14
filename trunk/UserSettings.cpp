@@ -16,7 +16,7 @@ void UserSettings::Load() {
 
 
 void UserSettings::Save() {
-  wxFileConfig* config = new wxFileConfig(_T(""), _T(""), gController.GetFilePaths().ConfigFile, _T(""), wxCONFIG_USE_RELATIVE_PATH );
+  wxFileConfig* config = new wxFileConfig(_T(""), _T(""), gController.GetFilePaths().ConfigFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
   config->SetPath(_T("/Config"));
   config->Write(_T("IconSize"), IconSize);
   config->Flush();

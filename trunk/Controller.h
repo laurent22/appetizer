@@ -7,6 +7,7 @@
 #include "User.h"
 
 
+
 struct FilePaths {
   wxString ApplicationDirectory;
   wxString DataDirectory;
@@ -98,6 +99,7 @@ class Controller {
     FilePaths filePaths_;
     User* user_;
     wxString applicationDrive_;
+    
 
 };
 

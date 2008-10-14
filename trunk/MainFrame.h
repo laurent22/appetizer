@@ -6,6 +6,8 @@
 #include "ImagePanel.h"
 #include "NineSlicesPanel.h"
 #include "IconPanel.h"
+#include <wx/log.h>
+
 
 class MainFrame: public wxFrame {
 
@@ -24,6 +26,7 @@ class MainFrame: public wxFrame {
     NineSlicesPainter maskNineSlices_;
     WindowDragDataStruct windowDragData_;
     ImagePanel* resizerPanel_;
+    wxLogWindow* logWindow_;
 
     void UpdateMask();
     void UpdateLayout();

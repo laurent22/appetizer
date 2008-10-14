@@ -27,8 +27,8 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
   } else {
     grid.SetLeft(floor((double)(sourceBitmap_.GetWidth() / 2)));
     grid.SetTop(floor((double)(sourceBitmap_.GetHeight() / 2)));
-    grid.SetWidth(10);
-    grid.SetHeight(10);
+    grid.SetWidth(1);
+    grid.SetHeight(1);
     grid_ = grid;
   }
 

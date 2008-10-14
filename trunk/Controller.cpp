@@ -8,6 +8,8 @@ Controller::Controller() {
   mainFrame_ = NULL;
   user_ = NULL;
 
+  
+
   /****************************************************************************
    * Initialize paths
    ***************************************************************************/
@@ -43,8 +45,8 @@ Controller::Controller() {
   styles_.MainPanel.PaddingWidth = styles_.MainPanel.PaddingLeft + styles_.MainPanel.PaddingRight;
   styles_.MainPanel.PaddingHeight = styles_.MainPanel.PaddingTop + styles_.MainPanel.PaddingBottom;
 
-  styles_.InnerPanel.PaddingLeft = 4;
-  styles_.InnerPanel.PaddingRight = 4;
+  styles_.InnerPanel.PaddingLeft = 8;
+  styles_.InnerPanel.PaddingRight = 8;
   styles_.InnerPanel.PaddingTop = 8;
   styles_.InnerPanel.PaddingBottom = 8;
   styles_.InnerPanel.PaddingWidth = styles_.InnerPanel.PaddingLeft + styles_.InnerPanel.PaddingRight;

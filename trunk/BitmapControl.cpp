@@ -22,6 +22,8 @@ void BitmapControl::InvalidateControlBitmap() {
   // @todo Whenever the bitmap is invalidated, it should probably
   // be destroyed and recreated, so that parts of the old bitmap
   // don't appear in the new one.
+
+  wxDELETE(controlBitmap_);
   controlBitmapInvalidated_ = true;
   Refresh();
 }
