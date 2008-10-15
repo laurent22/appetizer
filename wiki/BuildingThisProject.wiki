@@ -2,6 +2,8 @@
 
 = Details =
 
-This project is developed and built using Turbo Delphi Explorer, available for free at http://www.turboexplorer.com/delphi
+This project is developed and built using [http://www.microsoft.com/express/vc/ Visual C++ 2008 Express Edition] and [http://www.wxwidgets.org/ wxWidgets] (2.8.9, Unicode Build).
 
-Additionally, MiniLaunchBar requires the Microsoft XML 5 OLE object, which should be installed on most systems. This depency might be removed in a futur version in favor of an open source library such as OpenXML.
+In order to build the project, you must set a WXWIN environment variable and make it point to your wxWidgets folder as shown [http://priyank.co.in/readarticle.php?article_id=1 here]. Also make sure that you have [http://wiki.wxwidgets.org/Microsoft_Visual_CPP_Guide built] the wxWidgets Unicode libraries.
+
+Currently wxMiniLaunchBar can only build under Windows (tested under Vista).
