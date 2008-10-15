@@ -129,31 +129,6 @@ bool IconPanelDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString&
 }
 
 
-void IconPanel::ReloadIcons() {
-
-  // Delete existing renderers, if any.
-  for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
-    wxDELETE(renderer);
-  }
-  folderItemRenderers_.clear();
-
-  std::vector<FolderItem*> folderItems = gController.GetUser()->GetFolderItems();
-
-  for (int i = 0; i < folderItems.size(); i++) {
-    FolderItemRenderer* renderer = new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(32, 32));
-    
-    renderer->LoadData(folderItems.at(i));
-    renderer->FitToContent();
-
-    folderItemRenderers_.push_back(renderer);
-  }
-
-  layoutInvalidated_ = true;
-  Refresh();
-}
-
-
 void IconPanel::OnSize(wxSizeEvent& evt) {
   BitmapControl::OnSize(evt);
 
@@ -166,6 +141,85 @@ void IconPanel::OnPaint(wxPaintEvent& evt) {
   BitmapControl::OnPaint(evt);
   
   if (layoutInvalidated_) UpdateLayout();
+}
+
+
+void IconPanel::RefreshIcons() {
+  std::vector<FolderItem*> folderItems = gController.GetUser()->GetFolderItems();
+
+  /****************************************************************************
+   * Remove renderers that match a folder item that has been deleted
+   ***************************************************************************/
+
+  for (int i = folderItemRenderers_.size() - 1; i >= 0; i--) {
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    FolderItem* rendererFolderItem = renderer->GetFolderItem();
+
+    bool found = false;
+
+    for (int j = 0; j < folderItems.size(); j++) {
+      if (folderItems.at(j)->GetId() == rendererFolderItem->GetId()) {
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
+    }
+  }
+
+  /****************************************************************************
+   * Create new renderers for new folder items
+   ***************************************************************************/
+
+  for (int i = 0; i < folderItems.size(); i++) {
+    FolderItem* folderItem = folderItems.at(i);
+
+    bool found = false;
+    for (int j = 0; j < folderItemRenderers_.size(); j++) {
+      if (folderItemRenderers_.at(j)->GetFolderItem()->GetId() == folderItem->GetId()) {
+        found = true;
+        break;
+      }
+    }
+
+    if (found) continue;
+
+    FolderItemRenderer* renderer = new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(32, 32));
+    
+    renderer->LoadData(folderItem);
+    renderer->FitToContent();
+
+    folderItemRenderers_.push_back(renderer);
+  }
+
+  /****************************************************************************
+   * Sort the renderers
+   ***************************************************************************/
+
+  std::vector<FolderItemRenderer*> newRenderers;
+
+  for (int i = 0; i < folderItems.size(); i++) {
+    FolderItem* folderItem = folderItems.at(i);
+
+    for (int j = 0; j < folderItemRenderers_.size(); j++) {
+      FolderItemRenderer* renderer = folderItemRenderers_.at(j);
+
+      if (renderer->GetFolderItem()->GetId() == folderItem->GetId()) {
+        newRenderers.push_back(renderer);
+        break;
+      }
+    }
+  }
+
+  folderItemRenderers_.clear();
+  folderItemRenderers_ = newRenderers;
+
+  wxASSERT_MSG(folderItemRenderers_.size() == folderItems.size(), _T("Number of folder items must match number of renderers"));  
+  
+  layoutInvalidated_ = true;
+  Refresh();
 }
 
 

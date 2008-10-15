@@ -102,7 +102,7 @@ User* Controller::GetUser() {
 
 
 void Controller::User_FolderItemCollectionChange() {
-  mainFrame_->GetIconPanel()->ReloadIcons();
+  mainFrame_->GetIconPanel()->RefreshIcons();
 }
 
 

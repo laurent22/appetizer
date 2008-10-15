@@ -22,6 +22,14 @@ std::vector<FolderItem*> User::GetFolderItems() {
 }
 
 
+FolderItem* User::GetFolderItemById(int folderItemId) {
+  for (int i = 0; i < folderItems_.size(); i++) {
+    if (folderItems_.at(i)->GetId() == folderItemId) return folderItems_.at(i);
+  }
+  return NULL;
+}
+
+
 UserSettings* User::GetSettings() {
   return settings_;
 }

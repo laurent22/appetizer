@@ -71,6 +71,8 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
 
   if (mouseInside_ && mousePressed_) {
+    wxDELETE(folderItem_);
+    std::vector<FolderItem*> folderItems = gController.GetUser()->GetFolderItems();
     wxLogDebug(_T("CLICK"));
   }
 

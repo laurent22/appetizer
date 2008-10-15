@@ -18,6 +18,7 @@ public:
   void AutomaticallyAddNewApps();
   void LoadSettings();
   UserSettings* GetSettings();
+  FolderItem* GetFolderItemById(int folderItemId);
 
 private:
 
