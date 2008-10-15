@@ -6,4 +6,4 @@ This project is developed and built using [http://www.microsoft.com/express/vc/ 
 
 In order to build the project, you must set a WXWIN environment variable and make it point to your wxWidgets folder as shown [http://priyank.co.in/readarticle.php?article_id=1 here]. Also make sure that you have [http://wiki.wxwidgets.org/Microsoft_Visual_CPP_Guide built] the wxWidgets Unicode libraries.
 
-Currently wxMiniLaunchBar can only build under Windows (tested under Vista).
+Currently wxMiniLaunchBar can only build under Windows (tested under XP only).
