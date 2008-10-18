@@ -15,7 +15,7 @@ class FolderItemRenderer: public BitmapControl {
 public:
 
   FolderItemRenderer(wxWindow *owner, int id, wxPoint point, wxSize size);
-  void LoadData(FolderItem* folderItem);
+  void LoadData(int folderItemId);
   void UpdateControlBitmap();
   void FitToContent();
   FolderItem* GetFolderItem();
@@ -27,7 +27,7 @@ private:
   bool mouseInside_;
   bool mousePressed_;
   bool draggingStarted_;
-  FolderItem* folderItem_;
+  int folderItemId_;
   NineSlicesPainter* iconOverlayPainterUp_;
   NineSlicesPainter* iconOverlayPainterDown_;
   wxPoint* pressPosition_;

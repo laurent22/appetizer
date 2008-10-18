@@ -26,6 +26,8 @@ public:
   IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size);
   void RefreshIcons();
   void UpdateLayout();
+  void InvalidateIcons();
+  void InvalidateLayout();
 
   /**
    * Get the insertion index under the given point. Useful for drag & drop
@@ -45,6 +47,7 @@ public:
 private:
 
   IconPanelDropTarget* dropTarget_;
+  bool iconsInvalidated_;
   bool layoutInvalidated_;
   std::vector<FolderItemRenderer*> folderItemRenderers_;
 

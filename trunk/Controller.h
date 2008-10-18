@@ -17,6 +17,7 @@ struct FilePaths {
   wxString UserSettingsFile;
   wxString IconsDirectory;
   wxString ConfigFile;
+  wxString FolderItemsFile;
 };
 
 struct MainPanelStyle {
@@ -85,7 +86,7 @@ class Controller {
     User* GetUser();
     wxString GetApplicationDrive();
     void Initialize();
-    void SetDraggedFolderItem(FolderItem* folderItem);
+    void SetDraggedFolderItem(int folderItemId);
     FolderItem* GetDraggedFolderItem();
 
     /**
@@ -101,7 +102,7 @@ class Controller {
     FilePaths filePaths_;
     User* user_;
     wxString applicationDrive_;
-    FolderItem* draggedFolderItem_;
+    int draggedFolderItemId_;
 
 };
 

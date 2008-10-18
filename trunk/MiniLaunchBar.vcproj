@@ -305,6 +305,10 @@
 					RelativePath=".\utilities\MathUtil.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\utilities\StringUtil.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="third_party"
@@ -385,6 +389,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\MathUtil.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\StringUtil.h"
 					>
 				</File>
 			</Filter>

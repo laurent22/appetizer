@@ -7,11 +7,11 @@
 Controller::Controller() {
   mainFrame_ = NULL;
   user_ = NULL;
-  draggedFolderItem_ = NULL;  
+  draggedFolderItemId_ = -1;  
 
-  /****************************************************************************
-   * Initialize paths
-   ***************************************************************************/
+  //***************************************************************************
+  // Initialize paths
+  //***************************************************************************
 
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
 
@@ -30,10 +30,11 @@ Controller::Controller() {
   filePaths_.LocalesDirectory = filePaths_.DataDirectory + wxT("\\") + LOCALES_FOLDER_NAME;
   filePaths_.ConfigFile = filePaths_.SettingsDirectory + wxT("\\") + CONFIG_FILE_NAME;
   filePaths_.IconsDirectory = filePaths_.SkinDirectory + wxT("\\") + ICONS_FOLDER_NAME;
+  filePaths_.FolderItemsFile = filePaths_.SettingsDirectory + wxT("\\") + FOLDER_ITEMS_FILE_NAME;
 
-  /****************************************************************************
-   * Initialize styles
-   ***************************************************************************/
+  //***************************************************************************
+  // Initialize styles
+  //***************************************************************************
 
   styles_ = ControllerStyles();
 
@@ -66,13 +67,14 @@ void Controller::Initialize() {
 }
 
 
-void Controller::SetDraggedFolderItem(FolderItem* folderItem) {
-  draggedFolderItem_ = folderItem;
+void Controller::SetDraggedFolderItem(int folderItemId) {
+  draggedFolderItemId_ = folderItemId;
 }
 
 
 FolderItem* Controller::GetDraggedFolderItem() {
-  return draggedFolderItem_;
+  if (draggedFolderItemId_ < 0 || !user_) return NULL;
+  return user_->GetFolderItemById(draggedFolderItemId_);
 }
 
 
@@ -102,7 +104,7 @@ User* Controller::GetUser() {
 
 
 void Controller::User_FolderItemCollectionChange() {
-  mainFrame_->GetIconPanel()->RefreshIcons();
+  mainFrame_->GetIconPanel()->InvalidateIcons();
 }
 
 

@@ -13,12 +13,16 @@ class User {
 
 public:
 
-  User();
-  std::vector<FolderItem*> GetFolderItems();
+  User();  
   void AutomaticallyAddNewApps();
-  void LoadSettings();
   UserSettings* GetSettings();
+  void SaveAll();
+  void LoadAll();
+
+  std::vector<FolderItem*> GetFolderItems();
   FolderItem* GetFolderItemById(int folderItemId);
+  void DeleteFolderItem(int folderItemId);
+  void DumpFolderItems();
 
 private:
 

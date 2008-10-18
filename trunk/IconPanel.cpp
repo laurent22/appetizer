@@ -11,8 +11,9 @@ NineSlicesPanel(owner, id, point, size) {
   dropTarget_ = new IconPanelDropTarget();
   SetDropTarget(dropTarget_);
 
-  LoadImage(wxT("Data/Skin/Default/BarInnerPanel.png"));
+  LoadImage(gController.GetFilePaths().SkinDirectory + _T("/BarInnerPanel.png"));
   layoutInvalidated_ = true;
+  iconsInvalidated_ = true;
 }
 
 
@@ -101,7 +102,7 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       folderItemRenderers_.clear();
       folderItemRenderers_ = newRenderers;
 
-      UpdateLayout();
+      InvalidateLayout();
 
       wxLogDebug(_T("%d"), folderItemRenderers_.size());
 
@@ -132,19 +133,36 @@ bool IconPanelDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString&
 void IconPanel::OnSize(wxSizeEvent& evt) {
   BitmapControl::OnSize(evt);
 
-  layoutInvalidated_ = true;
-  Refresh();
+  InvalidateIcons();
 }
 
 
 void IconPanel::OnPaint(wxPaintEvent& evt) {
   BitmapControl::OnPaint(evt);
   
-  if (layoutInvalidated_) UpdateLayout();
+  if (iconsInvalidated_) {
+    RefreshIcons();
+  } else {
+    if (layoutInvalidated_) UpdateLayout();
+  }
+}
+
+
+void IconPanel::InvalidateIcons() {
+  iconsInvalidated_ = true;
+  Refresh();
+}
+
+
+void IconPanel::InvalidateLayout() {
+  layoutInvalidated_ = true;
+  Refresh();
 }
 
 
 void IconPanel::RefreshIcons() {
+  iconsInvalidated_ = false;
+
   std::vector<FolderItem*> folderItems = gController.GetUser()->GetFolderItems();
 
   /****************************************************************************
@@ -153,19 +171,9 @@ void IconPanel::RefreshIcons() {
 
   for (int i = folderItemRenderers_.size() - 1; i >= 0; i--) {
     FolderItemRenderer* renderer = folderItemRenderers_.at(i);
-    FolderItem* rendererFolderItem = renderer->GetFolderItem();
-
-    bool found = false;
-
-    for (int j = 0; j < folderItems.size(); j++) {
-      if (folderItems.at(j)->GetId() == rendererFolderItem->GetId()) {
-        found = true;
-        break;
-      }
-    }
-
-    if (!found) {
+    if (!renderer->GetFolderItem()) {
       folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
+      wxDELETE(renderer);
     }
   }
 
@@ -188,7 +196,7 @@ void IconPanel::RefreshIcons() {
 
     FolderItemRenderer* renderer = new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(32, 32));
     
-    renderer->LoadData(folderItem);
+    renderer->LoadData(folderItem->GetId());
     renderer->FitToContent();
 
     folderItemRenderers_.push_back(renderer);
@@ -217,9 +225,8 @@ void IconPanel::RefreshIcons() {
   folderItemRenderers_ = newRenderers;
 
   wxASSERT_MSG(folderItemRenderers_.size() == folderItems.size(), _T("Number of folder items must match number of renderers"));  
-  
-  layoutInvalidated_ = true;
-  Refresh();
+    
+  InvalidateLayout();
 }
 
 
