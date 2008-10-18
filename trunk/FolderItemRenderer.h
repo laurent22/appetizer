@@ -8,6 +8,7 @@
 #include <wx/dataobj.h>
 #include <wx/dnd.h>
 #include "utilities/MathUtil.h"
+#include "boost/shared_ptr.hpp"
 
 
 class FolderItemRenderer: public BitmapControl {
@@ -18,7 +19,7 @@ public:
   void LoadData(int folderItemId);
   void UpdateControlBitmap();
   void FitToContent();
-  FolderItem* GetFolderItem();
+  FolderItemSP GetFolderItem();
 
 private:
 

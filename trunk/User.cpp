@@ -21,7 +21,7 @@ void User::SaveAll() {
   config.DeleteAll();
 
   for (int i = 0; i < folderItems_.size(); i++) {
-    FolderItem* folderItem = folderItems_.at(i);
+    FolderItemSP folderItem = folderItems_.at(i);
     config.SetPath(_T("/FolderItem") + StringUtil::ZeroPadding(i, 4));
     config.Write(_T("FilePath"), folderItem->GetFilePath());
   }
@@ -42,7 +42,7 @@ void User::LoadAll() {
     bool success = config.Read(_T("/") + folderItemGroup + _T("/FilePath"), &filePath);
     if (!success) continue;
 
-    FolderItem* folderItem = new FolderItem();
+    FolderItemSP folderItem(new FolderItem());
     folderItem->SetFilePath(filePath);
     folderItems_.push_back(folderItem);
 
@@ -51,25 +51,25 @@ void User::LoadAll() {
 }
 
 
-std::vector<FolderItem*> User::GetFolderItems() {
+std::vector<FolderItemSP> User::GetFolderItems() {
   return folderItems_;
 }
 
 
-FolderItem* User::GetFolderItemById(int folderItemId) {
+FolderItemSP User::GetFolderItemById(int folderItemId) {
   for (int i = 0; i < folderItems_.size(); i++) {
     if (folderItems_.at(i)->GetId() == folderItemId) return folderItems_.at(i);
   }
-  return NULL;
+  FolderItemSP nullPointer;
+  return nullPointer;
 }
 
 
 void User::DeleteFolderItem(int folderItemId) {
   for (int i = 0; i < folderItems_.size(); i++) {
-    FolderItem* folderItem = folderItems_.at(i);
+    FolderItemSP folderItem = folderItems_.at(i);
     if (folderItem->GetId() == folderItemId) {
       folderItems_.erase(folderItems_.begin() + i);
-      wxDELETE(folderItem);
       break;
     }
   }
@@ -82,7 +82,7 @@ void User::DeleteFolderItem(int folderItemId) {
 
 void User::DumpFolderItems() {
   for (int i = 0; i < folderItems_.size(); i++) {
-    FolderItem* folderItem = folderItems_.at(i);
+    FolderItemSP folderItem = folderItems_.at(i);
     wxLogDebug(_T("%d - %s"), folderItem->GetId(), folderItem->GetFilePath());
   }
 }
@@ -140,7 +140,7 @@ void User::AutomaticallyAddNewApps() {
 
     if (alreadyExists) continue;
 
-    FolderItem* folderItem = new FolderItem();
+    FolderItemSP folderItem(new FolderItem());
     folderItem->SetFilePath(filePath);
     folderItems_.push_back(folderItem);
 

@@ -1,6 +1,7 @@
 #include "IconPanel.h"
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
+#include "boost/shared_ptr.hpp"
 
 #include "Controller.h"
 extern Controller gController;
@@ -61,7 +62,7 @@ IconPanelDropTarget::IconPanelDropTarget() {
 
 
 bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  FolderItem* folderItem = gController.GetDraggedFolderItem();  
+  FolderItemSP folderItem = gController.GetDraggedFolderItem();  
 
   if (folderItem) {
     // If a folder item is being dragged, and the panel receives a drop
@@ -163,7 +164,10 @@ void IconPanel::InvalidateLayout() {
 void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
-  std::vector<FolderItem*> folderItems = gController.GetUser()->GetFolderItems();
+  // @todo: we shouldn't be able to access the FolderItem vector directly.
+  // Need to implement GetFolderItemAt() and GetFolderItemCount() to iterate
+  // through the folder items.
+  std::vector<FolderItemSP> folderItems = gController.GetUser()->GetFolderItems();
 
   /****************************************************************************
    * Remove renderers that match a folder item that has been deleted
@@ -182,7 +186,7 @@ void IconPanel::RefreshIcons() {
    ***************************************************************************/
 
   for (int i = 0; i < folderItems.size(); i++) {
-    FolderItem* folderItem = folderItems.at(i);
+    FolderItemSP folderItem = folderItems.at(i);
 
     bool found = false;
     for (int j = 0; j < folderItemRenderers_.size(); j++) {
@@ -209,7 +213,7 @@ void IconPanel::RefreshIcons() {
   std::vector<FolderItemRenderer*> newRenderers;
 
   for (int i = 0; i < folderItems.size(); i++) {
-    FolderItem* folderItem = folderItems.at(i);
+    FolderItemSP folderItem = folderItems.at(i);
 
     for (int j = 0; j < folderItemRenderers_.size(); j++) {
       FolderItemRenderer* renderer = folderItemRenderers_.at(j);

@@ -7,6 +7,7 @@
 #include "UserSettings.h"
 #include <vector>
 using namespace std;
+#include "boost/shared_ptr.hpp"
 
 
 class User {
@@ -19,17 +20,20 @@ public:
   void SaveAll();
   void LoadAll();
 
-  std::vector<FolderItem*> GetFolderItems();
-  FolderItem* GetFolderItemById(int folderItemId);
+  std::vector<FolderItemSP> GetFolderItems();
+  FolderItemSP GetFolderItemById(int folderItemId);
   void DeleteFolderItem(int folderItemId);
   void DumpFolderItems();
 
 private:
 
-  std::vector<FolderItem*> folderItems_;
+  std::vector<FolderItemSP> folderItems_;
   UserSettings* settings_;
 
 };
+
+
+typedef boost::shared_ptr<User> UserSP;
 
 
 #endif

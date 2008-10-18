@@ -7,7 +7,6 @@
 #include "User.h"
 
 
-
 struct FilePaths {
   wxString ApplicationDirectory;
   wxString DataDirectory;
@@ -83,11 +82,11 @@ class Controller {
     void SetMainFrame(MainFrame* mainFrame);
     ControllerStyles GetStyles();
     FilePaths GetFilePaths();
-    User* GetUser();
+    UserSP GetUser();
     wxString GetApplicationDrive();
     void Initialize();
     void SetDraggedFolderItem(int folderItemId);
-    FolderItem* GetDraggedFolderItem();
+    FolderItemSP GetDraggedFolderItem();
 
     /**
      * GLOBAL EVENTS
@@ -100,7 +99,7 @@ class Controller {
     MainFrame* mainFrame_;
     ControllerStyles styles_;
     FilePaths filePaths_;
-    User* user_;
+    UserSP user_;
     wxString applicationDrive_;
     int draggedFolderItemId_;
 

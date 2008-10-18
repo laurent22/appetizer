@@ -2,6 +2,7 @@
 #define __FolderItem_H
 
 #include "wx/wx.h"
+#include "boost/shared_ptr.hpp"
 
 class FolderItem {
 
@@ -26,6 +27,9 @@ private:
   wxIcon* icon32_;  
 
 };
+
+
+typedef boost::shared_ptr<FolderItem> FolderItemSP;
 
 
 #endif // __FolderItem_H

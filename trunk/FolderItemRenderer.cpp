@@ -36,7 +36,7 @@ BitmapControl(owner, id, point, size) {
 }
 
 
-FolderItem* FolderItemRenderer::GetFolderItem() {
+FolderItemSP FolderItemRenderer::GetFolderItem() {
   return gController.GetUser()->GetFolderItemById(folderItemId_);
 }
 
@@ -93,8 +93,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       if (HasCapture()) ReleaseMouse(); 
       draggingStarted_ = true;
 
-      FolderItem* folderItem = GetFolderItem();
-      if (!folderItem) return;
+      FolderItemSP folderItem = GetFolderItem();
+      if (!folderItem.get()) return;
 
       // Tell the main controller that we've started dragging
       // a folder item. Other objects can then do GetDraggedFolderItem()
@@ -133,9 +133,9 @@ void FolderItemRenderer::FitToContent() {
 void FolderItemRenderer::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
 
-  FolderItem* folderItem = GetFolderItem();
+  FolderItemSP folderItem = GetFolderItem();
 
-  if (!folderItem) return;
+  if (!folderItem.get()) return;
 
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);
