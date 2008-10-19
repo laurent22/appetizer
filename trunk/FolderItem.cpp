@@ -7,8 +7,6 @@ int FolderItem::uniqueID_ = 0;
 
 FolderItem::FolderItem() {
   filePath_ = _T("");
-  icon16_ = NULL;
-  icon32_ = NULL;
 
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
@@ -21,17 +19,17 @@ int FolderItem::GetId() const {
 
 
 void FolderItem::ClearCachedIcons() {
-  wxDELETE(icon16_);
-  wxDELETE(icon32_);
+  icon16_.reset();
+  icon32_.reset();
 }
 
 
-wxIcon* FolderItem::GetIcon(int iconSize) {
+wxIconSP FolderItem::GetIcon(int iconSize) {
   if (iconSize == 16) {
-    if (icon16_ == NULL) icon16_ = IconGetter::GetFolderItemIcon(filePath_, iconSize);
+    if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(filePath_, iconSize));
     return icon16_;
   } else {
-    if (icon32_ == NULL) icon32_ = IconGetter::GetFolderItemIcon(filePath_, iconSize);
+    if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(filePath_, iconSize));
     return icon32_;
   }
 }

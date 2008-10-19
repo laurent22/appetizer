@@ -345,6 +345,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TypeDefinitions.h"
+				>
+			</File>
+			<File
 				RelativePath=".\User.h"
 				>
 			</File>

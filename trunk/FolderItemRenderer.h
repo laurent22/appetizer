@@ -9,6 +9,8 @@
 #include <wx/dnd.h>
 #include "utilities/MathUtil.h"
 #include "boost/shared_ptr.hpp"
+#include "TypeDefinitions.h"
+
 
 
 class FolderItemRenderer: public BitmapControl {
@@ -29,9 +31,9 @@ private:
   bool mousePressed_;
   bool draggingStarted_;
   int folderItemId_;
-  NineSlicesPainter* iconOverlayPainterUp_;
-  NineSlicesPainter* iconOverlayPainterDown_;
-  wxPoint* pressPosition_;
+  NineSlicesPainterSP iconOverlayPainterUp_;
+  NineSlicesPainterSP iconOverlayPainterDown_;
+  wxPoint pressPosition_;
 
   void OnEnterWindow(wxMouseEvent& evt);
   void OnLeaveWindow(wxMouseEvent& evt);
@@ -42,6 +44,8 @@ private:
   DECLARE_EVENT_TABLE()
 
 };
+
+typedef boost::shared_ptr<FolderItemRenderer> FolderItemRendererSP;
 
 
 #endif // __FolderItemRenderer_H

@@ -3,9 +3,12 @@
 #include "wx/filename.h"
 #include "Controller.h"
 #include "Constants.h"
+#include "MainFrame.h"
+
+extern MainFrame* gMainFrame;
+
 
 Controller::Controller() {
-  mainFrame_ = NULL;
   draggedFolderItemId_ = -1;  
 
   //***************************************************************************
@@ -58,10 +61,6 @@ Controller::Controller() {
   styles_.Icon.PaddingWidth = styles_.Icon.PaddingLeft + styles_.Icon.PaddingRight;
   styles_.Icon.PaddingHeight = styles_.Icon.PaddingTop + styles_.Icon.PaddingBottom;
 
-}
-
-
-void Controller::Initialize() {
   user_.reset(new User());
 }
 
@@ -85,16 +84,6 @@ ControllerStyles Controller::GetStyles() {
 }
 
 
-MainFrame* Controller::GetMainFrame() {
-  return mainFrame_;
-}
-
-
-void Controller::SetMainFrame(MainFrame* mainFrame) {
-  mainFrame_ = mainFrame;
-}
-
-
 wxString Controller::GetApplicationDrive() {
   return applicationDrive_;
 }
@@ -106,7 +95,7 @@ UserSP Controller::GetUser() {
 
 
 void Controller::User_FolderItemCollectionChange() {
-  mainFrame_->GetIconPanel()->InvalidateIcons();
+  gMainFrame->GetIconPanel()->InvalidateIcons();
 }
 
 

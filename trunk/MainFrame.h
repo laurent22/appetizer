@@ -7,6 +7,7 @@
 #include "NineSlicesPanel.h"
 #include "IconPanel.h"
 #include <wx/log.h>
+#include "TypeDefinitions.h"
 
 
 class MainFrame: public wxFrame {

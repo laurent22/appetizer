@@ -16,7 +16,7 @@ public:
 
   User();  
   void AutomaticallyAddNewApps();
-  UserSettings* GetSettings();
+  UserSettingsSP GetSettings();
   void SaveAll();
   void LoadAll();
 
@@ -28,7 +28,7 @@ public:
 private:
 
   std::vector<FolderItemSP> folderItems_;
-  UserSettings* settings_;
+  UserSettingsSP settings_;
 
 };
 

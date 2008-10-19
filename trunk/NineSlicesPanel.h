@@ -15,6 +15,7 @@ class NineSlicesPanel: public BitmapControl {
   public:
 
     NineSlicesPanel(wxWindow *owner, int id, wxPoint point, wxSize size);
+    ~NineSlicesPanel();
     void LoadImage(const wxString& filePath);
     void UpdateControlBitmap();
 

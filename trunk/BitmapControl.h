@@ -8,6 +8,8 @@ class BitmapControl: public wxPanel {
   public:
 
     BitmapControl(wxWindow *owner, int id, wxPoint point, wxSize size);
+    ~BitmapControl();
+
     wxBitmap* GetControlBitmap();
     void InvalidateControlBitmap();
     virtual void UpdateControlBitmap();

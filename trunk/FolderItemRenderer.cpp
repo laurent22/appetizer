@@ -4,7 +4,7 @@
 #include <wx/log.h>
 
 #include "Controller.h"
-extern Controller gController;
+extern ControllerSP gController;
 
 
 int FolderItemRenderer::uniqueID_ = 0;
@@ -27,9 +27,6 @@ BitmapControl(owner, id, point, size) {
   SetId(FolderItemRenderer::uniqueID_);
 
   folderItemId_ = -1;
-  iconOverlayPainterUp_ = NULL;
-  iconOverlayPainterDown_ = NULL;
-  pressPosition_ = NULL;
   mouseInside_ = false;
   mousePressed_ = false;
   draggingStarted_ = false;
@@ -37,7 +34,7 @@ BitmapControl(owner, id, point, size) {
 
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
-  return gController.GetUser()->GetFolderItemById(folderItemId_);
+  return gController->GetUser()->GetFolderItemById(folderItemId_);
 }
 
 
@@ -58,10 +55,8 @@ void FolderItemRenderer::OnLeftDown(wxMouseEvent& evt) {
   mousePressed_ = true;
   draggingStarted_ = false;
 
-  if (!pressPosition_) pressPosition_ = new wxPoint();
-
-  pressPosition_->x = evt.m_x;
-  pressPosition_->y = evt.m_y;
+  pressPosition_.x = evt.m_x;
+  pressPosition_.y = evt.m_y;
 
   InvalidateControlBitmap();
 }
@@ -84,10 +79,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
   if (!mousePressed_) return;
 
   if (!draggingStarted_) {
-    wxASSERT(pressPosition_ != NULL);
-
     wxPoint p(evt.m_x, evt.m_y);
-    double distance = MathUtil::GetPointDistance(p, *pressPosition_);
+    double distance = MathUtil::GetPointDistance(p, pressPosition_);
 
     if (distance > 5.0) {
       if (HasCapture()) ReleaseMouse(); 
@@ -99,7 +92,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       // Tell the main controller that we've started dragging
       // a folder item. Other objects can then do GetDraggedFolderItem()
       // to know if a folder item is being dragged.
-      gController.SetDraggedFolderItem(folderItem->GetId());
+      gController->SetDraggedFolderItem(folderItem->GetId());
 
       wxFileDataObject fileData;
       fileData.AddFile(folderItem->GetResolvedFilePath());
@@ -110,7 +103,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
       // Tell the main controller that we've finished dragging
       // the folder item
-      gController.SetDraggedFolderItem(-1);
+      gController->SetDraggedFolderItem(-1);
       mousePressed_ = false;
       draggingStarted_ = false;
 
@@ -125,8 +118,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(gController.GetUser()->GetSettings()->IconSize + gController.GetStyles().Icon.PaddingWidth,
-          gController.GetUser()->GetSettings()->IconSize + gController.GetStyles().Icon.PaddingHeight);
+  SetSize(gController->GetUser()->GetSettings()->IconSize + gController->GetStyles().Icon.PaddingWidth,
+          gController->GetUser()->GetSettings()->IconSize + gController->GetStyles().Icon.PaddingHeight);
 }
 
 
@@ -145,15 +138,15 @@ void FolderItemRenderer::UpdateControlBitmap() {
     // draw the icon overlay
 
     if (mousePressed_) { // DOWN state      
-      if (!iconOverlayPainterDown_) {
-        iconOverlayPainterDown_ = new NineSlicesPainter();
-        iconOverlayPainterDown_->LoadImage(gController.GetFilePaths().SkinDirectory + _T("/IconOverlayDown.png"));
+      if (!iconOverlayPainterDown_.get()) {
+        iconOverlayPainterDown_.reset(new NineSlicesPainter());
+        iconOverlayPainterDown_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/IconOverlayDown.png"));
       }
       iconOverlayPainterDown_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     } else { // UP state      
-      if (!iconOverlayPainterUp_) {
-        iconOverlayPainterUp_ = new NineSlicesPainter();
-        iconOverlayPainterUp_->LoadImage(gController.GetFilePaths().SkinDirectory + _T("/IconOverlayUp.png"));
+      if (!iconOverlayPainterUp_.get()) {
+        iconOverlayPainterUp_.reset(new NineSlicesPainter());
+        iconOverlayPainterUp_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/IconOverlayUp.png"));
       }
       iconOverlayPainterUp_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     }
@@ -161,12 +154,12 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   // Get the icon from the folder item
-  wxIcon* icon = folderItem->GetIcon(gController.GetUser()->GetSettings()->IconSize);
+  wxIconSP icon = folderItem->GetIcon(gController->GetUser()->GetSettings()->IconSize);
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
   if (icon->IsOk()) {
     // If the icon is valid, draw it
-    destDC.DrawIcon(*icon, gController.GetStyles().Icon.PaddingLeft, gController.GetStyles().Icon.PaddingTop);
+    destDC.DrawIcon(*icon, gController->GetStyles().Icon.PaddingLeft, gController->GetStyles().Icon.PaddingTop);
   }
 
   destDC.SelectObject(wxNullBitmap);

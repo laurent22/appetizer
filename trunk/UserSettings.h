@@ -1,6 +1,8 @@
 #ifndef __UserSettings_H
 #define __UserSettings_H
 
+#include "boost/shared_ptr.hpp"
+
 class UserSettings {
 
 public:
@@ -12,5 +14,7 @@ public:
   void Load();
 
 };
+
+typedef boost::shared_ptr<UserSettings> UserSettingsSP;
 
 #endif // __UserSettings_H

@@ -5,18 +5,18 @@
 #include "FolderItem.h"
 #include "utilities/StringUtil.h"
 
-extern Controller gController;
+extern ControllerSP gController;
 
 
 User::User() {
-  settings_ = new UserSettings();  
+  settings_.reset(new UserSettings());  
 }
 
 
 void User::SaveAll() {
   settings_->Save();
 
-  wxFileConfig config(_T(""), _T(""), gController.GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
+  wxFileConfig config(_T(""), _T(""), gController->GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
 
   config.DeleteAll();
 
@@ -31,7 +31,7 @@ void User::SaveAll() {
 
 
 void User::LoadAll() {
-  wxFileConfig config(_T(""), _T(""), gController.GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
+  wxFileConfig config(_T(""), _T(""), gController->GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
 
   wxString folderItemGroup;
   long index;
@@ -74,7 +74,7 @@ void User::DeleteFolderItem(int folderItemId) {
     }
   }
 
-  gController.User_FolderItemCollectionChange();
+  gController->User_FolderItemCollectionChange();
 
   DumpFolderItems();
 }
@@ -88,13 +88,13 @@ void User::DumpFolderItems() {
 }
 
 
-UserSettings* User::GetSettings() {
+UserSettingsSP User::GetSettings() {
   return settings_;
 }
 
 
 void User::AutomaticallyAddNewApps() {
-  wxString portableAppsFolderPath = gController.GetApplicationDrive() + _T("/PortableApps");
+  wxString portableAppsFolderPath = gController->GetApplicationDrive() + _T("/PortableApps");
 
   wxArrayString foundFilePaths;
   wxDir portableAppsFolder;
@@ -148,7 +148,7 @@ void User::AutomaticallyAddNewApps() {
   }
 
   // Notify the controller that we've updated the folder items
-  if (folderItemsChanged) gController.User_FolderItemCollectionChange();
+  if (folderItemsChanged) gController->User_FolderItemCollectionChange();
 }
 
 

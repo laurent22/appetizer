@@ -8,6 +8,11 @@ BitmapControl(owner, id, point, size) {
 }
 
 
+NineSlicesPanel::~NineSlicesPanel() {
+  wxDELETE(nineSlicesPainter_);
+}
+
+
 void NineSlicesPanel::LoadImage(const wxString& filePath) {
   if (filePath_ == filePath) return;
 

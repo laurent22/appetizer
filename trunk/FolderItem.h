@@ -3,6 +3,7 @@
 
 #include "wx/wx.h"
 #include "boost/shared_ptr.hpp"
+#include "TypeDefinitions.h"
 
 class FolderItem {
 
@@ -12,7 +13,7 @@ public:
   int GetId() const;
   wxString GetResolvedFilePath();
   wxString GetFilePath();
-  wxIcon* GetIcon(int iconSize);
+  wxIconSP GetIcon(int iconSize);
   void SetFilePath(const wxString& filePath);
   static wxString ResolvePath(const wxString& filePath);
   void ClearCachedIcons();
@@ -23,8 +24,8 @@ private:
 
   int id_;
   wxString filePath_;
-  wxIcon* icon16_;
-  wxIcon* icon32_;  
+  wxIconSP icon16_;
+  wxIconSP icon32_;  
 
 };
 

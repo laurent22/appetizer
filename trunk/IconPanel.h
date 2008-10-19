@@ -38,7 +38,7 @@ public:
    */
   int GetInsertionIndexAtPoint(const wxPoint& point);
 
-  FolderItemRenderer* GetRendererFromFolderItem(const FolderItem& folderItem);
+  FolderItemRendererSP GetRendererFromFolderItem(const FolderItem& folderItem);
 
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);
@@ -46,11 +46,11 @@ public:
 
 private:
 
-  IconPanelDropTarget* dropTarget_;
   bool iconsInvalidated_;
   bool layoutInvalidated_;
-  std::vector<FolderItemRenderer*> folderItemRenderers_;
+  std::vector<FolderItemRendererSP> folderItemRenderers_;
 
 };
+
 
 #endif

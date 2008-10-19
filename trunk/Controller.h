@@ -5,6 +5,7 @@
 #include "MainFrame.h"
 #include "Constants.h"
 #include "User.h"
+#include "boost/shared_ptr.hpp"
 
 
 struct FilePaths {
@@ -78,13 +79,10 @@ class Controller {
   public:
 
     Controller();      
-    MainFrame* GetMainFrame();
-    void SetMainFrame(MainFrame* mainFrame);
     ControllerStyles GetStyles();
     FilePaths GetFilePaths();
     UserSP GetUser();
     wxString GetApplicationDrive();
-    void Initialize();
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
 
@@ -96,7 +94,6 @@ class Controller {
 
   private:
       
-    MainFrame* mainFrame_;
     ControllerStyles styles_;
     FilePaths filePaths_;
     UserSP user_;
@@ -104,5 +101,7 @@ class Controller {
     int draggedFolderItemId_;
 
 };
+
+typedef boost::shared_ptr<Controller> ControllerSP;
 
 #endif

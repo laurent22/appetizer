@@ -4,15 +4,17 @@
 #include "boost/shared_ptr.hpp"
 
 #include "Controller.h"
-extern Controller gController;
+#include "MainFrame.h"
+
+extern ControllerSP gController;
+extern MainFrame* gMainFrame;
 
 
 IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
-  dropTarget_ = new IconPanelDropTarget();
-  SetDropTarget(dropTarget_);
+  SetDropTarget(new IconPanelDropTarget());
 
-  LoadImage(gController.GetFilePaths().SkinDirectory + _T("/BarInnerPanel.png"));
+  LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarInnerPanel.png"));
   layoutInvalidated_ = true;
   iconsInvalidated_ = true;
 }
@@ -20,7 +22,7 @@ NineSlicesPanel(owner, id, point, size) {
 
 int IconPanel::GetInsertionIndexAtPoint(const wxPoint& point) {  
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
 
     int rendererScreenX = renderer->GetRect().GetLeft();
     int rendererScreenY = renderer->GetRect().GetTop();
@@ -47,12 +49,13 @@ int IconPanel::GetInsertionIndexAtPoint(const wxPoint& point) {
 }
 
 
-FolderItemRenderer* IconPanel::GetRendererFromFolderItem(const FolderItem& folderItem) {
+FolderItemRendererSP IconPanel::GetRendererFromFolderItem(const FolderItem& folderItem) {
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
     if (renderer->GetFolderItem()->GetId() == folderItem.GetId()) return renderer;
   }
-  return NULL;
+  FolderItemRendererSP nullOuput;
+  return nullOuput;
 }
 
 
@@ -62,7 +65,7 @@ IconPanelDropTarget::IconPanelDropTarget() {
 
 
 bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  FolderItemSP folderItem = gController.GetDraggedFolderItem();  
+  FolderItemSP folderItem = gController->GetDraggedFolderItem();  
 
   if (folderItem) {
     // If a folder item is being dragged, and the panel receives a drop
@@ -80,15 +83,15 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
     if (index >= 0) {
 
-      FolderItemRenderer* folderItemRenderer = GetRendererFromFolderItem(*folderItem);
-      wxASSERT_MSG(folderItemRenderer, _T("FolderItemRenderer must be defined"));
+      FolderItemRendererSP folderItemRenderer = GetRendererFromFolderItem(*folderItem);
+      wxASSERT_MSG(folderItemRenderer.get(), _T("FolderItemRenderer must be defined"));
 
-      std::vector<FolderItemRenderer*> newRenderers;
+      std::vector<FolderItemRendererSP> newRenderers;
 
       bool isPushed = false;
 
       for (int i = 0; i < folderItemRenderers_.size(); i++) {
-        FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+        FolderItemRendererSP renderer = folderItemRenderers_.at(i);
         if (renderer->GetId() == folderItemRenderer->GetId()) continue;
 
         if (i == index) {
@@ -124,9 +127,11 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
 
 bool IconPanelDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  IconPanel* iconPanel = gController.GetMainFrame()->GetIconPanel();
+  IconPanel* iconPanel = gMainFrame->GetIconPanel();
   wxASSERT_MSG(iconPanel, _T("Icon panel must be defined"));
 
+  // Forward the event to the icon panel, so that we
+  // can have a useful "this" pointer
   return iconPanel->OnDropFiles(x, y, filenames);
 }
 
@@ -167,17 +172,16 @@ void IconPanel::RefreshIcons() {
   // @todo: we shouldn't be able to access the FolderItem vector directly.
   // Need to implement GetFolderItemAt() and GetFolderItemCount() to iterate
   // through the folder items.
-  std::vector<FolderItemSP> folderItems = gController.GetUser()->GetFolderItems();
+  std::vector<FolderItemSP> folderItems = gController->GetUser()->GetFolderItems();
 
   /****************************************************************************
    * Remove renderers that match a folder item that has been deleted
    ***************************************************************************/
 
   for (int i = folderItemRenderers_.size() - 1; i >= 0; i--) {
-    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
-    if (!renderer->GetFolderItem()) {
+    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    if (!renderer->GetFolderItem().get()) {
       folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
-      wxDELETE(renderer);
     }
   }
 
@@ -198,7 +202,7 @@ void IconPanel::RefreshIcons() {
 
     if (found) continue;
 
-    FolderItemRenderer* renderer = new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(32, 32));
+    FolderItemRendererSP renderer(new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(0, 0)));
     
     renderer->LoadData(folderItem->GetId());
     renderer->FitToContent();
@@ -210,13 +214,13 @@ void IconPanel::RefreshIcons() {
    * Sort the renderers
    ***************************************************************************/
 
-  std::vector<FolderItemRenderer*> newRenderers;
+  std::vector<FolderItemRendererSP> newRenderers;
 
   for (int i = 0; i < folderItems.size(); i++) {
     FolderItemSP folderItem = folderItems.at(i);
 
     for (int j = 0; j < folderItemRenderers_.size(); j++) {
-      FolderItemRenderer* renderer = folderItemRenderers_.at(j);
+      FolderItemRendererSP renderer = folderItemRenderers_.at(j);
 
       if (renderer->GetFolderItem()->GetId() == folderItem->GetId()) {
         newRenderers.push_back(renderer);
@@ -237,20 +241,20 @@ void IconPanel::RefreshIcons() {
 void IconPanel::UpdateLayout() {
   layoutInvalidated_ = false;
 
-  int x = gController.GetStyles().InnerPanel.PaddingLeft;
-  int y = gController.GetStyles().InnerPanel.PaddingTop;
+  int x = gController->GetStyles().InnerPanel.PaddingLeft;
+  int y = gController->GetStyles().InnerPanel.PaddingTop;
 
   int iconSize = -1;
   
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
 
     renderer->Move(x, y);
 
     if (iconSize < 0) iconSize = renderer->GetRect().GetWidth();
 
-    if (renderer->GetRect().GetRight() > GetRect().GetWidth() - gController.GetStyles().InnerPanel.PaddingRight) {
-      x = gController.GetStyles().InnerPanel.PaddingLeft;
+    if (renderer->GetRect().GetRight() > GetRect().GetWidth() - gController->GetStyles().InnerPanel.PaddingRight) {
+      x = gController->GetStyles().InnerPanel.PaddingLeft;
       y += iconSize;
 
       renderer->Move(x, y);

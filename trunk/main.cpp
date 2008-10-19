@@ -4,6 +4,7 @@
 #include "Controller.h"
 
 
+
 // The application class. An instance is created and initialized
 // below in IMPLEMENT_APP()
 class MiniLaunchBar: public wxApp {
@@ -15,7 +16,12 @@ IMPLEMENT_APP(MiniLaunchBar)
 
 
 // Initialize the global controller
-Controller gController = Controller();
+ControllerSP gController;
+
+// We can't use a smart pointer for the main frame
+// since it's going to be owned by the wxApp
+MainFrame* gMainFrame;
+
 
 
 bool MiniLaunchBar::OnInit() {
@@ -25,13 +31,16 @@ bool MiniLaunchBar::OnInit() {
   // Setting this option to "0" removed the flickering.
   wxSystemOptions::SetOption(wxT("msw.window.no-clip-children"), wxT("0"));
 
-  gController.Initialize();
+  gController.reset(new Controller());
 
-  MainFrame *frame = new MainFrame();
-  frame->Show(true);
-  frame->SetBackgroundStyle(wxBG_STYLE_CUSTOM);
+  gMainFrame = new MainFrame();
+  gMainFrame->Show(true);
+  gMainFrame->SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 
-  SetTopWindow(frame);
+  gController->GetUser()->LoadAll();
+  gController->GetUser()->AutomaticallyAddNewApps();
+
+  SetTopWindow(gMainFrame);
 
   return true;
 } 

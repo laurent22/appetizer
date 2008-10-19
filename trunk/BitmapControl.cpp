@@ -16,6 +16,11 @@ wxPanel(owner, id, point, size) {
 }
 
 
+BitmapControl::~BitmapControl() {
+  wxDELETE(controlBitmap_);
+}
+
+
 wxBitmap* BitmapControl::GetControlBitmap() { return controlBitmap_; }
 
 void BitmapControl::InvalidateControlBitmap() {

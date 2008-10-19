@@ -3,7 +3,7 @@
 #include "wx/dcbuffer.h"
 
 #include "Controller.h"
-extern Controller gController;
+extern ControllerSP gController;
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
@@ -23,8 +23,6 @@ MainFrame::MainFrame()
   0 | wxFRAME_SHAPED | wxSIMPLE_BORDER*/
   ) // 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR | wxSTAY_ON_TOP
 {  
-  gController.SetMainFrame(this);
-
   logWindow_ = NULL;
 
   #ifdef __WXDEBUG__
@@ -51,9 +49,6 @@ MainFrame::MainFrame()
   resizerPanel_->FitToContent();
 
   iconPanel_ = new IconPanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
-
-  gController.GetUser()->LoadAll();
-  gController.GetUser()->AutomaticallyAddNewApps();
 } 
 
 
@@ -86,7 +81,7 @@ void MainFrame::UpdateMask() {
 
 
 void MainFrame::UpdateLayout(int width, int height) {
-  ControllerStyles styles = gController.GetStyles();
+  ControllerStyles styles = gController->GetStyles();
 
   resizerPanel_->Move(width - resizerPanel_->GetRect().GetWidth(), height - resizerPanel_->GetRect().GetHeight());
   backgroundPanel_->SetSize(0, 0, width, height);
