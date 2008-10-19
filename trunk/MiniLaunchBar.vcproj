@@ -314,6 +314,18 @@
 				Name="third_party"
 				>
 			</Filter>
+			<Filter
+				Name="gui"
+				>
+				<File
+					RelativePath=".\gui\ShortcutEditorFrame.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\ShortcutEditorFrameBase.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -405,6 +417,18 @@
 				>
 				<File
 					RelativePath=".\third_party\simpleini\SimpleIni.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="gui"
+				>
+				<File
+					RelativePath=".\gui\ShortcutEditorFrame.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\ShortcutEditorFrameBase.h"
 					>
 				</File>
 			</Filter>
