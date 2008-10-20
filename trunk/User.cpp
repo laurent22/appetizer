@@ -9,11 +9,18 @@ extern ControllerSP gController;
 
 
 User::User() {
+  shortcutEditorDialog_ = NULL;
   settings_.reset(new UserSettings());  
 }
 
 
-void User::SaveAll() {
+void User::ScheduleSave() {
+  // @todo: Implement scheduled save
+  Save();
+}
+
+
+void User::Save() {
   settings_->Save();
 
   wxFileConfig config(_T(""), _T(""), gController->GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
@@ -30,7 +37,7 @@ void User::SaveAll() {
 }
 
 
-void User::LoadAll() {
+void User::Load() {
   wxFileConfig config(_T(""), _T(""), gController->GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
 
   wxString folderItemGroup;
@@ -65,18 +72,25 @@ FolderItemSP User::GetFolderItemById(int folderItemId) {
 }
 
 
+void User::EditFolderItem(int folderItemId) {
+  shortcutEditorDialog_ = new ShortcutEditorDialog();
+  shortcutEditorDialog_->ShowModal();
+  shortcutEditorDialog_->Destroy();
+  shortcutEditorDialog_ = NULL;
+}
+
+
 void User::DeleteFolderItem(int folderItemId) {
   for (int i = 0; i < folderItems_.size(); i++) {
     FolderItemSP folderItem = folderItems_.at(i);
     if (folderItem->GetId() == folderItemId) {
       folderItems_.erase(folderItems_.begin() + i);
+      ScheduleSave();
       break;
     }
   }
 
   gController->User_FolderItemCollectionChange();
-
-  DumpFolderItems();
 }
 
 
@@ -148,7 +162,10 @@ void User::AutomaticallyAddNewApps() {
   }
 
   // Notify the controller that we've updated the folder items
-  if (folderItemsChanged) gController->User_FolderItemCollectionChange();
+  if (folderItemsChanged) {
+    gController->User_FolderItemCollectionChange();
+    ScheduleSave();
+  }
 }
 
 

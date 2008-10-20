@@ -8,6 +8,7 @@
 #include <vector>
 using namespace std;
 #include "boost/shared_ptr.hpp"
+#include "gui/ShortcutEditorDialog.h"
 
 
 class User {
@@ -17,11 +18,13 @@ public:
   User();  
   void AutomaticallyAddNewApps();
   UserSettingsSP GetSettings();
-  void SaveAll();
-  void LoadAll();
+  void ScheduleSave();
+  void Save();
+  void Load();
 
   std::vector<FolderItemSP> GetFolderItems();
   FolderItemSP GetFolderItemById(int folderItemId);
+  void EditFolderItem(int folderItemId);
   void DeleteFolderItem(int folderItemId);
   void DumpFolderItems();
 
@@ -29,6 +32,7 @@ private:
 
   std::vector<FolderItemSP> folderItems_;
   UserSettingsSP settings_;
+  ShortcutEditorDialog* shortcutEditorDialog_;
 
 };
 

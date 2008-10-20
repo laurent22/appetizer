@@ -318,11 +318,11 @@
 				Name="gui"
 				>
 				<File
-					RelativePath=".\gui\ShortcutEditorFrame.cpp"
+					RelativePath=".\gui\ShortcutEditorDialog.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gui\ShortcutEditorFrameBase.cpp"
+					RelativePath=".\gui\ShortcutEditorDialogBase.cpp"
 					>
 				</File>
 			</Filter>
@@ -424,11 +424,11 @@
 				Name="gui"
 				>
 				<File
-					RelativePath=".\gui\ShortcutEditorFrame.h"
+					RelativePath=".\gui\ShortcutEditorDialog.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gui\ShortcutEditorFrameBase.h"
+					RelativePath=".\gui\ShortcutEditorDialogBase.h"
 					>
 				</File>
 			</Filter>

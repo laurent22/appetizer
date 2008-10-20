@@ -23,10 +23,6 @@ ControllerSP gController;
 MainFrame* gMainFrame;
 
 
-
-//#include "gui/ShortcutEditorFrame.h"
-
-
 bool MiniLaunchBar::OnInit() {
   // Required to enabled PNG support
   wxInitAllImageHandlers();
@@ -40,14 +36,10 @@ bool MiniLaunchBar::OnInit() {
   gMainFrame->Show(true);
   gMainFrame->SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 
-  gController->GetUser()->LoadAll();
+  gController->GetUser()->Load();
   gController->GetUser()->AutomaticallyAddNewApps();
 
   SetTopWindow(gMainFrame);
-
-  //ShortcutEditorFrame* test = new ShortcutEditorFrame();
-  //test->Show(true);
-
 
   return true;
 } 

@@ -6,8 +6,8 @@
 // end wxGlade
 
 
-#ifndef SHORTCUTEDITORFRAMEBASE_H
-#define SHORTCUTEDITORFRAMEBASE_H
+#ifndef SHORTCUTEDITORDIALOGBASE_H
+#define SHORTCUTEDITORDIALOGBASE_H
 
 
 // begin wxGlade: ::extracode
@@ -40,4 +40,4 @@ protected:
 }; // wxGlade: end class
 
 
-#endif // SHORTCUTEDITORFRAMEBASE_H
+#endif // SHORTCUTEDITORDIALOGBASE_H

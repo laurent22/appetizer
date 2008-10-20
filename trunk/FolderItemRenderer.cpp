@@ -2,6 +2,7 @@
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
 #include <wx/log.h>
+#include <wx/menu.h>
 
 #include "Controller.h"
 extern ControllerSP gController;
@@ -16,6 +17,9 @@ BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
   EVT_LEAVE_WINDOW(FolderItemRenderer::OnLeaveWindow)
   EVT_LEFT_DOWN(FolderItemRenderer::OnLeftDown)
   EVT_LEFT_UP(FolderItemRenderer::OnLeftUp)
+  EVT_RIGHT_DOWN(FolderItemRenderer::OnRightDown)
+  EVT_MENU(ID_MENU_Delete, FolderItemRenderer::OnMenuDelete)
+  EVT_MENU(ID_MENU_Properties, FolderItemRenderer::OnMenuProperties)
 END_EVENT_TABLE()
 
 
@@ -35,6 +39,27 @@ BitmapControl(owner, id, point, size) {
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
   return gController->GetUser()->GetFolderItemById(folderItemId_);
+}
+
+
+void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
+  gController->GetUser()->DeleteFolderItem(folderItemId_);
+}
+
+
+void FolderItemRenderer::OnMenuProperties(wxCommandEvent& evt) {
+  gController->GetUser()->EditFolderItem(folderItemId_);
+}
+
+
+void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
+  wxMenu menu;
+
+  menu.Append(ID_MENU_Delete, _T("Delete"));
+  menu.AppendSeparator();
+  menu.Append(ID_MENU_Properties, _T("Properties"));
+
+  PopupMenu(&menu, wxDefaultPosition);
 }
 
 

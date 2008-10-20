@@ -40,12 +40,21 @@ private:
   void OnLeftDown(wxMouseEvent& evt);
   void OnLeftUp(wxMouseEvent& evt);
   void OnMotion(wxMouseEvent& evt);
+  void OnRightDown(wxMouseEvent& evt);
+
+  void OnMenuDelete(wxCommandEvent& evt);
+  void OnMenuProperties(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 
 };
 
 typedef boost::shared_ptr<FolderItemRenderer> FolderItemRendererSP;
+
+enum {
+  ID_MENU_Delete,
+  ID_MENU_Properties
+};
 
 
 #endif // __FolderItemRenderer_H
