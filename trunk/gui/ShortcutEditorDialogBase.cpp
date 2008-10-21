@@ -3,6 +3,7 @@
 #include "ShortcutEditorDialogBase.h"
 
 // begin wxGlade: ::extracode
+
 // end wxGlade
 
 
@@ -16,8 +17,8 @@ ShortcutEditorDialogBase::ShortcutEditorDialogBase(wxWindow* parent, int id, con
     locationLabel = new wxStaticText(this, wxID_ANY, wxT("Location:"));
     locationTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
     locationButton = new wxButton(this, wxID_ANY, wxT("..."));
-    saveButton = new wxButton(this, wxID_ANY, wxT("Save"));
-    cancelButton = new wxButton(this, wxID_ANY, wxT("Cancel"));
+    saveButton = new wxButton(this, ID_BUTTON_Save, wxT("Save"));
+    cancelButton = new wxButton(this, ID_BUTTON_Cancel, wxT("Cancel"));
 
     set_properties();
     do_layout();
@@ -29,6 +30,7 @@ void ShortcutEditorDialogBase::set_properties()
 {
     // begin wxGlade: ShortcutEditorDialogBase::set_properties
     SetTitle(wxT("Edit shortcut"));
+    SetSize(wxSize(336, 158));
     locationButton->SetMinSize(wxSize(30, -1));
     // end wxGlade
 }
@@ -53,7 +55,6 @@ void ShortcutEditorDialogBase::do_layout()
     saveCancelSizer->Add(cancelButton, 0, wxALIGN_BOTTOM, 0);
     mainSizer->Add(saveCancelSizer, 1, wxRIGHT|wxBOTTOM|wxALIGN_RIGHT, 10);
     SetSizer(mainSizer);
-    mainSizer->Fit(this);
     Layout();
     // end wxGlade
 }

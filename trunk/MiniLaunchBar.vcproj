@@ -298,6 +298,10 @@
 				Name="utilities"
 				>
 				<File
+					RelativePath=".\utilities\DelphiToolsInterface.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\utilities\IconGetter.cpp"
 					>
 				</File>
@@ -399,6 +403,10 @@
 			<Filter
 				Name="utilities"
 				>
+				<File
+					RelativePath=".\utilities\DelphiToolsInterface.h"
+					>
+				</File>
 				<File
 					RelativePath=".\utilities\IconGetter.h"
 					>

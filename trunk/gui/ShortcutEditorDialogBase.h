@@ -11,6 +11,10 @@
 
 
 // begin wxGlade: ::extracode
+enum {
+  ID_BUTTON_Save,
+  ID_BUTTON_Cancel
+};
 // end wxGlade
 
 

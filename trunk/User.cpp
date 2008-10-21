@@ -74,6 +74,7 @@ FolderItemSP User::GetFolderItemById(int folderItemId) {
 
 void User::EditFolderItem(int folderItemId) {
   shortcutEditorDialog_ = new ShortcutEditorDialog();
+  shortcutEditorDialog_->LoadFolderItem(GetFolderItemById(folderItemId));
   shortcutEditorDialog_->ShowModal();
   shortcutEditorDialog_->Destroy();
   shortcutEditorDialog_ = NULL;
