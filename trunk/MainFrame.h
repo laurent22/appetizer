@@ -16,8 +16,10 @@ class MainFrame: public wxFrame {
 
     struct WindowDragDataStruct {
       bool DraggingStarted;
+      bool Resizing;
       wxPoint InitWindowPos;
       wxPoint InitMousePos;
+      wxSize InitWindowSize;
     };
     
     bool needLayoutUpdate_;
@@ -46,7 +48,11 @@ class MainFrame: public wxFrame {
     void OnMouseDown(wxMouseEvent& evt);
     void OnMouseUp(wxMouseEvent& evt);
     void OnMouseMove(wxMouseEvent& evt);
+    void OnResizerMouseDown(wxMouseEvent& evt);
+    void OnResizerMouseUp(wxMouseEvent& evt);
+    void OnResizerMouseMove(wxMouseEvent& evt);
     void OnSize(wxSizeEvent& evt);
+    void OnMove(wxMoveEvent& evt);
     void OnEraseBackground(wxEraseEvent &evt);  
 
   DECLARE_EVENT_TABLE()

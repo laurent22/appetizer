@@ -259,6 +259,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\OptionFrame.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\User.cpp"
 				>
 			</File>
@@ -358,6 +362,10 @@
 			</File>
 			<File
 				RelativePath=".\MainFrame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OptionFrame.h"
 				>
 			</File>
 			<File

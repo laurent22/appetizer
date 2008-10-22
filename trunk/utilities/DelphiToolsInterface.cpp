@@ -2,7 +2,7 @@
 #include <wx/filename.h>
 
 
-wxString DelphiToolsInterface::GetFileDescription(const wxString& filePath) {
+void DelphiToolsInterface::GetFileDescription(const wxString& filePath, wxString& fileDescription) {
   #ifdef __WIN32__
 
   typedef wxChar* (*GetVersionInfo_FileDescription)(const wxChar*);
@@ -15,9 +15,11 @@ wxString DelphiToolsInterface::GetFileDescription(const wxString& filePath) {
     wxChar* outputChar = _GetVersionInfo_FileDescription(filePath.c_str());
     FreeLibrary(hInstLibrary);
 
-    wxString output(outputChar);
+    fileDescription = wxString(outputChar);
 
-    return output;
+    // If we got the file description, exit now
+    if (fileDescription != _T("")) return;
+
   } else {
     wxLogDebug(_T("DelphiTools.dll failed to load!"));
   }
@@ -27,6 +29,5 @@ wxString DelphiToolsInterface::GetFileDescription(const wxString& filePath) {
   // If we couldn't get the file description field, return the
   // filename (without the extension)
   wxFileName filename(filePath);
-
-  return filename.GetName();
+  fileDescription = filename.GetName();
 }

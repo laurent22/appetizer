@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "User.h"
 #include "boost/shared_ptr.hpp"
+#include <wx/msgdlg.h>
 
 
 struct FilePaths {
@@ -85,6 +86,8 @@ class Controller {
     wxString GetApplicationDrive();
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
+    int ShowWarningMessage(const wxString& message, long style = wxOK);
+    int ShowErrorMessage(const wxString& message, long style = wxOK);
 
     /**
      * GLOBAL EVENTS

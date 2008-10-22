@@ -1,13 +1,12 @@
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
+#include "utilities/DelphiToolsInterface.h"
 
 
 int FolderItem::uniqueID_ = 0;
 
 
 FolderItem::FolderItem() {
-  filePath_ = _T("");
-
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
 }
@@ -15,6 +14,21 @@ FolderItem::FolderItem() {
 
 int FolderItem::GetId() const {
   return id_;
+}
+
+
+void FolderItem::AutoSetName() {
+  DelphiToolsInterface::GetFileDescription(GetResolvedFilePath(), name_);
+}
+
+
+wxString FolderItem::GetName() {
+  return name_;
+}
+
+
+void FolderItem::SetName(const wxString& name) {
+  name_ = name;
 }
 
 

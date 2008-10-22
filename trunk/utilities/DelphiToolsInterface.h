@@ -8,7 +8,7 @@ class DelphiToolsInterface {
 
 public:
 
-  static wxString GetFileDescription(const wxString& filePath);
+  static void GetFileDescription(const wxString& filePath, wxString& fileDescription);
 
 };
 

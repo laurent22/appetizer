@@ -1,13 +1,16 @@
 #include "MainFrame.h"
 #include "Constants.h"
 #include "wx/dcbuffer.h"
-
 #include "Controller.h"
+#include "OptionFrame.h"
+
 extern ControllerSP gController;
+extern OptionFrame* gOptionFrame;
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_SIZE(MainFrame::OnSize)
+  EVT_MOVE(MainFrame::OnMove)
   EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
   EVT_PAINT(MainFrame::OnPaint)
 END_EVENT_TABLE()
@@ -19,8 +22,8 @@ MainFrame::MainFrame()
   wxID_ANY,
   wxEmptyString,
   wxDefaultPosition,
-  wxDefaultSize /*,
-  0 | wxFRAME_SHAPED | wxSIMPLE_BORDER*/
+  wxDefaultSize,
+  0 | wxFRAME_SHAPED | wxSIMPLE_BORDER
   ) // 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR | wxSTAY_ON_TOP
 {  
   logWindow_ = NULL;
@@ -48,7 +51,15 @@ MainFrame::MainFrame()
   resizerPanel_->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
   resizerPanel_->FitToContent();
 
+  resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnResizerMouseDown), NULL, this);
+  resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnResizerMouseUp), NULL, this);
+  resizerPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnResizerMouseMove), NULL, this);
+
   iconPanel_ = new IconPanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
+
+  iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
+  iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
+  iconPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 } 
 
 
@@ -56,8 +67,6 @@ IconPanel* MainFrame::GetIconPanel() { return iconPanel_; }
 
 
 void MainFrame::UpdateMask() {
-  return;
-
   // Create the bitmap on which the 9-slices scaled mask is going to be drawn
   wxBitmap maskBitmap = wxBitmap(GetClientSize().GetWidth(), GetClientSize().GetHeight());
   
@@ -109,7 +118,14 @@ void MainFrame::OnPaint(wxPaintEvent& evt) {
 }
 
 
+void MainFrame::OnMove(wxMoveEvent& evt) {
+  gOptionFrame->Move(GetRect().GetLeft() - 20, GetRect().GetTop());
+}
+
+
 void MainFrame::OnSize(wxSizeEvent& evt) {
+  gOptionFrame->SetSize(GetRect().GetWidth(), GetRect().GetHeight());
+
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
 	Refresh();
@@ -119,6 +135,7 @@ void MainFrame::OnSize(wxSizeEvent& evt) {
 void MainFrame::OnMouseDown(wxMouseEvent& evt) {
   static_cast<wxWindow*>(evt.GetEventObject())->CaptureMouse();
 
+  windowDragData_.Resizing = false;
   windowDragData_.DraggingStarted = true;
   windowDragData_.InitMousePos = ClientToScreen(evt.GetPosition());
   windowDragData_.InitWindowPos = GetPosition();
@@ -133,9 +150,42 @@ void MainFrame::OnMouseUp(wxMouseEvent& evt) {
 
 
 void MainFrame::OnMouseMove(wxMouseEvent& evt) {
-  if (windowDragData_.DraggingStarted && evt.Dragging() && evt.LeftIsDown()) {
+  if (windowDragData_.DraggingStarted && evt.Dragging() && evt.LeftIsDown() && !windowDragData_.Resizing) {
     wxPoint mousePos = ClientToScreen(evt.GetPosition());
     wxPoint mouseOffset = mousePos - windowDragData_.InitMousePos;
     Move(mouseOffset.x + windowDragData_.InitWindowPos.x, mouseOffset.y + windowDragData_.InitWindowPos.y);
+  }
+}
+
+
+void MainFrame::OnResizerMouseDown(wxMouseEvent& evt) {
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  w->CaptureMouse();
+
+  windowDragData_.Resizing = true;
+  windowDragData_.DraggingStarted = true;
+  windowDragData_.InitMousePos = w->ClientToScreen(evt.GetPosition());
+  windowDragData_.InitWindowSize.SetWidth(GetSize().GetWidth());
+  windowDragData_.InitWindowSize.SetHeight(GetSize().GetHeight());
+}
+
+
+void MainFrame::OnResizerMouseUp(wxMouseEvent& evt) {
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  if (w->HasCapture()) w->ReleaseMouse();
+  windowDragData_.DraggingStarted = false;
+}
+
+
+void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
+  if (windowDragData_.DraggingStarted && evt.Dragging() && evt.LeftIsDown() && windowDragData_.Resizing) {
+    wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+    
+    wxPoint mousePos = w->ClientToScreen(evt.GetPosition());
+    wxPoint mouseOffset = mousePos - windowDragData_.InitMousePos;
+
+    SetSize(windowDragData_.InitWindowSize.GetWidth() + mouseOffset.x,
+            windowDragData_.InitWindowSize.GetHeight() + mouseOffset.y);
+    Update();
   }
 }

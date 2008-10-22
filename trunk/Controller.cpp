@@ -5,6 +5,8 @@
 #include "Constants.h"
 #include "MainFrame.h"
 
+
+
 extern MainFrame* gMainFrame;
 
 
@@ -62,6 +64,18 @@ Controller::Controller() {
   styles_.Icon.PaddingHeight = styles_.Icon.PaddingTop + styles_.Icon.PaddingBottom;
 
   user_.reset(new User());
+}
+
+
+int Controller::ShowErrorMessage(const wxString& message, long style) {
+  wxMessageDialog dialog(NULL, message, _T("Error"), style | wxICON_ERROR);
+  return dialog.ShowModal();
+}
+
+
+int Controller::ShowWarningMessage(const wxString& message, long style) {
+  wxMessageDialog dialog(NULL, message, _T("Warning"), style | wxICON_EXCLAMATION);
+  return dialog.ShowModal();
 }
 
 

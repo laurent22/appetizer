@@ -31,6 +31,7 @@ void User::Save() {
     FolderItemSP folderItem = folderItems_.at(i);
     config.SetPath(_T("/FolderItem") + StringUtil::ZeroPadding(i, 4));
     config.Write(_T("FilePath"), folderItem->GetFilePath());
+    config.Write(_T("Name"), folderItem->GetName());
   }
 
   config.Flush();
@@ -46,11 +47,16 @@ void User::Load() {
 
   while (ok) {
     wxString filePath;
+    wxString name;
     bool success = config.Read(_T("/") + folderItemGroup + _T("/FilePath"), &filePath);
     if (!success) continue;
 
+    config.Read(_T("/") + folderItemGroup + _T("/Name"), &name);
+    if (!success) name = _T("");
+
     FolderItemSP folderItem(new FolderItem());
     folderItem->SetFilePath(filePath);
+    folderItem->SetName(name);
     folderItems_.push_back(folderItem);
 
     ok = config.GetNextGroup(folderItemGroup, index);
@@ -157,6 +163,7 @@ void User::AutomaticallyAddNewApps() {
 
     FolderItemSP folderItem(new FolderItem());
     folderItem->SetFilePath(filePath);
+    folderItem->AutoSetName();
     folderItems_.push_back(folderItem);
 
     folderItemsChanged = true;

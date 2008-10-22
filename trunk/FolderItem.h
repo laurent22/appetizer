@@ -11,10 +11,13 @@ public:
 
   FolderItem();
   int GetId() const;
+  void AutoSetName();
+  wxString GetName();
   wxString GetResolvedFilePath();
   wxString GetFilePath();
   wxIconSP GetIcon(int iconSize);
   void SetFilePath(const wxString& filePath);
+  void SetName(const wxString& name);
   static wxString ResolvePath(const wxString& filePath);
   void ClearCachedIcons();
 
@@ -23,6 +26,7 @@ private:
   static int uniqueID_;
 
   int id_;
+  wxString name_;
   wxString filePath_;
   wxIconSP icon16_;
   wxIconSP icon32_;  
