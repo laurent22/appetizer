@@ -63,6 +63,14 @@ Controller::Controller() {
   styles_.Icon.PaddingWidth = styles_.Icon.PaddingLeft + styles_.Icon.PaddingRight;
   styles_.Icon.PaddingHeight = styles_.Icon.PaddingTop + styles_.Icon.PaddingBottom;
 
+  styles_.OptionPanel.PaddingLeft = 4;
+  styles_.OptionPanel.PaddingRight = 4;
+  styles_.OptionPanel.PaddingTop = 4;
+  styles_.OptionPanel.PaddingBottom = 4;
+  styles_.OptionPanel.PaddingWidth = styles_.OptionPanel.PaddingLeft + styles_.OptionPanel.PaddingRight;
+  styles_.OptionPanel.PaddingHeight = styles_.OptionPanel.PaddingTop + styles_.OptionPanel.PaddingBottom;
+  styles_.OptionPanel.ArrowButtonWidth = 16;
+
   user_.reset(new User());
 }
 

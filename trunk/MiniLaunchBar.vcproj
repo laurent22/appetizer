@@ -278,6 +278,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\bitmap_controls\ImageButton.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\bitmap_controls\ImagePanel.cpp"
 					>
 				</File>
@@ -385,6 +389,10 @@
 				>
 				<File
 					RelativePath=".\bitmap_controls\BitmapControl.h"
+					>
+				</File>
+				<File
+					RelativePath=".\bitmap_controls\ImageButton.h"
 					>
 				</File>
 				<File

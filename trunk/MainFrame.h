@@ -37,14 +37,12 @@ class MainFrame: public wxFrame {
 
   public:
 
-    // Constructor
     MainFrame();
 
     IconPanel* GetIconPanel();
+    void AttachOptionPanel();
 
-    // Event handlers
     void OnPaint(wxPaintEvent& evt);
-    void OnWindowCreate(wxWindowCreateEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);
     void OnMouseUp(wxMouseEvent& evt);
     void OnMouseMove(wxMouseEvent& evt);
@@ -54,6 +52,7 @@ class MainFrame: public wxFrame {
     void OnSize(wxSizeEvent& evt);
     void OnMove(wxMoveEvent& evt);
     void OnEraseBackground(wxEraseEvent &evt);  
+    void OnClose(wxCloseEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

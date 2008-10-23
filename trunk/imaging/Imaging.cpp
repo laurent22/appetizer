@@ -1,6 +1,8 @@
 #include "Imaging.h"
 
 void Imaging::StretchBlit(wxDC* destDC, wxDC* sourceDC, wxCoord destX, wxCoord destY, wxCoord destWidth, wxCoord destHeight, wxCoord srcX, wxCoord srcY, wxCoord srcWidth, wxCoord srcHeight) {
+  if (destWidth <= 0 || destHeight <= 0 || srcWidth <= 0 || srcHeight <= 0) return;
+  
   double saveScaleX, saveScaleY;
   sourceDC->GetUserScale(&saveScaleX, &saveScaleY);
 

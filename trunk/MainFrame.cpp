@@ -13,6 +13,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MOVE(MainFrame::OnMove)
   EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
   EVT_PAINT(MainFrame::OnPaint)
+  EVT_CLOSE(MainFrame::OnClose)
 END_EVENT_TABLE()
 
 
@@ -23,8 +24,8 @@ MainFrame::MainFrame()
   wxEmptyString,
   wxDefaultPosition,
   wxDefaultSize,
-  0 | wxFRAME_SHAPED | wxSIMPLE_BORDER
-  ) // 0 | wxFRAME_SHAPED | wxSIMPLE_BORDER | wxFRAME_NO_TASKBAR | wxSTAY_ON_TOP
+  0 | wxFRAME_SHAPED | wxNO_BORDER
+  )
 {  
   logWindow_ = NULL;
 
@@ -36,19 +37,19 @@ MainFrame::MainFrame()
   needMaskUpdate_ = true;
 
   // Load the mask and background images
-  maskNineSlices_.LoadImage(wxT("Data/Skin/Default/BarBackgroundRegion.png"));
+  maskNineSlices_.LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackgroundRegion.png"));
 
   windowDragData_.DraggingStarted = false;
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
-  backgroundPanel_->LoadImage(wxT("Data/Skin/Default/BarBackground.png"));
+  backgroundPanel_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackground.png"));
 
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
   resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  resizerPanel_->LoadImage(wxT("Data/Skin/Default/Resizer.png"));
+  resizerPanel_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/Resizer.png"));
   resizerPanel_->FitToContent();
 
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnResizerMouseDown), NULL, this);
@@ -68,7 +69,7 @@ IconPanel* MainFrame::GetIconPanel() { return iconPanel_; }
 
 void MainFrame::UpdateMask() {
   // Create the bitmap on which the 9-slices scaled mask is going to be drawn
-  wxBitmap maskBitmap = wxBitmap(GetClientSize().GetWidth(), GetClientSize().GetHeight());
+  wxBitmap maskBitmap = wxBitmap(GetRect().GetWidth(), GetRect().GetHeight());
   
   // Create a temporary DC to do the actual drawing and assign it the bitmap
   wxMemoryDC maskDC;
@@ -78,7 +79,6 @@ void MainFrame::UpdateMask() {
   maskNineSlices_.Draw(&maskDC, 0, 0, maskBitmap.GetWidth(), maskBitmap.GetHeight());
 
   // Select NULL to release the bitmap
-  // TODO: Should the bitmap be manually deleted at this point or is it handled by wxWidgets?
   maskDC.SelectObject(wxNullBitmap);
 
   // Create the region from the bitmap and assign it to the window
@@ -118,13 +118,19 @@ void MainFrame::OnPaint(wxPaintEvent& evt) {
 }
 
 
+void MainFrame::AttachOptionPanel() {
+  gOptionFrame->SetSize(GetRect().GetLeft() - gOptionFrame->GetRect().GetWidth(), GetRect().GetTop(), gOptionFrame->GetRect().GetWidth(), GetRect().GetHeight());
+}
+
+
 void MainFrame::OnMove(wxMoveEvent& evt) {
-  gOptionFrame->Move(GetRect().GetLeft() - 20, GetRect().GetTop());
+  AttachOptionPanel();
 }
 
 
 void MainFrame::OnSize(wxSizeEvent& evt) {
-  gOptionFrame->SetSize(GetRect().GetWidth(), GetRect().GetHeight());
+  AttachOptionPanel();
+  gOptionFrame->Update();
 
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
@@ -188,4 +194,11 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
             windowDragData_.InitWindowSize.GetHeight() + mouseOffset.y);
     Update();
   }
+}
+
+
+void MainFrame::OnClose(wxCloseEvent& evt) {
+  gOptionFrame->Close(true);
+  gOptionFrame = NULL;
+  Destroy();
 }

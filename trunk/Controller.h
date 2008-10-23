@@ -46,6 +46,7 @@ struct OptionPanelStyle {
   int PaddingBottom;
   int PaddingWidth;
   int PaddingHeight;
+  int ArrowButtonWidth;
 };
 
 struct IconTooltipStyle {
@@ -72,6 +73,7 @@ struct ControllerStyles {
   MainPanelStyle MainPanel;
   InnerPanelStyle InnerPanel;
   IconStyle Icon;
+  OptionPanelStyle OptionPanel;
 };
 
 

@@ -31,12 +31,13 @@ bool MiniLaunchBar::OnInit() {
   wxInitAllImageHandlers();
 
   // Setting this option to "0" removed the flickering.
-  wxSystemOptions::SetOption(wxT("msw.window.no-clip-children"), wxT("0"));
+  wxSystemOptions::SetOption(_T("msw.window.no-clip-children"), _T("0"));
 
   gController.reset(new Controller());
 
   gMainFrame = new MainFrame();
   gMainFrame->Show(true);
+  // @todo: this line doesn't do anything:
   //gMainFrame->SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 
   gOptionFrame = new OptionFrame();
@@ -44,6 +45,9 @@ bool MiniLaunchBar::OnInit() {
 
   gController->GetUser()->Load();
   gController->GetUser()->AutomaticallyAddNewApps();
+
+  gMainFrame->AttachOptionPanel();
+  gMainFrame->SetSize(100, 100, 400, 100);
 
   SetTopWindow(gMainFrame);
 

@@ -6,6 +6,15 @@ NineSlicesPainter::NineSlicesPainter() {
 }
 
 
+void NineSlicesPainter::SetGrid(int left, int top, int width, int height) {
+  grid_.SetLeft(left);
+  grid_.SetTop(top);
+  grid_.SetWidth(width);
+  grid_.SetHeight(height);
+  gridIsExplicitelySet_ = true;
+}
+
+
 void NineSlicesPainter::LoadImage(const wxString& filePath) {  
   filePath_ = filePath;
   sourceBitmap_ = wxBitmap(filePath_, wxBITMAP_TYPE_PNG);

@@ -13,7 +13,7 @@ void ImagePanel::LoadImage(const wxString& filePath) {
 
   filePath_ = filePath;
 
-  // FIXME: Currently the loaded image MUST have an alpha channel otherwise the
+  // @todo: Currently the loaded image MUST have an alpha channel otherwise the
   // blit operations will fail.  If the loaded bitmap is fully opaque, the alpha
   // value of at least one pixel must be set to 254 or less.
   bitmap_ = wxBitmap(filePath, wxBITMAP_TYPE_PNG);

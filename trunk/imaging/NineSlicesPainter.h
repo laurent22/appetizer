@@ -19,7 +19,7 @@ class NineSlicesPainter {
 
     NineSlicesPainter();
     void LoadImage(const wxString& filePath);
-    void SetGrid(wxRect *grid);
+    void SetGrid(int left, int top, int width, int height);
     void Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, wxCoord height);
 
 };
