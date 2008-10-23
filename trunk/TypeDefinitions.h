@@ -4,8 +4,8 @@
 
 #include "wx/wx.h"
 #include "boost/shared_ptr.hpp"
-#include "NineSlicesPainter.h"
-#include "NineSlicesPanel.h"
+#include "imaging/NineSlicesPainter.h"
+#include "bitmap_controls/NineSlicesPanel.h"
 
 typedef boost::shared_ptr<wxIcon> wxIconSP;
 typedef boost::shared_ptr<NineSlicesPainter> NineSlicesPainterSP;

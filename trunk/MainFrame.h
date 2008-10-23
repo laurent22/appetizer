@@ -2,9 +2,9 @@
 #define __MainFrame_H
 
 #include "wx/wx.h" 
-#include "NineSlicesPainter.h"
-#include "ImagePanel.h"
-#include "NineSlicesPanel.h"
+#include "imaging/NineSlicesPainter.h"
+#include "bitmap_controls/ImagePanel.h"
+#include "bitmap_controls/NineSlicesPanel.h"
 #include "IconPanel.h"
 #include <wx/log.h>
 #include "TypeDefinitions.h"

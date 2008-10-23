@@ -1,5 +1,5 @@
 #include "ImagePanel.h"
-#include "Imaging.h"
+#include "../imaging/Imaging.h"
 
 
 ImagePanel::ImagePanel(wxWindow *owner, int id, wxPoint point, wxSize size):

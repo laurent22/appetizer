@@ -2,7 +2,7 @@
 #define __NineSlicesPanel_H
 
 #include "wx/wx.h"
-#include "NineSlicesPainter.h"
+#include "../imaging/NineSlicesPainter.h"
 #include "BitmapControl.h"
 
 class NineSlicesPanel: public BitmapControl {

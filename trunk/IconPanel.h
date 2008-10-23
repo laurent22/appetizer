@@ -2,7 +2,7 @@
 #define __IconPanel_H
 
 #include "wx/wx.h"
-#include "NineSlicesPanel.h"
+#include "bitmap_controls/NineSlicesPanel.h"
 #include "FolderItemRenderer.h"
 #include <vector>
 #include <wx/dnd.h>

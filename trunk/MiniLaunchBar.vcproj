@@ -271,30 +271,30 @@
 				>
 			</File>
 			<Filter
-				Name="BitmapControls"
+				Name="bitmap_controls"
 				>
 				<File
-					RelativePath=".\BitmapControl.cpp"
+					RelativePath=".\bitmap_controls\BitmapControl.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\ImagePanel.cpp"
+					RelativePath=".\bitmap_controls\ImagePanel.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\NineSlicesPanel.cpp"
+					RelativePath=".\bitmap_controls\NineSlicesPanel.cpp"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="Imaging"
+				Name="imaging"
 				>
 				<File
-					RelativePath=".\Imaging.cpp"
+					RelativePath=".\imaging\Imaging.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\NineSlicesPainter.cpp"
+					RelativePath=".\imaging\NineSlicesPainter.cpp"
 					>
 				</File>
 			</Filter>
@@ -381,30 +381,30 @@
 				>
 			</File>
 			<Filter
-				Name="BitmapControls"
+				Name="bitmap_controls"
 				>
 				<File
-					RelativePath=".\BitmapControl.h"
+					RelativePath=".\bitmap_controls\BitmapControl.h"
 					>
 				</File>
 				<File
-					RelativePath=".\ImagePanel.h"
+					RelativePath=".\bitmap_controls\ImagePanel.h"
 					>
 				</File>
 				<File
-					RelativePath=".\NineSlicesPanel.h"
+					RelativePath=".\bitmap_controls\NineSlicesPanel.h"
 					>
 				</File>
 			</Filter>
 			<Filter
-				Name="Imaging"
+				Name="imaging"
 				>
 				<File
-					RelativePath=".\Imaging.h"
+					RelativePath=".\imaging\Imaging.h"
 					>
 				</File>
 				<File
-					RelativePath=".\NineSlicesPainter.h"
+					RelativePath=".\imaging\NineSlicesPainter.h"
 					>
 				</File>
 			</Filter>

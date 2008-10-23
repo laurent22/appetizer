@@ -2,8 +2,8 @@
 #define __FolderItemRenderer_H
 
 #include "wx/wx.h"
-#include "BitmapControl.h"
-#include "NineSlicesPainter.h"
+#include "bitmap_controls/BitmapControl.h"
+#include "imaging/NineSlicesPainter.h"
 #include "FolderItem.h"
 #include <wx/dataobj.h>
 #include <wx/dnd.h>
