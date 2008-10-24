@@ -2,10 +2,9 @@
 #include "Constants.h"
 #include "wx/dcbuffer.h"
 #include "Controller.h"
-#include "OptionFrame.h"
+#include "bitmap_controls/ImageButton.h"
 
 extern ControllerSP gController;
-extern OptionFrame* gOptionFrame;
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
@@ -14,6 +13,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
   EVT_PAINT(MainFrame::OnPaint)
   EVT_CLOSE(MainFrame::OnClose)
+  EVT_COMMAND(ID_BUTTON_Arrow, wxeEVT_CLICK, MainFrame::ArrowButton_Click)
 END_EVENT_TABLE()
 
 
@@ -35,11 +35,17 @@ MainFrame::MainFrame()
 
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
+  optionPanelOpenWidth_ = 0;
 
   // Load the mask and background images
   maskNineSlices_.LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackgroundRegion.png"));
 
   windowDragData_.DraggingStarted = false;
+
+  arrowButton_ = new ImageButton(this, ID_BUTTON_Arrow, wxPoint(0, 0), wxSize(10, 10));
+  arrowButton_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/ArrowButton"));
+  // @todo: Grid should not be hardcoded but set in styles
+  arrowButton_->SetGrid(6, 30, 1, 1);
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
   backgroundPanel_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackground.png"));
@@ -92,10 +98,23 @@ void MainFrame::UpdateMask() {
 void MainFrame::UpdateLayout(int width, int height) {
   ControllerStyles styles = gController->GetStyles();
 
-  resizerPanel_->Move(width - resizerPanel_->GetRect().GetWidth(), height - resizerPanel_->GetRect().GetHeight());
-  backgroundPanel_->SetSize(0, 0, width, height);
-  iconPanel_->SetSize(styles.MainPanel.PaddingLeft, styles.MainPanel.PaddingRight, width - styles.MainPanel.PaddingWidth, height - styles.MainPanel.PaddingHeight);
-
+  arrowButton_->SetSize(0,
+    0,
+    gController->GetStyles().OptionPanel.ArrowButtonWidth,
+    height);
+  
+  int bgPanelX = gController->GetStyles().OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
+  int bgPanelWidth = width - bgPanelX;
+  backgroundPanel_->SetSize(bgPanelX, 0, bgPanelWidth, height);
+  
+  iconPanel_->SetSize(styles.MainPanel.PaddingLeft,
+    styles.MainPanel.PaddingRight,
+    bgPanelWidth - styles.MainPanel.PaddingWidth,
+    height - styles.MainPanel.PaddingHeight);
+  
+  resizerPanel_->Move(bgPanelWidth - resizerPanel_->GetRect().GetWidth(),
+    height - resizerPanel_->GetRect().GetHeight());
+  
   needLayoutUpdate_ = false;
 }
 
@@ -118,20 +137,12 @@ void MainFrame::OnPaint(wxPaintEvent& evt) {
 }
 
 
-void MainFrame::AttachOptionPanel() {
-  gOptionFrame->SetSize(GetRect().GetLeft() - gOptionFrame->GetRect().GetWidth(), GetRect().GetTop(), gOptionFrame->GetRect().GetWidth(), GetRect().GetHeight());
-}
-
-
 void MainFrame::OnMove(wxMoveEvent& evt) {
-  AttachOptionPanel();
+
 }
 
 
 void MainFrame::OnSize(wxSizeEvent& evt) {
-  AttachOptionPanel();
-  gOptionFrame->Update();
-
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
 	Refresh();
@@ -198,7 +209,10 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
 
 
 void MainFrame::OnClose(wxCloseEvent& evt) {
-  gOptionFrame->Close(true);
-  gOptionFrame = NULL;
   Destroy();
+}
+
+
+void MainFrame::ArrowButton_Click(wxCommandEvent& evt) {
+  wxLogDebug(_T("ARROW BUTTON CLICK"));
 }

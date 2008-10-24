@@ -1,6 +1,5 @@
 #include "wx/wx.h" 
 #include "MainFrame.h"
-#include "OptionFrame.h"
 #include "wx/sysopt.h"
 #include "Controller.h"
 
@@ -23,8 +22,6 @@ ControllerSP gController;
 // since it's going to be owned by the wxApp
 MainFrame* gMainFrame;
 
-OptionFrame* gOptionFrame;
-
 
 bool MiniLaunchBar::OnInit() {
   // Required to enabled PNG support
@@ -40,13 +37,9 @@ bool MiniLaunchBar::OnInit() {
   // @todo: this line doesn't do anything:
   //gMainFrame->SetBackgroundStyle(wxBG_STYLE_CUSTOM);
 
-  gOptionFrame = new OptionFrame();
-  gOptionFrame->Show(true);
-
   gController->GetUser()->Load();
   gController->GetUser()->AutomaticallyAddNewApps();
 
-  gMainFrame->AttachOptionPanel();
   gMainFrame->SetSize(100, 100, 400, 100);
 
   SetTopWindow(gMainFrame);

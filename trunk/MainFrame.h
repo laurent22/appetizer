@@ -5,10 +5,14 @@
 #include "imaging/NineSlicesPainter.h"
 #include "bitmap_controls/ImagePanel.h"
 #include "bitmap_controls/NineSlicesPanel.h"
+#include "bitmap_controls/ImageButton.h"
 #include "IconPanel.h"
 #include <wx/log.h>
 #include "TypeDefinitions.h"
 
+enum {
+  ID_BUTTON_Arrow
+};
 
 class MainFrame: public wxFrame {
 
@@ -30,6 +34,8 @@ class MainFrame: public wxFrame {
     WindowDragDataStruct windowDragData_;
     ImagePanel* resizerPanel_;
     wxLogWindow* logWindow_;
+    ImageButton* arrowButton_;
+    int optionPanelOpenWidth_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -40,7 +46,6 @@ class MainFrame: public wxFrame {
     MainFrame();
 
     IconPanel* GetIconPanel();
-    void AttachOptionPanel();
 
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);
@@ -53,6 +58,7 @@ class MainFrame: public wxFrame {
     void OnMove(wxMoveEvent& evt);
     void OnEraseBackground(wxEraseEvent &evt);  
     void OnClose(wxCloseEvent& evt);
+    void ArrowButton_Click(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

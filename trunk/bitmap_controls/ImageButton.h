@@ -5,6 +5,8 @@
 #include "BitmapControl.h"
 #include "../imaging/NineSlicesPainter.h"
 
+DECLARE_EVENT_TYPE(wxeEVT_CLICK, -1)
+
 class ImageButton: public BitmapControl {
 
   public:
@@ -15,8 +17,14 @@ class ImageButton: public BitmapControl {
     void UpdateControlBitmap();
     void SetGrid(int left, int top, int width, int height);
 
+    void OnMouseDown(wxMouseEvent& evt);
+    void OnMouseUp(wxMouseEvent& evt);
+    void OnMouseOver(wxMouseEvent& evt);
+    void OnMouseLeave(wxMouseEvent& evt);
+
   private:
 
+    bool pressed_;
     wxRect grid_;
     wxString state_;
     wxString filePathPrefix_;
@@ -25,6 +33,10 @@ class ImageButton: public BitmapControl {
     NineSlicesPainter* nineSlicesPainterOver_;
     NineSlicesPainter* nineSlicesPainterDown_;
     NineSlicesPainter* nineSlicesPainterDisabled_;
+    void SetState(const wxString& state);
+    wxString GetState();
+
+    DECLARE_EVENT_TABLE()
 
 };
 

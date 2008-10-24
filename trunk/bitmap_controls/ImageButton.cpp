@@ -1,10 +1,24 @@
 #include "ImageButton.h"
 
 
+
+DEFINE_EVENT_TYPE(wxeEVT_CLICK)
+
+
+
+BEGIN_EVENT_TABLE(ImageButton, BitmapControl)
+  EVT_LEFT_UP(ImageButton::OnMouseUp)
+  EVT_LEFT_DOWN(ImageButton::OnMouseDown)
+  EVT_MOTION(ImageButton::OnMouseOver)
+  EVT_LEAVE_WINDOW(ImageButton::OnMouseLeave)
+END_EVENT_TABLE()
+
+
 ImageButton::ImageButton(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
   state_ = _T("Up");  
-  
+
+  pressed_ = false;  
   gridIsExplicitelySet_ = false;
   nineSlicesPainterUp_ = NULL;
   nineSlicesPainterOver_ = NULL;
@@ -92,4 +106,58 @@ ImageButton::~ImageButton() {
   wxDELETE(nineSlicesPainterOver_);
   wxDELETE(nineSlicesPainterDown_);
   wxDELETE(nineSlicesPainterDisabled_);
+}
+
+
+void ImageButton::SetState(const wxString& state) {
+  if (state_ == state) return;
+  state_ = state;
+  InvalidateControlBitmap();
+}
+
+
+wxString ImageButton::GetState() {
+  return state_;
+}
+
+
+void ImageButton::OnMouseDown(wxMouseEvent& evt) {
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  w->CaptureMouse();
+
+  pressed_ = true;
+  SetState(_T("Down"));
+  Update();
+}
+
+
+void ImageButton::OnMouseUp(wxMouseEvent& evt) {
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  if (w->HasCapture()) w->ReleaseMouse();
+
+  if (GetRect().Contains(evt.GetPosition())) {
+    wxCommandEvent newEvent(wxeEVT_CLICK);
+    newEvent.SetEventObject(this);
+    GetEventHandler()->ProcessEvent(newEvent);
+  }
+
+  pressed_ = false;
+  SetState(_T("Up"));
+  Update();
+}
+
+
+void ImageButton::OnMouseOver(wxMouseEvent& evt) {
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+
+  if (pressed_) {
+    SetState(_T("Down"));
+  } else {
+    SetState(_T("Over"));
+  }  
+}
+
+
+void ImageButton::OnMouseLeave(wxMouseEvent& evt) {
+  SetState(_T("Up"));
 }
