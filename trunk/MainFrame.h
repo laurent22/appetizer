@@ -7,11 +7,13 @@
 #include "bitmap_controls/NineSlicesPanel.h"
 #include "bitmap_controls/ImageButton.h"
 #include "IconPanel.h"
+#include <wx/timer.h>
 #include <wx/log.h>
 #include "TypeDefinitions.h"
 
 enum {
-  ID_BUTTON_Arrow
+  ID_BUTTON_Arrow,
+  ID_TIMER_OpenCloseAnimation
 };
 
 class MainFrame: public wxFrame {
@@ -28,6 +30,7 @@ class MainFrame: public wxFrame {
     
     bool needLayoutUpdate_;
     bool needMaskUpdate_;
+    bool optionPanelOpen_;
     NineSlicesPanel* backgroundPanel_;
     IconPanel* iconPanel_;
     NineSlicesPainter maskNineSlices_;
@@ -36,6 +39,10 @@ class MainFrame: public wxFrame {
     wxLogWindow* logWindow_;
     ImageButton* arrowButton_;
     int optionPanelOpenWidth_;
+    int optionPanelMaxOpenWidth_;
+    long openCloseAnimationStartTime_;
+    long openCloseAnimationDuration_;
+    wxTimer* openCloseAnimationTimer_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -46,6 +53,12 @@ class MainFrame: public wxFrame {
     MainFrame();
 
     IconPanel* GetIconPanel();
+
+    void OpenOptionPanel(bool open = true);
+    void CloseOptionPanel();
+    void ToggleOptionPanel();
+    void InvalidateLayout();
+    void InvalidateMask();
 
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);
@@ -59,6 +72,7 @@ class MainFrame: public wxFrame {
     void OnEraseBackground(wxEraseEvent &evt);  
     void OnClose(wxCloseEvent& evt);
     void ArrowButton_Click(wxCommandEvent& evt);
+    void OpenCloseAnimationTimer_Timer(wxTimerEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

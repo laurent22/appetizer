@@ -12,6 +12,7 @@ extern MainFrame* gMainFrame;
 
 Controller::Controller() {
   draggedFolderItemId_ = -1;  
+  stopWatch_.Start();
 
   //***************************************************************************
   // Initialize paths
@@ -72,6 +73,11 @@ Controller::Controller() {
   styles_.OptionPanel.ArrowButtonWidth = 16;
 
   user_.reset(new User());
+}
+
+
+long Controller::GetTimer() {
+  return stopWatch_.Time();
 }
 
 

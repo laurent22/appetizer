@@ -14,6 +14,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_PAINT(MainFrame::OnPaint)
   EVT_CLOSE(MainFrame::OnClose)
   EVT_COMMAND(ID_BUTTON_Arrow, wxeEVT_CLICK, MainFrame::ArrowButton_Click)
+  EVT_TIMER(ID_TIMER_OpenCloseAnimation, MainFrame::OpenCloseAnimationTimer_Timer)
 END_EVENT_TABLE()
 
 
@@ -35,7 +36,11 @@ MainFrame::MainFrame()
 
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
+  optionPanelOpen_ = false;
   optionPanelOpenWidth_ = 0;
+  optionPanelMaxOpenWidth_ = 50;
+  openCloseAnimationTimer_ = NULL;
+  openCloseAnimationDuration_ = 200;
 
   // Load the mask and background images
   maskNineSlices_.LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackgroundRegion.png"));
@@ -208,11 +213,66 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
 }
 
 
+void MainFrame::InvalidateLayout() {
+  needLayoutUpdate_ = true;
+  Refresh();
+}
+
+
+void MainFrame::InvalidateMask() {
+  needMaskUpdate_ = true;
+  Refresh();
+}
+
+
 void MainFrame::OnClose(wxCloseEvent& evt) {
   Destroy();
 }
 
 
 void MainFrame::ArrowButton_Click(wxCommandEvent& evt) {
-  wxLogDebug(_T("ARROW BUTTON CLICK"));
+  ToggleOptionPanel();
+}
+
+
+void MainFrame::OpenOptionPanel(bool open) {
+  if (open == optionPanelOpen_) return;
+
+  optionPanelOpen_ = open;
+  openCloseAnimationStartTime_ = gController->GetTimer();
+
+  if (!openCloseAnimationTimer_) openCloseAnimationTimer_ = new wxTimer(this, ID_TIMER_OpenCloseAnimation);
+  openCloseAnimationTimer_->Start(10);
+}
+
+
+void MainFrame::CloseOptionPanel() {
+  OpenOptionPanel(false);
+}
+
+
+void MainFrame::ToggleOptionPanel() {
+  OpenOptionPanel(!optionPanelOpen_);
+}
+
+
+void MainFrame::OpenCloseAnimationTimer_Timer(wxTimerEvent& evt) {
+  int newOpenWidth;
+  float percent = (float)((gController->GetTimer() - openCloseAnimationStartTime_)) / (float)openCloseAnimationDuration_;
+
+  if (percent >= 1.0) {
+    percent = 1.0;
+    openCloseAnimationTimer_->Stop();
+  }
+
+  if (optionPanelOpen_) {
+    newOpenWidth = percent * optionPanelMaxOpenWidth_;
+  } else {
+    newOpenWidth = optionPanelMaxOpenWidth_ - percent * optionPanelMaxOpenWidth_;
+  }
+
+  optionPanelOpenWidth_ = newOpenWidth;
+
+  InvalidateLayout();
+  InvalidateMask();
 }

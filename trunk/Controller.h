@@ -7,6 +7,7 @@
 #include "User.h"
 #include "boost/shared_ptr.hpp"
 #include <wx/msgdlg.h>
+#include <wx/stopwatch.h>
 
 
 struct FilePaths {
@@ -90,6 +91,7 @@ class Controller {
     FolderItemSP GetDraggedFolderItem();
     int ShowWarningMessage(const wxString& message, long style = wxOK);
     int ShowErrorMessage(const wxString& message, long style = wxOK);
+    long GetTimer();
 
     /**
      * GLOBAL EVENTS
@@ -104,6 +106,7 @@ class Controller {
     UserSP user_;
     wxString applicationDrive_;
     int draggedFolderItemId_;
+    wxStopWatch stopWatch_;
 
 };
 
