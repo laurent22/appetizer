@@ -15,11 +15,25 @@ void NineSlicesPainter::SetGrid(int left, int top, int width, int height) {
 }
 
 
-void NineSlicesPainter::LoadImage(const wxString& filePath) {  
-  filePath_ = filePath;
-  sourceBitmap_ = wxBitmap(filePath_, wxBITMAP_TYPE_PNG);
+void NineSlicesPainter::LoadImage(const wxString& filePath, bool forceAlpha) {  
   sourceDC_.SelectObject(wxNullBitmap);
-  // TODO: Should the previously selected bitmap be explicitely deleted?
+
+  filePath_ = filePath;
+  sourceBitmap_ = wxBitmap(filePath_, wxBITMAP_TYPE_PNG);  
+
+  if (!sourceBitmap_.HasAlpha() && forceAlpha) {
+    // @hack: the bitmap MUST have an alpha channel
+    // otherwise any draw operation will fail. This
+    // is probably because we are using the undocumented
+    // UseAlpha() on ControlBitmap
+    wxImage tempImage(filePath_, wxBITMAP_TYPE_PNG);
+    if (tempImage.GetWidth() > 0 && tempImage.GetHeight() > 0) {
+      tempImage.InitAlpha();
+      tempImage.SetAlpha(0, 0, 254);
+      sourceBitmap_ = wxBitmap(tempImage);
+    }
+  }  
+
   sourceDC_.SelectObject(sourceBitmap_);
 }
 

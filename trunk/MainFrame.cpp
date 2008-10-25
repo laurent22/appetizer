@@ -37,13 +37,14 @@ MainFrame::MainFrame()
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
   optionPanelOpen_ = false;
+  openCloseAnimationDockLeft_ = true;
   optionPanelOpenWidth_ = 0;
   optionPanelMaxOpenWidth_ = 50;
   openCloseAnimationTimer_ = NULL;
-  openCloseAnimationDuration_ = 200;
+  openCloseAnimationDuration_ = 50;
 
   // Load the mask and background images
-  maskNineSlices_.LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackgroundRegion.png"));
+  maskNineSlices_.LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackgroundRegion.png"), false);
 
   windowDragData_.DraggingStarted = false;
 
@@ -58,6 +59,8 @@ MainFrame::MainFrame()
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
+
+  optionPanel_ = new OptionPanel(this, wxID_ANY, wxPoint(0,0), wxSize(10,10));
 
   resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
   resizerPanel_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/Resizer.png"));
@@ -110,15 +113,23 @@ void MainFrame::UpdateLayout(int width, int height) {
   
   int bgPanelX = gController->GetStyles().OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
   int bgPanelWidth = width - bgPanelX;
+
   backgroundPanel_->SetSize(bgPanelX, 0, bgPanelWidth, height);
   
-  iconPanel_->SetSize(styles.MainPanel.PaddingLeft,
+  iconPanel_->SetSize(
+    styles.MainPanel.PaddingLeft,
     styles.MainPanel.PaddingRight,
     bgPanelWidth - styles.MainPanel.PaddingWidth,
     height - styles.MainPanel.PaddingHeight);
   
   resizerPanel_->Move(bgPanelWidth - resizerPanel_->GetRect().GetWidth(),
     height - resizerPanel_->GetRect().GetHeight());
+
+  optionPanel_->SetSize(
+    gController->GetStyles().OptionPanel.ArrowButtonWidth,
+    0,
+    optionPanelOpenWidth_,
+    height);
   
   needLayoutUpdate_ = false;
 }
@@ -126,6 +137,16 @@ void MainFrame::UpdateLayout(int width, int height) {
 
 void MainFrame::UpdateLayout() {
   UpdateLayout(GetClientRect().GetWidth(), GetClientRect().GetHeight());
+}
+
+
+int MainFrame::GetMinHeight() {
+  return iconPanel_->GetMinHeight() + gController->GetStyles().MainPanel.PaddingHeight;
+}
+
+
+int MainFrame::GetMinWidth() {
+  return GetMinHeight();
 }
 
 
@@ -148,9 +169,8 @@ void MainFrame::OnMove(wxMoveEvent& evt) {
 
 
 void MainFrame::OnSize(wxSizeEvent& evt) {
-  needLayoutUpdate_ = true;
-  needMaskUpdate_ = true;
-	Refresh();
+  InvalidateLayout();
+  InvalidateMask();
 }
 
 
@@ -206,8 +226,14 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
     wxPoint mousePos = w->ClientToScreen(evt.GetPosition());
     wxPoint mouseOffset = mousePos - windowDragData_.InitMousePos;
 
-    SetSize(windowDragData_.InitWindowSize.GetWidth() + mouseOffset.x,
-            windowDragData_.InitWindowSize.GetHeight() + mouseOffset.y);
+    int newHeight = windowDragData_.InitWindowSize.GetHeight() + mouseOffset.y;
+    if (newHeight < GetMinHeight()) newHeight = GetMinHeight();
+
+    int newWidth = windowDragData_.InitWindowSize.GetWidth() + mouseOffset.x;
+    if (newWidth < GetMinWidth()) newWidth = GetMinWidth();
+
+    SetSize(newWidth,
+            newHeight);
     Update();
   }
 }
@@ -241,8 +267,36 @@ void MainFrame::OpenOptionPanel(bool open) {
   optionPanelOpen_ = open;
   openCloseAnimationStartTime_ = gController->GetTimer();
 
-  if (!openCloseAnimationTimer_) openCloseAnimationTimer_ = new wxTimer(this, ID_TIMER_OpenCloseAnimation);
-  openCloseAnimationTimer_->Start(10);
+  openCloseAnimationWindowRight_ = GetRect().GetRight();
+  openCloseAnimationDockLeft_ = !false;
+
+  if (optionPanelOpen_) {
+    optionPanelOpenWidth_ = optionPanelMaxOpenWidth_;
+  } else {
+    optionPanelOpenWidth_ = 0;
+  }
+
+  int newWindowWidth = arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_ + backgroundPanel_->GetSize().GetWidth();
+
+  if (openCloseAnimationDockLeft_) {
+    SetSize(
+      newWindowWidth, 
+      GetSize().GetHeight());
+  } else {
+    SetSize(
+      openCloseAnimationWindowRight_ - newWindowWidth + 1,
+      GetRect().GetTop(),
+      newWindowWidth, 
+      GetSize().GetHeight());    
+  }  
+
+  InvalidateLayout();
+  InvalidateMask();
+  Update();
+  
+
+  //if (!openCloseAnimationTimer_) openCloseAnimationTimer_ = new wxTimer(this, ID_TIMER_OpenCloseAnimation);
+  //openCloseAnimationTimer_->Start(10);
 }
 
 
@@ -266,13 +320,41 @@ void MainFrame::OpenCloseAnimationTimer_Timer(wxTimerEvent& evt) {
   }
 
   if (optionPanelOpen_) {
-    newOpenWidth = percent * optionPanelMaxOpenWidth_;
+    newOpenWidth = floor(percent * optionPanelMaxOpenWidth_);
   } else {
-    newOpenWidth = optionPanelMaxOpenWidth_ - percent * optionPanelMaxOpenWidth_;
+    newOpenWidth = floor(optionPanelMaxOpenWidth_ - percent * optionPanelMaxOpenWidth_);
   }
 
   optionPanelOpenWidth_ = newOpenWidth;
 
-  InvalidateLayout();
-  InvalidateMask();
+  int newWindowWidth = arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_ + backgroundPanel_->GetSize().GetWidth();
+
+  if (openCloseAnimationDockLeft_) {
+    SetSize(
+      newWindowWidth, 
+      GetSize().GetHeight());
+  } else {
+    //SetSize(newWindowWidth, GetSize().GetHeight());    
+    //Move(openCloseAnimationWindowRight_ - newWindowWidth+1, GetRect().GetTop());
+
+    SetSize(
+      openCloseAnimationWindowRight_ - newWindowWidth + 1,
+      GetRect().GetTop(),
+      newWindowWidth, 
+      GetSize().GetHeight());    
+  }
+
+  //wxLogDebug(_T("%d %d"), optionPanelOpenWidth_, GetRect().GetRight());
+
+  //InvalidateLayout();
+  //InvalidateMask();
+  //Update();
+
+  UpdateLayout();
+  UpdateMask();
+  
+  //Thaw();
+  Refresh();
+  Update();
+  //if (percent < 1.0) Freeze();
 }

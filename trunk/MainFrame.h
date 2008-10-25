@@ -10,6 +10,8 @@
 #include <wx/timer.h>
 #include <wx/log.h>
 #include "TypeDefinitions.h"
+#include "OptionPanel.h"
+
 
 enum {
   ID_BUTTON_Arrow,
@@ -38,10 +40,13 @@ class MainFrame: public wxFrame {
     ImagePanel* resizerPanel_;
     wxLogWindow* logWindow_;
     ImageButton* arrowButton_;
+    OptionPanel* optionPanel_;
     int optionPanelOpenWidth_;
     int optionPanelMaxOpenWidth_;
     long openCloseAnimationStartTime_;
     long openCloseAnimationDuration_;
+    bool openCloseAnimationDockLeft_;
+    int openCloseAnimationWindowRight_;
     wxTimer* openCloseAnimationTimer_;
 
     void UpdateMask();
@@ -53,6 +58,9 @@ class MainFrame: public wxFrame {
     MainFrame();
 
     IconPanel* GetIconPanel();
+
+    int GetMinHeight();
+    int GetMinWidth();
 
     void OpenOptionPanel(bool open = true);
     void CloseOptionPanel();

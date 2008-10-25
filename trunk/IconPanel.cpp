@@ -126,6 +126,14 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 }
 
 
+int IconPanel::GetMinHeight() {
+  return 
+    gController->GetUser()->GetSettings()->IconSize +
+    gController->GetStyles().Icon.PaddingHeight +
+    gController->GetStyles().InnerPanel.PaddingHeight;
+}
+
+
 bool IconPanelDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
   IconPanel* iconPanel = gMainFrame->GetIconPanel();
   wxASSERT_MSG(iconPanel, _T("Icon panel must be defined"));

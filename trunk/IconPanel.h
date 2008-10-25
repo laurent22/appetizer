@@ -29,6 +29,8 @@ public:
   void InvalidateIcons();
   void InvalidateLayout();
 
+  int GetMinHeight();
+
   /**
    * Get the insertion index under the given point. Useful for drag & drop
    * operations, in order to know between which icons the object should
