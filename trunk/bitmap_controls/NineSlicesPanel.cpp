@@ -31,13 +31,12 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
 void NineSlicesPanel::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
 
-  if ((nineSlicesPainter_ == NULL) && (filePath_ != wxT(""))) {
+  if ((nineSlicesPainter_ == NULL) && (filePath_ != wxEmptyString)) {
     nineSlicesPainter_ = new NineSlicesPainter();
     nineSlicesPainter_->LoadImage(filePath_);
   }
 
   if (nineSlicesPainter_ != NULL) {
-
     wxMemoryDC destDC;
     destDC.SelectObject(*controlBitmap_);    
     nineSlicesPainter_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());

@@ -24,10 +24,6 @@ BitmapControl::~BitmapControl() {
 wxBitmap* BitmapControl::GetControlBitmap() { return controlBitmap_; }
 
 void BitmapControl::InvalidateControlBitmap() {
-  // @todo Whenever the bitmap is invalidated, it should probably
-  // be destroyed and recreated, so that parts of the old bitmap
-  // don't appear in the new one.
-
   wxDELETE(controlBitmap_);
   controlBitmapInvalidated_ = true;
   Refresh();
@@ -36,9 +32,13 @@ void BitmapControl::InvalidateControlBitmap() {
 void BitmapControl::UpdateControlBitmap() {
   if (!controlBitmap_) {
     controlBitmap_ = new wxBitmap(GetRect().GetWidth(), GetRect().GetHeight(), 32);
-    // @todo We need UseAlpha() so that the alpha channel is used when drawing
+    // We need UseAlpha() so that the alpha channel is used when drawing
     // the bitmap. However UseAlpha() is an undocumented method so it would
     // be good to find an alternative.
+    // It seems like one of the side effect of using UseAlpha() is that
+    // all the bitmaps drawn on controlBitmap_ MUST have an alpha channel,
+    // otherwise we get an assertion error. See IconPanel::LoadImage for
+    // an example on how to force a bitmap to have an alpha channel.
     controlBitmap_->UseAlpha();
   }
 
@@ -66,6 +66,7 @@ void BitmapControl::OnEraseBackground(wxEraseEvent &evt) {
 
 
 void BitmapControl::OnPaint(wxPaintEvent& evt) {
+  wxBufferedPaintDC dc(this);
 
   // Update the control bitmap if it has been invalidated
   if (controlBitmapInvalidated_) {
@@ -73,7 +74,7 @@ void BitmapControl::OnPaint(wxPaintEvent& evt) {
     controlBitmapInvalidated_ = false;
   }
 
-  wxBufferedPaintDC dc(this);
+  if (controlBitmap_->GetWidth() <= 0 || controlBitmap_->GetHeight() <= 0) return; 
 
   // Get the parent and check if it's an BitmapControl. If it's not, the dynamic cast
   // returns NULL.

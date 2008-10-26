@@ -27,6 +27,13 @@ BitmapControl(owner, id, point, size) {
 }
 
 
+void ImageButton::FitToImage() {
+  wxBitmap tempBitmap(filePathPrefix_ + _T("Up.png"), wxBITMAP_TYPE_PNG);
+  wxASSERT_MSG(tempBitmap.IsOk(), _T("Could not load bitmap"));
+  SetSize(tempBitmap.GetWidth(), tempBitmap.GetHeight());
+}
+
+
 void ImageButton::SetGrid(int left, int top, int width, int height) {
   gridIsExplicitelySet_ = true;
   grid_.SetLeft(left);

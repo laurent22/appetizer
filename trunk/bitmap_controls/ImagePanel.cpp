@@ -13,10 +13,15 @@ void ImagePanel::LoadImage(const wxString& filePath) {
 
   filePath_ = filePath;
 
-  // @todo: Currently the loaded image MUST have an alpha channel otherwise the
-  // blit operations will fail.  If the loaded bitmap is fully opaque, the alpha
-  // value of at least one pixel must be set to 254 or less.
-  bitmap_ = wxBitmap(filePath, wxBITMAP_TYPE_PNG);
+  // Create a wxImage first and convert it to a wxBitmap
+  // to make sure that the alpha channel is handled properly.
+  // Also force the image to have an alpha channel so that
+  // the blit operations on BitmapControl::controlBitmap_
+  // don't fail. See BitmapControl::UpdateControlBitmap
+  wxImage tempImage;
+  tempImage.LoadFile(filePath, wxBITMAP_TYPE_PNG);
+  if (!tempImage.HasAlpha()) tempImage.InitAlpha();
+  bitmap_ = wxBitmap(tempImage);
 
   Refresh();
 }

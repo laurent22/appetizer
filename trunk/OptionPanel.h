@@ -3,13 +3,22 @@
 
 #include "wx/wx.h" 
 #include "bitmap_controls/NineSlicesPanel.h"
+#include <vector>
+#include "OptionButton.h"
+
+
+typedef std::vector<OptionButton*> OptionButtonVector;
 
 
 class OptionPanel: public NineSlicesPanel {
 
-  public:
+public:
 
-    OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size);
+  OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size);
+
+private:
+
+  OptionButtonVector buttons_;
 
 };
 

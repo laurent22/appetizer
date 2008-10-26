@@ -23,9 +23,7 @@ void NineSlicesPainter::LoadImage(const wxString& filePath, bool forceAlpha) {
 
   if (!sourceBitmap_.HasAlpha() && forceAlpha) {
     // @hack: the bitmap MUST have an alpha channel
-    // otherwise any draw operation will fail. This
-    // is probably because we are using the undocumented
-    // UseAlpha() on ControlBitmap
+    // See ImageButton::LoadImage
     wxImage tempImage(filePath_, wxBITMAP_TYPE_PNG);
     if (tempImage.GetWidth() > 0 && tempImage.GetHeight() > 0) {
       tempImage.InitAlpha();
@@ -39,6 +37,18 @@ void NineSlicesPainter::LoadImage(const wxString& filePath, bool forceAlpha) {
 
 
 void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, wxCoord height) {
+
+  if (width == 0 || height == 0) return;
+
+  if (width == sourceBitmap_.GetWidth() && height == sourceBitmap_.GetHeight()) {
+    // Optimization: if the source bitmap has the same size as the
+    // destination size, we blit it directly.
+    wxMemoryDC sourceDC;
+    sourceDC.SelectObject(sourceBitmap_);
+    destDC->Blit(x, y, width, height, &sourceDC, 0, 0);
+    sourceDC.SelectObject(wxNullBitmap);
+    return;
+  }
 
   int destX, destY, destWidth, destHeight;
   int sourceX, sourceY, sourceWidth, sourceHeight;
@@ -87,7 +97,6 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
         break;
 
     } // switch
-
 
     switch(i) {
 

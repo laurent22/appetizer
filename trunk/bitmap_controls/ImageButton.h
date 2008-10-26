@@ -16,6 +16,7 @@ class ImageButton: public BitmapControl {
     void LoadImage(const wxString& filePathPrefix);
     void UpdateControlBitmap();
     void SetGrid(int left, int top, int width, int height);
+    void FitToImage();
 
     void OnMouseDown(wxMouseEvent& evt);
     void OnMouseUp(wxMouseEvent& evt);

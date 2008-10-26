@@ -13,8 +13,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_ERASE_BACKGROUND(MainFrame::OnEraseBackground)
   EVT_PAINT(MainFrame::OnPaint)
   EVT_CLOSE(MainFrame::OnClose)
-  EVT_COMMAND(ID_BUTTON_Arrow, wxeEVT_CLICK, MainFrame::ArrowButton_Click)
-  EVT_TIMER(ID_TIMER_OpenCloseAnimation, MainFrame::OpenCloseAnimationTimer_Timer)
+  EVT_COMMAND(wxID_ANY, wxeEVT_CLICK, MainFrame::OnImageButtonClick)
 END_EVENT_TABLE()
 
 
@@ -40,7 +39,6 @@ MainFrame::MainFrame()
   openCloseAnimationDockLeft_ = true;
   optionPanelOpenWidth_ = 0;
   optionPanelMaxOpenWidth_ = 50;
-  openCloseAnimationTimer_ = NULL;
   openCloseAnimationDuration_ = 50;
 
   // Load the mask and background images
@@ -256,8 +254,11 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
 }
 
 
-void MainFrame::ArrowButton_Click(wxCommandEvent& evt) {
-  ToggleOptionPanel();
+void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  wxWindowID id = w->GetId();
+
+  if (id == ID_BUTTON_Arrow) ToggleOptionPanel();
 }
 
 
@@ -293,10 +294,6 @@ void MainFrame::OpenOptionPanel(bool open) {
   InvalidateLayout();
   InvalidateMask();
   Update();
-  
-
-  //if (!openCloseAnimationTimer_) openCloseAnimationTimer_ = new wxTimer(this, ID_TIMER_OpenCloseAnimation);
-  //openCloseAnimationTimer_->Start(10);
 }
 
 
@@ -307,54 +304,4 @@ void MainFrame::CloseOptionPanel() {
 
 void MainFrame::ToggleOptionPanel() {
   OpenOptionPanel(!optionPanelOpen_);
-}
-
-
-void MainFrame::OpenCloseAnimationTimer_Timer(wxTimerEvent& evt) {
-  int newOpenWidth;
-  float percent = (float)((gController->GetTimer() - openCloseAnimationStartTime_)) / (float)openCloseAnimationDuration_;
-
-  if (percent >= 1.0) {
-    percent = 1.0;
-    openCloseAnimationTimer_->Stop();
-  }
-
-  if (optionPanelOpen_) {
-    newOpenWidth = floor(percent * optionPanelMaxOpenWidth_);
-  } else {
-    newOpenWidth = floor(optionPanelMaxOpenWidth_ - percent * optionPanelMaxOpenWidth_);
-  }
-
-  optionPanelOpenWidth_ = newOpenWidth;
-
-  int newWindowWidth = arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_ + backgroundPanel_->GetSize().GetWidth();
-
-  if (openCloseAnimationDockLeft_) {
-    SetSize(
-      newWindowWidth, 
-      GetSize().GetHeight());
-  } else {
-    //SetSize(newWindowWidth, GetSize().GetHeight());    
-    //Move(openCloseAnimationWindowRight_ - newWindowWidth+1, GetRect().GetTop());
-
-    SetSize(
-      openCloseAnimationWindowRight_ - newWindowWidth + 1,
-      GetRect().GetTop(),
-      newWindowWidth, 
-      GetSize().GetHeight());    
-  }
-
-  //wxLogDebug(_T("%d %d"), optionPanelOpenWidth_, GetRect().GetRight());
-
-  //InvalidateLayout();
-  //InvalidateMask();
-  //Update();
-
-  UpdateLayout();
-  UpdateMask();
-  
-  //Thaw();
-  Refresh();
-  Update();
-  //if (percent < 1.0) Freeze();
 }

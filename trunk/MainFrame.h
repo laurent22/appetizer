@@ -47,7 +47,6 @@ class MainFrame: public wxFrame {
     long openCloseAnimationDuration_;
     bool openCloseAnimationDockLeft_;
     int openCloseAnimationWindowRight_;
-    wxTimer* openCloseAnimationTimer_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -79,8 +78,7 @@ class MainFrame: public wxFrame {
     void OnMove(wxMoveEvent& evt);
     void OnEraseBackground(wxEraseEvent &evt);  
     void OnClose(wxCloseEvent& evt);
-    void ArrowButton_Click(wxCommandEvent& evt);
-    void OpenCloseAnimationTimer_Timer(wxTimerEvent& evt);
+    void OnImageButtonClick(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 
