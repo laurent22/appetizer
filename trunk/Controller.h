@@ -10,81 +10,12 @@
 #include <wx/stopwatch.h>
 
 
-struct FilePaths {
-  wxString ApplicationDirectory;
-  wxString DataDirectory;
-  wxString SettingsDirectory;
-  wxString SkinDirectory;
-  wxString LocalesDirectory;
-  wxString UserSettingsFile;
-  wxString IconsDirectory;
-  wxString ConfigFile;
-  wxString FolderItemsFile;
-};
-
-struct MainPanelStyle {
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
-};
-
-struct InnerPanelStyle {
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
-};
-
-struct OptionPanelStyle {
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
-  int ArrowButtonWidth;
-};
-
-struct IconTooltipStyle {
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
-  wxColor FontColor;
-};
-
-struct IconStyle {
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
-};
-
-
-struct ControllerStyles {
-  MainPanelStyle MainPanel;
-  InnerPanelStyle InnerPanel;
-  IconStyle Icon;
-  OptionPanelStyle OptionPanel;
-};
-
 
 class Controller {
 
   public:
 
     Controller();      
-    ControllerStyles GetStyles();
-    FilePaths GetFilePaths();
     UserSP GetUser();
     wxString GetApplicationDrive();
     void SetDraggedFolderItem(int folderItemId);
@@ -101,8 +32,6 @@ class Controller {
 
   private:
       
-    ControllerStyles styles_;
-    FilePaths filePaths_;
     UserSP user_;
     wxString applicationDrive_;
     int draggedFolderItemId_;

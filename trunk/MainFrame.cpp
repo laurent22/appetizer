@@ -2,6 +2,8 @@
 #include "Constants.h"
 #include "wx/dcbuffer.h"
 #include "Controller.h"
+#include "FilePaths.h"
+#include "Styles.h"
 #include "bitmap_controls/ImageButton.h"
 
 extern ControllerSP gController;
@@ -42,26 +44,26 @@ MainFrame::MainFrame()
   openCloseAnimationDuration_ = 50;
 
   // Load the mask and background images
-  maskNineSlices_.LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackgroundRegion.png"), false);
+  maskNineSlices_.LoadImage(FilePaths::SkinDirectory + _T("/BarBackgroundRegion.png"), false);
 
   windowDragData_.DraggingStarted = false;
 
   arrowButton_ = new ImageButton(this, ID_BUTTON_Arrow, wxPoint(0, 0), wxSize(10, 10));
-  arrowButton_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/ArrowButton"));
+  arrowButton_->LoadImage(FilePaths::SkinDirectory + _T("/ArrowButton"));
   // @todo: Grid should not be hardcoded but set in styles
   arrowButton_->SetGrid(6, 30, 1, 1);
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
-  backgroundPanel_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarBackground.png"));
+  backgroundPanel_->LoadImage(FilePaths::SkinDirectory + _T("/BarBackground.png"));
 
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
-  optionPanel_ = new OptionPanel(this, wxID_ANY, wxPoint(0,0), wxSize(10,10));
+  optionPanel_ = new OptionPanel(this);
 
   resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  resizerPanel_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/Resizer.png"));
+  resizerPanel_->LoadImage(FilePaths::SkinDirectory + _T("/Resizer.png"));
   resizerPanel_->FitToContent();
 
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnResizerMouseDown), NULL, this);
@@ -102,29 +104,29 @@ void MainFrame::UpdateMask() {
 
 
 void MainFrame::UpdateLayout(int width, int height) {
-  ControllerStyles styles = gController->GetStyles();
-
-  arrowButton_->SetSize(0,
+  arrowButton_->SetSize(
     0,
-    gController->GetStyles().OptionPanel.ArrowButtonWidth,
+    0,
+    Styles::OptionPanel.ArrowButtonWidth,
     height);
   
-  int bgPanelX = gController->GetStyles().OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
+  int bgPanelX = Styles::OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
   int bgPanelWidth = width - bgPanelX;
 
   backgroundPanel_->SetSize(bgPanelX, 0, bgPanelWidth, height);
   
   iconPanel_->SetSize(
-    styles.MainPanel.PaddingLeft,
-    styles.MainPanel.PaddingRight,
-    bgPanelWidth - styles.MainPanel.PaddingWidth,
-    height - styles.MainPanel.PaddingHeight);
+    Styles::MainPanel.PaddingLeft,
+    Styles::MainPanel.PaddingRight,
+    bgPanelWidth - Styles::MainPanel.PaddingWidth,
+    height - Styles::MainPanel.PaddingHeight);
   
-  resizerPanel_->Move(bgPanelWidth - resizerPanel_->GetRect().GetWidth(),
+  resizerPanel_->Move(
+    bgPanelWidth - resizerPanel_->GetRect().GetWidth(),
     height - resizerPanel_->GetRect().GetHeight());
 
   optionPanel_->SetSize(
-    gController->GetStyles().OptionPanel.ArrowButtonWidth,
+    Styles::OptionPanel.ArrowButtonWidth,
     0,
     optionPanelOpenWidth_,
     height);
@@ -139,7 +141,7 @@ void MainFrame::UpdateLayout() {
 
 
 int MainFrame::GetMinHeight() {
-  return iconPanel_->GetMinHeight() + gController->GetStyles().MainPanel.PaddingHeight;
+  return iconPanel_->GetMinHeight() + Styles::MainPanel.PaddingHeight;
 }
 
 

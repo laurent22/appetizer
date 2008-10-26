@@ -1,5 +1,6 @@
 #include "OptionButton.h"
 #include "Controller.h"
+#include "FilePaths.h"
 
 
 extern ControllerSP gController;
@@ -7,6 +8,6 @@ extern ControllerSP gController;
 
 OptionButton::OptionButton(wxWindow *owner, int id, wxPoint point, wxSize size):
 ImageButton(owner, id, point, size) {
-  LoadImage(gController->GetFilePaths().SkinDirectory + _T("/OptionButton"));
+  LoadImage(FilePaths::SkinDirectory + _T("/OptionButton"));
   FitToImage();
 }

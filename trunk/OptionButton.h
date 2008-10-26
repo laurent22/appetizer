@@ -9,7 +9,7 @@ class OptionButton: public ImageButton {
 
   public:
 
-    OptionButton(wxWindow *owner, int id, wxPoint point, wxSize size);
+    OptionButton(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
 
 };
 

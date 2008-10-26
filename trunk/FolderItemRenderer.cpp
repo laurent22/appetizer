@@ -2,7 +2,9 @@
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
 #include <wx/log.h>
+#include "FilePaths.h"
 #include <wx/menu.h>
+#include "Styles.h"
 
 #include "Controller.h"
 extern ControllerSP gController;
@@ -143,8 +145,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(gController->GetUser()->GetSettings()->IconSize + gController->GetStyles().Icon.PaddingWidth,
-          gController->GetUser()->GetSettings()->IconSize + gController->GetStyles().Icon.PaddingHeight);
+  SetSize(gController->GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingWidth,
+          gController->GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingHeight);
 }
 
 
@@ -165,13 +167,13 @@ void FolderItemRenderer::UpdateControlBitmap() {
     if (mousePressed_) { // DOWN state      
       if (!iconOverlayPainterDown_.get()) {
         iconOverlayPainterDown_.reset(new NineSlicesPainter());
-        iconOverlayPainterDown_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/IconOverlayDown.png"));
+        iconOverlayPainterDown_->LoadImage(FilePaths::SkinDirectory + _T("/IconOverlayDown.png"));
       }
       iconOverlayPainterDown_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     } else { // UP state      
       if (!iconOverlayPainterUp_.get()) {
         iconOverlayPainterUp_.reset(new NineSlicesPainter());
-        iconOverlayPainterUp_->LoadImage(gController->GetFilePaths().SkinDirectory + _T("/IconOverlayUp.png"));
+        iconOverlayPainterUp_->LoadImage(FilePaths::SkinDirectory + _T("/IconOverlayUp.png"));
       }
       iconOverlayPainterUp_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     }
@@ -184,7 +186,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   if (icon->IsOk()) {
     // If the icon is valid, draw it
-    destDC.DrawIcon(*icon, gController->GetStyles().Icon.PaddingLeft, gController->GetStyles().Icon.PaddingTop);
+    destDC.DrawIcon(*icon, Styles::Icon.PaddingLeft, Styles::Icon.PaddingTop);
   }
 
   destDC.SelectObject(wxNullBitmap);

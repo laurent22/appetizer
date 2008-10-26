@@ -2,6 +2,8 @@
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
 #include "boost/shared_ptr.hpp"
+#include "FilePaths.h"
+#include "Styles.h"
 
 #include "Controller.h"
 #include "MainFrame.h"
@@ -14,7 +16,7 @@ IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
   SetDropTarget(new IconPanelDropTarget());
 
-  LoadImage(gController->GetFilePaths().SkinDirectory + _T("/BarInnerPanel.png"));
+  LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
   layoutInvalidated_ = true;
   iconsInvalidated_ = true;
 }
@@ -129,8 +131,8 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 int IconPanel::GetMinHeight() {
   return 
     gController->GetUser()->GetSettings()->IconSize +
-    gController->GetStyles().Icon.PaddingHeight +
-    gController->GetStyles().InnerPanel.PaddingHeight;
+    Styles::Icon.PaddingHeight +
+    Styles::InnerPanel.PaddingHeight;
 }
 
 
@@ -249,8 +251,8 @@ void IconPanel::RefreshIcons() {
 void IconPanel::UpdateLayout() {
   layoutInvalidated_ = false;
 
-  int x = gController->GetStyles().InnerPanel.PaddingLeft;
-  int y = gController->GetStyles().InnerPanel.PaddingTop;
+  int x = Styles::InnerPanel.PaddingLeft;
+  int y = Styles::InnerPanel.PaddingTop;
 
   int iconSize = -1;
   
@@ -261,8 +263,8 @@ void IconPanel::UpdateLayout() {
 
     if (iconSize < 0) iconSize = renderer->GetRect().GetWidth();
 
-    if (renderer->GetRect().GetRight() > GetRect().GetWidth() - gController->GetStyles().InnerPanel.PaddingRight) {
-      x = gController->GetStyles().InnerPanel.PaddingLeft;
+    if (renderer->GetRect().GetRight() > GetRect().GetWidth() - Styles::InnerPanel.PaddingRight) {
+      x = Styles::InnerPanel.PaddingLeft;
       y += iconSize;
 
       renderer->Move(x, y);

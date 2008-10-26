@@ -14,11 +14,17 @@ class OptionPanel: public NineSlicesPanel {
 
 public:
 
-  OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size);
+  OptionPanel(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
+  void InvalidateLayout();
+  void UpdateLayout();
+
+  void OnSize(wxSizeEvent& evt);
+  void OnPaint(wxPaintEvent& evt);
 
 private:
 
   OptionButtonVector buttons_;
+  bool layoutInvalidated_;
 
 };
 

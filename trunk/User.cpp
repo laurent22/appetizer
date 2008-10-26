@@ -4,6 +4,7 @@
 #include "Controller.h"
 #include "FolderItem.h"
 #include "utilities/StringUtil.h"
+#include "FilePaths.h"
 
 extern ControllerSP gController;
 
@@ -23,7 +24,7 @@ void User::ScheduleSave() {
 void User::Save() {
   settings_->Save();
 
-  wxFileConfig config(_T(""), _T(""), gController->GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
+  wxFileConfig config(_T(""), _T(""), FilePaths::FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
 
   config.DeleteAll();
 
@@ -39,7 +40,7 @@ void User::Save() {
 
 
 void User::Load() {
-  wxFileConfig config(_T(""), _T(""), gController->GetFilePaths().FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
+  wxFileConfig config(_T(""), _T(""), FilePaths::FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
 
   wxString folderItemGroup;
   long index;
