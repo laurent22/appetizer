@@ -30,6 +30,8 @@ public:
   void InvalidateLayout();
 
   int GetMinHeight();
+  int GetMaxWidth();
+  int GetMaxHeight();
 
   /**
    * Get the insertion index under the given point. Useful for drag & drop
@@ -48,6 +50,8 @@ public:
 
 private:
 
+  int maxWidth_;
+  int maxHeight_;
   bool iconsInvalidated_;
   bool layoutInvalidated_;
   std::vector<FolderItemRendererSP> folderItemRenderers_;

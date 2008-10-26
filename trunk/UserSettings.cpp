@@ -3,7 +3,7 @@
 #include "FilePaths.h"
 
 #include "Controller.h"
-extern ControllerSP gController;
+extern Controller gController;
 
 
 UserSettings::UserSettings() {

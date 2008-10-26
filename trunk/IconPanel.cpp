@@ -8,7 +8,7 @@
 #include "Controller.h"
 #include "MainFrame.h"
 
-extern ControllerSP gController;
+extern Controller gController;
 extern MainFrame* gMainFrame;
 
 
@@ -67,7 +67,7 @@ IconPanelDropTarget::IconPanelDropTarget() {
 
 
 bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  FolderItemSP folderItem = gController->GetDraggedFolderItem();  
+  FolderItemSP folderItem = gController.GetDraggedFolderItem();  
 
   if (folderItem) {
     // If a folder item is being dragged, and the panel receives a drop
@@ -130,9 +130,19 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
 int IconPanel::GetMinHeight() {
   return 
-    gController->GetUser()->GetSettings()->IconSize +
+    gController.GetUser()->GetSettings()->IconSize +
     Styles::Icon.PaddingHeight +
     Styles::InnerPanel.PaddingHeight;
+}
+
+
+int IconPanel::GetMaxWidth() {
+  return maxWidth_;
+}
+
+
+int IconPanel::GetMaxHeight() {
+  return maxHeight_;
 }
 
 
@@ -182,7 +192,7 @@ void IconPanel::RefreshIcons() {
   // @todo: we shouldn't be able to access the FolderItem vector directly.
   // Need to implement GetFolderItemAt() and GetFolderItemCount() to iterate
   // through the folder items.
-  std::vector<FolderItemSP> folderItems = gController->GetUser()->GetFolderItems();
+  std::vector<FolderItemSP> folderItems = gController.GetUser()->GetFolderItems();
 
   /****************************************************************************
    * Remove renderers that match a folder item that has been deleted
@@ -259,17 +269,26 @@ void IconPanel::UpdateLayout() {
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
 
-    renderer->Move(x, y);
+    int newX = x;
+    int newY = y;
 
     if (iconSize < 0) iconSize = renderer->GetRect().GetWidth();
 
-    if (renderer->GetRect().GetRight() > GetRect().GetWidth() - Styles::InnerPanel.PaddingRight) {
-      x = Styles::InnerPanel.PaddingLeft;
-      y += iconSize;
-
-      renderer->Move(x, y);
+    if (i > 0 && newX + iconSize > GetRect().GetWidth() - Styles::InnerPanel.PaddingRight) {
+      newX = Styles::InnerPanel.PaddingLeft;
+      newY += iconSize;
+      y = newY;
     }
 
-    x += iconSize;
+    renderer->Move(newX, newY);
+
+    maxWidth_ = newX + iconSize;
+    maxHeight_ = newY + iconSize;
+
+    x = newX + iconSize;
   }  
+
+  maxWidth_ += Styles::InnerPanel.PaddingRight;
+  maxHeight_ += Styles::InnerPanel.PaddingBottom;
+
 }

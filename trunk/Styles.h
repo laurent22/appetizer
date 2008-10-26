@@ -29,6 +29,8 @@ class OptionPanelStyle { public:
   int PaddingWidth;
   int PaddingHeight;
   int ArrowButtonWidth;
+  int ButtonHGap;
+  int ButtonVGap;
 };
 
 class IconTooltipStyle { public:

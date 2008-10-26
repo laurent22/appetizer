@@ -7,7 +7,7 @@
 #include "Styles.h"
 
 #include "Controller.h"
-extern ControllerSP gController;
+extern Controller gController;
 
 
 int FolderItemRenderer::uniqueID_ = 0;
@@ -40,17 +40,17 @@ BitmapControl(owner, id, point, size) {
 
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
-  return gController->GetUser()->GetFolderItemById(folderItemId_);
+  return gController.GetUser()->GetFolderItemById(folderItemId_);
 }
 
 
 void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
-  gController->GetUser()->DeleteFolderItem(folderItemId_);
+  gController.GetUser()->DeleteFolderItem(folderItemId_);
 }
 
 
 void FolderItemRenderer::OnMenuProperties(wxCommandEvent& evt) {
-  gController->GetUser()->EditFolderItem(folderItemId_);
+  gController.GetUser()->EditFolderItem(folderItemId_);
 }
 
 
@@ -119,7 +119,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       // Tell the main controller that we've started dragging
       // a folder item. Other objects can then do GetDraggedFolderItem()
       // to know if a folder item is being dragged.
-      gController->SetDraggedFolderItem(folderItem->GetId());
+      gController.SetDraggedFolderItem(folderItem->GetId());
 
       wxFileDataObject fileData;
       fileData.AddFile(folderItem->GetResolvedFilePath());
@@ -130,7 +130,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
       // Tell the main controller that we've finished dragging
       // the folder item
-      gController->SetDraggedFolderItem(-1);
+      gController.SetDraggedFolderItem(-1);
       mousePressed_ = false;
       draggingStarted_ = false;
 
@@ -145,8 +145,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(gController->GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingWidth,
-          gController->GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingHeight);
+  SetSize(gController.GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingWidth,
+          gController.GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingHeight);
 }
 
 
@@ -181,7 +181,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   // Get the icon from the folder item
-  wxIconSP icon = folderItem->GetIcon(gController->GetUser()->GetSettings()->IconSize);
+  wxIconSP icon = folderItem->GetIcon(gController.GetUser()->GetSettings()->IconSize);
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
   if (icon->IsOk()) {

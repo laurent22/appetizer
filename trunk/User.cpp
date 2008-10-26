@@ -6,7 +6,7 @@
 #include "utilities/StringUtil.h"
 #include "FilePaths.h"
 
-extern ControllerSP gController;
+extern Controller gController;
 
 
 User::User() {
@@ -98,7 +98,7 @@ void User::DeleteFolderItem(int folderItemId) {
     }
   }
 
-  gController->User_FolderItemCollectionChange();
+  gController.User_FolderItemCollectionChange();
 }
 
 
@@ -116,7 +116,7 @@ UserSettingsSP User::GetSettings() {
 
 
 void User::AutomaticallyAddNewApps() {
-  wxString portableAppsFolderPath = gController->GetApplicationDrive() + _T("/PortableApps");
+  wxString portableAppsFolderPath = FilePaths::ApplicationDrive + _T("/PortableApps");
 
   wxArrayString foundFilePaths;
   wxDir portableAppsFolder;
@@ -172,7 +172,7 @@ void User::AutomaticallyAddNewApps() {
 
   // Notify the controller that we've updated the folder items
   if (folderItemsChanged) {
-    gController->User_FolderItemCollectionChange();
+    gController.User_FolderItemCollectionChange();
     ScheduleSave();
   }
 }

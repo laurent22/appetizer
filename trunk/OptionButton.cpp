@@ -3,7 +3,7 @@
 #include "FilePaths.h"
 
 
-extern ControllerSP gController;
+extern Controller gController;
 
 
 OptionButton::OptionButton(wxWindow *owner, int id, wxPoint point, wxSize size):

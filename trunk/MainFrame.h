@@ -40,7 +40,9 @@ class MainFrame: public wxFrame {
     ImagePanel* resizerPanel_;
     wxLogWindow* logWindow_;
     ImageButton* arrowButton_;
-    OptionPanel* optionPanel_;
+    wxBitmap* arrowButtonCloseIcon_;
+    wxBitmap* arrowButtonOpenIcon_;
+    OptionPanel* optionPanel_;    
     int optionPanelOpenWidth_;
     int optionPanelMaxOpenWidth_;
     long openCloseAnimationStartTime_;
@@ -55,11 +57,16 @@ class MainFrame: public wxFrame {
   public:
 
     MainFrame();
+    ~MainFrame();
 
     IconPanel* GetIconPanel();
 
     int GetMinHeight();
     int GetMinWidth();
+    int GetMaxHeight();
+    int GetMaxWidth();
+
+    int GetOptionPanelTotalWidth();
 
     void OpenOptionPanel(bool open = true);
     void CloseOptionPanel();

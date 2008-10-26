@@ -4,6 +4,8 @@
 #include "wx/wx.h"
 #include "BitmapControl.h"
 #include "../imaging/NineSlicesPainter.h"
+#include "ImagePanel.h"
+
 
 DECLARE_EVENT_TYPE(wxeEVT_CLICK, -1)
 
@@ -17,6 +19,7 @@ class ImageButton: public BitmapControl {
     void UpdateControlBitmap();
     void SetGrid(int left, int top, int width, int height);
     void FitToImage();
+    void SetIcon(wxBitmap* iconBitmap, bool ownIt = true);
 
     void OnMouseDown(wxMouseEvent& evt);
     void OnMouseUp(wxMouseEvent& evt);
@@ -25,6 +28,8 @@ class ImageButton: public BitmapControl {
 
   private:
 
+    wxBitmap* iconBitmap_;
+    bool ownIcon_;
     bool pressed_;
     wxRect grid_;
     wxString state_;

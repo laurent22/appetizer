@@ -13,7 +13,9 @@
 // begin wxGlade: ::extracode
 enum {
   ID_BUTTON_Save,
-  ID_BUTTON_Cancel
+  ID_BUTTON_Cancel,
+  ID_BUTTON_SelectFile,
+  ID_BUTTON_SelectFolder
 };
 // end wxGlade
 
@@ -37,7 +39,8 @@ protected:
     wxTextCtrl* nameTextBox;
     wxStaticText* locationLabel;
     wxTextCtrl* locationTextBox;
-    wxButton* locationButton;
+    wxBitmapButton* selectFileButton;
+    wxBitmapButton* selectFolderButton;
     wxButton* saveButton;
     wxButton* cancelButton;
     // end wxGlade

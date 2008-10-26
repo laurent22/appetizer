@@ -6,7 +6,7 @@
 #include "Styles.h"
 #include "bitmap_controls/ImageButton.h"
 
-extern ControllerSP gController;
+extern Controller gController;
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
@@ -52,6 +52,9 @@ MainFrame::MainFrame()
   arrowButton_->LoadImage(FilePaths::SkinDirectory + _T("/ArrowButton"));
   // @todo: Grid should not be hardcoded but set in styles
   arrowButton_->SetGrid(6, 30, 1, 1);
+  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
+  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
+  arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
   backgroundPanel_->LoadImage(FilePaths::SkinDirectory + _T("/BarBackground.png"));
@@ -140,13 +143,28 @@ void MainFrame::UpdateLayout() {
 }
 
 
+int MainFrame::GetOptionPanelTotalWidth() {
+  return arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_;
+}
+
+
 int MainFrame::GetMinHeight() {
   return iconPanel_->GetMinHeight() + Styles::MainPanel.PaddingHeight;
 }
 
 
 int MainFrame::GetMinWidth() {
-  return GetMinHeight();
+  return GetMinHeight() + GetOptionPanelTotalWidth();
+}
+
+
+int MainFrame::GetMaxWidth() {
+  return iconPanel_->GetMaxWidth() + Styles::MainPanel.PaddingWidth + GetOptionPanelTotalWidth();
+}
+
+
+int MainFrame::GetMaxHeight() {
+  return iconPanel_->GetMaxHeight() + Styles::MainPanel.PaddingHeight;
 }
 
 
@@ -227,14 +245,37 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
     wxPoint mouseOffset = mousePos - windowDragData_.InitMousePos;
 
     int newHeight = windowDragData_.InitWindowSize.GetHeight() + mouseOffset.y;
-    if (newHeight < GetMinHeight()) newHeight = GetMinHeight();
+    if (newHeight < GetMinHeight()) {
+      newHeight = GetMinHeight();
+    } else if (newHeight > GetMaxHeight()) {
+      newHeight = GetMaxHeight();
+    }
 
     int newWidth = windowDragData_.InitWindowSize.GetWidth() + mouseOffset.x;
-    if (newWidth < GetMinWidth()) newWidth = GetMinWidth();
+    if (newWidth < GetMinWidth()) {
+      newWidth = GetMinWidth();
+    } else if (newWidth > GetMaxWidth()) {
+      // no restriction on maximum width
+    }
 
-    SetSize(newWidth,
-            newHeight);
+    if (newWidth == GetSize().GetWidth() && newHeight == GetSize().GetHeight()) return;
+
+    SetSize(newWidth, newHeight);
+
+    int previousPanelWidth = optionPanel_->GetRequiredWidth();
+
     Update();
+    iconPanel_->Update();
+
+    if (optionPanelOpen_) {
+      if (previousPanelWidth != optionPanel_->GetRequiredWidth()) {
+        optionPanelOpenWidth_ = optionPanel_->GetRequiredWidth();
+        InvalidateLayout();
+        InvalidateMask();
+        Update();
+      }
+    }
+
   }
 }
 
@@ -258,9 +299,20 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
 
 void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
   wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
-  wxWindowID id = w->GetId();
 
-  if (id == ID_BUTTON_Arrow) ToggleOptionPanel();
+  switch(w->GetId()) {
+   
+    case ID_BUTTON_Arrow:
+      
+      ToggleOptionPanel();
+      break;
+
+    default:
+
+      evt.Skip();
+      break;
+
+  } 
 }
 
 
@@ -268,13 +320,13 @@ void MainFrame::OpenOptionPanel(bool open) {
   if (open == optionPanelOpen_) return;
 
   optionPanelOpen_ = open;
-  openCloseAnimationStartTime_ = gController->GetTimer();
+  openCloseAnimationStartTime_ = gController.GetTimer();
 
   openCloseAnimationWindowRight_ = GetRect().GetRight();
   openCloseAnimationDockLeft_ = !false;
 
   if (optionPanelOpen_) {
-    optionPanelOpenWidth_ = optionPanelMaxOpenWidth_;
+    optionPanelOpenWidth_ = optionPanel_->GetRequiredWidth();
   } else {
     optionPanelOpenWidth_ = 0;
   }
@@ -293,6 +345,12 @@ void MainFrame::OpenOptionPanel(bool open) {
       GetSize().GetHeight());    
   }  
 
+  if (optionPanelOpen_) {
+    arrowButton_->SetIcon(arrowButtonOpenIcon_, false);
+  } else {
+    arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
+  }
+
   InvalidateLayout();
   InvalidateMask();
   Update();
@@ -306,4 +364,11 @@ void MainFrame::CloseOptionPanel() {
 
 void MainFrame::ToggleOptionPanel() {
   OpenOptionPanel(!optionPanelOpen_);
+}
+
+
+MainFrame::~MainFrame() {
+  arrowButton_->SetIcon(NULL);
+  wxDELETE(arrowButtonCloseIcon_);
+  wxDELETE(arrowButtonOpenIcon_);
 }

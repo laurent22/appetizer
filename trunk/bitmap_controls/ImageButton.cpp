@@ -18,6 +18,7 @@ ImageButton::ImageButton(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
   state_ = _T("Up");  
 
+  iconBitmap_ = NULL;
   pressed_ = false;  
   gridIsExplicitelySet_ = false;
   nineSlicesPainterUp_ = NULL;
@@ -40,6 +41,14 @@ void ImageButton::SetGrid(int left, int top, int width, int height) {
   grid_.SetTop(top);
   grid_.SetWidth(width);
   grid_.SetHeight(height);
+  InvalidateControlBitmap();
+}
+
+
+void ImageButton::SetIcon(wxBitmap* iconBitmap, bool ownIt) {
+  if (iconBitmap_ == iconBitmap) return;
+  iconBitmap_ = iconBitmap;
+  ownIcon_ = ownIt;
   InvalidateControlBitmap();
 }
 
@@ -104,11 +113,20 @@ void ImageButton::UpdateControlBitmap() {
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);    
   painter->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
+  if (iconBitmap_) {
+    wxASSERT_MSG(iconBitmap_->IsOk(), _T("Invalid icon"));
+    destDC.DrawBitmap(
+      *iconBitmap_,
+      (GetSize().GetWidth() - iconBitmap_->GetWidth()) / 2,
+      (GetSize().GetHeight() - iconBitmap_->GetHeight()) / 2);
+  }  
   destDC.SelectObject(wxNullBitmap);
 }
 
 
 ImageButton::~ImageButton() {
+  if (ownIcon_) wxDELETE(iconBitmap_);
+
   wxDELETE(nineSlicesPainterUp_);
   wxDELETE(nineSlicesPainterOver_);
   wxDELETE(nineSlicesPainterDown_);
@@ -142,7 +160,9 @@ void ImageButton::OnMouseUp(wxMouseEvent& evt) {
   wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
   if (w->HasCapture()) w->ReleaseMouse();
 
-  if (GetRect().Contains(evt.GetPosition())) {
+  wxRect zeroRect(0, 0, GetSize().GetWidth(), GetSize().GetHeight());
+
+  if (zeroRect.Contains(evt.GetPosition())) {
     wxCommandEvent newEvent(wxeEVT_CLICK);
     newEvent.SetEventObject(this);
     GetEventHandler()->ProcessEvent(newEvent);

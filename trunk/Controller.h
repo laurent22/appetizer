@@ -10,14 +10,12 @@
 #include <wx/stopwatch.h>
 
 
-
 class Controller {
 
   public:
 
     Controller();      
     UserSP GetUser();
-    wxString GetApplicationDrive();
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
     int ShowWarningMessage(const wxString& message, long style = wxOK);
@@ -29,6 +27,7 @@ class Controller {
      */
 
     void User_FolderItemCollectionChange();
+    void User_FolderItemChange(FolderItemSP folderItem);
 
   private:
       

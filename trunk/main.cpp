@@ -22,7 +22,7 @@ IMPLEMENT_APP(MiniLaunchBar)
 
 
 // Initialize the global controller
-ControllerSP gController;
+Controller gController;
 
 // We can't use a smart pointer for the main frame
 // since it's going to be owned by the wxApp
@@ -62,8 +62,8 @@ bool MiniLaunchBar::OnInit() {
 
   Styles::InnerPanel.PaddingLeft = 8;
   Styles::InnerPanel.PaddingRight = 8;
-  Styles::InnerPanel.PaddingTop = 8;
-  Styles::InnerPanel.PaddingBottom = 8;
+  Styles::InnerPanel.PaddingTop = 4;
+  Styles::InnerPanel.PaddingBottom = 4;
   Styles::InnerPanel.PaddingWidth = Styles::InnerPanel.PaddingLeft + Styles::InnerPanel.PaddingRight;
   Styles::InnerPanel.PaddingHeight = Styles::InnerPanel.PaddingTop + Styles::InnerPanel.PaddingBottom;
 
@@ -74,21 +74,21 @@ bool MiniLaunchBar::OnInit() {
   Styles::Icon.PaddingWidth = Styles::Icon.PaddingLeft + Styles::Icon.PaddingRight;
   Styles::Icon.PaddingHeight = Styles::Icon.PaddingTop + Styles::Icon.PaddingBottom;
 
-  Styles::OptionPanel.PaddingLeft = 4;
-  Styles::OptionPanel.PaddingRight = 4;
+  Styles::OptionPanel.PaddingLeft = 6;
+  Styles::OptionPanel.PaddingRight = 6;
   Styles::OptionPanel.PaddingTop = 4;
   Styles::OptionPanel.PaddingBottom = 4;
   Styles::OptionPanel.PaddingWidth = Styles::OptionPanel.PaddingLeft + Styles::OptionPanel.PaddingRight;
   Styles::OptionPanel.PaddingHeight = Styles::OptionPanel.PaddingTop + Styles::OptionPanel.PaddingBottom;
   Styles::OptionPanel.ArrowButtonWidth = 16;
-
-  gController.reset(new Controller());
+  Styles::OptionPanel.ButtonHGap = 4;
+  Styles::OptionPanel.ButtonVGap = 3;
 
   gMainFrame = new MainFrame();
   gMainFrame->Show(true);
 
-  gController->GetUser()->Load();
-  gController->GetUser()->AutomaticallyAddNewApps();
+  gController.GetUser()->Load();
+  gController.GetUser()->AutomaticallyAddNewApps();
 
   gMainFrame->SetSize(100, 100, 400, 100);
 

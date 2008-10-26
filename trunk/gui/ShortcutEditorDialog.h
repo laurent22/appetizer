@@ -22,6 +22,8 @@ private:
 
   void OnCancelButtonClick(wxCommandEvent& evt);
   void OnSaveButtonClick(wxCommandEvent& evt);
+  void OnSelectFileButtonClick(wxCommandEvent& evt);
+  void OnSelectFolderButtonClick(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE();
 

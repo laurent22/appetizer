@@ -48,11 +48,6 @@ FolderItemSP Controller::GetDraggedFolderItem() {
 }
 
 
-wxString Controller::GetApplicationDrive() {
-  return applicationDrive_;
-}
-
-
 UserSP Controller::GetUser() {
   return user_;
 }
@@ -60,5 +55,16 @@ UserSP Controller::GetUser() {
 
 void Controller::User_FolderItemCollectionChange() {
   gMainFrame->GetIconPanel()->InvalidateIcons();
+}
+
+
+void Controller::User_FolderItemChange(FolderItemSP folderItem) {
+  FolderItemRendererSP renderer = gMainFrame->GetIconPanel()->GetRendererFromFolderItem(*folderItem);
+  if (!renderer.get()) {
+    wxLogDebug(_T("Warning: Could not find folder item renderer"));
+    return;
+  }
+
+  renderer->InvalidateControlBitmap();
 }
 

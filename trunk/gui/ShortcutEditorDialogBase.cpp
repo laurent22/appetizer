@@ -16,7 +16,8 @@ ShortcutEditorDialogBase::ShortcutEditorDialogBase(wxWindow* parent, int id, con
     nameTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
     locationLabel = new wxStaticText(this, wxID_ANY, wxT("Location:"));
     locationTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
-    locationButton = new wxButton(this, wxID_ANY, wxT("..."));
+    selectFileButton = new wxBitmapButton(this, ID_BUTTON_SelectFile, wxNullBitmap);
+    selectFolderButton = new wxBitmapButton(this, ID_BUTTON_SelectFolder, wxNullBitmap);
     saveButton = new wxButton(this, ID_BUTTON_Save, wxT("Save"));
     cancelButton = new wxButton(this, ID_BUTTON_Cancel, wxT("Cancel"));
 
@@ -31,7 +32,8 @@ void ShortcutEditorDialogBase::set_properties()
     // begin wxGlade: ShortcutEditorDialogBase::set_properties
     SetTitle(wxT("Edit shortcut"));
     SetSize(wxSize(336, 158));
-    locationButton->SetMinSize(wxSize(30, -1));
+    selectFileButton->SetMinSize(wxSize(24, 24));
+    selectFolderButton->SetMinSize(wxSize(24, 24));
     // end wxGlade
 }
 
@@ -47,7 +49,8 @@ void ShortcutEditorDialogBase::do_layout()
     inputSizers->Add(nameTextBox, 0, wxEXPAND, 0);
     inputSizers->Add(locationLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     sizer_4->Add(locationTextBox, 1, wxRIGHT|wxEXPAND, 8);
-    sizer_4->Add(locationButton, 0, 0, 0);
+    sizer_4->Add(selectFileButton, 0, wxRIGHT, 4);
+    sizer_4->Add(selectFolderButton, 0, 0, 0);
     inputSizers->Add(sizer_4, 1, wxEXPAND, 0);
     inputSizers->AddGrowableCol(1);
     mainSizer->Add(inputSizers, 0, wxALL|wxEXPAND, 10);
