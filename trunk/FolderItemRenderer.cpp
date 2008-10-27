@@ -5,9 +5,13 @@
 #include "FilePaths.h"
 #include <wx/menu.h>
 #include "Styles.h"
-
+#include "MainFrame.h"
+#include "Enumerations.h"
 #include "Controller.h"
+
+
 extern Controller gController;
+extern MainFrame* gMainFrame;
 
 
 int FolderItemRenderer::uniqueID_ = 0;
@@ -50,18 +54,21 @@ void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnMenuProperties(wxCommandEvent& evt) {
-  gController.GetUser()->EditFolderItem(folderItemId_);
+  gController.GetUser()->EditFolderItem(GetFolderItem());
 }
 
 
 void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
-  wxMenu menu;
+  wxMenu* menu = gMainFrame->GetIconPanel()->GetContextMenu();
 
-  menu.Append(ID_MENU_Delete, _T("Delete"));
-  menu.AppendSeparator();
-  menu.Append(ID_MENU_Properties, _T("Properties"));
+  menu->AppendSeparator();
+  menu->Append(ID_MENU_Delete, _T("Delete"));
+  menu->AppendSeparator();
+  menu->Append(ID_MENU_Properties, _T("Properties"));
 
-  PopupMenu(&menu, wxDefaultPosition);
+  PopupMenu(menu, wxDefaultPosition);
+
+  wxDELETE(menu);
 }
 
 
@@ -93,7 +100,9 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
 
   if (mouseInside_ && mousePressed_) {
-    wxLogDebug(_T("CLICK"));
+    FolderItemSP folderItem = GetFolderItem();
+    wxASSERT_MSG(folderItem.get(), _T("Folder item cannot be NULL"));
+    folderItem->Launch();
   }
 
   mousePressed_ = false;
@@ -122,7 +131,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       gController.SetDraggedFolderItem(folderItem->GetId());
 
       wxFileDataObject fileData;
-      fileData.AddFile(folderItem->GetResolvedFilePath());
+      fileData.AddFile(folderItem->GetResolvedPath());
 
       wxDropSource dragSource(this);
       dragSource.SetData(fileData);

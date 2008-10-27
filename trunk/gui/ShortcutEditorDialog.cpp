@@ -1,10 +1,11 @@
 #include "ShortcutEditorDialog.h"
-#include "../Controller.h"
 #include <wx/filename.h>
-#include "../FilePaths.h"
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
-
+#include "../FilePaths.h"
+#include "../Controller.h"
+#include "../MessageBoxes.h"
+#include "../utilities/DelphiToolsInterface.h"
 
 
 extern Controller gController;
@@ -32,7 +33,7 @@ void ShortcutEditorDialog::LoadFolderItem(FolderItemSP folderItem) {
 
 
 void ShortcutEditorDialog::OnCancelButtonClick(wxCommandEvent& evt) {
-  Close();
+  EndDialog(wxID_CANCEL);
 }
 
 
@@ -45,17 +46,14 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     // If the shortcut location doesn't exist, just show a warning but allow
     // the user to continue. Invalid shortcuts are allowed since they
     // might be referencing files from a different computer.
-    int result = gController.ShowWarningMessage(_T("The shorcut location doesn't exist. Do you wish to continue?"), wxOK | wxCANCEL);
+    int result = MessageBoxes::ShowWarning(_T("The shorcut location doesn't exist. Do you wish to continue?"), wxOK | wxCANCEL);
     if (result == wxID_CANCEL) return;
   }
 
   folderItem_->SetFilePath(folderItemFilePath);
   folderItem_->SetName(folderItemName);
 
-  gController.User_FolderItemChange(folderItem_);
-  gController.GetUser()->ScheduleSave();
-
-  Close();
+  EndDialog(wxID_OK);
 }
 
 
@@ -70,7 +68,14 @@ void ShortcutEditorDialog::OnSelectFileButtonClick(wxCommandEvent& evt) {
   int result = fileDialog.ShowModal();
   if (result != wxID_OK) return;
 
-  locationTextBox->SetValue(fileDialog.GetPath());
+  wxString newValue = FolderItem::ConvertToRelativePath(fileDialog.GetPath());
+  if (locationTextBox->GetValue() == newValue) return;
+
+  locationTextBox->SetValue(newValue);
+
+  wxString newName;
+  DelphiToolsInterface::GetFileDescription(FolderItem::ResolvePath(newValue), newName);
+  nameTextBox->SetValue(newName);
 }
 
 
@@ -79,7 +84,14 @@ void ShortcutEditorDialog::OnSelectFolderButtonClick(wxCommandEvent& evt) {
   int result = dirDialog.ShowModal();
   if (result != wxID_OK) return;
 
-  locationTextBox->SetValue(dirDialog.GetPath());
+  wxString newValue = FolderItem::ConvertToRelativePath(dirDialog.GetPath());
+  if (locationTextBox->GetValue() == newValue) return;
+
+  locationTextBox->SetValue(newValue);
+
+  wxString newName;
+  DelphiToolsInterface::GetFileDescription(FolderItem::ResolvePath(newValue), newName);
+  nameTextBox->SetValue(newName);
 }
 
 

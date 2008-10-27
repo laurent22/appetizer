@@ -11,6 +11,9 @@
 
 
 
+
+
+
 // The application class. An instance is created and initialized
 // below in IMPLEMENT_APP()
 class MiniLaunchBar: public wxApp {
@@ -38,8 +41,10 @@ bool MiniLaunchBar::OnInit() {
 
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
   wxString applicationDirectory = executablePath.GetPath();
-  wxFileName::SplitPath(executablePath.GetPath(), &FilePaths::ApplicationDrive, NULL, NULL, NULL, false, wxPATH_NATIVE);
+  wxString applicationDrive;
+  wxFileName::SplitPath(executablePath.GetPath(), &applicationDrive, NULL, NULL, NULL, false, wxPATH_NATIVE);
 
+  FilePaths::ApplicationDrive = applicationDrive;
   #ifdef __WIN32__
   FilePaths::ApplicationDrive += _T(":");
   #endif // __WIN32__
@@ -49,7 +54,7 @@ bool MiniLaunchBar::OnInit() {
   FilePaths::SettingsDirectory = FilePaths::DataDirectory + _T("\\") + SETTING_FOLDER_NAME;
   FilePaths::SkinDirectory = FilePaths::DataDirectory + _T("\\") + SKIN_FOLDER_NAME + _T("\\Default");
   FilePaths::LocalesDirectory = FilePaths::DataDirectory + _T("\\") + LOCALES_FOLDER_NAME;
-  FilePaths::ConfigFile = FilePaths::SettingsDirectory + _T("\\") + CONFIG_FILE_NAME;
+  FilePaths::SettingsFile = FilePaths::SettingsDirectory + _T("\\") + SETTING_FILE_NAME;
   FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("\\") + ICONS_FOLDER_NAME;
   FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("\\") + FOLDER_ITEMS_FILE_NAME;
 

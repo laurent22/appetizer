@@ -2,9 +2,11 @@
 #include <wx/dir.h>
 #include <wx/filename.h>
 #include "Controller.h"
+#include "Constants.h"
 #include "FolderItem.h"
 #include "utilities/StringUtil.h"
 #include "FilePaths.h"
+#include "third_party/tinyxml/tinyxml.h"
 
 extern Controller gController;
 
@@ -24,22 +26,29 @@ void User::ScheduleSave() {
 void User::Save() {
   settings_->Save();
 
-  wxFileConfig config(_T(""), _T(""), FilePaths::FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
+  TiXmlDocument doc;
+  doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
 
-  config.DeleteAll();
+  TiXmlElement* xmlRoot = new TiXmlElement("FolderItems");
+  xmlRoot->SetAttribute("version", "1.0");
+  doc.LinkEndChild(xmlRoot);
 
   for (int i = 0; i < folderItems_.size(); i++) {
     FolderItemSP folderItem = folderItems_.at(i);
-    config.SetPath(_T("/FolderItem") + StringUtil::ZeroPadding(i, 4));
-    config.Write(_T("FilePath"), folderItem->GetFilePath());
-    config.Write(_T("Name"), folderItem->GetName());
+    xmlRoot->LinkEndChild(folderItem->ToXML());   
   }
 
-  config.Flush();
+  wxString filePath = FilePaths::FolderItemsFile;
+  doc.SaveFile(filePath.mb_str());
 }
 
 
 void User::Load() {
+
+
+
+  return;
+
   wxFileConfig config(_T(""), _T(""), FilePaths::FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
 
   wxString folderItemGroup;
@@ -79,12 +88,35 @@ FolderItemSP User::GetFolderItemById(int folderItemId) {
 }
 
 
-void User::EditFolderItem(int folderItemId) {
+FolderItemSP User::EditNewFolderItem() {
+  FolderItemSP folderItem(new FolderItem());
+  int result = EditFolderItem(folderItem);
+
+  if (result == wxID_OK) {
+    folderItems_.push_back(folderItem);
+    ScheduleSave();
+    gController.User_FolderItemCollectionChange();
+    return folderItem;
+  }
+
+  FolderItemSP nullFolderItem;
+  return nullFolderItem;
+}
+
+
+int User::EditFolderItem(FolderItemSP folderItem) {
   shortcutEditorDialog_ = new ShortcutEditorDialog();
-  shortcutEditorDialog_->LoadFolderItem(GetFolderItemById(folderItemId));
-  shortcutEditorDialog_->ShowModal();
+  shortcutEditorDialog_->LoadFolderItem(folderItem);
+  int result = shortcutEditorDialog_->ShowModal();
   shortcutEditorDialog_->Destroy();
   shortcutEditorDialog_ = NULL;
+
+  if (result == wxID_OK) {
+    gController.User_FolderItemChange(folderItem);
+    ScheduleSave();
+  }
+
+  return result;
 }
 
 
@@ -154,7 +186,7 @@ void User::AutomaticallyAddNewApps() {
     // for this file path. If so: skip it.
     bool alreadyExists = false;
     for (int j = 0; j < folderItems_.size(); j++) {
-      if (folderItems_.at(j)->GetResolvedFilePath() == resolvedPath) {
+      if (folderItems_.at(j)->GetResolvedPath() == resolvedPath) {
         alreadyExists = true;
         break;
       }
@@ -163,7 +195,7 @@ void User::AutomaticallyAddNewApps() {
     if (alreadyExists) continue;
 
     FolderItemSP folderItem(new FolderItem());
-    folderItem->SetFilePath(filePath);
+    folderItem->SetFilePath(FolderItem::ConvertToRelativePath(filePath));
     folderItem->AutoSetName();
     folderItems_.push_back(folderItem);
 

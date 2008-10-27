@@ -1,16 +1,18 @@
 #ifndef __MainFrame_H
 #define __MainFrame_H
 
-#include "wx/wx.h" 
+#include <wx/wx.h>
+#include <wx/timer.h>
+#include <wx/log.h>
+#include <wx/icon.h>
 #include "imaging/NineSlicesPainter.h"
 #include "bitmap_controls/ImagePanel.h"
 #include "bitmap_controls/NineSlicesPanel.h"
 #include "bitmap_controls/ImageButton.h"
 #include "IconPanel.h"
-#include <wx/timer.h>
-#include <wx/log.h>
 #include "TypeDefinitions.h"
 #include "OptionPanel.h"
+#include "ApplicationTrayIcon.h"
 
 
 enum {
@@ -49,6 +51,8 @@ class MainFrame: public wxFrame {
     long openCloseAnimationDuration_;
     bool openCloseAnimationDockLeft_;
     int openCloseAnimationWindowRight_;
+    wxIcon frameIcon_;
+    ApplicationTrayIcon taskBarIcon_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -66,6 +70,8 @@ class MainFrame: public wxFrame {
     int GetMaxHeight();
     int GetMaxWidth();
 
+    wxMenu* GetContextMenu();
+
     int GetOptionPanelTotalWidth();
 
     void OpenOptionPanel(bool open = true);
@@ -73,6 +79,8 @@ class MainFrame: public wxFrame {
     void ToggleOptionPanel();
     void InvalidateLayout();
     void InvalidateMask();
+
+    
 
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);

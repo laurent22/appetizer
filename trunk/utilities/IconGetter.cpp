@@ -77,9 +77,13 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
   #ifdef __WIN32__
 
   // Get the file type from the file extension
+  wxFileType* fileType = NULL;
+
   wxFileName filename = wxFileName(filePath);
   wxString fileExtension = filename.GetExt();
-  wxFileType* fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(fileExtension);
+  if (fileExtension != wxEmptyString) {
+    fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(fileExtension);
+  }
 
   if (!fileType) {
     // The file type is not registered on the system, so try to get the default
@@ -114,6 +118,10 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
     wxIcon* icon = new wxIcon(iconLocation);
     icon->SetSize(iconSize, iconSize);
     return icon;
+  } else {
+    // @todo: If we couldn't get the icon, we
+    // should look for it in the registry.
+    // Noticed some problems with .pdf and .sln files among others
   }
   
   #endif // __WIN32__

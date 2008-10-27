@@ -6,7 +6,6 @@
 #include "Constants.h"
 #include "User.h"
 #include "boost/shared_ptr.hpp"
-#include <wx/msgdlg.h>
 #include <wx/stopwatch.h>
 
 
@@ -18,8 +17,6 @@ class Controller {
     UserSP GetUser();
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
-    int ShowWarningMessage(const wxString& message, long style = wxOK);
-    int ShowErrorMessage(const wxString& message, long style = wxOK);
     long GetTimer();
 
     /**

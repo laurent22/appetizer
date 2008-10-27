@@ -1,11 +1,12 @@
 #ifndef __IconPanel_H
 #define __IconPanel_H
 
-#include "wx/wx.h"
+#include <wx/wx.h>
+#include <wx/dnd.h>
+#include <wx/menu.h>
 #include "bitmap_controls/NineSlicesPanel.h"
 #include "FolderItemRenderer.h"
 #include <vector>
-#include <wx/dnd.h>
 using namespace std;
 
 
@@ -29,6 +30,7 @@ public:
   void InvalidateIcons();
   void InvalidateLayout();
 
+  int GetMinWidth();
   int GetMinHeight();
   int GetMaxWidth();
   int GetMaxHeight();
@@ -44,6 +46,11 @@ public:
 
   FolderItemRendererSP GetRendererFromFolderItem(const FolderItem& folderItem);
 
+  wxMenu* GetContextMenu();
+
+  void OnRightDown(wxMouseEvent& evt);
+  void OnMenuNewShortcut(wxCommandEvent& evt);
+
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);
   bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames); 
@@ -55,6 +62,8 @@ private:
   bool iconsInvalidated_;
   bool layoutInvalidated_;
   std::vector<FolderItemRendererSP> folderItemRenderers_;
+
+  DECLARE_EVENT_TABLE()
 
 };
 

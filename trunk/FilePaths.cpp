@@ -8,5 +8,5 @@ wxString FilePaths::SkinDirectory = _T("");
 wxString FilePaths::LocalesDirectory = _T("");
 wxString FilePaths::UserSettingsFile = _T("");
 wxString FilePaths::IconsDirectory = _T("");
-wxString FilePaths::ConfigFile = _T("");
+wxString FilePaths::SettingsFile = _T("");
 wxString FilePaths::FolderItemsFile = _T("");

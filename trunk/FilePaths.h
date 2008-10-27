@@ -15,7 +15,7 @@ public:
   static wxString LocalesDirectory;
   static wxString UserSettingsFile;
   static wxString IconsDirectory;
-  static wxString ConfigFile;
+  static wxString SettingsFile;
   static wxString FolderItemsFile;
 
 };

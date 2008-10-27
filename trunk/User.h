@@ -24,7 +24,8 @@ public:
 
   std::vector<FolderItemSP> GetFolderItems();
   FolderItemSP GetFolderItemById(int folderItemId);
-  void EditFolderItem(int folderItemId);
+  int EditFolderItem(FolderItemSP folderItem);
+  FolderItemSP EditNewFolderItem();
   void DeleteFolderItem(int folderItemId);
   void DumpFolderItems();
 

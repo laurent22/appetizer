@@ -6,7 +6,6 @@
 #include "MainFrame.h"
 
 
-
 extern MainFrame* gMainFrame;
 
 
@@ -19,18 +18,6 @@ Controller::Controller() {
 
 long Controller::GetTimer() {
   return stopWatch_.Time();
-}
-
-
-int Controller::ShowErrorMessage(const wxString& message, long style) {
-  wxMessageDialog dialog(NULL, message, _T("Error"), style | wxICON_ERROR);
-  return dialog.ShowModal();
-}
-
-
-int Controller::ShowWarningMessage(const wxString& message, long style) {
-  wxMessageDialog dialog(NULL, message, _T("Warning"), style | wxICON_EXCLAMATION);
-  return dialog.ShowModal();
 }
 
 
@@ -61,7 +48,8 @@ void Controller::User_FolderItemCollectionChange() {
 void Controller::User_FolderItemChange(FolderItemSP folderItem) {
   FolderItemRendererSP renderer = gMainFrame->GetIconPanel()->GetRendererFromFolderItem(*folderItem);
   if (!renderer.get()) {
-    wxLogDebug(_T("Warning: Could not find folder item renderer"));
+    // The folder item is not on the icon panel. It
+    // may happen if it has just been created.
     return;
   }
 

@@ -98,7 +98,14 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
 
   if (buttonName == _T("Close")) {
     gMainFrame->Close();
-  } else {
-
+  } else if (buttonName == _T("Minimize")) {
+    gMainFrame->Hide();
+  } else if (buttonName == _T("Eject")) {
+    gMainFrame->Close();
+    #ifdef __WIN32__
+    wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
+    #else
+    wxLogDebug(_T("TO BE IMPLEMENTED"));
+    #endif
   }
 }

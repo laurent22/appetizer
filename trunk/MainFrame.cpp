@@ -6,6 +6,9 @@
 #include "Styles.h"
 #include "bitmap_controls/ImageButton.h"
 
+
+
+
 extern Controller gController;
 
 
@@ -26,7 +29,7 @@ MainFrame::MainFrame()
   wxEmptyString,
   wxDefaultPosition,
   wxDefaultSize,
-  0 | wxFRAME_SHAPED | wxNO_BORDER
+  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR 
   )
 {  
   logWindow_ = NULL;
@@ -78,6 +81,12 @@ MainFrame::MainFrame()
   iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   iconPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
+
+  frameIcon_.LoadFile(FilePaths::IconsDirectory + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
+  taskBarIcon_.SetIcon(frameIcon_);
+
+  SetIcon(frameIcon_);
+  SetTitle(APPLICATION_NAME);
 } 
 
 
@@ -154,7 +163,7 @@ int MainFrame::GetMinHeight() {
 
 
 int MainFrame::GetMinWidth() {
-  return GetMinHeight() + GetOptionPanelTotalWidth();
+  return iconPanel_->GetMinWidth() + GetOptionPanelTotalWidth() + Styles::MainPanel.PaddingWidth;
 }
 
 

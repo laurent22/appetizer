@@ -4,12 +4,19 @@
 #include "boost/shared_ptr.hpp"
 #include "FilePaths.h"
 #include "Styles.h"
+#include "Enumerations.h"
 
 #include "Controller.h"
 #include "MainFrame.h"
 
 extern Controller gController;
 extern MainFrame* gMainFrame;
+
+
+BEGIN_EVENT_TABLE(IconPanel, NineSlicesPanel)
+  EVT_RIGHT_DOWN(IconPanel::OnRightDown)
+  EVT_MENU(ID_MENU_NewShortcut, IconPanel::OnMenuNewShortcut)
+END_EVENT_TABLE()
 
 
 IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
@@ -19,6 +26,27 @@ NineSlicesPanel(owner, id, point, size) {
   LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
   layoutInvalidated_ = true;
   iconsInvalidated_ = true;
+}
+
+
+wxMenu* IconPanel::GetContextMenu() {
+  wxMenu* menu = new wxMenu();
+  
+  menu->Append(ID_MENU_NewShortcut, _T("New shortcut..."));
+  
+  return menu;
+}
+
+
+void IconPanel::OnMenuNewShortcut(wxCommandEvent& evt) {
+  gController.GetUser()->EditNewFolderItem();
+}
+
+
+void IconPanel::OnRightDown(wxMouseEvent& evt) {
+  wxMenu* menu = GetContextMenu();
+  PopupMenu(menu, wxDefaultPosition);
+  wxDELETE(menu);
 }
 
 
@@ -73,7 +101,7 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
     // If a folder item is being dragged, and the panel receives a drop
     // event, it means that a folder item has been dragged from the app to the app.
     // In that case, we just change the position of the folder item.
-    wxLogDebug(_T("A FolderItem has been dropped: ") + folderItem->GetResolvedFilePath());
+    wxLogDebug(_T("A FolderItem has been dropped: ") + folderItem->GetResolvedPath());
 
     int screenX = x;
     int screenY = y;
@@ -125,6 +153,14 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
   }
 
   return true;
+}
+
+
+int IconPanel::GetMinWidth() {
+  return 
+    gController.GetUser()->GetSettings()->IconSize +
+    Styles::Icon.PaddingWidth +
+    Styles::InnerPanel.PaddingWidth;
 }
 
 

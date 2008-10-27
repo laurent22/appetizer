@@ -4,6 +4,8 @@
 #include "wx/wx.h"
 #include "boost/shared_ptr.hpp"
 #include "TypeDefinitions.h"
+#include "utilities/XmlUtil.h"
+
 
 class FolderItem {
 
@@ -13,13 +15,17 @@ public:
   int GetId() const;
   void AutoSetName();
   wxString GetName();
-  wxString GetResolvedFilePath();
+  wxString GetResolvedPath();
   wxString GetFilePath();
   wxIconSP GetIcon(int iconSize);
   void SetFilePath(const wxString& filePath);
-  void SetName(const wxString& name);
+  void SetName(const wxString& name);  
+  void ClearCachedIcons();  
+  void Launch();
+  TiXmlElement* ToXML();
+
   static wxString ResolvePath(const wxString& filePath);
-  void ClearCachedIcons();
+  static wxString ConvertToRelativePath(const wxString& filePath);
 
 private:
 
