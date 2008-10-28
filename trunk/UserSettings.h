@@ -11,14 +11,18 @@ public:
   UserSettings();
   int IconSize;
   void Save();
+  void Load();
 
   TiXmlElement* ToXml();
+  void FromXml(TiXmlElement* xml);
 
 private:
 
   void AppendSettingToXml(TiXmlElement* element, const char* name, const char* value);
   void AppendSettingToXml(TiXmlElement* element, const char* name, int value);
   void AppendSettingToXml(TiXmlElement* element, const char* name, wxString value);
+  void AssignSettingValue(int& setting, wxString value, int defaultValue);
+  void AssignSettingValue(int& setting, wxString value);
 
 };
 

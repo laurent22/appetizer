@@ -13,3 +13,10 @@ void XmlUtil::AppendTextElement(TiXmlElement* targetElement, const char* element
   s << elementText;
   XmlUtil::AppendTextElement(targetElement, elementName, s.mb_str());
 }
+
+
+wxString XmlUtil::ReadElementText(TiXmlHandle handle, const char* elementName) {
+  TiXmlElement* element = handle.Child(elementName, 0).ToElement();
+  if (element) return wxString(element->GetText(), wxConvUTF8);
+  return wxEmptyString;
+}

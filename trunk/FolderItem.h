@@ -23,6 +23,7 @@ public:
   void ClearCachedIcons();  
   void Launch();
   TiXmlElement* ToXML();
+  void FromXML(TiXmlElement* xml);
 
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);

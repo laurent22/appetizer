@@ -166,6 +166,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Generates version info and increments build number"
+				CommandLine="resources\\CreateResources.exe"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -192,6 +194,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -201,6 +204,75 @@
 				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				GenerateDebugInformation="true"
+				SubSystem="2"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Unicode Release|Win32"
+			OutputDirectory="$(SolutionDir)_$(ConfigurationName)"
+			IntermediateDirectory="_$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="1"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(BOOST_ROOT)&quot;"
+				PreprocessorDefinitions="WINVER=0x0400;wxUSE_GUI=1"
+				RuntimeLibrary="2"
+				DebugInformationFormat="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib"
+				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
+				IgnoreDefaultLibraryNames=""
+				GenerateDebugInformation="false"
 				SubSystem="2"
 			/>
 			<Tool
@@ -533,6 +605,10 @@
 				</File>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath=".\resources\resources.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

@@ -11,19 +11,40 @@
 extern Controller gController;
 
 
+BEGIN_EVENT_TABLE(User, wxEvtHandler)
+  EVT_TIMER(ID_TIMER_User_ScheduleSave, User::OnTimer)
+END_EVENT_TABLE()
+
+
 User::User() {
+  scheduledSaveTimer_ = NULL;
   shortcutEditorDialog_ = NULL;
   settings_.reset(new UserSettings());  
 }
 
 
-void User::ScheduleSave() {
-  // @todo: Implement scheduled save
-  Save();
+void User::OnTimer(wxTimerEvent& evt) {
+  Save(true);
+
 }
 
 
-void User::Save() {
+void User::ScheduleSave() {
+  if (!scheduledSaveTimer_) {
+    scheduledSaveTimer_ = new wxTimer(this, ID_TIMER_User_ScheduleSave);
+  }
+
+  scheduledSaveTimer_->Start(2000, true);
+}
+
+
+void User::Save(bool force) {
+  if (!force) {
+    // If no save operation is scheduled, exit now
+    if (!scheduledSaveTimer_) return;
+    if (!scheduledSaveTimer_->IsRunning()) return;
+  }
+
   settings_->Save();
 
   TiXmlDocument doc;
@@ -38,38 +59,35 @@ void User::Save() {
     xmlRoot->LinkEndChild(folderItem->ToXML());   
   }
 
-  wxString filePath = FilePaths::FolderItemsFile;
-  doc.SaveFile(filePath.mb_str());
+  doc.SaveFile(FilePaths::FolderItemsFile.mb_str());
 }
 
 
 void User::Load() {
+  settings_->Load();
 
+  TiXmlDocument doc(FilePaths::FolderItemsFile.mb_str());
+  doc.LoadFile();
 
+  TiXmlElement* root = doc.FirstChildElement("FolderItems");
+  if (!root) {
+    wxLogDebug(_T("User::Load: Could not load XML. No FolderItems element found."));
+    return;
+  }
 
-  return;
+  // @todo: AutoAddExclusions elements
+  
+  for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
+    wxString elementName = wxString(element->Value(), wxConvUTF8);
 
-  wxFileConfig config(_T(""), _T(""), FilePaths::FolderItemsFile, _T(""), wxCONFIG_USE_RELATIVE_PATH);
-
-  wxString folderItemGroup;
-  long index;
-  bool ok = config.GetFirstGroup(folderItemGroup, index);
-
-  while (ok) {
-    wxString filePath;
-    wxString name;
-    bool success = config.Read(_T("/") + folderItemGroup + _T("/FilePath"), &filePath);
-    if (!success) continue;
-
-    config.Read(_T("/") + folderItemGroup + _T("/Name"), &name);
-    if (!success) name = _T("");
+    if (elementName != _T("FolderItem")) {
+      wxLogDebug(_T("User::Load: Unknown element: %s"), elementName);
+      continue;
+    }
 
     FolderItemSP folderItem(new FolderItem());
-    folderItem->SetFilePath(filePath);
-    folderItem->SetName(name);
+    folderItem->FromXML(element);
     folderItems_.push_back(folderItem);
-
-    ok = config.GetNextGroup(folderItemGroup, index);
   }
 }
 

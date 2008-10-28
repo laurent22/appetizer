@@ -302,6 +302,8 @@ void MainFrame::InvalidateMask() {
 
 
 void MainFrame::OnClose(wxCloseEvent& evt) {
+  gController.GetUser()->Save();
+
   Destroy();
 }
 

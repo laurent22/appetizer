@@ -52,6 +52,14 @@ TiXmlElement* FolderItem::ToXML() {
 }
 
 
+void FolderItem::FromXML(TiXmlElement* xml) {
+  TiXmlHandle handle(xml);
+
+  SetName(XmlUtil::ReadElementText(handle, "Name"));
+  SetFilePath(XmlUtil::ReadElementText(handle, "FilePath"));
+}
+
+
 void FolderItem::AutoSetName() {
   DelphiToolsInterface::GetFileDescription(GetResolvedPath(), name_);
 }
