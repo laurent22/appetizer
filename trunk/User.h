@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <wx/event.h>
 #include <wx/timer.h>
+#include <wx/list.h>
 #include "FolderItem.h"
 #include "Enumerations.h"
 #include "UserSettings.h"
@@ -23,20 +24,23 @@ public:
   void ScheduleSave();
   void Save(bool force = false);
   void Load();
-
-  wxTimer* scheduledSaveTimer_;
+  
   std::vector<FolderItemSP> GetFolderItems();
   FolderItemSP GetFolderItemById(int folderItemId);
   int EditFolderItem(FolderItemSP folderItem);
   FolderItemSP EditNewFolderItem();
   void DeleteFolderItem(int folderItemId);
+  void MoveFolderItem(int folderItemId, int insertionIndex);
   void DumpFolderItems();
+  void DoMultiLaunch();
 
   void OnTimer(wxTimerEvent& evt);
 
 private:
 
+  wxTimer* scheduledSaveTimer_;
   std::vector<FolderItemSP> folderItems_;
+  wxStringList folderItemExclusions_;
   UserSettingsSP settings_;
   ShortcutEditorDialog* shortcutEditorDialog_;
 

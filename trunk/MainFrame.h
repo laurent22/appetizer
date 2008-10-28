@@ -5,6 +5,7 @@
 #include <wx/timer.h>
 #include <wx/log.h>
 #include <wx/icon.h>
+#include <wx/display.h>
 #include "imaging/NineSlicesPainter.h"
 #include "bitmap_controls/ImagePanel.h"
 #include "bitmap_controls/NineSlicesPanel.h"
@@ -70,6 +71,8 @@ class MainFrame: public wxFrame {
     int GetMaxHeight();
     int GetMaxWidth();
 
+    void ConvertToWindowValidCoordinates(const wxDisplay* display, int& x, int& y, int& width, int& height);
+
     wxMenu* GetContextMenu();
 
     int GetOptionPanelTotalWidth();
@@ -80,7 +83,9 @@ class MainFrame: public wxFrame {
     void InvalidateLayout();
     void InvalidateMask();
 
-    
+    int GetDisplayIndex();
+    bool IsLeftOfDisplay();
+    bool IsTopOfDisplay();
 
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);

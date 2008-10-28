@@ -13,7 +13,7 @@ class ImageButton: public BitmapControl {
 
   public:
 
-    ImageButton(wxWindow *owner, int id, wxPoint point, wxSize size);
+    ImageButton(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
     ~ImageButton();
     void LoadImage(const wxString& filePathPrefix);
     void UpdateControlBitmap();
@@ -25,6 +25,8 @@ class ImageButton: public BitmapControl {
     void OnMouseUp(wxMouseEvent& evt);
     void OnMouseOver(wxMouseEvent& evt);
     void OnMouseLeave(wxMouseEvent& evt);
+
+    bool Enable(bool enable = true);
 
   private:
 

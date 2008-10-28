@@ -17,6 +17,7 @@ public:
   static wxString IconsDirectory;
   static wxString SettingsFile;
   static wxString FolderItemsFile;
+  static wxString WindowFile;
 
 };
 

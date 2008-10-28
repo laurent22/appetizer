@@ -13,6 +13,7 @@ public:
 
   ShortcutEditorDialog();
   void LoadFolderItem(FolderItemSP folderItem);
+  void Localize();
 
 private:
 

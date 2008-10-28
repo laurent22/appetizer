@@ -9,7 +9,10 @@ class UserSettings {
 public:
 
   UserSettings();
+
   int IconSize;
+  wxString Locale;
+
   void Save();
   void Load();
 
@@ -22,6 +25,8 @@ private:
   void AppendSettingToXml(TiXmlElement* element, const char* name, int value);
   void AppendSettingToXml(TiXmlElement* element, const char* name, wxString value);
   void AssignSettingValue(int& setting, wxString value, int defaultValue);
+  //void AssignSettingValue(wxString& setting, wxString value, wxString defaultValue);
+  //void AssignSettingValue(wxString& setting, wxString value);
   void AssignSettingValue(int& setting, wxString value);
 
 };

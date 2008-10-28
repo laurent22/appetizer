@@ -166,7 +166,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Generates version info and increments build number"
+				Description="Generating version info and incrementing build number..."
 				CommandLine="resources\\CreateResources.exe"
 			/>
 			<Tool
@@ -331,6 +331,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Localization.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -486,6 +490,10 @@
 			</File>
 			<File
 				RelativePath=".\IconPanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Localization.h"
 				>
 			</File>
 			<File

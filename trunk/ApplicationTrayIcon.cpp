@@ -1,5 +1,6 @@
 #include "ApplicationTrayIcon.h"
 #include "MainFrame.h"
+#include "Localization.h"
 
 
 extern MainFrame* gMainFrame;
@@ -18,9 +19,9 @@ ApplicationTrayIcon::ApplicationTrayIcon() {}
 wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
   wxMenu* menu = new wxMenu();
 
-  menu->Append(ID_MENU_HideShow, _T("Hide / Show"));
+  menu->Append(ID_MENU_HideShow, gMainFrame->IsVisible() ? LOC(_T("TrayIcon.Hide")) : LOC(_T("TrayIcon.Show")));
   menu->AppendSeparator();  
-  menu->Append(ID_MENU_Exit, _T("Exit"));
+  menu->Append(ID_MENU_Exit, LOC(_T("Exit")));
 
   return menu;
 }

@@ -2,6 +2,7 @@
 #include <wx/filename.h>
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
+#include "../Localization.h"
 #include "../FilePaths.h"
 #include "../Controller.h"
 #include "../MessageBoxes.h"
@@ -23,6 +24,16 @@ ShortcutEditorDialog::ShortcutEditorDialog()
 : ShortcutEditorDialogBase(NULL, wxID_ANY, wxEmptyString) {
   selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FolderIcon.png"), wxBITMAP_TYPE_PNG));
   selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FileIcon.png"), wxBITMAP_TYPE_PNG));
+  Localize();
+}
+
+
+void ShortcutEditorDialog::Localize() {
+  SetTitle(LOC(_T("EditFolderItemForm.Title")));
+  nameLabel->SetLabel(LOC(_T("EditFolderItemForm.NameLabel")));
+  locationLabel->SetLabel(LOC(_T("EditFolderItemForm.LocationLabel")));
+  saveButton->SetLabel(LOC(_T("Global.Save")));
+  cancelButton->SetLabel(LOC(_T("Global.Cancel")));
 }
 
 

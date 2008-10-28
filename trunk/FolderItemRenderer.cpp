@@ -2,12 +2,14 @@
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
 #include <wx/log.h>
-#include "FilePaths.h"
 #include <wx/menu.h>
+#include "FilePaths.h"
+#include "Localization.h"
 #include "Styles.h"
 #include "MainFrame.h"
 #include "Enumerations.h"
 #include "Controller.h"
+#include "MessageBoxes.h"
 
 
 extern Controller gController;
@@ -26,6 +28,7 @@ BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
   EVT_RIGHT_DOWN(FolderItemRenderer::OnRightDown)
   EVT_MENU(ID_MENU_Delete, FolderItemRenderer::OnMenuDelete)
   EVT_MENU(ID_MENU_Properties, FolderItemRenderer::OnMenuProperties)
+  EVT_MENU(ID_MENU_AddToMultiLaunch, FolderItemRenderer::OnMenuAddToMultiLaunch)
 END_EVENT_TABLE()
 
 
@@ -48,7 +51,24 @@ FolderItemSP FolderItemRenderer::GetFolderItem() {
 }
 
 
+void FolderItemRenderer::OnMenuAddToMultiLaunch(wxCommandEvent& evt) {
+  FolderItemSP folderItem = GetFolderItem();
+  if (!folderItem.get()) return;
+  
+  if (folderItem->BelongsToMultiLaunchGroup()) {
+    GetFolderItem()->RemoveFromMultiLaunchGroup();
+  } else {
+    GetFolderItem()->AddToMultiLaunchGroup();
+  }
+
+  gController.User_FolderItemChange(folderItem);
+}
+
+
 void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
+  int result = MessageBoxes::ShowConfirmation(LOC(_T("IconPanel.DeleteConfirmation")));
+  if (result != wxID_YES) return;
+
   gController.GetUser()->DeleteFolderItem(folderItemId_);
 }
 
@@ -62,9 +82,14 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   wxMenu* menu = gMainFrame->GetIconPanel()->GetContextMenu();
 
   menu->AppendSeparator();
-  menu->Append(ID_MENU_Delete, _T("Delete"));
+  menu->Append(ID_MENU_Delete, LOC(_T("IconPanel.PopupMenu.Delete")));
+
+  wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_AddToMultiLaunch, LOC(_T("IconPanel.PopupMenu.AddToQuickLaunch")), wxEmptyString, wxITEM_CHECK);
+  menu->Append(menuItem);
+  menuItem->Check(GetFolderItem()->BelongsToMultiLaunchGroup());
+
   menu->AppendSeparator();
-  menu->Append(ID_MENU_Properties, _T("Properties"));
+  menu->Append(ID_MENU_Properties, LOC(_T("IconPanel.PopupMenu.Properties")));
 
   PopupMenu(menu, wxDefaultPosition);
 

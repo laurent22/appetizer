@@ -12,9 +12,9 @@ wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
     wxFileName filename(filePath);
 
     if ((filename.GetExt().CmpNoCase(wxT("exe")) == 0) || (filename.GetExt().CmpNoCase(wxT("ico")) == 0)) {
-      return GetExecutableIcon(filePath);
+      return GetExecutableIcon(filePath, iconSize);
     } else {
-      return GetDocumentIcon(filePath);
+      return GetDocumentIcon(filePath, iconSize);
     }
   }
 

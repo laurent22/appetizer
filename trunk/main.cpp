@@ -1,15 +1,13 @@
-#include "wx/wx.h" 
+#include <wx/wx.h>
+#include <wx/sysopt.h>
+#include <wx/stdpaths.h>
+#include <wx/filename.h>
 #include "MainFrame.h"
-#include "wx/sysopt.h"
 #include "Controller.h"
 #include "Constants.h"
 #include "FilePaths.h"
-#include "wx/stdpaths.h"
-#include "wx/filename.h"
 #include "Styles.h"
-#include "Styles.h"
-
-
+#include "Localization.h"
 
 
 
@@ -57,6 +55,9 @@ bool MiniLaunchBar::OnInit() {
   FilePaths::SettingsFile = FilePaths::SettingsDirectory + _T("\\") + SETTING_FILE_NAME;
   FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("\\") + ICONS_FOLDER_NAME;
   FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("\\") + FOLDER_ITEMS_FILE_NAME;
+  FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("\\") + WINDOW_FILE_NAME;
+
+  Localization::Initialize();
 
   Styles::MainPanel.PaddingLeft = 8;
   Styles::MainPanel.PaddingRight = 8;
@@ -95,7 +96,8 @@ bool MiniLaunchBar::OnInit() {
   gController.GetUser()->Load();
   gController.GetUser()->AutomaticallyAddNewApps();
 
-  gMainFrame->SetSize(100, 100, 400, 100);
+  Localization::Instance->LoadLocale(_T("fr"), FilePaths::LocalesDirectory);
+  Localization::Instance->SetCurrentLocale(_T("fr"));
 
   SetTopWindow(gMainFrame);
 

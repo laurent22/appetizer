@@ -44,6 +44,7 @@ private:
 
   void OnMenuDelete(wxCommandEvent& evt);
   void OnMenuProperties(wxCommandEvent& evt);
+  void OnMenuAddToMultiLaunch(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

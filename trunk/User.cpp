@@ -25,7 +25,14 @@ User::User() {
 
 void User::OnTimer(wxTimerEvent& evt) {
   Save(true);
+}
 
+
+void User::DoMultiLaunch() {
+  for (int i = 0; i < folderItems_.size(); i++) {
+    FolderItemSP folderItem = folderItems_.at(i);
+    if (folderItem->BelongsToMultiLaunchGroup()) folderItem->Launch();
+  }
 }
 
 
@@ -74,8 +81,6 @@ void User::Load() {
     wxLogDebug(_T("User::Load: Could not load XML. No FolderItems element found."));
     return;
   }
-
-  // @todo: AutoAddExclusions elements
   
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
@@ -112,7 +117,6 @@ FolderItemSP User::EditNewFolderItem() {
 
   if (result == wxID_OK) {
     folderItems_.push_back(folderItem);
-    ScheduleSave();
     gController.User_FolderItemCollectionChange();
     return folderItem;
   }
@@ -129,25 +133,73 @@ int User::EditFolderItem(FolderItemSP folderItem) {
   shortcutEditorDialog_->Destroy();
   shortcutEditorDialog_ = NULL;
 
-  if (result == wxID_OK) {
-    gController.User_FolderItemChange(folderItem);
-    ScheduleSave();
-  }
+  if (result == wxID_OK) gController.User_FolderItemChange(folderItem);
 
   return result;
 }
 
 
 void User::DeleteFolderItem(int folderItemId) {
+  bool wasDeleted = false;
+
   for (int i = 0; i < folderItems_.size(); i++) {
     FolderItemSP folderItem = folderItems_.at(i);
     if (folderItem->GetId() == folderItemId) {
       folderItems_.erase(folderItems_.begin() + i);
-      ScheduleSave();
+      wasDeleted = true;
       break;
     }
   }
 
+  if (wasDeleted) gController.User_FolderItemCollectionChange();
+}
+
+
+void User::MoveFolderItem(int folderItemId, int insertionIndex) {
+
+  // Get the folder item that we need to move
+  FolderItemSP folderItemToMove = GetFolderItemById(folderItemId);
+  if (!folderItemToMove.get()) {
+    wxLogDebug(_T("Could not find folder item #%d"), folderItemId);
+    return;
+  }
+
+  // Create the new vector of folder items that
+  // is going to replace the old one
+  std::vector<FolderItemSP> newFolderItems;
+
+  bool isPushed = false;
+
+  if (insertionIndex < 0) {
+    newFolderItems.push_back(folderItemToMove);
+    isPushed = true;
+  }
+
+  for (int i = 0; i < folderItems_.size(); i++) {
+    FolderItemSP folderItem = folderItems_.at(i);
+
+    // If the current folder item is the one
+    // we want to move, skip it
+    if (folderItem->GetId() == folderItemToMove->GetId()) continue;
+
+    if (i == insertionIndex && !isPushed) {
+      // If we are at the insertion index, insert the
+      // the folder item
+      newFolderItems.push_back(folderItemToMove);
+      isPushed = true;
+    }
+
+    // Keep copying the other folder items
+    newFolderItems.push_back(folderItem);
+  }
+
+  // If we didn't insert the folder item, do it now
+  if (!isPushed) newFolderItems.push_back(folderItemToMove);
+
+  // Swap the vectors
+  folderItems_ = newFolderItems;
+
+  // Notify everybody that we've changed the item collection
   gController.User_FolderItemCollectionChange();
 }
 
@@ -215,16 +267,14 @@ void User::AutomaticallyAddNewApps() {
     FolderItemSP folderItem(new FolderItem());
     folderItem->SetFilePath(FolderItem::ConvertToRelativePath(filePath));
     folderItem->AutoSetName();
+    folderItem->SetAutomaticallyAdded(true);
     folderItems_.push_back(folderItem);
 
     folderItemsChanged = true;
   }
 
   // Notify the controller that we've updated the folder items
-  if (folderItemsChanged) {
-    gController.User_FolderItemCollectionChange();
-    ScheduleSave();
-  }
+  if (folderItemsChanged) gController.User_FolderItemCollectionChange();
 }
 
 

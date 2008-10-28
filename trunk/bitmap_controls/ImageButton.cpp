@@ -28,6 +28,21 @@ BitmapControl(owner, id, point, size) {
 }
 
 
+bool ImageButton::Enable(bool enable) {
+  bool result = BitmapControl::Enable(enable);
+
+  if (enable) {
+    state_ = _T("Up");
+  } else {
+    state_ = _T("Disabled");
+  }
+
+  InvalidateControlBitmap();
+
+  return result;
+}
+
+
 void ImageButton::FitToImage() {
   wxBitmap tempBitmap(filePathPrefix_ + _T("Up.png"), wxBITMAP_TYPE_PNG);
   wxASSERT_MSG(tempBitmap.IsOk(), _T("Could not load bitmap"));

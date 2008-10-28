@@ -5,9 +5,10 @@
 #include "FilePaths.h"
 #include "Styles.h"
 #include "Enumerations.h"
-
+#include "Localization.h"
 #include "Controller.h"
 #include "MainFrame.h"
+
 
 extern Controller gController;
 extern MainFrame* gMainFrame;
@@ -23,16 +24,62 @@ IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
   SetDropTarget(new IconPanelDropTarget());
 
+  firstOffScreenIconIndex_ = -1; // Means all the icons are visible
   LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
   layoutInvalidated_ = true;
   iconsInvalidated_ = true;
+
+  browseButton_ = new ImageButton(this);
+  browseButton_->LoadImage(FilePaths::SkinDirectory + _T("/BrowseArrowButton"));
+  browseButton_->FitToImage();
+  browseButton_->Hide();
+  browseButton_->Connect(
+    wxID_ANY,
+    wxeEVT_CLICK,
+    wxCommandEventHandler(IconPanel::OnBrowseButtonClick),
+    NULL,
+    this);
+}
+
+
+void IconPanel::OnBrowseButtonMenu(wxCommandEvent& evt) {
+  FolderItemSP folderItem = gController.GetUser()->GetFolderItemById(evt.GetId());
+  if (!folderItem.get()) {
+    evt.Skip();
+  } else {
+    folderItem->Launch();
+  }
+}
+
+
+void IconPanel::OnBrowseButtonClick(wxCommandEvent& evt) {
+  if (firstOffScreenIconIndex_ < 0) return;
+
+  wxMenu menu;
+  
+  for (int i = firstOffScreenIconIndex_; i < folderItemRenderers_.size(); i++) {
+    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    FolderItemSP folderItem = renderer->GetFolderItem();
+
+    wxMenuItem* menuItem = folderItem->ToMenuItem(&menu);*
+    menu.Append(menuItem);
+  }
+
+  menu.Connect(
+    wxID_ANY,
+    wxEVT_COMMAND_MENU_SELECTED,
+    wxCommandEventHandler(IconPanel::OnBrowseButtonMenu),
+    NULL,
+    this);
+
+  PopupMenu(&menu, wxDefaultPosition);
 }
 
 
 wxMenu* IconPanel::GetContextMenu() {
   wxMenu* menu = new wxMenu();
   
-  menu->Append(ID_MENU_NewShortcut, _T("New shortcut..."));
+  menu->Append(ID_MENU_NewShortcut, LOC(_T("IconPanel.PopupMenu.NewShortcut")));
   
   return menu;
 }
@@ -112,36 +159,8 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
     wxLogDebug(_T("Drop index: %d"), index);
 
     if (index >= 0) {
-
-      FolderItemRendererSP folderItemRenderer = GetRendererFromFolderItem(*folderItem);
-      wxASSERT_MSG(folderItemRenderer.get(), _T("FolderItemRenderer must be defined"));
-
-      std::vector<FolderItemRendererSP> newRenderers;
-
-      bool isPushed = false;
-
-      for (int i = 0; i < folderItemRenderers_.size(); i++) {
-        FolderItemRendererSP renderer = folderItemRenderers_.at(i);
-        if (renderer->GetId() == folderItemRenderer->GetId()) continue;
-
-        if (i == index) {
-          newRenderers.push_back(folderItemRenderer);
-          isPushed = true;
-        }
-        newRenderers.push_back(renderer);
-      }
-
-      if (!isPushed) newRenderers.push_back(folderItemRenderer);
-
-      folderItemRenderers_.clear();
-      folderItemRenderers_ = newRenderers;
-
-      InvalidateLayout();
-
-      wxLogDebug(_T("%d"), folderItemRenderers_.size());
-
+      gController.GetUser()->MoveFolderItem(folderItem->GetId(), index);
     }
-
 
   } else {
     // Some files from outside the app have been dropped on the panel.
@@ -297,10 +316,16 @@ void IconPanel::RefreshIcons() {
 void IconPanel::UpdateLayout() {
   layoutInvalidated_ = false;
 
+  // Loop through the icons and move them
+  // at their right position
+
   int x = Styles::InnerPanel.PaddingLeft;
   int y = Styles::InnerPanel.PaddingTop;
+  int width = GetRect().GetWidth();
+  int height = GetRect().GetHeight();
 
   int iconSize = -1;
+  firstOffScreenIconIndex_ = -1;
   
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
@@ -310,14 +335,21 @@ void IconPanel::UpdateLayout() {
 
     if (iconSize < 0) iconSize = renderer->GetRect().GetWidth();
 
-    if (i > 0 && newX + iconSize > GetRect().GetWidth() - Styles::InnerPanel.PaddingRight) {
+    if (i > 0 && newX + iconSize > width - Styles::InnerPanel.PaddingRight) {
       newX = Styles::InnerPanel.PaddingLeft;
       newY += iconSize;
       y = newY;
     }
 
+    if (newY + iconSize > height - Styles::InnerPanel.PaddingBottom) {
+      if (firstOffScreenIconIndex_ < 0) firstOffScreenIconIndex_ = i;
+      renderer->Hide();
+    } else {
+      renderer->Show();
+    }
+    
     renderer->Move(newX, newY);
-
+    
     maxWidth_ = newX + iconSize;
     maxHeight_ = newY + iconSize;
 
@@ -327,4 +359,23 @@ void IconPanel::UpdateLayout() {
   maxWidth_ += Styles::InnerPanel.PaddingRight;
   maxHeight_ += Styles::InnerPanel.PaddingBottom;
 
+  if (firstOffScreenIconIndex_ >= 0) {
+    // If there are some offscreen icons, show the browse button
+    browseButton_->Show();
+    browseButton_->Move(
+      width - browseButton_->GetSize().GetWidth(),
+      height - browseButton_->GetSize().GetHeight());
+
+    if (firstOffScreenIconIndex_ > 0) {
+      // If the browse button overlaps the last icon,
+      // hide this icon and decrement firstOffScreenIconIndex_
+      FolderItemRendererSP r = folderItemRenderers_.at(firstOffScreenIconIndex_ - 1);
+      if (r->GetRect().GetRight() > browseButton_->GetRect().GetLeft()) {
+        r->Hide();
+        firstOffScreenIconIndex_--;
+      }
+    }
+  } else {
+    browseButton_->Hide();
+  }
 }

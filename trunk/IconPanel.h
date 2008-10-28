@@ -5,6 +5,7 @@
 #include <wx/dnd.h>
 #include <wx/menu.h>
 #include "bitmap_controls/NineSlicesPanel.h"
+#include "bitmap_controls/ImageButton.h"
 #include "FolderItemRenderer.h"
 #include <vector>
 using namespace std;
@@ -50,18 +51,22 @@ public:
 
   void OnRightDown(wxMouseEvent& evt);
   void OnMenuNewShortcut(wxCommandEvent& evt);
+  void OnBrowseButtonMenu(wxCommandEvent& evt);
 
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);
   bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames); 
+  void OnBrowseButtonClick(wxCommandEvent& evt);
 
 private:
 
+  int firstOffScreenIconIndex_;
   int maxWidth_;
   int maxHeight_;
   bool iconsInvalidated_;
   bool layoutInvalidated_;
   std::vector<FolderItemRendererSP> folderItemRenderers_;
+  ImageButton* browseButton_;
 
   DECLARE_EVENT_TABLE()
 

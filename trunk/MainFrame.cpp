@@ -1,9 +1,10 @@
+#include <wx/dcbuffer.h>
 #include "MainFrame.h"
 #include "Constants.h"
-#include "wx/dcbuffer.h"
 #include "Controller.h"
 #include "FilePaths.h"
 #include "Styles.h"
+#include "utilities/XmlUtil.h"
 #include "bitmap_controls/ImageButton.h"
 
 
@@ -87,10 +88,115 @@ MainFrame::MainFrame()
 
   SetIcon(frameIcon_);
   SetTitle(APPLICATION_NAME);
+
+
+
+  TiXmlDocument doc(FilePaths::WindowFile.mb_str());
+  doc.LoadFile();
+
+  TiXmlElement* root = doc.FirstChildElement("Window");
+  if (!root) {
+    wxLogDebug(_T("MainFrame: Could not load XML. No Window element found."));
+  } else {
+    TiXmlHandle handle(root);
+    int displayIndex = XmlUtil::ReadElementTextAsInt(handle, "DisplayIndex", 0);
+    bool isLeftOfDisplay = XmlUtil::ReadElementTextAsBool(handle, "IsLeftOfDisplay", true);
+    bool isTopOfDisplay = XmlUtil::ReadElementTextAsBool(handle, "IsTopOfDisplay", true);
+    int horizontalGap = XmlUtil::ReadElementTextAsInt(handle, "HorizontalGap", 0);
+    int verticalGap = XmlUtil::ReadElementTextAsInt(handle, "VerticalGap", 0);
+    int width = XmlUtil::ReadElementTextAsInt(handle, "Width", 200);
+    int height = XmlUtil::ReadElementTextAsInt(handle, "Height", 100);
+
+    if (displayIndex >= wxDisplay::GetCount()) displayIndex = wxDisplay::GetCount() - 1;
+    
+    wxDisplay display(displayIndex);
+
+    int x = 0;
+    int y = 0;
+
+    if (isLeftOfDisplay) {
+      x = display.GetGeometry().GetLeft() + horizontalGap;
+    } else {
+      x = display.GetGeometry().GetRight() - horizontalGap - width;
+    }
+
+    if (isTopOfDisplay) {
+      y = display.GetGeometry().GetTop() + verticalGap;
+    } else {
+      y = display.GetGeometry().GetBottom() - verticalGap - height;
+    }
+
+    ConvertToWindowValidCoordinates(&display, x, y, width, height);
+
+    SetSize(x, y, width, height);
+  }
 } 
 
 
+void MainFrame::ConvertToWindowValidCoordinates(const wxDisplay* display, int& x, int& y, int& width, int& height) {  
+  int displayX = x - display->GetGeometry().GetLeft();
+  int displayY = y - display->GetGeometry().GetTop();
+
+  if (displayX + width < WINDOW_VISIBILITY_BORDER) {
+    displayX = WINDOW_VISIBILITY_BORDER - width;
+  } else if (displayX > display->GetGeometry().GetWidth() - WINDOW_VISIBILITY_BORDER) {
+    displayX = display->GetGeometry().GetWidth() - WINDOW_VISIBILITY_BORDER;
+  }
+
+  if (displayY + height < WINDOW_VISIBILITY_BORDER) {
+    displayY = WINDOW_VISIBILITY_BORDER - height;
+  } else if (displayY > display->GetGeometry().GetHeight() - WINDOW_VISIBILITY_BORDER) {
+    displayY = display->GetGeometry().GetHeight() - WINDOW_VISIBILITY_BORDER;
+  }
+
+  x = displayX + display->GetGeometry().GetLeft();
+  y = displayY + display->GetGeometry().GetTop();
+}
+
+
 IconPanel* MainFrame::GetIconPanel() { return iconPanel_; }
+
+
+int MainFrame::GetDisplayIndex() {
+  int displayCount = wxDisplay::GetCount();
+  if (displayCount <= 1) return 0;
+
+  wxPoint centerPoint(
+    GetRect().GetLeft() + floor((double)GetRect().GetWidth() / 2),
+    GetRect().GetTop() + floor((double)GetRect().GetHeight() / 2));
+
+  int index = wxDisplay::GetFromPoint(centerPoint);
+  if (index < 0) return 0;
+  return index;
+}
+
+
+bool MainFrame::IsLeftOfDisplay() {
+  wxDisplay display(GetDisplayIndex());
+
+  wxRect geometry = display.GetGeometry();
+  wxPoint centerPoint(
+    GetRect().GetLeft() + floor((double)GetRect().GetWidth() / 2),
+    GetRect().GetTop() + floor((double)GetRect().GetHeight() / 2));
+
+  wxRect leftRect(geometry.GetLeft(), geometry.GetTop(), geometry.GetWidth() / 2, geometry.GetHeight());
+
+  return leftRect.Contains(centerPoint);
+}
+
+
+bool MainFrame::IsTopOfDisplay() {
+  wxDisplay display(GetDisplayIndex());
+
+  wxRect geometry = display.GetGeometry();
+  wxPoint centerPoint(
+    GetRect().GetLeft() + floor((double)GetRect().GetWidth() / 2),
+    GetRect().GetTop() + floor((double)GetRect().GetHeight() / 2));
+
+  wxRect topRect(geometry.GetLeft(), geometry.GetTop(), geometry.GetWidth(), geometry.GetHeight() / 2);
+
+  return topRect.Contains(centerPoint);
+}
 
 
 void MainFrame::UpdateMask() {
@@ -304,6 +410,40 @@ void MainFrame::InvalidateMask() {
 void MainFrame::OnClose(wxCloseEvent& evt) {
   gController.GetUser()->Save();
 
+  TiXmlDocument doc;
+  doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
+  TiXmlElement* xmlRoot = new TiXmlElement("Window");;
+  xmlRoot->SetAttribute("version", "1.0");
+  doc.LinkEndChild(xmlRoot);
+
+  XmlUtil::AppendTextElement(xmlRoot, "DisplayIndex", GetDisplayIndex());
+  XmlUtil::AppendTextElement(xmlRoot, "IsLeftOfDisplay", IsLeftOfDisplay());
+  XmlUtil::AppendTextElement(xmlRoot, "IsTopOfDisplay", IsTopOfDisplay());
+  XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth() - optionPanelOpenWidth_);
+  XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight());
+  
+  int hGap;
+  int vGap;
+
+  wxDisplay display(GetDisplayIndex());
+
+  if (IsLeftOfDisplay()) {
+    hGap = GetRect().GetLeft() - display.GetGeometry().GetLeft();
+  } else {    
+    hGap = display.GetGeometry().GetRight() - GetRect().GetRight();
+  }
+
+  if (IsTopOfDisplay()) {
+    vGap = GetRect().GetTop() - display.GetGeometry().GetTop();
+  } else {    
+    vGap = display.GetGeometry().GetBottom() - GetRect().GetBottom();
+  }
+
+  XmlUtil::AppendTextElement(xmlRoot, "HorizontalGap", hGap);
+  XmlUtil::AppendTextElement(xmlRoot, "VerticalGap", vGap);
+
+  doc.SaveFile(FilePaths::WindowFile.mb_str());
+
   Destroy();
 }
 
@@ -337,6 +477,7 @@ void MainFrame::OpenOptionPanel(bool open) {
   openCloseAnimationDockLeft_ = !false;
 
   if (optionPanelOpen_) {
+    optionPanel_->UpdateLayout();
     optionPanelOpenWidth_ = optionPanel_->GetRequiredWidth();
   } else {
     optionPanelOpenWidth_ = 0;
@@ -344,7 +485,7 @@ void MainFrame::OpenOptionPanel(bool open) {
 
   int newWindowWidth = arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_ + backgroundPanel_->GetSize().GetWidth();
 
-  if (openCloseAnimationDockLeft_) {
+  if (IsLeftOfDisplay()) {
     SetSize(
       newWindowWidth, 
       GetSize().GetHeight());

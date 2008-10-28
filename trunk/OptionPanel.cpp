@@ -28,6 +28,7 @@ NineSlicesPanel(owner, id, point, size) {
     wxString n = buttonNames[i];
     button->SetName(n);
     button->SetIcon(new wxBitmap(FilePaths::IconsDirectory + _T("/ButtonIcon_") + n + _T(".png"), wxBITMAP_TYPE_PNG));
+    button->Enable(n != _T("AddShortcut") && n != _T("Help") && n != _T("Key"));
     buttons_.push_back(button);
 
     button->Connect(
@@ -107,5 +108,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     #else
     wxLogDebug(_T("TO BE IMPLEMENTED"));
     #endif
+  } else if (buttonName == _T("MultiLaunch")) {
+    gController.GetUser()->DoMultiLaunch();
   }
 }

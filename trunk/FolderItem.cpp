@@ -4,6 +4,7 @@
 #include <wx/filename.h>
 #include "MessageBoxes.h"
 #include "FilePaths.h"
+#include "Localization.h"
 
 
 int FolderItem::uniqueID_ = 0;
@@ -12,11 +13,43 @@ int FolderItem::uniqueID_ = 0;
 FolderItem::FolderItem() {
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
+  automaticallyAdded_ = false;
+  belongsToMultiLaunchGroup_ = false;
 }
 
 
 int FolderItem::GetId() const {
   return id_;
+}
+
+
+void FolderItem::AddToMultiLaunchGroup() {
+  belongsToMultiLaunchGroup_ = true;
+}
+
+
+void FolderItem::RemoveFromMultiLaunchGroup() {
+  belongsToMultiLaunchGroup_ = false;
+}
+
+
+bool FolderItem::BelongsToMultiLaunchGroup() {
+  return belongsToMultiLaunchGroup_;
+}
+
+
+wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
+  wxMenuItem* menuItem = new wxMenuItem(parentMenu, GetId(), GetName());
+
+  const wxIcon* icon = GetIcon(16).get();
+  if (!icon->IsOk()) {
+    wxLogDebug(_T("Icon is not ok for: %s"), GetName());
+  } else {
+    wxBitmap* iconBitmap = new wxBitmap(*icon);
+    menuItem->SetBitmap(*iconBitmap);
+  }
+
+  return menuItem;
 }
 
 
@@ -37,7 +70,7 @@ void FolderItem::Launch() {
     wxLogDebug(_T("TO BE IMPLEMENTED"));
     #endif
   } else {
-    MessageBoxes::ShowError(filename.GetName() + _T(' could not be found.'));
+    MessageBoxes::ShowError(LOC(_T("FolderItem.LaunchFileError")));
   }
 }
 
@@ -47,6 +80,8 @@ TiXmlElement* FolderItem::ToXML() {
 
   XmlUtil::AppendTextElement(xml, "FilePath", GetFilePath().mb_str());
   XmlUtil::AppendTextElement(xml, "Name", GetName().mb_str());
+  XmlUtil::AppendTextElement(xml, "AutomaticallyAdded", GetAutomaticallyAdded());
+  XmlUtil::AppendTextElement(xml, "MultiLaunchGroup", BelongsToMultiLaunchGroup());
 
   return xml;
 }
@@ -57,6 +92,18 @@ void FolderItem::FromXML(TiXmlElement* xml) {
 
   SetName(XmlUtil::ReadElementText(handle, "Name"));
   SetFilePath(XmlUtil::ReadElementText(handle, "FilePath"));
+  SetAutomaticallyAdded(XmlUtil::ReadElementTextAsBool(handle, "AutomaticallyAdded"));
+  belongsToMultiLaunchGroup_ = XmlUtil::ReadElementTextAsBool(handle, "MultiLaunchGroup");
+}
+
+
+bool FolderItem::GetAutomaticallyAdded() {
+  return automaticallyAdded_;
+}
+
+
+void FolderItem::SetAutomaticallyAdded(bool automaticallyAdded) {
+  automaticallyAdded_ = automaticallyAdded;
 }
 
 

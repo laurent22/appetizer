@@ -10,3 +10,4 @@ wxString FilePaths::UserSettingsFile = _T("");
 wxString FilePaths::IconsDirectory = _T("");
 wxString FilePaths::SettingsFile = _T("");
 wxString FilePaths::FolderItemsFile = _T("");
+wxString FilePaths::WindowFile = _T("");

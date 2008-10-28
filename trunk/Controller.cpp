@@ -42,6 +42,7 @@ UserSP Controller::GetUser() {
 
 void Controller::User_FolderItemCollectionChange() {
   gMainFrame->GetIconPanel()->InvalidateIcons();
+  GetUser()->ScheduleSave();
 }
 
 
@@ -54,5 +55,6 @@ void Controller::User_FolderItemChange(FolderItemSP folderItem) {
   }
 
   renderer->InvalidateControlBitmap();
+  GetUser()->ScheduleSave();
 }
 

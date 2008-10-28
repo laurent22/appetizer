@@ -8,7 +8,8 @@ extern Controller gController;
 
 
 UserSettings::UserSettings() {
-  IconSize = 32;
+  IconSize = 16;
+  Locale = _T("en");
 }
 
 
@@ -16,6 +17,7 @@ TiXmlElement* UserSettings::ToXml() {
   TiXmlElement* xml = new TiXmlElement("Settings");
 
   AppendSettingToXml(xml, "IconSize", IconSize);
+  AppendSettingToXml(xml, "Locale", Locale);
 
   return xml;
 }
@@ -47,6 +49,7 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     }
 
     if (n == _T("IconSize")) AssignSettingValue(IconSize, v);
+    if (n == _T("Locale")) Locale = v;
 
   }
 }
