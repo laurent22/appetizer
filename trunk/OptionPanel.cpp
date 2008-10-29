@@ -4,6 +4,7 @@
 #include "Styles.h"
 #include "MainFrame.h"
 #include "Localization.h"
+#include <wx/cursor.h>
 
 
 extern Controller gController;
@@ -29,6 +30,7 @@ NineSlicesPanel(owner, id, point, size) {
   for (int i = 0; i < buttonNames.size(); i++) {
     OptionButton* button = new OptionButton(this, wxID_ANY);
     wxString n = buttonNames[i];
+    button->SetCursor(wxCursor(wxCURSOR_HAND));
     button->SetName(n);
     button->SetIcon(new wxBitmap(FilePaths::IconsDirectory + _T("/ButtonIcon_") + n + _T(".png"), wxBITMAP_TYPE_PNG));
     button->Enable(n != _T("AddShortcut") && n != _T("Help") && n != _T("Key"));
@@ -165,7 +167,7 @@ ConfigDialog* OptionPanel::GetConfigDialog() {
 
 OptionPanel::~OptionPanel() {
   if (configDialog_) {
-    configDialog_->Destroy();
+    wxDELETE(configDialog_);
     configDialog_ = NULL;
   }
 }

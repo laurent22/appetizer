@@ -1,4 +1,5 @@
 #include "IconPanel.h"
+#include <wx/cursor.h>
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
 #include "boost/shared_ptr.hpp"
@@ -33,6 +34,7 @@ NineSlicesPanel(owner, id, point, size) {
   browseButton_->LoadImage(FilePaths::SkinDirectory + _T("/BrowseArrowButton"));
   browseButton_->FitToImage();
   browseButton_->Hide();
+  browseButton_->SetCursor(wxCursor(wxCURSOR_HAND));
   browseButton_->Connect(
     wxID_ANY,
     wxeEVT_CLICK,
@@ -286,6 +288,7 @@ void IconPanel::RefreshIcons() {
     
     renderer->LoadData(folderItem->GetId());
     renderer->FitToContent();
+    renderer->SetCursor(wxCursor(wxCURSOR_HAND));
 
     folderItemRenderers_.push_back(renderer);
   }
@@ -368,8 +371,8 @@ void IconPanel::UpdateLayout() {
     // If there are some offscreen icons, show the browse button
     browseButton_->Show();
     browseButton_->Move(
-      width - browseButton_->GetSize().GetWidth(),
-      height - browseButton_->GetSize().GetHeight());
+      width - browseButton_->GetSize().GetWidth() - Styles::InnerPanel.PaddingRight,
+      height - browseButton_->GetSize().GetHeight() - Styles::InnerPanel.PaddingBottom);
 
     if (firstOffScreenIconIndex_ > 0) {
       // If the browse button overlaps the last icon,

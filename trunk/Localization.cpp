@@ -191,4 +191,17 @@ void Localization::Initialize() {
 }
 
 
+Localization::~Localization() {
+  for (int i = 0; i < loadedLocales_.size(); i++) {
+    wxDELETE(loadedLocales_.at(i))
+  }
+  loadedLocales_.clear();
+}
 
+
+LocalizationLocale::~LocalizationLocale() {
+  for (int i = 0; i < strings_.size(); i++) {
+    wxDELETE(strings_.at(i))
+  }
+  strings_.clear();
+}

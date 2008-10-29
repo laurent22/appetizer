@@ -1,6 +1,7 @@
 #include "FolderItemRenderer.h"
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
+#include "imaging/Imaging.h"
 #include <wx/log.h>
 #include <wx/menu.h>
 #include "FilePaths.h"
@@ -218,9 +219,8 @@ void FolderItemRenderer::UpdateControlBitmap() {
   wxIconSP icon = folderItem->GetIcon(gController.GetUser()->GetSettings()->IconSize);
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
-  if (icon->IsOk()) {
-    // If the icon is valid, draw it
-    destDC.DrawIcon(*icon, Styles::Icon.PaddingLeft, Styles::Icon.PaddingTop);
+  if (icon->IsOk()) {  
+    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.PaddingLeft, Styles::Icon.PaddingTop);
   }
 
   destDC.SelectObject(wxNullBitmap);

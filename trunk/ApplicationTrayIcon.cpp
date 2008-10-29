@@ -20,8 +20,8 @@ wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
   wxMenu* menu = new wxMenu();
 
   menu->Append(ID_MENU_HideShow, gMainFrame->IsVisible() ? LOC(_T("TrayIcon.Hide")) : LOC(_T("TrayIcon.Show")));
-  menu->AppendSeparator();  
-  menu->Append(ID_MENU_Exit, LOC(_T("Exit")));
+  menu->AppendSeparator();
+  menu->Append(ID_MENU_Exit, LOC(_T("TrayIcon.Close")));
 
   return menu;
 }

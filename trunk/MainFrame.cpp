@@ -1,8 +1,10 @@
 #include <wx/dcbuffer.h>
+#include <wx/cursor.h>
 #include "MainFrame.h"
 #include "Constants.h"
 #include "Controller.h"
 #include "FilePaths.h"
+#include "Localization.h"
 #include "Styles.h"
 #include "utilities/DelphiToolsInterface.h"
 #include "utilities/XmlUtil.h"
@@ -57,6 +59,7 @@ MainFrame::MainFrame()
   arrowButton_->LoadImage(FilePaths::SkinDirectory + _T("/ArrowButton"));
   // @todo: Grid should not be hardcoded but set in styles
   arrowButton_->SetGrid(6, 30, 1, 1);
+  arrowButton_->SetCursor(wxCursor(wxCURSOR_HAND));
   arrowButtonOpenIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
   arrowButtonCloseIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
   arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
@@ -458,6 +461,8 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   doc.SaveFile(FilePaths::WindowFile.mb_str());
 
   DelphiToolsInterface::UnloadDLL();
+
+  wxDELETE(Localization::Instance);
 
   Destroy();
 }

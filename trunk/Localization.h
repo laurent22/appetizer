@@ -18,6 +18,7 @@ class LocalizationLocale {
 public:
 
   LocalizationLocale(const wxString& code);
+  ~LocalizationLocale();
   wxString GetString(const wxString& stringId);
   wxString GetCode();
   void AddString(const wxString& stringId, const wxString& stringText);
@@ -35,6 +36,7 @@ class Localization {
 public:
 
   Localization();
+  ~Localization();
   void LoadLocale(const wxString& localeCode, const wxString& localeFolderPath);
   bool LocaleLoaded(const wxString& localeCode);
   static wxString GetLanguageName(const wxString& localeFilePath);
