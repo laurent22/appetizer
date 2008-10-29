@@ -1,9 +1,19 @@
 #summary Some information on how to build this project
 
-= Details =
+== Details ==
 
-This project is developed and built using [http://www.microsoft.com/express/vc/ Visual C++ 2008 Express Edition] and [http://www.wxwidgets.org/ wxWidgets] (2.8.9, Unicode Build).
+This project is developed and built using [http://www.microsoft.com/express/vc/ Visual C++ 2008 Express Edition] and [http://www.wxwidgets.org/ wxWidgets] (2.8.9 Unicode). The [http://www.boost.org/ Boost C++ library] must also be installed on your system.
 
-In order to build the project, you must set a WXWIN environment variable and make it point to your wxWidgets folder as shown [http://priyank.co.in/readarticle.php?article_id=1 here]. Also make sure that you have [http://wiki.wxwidgets.org/Microsoft_Visual_CPP_Guide built] the wxWidgets Unicode libraries.
+== Required environment variables ==
 
-Currently wxMiniLaunchBar can only build under Windows (tested under XP only).
+In order to build the project, you must set two environment variables:
+
+* WXWIN that points to your wxWidgets folder (eg C:\wxWidgets-2.8.9)
+
+* BOOST_ROOT that points to your Boost folder (eg c:\boost_1_36_0)
+
+See [http://priyank.co.in/readarticle.php?article_id=1 here] for some information on how to do that.
+
+== Supported OS ==
+
+Currently, wxMiniLaunchBar can only be built under Windows (tested under XP only).
