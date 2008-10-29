@@ -2,7 +2,7 @@
 
 == Details ==
 
-This project is developed and built using [http://www.microsoft.com/express/vc/ Visual C++ 2008 Express Edition] and [http://www.wxwidgets.org/ wxWidgets] (2.8.9 Unicode). The [http://www.boost.org/ Boost C++ library] must also be installed on your system.
+This project is developed and built using [http://www.microsoft.com/express/vc/ Visual C++ 2008 Express Edition] and [http://www.wxwidgets.org/ wxWidgets] (2.8.9 Unicode). The [http://www.boost.org/ Boost C++ libraries] must also be installed on your system.
 
 == Required environment variables ==
 
