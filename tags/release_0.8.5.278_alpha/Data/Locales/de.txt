@@ -1,0 +1,38 @@
+//Deutsch
+//@author =  Simeon, adapted by wk
+
+Global.Error = Fehler
+Global.Cancel = Abbrechen
+Global.OK = OK
+Global.Yes = Ja
+Global.No = Nein
+Global.Save = Speichern
+Global.OpenDialog.AllFiles = Alle Dateien
+
+FolderItem.LaunchFileError = Diese Datei existiert nicht oder wurde gelöscht (Fehler %0%)
+
+IconPanel.PopupMenu.NewShortcut = Neue Verknüpfung...
+IconPanel.PopupMenu.Delete = Löschen...
+IconPanel.PopupMenu.Properties = Eigenschaften
+IconPanel.PopupMenu.AddToQuickLaunch = Zur Schnellstart-Gruppe hinzufügen
+IconPanel.DeleteConfirmation = Wollen Sie diese Verknüpfung wirklich löschen?
+
+EditFolderItemForm.Title = Verknüpfungseigenschaften
+EditFolderItemForm.NameLabel = Name:
+EditFolderItemForm.LocationLabel = Ort:
+
+TrayIcon.Close = Schließen
+TrayIcon.Hide = Minimieren
+TrayIcon.Show = Zeigen
+
+SelectFolderOrFileDialog.Title = Ordner oder Datei auswählen
+SelectFolderOrFileDialog.SelectFile = Datei auswählen
+SelectFolderOrFileDialog.SelectFolder = Ordner auswählen
+
+Icon.Size16 = Klein (16x16)
+Icon.Size32 = Groß  (32x32)
+
+ConfigDialog.Title = Einstellungen
+ConfigDialog.GeneralTab = Allgemein
+ConfigDialog.LanguageLabel = Sprache:
+ConfigDialog.IconSizeLabel = Größe der Symbole:

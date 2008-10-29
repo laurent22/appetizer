@@ -1,0 +1,38 @@
+// Dutch
+// @author = Pieter Kerstens
+
+Global.Error = Fout
+Global.Cancel = Annuleren
+Global.OK = OK
+Global.Yes = Ja
+Global.No = Nee
+Global.Save = Opslaan
+Global.OpenDialog.AllFiles = Alle Bestanden
+
+FolderItem.LaunchFileError = Dit bestand bestaat niet of werd verwijderd (Error %0%)
+
+IconPanel.PopupMenu.NewShortcut = Nieuwe snelkoppeling...
+IconPanel.PopupMenu.Delete = Verwijder...
+IconPanel.PopupMenu.Properties = Eigenschappen
+IconPanel.PopupMenu.AddToQuickLaunch = Toevoegen aan Multi Launch groep
+IconPanel.DeleteConfirmation = Wil u dit item verwijderen?
+
+EditFolderItemForm.Title = Snelkoppeling Eigenschappen
+EditFolderItemForm.NameLabel = Naam:
+EditFolderItemForm.LocationLabel = Lokatie:
+
+TrayIcon.Close = Sluiten
+TrayIcon.Hide = Verbergen
+TrayIcon.Show = Toon
+
+SelectFolderOrFileDialog.Title = Selecteer map of bestand
+SelectFolderOrFileDialog.SelectFile = Selecteer bestand
+SelectFolderOrFileDialog.SelectFolder = Selecteer map
+
+Icon.Size16 = Klein
+Icon.Size32 = Groot
+
+ConfigDialog.Title = Configuratie
+ConfigDialog.GeneralTab = Algemeen
+ConfigDialog.LanguageLabel = Taal:
+ConfigDialog.IconSizeLabel = Icon grootte:
