@@ -8,9 +8,9 @@ This project is developed and built using [http://www.microsoft.com/express/vc/ 
 
 In order to build the project, you must set two environment variables:
 
-* WXWIN that points to your wxWidgets folder (eg C:\wxWidgets-2.8.9)
+ * *WXWIN* that points to your wxWidgets folder (eg C:\wxWidgets-2.8.9)
 
-* BOOST_ROOT that points to your Boost folder (eg c:\boost_1_36_0)
+ * *BOOST_ROOT* that points to your Boost folder (eg c:\boost_1_36_0)
 
 See [http://priyank.co.in/readarticle.php?article_id=1 here] for some information on how to do that.
 
