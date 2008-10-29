@@ -14,5 +14,7 @@ const wxString LOCALES_FOLDER_NAME = _T("Locales");
 const wxString ICONS_FOLDER_NAME = _T("Icons");
 const wxString WINDOW_FILE_NAME = _T("Window.xml");
 const int WINDOW_VISIBILITY_BORDER = 20;
+const int MAIN_FRAME_DEFAULT_WIDTH = 300;
+const int MAIN_FRAME_DEFAULT_HEIGHT = 80;
 
 #endif // __Constants_H

@@ -8,7 +8,7 @@ extern Controller gController;
 
 
 UserSettings::UserSettings() {
-  IconSize = 16;
+  IconSize = 32;
   Locale = _T("en");
 }
 

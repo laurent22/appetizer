@@ -1,5 +1,24 @@
 #include "DelphiToolsInterface.h"
+#include "../FilePaths.h"
 #include <wx/filename.h>
+
+
+HINSTANCE DelphiToolsInterface::hInstLibrary;
+bool DelphiToolsInterface::IsLoaded = false;
+
+
+void DelphiToolsInterface::LoadDLL() {
+  if (DelphiToolsInterface::IsLoaded) return;
+  DelphiToolsInterface::hInstLibrary = LoadLibrary(FilePaths::DataDirectory + _T("\\DelphiTools.dll"));
+  DelphiToolsInterface::IsLoaded = true;
+}
+
+
+void DelphiToolsInterface::UnloadDLL() {
+  if (!DelphiToolsInterface::IsLoaded) return;
+  FreeLibrary(DelphiToolsInterface::hInstLibrary);
+  DelphiToolsInterface::IsLoaded = false;
+}
 
 
 void DelphiToolsInterface::GetFileDescription(const wxString& filePath, wxString& fileDescription) {
@@ -8,12 +27,12 @@ void DelphiToolsInterface::GetFileDescription(const wxString& filePath, wxString
   typedef wxChar* (*GetVersionInfo_FileDescription)(const wxChar*);
   GetVersionInfo_FileDescription _GetVersionInfo_FileDescription;
 
-  HINSTANCE hInstLibrary = LoadLibrary(_T("Data\\DelphiTools.dll"));
+  //HINSTANCE hInstLibrary = LoadLibrary(_T("Data\\DelphiTools.dll"));
 
   if (hInstLibrary) {
     _GetVersionInfo_FileDescription = (GetVersionInfo_FileDescription)GetProcAddress(hInstLibrary, "GetVersionInfo_FileDescription");
     wxChar* outputChar = _GetVersionInfo_FileDescription(filePath.c_str());
-    FreeLibrary(hInstLibrary);
+    //FreeLibrary(hInstLibrary);
 
     fileDescription = wxString(outputChar);
 

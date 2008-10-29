@@ -8,6 +8,7 @@
 #include "FilePaths.h"
 #include "Styles.h"
 #include "Localization.h"
+#include "utilities/DelphiToolsInterface.h"
 
 
 
@@ -88,6 +89,7 @@ bool MiniLaunchBar::OnInit() {
   Styles::OptionPanel.ButtonHGap = 4;
   Styles::OptionPanel.ButtonVGap = 3;
 
+  DelphiToolsInterface::LoadDLL();
   gController.GetUser()->Load();
 
   Localization::Initialize();

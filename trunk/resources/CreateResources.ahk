@@ -7,6 +7,7 @@
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 
 versionFilePath = %A_ScriptDir%\version.txt
+versionPrefixFilePath = %A_ScriptDir%\version_prefix.txt
 resourceTemplateFilePath = %A_ScriptDir%\resources_template.rc
 resourceFilePath = %A_ScriptDir%\resources.rc
 
@@ -16,6 +17,8 @@ if ErrorLevel
 	MsgBox Could not read version number
 	ExitApp
 }
+
+FileRead, versionPrefixText, %versionPrefixFilePath%
 
 FileRead, resourceText, %resourceTemplateFilePath%
 if ErrorLevel
@@ -68,7 +71,7 @@ if (newVersionNumber = "")
 StringReplace, newVersionNumberComa, newVersionNumber, ., `,, All
 
 StringReplace, resourceText, resourceText, ____VERSION_COMA____, %newVersionNumberComa%, All
-StringReplace, resourceText, resourceText, ____VERSION____, %newVersionNumber%, All
+StringReplace, resourceText, resourceText, ____VERSION____, %newVersionNumber% %versionPrefixText%, All
 
 FileDelete %resourceFilePath%
 FileAppend %resourceText%, %resourceFilePath%

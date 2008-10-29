@@ -4,6 +4,7 @@
 #include "Controller.h"
 #include "FilePaths.h"
 #include "Styles.h"
+#include "utilities/DelphiToolsInterface.h"
 #include "utilities/XmlUtil.h"
 #include "bitmap_controls/ImageButton.h"
 
@@ -97,6 +98,8 @@ MainFrame::MainFrame()
   TiXmlElement* root = doc.FirstChildElement("Window");
   if (!root) {
     wxLogDebug(_T("MainFrame: Could not load XML. No Window element found."));
+
+    SetSize(0, 0, MAIN_FRAME_DEFAULT_WIDTH, MAIN_FRAME_DEFAULT_HEIGHT);
   } else {
     TiXmlHandle handle(root);
     int displayIndex = XmlUtil::ReadElementTextAsInt(handle, "DisplayIndex", 0);
@@ -104,8 +107,8 @@ MainFrame::MainFrame()
     bool isTopOfDisplay = XmlUtil::ReadElementTextAsBool(handle, "IsTopOfDisplay", true);
     int horizontalGap = XmlUtil::ReadElementTextAsInt(handle, "HorizontalGap", 0);
     int verticalGap = XmlUtil::ReadElementTextAsInt(handle, "VerticalGap", 0);
-    int width = XmlUtil::ReadElementTextAsInt(handle, "Width", 200);
-    int height = XmlUtil::ReadElementTextAsInt(handle, "Height", 100);
+    int width = XmlUtil::ReadElementTextAsInt(handle, "Width", MAIN_FRAME_DEFAULT_WIDTH);
+    int height = XmlUtil::ReadElementTextAsInt(handle, "Height", MAIN_FRAME_DEFAULT_HEIGHT);
 
     if (displayIndex >= wxDisplay::GetCount()) displayIndex = wxDisplay::GetCount() - 1;
     
@@ -453,6 +456,8 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   XmlUtil::AppendTextElement(xmlRoot, "VerticalGap", vGap);
 
   doc.SaveFile(FilePaths::WindowFile.mb_str());
+
+  DelphiToolsInterface::UnloadDLL();
 
   Destroy();
 }

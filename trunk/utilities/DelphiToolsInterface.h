@@ -8,6 +8,10 @@ class DelphiToolsInterface {
 
 public:
 
+  static bool IsLoaded;
+  static HINSTANCE hInstLibrary;
+  static void LoadDLL();
+  static void UnloadDLL();
   static void GetFileDescription(const wxString& filePath, wxString& fileDescription);
 
 };
