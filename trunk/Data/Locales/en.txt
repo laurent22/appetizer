@@ -21,6 +21,7 @@ IconPanel.DeleteConfirmation = Do you wish to delete this item?
 EditFolderItemForm.Title = Shorcut Properties
 EditFolderItemForm.NameLabel = Name:
 EditFolderItemForm.LocationLabel = Location:
+EditFolderItemForm.LocationWarning = The shorcut location doesn't exist. Do you wish to continue?
 
 TrayIcon.Close = Close
 TrayIcon.Hide = Hide
@@ -37,3 +38,12 @@ ConfigDialog.Title = Configuration
 ConfigDialog.GeneralTab = General
 ConfigDialog.LanguageLabel = Language:
 ConfigDialog.IconSizeLabel = Icon size:
+
+OptionPanel.CloseToolTip = Close
+OptionPanel.MinimizeToolTip = Minimize
+OptionPanel.ConfigToolTip = Config
+OptionPanel.EjectToolTip = Eject
+OptionPanel.AddShortcutToolTip = New shortcut
+OptionPanel.HelpToolTip = Help
+OptionPanel.KeyToolTip = Encrypt / Decrypt
+OptionPanel.MultiLaunchToolTip = Multi-launch

@@ -3,6 +3,7 @@
 #include "FilePaths.h"
 #include "Styles.h"
 #include "MainFrame.h"
+#include "Localization.h"
 
 
 extern Controller gController;
@@ -11,16 +12,18 @@ extern MainFrame* gMainFrame;
 
 OptionPanel::OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
+  configDialog_ = NULL;
+
   LoadImage(FilePaths::SkinDirectory + _T("/OptionPanel.png"));
 
   wxStringList buttonNames;
   buttonNames.Add(_T("Close"));
   buttonNames.Add(_T("Minimize"));
   buttonNames.Add(_T("Eject"));
-  buttonNames.Add(_T("AddShortcut"));
+  //buttonNames.Add(_T("AddShortcut"));
   buttonNames.Add(_T("Config"));
-  buttonNames.Add(_T("Help"));
-  buttonNames.Add(_T("Key"));
+  //buttonNames.Add(_T("Help"));
+  //buttonNames.Add(_T("Key"));
   buttonNames.Add(_T("MultiLaunch"));
 
   for (int i = 0; i < buttonNames.size(); i++) {
@@ -37,6 +40,24 @@ NineSlicesPanel(owner, id, point, size) {
       wxCommandEventHandler(OptionPanel::OnImageButtonClick),
       NULL,
       this);
+  }
+
+  Localize();
+}
+
+
+void OptionPanel::Localize() {
+  if (configDialog_) configDialog_->Localize();
+
+  for (int i = 0; i < buttons_.size(); i++) {
+    OptionButton* button = buttons_.at(i);
+    wxString buttonName = button->GetName();
+    wxString stringId = _T("OptionPanel.");
+    stringId += buttonName;
+    stringId += _T("ToolTip");
+
+    wxString toolTip = LOC(stringId);
+    button->SetToolTip(toolTip);
   }
 }
 
@@ -98,17 +119,53 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
   wxString buttonName = w->GetName();
 
   if (buttonName == _T("Close")) {
+    //***************************************************************************
+    // CLOSE
+    //***************************************************************************
     gMainFrame->Close();
+
   } else if (buttonName == _T("Minimize")) {
+    //***************************************************************************
+    // MINIMIZE
+    //***************************************************************************
     gMainFrame->Hide();
+
   } else if (buttonName == _T("Eject")) {
+    //***************************************************************************
+    // EJECT
+    //***************************************************************************
     gMainFrame->Close();
     #ifdef __WIN32__
     wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
     #else
     wxLogDebug(_T("TO BE IMPLEMENTED"));
     #endif
+
   } else if (buttonName == _T("MultiLaunch")) {
+    //***************************************************************************
+    // MULTI-LAUNCH
+    //***************************************************************************
     gController.GetUser()->DoMultiLaunch();
+
+  } else if (buttonName == _T("Config")) {
+    //***************************************************************************
+    // CONFIG
+    //***************************************************************************
+    if (!configDialog_) configDialog_ = new ConfigDialog();
+    configDialog_->LoadSettings();
+    configDialog_->ShowModal();
+  }
+}
+
+
+ConfigDialog* OptionPanel::GetConfigDialog() {
+  return configDialog_;
+}
+
+
+OptionPanel::~OptionPanel() {
+  if (configDialog_) {
+    configDialog_->Destroy();
+    configDialog_ = NULL;
   }
 }

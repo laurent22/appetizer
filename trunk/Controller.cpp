@@ -58,3 +58,14 @@ void Controller::User_FolderItemChange(FolderItemSP folderItem) {
   GetUser()->ScheduleSave();
 }
 
+
+void Controller::User_LocaleChange() {
+  gMainFrame->Localize();
+}
+
+
+void Controller::User_IconSizeChange() {
+  gMainFrame->GetIconPanel()->ClearIcons();
+  gMainFrame->GetIconPanel()->InvalidateIcons();
+  gMainFrame->GetIconPanel()->InvalidateLayout();
+}

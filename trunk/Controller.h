@@ -25,6 +25,8 @@ class Controller {
 
     void User_FolderItemCollectionChange();
     void User_FolderItemChange(FolderItemSP folderItem);
+    void User_LocaleChange();
+    void User_IconSizeChange();
 
   private:
       

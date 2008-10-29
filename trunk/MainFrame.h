@@ -65,6 +65,7 @@ class MainFrame: public wxFrame {
     ~MainFrame();
 
     IconPanel* GetIconPanel();
+    OptionPanel* GetOptionPanel();
 
     int GetMinHeight();
     int GetMinWidth();
@@ -76,6 +77,8 @@ class MainFrame: public wxFrame {
     wxMenu* GetContextMenu();
 
     int GetOptionPanelTotalWidth();
+
+    void Localize();
 
     void OpenOptionPanel(bool open = true);
     void CloseOptionPanel();

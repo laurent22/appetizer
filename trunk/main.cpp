@@ -55,9 +55,7 @@ bool MiniLaunchBar::OnInit() {
   FilePaths::SettingsFile = FilePaths::SettingsDirectory + _T("\\") + SETTING_FILE_NAME;
   FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("\\") + ICONS_FOLDER_NAME;
   FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("\\") + FOLDER_ITEMS_FILE_NAME;
-  FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("\\") + WINDOW_FILE_NAME;
-
-  Localization::Initialize();
+  FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("\\") + WINDOW_FILE_NAME;  
 
   Styles::MainPanel.PaddingLeft = 8;
   Styles::MainPanel.PaddingRight = 8;
@@ -90,14 +88,16 @@ bool MiniLaunchBar::OnInit() {
   Styles::OptionPanel.ButtonHGap = 4;
   Styles::OptionPanel.ButtonVGap = 3;
 
+  gController.GetUser()->Load();
+
+  Localization::Initialize();
+  Localization::Instance->LoadLocale(gController.GetUser()->GetSettings()->Locale, FilePaths::LocalesDirectory);
+  Localization::Instance->SetCurrentLocale(gController.GetUser()->GetSettings()->Locale);
+
   gMainFrame = new MainFrame();
   gMainFrame->Show(true);
-
-  gController.GetUser()->Load();
+  
   gController.GetUser()->AutomaticallyAddNewApps();
-
-  Localization::Instance->LoadLocale(_T("fr"), FilePaths::LocalesDirectory);
-  Localization::Instance->SetCurrentLocale(_T("fr"));
 
   SetTopWindow(gMainFrame);
 

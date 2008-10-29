@@ -224,6 +224,8 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   destDC.SelectObject(wxNullBitmap);
+
+  SetToolTip(folderItem->GetName());
 }
 
 

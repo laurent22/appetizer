@@ -15,7 +15,7 @@ wxString LocalizationLocale::GetString(const wxString& stringId) {
     LocalizationString* s = strings_.at(i);
     if (s->Id == stringId) return s->Text;
   }
-  return stringId;
+  return wxEmptyString;
 }
 
 
@@ -110,8 +110,9 @@ wxString Localization::GetLanguageName(const wxString& localeFilePath) {
 
   wxString result;
 
-  if (line[0] == _T('/') && line[1] == _T('/')) {
+  if (line.Left(2) == _T("//")) {
     result = line.Mid(2, line.Len());
+    result.Trim(false).Trim(true);
   }
 
   textFile.Close();

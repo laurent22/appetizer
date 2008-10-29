@@ -26,6 +26,7 @@ class IconPanel : public NineSlicesPanel {
 public:
   
   IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size);
+  void ClearIcons();
   void RefreshIcons();
   void UpdateLayout();
   void InvalidateIcons();

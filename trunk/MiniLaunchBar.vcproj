@@ -237,6 +237,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Generating version info and incrementing build number..."
+				CommandLine="resources\\CreateResources.exe"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -263,6 +265,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -446,6 +449,14 @@
 				Name="gui"
 				>
 				<File
+					RelativePath=".\gui\ConfigDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\ConfigDialogBase.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\ShortcutEditorDialog.cpp"
 					>
 				</File>
@@ -603,6 +614,14 @@
 			<Filter
 				Name="gui"
 				>
+				<File
+					RelativePath=".\gui\ConfigDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\ConfigDialogBase.h"
+					>
+				</File>
 				<File
 					RelativePath=".\gui\ShortcutEditorDialog.h"
 					>

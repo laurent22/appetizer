@@ -241,10 +241,15 @@ void IconPanel::InvalidateLayout() {
 }
 
 
+void IconPanel::ClearIcons() {
+  folderItemRenderers_.clear();
+}
+
+
 void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
-  // @todo: we shouldn't be able to access the FolderItem vector directly.
+  // @todo: It shouldn't be possible to access the FolderItem vector directly.
   // Need to implement GetFolderItemAt() and GetFolderItemCount() to iterate
   // through the folder items.
   std::vector<FolderItemSP> folderItems = gController.GetUser()->GetFolderItems();

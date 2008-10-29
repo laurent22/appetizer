@@ -1,4 +1,4 @@
-// FranÁais
+// Fran√ßais
 // @author = Laurent Cozic
 // @email.rot13 = ynherag@pbmvp.arg
 
@@ -10,15 +10,15 @@ Global.No = Non
 Global.Save = Sauvegarder
 Global.OpenDialog.AllFiles = Tous les fichiers
 
-FolderItem.LaunchFileError = Ce fichier n'existe pas ou a ÈtÈ effacÈ (Erreur %0%)
+FolderItem.LaunchFileError = Ce fichier n'existe pas ou a √©t√© effac√© (Erreur %0%)
 
 IconPanel.PopupMenu.NewShortcut = Nouveau raccourci...
 IconPanel.PopupMenu.Delete = Supprimer...
-IconPanel.PopupMenu.Properties = PropriÈtÈs
+IconPanel.PopupMenu.Properties = Propri√©t√©s
 IconPanel.PopupMenu.AddToQuickLaunch = Ajouter au groupe de Lancements Multiples
 IconPanel.DeleteConfirmation = Souhaitez-vous supprimer cet objet ?
 
-EditFolderItemForm.Title = PropriÈtÈs du raccourci
+EditFolderItemForm.Title = Propri√©t√©s du raccourci
 EditFolderItemForm.NameLabel = Nom :
 EditFolderItemForm.LocationLabel = Emplacement :
 
@@ -26,14 +26,24 @@ TrayIcon.Close = Fermer
 TrayIcon.Hide = Masquer
 TrayIcon.Show = Montrer
 
-SelectFolderOrFileDialog.Title = SÈlectionnez un fichier ou un dossier
-SelectFolderOrFileDialog.SelectFile = SÈlectionner fichier
-SelectFolderOrFileDialog.SelectFolder = SÈlectionner dossier
+SelectFolderOrFileDialog.Title = S√©lectionnez un fichier ou un dossier
+SelectFolderOrFileDialog.SelectFile = S√©lectionner un fichier
+SelectFolderOrFileDialog.SelectFolder = Veuillez s√©lectionner un dossier
 
 Icon.Size16 = Petite
 Icon.Size32 = Grande
 
 ConfigDialog.Title = Configuration
-ConfigDialog.GeneralTab = GÈnÈral
+ConfigDialog.GeneralTab = G√©n√©ral
 ConfigDialog.LanguageLabel = Langue :
-ConfigDialog.IconSizeLabel = Taille des icÙnes :
+ConfigDialog.IconSizeLabel = Taille des ic√¥nes :
+
+OptionPanel.CloseToolTip = Fermer
+OptionPanel.MinimizeToolTip = Minimiser
+OptionPanel.ConfigToolTip = Configuration
+OptionPanel.EjectToolTip = Ejecter
+OptionPanel.AddShortcutToolTip = Nouveau raccourci
+OptionPanel.HelpToolTip = Aide
+OptionPanel.KeyToolTip = Crypter / D√©crypter
+OptionPanel.MultiLaunchToolTip = Lancement multiple
+

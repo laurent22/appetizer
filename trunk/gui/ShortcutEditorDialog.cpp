@@ -57,8 +57,8 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     // If the shortcut location doesn't exist, just show a warning but allow
     // the user to continue. Invalid shortcuts are allowed since they
     // might be referencing files from a different computer.
-    int result = MessageBoxes::ShowWarning(_T("The shorcut location doesn't exist. Do you wish to continue?"), wxOK | wxCANCEL);
-    if (result == wxID_CANCEL) return;
+    int result = MessageBoxes::ShowWarning(LOC(_T("EditFolderItemForm.LocationWarning")), wxYES | wxNO);
+    if (result == wxID_NO) return;
   }
 
   folderItem_->SetFilePath(folderItemFilePath);
@@ -75,7 +75,7 @@ void ShortcutEditorDialog::UpdateFromFolderItem() {
 
 
 void ShortcutEditorDialog::OnSelectFileButtonClick(wxCommandEvent& evt) {
-  wxFileDialog fileDialog(this, _T("Pick a file"));
+  wxFileDialog fileDialog(this, LOC(_T("SelectFolderOrFileDialog.SelectFile")));
   int result = fileDialog.ShowModal();
   if (result != wxID_OK) return;
 
@@ -91,7 +91,7 @@ void ShortcutEditorDialog::OnSelectFileButtonClick(wxCommandEvent& evt) {
 
 
 void ShortcutEditorDialog::OnSelectFolderButtonClick(wxCommandEvent& evt) {
-  wxDirDialog dirDialog(this, _T("Pick a folder"));
+  wxDirDialog dirDialog(this, LOC(_T("SelectFolderOrFileDialog.SelectFolder")));
   int result = dirDialog.ShowModal();
   if (result != wxID_OK) return;
 

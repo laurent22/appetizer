@@ -12,14 +12,14 @@ Global.OpenDialog.AllFiles = Wszystkie pliki
 
 FolderItem.LaunchFileError = Nie mozna znalezc pliku lub zostal on usuniety (Blad %0%)
 
-IconPanel.PopupMenu.NewShortcut = Nowy skrót...
+IconPanel.PopupMenu.NewShortcut = Nowy skrÃ³t...
 IconPanel.PopupMenu.Delete = Usun...
 IconPanel.PopupMenu.Properties = Wlasciwosci
 IconPanel.PopupMenu.AddToQuickLaunch = Dodaj do grupy wielokrotnego uruchamiania
 IconPanel.DeleteConfirmation = Czy chcesz to usunac?
 IconPanel.NewShorcut.OpenDialog = Wybierz plik lub folder
 
-EditFolderItemForm.Title = Wlasciwosci skrótu
+EditFolderItemForm.Title = Wlasciwosci skrÃ³tu
 EditFolderItemForm.NameLabel = Nazwa:
 EditFolderItemForm.LocationLabel = Sciezka:
 
@@ -35,6 +35,6 @@ Icon.Size16 = Male
 Icon.Size32 = Duze
 
 ConfigDialog.Title = Konfiguracja
-ConfigDialog.GeneralTab = Ogólne
+ConfigDialog.GeneralTab = OgÃ³lne
 ConfigDialog.LanguageLabel = Jezyk:
 ConfigDialog.IconSizeLabel = Rozmiar ikon:

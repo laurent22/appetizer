@@ -133,6 +133,16 @@ MainFrame::MainFrame()
 } 
 
 
+OptionPanel* MainFrame::GetOptionPanel() {
+  return optionPanel_;
+}
+
+
+void MainFrame::Localize() {
+  if (optionPanel_) optionPanel_->Localize();
+}
+
+
 void MainFrame::ConvertToWindowValidCoordinates(const wxDisplay* display, int& x, int& y, int& width, int& height) {  
   int displayX = x - display->GetGeometry().GetLeft();
   int displayY = y - display->GetGeometry().GetTop();
