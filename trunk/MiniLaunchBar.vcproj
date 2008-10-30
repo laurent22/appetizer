@@ -257,7 +257,7 @@
 				Optimization="1"
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(BOOST_ROOT)&quot;"
 				PreprocessorDefinitions="WINVER=0x0400;wxUSE_GUI=1"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				DebugInformationFormat="0"
 			/>
 			<Tool
