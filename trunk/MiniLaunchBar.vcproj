@@ -186,7 +186,7 @@
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(BOOST_ROOT)&quot;"
 				PreprocessorDefinitions="WINVER=0x0400;wxUSE_GUI=1;__WXDEBUG__"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				DebugInformationFormat="4"
 			/>
 			<Tool

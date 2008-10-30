@@ -12,6 +12,11 @@ public:
 
   int IconSize;
   wxString Locale;
+  wxString PortableAppsPath;
+  wxString DocumentsPath;
+  wxString MusicPath;
+  wxString PicturesPath;
+  wxString VideosPath;
 
   void Save();
   void Load();

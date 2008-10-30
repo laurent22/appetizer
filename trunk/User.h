@@ -5,6 +5,7 @@
 #include <wx/event.h>
 #include <wx/timer.h>
 #include <wx/list.h>
+#include <wx/arrstr.h>
 #include "FolderItem.h"
 #include "Enumerations.h"
 #include "UserSettings.h"
@@ -33,6 +34,8 @@ public:
   void MoveFolderItem(int folderItemId, int insertionIndex);
   void DumpFolderItems();
   void DoMultiLaunch();
+  void AddAutoAddExclusion(const wxString& filePath);
+  bool IsAutoAddExclusion(const wxString& filePath);
 
   void OnTimer(wxTimerEvent& evt);
 
@@ -43,6 +46,7 @@ private:
   wxStringList folderItemExclusions_;
   UserSettingsSP settings_;
   ShortcutEditorDialog* shortcutEditorDialog_;
+  wxArrayString autoAddExclusions_;
 
   DECLARE_EVENT_TABLE()
 

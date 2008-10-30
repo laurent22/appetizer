@@ -61,6 +61,10 @@ void User::Save(bool force) {
   xmlRoot->SetAttribute("version", "1.0");
   doc.LinkEndChild(xmlRoot);
 
+  for (int i = 0; i < autoAddExclusions_.size(); i++) {
+    XmlUtil::AppendTextElement(xmlRoot, "ExcludedPath", autoAddExclusions_[i]);
+  }
+
   for (int i = 0; i < folderItems_.size(); i++) {
     FolderItemSP folderItem = folderItems_.at(i);
     xmlRoot->LinkEndChild(folderItem->ToXML());   
@@ -72,6 +76,8 @@ void User::Save(bool force) {
 
 void User::Load() {
   settings_->Load();
+
+  autoAddExclusions_.Clear();
 
   TiXmlDocument doc(FilePaths::FolderItemsFile.mb_str());
   doc.LoadFile();
@@ -85,14 +91,18 @@ void User::Load() {
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
-    if (elementName != _T("FolderItem")) {
+    if (elementName == _T("FolderItem")) {
+      FolderItemSP folderItem(new FolderItem());
+      folderItem->FromXML(element);
+      folderItems_.push_back(folderItem);
+    } else if (elementName == _T("ExcludedPath")) {
+      wxString path = wxString(element->GetText(), wxConvUTF8);
+      path.Trim(true).Trim(false);
+      if (path == wxEmptyString) continue;
+      AddAutoAddExclusion(path);
+    } else {
       wxLogDebug(_T("User::Load: Unknown element: %s"), elementName);
-      continue;
     }
-
-    FolderItemSP folderItem(new FolderItem());
-    folderItem->FromXML(element);
-    folderItems_.push_back(folderItem);
   }
 }
 
@@ -139,12 +149,29 @@ int User::EditFolderItem(FolderItemSP folderItem) {
 }
 
 
+void User::AddAutoAddExclusion(const wxString& filePath) {
+  if (IsAutoAddExclusion(filePath)) return;
+  autoAddExclusions_.Add(filePath);
+}
+
+
+bool User::IsAutoAddExclusion(const wxString& filePath) {
+  for (int i = 0; i < autoAddExclusions_.size(); i++) {
+    if (autoAddExclusions_[i] == filePath) return true;
+  }
+  return false;
+}
+
+
 void User::DeleteFolderItem(int folderItemId) {
   bool wasDeleted = false;
 
   for (int i = 0; i < folderItems_.size(); i++) {
     FolderItemSP folderItem = folderItems_.at(i);
     if (folderItem->GetId() == folderItemId) {
+      if (folderItem->GetAutomaticallyAdded()) {
+        AddAutoAddExclusion(folderItem->GetResolvedPath());
+      }
       folderItems_.erase(folderItems_.begin() + i);
       wasDeleted = true;
       break;
@@ -218,7 +245,7 @@ UserSettingsSP User::GetSettings() {
 
 
 void User::AutomaticallyAddNewApps() {
-  wxString portableAppsFolderPath = FilePaths::ApplicationDrive + _T("/PortableApps");
+  wxString portableAppsFolderPath = FolderItem::ResolvePath(GetSettings()->PortableAppsPath);
 
   wxArrayString foundFilePaths;
   wxDir portableAppsFolder;
@@ -226,11 +253,24 @@ void User::AutomaticallyAddNewApps() {
   bool folderItemsChanged = false;
 
   //***************************************************************************
+  // Add special folders to the list of files to process
+  //***************************************************************************
+  wxString documentsPath = FolderItem::ResolvePath(GetSettings()->DocumentsPath);
+  wxString musicPath = FolderItem::ResolvePath(GetSettings()->MusicPath);
+  wxString picturesPath = FolderItem::ResolvePath(GetSettings()->PicturesPath);
+  wxString videosPath = FolderItem::ResolvePath(GetSettings()->VideosPath);
+
+  if (wxFileName::DirExists(documentsPath)) foundFilePaths.Add(documentsPath);
+  if (wxFileName::DirExists(musicPath)) foundFilePaths.Add(musicPath);
+  if (wxFileName::DirExists(picturesPath)) foundFilePaths.Add(picturesPath);
+  if (wxFileName::DirExists(videosPath)) foundFilePaths.Add(videosPath);
+
+  //***************************************************************************
   // Look for all the executable files two levels down the PortableApps folder
   // i.e. it will find PortableApps/7-Zip/7-ZipPortable.exe
   //      but not PortableApps/7-Zip/App/7-Zip/7zG.exe
   //***************************************************************************
-  if (portableAppsFolder.Open(portableAppsFolderPath)) {
+  if (wxFileName::DirExists(portableAppsFolderPath) && portableAppsFolder.Open(portableAppsFolderPath)) {
     wxString folderName;
     bool success = portableAppsFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
     
@@ -251,6 +291,10 @@ void User::AutomaticallyAddNewApps() {
   for (int i = 0; i < foundFilePaths.GetCount(); i++) {
     wxString filePath = foundFilePaths[i];
     wxString resolvedPath = FolderItem::ResolvePath(filePath);
+
+    // This path has previously been deleted by the user
+    // so don't automatically add it again.
+    if (IsAutoAddExclusion(filePath)) continue;
 
     // Check if there is already a folder item
     // for this file path. If so: skip it.

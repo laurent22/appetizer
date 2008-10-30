@@ -5,6 +5,7 @@
 #include "MainFrame.h"
 #include "Localization.h"
 #include <wx/cursor.h>
+#include <wx/filename.h>
 
 
 extern Controller gController;
@@ -20,10 +21,10 @@ NineSlicesPanel(owner, id, point, size) {
   wxStringList buttonNames;
   buttonNames.Add(_T("Close"));
   buttonNames.Add(_T("Minimize"));
+  buttonNames.Add(_T("Help"));
   buttonNames.Add(_T("Eject"));
   //buttonNames.Add(_T("AddShortcut"));
   buttonNames.Add(_T("Config"));
-  //buttonNames.Add(_T("Help"));
   //buttonNames.Add(_T("Key"));
   buttonNames.Add(_T("MultiLaunch"));
 
@@ -33,7 +34,6 @@ NineSlicesPanel(owner, id, point, size) {
     button->SetCursor(wxCursor(wxCURSOR_HAND));
     button->SetName(n);
     button->SetIcon(new wxBitmap(FilePaths::IconsDirectory + _T("/ButtonIcon_") + n + _T(".png"), wxBITMAP_TYPE_PNG));
-    button->Enable(n != _T("AddShortcut") && n != _T("Help") && n != _T("Key"));
     buttons_.push_back(button);
 
     button->Connect(
@@ -156,6 +156,17 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     if (!configDialog_) configDialog_ = new ConfigDialog();
     configDialog_->LoadSettings();
     configDialog_->ShowModal();
+  } else if (buttonName == _T("Help")) {
+    //***************************************************************************
+    // HELP
+    //***************************************************************************
+    wxString helpFile = FilePaths::HelpDirectory + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
+    if (!wxFileName::FileExists(helpFile)) {
+      // Default to english
+      helpFile = FilePaths::HelpDirectory + _T("/en/") + HELP_FILE_NAME;
+    }
+
+    FolderItem::Launch(helpFile);
   }
 }
 

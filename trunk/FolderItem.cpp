@@ -2,6 +2,7 @@
 #include "utilities/IconGetter.h"
 #include "utilities/DelphiToolsInterface.h"
 #include <wx/filename.h>
+#include <wx/mimetype.h>
 #include "MessageBoxes.h"
 #include "FilePaths.h"
 #include "Localization.h"
@@ -53,25 +54,63 @@ wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
 }
 
 
-void FolderItem::Launch() {
-  wxString resolvedFilePath = GetResolvedPath();
-  wxFileName filename(resolvedFilePath);
+void FolderItem::Launch(const wxString& filePath) {
+  wxFileName filename(filePath);
 
   if (filename.FileExists()) {
-    wxExecute(resolvedFilePath, true);
-  } else if (wxFileName::DirExists(resolvedFilePath)) {
+
+    //***************************************************************************
+    // Launch executable
+    //***************************************************************************
+
+    if (filename.GetExt().Upper() == _T("EXE")) {
+      wxExecute(filePath, true);
+      return;
+    }
+
+    //***************************************************************************
+    // Launch document
+    //***************************************************************************
+
+    wxFileType* fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
+    if (!fileType) {
+      MessageBoxes::ShowError(LOC1(_T("FolderItem.LaunchFileError"), _T("UnknownMimeType")));
+      return;
+    }
+
+    wxString command; 
+    bool ok = fileType->GetOpenCommand(&command, wxFileType::MessageParameters(filePath, wxEmptyString)); 
+    if (!ok) {
+      MessageBoxes::ShowError(LOC1(_T("FolderItem.LaunchFileError"), _T("CannotBuildCommand")));
+      return;
+    }
+
+    wxExecute(command, wxEXEC_ASYNC);
+
+  } else if (wxFileName::DirExists(filePath)) {
     // Strangely enough filename.DirExists() returns true
     // even if the directory doesn't exist, so we need to
     // use the static method wxFileName::DirExists() instead
+
+    //***************************************************************************
+    // Open folder
+    //***************************************************************************
+
     #ifdef __WIN32__
-    wxString commandLine = _T("explorer ") + resolvedFilePath;
-    wxExecute(commandLine, true);
+    wxString command = _T("explorer ") + filename.GetFullPath();
+    wxExecute(command, true);
     #else
     wxLogDebug(_T("TO BE IMPLEMENTED"));
     #endif
   } else {
-    MessageBoxes::ShowError(LOC(_T("FolderItem.LaunchFileError")));
+    MessageBoxes::ShowError(LOC1(_T("FolderItem.LaunchFileError"), _T("DoesNotExist")));
   }
+}
+
+
+void FolderItem::Launch() {
+  wxString resolvedFilePath = GetResolvedPath();
+  FolderItem::Launch(resolvedFilePath);
 }
 
 

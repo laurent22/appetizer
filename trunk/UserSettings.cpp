@@ -10,6 +10,11 @@ extern Controller gController;
 UserSettings::UserSettings() {
   IconSize = 32;
   Locale = _T("en");
+  PortableAppsPath = _T("%DRIVE%/PortableApps");
+  DocumentsPath = _T("%DRIVE%/Documents");
+  MusicPath = _T("%DRIVE%/Documents/Music");
+  PicturesPath = _T("%DRIVE%/Documents/Pictures");
+  VideosPath = _T("%DRIVE%/Documents/Videos");
 }
 
 
@@ -18,6 +23,11 @@ TiXmlElement* UserSettings::ToXml() {
 
   AppendSettingToXml(xml, "IconSize", IconSize);
   AppendSettingToXml(xml, "Locale", Locale);
+  AppendSettingToXml(xml, "PortableAppsPath", PortableAppsPath);
+  AppendSettingToXml(xml, "DocumentsPath", DocumentsPath);
+  AppendSettingToXml(xml, "MusicPath", MusicPath);
+  AppendSettingToXml(xml, "PicturesPath", PicturesPath);
+  AppendSettingToXml(xml, "VideosPath", VideosPath);
 
   return xml;
 }
@@ -50,7 +60,11 @@ void UserSettings::FromXml(TiXmlElement* xml) {
 
     if (n == _T("IconSize")) AssignSettingValue(IconSize, v);
     if (n == _T("Locale")) Locale = v;
-
+    if (n == _T("PortableAppsPath")) PortableAppsPath = v;
+    if (n == _T("DocumentsPath")) DocumentsPath = v;
+    if (n == _T("MusicPath")) MusicPath = v;
+    if (n == _T("PicturesPath")) PicturesPath = v;
+    if (n == _T("VideosPath")) VideosPath = v;
   }
 }
 

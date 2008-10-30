@@ -194,11 +194,15 @@ int IconPanel::GetMinHeight() {
 
 
 int IconPanel::GetMaxWidth() {
+  int minWidth = GetMinWidth();
+  if (maxWidth_ < minWidth) return minWidth;
   return maxWidth_;
 }
 
 
 int IconPanel::GetMaxHeight() {
+  int minHeight = GetMinHeight();
+  if (maxHeight_ < minHeight) return minHeight;
   return maxHeight_;
 }
 

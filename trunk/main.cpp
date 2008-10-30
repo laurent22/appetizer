@@ -57,6 +57,7 @@ bool MiniLaunchBar::OnInit() {
   FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("\\") + ICONS_FOLDER_NAME;
   FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("\\") + FOLDER_ITEMS_FILE_NAME;
   FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("\\") + WINDOW_FILE_NAME;  
+  FilePaths::HelpDirectory = FilePaths::DataDirectory + _T("\\") + HELP_FOLDER_NAME;  
 
   Styles::MainPanel.PaddingLeft = 8;
   Styles::MainPanel.PaddingRight = 8;

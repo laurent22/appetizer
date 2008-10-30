@@ -143,7 +143,11 @@ wxIcon* IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize) {
     result = ExtractIconEx(filePath.c_str(), 0, &largeIcon, NULL, 1);	
   }
 
-  if (result != 0) {
+  // If the function succeeds, the return value is the handle to an icon.
+  // If the file specified was not an executable file, DLL, or icon file,
+  // the return value is 1. If no icons were found in the file, the return 
+  // value is NULL. If the file didn't exist, the return value is < 0
+  if (result > 0) {
     wxIcon* icon = new wxIcon();
 
     if (iconSize == 16) {

@@ -23,6 +23,7 @@ public:
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
   void Launch();
+  static void Launch(const wxString& filePath);
   TiXmlElement* ToXML();
   void FromXML(TiXmlElement* xml);
 
