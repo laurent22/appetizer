@@ -1,0 +1,49 @@
+// English
+// @author = Laurent Cozic
+// @email.rot13 = ynherag@pbmvp.arg
+
+Global.Error = Error
+Global.Cancel = Cancel
+Global.OK = OK
+Global.Yes = Yes
+Global.No = No
+Global.Save = Save
+Global.OpenDialog.AllFiles = All files
+
+FolderItem.LaunchFileError = This file doesn't exist or has been deleted (Error %0%)
+
+IconPanel.PopupMenu.NewShortcut = New shortcut...
+IconPanel.PopupMenu.Delete = Delete...
+IconPanel.PopupMenu.Properties = Properties
+IconPanel.PopupMenu.AddToQuickLaunch = Add to Multi Launch group
+IconPanel.DeleteConfirmation = Do you wish to delete this item?
+
+EditFolderItemForm.Title = Shorcut Properties
+EditFolderItemForm.NameLabel = Name:
+EditFolderItemForm.LocationLabel = Location:
+EditFolderItemForm.LocationWarning = The shorcut location doesn't exist. Do you wish to continue?
+
+TrayIcon.Close = Close
+TrayIcon.Hide = Hide
+TrayIcon.Show = Show
+
+SelectFolderOrFileDialog.Title = Select folder or file
+SelectFolderOrFileDialog.SelectFile = Select file
+SelectFolderOrFileDialog.SelectFolder = Select folder
+
+Icon.Size16 = Small
+Icon.Size32 = Large
+
+ConfigDialog.Title = Configuration
+ConfigDialog.GeneralTab = General
+ConfigDialog.LanguageLabel = Language:
+ConfigDialog.IconSizeLabel = Icon size:
+
+OptionPanel.CloseToolTip = Close
+OptionPanel.MinimizeToolTip = Minimize
+OptionPanel.ConfigToolTip = Config
+OptionPanel.EjectToolTip = Eject
+OptionPanel.AddShortcutToolTip = New shortcut
+OptionPanel.HelpToolTip = Help
+OptionPanel.KeyToolTip = Encrypt / Decrypt
+OptionPanel.MultiLaunchToolTip = Multi-launch
