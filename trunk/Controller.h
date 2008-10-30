@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2008 Laurent Cozic. All right reserved.
+  Use of this source code is governed by a GNU/GPL license that can be
+  found in the LICENSE file.
+*/
+
 #ifndef __Controller_H
 #define __Controller_H
 
@@ -18,6 +24,7 @@ class Controller {
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
     long GetTimer();
+    wxString GetVersionString(const wxString& filePath = wxEmptyString);
 
     /**
      * GLOBAL EVENTS

@@ -1,3 +1,7 @@
+; Copyright (C) 2008 Laurent Cozic. All right reserved.
+; Use of this source code is governed by a GNU/GPL license that can be
+; found in the LICENSE file.
+
 ; Run this script or CreateResources.exe to create resources.rc from
 ; the template (resources_template.rc). Currently, the only purpose of this script
 ; is to auto-increment the application build number
@@ -7,7 +11,7 @@
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 
 versionFilePath = %A_ScriptDir%\version.txt
-versionPrefixFilePath = %A_ScriptDir%\version_prefix.txt
+versionSuffixFilePath = %A_ScriptDir%\version_suffix.txt
 resourceTemplateFilePath = %A_ScriptDir%\resources_template.rc
 resourceFilePath = %A_ScriptDir%\resources.rc
 
@@ -18,7 +22,7 @@ if ErrorLevel
 	ExitApp
 }
 
-FileRead, versionPrefixText, %versionPrefixFilePath%
+FileRead, versionSuffixText, %versionSuffixFilePath%
 
 FileRead, resourceText, %resourceTemplateFilePath%
 if ErrorLevel
@@ -71,7 +75,7 @@ if (newVersionNumber = "")
 StringReplace, newVersionNumberComa, newVersionNumber, ., `,, All
 
 StringReplace, resourceText, resourceText, ____VERSION_COMA____, %newVersionNumberComa%, All
-StringReplace, resourceText, resourceText, ____VERSION____, %newVersionNumber% %versionPrefixText%, All
+StringReplace, resourceText, resourceText, ____VERSION____, %newVersionNumber% %versionSuffixText%, All
 
 FileDelete %resourceFilePath%
 FileAppend %resourceText%, %resourceFilePath%

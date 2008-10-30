@@ -10,6 +10,9 @@ Global.No = Non
 Global.Save = Sauvegarder
 Global.OpenDialog.AllFiles = Tous les fichiers
 
+OptionPanel.Help = Rubriques d'aide
+OptionPanel.About = À propos de %0%...
+
 FolderItem.LaunchFileError = Ce fichier n'existe pas ou a été effacé (Erreur %0%)
 
 IconPanel.PopupMenu.NewShortcut = Nouveau raccourci...

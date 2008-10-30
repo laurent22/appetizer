@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2008 Laurent Cozic. All right reserved.
+  Use of this source code is governed by a GNU/GPL license that can be
+  found in the LICENSE file.
+*/
+
 #ifndef __OptionPanel_H
 #define __OptionPanel_H
 
@@ -31,6 +37,8 @@ public:
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);
   void OnImageButtonClick(wxCommandEvent& evt);
+  void OnMenuHelp(wxCommandEvent& evt);
+  void OnMenuAbout(wxCommandEvent& evt);
 
 private:
 
@@ -39,8 +47,7 @@ private:
   bool layoutInvalidated_;
   ConfigDialog* configDialog_;
 
-
-  //DECLARE_EVENT_TABLE()
+  DECLARE_EVENT_TABLE()
 
 };
 

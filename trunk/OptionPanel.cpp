@@ -1,15 +1,30 @@
+/*
+  Copyright (C) 2008 Laurent Cozic. All right reserved.
+  Use of this source code is governed by a GNU/GPL license that can be
+  found in the LICENSE file.
+*/
+
 #include "OptionPanel.h"
 #include "Controller.h"
+#include "Constants.h"
 #include "FilePaths.h"
 #include "Styles.h"
 #include "MainFrame.h"
 #include "Localization.h"
+#include "gui/AboutDialog.h"
 #include <wx/cursor.h>
 #include <wx/filename.h>
+#include <wx/menu.h>
 
 
 extern Controller gController;
 extern MainFrame* gMainFrame;
+
+
+BEGIN_EVENT_TABLE(OptionPanel, NineSlicesPanel)
+  EVT_MENU(ID_MENU_OptionPanel_Help, OptionPanel::OnMenuHelp)
+  EVT_MENU(ID_MENU_OptionPanel_About, OptionPanel::OnMenuAbout)
+END_EVENT_TABLE()
 
 
 OptionPanel::OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
@@ -23,7 +38,7 @@ NineSlicesPanel(owner, id, point, size) {
   buttonNames.Add(_T("Minimize"));
   buttonNames.Add(_T("Help"));
   buttonNames.Add(_T("Eject"));
-  //buttonNames.Add(_T("AddShortcut"));
+  buttonNames.Add(_T("AddShortcut"));
   buttonNames.Add(_T("Config"));
   //buttonNames.Add(_T("Key"));
   buttonNames.Add(_T("MultiLaunch"));
@@ -45,6 +60,24 @@ NineSlicesPanel(owner, id, point, size) {
   }
 
   Localize();
+}
+
+
+void OptionPanel::OnMenuHelp(wxCommandEvent& evt) {  
+  wxString helpFile = FilePaths::HelpDirectory + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
+  if (!wxFileName::FileExists(helpFile)) {
+    // Default to english
+    helpFile = FilePaths::HelpDirectory + _T("/en/") + HELP_FILE_NAME;
+  }
+
+  FolderItem::Launch(helpFile);
+}
+
+
+void OptionPanel::OnMenuAbout(wxCommandEvent& evt) {
+  AboutDialog aboutDialog;
+  aboutDialog.LoadContent();
+  aboutDialog.ShowModal();
 }
 
 
@@ -160,13 +193,19 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // HELP
     //***************************************************************************
-    wxString helpFile = FilePaths::HelpDirectory + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
-    if (!wxFileName::FileExists(helpFile)) {
-      // Default to english
-      helpFile = FilePaths::HelpDirectory + _T("/en/") + HELP_FILE_NAME;
-    }
+    wxMenu menu;
 
-    FolderItem::Launch(helpFile);
+    menu.Append(ID_MENU_OptionPanel_Help, LOC(_T("OptionPanel.Help")));
+    menu.AppendSeparator();
+    menu.Append(ID_MENU_OptionPanel_About, LOC1(_T("OptionPanel.About"), APPLICATION_NAME));
+    
+    wxPoint pos(w->GetRect().GetLeft(), w->GetRect().GetBottom());
+    PopupMenu(&menu, pos);
+  } else if (buttonName == _T("AddShortcut")) {
+    //***************************************************************************
+    // ADD SHORTCUT
+    //***************************************************************************
+    gController.GetUser()->EditNewFolderItem();
   }
 }
 

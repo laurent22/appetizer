@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2008 Laurent Cozic. All right reserved.
+  Use of this source code is governed by a GNU/GPL license that can be
+  found in the LICENSE file.
+*/
+
 #include "User.h"
 #include <wx/dir.h>
 #include <wx/filename.h>
@@ -253,19 +259,6 @@ void User::AutomaticallyAddNewApps() {
   bool folderItemsChanged = false;
 
   //***************************************************************************
-  // Add special folders to the list of files to process
-  //***************************************************************************
-  wxString documentsPath = FolderItem::ResolvePath(GetSettings()->DocumentsPath);
-  wxString musicPath = FolderItem::ResolvePath(GetSettings()->MusicPath);
-  wxString picturesPath = FolderItem::ResolvePath(GetSettings()->PicturesPath);
-  wxString videosPath = FolderItem::ResolvePath(GetSettings()->VideosPath);
-
-  if (wxFileName::DirExists(documentsPath)) foundFilePaths.Add(documentsPath);
-  if (wxFileName::DirExists(musicPath)) foundFilePaths.Add(musicPath);
-  if (wxFileName::DirExists(picturesPath)) foundFilePaths.Add(picturesPath);
-  if (wxFileName::DirExists(videosPath)) foundFilePaths.Add(videosPath);
-
-  //***************************************************************************
   // Look for all the executable files two levels down the PortableApps folder
   // i.e. it will find PortableApps/7-Zip/7-ZipPortable.exe
   //      but not PortableApps/7-Zip/App/7-Zip/7zG.exe
@@ -283,6 +276,19 @@ void User::AutomaticallyAddNewApps() {
       success = portableAppsFolder.GetNext(&folderName);
     }
   } 
+
+  //***************************************************************************
+  // Add special folders to the list of files to process
+  //***************************************************************************
+  wxString documentsPath = FolderItem::ResolvePath(GetSettings()->DocumentsPath);
+  wxString musicPath = FolderItem::ResolvePath(GetSettings()->MusicPath);
+  wxString picturesPath = FolderItem::ResolvePath(GetSettings()->PicturesPath);
+  wxString videosPath = FolderItem::ResolvePath(GetSettings()->VideosPath);
+
+  if (wxFileName::DirExists(documentsPath)) foundFilePaths.Add(documentsPath);
+  if (wxFileName::DirExists(musicPath)) foundFilePaths.Add(musicPath);
+  if (wxFileName::DirExists(picturesPath)) foundFilePaths.Add(picturesPath);
+  if (wxFileName::DirExists(videosPath)) foundFilePaths.Add(videosPath);
 
   //***************************************************************************
   // Loop through the files we've just found and create folder items

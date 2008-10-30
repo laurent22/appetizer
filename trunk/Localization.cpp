@@ -1,3 +1,9 @@
+/*
+  Copyright (C) 2008 Laurent Cozic. All right reserved.
+  Use of this source code is governed by a GNU/GPL license that can be
+  found in the LICENSE file.
+*/
+
 #include "Localization.h"
 #include "FilePaths.h"
 
@@ -15,7 +21,12 @@ wxString LocalizationLocale::GetString(const wxString& stringId) {
     LocalizationString* s = strings_.at(i);
     if (s->Id == stringId) return s->Text;
   }
-  return wxEmptyString;
+
+  if (code_ == _T("en")) {
+    return stringId;
+  } else {
+    return wxEmptyString;
+  }
 }
 
 

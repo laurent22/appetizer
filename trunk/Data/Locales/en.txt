@@ -10,6 +10,9 @@ Global.No = No
 Global.Save = Save
 Global.OpenDialog.AllFiles = All files
 
+OptionPanel.Help = Help Topics
+OptionPanel.About = About %0%...
+
 FolderItem.LaunchFileError = This file doesn't exist or has been deleted (Error %0%)
 
 IconPanel.PopupMenu.NewShortcut = New shortcut...
@@ -33,6 +36,10 @@ SelectFolderOrFileDialog.SelectFolder = Select folder
 
 Icon.Size16 = Small
 Icon.Size32 = Large
+
+AboutDialog.Title = About %0%...
+AboutDialog.AboutTab = About
+AboutDialog.License = License
 
 ConfigDialog.Title = Configuration
 ConfigDialog.GeneralTab = General

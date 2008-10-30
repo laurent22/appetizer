@@ -201,7 +201,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -272,7 +272,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="false"
@@ -449,6 +449,14 @@
 				Name="gui"
 				>
 				<File
+					RelativePath=".\gui\AboutDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\AboutDialogBase.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\ConfigDialog.cpp"
 					>
 				</File>
@@ -614,6 +622,14 @@
 			<Filter
 				Name="gui"
 				>
+				<File
+					RelativePath=".\gui\AboutDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\AboutDialogBase.h"
+					>
+				</File>
 				<File
 					RelativePath=".\gui\ConfigDialog.h"
 					>

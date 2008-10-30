@@ -1,5 +1,5 @@
-//Deutsch
-//@author =  Simeon, adapted by wk
+// Deutsch
+// @author = Simeon, adapted by wk
 
 Global.Error = Fehler
 Global.Cancel = Abbrechen
