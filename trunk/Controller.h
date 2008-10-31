@@ -24,7 +24,6 @@ class Controller {
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
     long GetTimer();
-    wxString GetVersionString(const wxString& filePath = wxEmptyString);
 
     /**
      * GLOBAL EVENTS

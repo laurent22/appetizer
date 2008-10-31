@@ -405,10 +405,6 @@
 				Name="utilities"
 				>
 				<File
-					RelativePath=".\utilities\DelphiToolsInterface.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\utilities\IconGetter.cpp"
 					>
 				</File>
@@ -418,6 +414,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\StringUtil.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\VersionInfo.cpp"
 					>
 				</File>
 				<File
@@ -583,10 +583,6 @@
 				Name="utilities"
 				>
 				<File
-					RelativePath=".\utilities\DelphiToolsInterface.h"
-					>
-				</File>
-				<File
 					RelativePath=".\utilities\IconGetter.h"
 					>
 				</File>
@@ -596,6 +592,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\StringUtil.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\VersionInfo.h"
 					>
 				</File>
 				<File

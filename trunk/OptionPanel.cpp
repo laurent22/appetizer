@@ -44,9 +44,21 @@ NineSlicesPanel(owner, id, point, size) {
   //buttonNames.Add(_T("Key"));
   buttonNames.Add(_T("MultiLaunch"));
 
-  for (int i = 0; i < buttonNames.size(); i++) {
-    OptionButton* button = new OptionButton(this, wxID_ANY);
+  for (int i = 0; i < buttonNames.size(); i++) {    
     wxString n = buttonNames[i];
+
+    if (n == _T("Eject")) {
+      #ifdef __WIN32__
+      UINT result = GetDriveType(FilePaths::ApplicationDrive);
+      // Don't show the eject button if we are not on a removable drive.
+      // However, to be safe, do show it if the call to GetDriveType
+      // failed (result = 0 or 1)
+      if (result >= 2 && result != DRIVE_REMOVABLE) continue;
+      #endif // __WIN32__
+    }
+
+    OptionButton* button = new OptionButton(this, wxID_ANY);
+
     button->SetCursor(wxCursor(wxCURSOR_HAND));
     button->SetName(n);
     button->SetIcon(new wxBitmap(FilePaths::IconsDirectory + _T("/ButtonIcon_") + n + _T(".png"), wxBITMAP_TYPE_PNG));

@@ -12,7 +12,6 @@
 #include "FilePaths.h"
 #include "Localization.h"
 #include "Styles.h"
-#include "utilities/DelphiToolsInterface.h"
 #include "utilities/XmlUtil.h"
 #include "bitmap_controls/ImageButton.h"
 
@@ -466,8 +465,6 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   XmlUtil::AppendTextElement(xmlRoot, "VerticalGap", vGap);
 
   doc.SaveFile(FilePaths::WindowFile.mb_str());
-
-  DelphiToolsInterface::UnloadDLL();
 
   wxDELETE(Localization::Instance);
 

@@ -5,11 +5,9 @@
 */
 
 #include "AboutDialog.h"
-#include "../Controller.h"
+#include "../utilities/VersionInfo.h"
 #include "../Localization.h"
 #include "../Constants.h"
-
-extern Controller gController;
 
 
 BEGIN_EVENT_TABLE(AboutDialog, wxDialog)
@@ -34,7 +32,7 @@ void AboutDialog::Localize() {
 void AboutDialog::LoadContent() {
   Localize();
 
-  wxString version = wxString::Format(_T("%s, Version %s"), APPLICATION_NAME, gController.GetVersionString());
+  wxString version = wxString::Format(_T("%s, Version %s"), APPLICATION_NAME, VersionInfo::GetVersionString());
   versionLabel->SetValue(version);
 }
 

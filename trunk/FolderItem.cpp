@@ -6,7 +6,7 @@
 
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
-#include "utilities/DelphiToolsInterface.h"
+#include "utilities/VersionInfo.h"
 #include <wx/filename.h>
 #include <wx/mimetype.h>
 #include "MessageBoxes.h"
@@ -153,7 +153,8 @@ void FolderItem::SetAutomaticallyAdded(bool automaticallyAdded) {
 
 
 void FolderItem::AutoSetName() {
-  DelphiToolsInterface::GetFileDescription(GetResolvedPath(), name_);
+  name_ = VersionInfo::GetFileDescription(GetResolvedPath());
+  //DelphiToolsInterface::GetFileDescription(GetResolvedPath(), name_);
 }
 
 

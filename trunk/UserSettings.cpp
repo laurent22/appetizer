@@ -21,6 +21,7 @@ UserSettings::UserSettings() {
   MusicPath = _T("%DRIVE%/Documents/Music");
   PicturesPath = _T("%DRIVE%/Documents/Pictures");
   VideosPath = _T("%DRIVE%/Documents/Videos");
+  Skin = _T("Default");
 }
 
 
@@ -34,6 +35,7 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "MusicPath", MusicPath);
   AppendSettingToXml(xml, "PicturesPath", PicturesPath);
   AppendSettingToXml(xml, "VideosPath", VideosPath);
+  AppendSettingToXml(xml, "Skin", Skin);
 
   return xml;
 }
@@ -71,6 +73,7 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("MusicPath")) MusicPath = v;
     if (n == _T("PicturesPath")) PicturesPath = v;
     if (n == _T("VideosPath")) VideosPath = v;
+    if (n == _T("Skin")) Skin = v;
   }
 }
 

@@ -12,7 +12,7 @@
 #include "../FilePaths.h"
 #include "../Controller.h"
 #include "../MessageBoxes.h"
-#include "../utilities/DelphiToolsInterface.h"
+#include "../utilities/VersionInfo.h"
 
 
 extern Controller gController;
@@ -88,11 +88,9 @@ void ShortcutEditorDialog::OnSelectFileButtonClick(wxCommandEvent& evt) {
   wxString newValue = FolderItem::ConvertToRelativePath(fileDialog.GetPath());
   if (locationTextBox->GetValue() == newValue) return;
 
-  locationTextBox->SetValue(newValue);
-
-  wxString newName;
-  DelphiToolsInterface::GetFileDescription(FolderItem::ResolvePath(newValue), newName);
-  nameTextBox->SetValue(newName);
+  locationTextBox->SetValue(newValue); 
+  
+  nameTextBox->SetValue(VersionInfo::GetFileDescription(FolderItem::ResolvePath(newValue)));
 }
 
 
@@ -106,9 +104,7 @@ void ShortcutEditorDialog::OnSelectFolderButtonClick(wxCommandEvent& evt) {
 
   locationTextBox->SetValue(newValue);
 
-  wxString newName;
-  DelphiToolsInterface::GetFileDescription(FolderItem::ResolvePath(newValue), newName);
-  nameTextBox->SetValue(newName);
+  nameTextBox->SetValue(VersionInfo::GetFileDescription(FolderItem::ResolvePath(newValue)));
 }
 
 

@@ -23,6 +23,7 @@ public:
   wxString MusicPath;
   wxString PicturesPath;
   wxString VideosPath;
+  wxString Skin;
 
   void Save();
   void Load();

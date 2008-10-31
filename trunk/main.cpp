@@ -14,7 +14,6 @@
 #include "FilePaths.h"
 #include "Styles.h"
 #include "Localization.h"
-#include "utilities/DelphiToolsInterface.h"
 
 
 
@@ -55,15 +54,13 @@ bool MiniLaunchBar::OnInit() {
   #endif // __WIN32__
 
   FilePaths::ApplicationDirectory = applicationDirectory;
-  FilePaths::DataDirectory = applicationDirectory + _T("\\") + DATA_FOLDER_NAME;
-  FilePaths::SettingsDirectory = FilePaths::DataDirectory + _T("\\") + SETTING_FOLDER_NAME;
-  FilePaths::SkinDirectory = FilePaths::DataDirectory + _T("\\") + SKIN_FOLDER_NAME + _T("\\Default");
-  FilePaths::LocalesDirectory = FilePaths::DataDirectory + _T("\\") + LOCALES_FOLDER_NAME;
-  FilePaths::SettingsFile = FilePaths::SettingsDirectory + _T("\\") + SETTING_FILE_NAME;
-  FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("\\") + ICONS_FOLDER_NAME;
-  FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("\\") + FOLDER_ITEMS_FILE_NAME;
-  FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("\\") + WINDOW_FILE_NAME;  
-  FilePaths::HelpDirectory = FilePaths::DataDirectory + _T("\\") + HELP_FOLDER_NAME;  
+  FilePaths::DataDirectory = applicationDirectory + _T("/") + DATA_FOLDER_NAME;
+  FilePaths::SettingsDirectory = FilePaths::DataDirectory + _T("/") + SETTING_FOLDER_NAME;
+  FilePaths::LocalesDirectory = FilePaths::DataDirectory + _T("/") + LOCALES_FOLDER_NAME;
+  FilePaths::SettingsFile = FilePaths::SettingsDirectory + _T("/") + SETTING_FILE_NAME;
+  FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("/") + FOLDER_ITEMS_FILE_NAME;
+  FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("/") + WINDOW_FILE_NAME;  
+  FilePaths::HelpDirectory = FilePaths::DataDirectory + _T("/") + HELP_FOLDER_NAME;  
 
   Styles::MainPanel.PaddingLeft = 8;
   Styles::MainPanel.PaddingRight = 8;
@@ -94,12 +91,13 @@ bool MiniLaunchBar::OnInit() {
   Styles::OptionPanel.PaddingHeight = Styles::OptionPanel.PaddingTop + Styles::OptionPanel.PaddingBottom;
   Styles::OptionPanel.ArrowButtonWidth = 16;
   Styles::OptionPanel.ButtonHGap = 4;
-  Styles::OptionPanel.ButtonVGap = 3;
+  Styles::OptionPanel.ButtonVGap = 3;  
 
-  Styles::LoadSkinFile(FilePaths::SkinDirectory + _T("/") + SKIN_FILE_NAME);
-
-  DelphiToolsInterface::LoadDLL();
   gController.GetUser()->Load();
+
+  FilePaths::SkinDirectory = FilePaths::DataDirectory + _T("/") + SKIN_FOLDER_NAME + _T("/") + gController.GetUser()->GetSettings()->Skin;
+  Styles::LoadSkinFile(FilePaths::SkinDirectory + _T("/") + SKIN_FILE_NAME);
+  FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("/") + ICONS_FOLDER_NAME;
 
   Localization::Initialize();
   Localization::Instance->LoadLocale(gController.GetUser()->GetSettings()->Locale, FilePaths::LocalesDirectory);
