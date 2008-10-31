@@ -14,6 +14,7 @@ class StringUtil {
 public:
 
   static wxString ZeroPadding(int number, int digits);
+  static void Split(const wxString& toSplit, wxArrayString& resultArray, const wxString& delimiter);
 
 };
 

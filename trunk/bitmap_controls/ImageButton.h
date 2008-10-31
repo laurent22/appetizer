@@ -24,6 +24,7 @@ class ImageButton: public BitmapControl {
     void LoadImage(const wxString& filePathPrefix);
     void UpdateControlBitmap();
     void SetGrid(int left, int top, int width, int height);
+    void SetGrid(const wxRect& rect);
     void FitToImage();
     void SetIcon(wxBitmap* iconBitmap, bool ownIt = true);
 

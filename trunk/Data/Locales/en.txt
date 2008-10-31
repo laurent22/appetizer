@@ -1,4 +1,4 @@
-// English
+﻿// English
 // @author = Laurent Cozic
 // @email.rot13 = ynherag@pbmvp.arg
 

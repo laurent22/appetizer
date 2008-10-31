@@ -1,5 +1,5 @@
-// Deutsch
-// @author = Simeon, adapted by wk
+﻿// Deutsch
+// @author = Simeon, adapted by Werner Künkel
 
 Global.Error = Fehler
 Global.Cancel = Abbrechen
@@ -9,6 +9,9 @@ Global.No = Nein
 Global.Save = Speichern
 Global.OpenDialog.AllFiles = Alle Dateien
 
+OptionPanel.Help = Hilfe Themen
+OptionPanel.About = Über %0%...
+
 FolderItem.LaunchFileError = Diese Datei existiert nicht oder wurde gelöscht (Fehler %0%)
 
 IconPanel.PopupMenu.NewShortcut = Neue Verknüpfung...
@@ -16,10 +19,10 @@ IconPanel.PopupMenu.Delete = Löschen...
 IconPanel.PopupMenu.Properties = Eigenschaften
 IconPanel.PopupMenu.AddToQuickLaunch = Zur Schnellstart-Gruppe hinzufügen
 IconPanel.DeleteConfirmation = Wollen Sie diese Verknüpfung wirklich löschen?
-
 EditFolderItemForm.Title = Verknüpfungseigenschaften
 EditFolderItemForm.NameLabel = Name:
 EditFolderItemForm.LocationLabel = Ort:
+EditFolderItemForm.LocationWarning = Der Zielort für diese Verknüpfung existiert nicht. Möchten Sie fortfahren?
 
 TrayIcon.Close = Schließen
 TrayIcon.Hide = Minimieren
@@ -29,10 +32,23 @@ SelectFolderOrFileDialog.Title = Ordner oder Datei auswählen
 SelectFolderOrFileDialog.SelectFile = Datei auswählen
 SelectFolderOrFileDialog.SelectFolder = Ordner auswählen
 
-Icon.Size16 = Klein (16x16)
-Icon.Size32 = Groß  (32x32)
+Icon.Size16 = Klein
+Icon.Size32 = Groß
+
+AboutDialog.Title = Über %0%...
+AboutDialog.AboutTab = Über
+AboutDialog.License = Lizenz
 
 ConfigDialog.Title = Einstellungen
 ConfigDialog.GeneralTab = Allgemein
 ConfigDialog.LanguageLabel = Sprache:
 ConfigDialog.IconSizeLabel = Größe der Symbole:
+
+OptionPanel.MinimizeToolTip = Minimieren
+OptionPanel.CloseToolTip = Schließen
+OptionPanel.ConfigToolTip = Einstellungen
+OptionPanel.EjectToolTip = Eject
+OptionPanel.AddShortcutToolTip = Neue Verknüpfung
+OptionPanel.HelpToolTip = Hilfe
+OptionPanel.KeyToolTip = Verschlüsseln / Entschlüsseln
+OptionPanel.MultiLaunchToolTip = Schnellstart-Gruppe

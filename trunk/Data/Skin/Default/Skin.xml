@@ -1,4 +1,15 @@
+<?xml version="1.0" ?>
 <Skin>
-	<ArrowButton nineScaleGrid="6,31,1,1"/>	
-	<BarBackground nineScaleGrid="30,30,1,1"/>	
+	<ArrowButton>
+		<ScaleGrid>6,30,1,1</ScaleGrid>
+	</ArrowButton>
+	<BarBackground>
+		<ScaleGrid>30,30,1,1</ScaleGrid>
+	</BarBackground>
+	<OptionPanel>
+		<ScaleGrid>20,30,1,1</ScaleGrid>
+	</OptionPanel>
+	<IconPanel>
+		<ScaleGrid>23,23,1,1</ScaleGrid>
+	</IconPanel>
 </Skin>

@@ -121,10 +121,16 @@ wxString Localization::GetLanguageName(const wxString& localeFilePath) {
 
   wxString result;
 
-  if (line.Left(2) == _T("//")) {
-    result = line.Mid(2, line.Len());
+  int ssIndex = line.Find(_T("//"));
+  if (ssIndex != wxNOT_FOUND) {
+    result = line.Mid(ssIndex + 2, line.Len());
     result.Trim(false).Trim(true);
   }
+
+  //if (line.Left(2) == _T("//")) {
+  //  result = line.Mid(2, line.Len());
+  //  result.Trim(false).Trim(true);
+  //}
 
   textFile.Close();
 

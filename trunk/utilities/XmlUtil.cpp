@@ -5,6 +5,8 @@
 */
 
 #include "XmlUtil.h"
+#include "StringUtil.h"
+#include <wx/arrstr.h>
 
 
 void XmlUtil::AppendTextElement(TiXmlElement* targetElement, const char* elementName, const char* elementText) {
@@ -53,4 +55,21 @@ int XmlUtil::ReadElementTextAsInt(TiXmlHandle handle, const char* elementName, i
   } else {
     return (int)tempLong;
   }
+}
+
+
+bool XmlUtil::ReadElementTextAsRect(TiXmlHandle handle, const char* elementName, wxRect& resultRect, wxRect defaultValue) {
+  wxString s = XmlUtil::ReadElementText(handle, elementName);
+
+  wxArrayString splitted;
+  StringUtil::Split(s, splitted, _T(","));
+  if (splitted.Count() < 4) return false;
+
+  long x; if (!splitted[0].ToLong(&x)) return false;
+  long y; if (!splitted[1].ToLong(&y)) return false;
+  long w; if (!splitted[2].ToLong(&w)) return false;
+  long h; if (!splitted[3].ToLong(&h)) return false;
+
+  resultRect = wxRect(x, y, w, h);
+  return true;
 }

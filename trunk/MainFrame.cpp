@@ -63,8 +63,8 @@ MainFrame::MainFrame()
 
   arrowButton_ = new ImageButton(this, ID_BUTTON_Arrow, wxPoint(0, 0), wxSize(10, 10));
   arrowButton_->LoadImage(FilePaths::SkinDirectory + _T("/ArrowButton"));
-  // @todo: Grid should not be hardcoded but set in styles
-  arrowButton_->SetGrid(6, 30, 1, 1);
+  arrowButton_->SetGrid(Styles::OptionPanel.ArrowButtonScaleGrid);
+
   arrowButton_->SetCursor(wxCursor(wxCURSOR_HAND));
   arrowButtonOpenIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
   arrowButtonCloseIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
@@ -72,6 +72,7 @@ MainFrame::MainFrame()
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
   backgroundPanel_->LoadImage(FilePaths::SkinDirectory + _T("/BarBackground.png"));
+  backgroundPanel_->SetGrid(Styles::MainPanel.ScaleGrid);
 
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);

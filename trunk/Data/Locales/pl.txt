@@ -31,8 +31,8 @@ SelectFolderOrFileDialog.Title = Wybierz folder lub plik
 SelectFolderOrFileDialog.SelectFile = Wybierz folder
 SelectFolderOrFileDialog.SelectFolder = Wybierz plik
 
-Icon.Size16 = Małe (16x16)
-Icon.Size32 = Duże (32x32)
+Icon.Size16 = Małe
+Icon.Size32 = Duże
 
 ConfigDialog.Title = Konfiguracja
 ConfigDialog.GeneralTab = Ogólne

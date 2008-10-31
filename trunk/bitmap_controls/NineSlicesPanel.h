@@ -17,6 +17,8 @@ class NineSlicesPanel: public BitmapControl {
 
     wxString filePath_;
     NineSlicesPainter* nineSlicesPainter_;
+    bool gridIsExplicitelySet_;
+    wxRect grid_;
 
   public:
 
@@ -24,6 +26,8 @@ class NineSlicesPanel: public BitmapControl {
     ~NineSlicesPanel();
     void LoadImage(const wxString& filePath);
     void UpdateControlBitmap();
+    void SetGrid(int left, int top, int width, int height);
+    void SetGrid(const wxRect& rect);
 
 };
 

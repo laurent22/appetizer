@@ -1,4 +1,4 @@
-// Français
+﻿// Français
 // @author = Laurent Cozic
 // @email.rot13 = ynherag@pbmvp.arg
 

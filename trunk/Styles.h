@@ -16,6 +16,7 @@ class MainPanelStyle { public:
   int PaddingBottom;
   int PaddingWidth;
   int PaddingHeight;
+  wxRect ScaleGrid;
 };
 
 class InnerPanelStyle { public:
@@ -25,6 +26,7 @@ class InnerPanelStyle { public:
   int PaddingBottom;
   int PaddingWidth;
   int PaddingHeight;
+  wxRect ScaleGrid;
 };
 
 class OptionPanelStyle { public:
@@ -35,6 +37,8 @@ class OptionPanelStyle { public:
   int PaddingWidth;
   int PaddingHeight;
   int ArrowButtonWidth;
+  wxRect ArrowButtonScaleGrid;
+  wxRect ScaleGrid;
   int ButtonHGap;
   int ButtonVGap;
 };
@@ -66,6 +70,8 @@ public:
   static InnerPanelStyle InnerPanel;
   static IconStyle Icon;
   static OptionPanelStyle OptionPanel;
+
+  static void LoadSkinFile(const wxString& filePath);
 
 };
 

@@ -23,6 +23,7 @@ public:
   static wxString ReadElementText(TiXmlHandle handle, const char* elementName, const wxString& defaultValue = wxEmptyString);
   static bool ReadElementTextAsBool(TiXmlHandle handle, const char* elementName, bool defaultValue = false);
   static int ReadElementTextAsInt(TiXmlHandle handle, const char* elementName, int defaultValue = 0);
+  static bool ReadElementTextAsRect(TiXmlHandle handle, const char* elementName, wxRect& resultRect, wxRect defaultValue = wxRect(0,0,0,0));
 
 };
 

@@ -21,6 +21,7 @@ const wxString ICONS_FOLDER_NAME = _T("Icons");
 const wxString HELP_FOLDER_NAME = _T("Help");
 const wxString WINDOW_FILE_NAME = _T("Window.xml");
 const wxString HELP_FILE_NAME = _T("MiniLaunchBar.pdf");
+const wxString SKIN_FILE_NAME = _T("Skin.xml");
 const int WINDOW_VISIBILITY_BORDER = 20;
 const int MAIN_FRAME_DEFAULT_WIDTH = 300;
 const int MAIN_FRAME_DEFAULT_HEIGHT = 80;

@@ -11,11 +11,27 @@
 NineSlicesPanel::NineSlicesPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
   nineSlicesPainter_ = NULL;
+  gridIsExplicitelySet_ = false;
 }
 
 
 NineSlicesPanel::~NineSlicesPanel() {
   wxDELETE(nineSlicesPainter_);
+}
+
+
+void NineSlicesPanel::SetGrid(int left, int top, int width, int height) {
+  gridIsExplicitelySet_ = true;
+  grid_.SetLeft(left);
+  grid_.SetTop(top);
+  grid_.SetWidth(width);
+  grid_.SetHeight(height);
+  InvalidateControlBitmap();
+}
+
+
+void NineSlicesPanel::SetGrid(const wxRect& rect) {
+  SetGrid(rect.GetLeft(), rect.GetTop(), rect.GetWidth(), rect.GetHeight());
 }
 
 
@@ -43,6 +59,8 @@ void NineSlicesPanel::UpdateControlBitmap() {
   }
 
   if (nineSlicesPainter_ != NULL) {
+    if (gridIsExplicitelySet_) nineSlicesPainter_->SetGrid(grid_.GetLeft(), grid_.GetTop(), grid_.GetWidth(), grid_.GetHeight());
+
     wxMemoryDC destDC;
     destDC.SelectObject(*controlBitmap_);    
     nineSlicesPainter_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());

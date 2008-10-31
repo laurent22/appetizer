@@ -1,4 +1,4 @@
-// Dutch
+﻿// Dutch
 // @author = Pieter Kerstens
 
 Global.Error = Fout

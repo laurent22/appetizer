@@ -30,9 +30,11 @@ END_EVENT_TABLE()
 IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
   SetDropTarget(new IconPanelDropTarget());
+  
+  LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
+  SetGrid(Styles::InnerPanel.ScaleGrid);
 
   firstOffScreenIconIndex_ = -1; // Means all the icons are visible
-  LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
   layoutInvalidated_ = true;
   iconsInvalidated_ = true;
 

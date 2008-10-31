@@ -32,6 +32,7 @@ NineSlicesPanel(owner, id, point, size) {
   configDialog_ = NULL;
 
   LoadImage(FilePaths::SkinDirectory + _T("/OptionPanel.png"));
+  SetGrid(Styles::OptionPanel.ScaleGrid);
 
   wxStringList buttonNames;
   buttonNames.Add(_T("Close"));

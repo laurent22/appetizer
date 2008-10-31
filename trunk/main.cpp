@@ -96,6 +96,8 @@ bool MiniLaunchBar::OnInit() {
   Styles::OptionPanel.ButtonHGap = 4;
   Styles::OptionPanel.ButtonVGap = 3;
 
+  Styles::LoadSkinFile(FilePaths::SkinDirectory + _T("/") + SKIN_FILE_NAME);
+
   DelphiToolsInterface::LoadDLL();
   gController.GetUser()->Load();
 

@@ -66,6 +66,11 @@ void ImageButton::SetGrid(int left, int top, int width, int height) {
 }
 
 
+void ImageButton::SetGrid(const wxRect& rect) {
+  SetGrid(rect.GetLeft(), rect.GetTop(), rect.GetWidth(), rect.GetHeight());
+}
+
+
 void ImageButton::SetIcon(wxBitmap* iconBitmap, bool ownIt) {
   if (iconBitmap_ == iconBitmap) return;
   iconBitmap_ = iconBitmap;
