@@ -1,4 +1,4 @@
-// Polski
+﻿// Polski
 // @author = Michał Trzebiatowski
 // @email.rot13 = uvccvr_1968@ubgznvy.pbz
 
@@ -25,14 +25,14 @@ EditFolderItemForm.LocationWarning = Cel skrótu nie istnieje. Czy chcesz kontyn
 
 TrayIcon.Close = Zamknij
 TrayIcon.Hide = Ukryj
-TrayIcon.Show = Pokaz
+TrayIcon.Show = Pokaż
 
 SelectFolderOrFileDialog.Title = Wybierz folder lub plik
 SelectFolderOrFileDialog.SelectFile = Wybierz folder
 SelectFolderOrFileDialog.SelectFolder = Wybierz plik
 
-Icon.Size16 = Małe
-Icon.Size32 = Duże
+Icon.Size16 = Małe (16x16)
+Icon.Size32 = Duże (32x32)
 
 ConfigDialog.Title = Konfiguracja
 ConfigDialog.GeneralTab = Ogólne
