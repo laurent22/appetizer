@@ -62,37 +62,6 @@ bool MiniLaunchBar::OnInit() {
   FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("/") + WINDOW_FILE_NAME;  
   FilePaths::HelpDirectory = FilePaths::DataDirectory + _T("/") + HELP_FOLDER_NAME;  
 
-  Styles::MainPanel.PaddingLeft = 8;
-  Styles::MainPanel.PaddingRight = 8;
-  Styles::MainPanel.PaddingTop = 8;
-  Styles::MainPanel.PaddingBottom = 8;
-  Styles::MainPanel.PaddingWidth = Styles::MainPanel.PaddingLeft + Styles::MainPanel.PaddingRight;
-  Styles::MainPanel.PaddingHeight = Styles::MainPanel.PaddingTop + Styles::MainPanel.PaddingBottom;
-
-  Styles::InnerPanel.PaddingLeft = 8;
-  Styles::InnerPanel.PaddingRight = 8;
-  Styles::InnerPanel.PaddingTop = 4;
-  Styles::InnerPanel.PaddingBottom = 4;
-  Styles::InnerPanel.PaddingWidth = Styles::InnerPanel.PaddingLeft + Styles::InnerPanel.PaddingRight;
-  Styles::InnerPanel.PaddingHeight = Styles::InnerPanel.PaddingTop + Styles::InnerPanel.PaddingBottom;
-
-  Styles::Icon.PaddingLeft = 4;
-  Styles::Icon.PaddingRight = 4;
-  Styles::Icon.PaddingTop = 4;
-  Styles::Icon.PaddingBottom = 4;
-  Styles::Icon.PaddingWidth = Styles::Icon.PaddingLeft + Styles::Icon.PaddingRight;
-  Styles::Icon.PaddingHeight = Styles::Icon.PaddingTop + Styles::Icon.PaddingBottom;
-
-  Styles::OptionPanel.PaddingLeft = 6;
-  Styles::OptionPanel.PaddingRight = 6;
-  Styles::OptionPanel.PaddingTop = 4;
-  Styles::OptionPanel.PaddingBottom = 4;
-  Styles::OptionPanel.PaddingWidth = Styles::OptionPanel.PaddingLeft + Styles::OptionPanel.PaddingRight;
-  Styles::OptionPanel.PaddingHeight = Styles::OptionPanel.PaddingTop + Styles::OptionPanel.PaddingBottom;
-  Styles::OptionPanel.ArrowButtonWidth = 16;
-  Styles::OptionPanel.ButtonHGap = 4;
-  Styles::OptionPanel.ButtonVGap = 3;  
-
   gController.GetUser()->Load();
 
   FilePaths::SkinDirectory = FilePaths::DataDirectory + _T("/") + SKIN_FOLDER_NAME + _T("/") + gController.GetUser()->GetSettings()->Skin;
