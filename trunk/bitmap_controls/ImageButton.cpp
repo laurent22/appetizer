@@ -24,6 +24,7 @@ ImageButton::ImageButton(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
   state_ = _T("Up");  
 
+  rotatedIconBitmap_ = NULL;
   iconBitmap_ = NULL;
   pressed_ = false;  
   gridIsExplicitelySet_ = false;
@@ -75,6 +76,7 @@ void ImageButton::SetIcon(wxBitmap* iconBitmap, bool ownIt) {
   if (iconBitmap_ == iconBitmap) return;
   iconBitmap_ = iconBitmap;
   ownIcon_ = ownIt;
+  wxDELETE(rotatedIconBitmap_);
   InvalidateControlBitmap();
 }
 
@@ -135,17 +137,37 @@ void ImageButton::UpdateControlBitmap() {
   if (!painter) return;
 
   if (gridIsExplicitelySet_) painter->SetGrid(grid_.GetLeft(), grid_.GetTop(), grid_.GetWidth(), grid_.GetHeight());
+  painter->SetRotation(GetBitmapRotation());  
 
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);    
   painter->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
+  
   if (iconBitmap_) {
+
     wxASSERT_MSG(iconBitmap_->IsOk(), _T("Invalid icon"));
-    destDC.DrawBitmap(
-      *iconBitmap_,
-      (GetSize().GetWidth() - iconBitmap_->GetWidth()) / 2,
-      (GetSize().GetHeight() - iconBitmap_->GetHeight()) / 2);
+    
+    if (GetBitmapRotation() != 0) {
+
+      if (!rotatedIconBitmap_) {
+        wxImage tempImage = iconBitmap_->ConvertToImage();
+        tempImage = tempImage.Rotate90(GetBitmapRotation() == 90);
+        rotatedIconBitmap_ = new wxBitmap(tempImage);
+      }
+
+      destDC.DrawBitmap(
+        *rotatedIconBitmap_,
+        (GetSize().GetWidth() - rotatedIconBitmap_->GetWidth()) / 2,
+        (GetSize().GetHeight() - rotatedIconBitmap_->GetHeight()) / 2);
+
+    } else {    
+      destDC.DrawBitmap(
+        *iconBitmap_,
+        (GetSize().GetWidth() - iconBitmap_->GetWidth()) / 2,
+        (GetSize().GetHeight() - iconBitmap_->GetHeight()) / 2);
+    }
   }  
+  
   destDC.SelectObject(wxNullBitmap);
 }
 
@@ -153,6 +175,7 @@ void ImageButton::UpdateControlBitmap() {
 ImageButton::~ImageButton() {
   if (ownIcon_) wxDELETE(iconBitmap_);
 
+  wxDELETE(rotatedIconBitmap_);
   wxDELETE(nineSlicesPainterUp_);
   wxDELETE(nineSlicesPainterOver_);
   wxDELETE(nineSlicesPainterDown_);

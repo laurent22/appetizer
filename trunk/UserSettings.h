@@ -24,6 +24,7 @@ public:
   wxString PicturesPath;
   wxString VideosPath;
   wxString Skin;
+  bool Rotated;
 
   void Save();
   void Load();
@@ -36,9 +37,8 @@ private:
   void AppendSettingToXml(TiXmlElement* element, const char* name, const char* value);
   void AppendSettingToXml(TiXmlElement* element, const char* name, int value);
   void AppendSettingToXml(TiXmlElement* element, const char* name, wxString value);
+  void AppendSettingToXml(TiXmlElement* element, const char* name, bool value);
   void AssignSettingValue(int& setting, wxString value, int defaultValue);
-  //void AssignSettingValue(wxString& setting, wxString value, wxString defaultValue);
-  //void AssignSettingValue(wxString& setting, wxString value);
   void AssignSettingValue(int& setting, wxString value);
 
 };

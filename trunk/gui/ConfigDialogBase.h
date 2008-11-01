@@ -38,6 +38,8 @@ protected:
     wxComboBox* languageComboBox;
     wxStaticText* iconSizeLabel;
     wxComboBox* iconSizeComboBox;
+    wxStaticText* orientationLabel;
+    wxComboBox* orientationComboBox;
     wxPanel* notebook_1_pane_1;
     wxNotebook* notebook;
     wxButton* saveButton;

@@ -79,5 +79,7 @@ bool MiniLaunchBar::OnInit() {
 
   SetTopWindow(gMainFrame);
 
+  gMainFrame->SetRotated(gController.GetUser()->GetSettings()->Rotated);
+
   return true;
 } 

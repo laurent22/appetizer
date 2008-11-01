@@ -9,6 +9,7 @@
 #include "../FilePaths.h"
 #include "../Controller.h"
 #include "../UserSettings.h"
+#include "../MainFrame.h"
 #include <wx/arrstr.h>
 #include <wx/dir.h>
 #include <wx/clntdata.h>
@@ -16,6 +17,7 @@
 
 
 extern Controller gController;
+extern MainFrame* gMainFrame;
 
 
 BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
@@ -46,6 +48,7 @@ void ConfigDialog::Localize() {
   iconSizeLabel->SetLabel(LOC(_T("ConfigDialog.IconSizeLabel")));
   saveButton->SetLabel(LOC(_T("Global.Save")));
   cancelButton->SetLabel(LOC(_T("Global.Cancel")));
+  orientationLabel->SetLabel(LOC(_T("ConfigDialog.Orientation")));
 }
 
 
@@ -90,6 +93,7 @@ void ConfigDialog::LoadSettings() {
   //***************************************************************************
   // Populate "icon size" dropdown list
   //***************************************************************************
+
   iconSizeComboBox->Clear();
   iconSizeComboBox->Append(LOC(_T("Icon.Size16")), new wxStringClientData(_T("16")));
   iconSizeComboBox->Append(LOC(_T("Icon.Size32")), new wxStringClientData(_T("32")));
@@ -99,6 +103,13 @@ void ConfigDialog::LoadSettings() {
   } else {
     iconSizeComboBox->Select(1);
   }
+
+
+  orientationComboBox->Clear();
+  orientationComboBox->Append(LOC(_T("ConfigDialog.HorizontalOrientation")), new wxStringClientData(_T("h")));
+  orientationComboBox->Append(LOC(_T("ConfigDialog.VerticalOrientation")), new wxStringClientData(_T("v")));
+  orientationComboBox->Select(userSettings->Rotated ? 1 : 0);
+
 }
 
 
@@ -136,6 +147,15 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   if (newIconSize != userSettings->IconSize) {
     userSettings->IconSize = newIconSize;
     gController.User_IconSizeChange();
+  }
+
+
+  clientData = (wxStringClientData*)(orientationComboBox->GetClientObject(orientationComboBox->GetSelection()));
+  bool rotated = clientData->GetData() == _T("v");
+
+  if (rotated != userSettings->Rotated) {
+    userSettings->Rotated = rotated;
+    gMainFrame->SetRotated(rotated);
   }
 
   gController.GetUser()->Save(true);

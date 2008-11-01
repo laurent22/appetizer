@@ -42,6 +42,7 @@ MainFrame::MainFrame()
   )
 {  
   logWindow_ = NULL;
+  rotated_ = false;
 
   #ifdef __WXDEBUG__
     logWindow_ = new wxLogWindow(this, wxEmptyString, true);
@@ -145,6 +146,33 @@ MainFrame::MainFrame()
 } 
 
 
+void MainFrame::SetRotated(bool rotated) {
+  if (rotated == rotated_) return;
+  rotated_ = rotated;
+
+  optionPanel_->SetRotated(rotated);
+  optionPanel_->UpdateLayout(); // We need a layout update to get a valid "required width" property
+  arrowButton_->SetBitmapRotation(rotated ? 90 : 0);
+  arrowButton_->SetHorizontalFlip(rotated);
+  backgroundPanel_->SetBitmapRotation(rotated ? 90 : 0);
+  backgroundPanel_->SetHorizontalFlip(rotated);
+  resizerPanel_->SetBitmapRotation(rotated ? 90 : 0);
+
+  UpdateLayout();
+  UpdateMask();
+
+  ToggleOptionPanel();
+  ToggleOptionPanel();
+
+  int newWidth = GetSize().GetWidth();
+  int newHeight = GetSize().GetHeight();
+  if (GetSize().GetWidth() < GetMinWidth()) newWidth = GetMinWidth(); 
+  if (GetSize().GetHeight() < GetMinHeight()) newHeight = GetMinHeight();
+
+  SetSize(newWidth, newHeight);
+}
+
+
 OptionPanel* MainFrame::GetOptionPanel() {
   return optionPanel_;
 }
@@ -244,32 +272,62 @@ void MainFrame::UpdateMask() {
 
 
 void MainFrame::UpdateLayout(int width, int height) {
-  arrowButton_->SetSize(
-    0,
-    0,
-    Styles::OptionPanel.ArrowButtonWidth,
-    height);
-  
-  int bgPanelX = Styles::OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
-  int bgPanelWidth = width - bgPanelX;
+  if (rotated_) {
+    arrowButton_->SetSize(
+      0,
+      0,
+      width,
+      Styles::OptionPanel.ArrowButtonWidth);
 
-  backgroundPanel_->SetSize(bgPanelX, 0, bgPanelWidth, height);
-  
-  iconPanel_->SetSize(
-    Styles::MainPanel.Padding.Left,
-    Styles::MainPanel.Padding.Right,
-    bgPanelWidth - Styles::MainPanel.Padding.Width,
-    height - Styles::MainPanel.Padding.Height);
-  
-  resizerPanel_->Move(
-    bgPanelWidth - resizerPanel_->GetRect().GetWidth(),
-    height - resizerPanel_->GetRect().GetHeight());
+    int bgPanelY = Styles::OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
+    int bgPanelHeight = height - bgPanelY;
 
-  optionPanel_->SetSize(
-    Styles::OptionPanel.ArrowButtonWidth,
-    0,
-    optionPanelOpenWidth_,
-    height);
+    backgroundPanel_->SetSize(0, bgPanelY, width, bgPanelHeight);
+
+    iconPanel_->SetSize(
+      Styles::MainPanel.Padding.Bottom,
+      Styles::MainPanel.Padding.Top,
+      width - Styles::MainPanel.Padding.Height,
+      bgPanelHeight - Styles::MainPanel.Padding.Width);
+    
+    resizerPanel_->Move(
+      width - resizerPanel_->GetRect().GetWidth(),
+      bgPanelHeight - resizerPanel_->GetRect().GetHeight());
+
+    optionPanel_->SetSize(
+      0,
+      Styles::OptionPanel.ArrowButtonWidth,
+      width,
+      optionPanelOpenWidth_);
+
+  } else {
+    arrowButton_->SetSize(
+      0,
+      0,
+      Styles::OptionPanel.ArrowButtonWidth,
+      height);
+    
+    int bgPanelX = Styles::OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
+    int bgPanelWidth = width - bgPanelX;
+
+    backgroundPanel_->SetSize(bgPanelX, 0, bgPanelWidth, height);
+    
+    iconPanel_->SetSize(
+      Styles::MainPanel.Padding.Left,
+      Styles::MainPanel.Padding.Right,
+      bgPanelWidth - Styles::MainPanel.Padding.Width,
+      height - Styles::MainPanel.Padding.Height);
+    
+    resizerPanel_->Move(
+      bgPanelWidth - resizerPanel_->GetRect().GetWidth(),
+      height - resizerPanel_->GetRect().GetHeight());
+
+    optionPanel_->SetSize(
+      Styles::OptionPanel.ArrowButtonWidth,
+      0,
+      optionPanelOpenWidth_,
+      height);
+  }
   
   needLayoutUpdate_ = false;
 }
@@ -281,27 +339,47 @@ void MainFrame::UpdateLayout() {
 
 
 int MainFrame::GetOptionPanelTotalWidth() {
-  return arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_;
+  if (rotated_) {
+    return arrowButton_->GetSize().GetHeight() + optionPanelOpenWidth_;
+  } else {
+    return arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_;
+  }
 }
 
 
 int MainFrame::GetMinHeight() {
-  return iconPanel_->GetMinHeight() + Styles::MainPanel.Padding.Height;
+  if (rotated_) {
+    return iconPanel_->GetMinHeight() + GetOptionPanelTotalWidth() + Styles::MainPanel.Padding.Width;
+  } else {
+    return iconPanel_->GetMinHeight() + Styles::MainPanel.Padding.Height;
+  }
 }
 
 
 int MainFrame::GetMinWidth() {
-  return iconPanel_->GetMinWidth() + GetOptionPanelTotalWidth() + Styles::MainPanel.Padding.Width;
+  if (rotated_) {
+    return iconPanel_->GetMinWidth() + Styles::MainPanel.Padding.Height;
+  } else {
+    return iconPanel_->GetMinWidth() + GetOptionPanelTotalWidth() + Styles::MainPanel.Padding.Width;
+  }
 }
 
 
 int MainFrame::GetMaxWidth() {
-  return iconPanel_->GetMaxWidth() + Styles::MainPanel.Padding.Width + GetOptionPanelTotalWidth();
+  if (rotated_) {
+    return iconPanel_->GetMaxWidth() + Styles::MainPanel.Padding.Height;
+  } else {
+    return iconPanel_->GetMaxWidth() + Styles::MainPanel.Padding.Width + GetOptionPanelTotalWidth();
+  }
 }
 
 
 int MainFrame::GetMaxHeight() {
-  return iconPanel_->GetMaxHeight() + Styles::MainPanel.Padding.Height;
+  if (rotated_) {
+    return iconPanel_->GetMaxHeight() + Styles::MainPanel.Padding.Width + GetOptionPanelTotalWidth();
+  } else {
+    return iconPanel_->GetMaxHeight() + Styles::MainPanel.Padding.Height;
+  }
 }
 
 
@@ -391,9 +469,9 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
     int newWidth = windowDragData_.InitWindowSize.GetWidth() + mouseOffset.x;
     if (newWidth < GetMinWidth()) {
       newWidth = GetMinWidth();
-    } else if (newWidth > GetMaxWidth()) {
-      // no restriction on maximum width
     }
+    
+    // Note: There are no restrictions on maximum width
 
     if (newWidth == GetSize().GetWidth() && newHeight == GetSize().GetHeight()) return;
 
@@ -441,8 +519,14 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   XmlUtil::AppendTextElement(xmlRoot, "DisplayIndex", GetDisplayIndex());
   XmlUtil::AppendTextElement(xmlRoot, "IsLeftOfDisplay", IsLeftOfDisplay());
   XmlUtil::AppendTextElement(xmlRoot, "IsTopOfDisplay", IsTopOfDisplay());
-  XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth() - optionPanelOpenWidth_);
-  XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight());
+
+  if (rotated_) {
+    XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth());
+    XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight() - optionPanelOpenWidth_);
+  } else {
+    XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth() - optionPanelOpenWidth_);
+    XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight());
+  }
   
   int hGap;
   int vGap;
@@ -495,10 +579,12 @@ void MainFrame::OpenOptionPanel(bool open) {
   if (open == optionPanelOpen_) return;
 
   optionPanelOpen_ = open;
-  openCloseAnimationStartTime_ = gController.GetTimer();
 
-  openCloseAnimationWindowRight_ = GetRect().GetRight();
-  openCloseAnimationDockLeft_ = !false;
+  if (rotated_) {
+    openCloseAnimationWindowRight_ = GetRect().GetBottom();
+  } else {
+    openCloseAnimationWindowRight_ = GetRect().GetRight();
+  }
 
   if (optionPanelOpen_) {
     optionPanel_->UpdateLayout();
@@ -507,19 +593,39 @@ void MainFrame::OpenOptionPanel(bool open) {
     optionPanelOpenWidth_ = 0;
   }
 
-  int newWindowWidth = arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_ + backgroundPanel_->GetSize().GetWidth();
-
-  if (IsLeftOfDisplay()) {
-    SetSize(
-      newWindowWidth, 
-      GetSize().GetHeight());
+  int newWindowWidth;
+  
+  if (rotated_) {
+    newWindowWidth = arrowButton_->GetSize().GetHeight() + optionPanelOpenWidth_ + backgroundPanel_->GetSize().GetHeight();
   } else {
-    SetSize(
-      openCloseAnimationWindowRight_ - newWindowWidth + 1,
-      GetRect().GetTop(),
-      newWindowWidth, 
-      GetSize().GetHeight());    
-  }  
+    newWindowWidth = arrowButton_->GetSize().GetWidth() + optionPanelOpenWidth_ + backgroundPanel_->GetSize().GetWidth();
+  }
+
+  if (!rotated_) {
+    if (IsLeftOfDisplay()) {
+      SetSize(
+        newWindowWidth, 
+        GetSize().GetHeight());
+    } else {
+      SetSize(
+        openCloseAnimationWindowRight_ - newWindowWidth + 1,
+        GetRect().GetTop(),
+        newWindowWidth, 
+        GetSize().GetHeight());    
+    }  
+  } else {
+    if (IsTopOfDisplay()) {
+      SetSize(
+        GetSize().GetWidth(),
+        newWindowWidth);
+    } else {
+      SetSize(
+        GetRect().GetLeft(),
+        openCloseAnimationWindowRight_ - newWindowWidth + 1,
+        GetSize().GetWidth(), 
+        newWindowWidth);    
+    } 
+  }
 
   if (optionPanelOpen_) {
     arrowButton_->SetIcon(arrowButtonOpenIcon_, false);

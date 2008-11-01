@@ -38,6 +38,7 @@ class ImageButton: public BitmapControl {
   private:
 
     wxBitmap* iconBitmap_;
+    wxBitmap* rotatedIconBitmap_;
     bool ownIcon_;
     bool pressed_;
     wxRect grid_;

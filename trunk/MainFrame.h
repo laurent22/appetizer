@@ -39,6 +39,7 @@ class MainFrame: public wxFrame {
       wxSize InitWindowSize;
     };
     
+    bool rotated_;
     bool needLayoutUpdate_;
     bool needMaskUpdate_;
     bool optionPanelOpen_;
@@ -91,6 +92,8 @@ class MainFrame: public wxFrame {
     void ToggleOptionPanel();
     void InvalidateLayout();
     void InvalidateMask();
+
+    void SetRotated(bool rotated);
 
     int GetDisplayIndex();
     bool IsLeftOfDisplay();

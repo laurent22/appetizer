@@ -33,6 +33,7 @@ public:
   int GetRequiredWidth();
   ConfigDialog* GetConfigDialog();
   void Localize();
+  void SetRotated(bool rotated);
 
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);
@@ -42,6 +43,7 @@ public:
 
 private:
 
+  bool rotated_;
   int requiredWidth_;
   OptionButtonVector buttons_;
   bool layoutInvalidated_;

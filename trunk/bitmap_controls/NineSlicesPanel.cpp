@@ -60,6 +60,7 @@ void NineSlicesPanel::UpdateControlBitmap() {
 
   if (nineSlicesPainter_ != NULL) {
     if (gridIsExplicitelySet_) nineSlicesPainter_->SetGrid(grid_.GetLeft(), grid_.GetTop(), grid_.GetWidth(), grid_.GetHeight());
+    nineSlicesPainter_->SetRotation(GetBitmapRotation());
 
     wxMemoryDC destDC;
     destDC.SelectObject(*controlBitmap_);    

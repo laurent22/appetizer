@@ -19,6 +19,15 @@ END_EVENT_TABLE()
 BitmapControl::BitmapControl(wxWindow *owner, int id, wxPoint point, wxSize size):
 wxPanel(owner, id, point, size) {
   controlBitmap_ = NULL;
+  horizontalFlip_ = false;
+  bitmapRotation_ = 0;
+}
+
+
+void BitmapControl::SetHorizontalFlip(bool horizontalFlip) {
+  if (horizontalFlip_ == horizontalFlip) return;
+  horizontalFlip_ = horizontalFlip;
+  InvalidateControlBitmap();
 }
 
 
@@ -46,6 +55,7 @@ void BitmapControl::UpdateControlBitmap() {
     // otherwise we get an assertion error. See IconPanel::LoadImage for
     // an example on how to force a bitmap to have an alpha channel.
     controlBitmap_->UseAlpha();
+    hasBeenFlipped_ = false;
   }
 
   // Mark the bitmap as invalidated. It will be updated in the next PAINT event
@@ -66,6 +76,17 @@ void BitmapControl::OnMove(wxMoveEvent& evt) {
 }
 
 
+int BitmapControl::GetBitmapRotation() {
+  return bitmapRotation_;
+}
+
+
+void BitmapControl::SetBitmapRotation(int rotation) {
+  bitmapRotation_ = rotation;
+  InvalidateControlBitmap();
+}
+
+
 void BitmapControl::OnEraseBackground(wxEraseEvent &evt) {
   // Cancel the default behaviour to avoid flickering.
 }
@@ -78,6 +99,17 @@ void BitmapControl::OnPaint(wxPaintEvent& evt) {
   if (controlBitmapInvalidated_) {
     UpdateControlBitmap();
     controlBitmapInvalidated_ = false;
+  }
+
+  if (horizontalFlip_ && !hasBeenFlipped_) {
+    if (controlBitmap_->IsOk()) {
+      wxImage tempImage = controlBitmap_->ConvertToImage();
+      tempImage = tempImage.Mirror();
+      wxDELETE(controlBitmap_);
+      controlBitmap_ = new wxBitmap(tempImage);
+      controlBitmap_->UseAlpha();
+      hasBeenFlipped_ = true;
+    }
   }
 
   if (controlBitmap_->GetWidth() <= 0 || controlBitmap_->GetHeight() <= 0) return; 
@@ -105,6 +137,8 @@ void BitmapControl::OnPaint(wxPaintEvent& evt) {
 
   // Finally, blit the control bitmap
   if (controlBitmap_->GetWidth() > 0 && controlBitmap_->GetHeight() > 0) {
-    if (controlBitmap_) dc.DrawBitmap(*controlBitmap_, 0, 0);
+    if (controlBitmap_) {
+      dc.DrawBitmap(*controlBitmap_, 0, 0);
+    }
   }
 }

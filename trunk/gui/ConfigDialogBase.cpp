@@ -20,6 +20,9 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     iconSizeLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Icon size:"));
     const wxString *iconSizeComboBox_choices = NULL;
     iconSizeComboBox = new wxComboBox(notebook_1_pane_1, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, iconSizeComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
+    orientationLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Orientation:"));
+    const wxString *orientationComboBox_choices = NULL;
+    orientationComboBox = new wxComboBox(notebook_1_pane_1, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, orientationComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
     cancelButton = new wxButton(this, ID_CDLG_BUTTON_Cancel, wxT("Cancel"));
 
@@ -33,7 +36,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(323, 192));
+    SetSize(wxSize(323, 219));
     // end wxGlade
 }
 
@@ -49,6 +52,8 @@ void ConfigDialogBase::do_layout()
     generalGridSizer->Add(languageComboBox, 0, wxEXPAND, 0);
     generalGridSizer->Add(iconSizeLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     generalGridSizer->Add(iconSizeComboBox, 0, wxEXPAND, 0);
+    generalGridSizer->Add(orientationLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
+    generalGridSizer->Add(orientationComboBox, 0, wxEXPAND, 0);
     generalGridSizer->AddGrowableCol(1);
     sizer_3->Add(generalGridSizer, 1, wxALL|wxEXPAND, 10);
     notebook_1_pane_1->SetSizer(sizer_3);

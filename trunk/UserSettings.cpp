@@ -22,6 +22,7 @@ UserSettings::UserSettings() {
   PicturesPath = _T("%DRIVE%/Documents/Pictures");
   VideosPath = _T("%DRIVE%/Documents/Videos");
   Skin = _T("Default");
+  Rotated = false;
 }
 
 
@@ -36,6 +37,7 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "PicturesPath", PicturesPath);
   AppendSettingToXml(xml, "VideosPath", VideosPath);
   AppendSettingToXml(xml, "Skin", Skin);
+  AppendSettingToXml(xml, "Rotated", Rotated);
 
   return xml;
 }
@@ -74,6 +76,8 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("PicturesPath")) PicturesPath = v;
     if (n == _T("VideosPath")) VideosPath = v;
     if (n == _T("Skin")) Skin = v;
+    if (n == _T("Rotated")) Rotated = v.Lower() == _T("true");
+
   }
 }
 
@@ -113,6 +117,11 @@ void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, i
 
 void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, wxString value) {
   AppendSettingToXml(element, name, value.mb_str());
+}
+
+
+void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, bool value) {
+  AppendSettingToXml(element, name, value ? "true" : "false");
 }
 
 

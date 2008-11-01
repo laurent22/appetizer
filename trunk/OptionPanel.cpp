@@ -29,6 +29,7 @@ END_EVENT_TABLE()
 
 OptionPanel::OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
+  rotated_ = false;
   configDialog_ = NULL;
 
   LoadImage(FilePaths::SkinDirectory + _T("/OptionPanel.png"));
@@ -73,6 +74,17 @@ NineSlicesPanel(owner, id, point, size) {
   }
 
   Localize();
+}
+
+
+void OptionPanel::SetRotated(bool rotated) {
+  if (rotated == rotated_) return;
+  rotated_ = rotated;
+  
+  SetBitmapRotation(rotated_ ? 90 : 0);
+  SetHorizontalFlip(rotated_);
+
+  InvalidateLayout();
 }
 
 
@@ -137,9 +149,20 @@ void OptionPanel::OnSize(wxSizeEvent& evt) {
 
 void OptionPanel::UpdateLayout() {
   layoutInvalidated_ = false;
+
+  int x;
+  int y;
   
-  int x = Styles::OptionPanel.Padding.Left;
-  int y = Styles::OptionPanel.Padding.Top;
+  if (rotated_) {
+    x = Styles::OptionPanel.Padding.Bottom;
+    y = Styles::OptionPanel.Padding.Left;
+  } else {
+    x = Styles::OptionPanel.Padding.Left;
+    y = Styles::OptionPanel.Padding.Top;
+  }
+
+  int buttonsTop;
+  int buttonsBottom = 0;
 
   for (int i = 0; i < buttons_.size(); i++) {
     OptionButton* b = buttons_[i];
@@ -147,17 +170,58 @@ void OptionPanel::UpdateLayout() {
     int newX = x;
     int newY = y;
 
-    if (newY + b->GetSize().GetHeight() > GetSize().GetHeight() - Styles::OptionPanel.Padding.Bottom) {
-      newY = Styles::OptionPanel.Padding.Top;
-      newX = newX + b->GetSize().GetWidth() + Styles::OptionPanel.ButtonHGap;
+    if (rotated_) {
+
+      if (newX + b->GetSize().GetWidth() > GetSize().GetWidth() - Styles::OptionPanel.Padding.Top) {
+        newX = Styles::OptionPanel.Padding.Bottom;
+        newY = newY + b->GetSize().GetHeight() + Styles::OptionPanel.ButtonVGap;
+      }
+
+      requiredWidth_ = newY + b->GetSize().GetHeight() + Styles::OptionPanel.Padding.Right;
+
+    } else {
+
+      if (newY + b->GetSize().GetHeight() > GetSize().GetHeight() - Styles::OptionPanel.Padding.Bottom) {
+        newY = Styles::OptionPanel.Padding.Top;
+        newX = newX + b->GetSize().GetWidth() + Styles::OptionPanel.ButtonHGap;
+      }
+
+      requiredWidth_ = newX + b->GetSize().GetWidth() + Styles::OptionPanel.Padding.Right;
     }
 
-    b->Move(newX, newY);
+    b->Move(newX, newY);      
 
-    requiredWidth_ = newX + b->GetSize().GetWidth() + Styles::OptionPanel.Padding.Right;
+    if (rotated_) {
+      x = newX + b->GetSize().GetWidth() + Styles::OptionPanel.ButtonHGap;
+      y = newY;
 
-    x = newX;
-    y = newY + b->GetSize().GetHeight() + Styles::OptionPanel.ButtonVGap;
+      if (i == 0) buttonsTop = newX;
+      if (newX + b->GetSize().GetWidth() > buttonsBottom) buttonsBottom = newX + b->GetSize().GetWidth();
+    } else {
+      x = newX;
+      y = newY + b->GetSize().GetHeight() + Styles::OptionPanel.ButtonVGap;
+
+      if (i == 0) buttonsTop = newY;
+      if (newY + b->GetSize().GetHeight() > buttonsBottom) buttonsBottom = newY + b->GetSize().GetHeight();
+    }
+  }
+
+  if (rotated_) {
+    int leftGap = GetSize().GetWidth() - buttonsBottom;
+    int leftOffset = (int)floor((leftGap + buttonsTop) / 2.0f) - buttonsTop;
+
+    for (int i = 0; i < buttons_.size(); i++) {
+      OptionButton* b = buttons_[i];
+      b->Move(b->GetRect().GetLeft() + leftOffset, b->GetRect().GetTop());
+    }
+  } else {
+    int bottomGap = GetSize().GetHeight() - buttonsBottom;
+    int topOffset = (int)floor((bottomGap + buttonsTop) / 2.0f) - buttonsTop;
+
+    for (int i = 0; i < buttons_.size(); i++) {
+      OptionButton* b = buttons_[i];
+      b->Move(b->GetRect().GetLeft(), b->GetRect().GetTop() + topOffset);
+    }
   }
 }
 

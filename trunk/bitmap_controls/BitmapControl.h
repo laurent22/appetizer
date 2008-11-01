@@ -33,6 +33,10 @@ class BitmapControl: public wxPanel {
      */
     wxBitmap* GetControlBitmap();
 
+    int GetBitmapRotation();
+    void SetBitmapRotation(int rotation);
+    void SetHorizontalFlip(bool horizontalFlip);
+
     /**
      * By calling this function, the control bitmap is going
      * to be redrawn on the next call to UpdateControlBitmap()
@@ -76,6 +80,9 @@ class BitmapControl: public wxPanel {
      * Tells whether the bitmap must be redrawn or not
      */
     bool controlBitmapInvalidated_;
+    int bitmapRotation_;
+    bool horizontalFlip_;
+    bool hasBeenFlipped_;
 
   DECLARE_EVENT_TABLE()
 

@@ -45,6 +45,9 @@ ConfigDialog.Title = Configuration
 ConfigDialog.GeneralTab = General
 ConfigDialog.LanguageLabel = Language:
 ConfigDialog.IconSizeLabel = Icon size:
+ConfigDialog.Orientation = Orientation
+ConfigDialog.HorizontalOrientation = Horizontal
+ConfigDialog.VerticalOrientation = Vertical
 
 OptionPanel.CloseToolTip = Close
 OptionPanel.MinimizeToolTip = Minimize
