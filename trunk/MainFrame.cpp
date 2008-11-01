@@ -256,10 +256,10 @@ void MainFrame::UpdateLayout(int width, int height) {
   backgroundPanel_->SetSize(bgPanelX, 0, bgPanelWidth, height);
   
   iconPanel_->SetSize(
-    Styles::MainPanel.PaddingLeft,
-    Styles::MainPanel.PaddingRight,
-    bgPanelWidth - Styles::MainPanel.PaddingWidth,
-    height - Styles::MainPanel.PaddingHeight);
+    Styles::MainPanel.Padding.Left,
+    Styles::MainPanel.Padding.Right,
+    bgPanelWidth - Styles::MainPanel.Padding.Width,
+    height - Styles::MainPanel.Padding.Height);
   
   resizerPanel_->Move(
     bgPanelWidth - resizerPanel_->GetRect().GetWidth(),
@@ -286,22 +286,22 @@ int MainFrame::GetOptionPanelTotalWidth() {
 
 
 int MainFrame::GetMinHeight() {
-  return iconPanel_->GetMinHeight() + Styles::MainPanel.PaddingHeight;
+  return iconPanel_->GetMinHeight() + Styles::MainPanel.Padding.Height;
 }
 
 
 int MainFrame::GetMinWidth() {
-  return iconPanel_->GetMinWidth() + GetOptionPanelTotalWidth() + Styles::MainPanel.PaddingWidth;
+  return iconPanel_->GetMinWidth() + GetOptionPanelTotalWidth() + Styles::MainPanel.Padding.Width;
 }
 
 
 int MainFrame::GetMaxWidth() {
-  return iconPanel_->GetMaxWidth() + Styles::MainPanel.PaddingWidth + GetOptionPanelTotalWidth();
+  return iconPanel_->GetMaxWidth() + Styles::MainPanel.Padding.Width + GetOptionPanelTotalWidth();
 }
 
 
 int MainFrame::GetMaxHeight() {
-  return iconPanel_->GetMaxHeight() + Styles::MainPanel.PaddingHeight;
+  return iconPanel_->GetMaxHeight() + Styles::MainPanel.Padding.Height;
 }
 
 

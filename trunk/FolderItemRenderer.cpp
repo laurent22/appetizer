@@ -186,8 +186,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(gController.GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingWidth,
-          gController.GetUser()->GetSettings()->IconSize + Styles::Icon.PaddingHeight);
+  SetSize(gController.GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Width,
+          gController.GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Height);
 }
 
 
@@ -226,7 +226,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
   if (icon->IsOk()) {  
-    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.PaddingLeft, Styles::Icon.PaddingTop);
+    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);
   }
 
   destDC.SelectObject(wxNullBitmap);

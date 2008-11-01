@@ -138,8 +138,8 @@ void OptionPanel::OnSize(wxSizeEvent& evt) {
 void OptionPanel::UpdateLayout() {
   layoutInvalidated_ = false;
   
-  int x = Styles::OptionPanel.PaddingLeft;
-  int y = Styles::OptionPanel.PaddingTop;
+  int x = Styles::OptionPanel.Padding.Left;
+  int y = Styles::OptionPanel.Padding.Top;
 
   for (int i = 0; i < buttons_.size(); i++) {
     OptionButton* b = buttons_[i];
@@ -147,14 +147,14 @@ void OptionPanel::UpdateLayout() {
     int newX = x;
     int newY = y;
 
-    if (newY + b->GetSize().GetHeight() > GetSize().GetHeight() - Styles::OptionPanel.PaddingBottom) {
-      newY = Styles::OptionPanel.PaddingTop;
+    if (newY + b->GetSize().GetHeight() > GetSize().GetHeight() - Styles::OptionPanel.Padding.Bottom) {
+      newY = Styles::OptionPanel.Padding.Top;
       newX = newX + b->GetSize().GetWidth() + Styles::OptionPanel.ButtonHGap;
     }
 
     b->Move(newX, newY);
 
-    requiredWidth_ = newX + b->GetSize().GetWidth() + Styles::OptionPanel.PaddingRight;
+    requiredWidth_ = newX + b->GetSize().GetWidth() + Styles::OptionPanel.Padding.Right;
 
     x = newX;
     y = newY + b->GetSize().GetHeight() + Styles::OptionPanel.ButtonVGap;

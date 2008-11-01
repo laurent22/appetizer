@@ -188,16 +188,16 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 int IconPanel::GetMinWidth() {
   return 
     gController.GetUser()->GetSettings()->IconSize +
-    Styles::Icon.PaddingWidth +
-    Styles::InnerPanel.PaddingWidth;
+    Styles::Icon.Padding.Width +
+    Styles::InnerPanel.Padding.Width;
 }
 
 
 int IconPanel::GetMinHeight() {
   return 
     gController.GetUser()->GetSettings()->IconSize +
-    Styles::Icon.PaddingHeight +
-    Styles::InnerPanel.PaddingHeight;
+    Styles::Icon.Padding.Height +
+    Styles::InnerPanel.Padding.Height;
 }
 
 
@@ -339,8 +339,8 @@ void IconPanel::UpdateLayout() {
   // Loop through the icons and move them
   // at their right position
 
-  int x = Styles::InnerPanel.PaddingLeft;
-  int y = Styles::InnerPanel.PaddingTop;
+  int x = Styles::InnerPanel.Padding.Left;
+  int y = Styles::InnerPanel.Padding.Top;
   int width = GetRect().GetWidth();
   int height = GetRect().GetHeight();
 
@@ -355,13 +355,13 @@ void IconPanel::UpdateLayout() {
 
     if (iconSize < 0) iconSize = renderer->GetRect().GetWidth();
 
-    if (i > 0 && newX + iconSize > width - Styles::InnerPanel.PaddingRight) {
-      newX = Styles::InnerPanel.PaddingLeft;
+    if (i > 0 && newX + iconSize > width - Styles::InnerPanel.Padding.Right) {
+      newX = Styles::InnerPanel.Padding.Left;
       newY += iconSize;
       y = newY;
     }
 
-    if (newY + iconSize > height - Styles::InnerPanel.PaddingBottom) {
+    if (newY + iconSize > height - Styles::InnerPanel.Padding.Bottom) {
       if (firstOffScreenIconIndex_ < 0) firstOffScreenIconIndex_ = i;
       renderer->Hide();
     } else {
@@ -376,15 +376,15 @@ void IconPanel::UpdateLayout() {
     x = newX + iconSize;
   }  
 
-  maxWidth_ += Styles::InnerPanel.PaddingRight;
-  maxHeight_ += Styles::InnerPanel.PaddingBottom;
+  maxWidth_ += Styles::InnerPanel.Padding.Right;
+  maxHeight_ += Styles::InnerPanel.Padding.Bottom;
 
   if (firstOffScreenIconIndex_ >= 0) {
     // If there are some offscreen icons, show the browse button
     browseButton_->Show();
     browseButton_->Move(
-      width - browseButton_->GetSize().GetWidth() - Styles::InnerPanel.PaddingRight,
-      height - browseButton_->GetSize().GetHeight() - Styles::InnerPanel.PaddingBottom);
+      width - browseButton_->GetSize().GetWidth() - Styles::InnerPanel.Padding.Right,
+      height - browseButton_->GetSize().GetHeight() - Styles::InnerPanel.Padding.Bottom);
 
     if (firstOffScreenIconIndex_ > 0) {
       // If the browse button overlaps the last icon,

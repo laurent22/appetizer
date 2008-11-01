@@ -33,7 +33,14 @@ void NineSlicesPainter::LoadImage(const wxString& filePath, bool forceAlpha) {
     wxImage tempImage(filePath_, wxBITMAP_TYPE_PNG);
     if (tempImage.GetWidth() > 0 && tempImage.GetHeight() > 0) {
       tempImage.InitAlpha();
-      tempImage.SetAlpha(0, 0, 254);
+
+      unsigned char pixelAlpha = tempImage.GetAlpha(0, 0);
+      if (pixelAlpha == 0) {
+        pixelAlpha = 1;
+      } else if (pixelAlpha == 255) {
+        pixelAlpha = 254;
+      }
+      
       sourceBitmap_ = wxBitmap(tempImage);
     }
   }  

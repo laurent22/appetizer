@@ -10,33 +10,33 @@
 #include "wx/wx.h"
 
 
+class PaddingStyle {
+ 
+public:
+
+  int Left;
+  int Right;
+  int Bottom;
+  int Top;
+  int Width;
+  int Height;
+  void FromRect(const wxRect& rect);
+
+};
+
+
 class MainPanelStyle { public:
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
+  PaddingStyle Padding;
   wxRect ScaleGrid;
 };
 
 class InnerPanelStyle { public:
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
+  PaddingStyle Padding;
   wxRect ScaleGrid;
 };
 
 class OptionPanelStyle { public:
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
+  PaddingStyle Padding;
   int ArrowButtonWidth;
   wxRect ArrowButtonScaleGrid;
   wxRect ScaleGrid;
@@ -45,12 +45,7 @@ class OptionPanelStyle { public:
 };
 
 class IconStyle { public:
-  int PaddingLeft;
-  int PaddingRight;
-  int PaddingTop;
-  int PaddingBottom;
-  int PaddingWidth;
-  int PaddingHeight;
+  PaddingStyle Padding;
 };
 
 class Styles {

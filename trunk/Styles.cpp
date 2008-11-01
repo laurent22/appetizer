@@ -14,6 +14,16 @@ IconStyle Styles::Icon;
 OptionPanelStyle Styles::OptionPanel;
 
 
+void PaddingStyle::FromRect(const wxRect& rect) {
+  Left = rect.GetLeft();
+  Top = rect.GetTop();
+  Bottom = rect.GetHeight();
+  Right = rect.GetWidth();
+  Width = Left + Right;
+  Height = Top + Bottom;
+}
+
+
 void Styles::LoadSkinFile(const wxString& filePath) {
   TiXmlDocument doc(filePath.mb_str());
   doc.LoadFile();
@@ -37,23 +47,13 @@ void Styles::LoadSkinFile(const wxString& filePath) {
     if (elementName == _T("BarBackground")) {
       XmlUtil::ReadElementTextAsRect(handle, "ScaleGrid", Styles::MainPanel.ScaleGrid);
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
-      Styles::MainPanel.PaddingLeft = resultRect.GetLeft();
-      Styles::MainPanel.PaddingTop = resultRect.GetTop();
-      Styles::MainPanel.PaddingRight = resultRect.GetWidth();
-      Styles::MainPanel.PaddingBottom = resultRect.GetHeight();
-      Styles::MainPanel.PaddingWidth = Styles::MainPanel.PaddingLeft + Styles::MainPanel.PaddingRight;
-      Styles::MainPanel.PaddingHeight = Styles::MainPanel.PaddingTop + Styles::MainPanel.PaddingBottom;
+      Styles::MainPanel.Padding.FromRect(resultRect);
     }
 
     if (elementName == _T("OptionPanel")) {
       XmlUtil::ReadElementTextAsRect(handle, "ScaleGrid", Styles::OptionPanel.ScaleGrid);
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
-      Styles::OptionPanel.PaddingLeft = resultRect.GetLeft();
-      Styles::OptionPanel.PaddingTop = resultRect.GetTop();
-      Styles::OptionPanel.PaddingRight = resultRect.GetWidth();
-      Styles::OptionPanel.PaddingBottom = resultRect.GetHeight();
-      Styles::OptionPanel.PaddingWidth = Styles::OptionPanel.PaddingLeft + Styles::OptionPanel.PaddingRight;
-      Styles::OptionPanel.PaddingHeight = Styles::OptionPanel.PaddingTop + Styles::OptionPanel.PaddingBottom;
+      Styles::OptionPanel.Padding.FromRect(resultRect);
       Styles::OptionPanel.ButtonHGap = XmlUtil::ReadElementTextAsInt(handle, "HGap");
       Styles::OptionPanel.ButtonVGap = XmlUtil::ReadElementTextAsInt(handle, "VGap");
     }
@@ -61,25 +61,13 @@ void Styles::LoadSkinFile(const wxString& filePath) {
     if (elementName == _T("IconPanel")) {
       XmlUtil::ReadElementTextAsRect(handle, "ScaleGrid", Styles::InnerPanel.ScaleGrid);
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
-      Styles::InnerPanel.PaddingLeft = resultRect.GetLeft();
-      Styles::InnerPanel.PaddingTop = resultRect.GetTop();
-      Styles::InnerPanel.PaddingRight = resultRect.GetWidth();
-      Styles::InnerPanel.PaddingBottom = resultRect.GetHeight();
-      Styles::InnerPanel.PaddingWidth = Styles::InnerPanel.PaddingLeft + Styles::InnerPanel.PaddingRight;
-      Styles::InnerPanel.PaddingHeight = Styles::InnerPanel.PaddingTop + Styles::InnerPanel.PaddingBottom;
+      Styles::InnerPanel.Padding.FromRect(resultRect);
     }
 
     if (elementName == _T("Icon")) {
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
-      Styles::Icon.PaddingLeft = resultRect.GetLeft();
-      Styles::Icon.PaddingTop = resultRect.GetTop();
-      Styles::Icon.PaddingRight = resultRect.GetWidth();
-      Styles::Icon.PaddingBottom = resultRect.GetHeight();
-      Styles::Icon.PaddingWidth = Styles::Icon.PaddingLeft + Styles::Icon.PaddingRight;
-      Styles::Icon.PaddingHeight = Styles::Icon.PaddingTop + Styles::Icon.PaddingBottom;
+      Styles::Icon.Padding.FromRect(resultRect);
     }
   }
-
-  int i = 0;
 
 }
