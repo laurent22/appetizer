@@ -24,6 +24,7 @@ class FolderItemRenderer: public BitmapControl {
 public:
 
   FolderItemRenderer(wxWindow *owner, int id, wxPoint point, wxSize size);
+  ~FolderItemRenderer();
   void LoadData(int folderItemId);
   void UpdateControlBitmap();
   void FitToContent();
@@ -40,6 +41,7 @@ private:
   NineSlicesPainterSP iconOverlayPainterUp_;
   NineSlicesPainterSP iconOverlayPainterDown_;
   wxPoint pressPosition_;
+  wxBitmapSP multiLaunchIcon_;
 
   void OnEnterWindow(wxMouseEvent& evt);
   void OnLeaveWindow(wxMouseEvent& evt);

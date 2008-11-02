@@ -35,6 +35,7 @@ void ImagePanel::LoadImage(const wxString& filePath) {
 
 void ImagePanel::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
+  if (!controlBitmap_) return;
 
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);

@@ -45,7 +45,7 @@ void BitmapControl::InvalidateControlBitmap() {
 }
 
 void BitmapControl::UpdateControlBitmap() {
-  if (!controlBitmap_) {
+  if (!controlBitmap_ && GetRect().GetWidth() > 0 && GetRect().GetHeight() > 0) {
     controlBitmap_ = new wxBitmap(GetRect().GetWidth(), GetRect().GetHeight(), 32);
     // We need UseAlpha() so that the alpha channel is used when drawing
     // the bitmap. However UseAlpha() is an undocumented method so it would
@@ -101,6 +101,8 @@ void BitmapControl::OnPaint(wxPaintEvent& evt) {
     controlBitmapInvalidated_ = false;
   }
 
+  if (!controlBitmap_) return;
+
   if (horizontalFlip_ && !hasBeenFlipped_) {
     if (controlBitmap_->IsOk()) {
       wxImage tempImage = controlBitmap_->ConvertToImage();
@@ -119,19 +121,21 @@ void BitmapControl::OnPaint(wxPaintEvent& evt) {
   BitmapControl* parent = dynamic_cast<BitmapControl*>(GetParent());
 
   if (parent) {
-    wxBitmap* parentBitmap = parent->GetControlBitmap();
-    // Copy the parent sub bitmap as a background of this control
+    wxBitmap* parentBitmap = parent->GetControlBitmap();    
 
-    // Check that the rectangle is not off-bounds
-    wxRect rect = this->GetRect();
-    if (rect.GetLeft() < 0) rect.SetLeft(0);
-    if (rect.GetTop() < 0) rect.SetTop(0);
-    if (rect.GetRight() >= parentBitmap->GetWidth()) rect.SetRight(parentBitmap->GetWidth() - 1);
-    if (rect.GetBottom() >= parentBitmap->GetHeight()) rect.SetBottom(parentBitmap->GetHeight() - 1);
+    if (parentBitmap) {
+      // Check that the rectangle is not off-bounds
+      wxRect rect = this->GetRect();
+      if (rect.GetLeft() < 0) rect.SetLeft(0);
+      if (rect.GetTop() < 0) rect.SetTop(0);
+      if (rect.GetRight() >= parentBitmap->GetWidth()) rect.SetRight(parentBitmap->GetWidth() - 1);
+      if (rect.GetBottom() >= parentBitmap->GetHeight()) rect.SetBottom(parentBitmap->GetHeight() - 1);
 
-    if (rect.GetWidth() > 0 && rect.GetHeight() > 0) {
-      wxBitmap subBitmap = parentBitmap->GetSubBitmap(rect);
-      dc.DrawBitmap(subBitmap, 0, 0);
+      if (rect.GetWidth() > 0 && rect.GetHeight() > 0) {
+        // Copy the parent sub bitmap as a background of this control
+        wxBitmap subBitmap = parentBitmap->GetSubBitmap(rect);
+        dc.DrawBitmap(subBitmap, 0, 0);
+      }
     }
   }
 

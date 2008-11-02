@@ -29,7 +29,8 @@ public:
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
   void Launch();
-  static void Launch(const wxString& filePath);
+  void LaunchWithArguments(const wxString& arguments);
+  static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString);
   TiXmlElement* ToXML();
   void FromXML(TiXmlElement* xml);
 

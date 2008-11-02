@@ -5,6 +5,7 @@
 */
 
 #include "Styles.h"
+#include "Log.h"
 #include "utilities/XmlUtil.h"
 
 
@@ -30,7 +31,7 @@ void Styles::LoadSkinFile(const wxString& filePath) {
 
   TiXmlElement* root = doc.FirstChildElement("Skin");
   if (!root) {
-    wxLogDebug(_T("Styles::LoadSkinFile: Could not load XML. No Skin element found."));
+    wlog("Styles::LoadSkinFile: Could not load XML. No Skin element found.");
     return;
   }
   

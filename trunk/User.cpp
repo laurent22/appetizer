@@ -9,6 +9,7 @@
 #include <wx/filename.h>
 #include "Controller.h"
 #include "Constants.h"
+#include "Log.h"
 #include "FolderItem.h"
 #include "utilities/StringUtil.h"
 #include "FilePaths.h"
@@ -91,7 +92,7 @@ void User::Load() {
 
   TiXmlElement* root = doc.FirstChildElement("FolderItems");
   if (!root) {
-    wxLogDebug(_T("User::Load: Could not load XML. No FolderItems element found."));
+    wlog("User::Load: Could not load XML. No FolderItems element found.");
     return;
   }
   
@@ -108,7 +109,7 @@ void User::Load() {
       if (path == wxEmptyString) continue;
       AddAutoAddExclusion(path);
     } else {
-      wxLogDebug(_T("User::Load: Unknown element: %s"), elementName);
+      wlog(wxString::Format(_T("User::Load: Unknown element: %s"), elementName));
     }
   }
 }
@@ -125,6 +126,18 @@ FolderItemSP User::GetFolderItemById(int folderItemId) {
   }
   FolderItemSP nullPointer;
   return nullPointer;
+}
+
+
+FolderItemSP User::AddNewFolderItemFromPath(wxString folderItemPath) {
+  FolderItemSP folderItem(new FolderItem());
+  folderItem->SetFilePath(FolderItem::ConvertToRelativePath(folderItemPath));
+  folderItem->AutoSetName();
+
+  folderItems_.push_back(folderItem);
+  gController.User_FolderItemCollectionChange();
+
+  return folderItem;
 }
 
 
@@ -194,7 +207,7 @@ void User::MoveFolderItem(int folderItemId, int insertionIndex) {
   // Get the folder item that we need to move
   FolderItemSP folderItemToMove = GetFolderItemById(folderItemId);
   if (!folderItemToMove.get()) {
-    wxLogDebug(_T("Could not find folder item #%d"), folderItemId);
+    elog(wxString::Format(_T("Could not find folder item #%d"), folderItemId));
     return;
   }
 

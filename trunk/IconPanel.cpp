@@ -6,10 +6,12 @@
 
 #include "IconPanel.h"
 #include <wx/cursor.h>
+#include <wx/filename.h>
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
 #include "boost/shared_ptr.hpp"
 #include "FilePaths.h"
+#include "Log.h"
 #include "Styles.h"
 #include "Enumerations.h"
 #include "Localization.h"
@@ -29,7 +31,10 @@ END_EVENT_TABLE()
 
 IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
-  SetDropTarget(new IconPanelDropTarget());
+
+  IconPanelDropTarget* dropTarget = new IconPanelDropTarget();
+  dropTarget->SetAssociatedIconPanel(this);
+  SetDropTarget(dropTarget);
   
   LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
   SetGrid(Styles::InnerPanel.ScaleGrid);
@@ -136,6 +141,31 @@ int IconPanel::GetInsertionIndexAtPoint(const wxPoint& point) {
 }
 
 
+int IconPanel::GetRendererIndexAtPoint(const wxPoint& point) {  
+  for (int i = 0; i < folderItemRenderers_.size(); i++) {
+    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+
+    int rendererScreenX = renderer->GetRect().GetLeft();
+    int rendererScreenY = renderer->GetRect().GetTop();
+    int rendererWidth = renderer->GetRect().GetWidth();
+    int rendererHeight = renderer->GetRect().GetHeight();
+
+    ClientToScreen(&rendererScreenX, &rendererScreenY);
+
+    // Early exits
+    if (point.y < rendererScreenY) continue;
+    if (point.y >= rendererScreenY + rendererHeight) continue;
+    if (point.x < rendererScreenX) continue;
+    if (point.x >= rendererScreenX + rendererWidth) continue;
+
+    return i;
+  }
+
+  // The point is off bounds
+  return -1;
+}
+
+
 FolderItemRendererSP IconPanel::GetRendererFromFolderItem(const FolderItem& folderItem) {
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
@@ -146,42 +176,64 @@ FolderItemRendererSP IconPanel::GetRendererFromFolderItem(const FolderItem& fold
 }
 
 
-IconPanelDropTarget::IconPanelDropTarget() {
-
-}
-
-
 bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
   FolderItemSP folderItem = gController.GetDraggedFolderItem();  
+
+  int screenX = x;
+  int screenY = y;
+  ClientToScreen(&screenX, &screenY);
 
   if (folderItem) {
     // If a folder item is being dragged, and the panel receives a drop
     // event, it means that a folder item has been dragged from the app to the app.
     // In that case, we just change the position of the folder item.
-    wxLogDebug(_T("A FolderItem has been dropped: ") + folderItem->GetResolvedPath());
-
-    int screenX = x;
-    int screenY = y;
-    ClientToScreen(&screenX, &screenY);
+    ilog(_T("A FolderItem has been dropped: ") + folderItem->GetResolvedPath());
 
     int index = GetInsertionIndexAtPoint(wxPoint(screenX, screenY));
 
-    wxLogDebug(_T("Drop index: %d"), index);
+    ilog(wxString::Format(_T("Drop index: %d"), index));
 
     if (index >= 0) {
       gController.GetUser()->MoveFolderItem(folderItem->GetId(), index);
     }
 
-  } else {
-    // Some files from outside the app have been dropped on the panel.
-    // Currently we ignore them, but later on we should create some FolderItems
-    // from these files and add them to the dock.
-    wxLogDebug(_T("Some files have been dropped"));
+    return true;
 
-    return false;
+  } else {
+
+    bool didSomething = false;
+    int index = GetRendererIndexAtPoint(wxPoint(screenX, screenY));
+    
+    if (index >= 0) {
+      // The files have been dropped on an icon    
+      // Launch the icon and give the files as parameters
+      
+      FolderItemSP folderItem = folderItemRenderers_.at(index)->GetFolderItem();
+      if (!folderItem.get()) return false;
+
+      for (int i = 0; i < filenames.Count(); i++) {
+        wxFileName filename(filenames[i]);
+        filename.Normalize();
+        folderItem->LaunchWithArguments(filename.GetFullPath());
+        didSomething = true;
+      }      
+
+    } else {
+      // The files have been dropped on the icon panel itself
+      // Create a new folder item for each file
+
+      for (int i = 0; i < filenames.Count(); i++) {
+        wxFileName filename(filenames[i]);
+        filename.Normalize();
+        gController.GetUser()->AddNewFolderItemFromPath(filename.GetFullPath());
+        didSomething = true;
+      }
+    }
+
+    return didSomething;
   }
 
-  return true;
+  return false;
 }
 
 
@@ -212,16 +264,6 @@ int IconPanel::GetMaxHeight() {
   int minHeight = GetMinHeight();
   if (maxHeight_ < minHeight) return minHeight;
   return maxHeight_;
-}
-
-
-bool IconPanelDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  IconPanel* iconPanel = gMainFrame->GetIconPanel();
-  wxASSERT_MSG(iconPanel, _T("Icon panel must be defined"));
-
-  // Forward the event to the icon panel, so that we
-  // can have a useful "this" pointer
-  return iconPanel->OnDropFiles(x, y, filenames);
 }
 
 
@@ -398,4 +440,34 @@ void IconPanel::UpdateLayout() {
   } else {
     browseButton_->Hide();
   }
+}
+
+
+
+//*****************************************************
+// IconPanelDropTarget
+//*****************************************************
+
+IconPanelDropTarget::IconPanelDropTarget() {
+  associatedIconPanel_ = NULL;
+}
+
+
+void IconPanelDropTarget::SetAssociatedIconPanel(IconPanel* iconPanel) {
+  associatedIconPanel_ = iconPanel;
+}
+
+
+IconPanel* IconPanelDropTarget::GetAssociatedIconPanel() {
+  return associatedIconPanel_;
+}
+
+
+bool IconPanelDropTarget::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
+  wxASSERT_MSG(associatedIconPanel_, _T("An icon panel must be associated"));
+  if (!associatedIconPanel_) return false;
+
+  // Forward the event to the icon panel, so that we
+  // can have a useful "this" pointer to work with
+  return associatedIconPanel_->OnDropFiles(x, y, filenames);
 }

@@ -6,6 +6,7 @@
 
 #include "FolderItemRenderer.h"
 #include "FolderItem.h"
+#include "Log.h"
 #include "utilities/IconGetter.h"
 #include "imaging/Imaging.h"
 #include <wx/log.h>
@@ -51,6 +52,11 @@ BitmapControl(owner, id, point, size) {
   mouseInside_ = false;
   mousePressed_ = false;
   draggingStarted_ = false;
+}
+
+
+FolderItemRenderer::~FolderItemRenderer() {
+
 }
 
 
@@ -205,8 +211,12 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   FolderItemSP folderItem = GetFolderItem();
 
-  if (!folderItem.get()) return;
+  if (!folderItem.get()) {
+    elog("FolderItemRenderer::UpdateControlBitmap: Folder item is null");
+    return;
+  }
 
+  UserSettingsSP userSettings = gController.GetUser()->GetSettings();
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);
 
@@ -236,6 +246,18 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   if (icon->IsOk()) {  
     Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);
+  }
+
+  if (folderItem->BelongsToMultiLaunchGroup()) {
+    if (!multiLaunchIcon_.get()) {
+      multiLaunchIcon_.reset(new wxBitmap(FilePaths::IconsDirectory + _T("/MultiLaunchIcon.png"), wxBITMAP_TYPE_PNG));
+    }
+    if (multiLaunchIcon_->IsOk()) {
+      destDC.DrawBitmap(
+        *multiLaunchIcon_,
+        Styles::Icon.Padding.Left + userSettings->IconSize / 2 - multiLaunchIcon_->GetWidth() / 2,
+        Styles::Icon.Padding.Top + userSettings->IconSize - multiLaunchIcon_->GetHeight() / 2);
+    }
   }
 
   destDC.SelectObject(wxNullBitmap);

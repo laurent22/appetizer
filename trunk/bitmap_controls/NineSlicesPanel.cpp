@@ -52,9 +52,10 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
 
 void NineSlicesPanel::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
+  if (!controlBitmap_) return;
 
   if ((nineSlicesPainter_ == NULL) && (filePath_ != wxEmptyString)) {
-    nineSlicesPainter_ = new NineSlicesPainter();
+    nineSlicesPainter_ = new NineSlicesPainter();    
     nineSlicesPainter_->LoadImage(filePath_);
   }
 
@@ -63,7 +64,7 @@ void NineSlicesPanel::UpdateControlBitmap() {
     nineSlicesPainter_->SetRotation(GetBitmapRotation());
 
     wxMemoryDC destDC;
-    destDC.SelectObject(*controlBitmap_);    
+    destDC.SelectObject(*controlBitmap_);
     nineSlicesPainter_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     destDC.SelectObject(wxNullBitmap);
   }

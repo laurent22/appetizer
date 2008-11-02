@@ -11,6 +11,7 @@
 #include <wx/mimetype.h>
 #include "MessageBoxes.h"
 #include "FilePaths.h"
+#include "Log.h"
 #include "Localization.h"
 
 
@@ -60,7 +61,7 @@ wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
 }
 
 
-void FolderItem::Launch(const wxString& filePath) {
+void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
 
   if (filename.FileExists()) {
@@ -70,7 +71,11 @@ void FolderItem::Launch(const wxString& filePath) {
     //***************************************************************************
 
     if (filename.GetExt().Upper() == _T("EXE")) {
-      wxExecute(filePath);
+      if (arguments == wxEmptyString) {
+        wxExecute(filePath);
+      } else {
+        wxExecute(wxString::Format(_T("%s %s"), filePath, arguments));
+      }
       return;
     }
 
@@ -106,7 +111,7 @@ void FolderItem::Launch(const wxString& filePath) {
     wxString command = _T("explorer ") + filename.GetFullPath();
     wxExecute(command);
     #else
-    wxLogDebug(_T("TO BE IMPLEMENTED"));
+    elog("TO BE IMPLEMENTED");
     #endif
   } else {
     MessageBoxes::ShowError(LOC1(_T("FolderItem.LaunchFileError"), _T("DoesNotExist")));
@@ -117,6 +122,12 @@ void FolderItem::Launch(const wxString& filePath) {
 void FolderItem::Launch() {
   wxString resolvedFilePath = GetResolvedPath();
   FolderItem::Launch(resolvedFilePath);
+}
+
+
+void FolderItem::LaunchWithArguments(const wxString& arguments) {
+  wxString resolvedFilePath = GetResolvedPath();
+  FolderItem::Launch(resolvedFilePath, arguments);
 }
 
 

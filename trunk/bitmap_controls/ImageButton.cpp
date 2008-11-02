@@ -102,6 +102,7 @@ void ImageButton::LoadImage(const wxString& filePathPrefix) {
 
 void ImageButton::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
+  if (!controlBitmap_) return;
 
   if (filePathPrefix_ == wxEmptyString) return;
 

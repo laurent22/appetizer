@@ -9,6 +9,7 @@
 #include "MainFrame.h"
 #include "MessageBoxes.h"
 #include "Localization.h"
+#include "Log.h"
 #include "utilities/VersionInfo.h"
 #include "utilities/Updater.h"
 
@@ -29,30 +30,30 @@ long Controller::GetTimer() {
 
 
 void Controller::CheckForNewVersion(bool silent) {
-  wxLogDebug(_T("Looking for an update..."));
+  ilog("Looking for an update...");
   UpdaterVersionInfo versionInfo;
   bool success = Updater::CheckVersion(CHECK_VERSION_URL, versionInfo);
   
   if (!success) {
-    wxLogDebug(_T("Could not get update information"));
+    elog("Could not get update information");
     if (!silent) MessageBoxes::ShowError(LOC(_T("Updater.Error")));
     return;
   }
 
   wxString thisVersion = VersionInfo::GetVersionString();
 
-  wxLogDebug(_T("This version: %s"), thisVersion);
-  wxLogDebug(_T("Current version: %s"), versionInfo.Version);
-  wxLogDebug(_T("Page URL: %s"), versionInfo.PageURL);
-  wxLogDebug(_T("Download URL: %s"), versionInfo.DownloadURL);
-  wxLogDebug(_T("Release notes: %s"), versionInfo.ReleaseNotes);
+  ilog(wxString::Format(_T("This version: %s"), thisVersion));
+  ilog(wxString::Format(_T("Current version: %s"), versionInfo.Version));
+  ilog(wxString::Format(_T("Page URL: %s"), versionInfo.PageURL));
+  ilog(wxString::Format(_T("Download URL: %s"), versionInfo.DownloadURL));
+  ilog(wxString::Format(_T("Release notes: %s"), versionInfo.ReleaseNotes));
 
   if (Updater::CompareVersions(thisVersion, versionInfo.Version) >= 0) {
-    wxLogDebug(_T("=> No new version"));
+    ilog("=> No new version");
     if (!silent) MessageBoxes::ShowInformation(LOC(_T("Updater.NoNewVersion")));
     return;
   } else {
-    wxLogDebug(_T("=> A new version is available"));
+    ilog("=> A new version is available");
   }
 
   wxString message;

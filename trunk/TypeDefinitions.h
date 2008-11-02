@@ -14,9 +14,8 @@
 #include "bitmap_controls/NineSlicesPanel.h"
 
 typedef boost::shared_ptr<wxIcon> wxIconSP;
+typedef boost::shared_ptr<wxBitmap> wxBitmapSP;
 typedef boost::shared_ptr<NineSlicesPainter> NineSlicesPainterSP;
 typedef boost::shared_ptr<NineSlicesPanel> NineSlicesPanelSP;
-
-
 
 #endif // __TypeDefinitions_H

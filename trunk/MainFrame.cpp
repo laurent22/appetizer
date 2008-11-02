@@ -9,6 +9,7 @@
 #include <wx/datetime.h>
 #include <wx/filename.h>
 #include "MainFrame.h"
+#include "Log.h"
 #include "Constants.h"
 #include "Controller.h"
 #include "MessageBoxes.h"
@@ -116,7 +117,7 @@ MainFrame::MainFrame()
 
   TiXmlElement* root = doc.FirstChildElement("Window");
   if (!root) {
-    wxLogDebug(_T("MainFrame: Could not load XML. No Window element found."));
+    wlog("MainFrame: Could not load XML. No Window element found.");
 
     SetSize(0, 0, MAIN_FRAME_DEFAULT_WIDTH, MAIN_FRAME_DEFAULT_HEIGHT);
   } else {
@@ -159,12 +160,12 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
   if (!firstIdleEventSent_) {
     firstIdleEventSent_ = true;
 
-    wxLogDebug(_T("Update check..."));
+    ilog("Update check...");
 
     wxDateTime now = wxDateTime::Now();
     wxDateTime nextUpdateTime = gController.GetUser()->GetSettings()->NextUpdateCheckTime;
-    wxLogDebug(_T("Now is %s"), now.Format());
-    wxLogDebug(_T("Next update check on %s"), nextUpdateTime.Format());
+    ilog(wxString::Format(_T("Now is %s"), now.Format()));
+    ilog(wxString::Format(_T("Next update check on %s"), nextUpdateTime.Format()));
 
     if (nextUpdateTime.IsLaterThan(now)) return;
 

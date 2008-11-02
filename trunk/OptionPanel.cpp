@@ -8,6 +8,7 @@
 #include "Controller.h"
 #include "Constants.h"
 #include "FilePaths.h"
+#include "Log.h"
 #include "Styles.h"
 #include "MainFrame.h"
 #include "Localization.h"
@@ -250,7 +251,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     #ifdef __WIN32__
     wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
     #else
-    wxLogDebug(_T("TO BE IMPLEMENTED"));
+    elog("TO BE IMPLEMENTED");
     #endif
 
   } else if (buttonName == _T("MultiLaunch")) {

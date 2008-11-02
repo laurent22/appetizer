@@ -17,16 +17,6 @@
 using namespace std;
 
 
-class IconPanelDropTarget : public wxFileDropTarget {
-
-public:
-
-  IconPanelDropTarget();
-  virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames); 
-
-};
-
-
 class IconPanel : public NineSlicesPanel {
 
 public:
@@ -51,6 +41,7 @@ public:
    * @return The insertion index or -1 if the point is off bounds
    */
   int GetInsertionIndexAtPoint(const wxPoint& point);
+  int GetRendererIndexAtPoint(const wxPoint& point);
 
   FolderItemRendererSP GetRendererFromFolderItem(const FolderItem& folderItem);
 
@@ -76,6 +67,22 @@ private:
   ImageButton* browseButton_;
 
   DECLARE_EVENT_TABLE()
+
+};
+
+
+class IconPanelDropTarget : public wxFileDropTarget {
+
+public:
+
+  IconPanelDropTarget();
+  void SetAssociatedIconPanel(IconPanel* iconPanel);
+  IconPanel* GetAssociatedIconPanel();
+  virtual bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames); 
+
+private:
+
+  IconPanel* associatedIconPanel_;
 
 };
 

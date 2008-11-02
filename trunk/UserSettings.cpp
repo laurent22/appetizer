@@ -9,6 +9,7 @@
 #include <wx/datetime.h>
 #include <wx/filename.h>
 #include "Constants.h"
+#include "Log.h"
 #include "FilePaths.h"
 #include "Controller.h"
 
@@ -55,13 +56,13 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
     if (elementName != _T("Setting")) {
-      wxLogDebug(_T("UserSettings::FromXml: Unknown element: %s"), elementName);
+      wlog(wxString::Format(_T("UserSettings::FromXml: Unknown element: %s"), elementName));
       continue;
     }
 
     const char* cSettingName = element->Attribute("name");
     if (!cSettingName) {
-      wxLogDebug(_T("UserSettings::FromXml: setting doesn t have a name"));
+      wlog("UserSettings::FromXml: setting doesn t have a name");
       continue;
     }
 
@@ -139,7 +140,7 @@ void UserSettings::Load() {
 
   TiXmlElement* root = doc.FirstChildElement("Settings");
   if (!root) {
-    wxLogDebug(_T("UserSettings::Load: Could not load XML. No Settings element found."));
+    wlog("UserSettings::Load: Could not load XML. No Settings element found.");
     return;
   }
 

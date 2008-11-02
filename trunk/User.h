@@ -36,6 +36,7 @@ public:
   FolderItemSP GetFolderItemById(int folderItemId);
   int EditFolderItem(FolderItemSP folderItem);
   FolderItemSP EditNewFolderItem();
+  FolderItemSP AddNewFolderItemFromPath(wxString folderItemPath);
   void DeleteFolderItem(int folderItemId);
   void MoveFolderItem(int folderItemId, int insertionIndex);
   void DumpFolderItems();
