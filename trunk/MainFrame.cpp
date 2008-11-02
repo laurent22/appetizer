@@ -6,13 +6,18 @@
 
 #include <wx/dcbuffer.h>
 #include <wx/cursor.h>
+#include <wx/datetime.h>
+#include <wx/filename.h>
 #include "MainFrame.h"
 #include "Constants.h"
 #include "Controller.h"
+#include "MessageBoxes.h"
 #include "FilePaths.h"
 #include "Localization.h"
 #include "Styles.h"
 #include "utilities/XmlUtil.h"
+#include "utilities/Updater.h"
+#include "utilities/VersionInfo.h"
 #include "bitmap_controls/ImageButton.h"
 
 
@@ -28,6 +33,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_PAINT(MainFrame::OnPaint)
   EVT_CLOSE(MainFrame::OnClose)
   EVT_COMMAND(wxID_ANY, wxeEVT_CLICK, MainFrame::OnImageButtonClick)
+  EVT_IDLE(MainFrame::OnIdle)
+  EVT_MOUSE_CAPTURE_LOST(MainFrame::OnMouseCaptureLost)
 END_EVENT_TABLE()
 
 
@@ -48,6 +55,7 @@ MainFrame::MainFrame()
     logWindow_ = new wxLogWindow(this, wxEmptyString, true);
   #endif // __WXDEBUG__
 
+  firstIdleEventSent_ = false;
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
   optionPanelOpen_ = false;
@@ -83,6 +91,7 @@ MainFrame::MainFrame()
   resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
   resizerPanel_->LoadImage(FilePaths::SkinDirectory + _T("/Resizer.png"));
   resizerPanel_->FitToContent();
+  resizerPanel_->SetCursor(wxCursor(wxCURSOR_HAND));
 
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnResizerMouseDown), NULL, this);
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnResizerMouseUp), NULL, this);
@@ -144,6 +153,27 @@ MainFrame::MainFrame()
     SetSize(x, y, width, height);
   }
 } 
+
+
+void MainFrame::OnIdle(wxIdleEvent& evt) {
+  if (!firstIdleEventSent_) {
+    firstIdleEventSent_ = true;
+
+    wxLogDebug(_T("Update check..."));
+
+    wxDateTime now = wxDateTime::Now();
+    wxDateTime nextUpdateTime = gController.GetUser()->GetSettings()->NextUpdateCheckTime;
+    wxLogDebug(_T("Now is %s"), now.Format());
+    wxLogDebug(_T("Next update check on %s"), nextUpdateTime.Format());
+
+    if (nextUpdateTime.IsLaterThan(now)) return;
+
+    gController.CheckForNewVersion(true);
+
+    gController.GetUser()->GetSettings()->NextUpdateCheckTime = now;
+    gController.GetUser()->GetSettings()->NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
+  }  
+}
 
 
 void MainFrame::SetRotated(bool rotated) {
@@ -407,6 +437,14 @@ void MainFrame::OnSize(wxSizeEvent& evt) {
 }
 
 
+void MainFrame::OnMouseCaptureLost(wxMouseCaptureLostEvent& evt) {
+  // Any MSW application that uses wxWindow::CaptureMouse() must implement an 
+  // wxEVT_MOUSE_CAPTURE_LOST event handler as of wxWidgets 2.8.0.
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  if (w->HasCapture()) w->ReleaseMouse();
+}
+
+
 void MainFrame::OnMouseDown(wxMouseEvent& evt) {
   static_cast<wxWindow*>(evt.GetEventObject())->CaptureMouse();
 
@@ -507,7 +545,7 @@ void MainFrame::InvalidateMask() {
 }
 
 
-void MainFrame::OnClose(wxCloseEvent& evt) {
+void MainFrame::OnClose(wxCloseEvent& evt) {  
   gController.GetUser()->Save();
 
   TiXmlDocument doc;
@@ -548,6 +586,7 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   XmlUtil::AppendTextElement(xmlRoot, "HorizontalGap", hGap);
   XmlUtil::AppendTextElement(xmlRoot, "VerticalGap", vGap);
 
+  FilePaths::CreateSettingsDirectory();
   doc.SaveFile(FilePaths::WindowFile.mb_str());
 
   wxDELETE(Localization::Instance);

@@ -23,6 +23,7 @@ extern MainFrame* gMainFrame;
 BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
   EVT_BUTTON(ID_CDLG_BUTTON_Cancel, ConfigDialog::OnCancelButtonClick)
   EVT_BUTTON(ID_CDLG_BUTTON_Save, ConfigDialog::OnSaveButtonClick)
+  EVT_BUTTON(ID_CDLG_BUTTON_CheckForUpdate, ConfigDialog::OnCheckForUpdateButtonClick)  
   EVT_SHOW(ConfigDialog::OnShow)
 END_EVENT_TABLE()
 
@@ -49,6 +50,7 @@ void ConfigDialog::Localize() {
   saveButton->SetLabel(LOC(_T("Global.Save")));
   cancelButton->SetLabel(LOC(_T("Global.Cancel")));
   orientationLabel->SetLabel(LOC(_T("ConfigDialog.Orientation")));
+  checkForUpdateButton->SetLabel(LOC(_T("ConfigDialog.UpdateButton")));
 }
 
 
@@ -104,12 +106,20 @@ void ConfigDialog::LoadSettings() {
     iconSizeComboBox->Select(1);
   }
 
-
   orientationComboBox->Clear();
   orientationComboBox->Append(LOC(_T("ConfigDialog.HorizontalOrientation")), new wxStringClientData(_T("h")));
   orientationComboBox->Append(LOC(_T("ConfigDialog.VerticalOrientation")), new wxStringClientData(_T("v")));
   orientationComboBox->Select(userSettings->Rotated ? 1 : 0);
+}
 
+
+void ConfigDialog::OnCheckForUpdateButtonClick(wxCommandEvent& evt) {
+  checkForUpdateButton->SetLabel(LOC(_T("ConfigDialog.UpdateButtonWait")));
+  checkForUpdateButton->Disable();
+  checkForUpdateButton->Update();
+  gController.CheckForNewVersion(false);
+  checkForUpdateButton->Enable();
+  checkForUpdateButton->SetLabel(LOC(_T("ConfigDialog.UpdateButton")));
 }
 
 

@@ -24,6 +24,7 @@ class Controller {
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
     long GetTimer();
+    void CheckForNewVersion(bool silent = false);
 
     /**
      * GLOBAL EVENTS

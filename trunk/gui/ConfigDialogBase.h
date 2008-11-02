@@ -14,7 +14,8 @@
 // begin wxGlade: ::extracode
 enum {
 ID_CDLG_BUTTON_Save,
-ID_CDLG_BUTTON_Cancel
+ID_CDLG_BUTTON_Cancel,
+ID_CDLG_BUTTON_CheckForUpdate
 };
 // end wxGlade
 
@@ -40,6 +41,8 @@ protected:
     wxComboBox* iconSizeComboBox;
     wxStaticText* orientationLabel;
     wxComboBox* orientationComboBox;
+    wxStaticText* label_1;
+    wxButton* checkForUpdateButton;
     wxPanel* notebook_1_pane_1;
     wxNotebook* notebook;
     wxButton* saveButton;

@@ -61,6 +61,7 @@ class MainFrame: public wxFrame {
     int openCloseAnimationWindowRight_;
     wxIcon frameIcon_;
     ApplicationTrayIcon taskBarIcon_;
+    bool firstIdleEventSent_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -111,6 +112,8 @@ class MainFrame: public wxFrame {
     void OnEraseBackground(wxEraseEvent &evt);  
     void OnClose(wxCloseEvent& evt);
     void OnImageButtonClick(wxCommandEvent& evt);
+    void OnIdle(wxIdleEvent& evt);
+    void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

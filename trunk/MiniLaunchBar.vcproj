@@ -201,7 +201,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib wxbase28ud_net.lib"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -272,7 +272,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib wxbase28u_net.lib"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="false"
@@ -414,6 +414,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\StringUtil.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\Updater.cpp"
 					>
 				</File>
 				<File
@@ -592,6 +596,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\StringUtil.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\Updater.h"
 					>
 				</File>
 				<File

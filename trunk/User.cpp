@@ -76,6 +76,7 @@ void User::Save(bool force) {
     xmlRoot->LinkEndChild(folderItem->ToXML());   
   }
 
+  FilePaths::CreateSettingsDirectory();
   doc.SaveFile(FilePaths::FolderItemsFile.mb_str());
 }
 

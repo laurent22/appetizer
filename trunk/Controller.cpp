@@ -7,6 +7,10 @@
 #include <wx/wx.h> 
 #include "Controller.h"
 #include "MainFrame.h"
+#include "MessageBoxes.h"
+#include "Localization.h"
+#include "utilities/VersionInfo.h"
+#include "utilities/Updater.h"
 
 
 extern MainFrame* gMainFrame;
@@ -21,6 +25,45 @@ Controller::Controller() {
 
 long Controller::GetTimer() {
   return stopWatch_.Time();
+}
+
+
+void Controller::CheckForNewVersion(bool silent) {
+  wxLogDebug(_T("Looking for an update..."));
+  UpdaterVersionInfo versionInfo;
+  bool success = Updater::CheckVersion(CHECK_VERSION_URL, versionInfo);
+  
+  if (!success) {
+    wxLogDebug(_T("Could not get update information"));
+    if (!silent) MessageBoxes::ShowError(LOC(_T("Updater.Error")));
+    return;
+  }
+
+  wxString thisVersion = VersionInfo::GetVersionString();
+
+  wxLogDebug(_T("This version: %s"), thisVersion);
+  wxLogDebug(_T("Current version: %s"), versionInfo.Version);
+  wxLogDebug(_T("Page URL: %s"), versionInfo.PageURL);
+  wxLogDebug(_T("Download URL: %s"), versionInfo.DownloadURL);
+  wxLogDebug(_T("Release notes: %s"), versionInfo.ReleaseNotes);
+
+  if (Updater::CompareVersions(thisVersion, versionInfo.Version) >= 0) {
+    wxLogDebug(_T("=> No new version"));
+    if (!silent) MessageBoxes::ShowInformation(LOC(_T("Updater.NoNewVersion")));
+    return;
+  } else {
+    wxLogDebug(_T("=> A new version is available"));
+  }
+
+  wxString message;
+  message = LOC3(_T("Updater.NewVersion"), thisVersion, versionInfo.Version, versionInfo.ReleaseNotes);
+      
+  int result = MessageBoxes::ShowConfirmation(message);
+
+  if (result == wxID_YES) {
+    bool wasLaunched = ::wxLaunchDefaultBrowser(versionInfo.PageURL, wxBROWSER_NEW_WINDOW);
+    if (!wasLaunched) MessageBoxes::ShowError(LOC(_T("Global.BrowserError")));
+  }
 }
 
 

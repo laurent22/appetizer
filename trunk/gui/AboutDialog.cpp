@@ -5,6 +5,8 @@
 */
 
 #include "AboutDialog.h"
+#include <wx/arrstr.h>
+#include "../utilities/StringUtil.h"
 #include "../utilities/VersionInfo.h"
 #include "../Localization.h"
 #include "../Constants.h"
@@ -32,8 +34,13 @@ void AboutDialog::Localize() {
 void AboutDialog::LoadContent() {
   Localize();
 
-  wxString version = wxString::Format(_T("%s, Version %s"), APPLICATION_NAME, VersionInfo::GetVersionString());
-  versionLabel->SetValue(version);
+  wxString version = VersionInfo::GetVersionString();
+  wxArrayString versionSplit;
+  StringUtil::Split(version, versionSplit, _T("."));
+  while (versionSplit.Count() < 4) versionSplit.Add(_T("0"));
+
+  wxString versionText = wxString::Format(_T("%s, Version %s.%s.%s (Build #%s)"), APPLICATION_NAME, versionSplit[0], versionSplit[1], versionSplit[2], versionSplit[3]);
+  versionLabel->SetValue(versionText);
 }
 
 

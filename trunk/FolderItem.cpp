@@ -70,7 +70,7 @@ void FolderItem::Launch(const wxString& filePath) {
     //***************************************************************************
 
     if (filename.GetExt().Upper() == _T("EXE")) {
-      wxExecute(filePath, true);
+      wxExecute(filePath);
       return;
     }
 
@@ -91,7 +91,7 @@ void FolderItem::Launch(const wxString& filePath) {
       return;
     }
 
-    wxExecute(command, wxEXEC_ASYNC);
+    wxExecute(command);
 
   } else if (wxFileName::DirExists(filePath)) {
     // Strangely enough filename.DirExists() returns true
@@ -104,7 +104,7 @@ void FolderItem::Launch(const wxString& filePath) {
 
     #ifdef __WIN32__
     wxString command = _T("explorer ") + filename.GetFullPath();
-    wxExecute(command, true);
+    wxExecute(command);
     #else
     wxLogDebug(_T("TO BE IMPLEMENTED"));
     #endif

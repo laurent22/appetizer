@@ -10,7 +10,13 @@
 
 
 int MessageBoxes::ShowError(const wxString& message, long style) {
-  wxMessageDialog dialog(NULL, message, LOC(_T("MessageBox.Error")), style | wxICON_ERROR);
+  wxMessageDialog dialog(NULL, message, LOC(_T("Global.Error")), style | wxICON_ERROR);
+  return dialog.ShowModal();
+}
+
+
+int MessageBoxes::ShowInformation(const wxString& message, long style) {
+  wxMessageDialog dialog(NULL, message, LOC(_T("MessageBox.Info")), style | wxICON_INFORMATION);
   return dialog.ShowModal();
 }
 

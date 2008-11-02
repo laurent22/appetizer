@@ -23,6 +23,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     orientationLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Orientation:"));
     const wxString *orientationComboBox_choices = NULL;
     orientationComboBox = new wxComboBox(notebook_1_pane_1, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, orientationComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
+    label_1 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
+    checkForUpdateButton = new wxButton(notebook_1_pane_1, ID_CDLG_BUTTON_CheckForUpdate, wxT("Check for update"));
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
     cancelButton = new wxButton(this, ID_CDLG_BUTTON_Cancel, wxT("Cancel"));
 
@@ -36,7 +38,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(323, 219));
+    SetSize(wxSize(323, 243));
     // end wxGlade
 }
 
@@ -47,13 +49,15 @@ void ConfigDialogBase::do_layout()
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer* generalGridSizer = new wxFlexGridSizer(2, 2, 8, 8);
+    wxFlexGridSizer* generalGridSizer = new wxFlexGridSizer(4, 2, 8, 8);
     generalGridSizer->Add(languageLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     generalGridSizer->Add(languageComboBox, 0, wxEXPAND, 0);
     generalGridSizer->Add(iconSizeLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     generalGridSizer->Add(iconSizeComboBox, 0, wxEXPAND, 0);
     generalGridSizer->Add(orientationLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     generalGridSizer->Add(orientationComboBox, 0, wxEXPAND, 0);
+    generalGridSizer->Add(label_1, 0, 0, 0);
+    generalGridSizer->Add(checkForUpdateButton, 0, wxEXPAND, 0);
     generalGridSizer->AddGrowableCol(1);
     sizer_3->Add(generalGridSizer, 1, wxALL|wxEXPAND, 10);
     notebook_1_pane_1->SetSizer(sizer_3);

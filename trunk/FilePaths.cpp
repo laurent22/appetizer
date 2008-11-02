@@ -5,6 +5,7 @@
 */
 
 #include "FilePaths.h"
+#include <wx/filename.h>
 
 wxString FilePaths::ApplicationDrive = _T("");
 wxString FilePaths::ApplicationDirectory = _T("");
@@ -18,3 +19,8 @@ wxString FilePaths::SettingsFile = _T("");
 wxString FilePaths::FolderItemsFile = _T("");
 wxString FilePaths::WindowFile = _T("");
 wxString FilePaths::HelpDirectory = _T("");
+
+void FilePaths::CreateSettingsDirectory() {
+  if (wxFileName::DirExists(FilePaths::SettingsDirectory)) return;
+  wxFileName::Mkdir(FilePaths::SettingsDirectory, wxPATH_MKDIR_FULL);
+}

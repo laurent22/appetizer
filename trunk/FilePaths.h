@@ -26,6 +26,8 @@ public:
   static wxString FolderItemsFile;
   static wxString WindowFile;
 
+  static void CreateSettingsDirectory();
+
 };
 
 #endif // __FilePaths_H

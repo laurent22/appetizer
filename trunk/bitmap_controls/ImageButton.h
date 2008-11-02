@@ -32,6 +32,7 @@ class ImageButton: public BitmapControl {
     void OnMouseUp(wxMouseEvent& evt);
     void OnMouseOver(wxMouseEvent& evt);
     void OnMouseLeave(wxMouseEvent& evt);
+    void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
 
     bool Enable(bool enable = true);
 

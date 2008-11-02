@@ -6,6 +6,9 @@
 
 #include "UserSettings.h"
 #include <wx/fileconf.h>
+#include <wx/datetime.h>
+#include <wx/filename.h>
+#include "Constants.h"
 #include "FilePaths.h"
 #include "Controller.h"
 
@@ -23,6 +26,9 @@ UserSettings::UserSettings() {
   VideosPath = _T("%DRIVE%/Documents/Videos");
   Skin = _T("Default");
   Rotated = false;
+
+  NextUpdateCheckTime = wxDateTime::Now();
+  NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
 }
 
 
@@ -38,6 +44,7 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "VideosPath", VideosPath);
   AppendSettingToXml(xml, "Skin", Skin);
   AppendSettingToXml(xml, "Rotated", Rotated);
+  AppendSettingToXml(xml, "NextUpdateCheckTime", NextUpdateCheckTime.Format());
 
   return xml;
 }
@@ -77,6 +84,7 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("VideosPath")) VideosPath = v;
     if (n == _T("Skin")) Skin = v;
     if (n == _T("Rotated")) Rotated = v.Lower() == _T("true");
+    if (n == _T("NextUpdateCheckTime")) NextUpdateCheckTime.ParseFormat(v);
 
   }
 }
@@ -147,5 +155,7 @@ void UserSettings::Save() {
   doc.LinkEndChild(xmlRoot);
 
   wxString filePath = FilePaths::SettingsFile;
+
+  FilePaths::CreateSettingsDirectory();
   doc.SaveFile(filePath.mb_str());
 }

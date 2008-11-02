@@ -9,6 +9,7 @@
 
 #include "boost/shared_ptr.hpp"
 #include "utilities/XmlUtil.h"
+#include <wx/datetime.h>
 
 class UserSettings {
 
@@ -25,6 +26,7 @@ public:
   wxString VideosPath;
   wxString Skin;
   bool Rotated;
+  wxDateTime NextUpdateCheckTime;
 
   void Save();
   void Load();

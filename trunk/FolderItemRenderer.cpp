@@ -36,6 +36,7 @@ BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
   EVT_MENU(ID_MENU_Delete, FolderItemRenderer::OnMenuDelete)
   EVT_MENU(ID_MENU_Properties, FolderItemRenderer::OnMenuProperties)
   EVT_MENU(ID_MENU_AddToMultiLaunch, FolderItemRenderer::OnMenuAddToMultiLaunch)
+  EVT_MOUSE_CAPTURE_LOST(FolderItemRenderer::OnMouseCaptureLost)
 END_EVENT_TABLE()
 
 
@@ -116,8 +117,16 @@ void FolderItemRenderer::OnLeaveWindow(wxMouseEvent& evt) {
 }
 
 
+void FolderItemRenderer::OnMouseCaptureLost(wxMouseCaptureLostEvent& evt) {
+  // Any MSW application that uses wxWindow::CaptureMouse() must implement an 
+  // wxEVT_MOUSE_CAPTURE_LOST event handler as of wxWidgets 2.8.0.
+  if (HasCapture()) ReleaseMouse();
+}
+
+
 void FolderItemRenderer::OnLeftDown(wxMouseEvent& evt) {
   if (!HasCapture()) CaptureMouse();
+
   mousePressed_ = true;
   draggingStarted_ = false;
 

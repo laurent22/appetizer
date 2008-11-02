@@ -9,6 +9,11 @@ Global.Yes = Yes
 Global.No = No
 Global.Save = Save
 Global.OpenDialog.AllFiles = All files
+Global.BrowserError = Error launching web browser
+
+MessageBox.Info = Information
+MessageBox.Warning = Warning
+MessageBox.Confirmation = Confirmation
 
 OptionPanel.Help = Help Topics
 OptionPanel.About = About %0%...
@@ -48,6 +53,8 @@ ConfigDialog.IconSizeLabel = Icon size:
 ConfigDialog.Orientation = Orientation
 ConfigDialog.HorizontalOrientation = Horizontal
 ConfigDialog.VerticalOrientation = Vertical
+ConfigDialog.UpdateButton = Check for update
+ConfigDialog.UpdateButtonWait = Please wait...
 
 OptionPanel.CloseToolTip = Close
 OptionPanel.MinimizeToolTip = Minimize
@@ -57,3 +64,13 @@ OptionPanel.AddShortcutToolTip = New shortcut
 OptionPanel.HelpToolTip = Help
 OptionPanel.KeyToolTip = Encrypt / Decrypt
 OptionPanel.MultiLaunchToolTip = Multi-launch
+
+Updater.NoNewVersion = You have the latest version.
+Updater.NewVersion = A new version is available!
+ 
+ Your version: %0%
+ Current version: %1%
+ Release notes: %2%
+ 
+ Do you wish to download it now?
+Updater.Error = Could not get update information

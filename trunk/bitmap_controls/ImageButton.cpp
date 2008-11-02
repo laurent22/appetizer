@@ -17,6 +17,7 @@ BEGIN_EVENT_TABLE(ImageButton, BitmapControl)
   EVT_LEFT_DOWN(ImageButton::OnMouseDown)
   EVT_MOTION(ImageButton::OnMouseOver)
   EVT_LEAVE_WINDOW(ImageButton::OnMouseLeave)
+  EVT_MOUSE_CAPTURE_LOST(ImageButton::OnMouseCaptureLost)
 END_EVENT_TABLE()
 
 
@@ -192,6 +193,14 @@ void ImageButton::SetState(const wxString& state) {
 
 wxString ImageButton::GetState() {
   return state_;
+}
+
+
+void ImageButton::OnMouseCaptureLost(wxMouseCaptureLostEvent& evt) {
+  // Any MSW application that uses wxWindow::CaptureMouse() must implement an 
+  // wxEVT_MOUSE_CAPTURE_LOST event handler as of wxWidgets 2.8.0.
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+  if (w->HasCapture()) w->ReleaseMouse();
 }
 
 

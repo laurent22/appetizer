@@ -47,6 +47,7 @@ private:
   void OnLeftUp(wxMouseEvent& evt);
   void OnMotion(wxMouseEvent& evt);
   void OnRightDown(wxMouseEvent& evt);
+  void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
 
   void OnMenuDelete(wxCommandEvent& evt);
   void OnMenuProperties(wxCommandEvent& evt);
