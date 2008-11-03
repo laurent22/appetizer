@@ -27,5 +27,7 @@ const int CHECK_VERSION_DAY_INTERVAL = 2;
 const int WINDOW_VISIBILITY_BORDER = 20;
 const int MAIN_FRAME_DEFAULT_WIDTH = 300;
 const int MAIN_FRAME_DEFAULT_HEIGHT = 80;
+const int SMALL_ICON_SIZE = 16;
+const int LARGE_ICON_SIZE = 32;
 
 #endif // __Constants_H

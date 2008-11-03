@@ -19,6 +19,7 @@
 #include "Controller.h"
 #include "MessageBoxes.h"
 #include "IconPanelFrame.h"
+#include "gui/TreeViewDialog.h"
 
 
 extern Controller gController;
@@ -146,6 +147,12 @@ void FolderItemRenderer::OnLeftDown(wxMouseEvent& evt) {
 
 void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
+
+  //TreeViewDialog* d = new TreeViewDialog();
+  //d->SetSize(200,200);
+  //d->LoadUser(gController.GetUser());
+  //d->ShowModal();
+  //return;
 
   if (mouseInside_ && mousePressed_) {    
     FolderItemSP folderItem = GetFolderItem();

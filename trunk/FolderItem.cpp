@@ -18,20 +18,40 @@
 int FolderItem::uniqueID_ = 0;
 
 
-FolderItem::FolderItem() {
+FolderItem::FolderItem(bool isGroup) {
+
+  // @todo: Should use wxNewId()
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
+
+  isGroup_ = isGroup;
+
   automaticallyAdded_ = false;
   belongsToMultiLaunchGroup_ = false;
 }
 
 
+FolderItem::~FolderItem() {
+  if (parent_.get()) {
+    // Reset the smart pointer to avoid circular reference
+    parent_.reset((FolderItem*)NULL);
+  }
+}
+
+
 bool FolderItem::IsGroup() {
-  return children_.size() > 0;
+  return isGroup_;
+}
+
+
+FolderItemVector FolderItem::GetChildren() {
+  return children_;
 }
 
 
 void FolderItem::AddChild(FolderItemSP folderItem) {
+  FolderItemSP smartPointer(this);
+  folderItem->SetParent(smartPointer);
   children_.push_back(folderItem);
 }
 
@@ -70,6 +90,16 @@ FolderItemSP FolderItem::GetChildById(int folderItemId, bool recurse) {
 
 int FolderItem::ChildrenCount() {
   return children_.size();
+}
+
+
+void FolderItem::SetParent(FolderItemSP folderItem) {
+  parent_ = folderItem;
+}
+
+
+FolderItemSP FolderItem::GetParent() {
+  return parent_;
 }
 
 
@@ -185,6 +215,7 @@ TiXmlElement* FolderItem::ToXml() {
   XmlUtil::AppendTextElement(xml, "Name", GetName().mb_str());
   XmlUtil::AppendTextElement(xml, "AutomaticallyAdded", GetAutomaticallyAdded());
   XmlUtil::AppendTextElement(xml, "MultiLaunchGroup", BelongsToMultiLaunchGroup());
+  XmlUtil::AppendTextElement(xml, "IsGroup", IsGroup());
 
   if (IsGroup()) {
     TiXmlElement* childrenXml = new TiXmlElement("Children");
@@ -208,6 +239,7 @@ void FolderItem::FromXml(TiXmlElement* xml) {
   SetFilePath(XmlUtil::ReadElementText(handle, "FilePath"));
   SetAutomaticallyAdded(XmlUtil::ReadElementTextAsBool(handle, "AutomaticallyAdded"));
   belongsToMultiLaunchGroup_ = XmlUtil::ReadElementTextAsBool(handle, "MultiLaunchGroup");
+  isGroup_ = XmlUtil::ReadElementTextAsBool(handle, "IsGroup");
 
   children_.clear();
   TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();

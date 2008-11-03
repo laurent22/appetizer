@@ -19,13 +19,15 @@
 class FolderItem;
 
 typedef boost::shared_ptr<FolderItem> FolderItemSP;
+typedef std::vector<FolderItemSP> FolderItemVector;
 
 
 class FolderItem {
 
 public:
 
-  FolderItem();
+  FolderItem(bool isGroup = false);
+  ~FolderItem();
   int GetId() const;
   void AutoSetName();
   wxString GetName();
@@ -54,7 +56,10 @@ public:
   static wxString ConvertToRelativePath(const wxString& filePath);
 
   bool IsGroup();
+  FolderItemVector GetChildren();
   void AddChild(FolderItemSP folderItem);
+  FolderItemSP GetParent();
+  void SetParent(FolderItemSP folderItem);
   void RemoveChild(FolderItemSP folderItem);
   FolderItemSP GetChildAt(int index);
   int ChildrenCount();
@@ -64,8 +69,10 @@ private:
 
   static int uniqueID_;
 
+  bool isGroup_;
+  FolderItemSP parent_;
   int id_;
-  std::vector<FolderItemSP> children_;
+  FolderItemVector children_;
   bool belongsToMultiLaunchGroup_;
   wxString name_;
   wxString filePath_;

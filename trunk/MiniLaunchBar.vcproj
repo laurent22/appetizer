@@ -484,6 +484,14 @@
 					RelativePath=".\gui\ShortcutEditorDialogBase.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\gui\TreeViewDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\TreeViewDialogBase.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -668,6 +676,14 @@
 				</File>
 				<File
 					RelativePath=".\gui\ShortcutEditorDialogBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\TreeViewDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\TreeViewDialogBase.h"
 					>
 				</File>
 			</Filter>
