@@ -38,12 +38,22 @@ BitmapControl::~BitmapControl() {
 
 wxBitmap* BitmapControl::GetControlBitmap() { return controlBitmap_; }
 
+
+/**
+ * By calling this function, the control bitmap is going
+ * to be redrawn on the next call to UpdateControlBitmap()
+ */
 void BitmapControl::InvalidateControlBitmap() {
   wxDELETE(controlBitmap_);
   controlBitmapInvalidated_ = true;
   Refresh();
 }
 
+
+/**
+ * This is where the control bitmap should be drawn. Classes
+ * which inherit from this class, should override this method.
+ */
 void BitmapControl::UpdateControlBitmap() {
   if (!controlBitmap_ && GetRect().GetWidth() > 0 && GetRect().GetHeight() > 0) {
     controlBitmap_ = new wxBitmap(GetRect().GetWidth(), GetRect().GetHeight(), 32);

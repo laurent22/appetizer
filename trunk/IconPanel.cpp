@@ -39,6 +39,7 @@ NineSlicesPanel(owner, id, point, size) {
   LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
   SetGrid(Styles::InnerPanel.ScaleGrid);
 
+  folderItemSource_ = ICON_PANEL_SOURCE_USER;
   firstOffScreenIconIndex_ = -1; // Means all the icons are visible
   layoutInvalidated_ = true;
   iconsInvalidated_ = true;
@@ -54,6 +55,20 @@ NineSlicesPanel(owner, id, point, size) {
     wxCommandEventHandler(IconPanel::OnBrowseButtonClick),
     NULL,
     this);
+}
+
+
+void IconPanel::ApplySkin(const wxString& skinName) {
+  LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
+  browseButton_->LoadImage(FilePaths::SkinDirectory + _T("/BrowseArrowButton"));
+  browseButton_->FitToImage();
+
+  InvalidateLayout();
+}
+
+
+void IconPanel::AddFolderItem(int folderItemId) {
+  folderItemIds_.push_back(folderItemId);
 }
 
 
@@ -237,6 +252,26 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 }
 
 
+void IconPanel::SetWidthInIcons(int numberOfIcons) {
+  int w = gController.GetUser()->GetSettings()->IconSize;
+  w += Styles::Icon.Padding.Width;
+  w *= numberOfIcons;
+  w += Styles::InnerPanel.Padding.Width;
+  
+  SetSize(w, GetSize().GetHeight());
+}
+
+
+void IconPanel::SetHeightInIcons(int numberOfIcons) {
+  int h = gController.GetUser()->GetSettings()->IconSize;
+  h += Styles::Icon.Padding.Height;
+  h *= numberOfIcons;
+  h += Styles::InnerPanel.Padding.Height;
+  
+  SetSize(GetSize().GetWidth(), h);
+}
+
+
 int IconPanel::GetMinWidth() {
   return 
     gController.GetUser()->GetSettings()->IconSize +
@@ -302,13 +337,35 @@ void IconPanel::ClearIcons() {
 }
 
 
+void IconPanel::SetFolderItemSource(int source) {
+  folderItemSource_ = source;
+}
+
+
 void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
-  // @todo: It shouldn't be possible to access the FolderItem vector directly.
-  // Need to implement GetFolderItemAt() and GetFolderItemCount() to iterate
-  // through the folder items.
-  std::vector<FolderItemSP> folderItems = gController.GetUser()->GetFolderItems();
+  std::vector<FolderItemSP> folderItems;
+
+  if (folderItemSource_ == ICON_PANEL_SOURCE_USER) {  
+    // @todo: It shouldn't be possible to access the FolderItem vector directly.
+    // Need to implement GetFolderItemAt() and GetFolderItemCount() to iterate
+    // through the folder items.
+    folderItems = gController.GetUser()->GetFolderItems();
+  } else {
+    
+    for (int i = 0; i < folderItemIds_.size(); i++) {
+      FolderItemSP folderItem = gController.GetUser()->GetFolderItemById(folderItemIds_.at(i));
+      if (!folderItem.get()) {
+        folderItemIds_.erase(folderItemIds_.begin() + i);
+        i--;
+        continue;
+      }
+      
+      folderItems.push_back(folderItem);
+    }
+
+  }
 
   /****************************************************************************
    * Remove renderers that match a folder item that has been deleted
@@ -432,7 +489,7 @@ void IconPanel::UpdateLayout() {
       // If the browse button overlaps the last icon,
       // hide this icon and decrement firstOffScreenIconIndex_
       FolderItemRendererSP r = folderItemRenderers_.at(firstOffScreenIconIndex_ - 1);
-      if (r->GetRect().GetRight() > browseButton_->GetRect().GetLeft()) {
+      if (r->GetRect().GetRight() > browseButton_->GetRect().GetLeft() && r->GetRect().GetBottom() > browseButton_->GetRect().GetTop()) {
         r->Hide();
         firstOffScreenIconIndex_--;
       }

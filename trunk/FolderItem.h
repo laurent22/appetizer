@@ -9,9 +9,16 @@
 
 #include <wx/wx.h>
 #include <wx/menuitem.h>
+#include <vector>
 #include "boost/shared_ptr.hpp"
 #include "TypeDefinitions.h"
 #include "utilities/XmlUtil.h"
+
+
+// Forward declaration so that we can create the typedef below
+class FolderItem;
+
+typedef boost::shared_ptr<FolderItem> FolderItemSP;
 
 
 class FolderItem {
@@ -31,8 +38,8 @@ public:
   void Launch();
   void LaunchWithArguments(const wxString& arguments);
   static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString);
-  TiXmlElement* ToXML();
-  void FromXML(TiXmlElement* xml);
+  TiXmlElement* ToXml();
+  void FromXml(TiXmlElement* xml);
 
   bool GetAutomaticallyAdded();
   void SetAutomaticallyAdded(bool automaticallyAdded);
@@ -46,11 +53,19 @@ public:
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);
 
+  bool IsGroup();
+  void AddChild(FolderItemSP folderItem);
+  void RemoveChild(FolderItemSP folderItem);
+  FolderItemSP GetChildAt(int index);
+  int ChildrenCount();
+  FolderItemSP GetChildById(int folderItemId, bool recurse = true);
+
 private:
 
   static int uniqueID_;
 
   int id_;
+  std::vector<FolderItemSP> children_;
   bool belongsToMultiLaunchGroup_;
   wxString name_;
   wxString filePath_;
@@ -61,7 +76,7 @@ private:
 };
 
 
-typedef boost::shared_ptr<FolderItem> FolderItemSP;
+
 
 
 #endif // __FolderItem_H

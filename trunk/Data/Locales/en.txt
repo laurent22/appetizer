@@ -15,8 +15,8 @@ MessageBox.Info = Information
 MessageBox.Warning = Warning
 MessageBox.Confirmation = Confirmation
 
-OptionPanel.Help = Help Topics
-OptionPanel.About = About %0%...
+HelpPopup.Help = Help Topics
+HelpPopup.About = About %0%...
 
 FolderItem.LaunchFileError = This file doesn't exist or has been deleted (Error %0%)
 

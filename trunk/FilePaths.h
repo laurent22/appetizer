@@ -17,6 +17,7 @@ public:
   static wxString ApplicationDirectory;
   static wxString DataDirectory;
   static wxString SettingsDirectory;
+  static wxString BaseSkinDirectory;
   static wxString SkinDirectory;
   static wxString LocalesDirectory;
   static wxString HelpDirectory;

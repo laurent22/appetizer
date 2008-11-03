@@ -37,13 +37,16 @@ protected:
     // begin wxGlade: ConfigDialogBase::attributes
     wxStaticText* languageLabel;
     wxComboBox* languageComboBox;
+    wxStaticText* label_1;
+    wxButton* checkForUpdateButton;
+    wxPanel* notebook_1_pane_1;
     wxStaticText* iconSizeLabel;
     wxComboBox* iconSizeComboBox;
     wxStaticText* orientationLabel;
     wxComboBox* orientationComboBox;
-    wxStaticText* label_1;
-    wxButton* checkForUpdateButton;
-    wxPanel* notebook_1_pane_1;
+    wxStaticText* skinLabel;
+    wxComboBox* skinComboBox;
+    wxPanel* notebook_pane_2;
     wxNotebook* notebook;
     wxButton* saveButton;
     wxButton* cancelButton;

@@ -17,3 +17,9 @@ ImageButton(owner, id, point, size) {
   LoadImage(FilePaths::SkinDirectory + _T("/OptionButton"));
   FitToImage();
 }
+
+
+void OptionButton::ApplySkin(const wxString& skinName) {
+  LoadImage(FilePaths::SkinDirectory + _T("/OptionButton"));
+  FitToImage();
+}

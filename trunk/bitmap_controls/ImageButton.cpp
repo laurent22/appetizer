@@ -5,6 +5,7 @@
 */
 
 #include "ImageButton.h"
+#include <wx/filename.h>
 
 
 
@@ -96,6 +97,7 @@ void ImageButton::LoadImage(const wxString& filePathPrefix) {
   // blit operations will fail.  If the loaded bitmap is fully opaque, the alpha
   // value of at least one pixel must be set to 254 or less.
 
+  InvalidateControlBitmap();
   Refresh();
 }
 
@@ -108,6 +110,8 @@ void ImageButton::UpdateControlBitmap() {
 
   NineSlicesPainter* painter;
   wxString filePath = filePathPrefix_ + state_ + _T(".png");
+
+  if (!wxFileName::FileExists(filePath)) filePath = filePathPrefix_ + _T("Up.png");
   
   // Lazily create the painters
   if (state_ == _T("Disabled")) {

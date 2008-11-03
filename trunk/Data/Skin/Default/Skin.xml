@@ -6,7 +6,7 @@
 	</ArrowButton>
 	<BarBackground>
 		<ScaleGrid>30,30,1,1</ScaleGrid>
-		<Padding>8,8,8,8</Padding>
+		<Padding>8,8,16,8</Padding>
 	</BarBackground>
 	<OptionPanel>
 		<ScaleGrid>20,30,1,1</ScaleGrid>

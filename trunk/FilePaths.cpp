@@ -11,6 +11,7 @@ wxString FilePaths::ApplicationDrive = _T("");
 wxString FilePaths::ApplicationDirectory = _T("");
 wxString FilePaths::DataDirectory = _T("");
 wxString FilePaths::SettingsDirectory = _T("");
+wxString FilePaths::BaseSkinDirectory = _T("");
 wxString FilePaths::SkinDirectory = _T("");
 wxString FilePaths::LocalesDirectory = _T("");
 wxString FilePaths::UserSettingsFile = _T("");

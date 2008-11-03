@@ -61,10 +61,11 @@ bool MiniLaunchBar::OnInit() {
   FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("/") + FOLDER_ITEMS_FILE_NAME;
   FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("/") + WINDOW_FILE_NAME;  
   FilePaths::HelpDirectory = FilePaths::DataDirectory + _T("/") + HELP_FOLDER_NAME;  
+  FilePaths::BaseSkinDirectory = FilePaths::DataDirectory + _T("/") + SKIN_FOLDER_NAME; 
 
   gController.GetUser()->Load();
 
-  FilePaths::SkinDirectory = FilePaths::DataDirectory + _T("/") + SKIN_FOLDER_NAME + _T("/") + gController.GetUser()->GetSettings()->Skin;
+  FilePaths::SkinDirectory = FilePaths::BaseSkinDirectory + _T("/") + gController.GetUser()->GetSettings()->Skin;
   Styles::LoadSkinFile(FilePaths::SkinDirectory + _T("/") + SKIN_FILE_NAME);
   FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("/") + ICONS_FOLDER_NAME;
 

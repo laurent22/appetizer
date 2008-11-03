@@ -46,6 +46,7 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
   // blit operations will fail.  If the loaded bitmap is fully opaque, the alpha
   // value of at least one pixel must be set to 254 or less.
 
+  InvalidateControlBitmap();
   Refresh();
 }
 

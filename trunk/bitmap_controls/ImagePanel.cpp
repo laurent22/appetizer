@@ -29,6 +29,7 @@ void ImagePanel::LoadImage(const wxString& filePath) {
   if (!tempImage.HasAlpha()) tempImage.InitAlpha();
   bitmap_ = wxBitmap(tempImage);
 
+  InvalidateControlBitmap();
   Refresh();
 }
 

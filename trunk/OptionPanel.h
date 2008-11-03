@@ -34,12 +34,11 @@ public:
   ConfigDialog* GetConfigDialog();
   void Localize();
   void SetRotated(bool rotated);
+  void ApplySkin(const wxString& skinName);
 
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);
   void OnImageButtonClick(wxCommandEvent& evt);
-  void OnMenuHelp(wxCommandEvent& evt);
-  void OnMenuAbout(wxCommandEvent& evt);
 
 private:
 
@@ -48,8 +47,6 @@ private:
   OptionButtonVector buttons_;
   bool layoutInvalidated_;
   ConfigDialog* configDialog_;
-
-  DECLARE_EVENT_TABLE()
 
 };
 

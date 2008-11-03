@@ -8,6 +8,7 @@
 #include <wx/cursor.h>
 #include <wx/datetime.h>
 #include <wx/filename.h>
+#include <wx/menu.h>
 #include "MainFrame.h"
 #include "Log.h"
 #include "Constants.h"
@@ -19,6 +20,7 @@
 #include "utilities/XmlUtil.h"
 #include "utilities/Updater.h"
 #include "utilities/VersionInfo.h"
+#include "gui/AboutDialog.h"
 #include "bitmap_controls/ImageButton.h"
 
 
@@ -36,6 +38,8 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_COMMAND(wxID_ANY, wxeEVT_CLICK, MainFrame::OnImageButtonClick)
   EVT_IDLE(MainFrame::OnIdle)
   EVT_MOUSE_CAPTURE_LOST(MainFrame::OnMouseCaptureLost)
+  EVT_MENU(ID_MENU_OptionPanel_Help, MainFrame::OnMenuHelp)
+  EVT_MENU(ID_MENU_OptionPanel_About, MainFrame::OnMenuAbout)
 END_EVENT_TABLE()
 
 
@@ -103,6 +107,16 @@ MainFrame::MainFrame()
   iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   iconPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
+
+  closeSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_CloseButton);
+  closeSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/CloseButton"));
+  closeSideButton_->FitToImage();
+  closeSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
+
+  helpSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_HelpButton);
+  helpSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/HelpButton"));
+  helpSideButton_->FitToImage();
+  helpSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
   frameIcon_.LoadFile(FilePaths::IconsDirectory + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   taskBarIcon_.SetIcon(frameIcon_);
@@ -177,17 +191,45 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 }
 
 
+void MainFrame::ApplySkin(const wxString& skinName) {
+  FilePaths::SkinDirectory = FilePaths::BaseSkinDirectory + _T("/") + gController.GetUser()->GetSettings()->Skin;
+  Styles::LoadSkinFile(FilePaths::SkinDirectory + _T("/") + SKIN_FILE_NAME);
+  FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("/") + ICONS_FOLDER_NAME;
+
+  wxDELETE(arrowButtonOpenIcon_);
+  wxDELETE(arrowButtonCloseIcon_);
+
+  maskNineSlices_.LoadImage(FilePaths::SkinDirectory + _T("/BarBackgroundRegion.png"), false);
+
+  arrowButton_->LoadImage(FilePaths::SkinDirectory + _T("/ArrowButton"));
+  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
+  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
+  arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
+
+  backgroundPanel_->LoadImage(FilePaths::SkinDirectory + _T("/BarBackground.png"));
+  resizerPanel_->LoadImage(FilePaths::SkinDirectory + _T("/Resizer.png"));
+  closeSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/CloseButton"));
+  helpSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/HelpButton"));
+  iconPanel_->ApplySkin(skinName);
+  optionPanel_->ApplySkin(skinName);
+
+  frameIcon_.LoadFile(FilePaths::IconsDirectory + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
+  taskBarIcon_.SetIcon(frameIcon_);
+
+  InvalidateMask();
+  InvalidateLayout();
+}
+
+
 void MainFrame::SetRotated(bool rotated) {
   if (rotated == rotated_) return;
   rotated_ = rotated;
 
   optionPanel_->SetRotated(rotated);
   optionPanel_->UpdateLayout(); // We need a layout update to get a valid "required width" property
-  arrowButton_->SetBitmapRotation(rotated ? 90 : 0);
-  arrowButton_->SetHorizontalFlip(rotated);
-  backgroundPanel_->SetBitmapRotation(rotated ? 90 : 0);
-  backgroundPanel_->SetHorizontalFlip(rotated);
-  resizerPanel_->SetBitmapRotation(rotated ? 90 : 0);
+  arrowButton_->SetBitmapRotation(rotated ? -90 : 0);
+  backgroundPanel_->SetBitmapRotation(rotated ? -90 : 0);
+  resizerPanel_->SetBitmapRotation(rotated ? -90 : 0);
 
   UpdateLayout();
   UpdateMask();
@@ -303,21 +345,22 @@ void MainFrame::UpdateMask() {
 
 
 void MainFrame::UpdateLayout(int width, int height) {
+  int sideButtonGap = 0;
+
   if (rotated_) {
+    int bgPanelHeight = height - Styles::OptionPanel.ArrowButtonWidth - optionPanelOpenWidth_;
+
     arrowButton_->SetSize(
       0,
-      0,
+      bgPanelHeight + optionPanelOpenWidth_,
       width,
       Styles::OptionPanel.ArrowButtonWidth);
 
-    int bgPanelY = Styles::OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
-    int bgPanelHeight = height - bgPanelY;
-
-    backgroundPanel_->SetSize(0, bgPanelY, width, bgPanelHeight);
+    backgroundPanel_->SetSize(0, 0, width, bgPanelHeight);
 
     iconPanel_->SetSize(
       Styles::MainPanel.Padding.Bottom,
-      Styles::MainPanel.Padding.Top,
+      Styles::MainPanel.Padding.Right,
       width - Styles::MainPanel.Padding.Height,
       bgPanelHeight - Styles::MainPanel.Padding.Width);
     
@@ -327,9 +370,17 @@ void MainFrame::UpdateLayout(int width, int height) {
 
     optionPanel_->SetSize(
       0,
-      Styles::OptionPanel.ArrowButtonWidth,
+      bgPanelHeight,
       width,
       optionPanelOpenWidth_);
+
+    closeSideButton_->Move(
+      Styles::MainPanel.Padding.Bottom,
+      0);
+
+    helpSideButton_->Move(
+      closeSideButton_->GetRect().GetRight() + sideButtonGap,
+      closeSideButton_->GetRect().GetTop());
 
   } else {
     arrowButton_->SetSize(
@@ -345,7 +396,7 @@ void MainFrame::UpdateLayout(int width, int height) {
     
     iconPanel_->SetSize(
       Styles::MainPanel.Padding.Left,
-      Styles::MainPanel.Padding.Right,
+      Styles::MainPanel.Padding.Top,
       bgPanelWidth - Styles::MainPanel.Padding.Width,
       height - Styles::MainPanel.Padding.Height);
     
@@ -358,6 +409,14 @@ void MainFrame::UpdateLayout(int width, int height) {
       0,
       optionPanelOpenWidth_,
       height);
+
+    closeSideButton_->Move(
+      bgPanelWidth - closeSideButton_->GetSize().GetWidth(),
+      Styles::MainPanel.Padding.Top);
+
+    helpSideButton_->Move(
+      closeSideButton_->GetRect().GetLeft(),
+      closeSideButton_->GetRect().GetBottom() + sideButtonGap);
   }
   
   needLayoutUpdate_ = false;
@@ -596,6 +655,24 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
 }
 
 
+void MainFrame::OnMenuHelp(wxCommandEvent& evt) {  
+  wxString helpFile = FilePaths::HelpDirectory + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
+  if (!wxFileName::FileExists(helpFile)) {
+    // Default to english
+    helpFile = FilePaths::HelpDirectory + _T("/en/") + HELP_FILE_NAME;
+  }
+
+  FolderItem::Launch(helpFile);
+}
+
+
+void MainFrame::OnMenuAbout(wxCommandEvent& evt) {
+  AboutDialog aboutDialog;
+  aboutDialog.LoadContent();
+  aboutDialog.ShowModal();
+}
+
+
 void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
   wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
 
@@ -605,6 +682,24 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
       
       ToggleOptionPanel();
       break;
+
+    case ID_BUTTON_MainFrame_CloseButton:
+      
+      Hide();
+      break;
+
+    case ID_BUTTON_MainFrame_HelpButton: {
+
+      wxMenu menu;
+
+      menu.Append(ID_MENU_OptionPanel_Help, LOC(_T("HelpPopup.Help")));
+      menu.AppendSeparator();
+      menu.Append(ID_MENU_OptionPanel_About, LOC1(_T("HelpPopup.About"), APPLICATION_NAME));
+      
+      wxPoint pos(w->GetRect().GetLeft(), w->GetRect().GetBottom());
+      PopupMenu(&menu, pos);
+
+    } break;
 
     default:
 

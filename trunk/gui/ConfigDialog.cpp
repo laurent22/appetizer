@@ -106,10 +106,39 @@ void ConfigDialog::LoadSettings() {
     iconSizeComboBox->Select(1);
   }
 
+  //***************************************************************************
+  // Populate "Orientation" dropdown list
+  //***************************************************************************
+
   orientationComboBox->Clear();
   orientationComboBox->Append(LOC(_T("ConfigDialog.HorizontalOrientation")), new wxStringClientData(_T("h")));
   orientationComboBox->Append(LOC(_T("ConfigDialog.VerticalOrientation")), new wxStringClientData(_T("v")));
   orientationComboBox->Select(userSettings->Rotated ? 1 : 0);
+
+  //***************************************************************************
+  // Populate "Skin" dropdown list
+  //***************************************************************************
+
+  skinComboBox->Clear();
+  wxString skinFolderPath = FilePaths::BaseSkinDirectory;
+
+  foundFilePaths.Clear();
+  wxDir skinFolder;
+
+  if (wxFileName::DirExists(skinFolderPath) && skinFolder.Open(skinFolderPath)) {
+    wxString folderName;
+    bool success = skinFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
+    int i = 0;
+
+    while (success) {
+      skinComboBox->Append(folderName, new wxStringClientData(folderName));
+      success = skinFolder.GetNext(&folderName);
+      if (folderName == userSettings->Skin) selectedIndex = i;
+      i++;
+    }
+  } 
+
+  skinComboBox->Select(selectedIndex);
 }
 
 
@@ -159,13 +188,26 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     gController.User_IconSizeChange();
   }
 
-
+  //***************************************************************************
+  // Apply changes to orientation
+  //***************************************************************************
   clientData = (wxStringClientData*)(orientationComboBox->GetClientObject(orientationComboBox->GetSelection()));
   bool rotated = clientData->GetData() == _T("v");
 
   if (rotated != userSettings->Rotated) {
     userSettings->Rotated = rotated;
     gMainFrame->SetRotated(rotated);
+  }
+
+  //***************************************************************************
+  // Apply changes to skin
+  //***************************************************************************
+  clientData = (wxStringClientData*)(skinComboBox->GetClientObject(skinComboBox->GetSelection()));
+  wxString skinName = clientData->GetData();
+
+  if (skinName != userSettings->Skin) {
+    userSettings->Skin = skinName;
+    gMainFrame->ApplySkin(skinName);
   }
 
   gController.GetUser()->Save(true);

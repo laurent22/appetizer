@@ -17,6 +17,12 @@
 using namespace std;
 
 
+enum {
+  ICON_PANEL_SOURCE_USER,
+  ICON_PANEL_SOURCE_CUSTOM
+};
+
+
 class IconPanel : public NineSlicesPanel {
 
 public:
@@ -27,6 +33,9 @@ public:
   void UpdateLayout();
   void InvalidateIcons();
   void InvalidateLayout();
+
+  void SetWidthInIcons(int numberOfIcons);
+  void SetHeightInIcons(int numberOfIcons);
 
   int GetMinWidth();
   int GetMinHeight();
@@ -46,6 +55,13 @@ public:
   FolderItemRendererSP GetRendererFromFolderItem(const FolderItem& folderItem);
 
   wxMenu* GetContextMenu();
+  void ApplySkin(const wxString& skinName);
+
+  void AddFolderItem(int folderItemId);
+  //void RemoveFolderItem(int folderItemId);
+  //void GetFolderItemAt(int index);
+  //void GetFolderItemCount();
+  void SetFolderItemSource(int source);
 
   void OnRightDown(wxMouseEvent& evt);
   void OnMenuNewShortcut(wxCommandEvent& evt);
@@ -58,6 +74,8 @@ public:
 
 private:
 
+  int folderItemSource_;
+  std::vector<int> folderItemIds_;
   int firstOffScreenIconIndex_;
   int maxWidth_;
   int maxHeight_;

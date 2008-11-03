@@ -62,6 +62,9 @@ class MainFrame: public wxFrame {
     wxIcon frameIcon_;
     ApplicationTrayIcon taskBarIcon_;
     bool firstIdleEventSent_;
+    ImageButton* closeSideButton_;
+    ImageButton* helpSideButton_;
+    ImageButton* minimizeSideButton_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -93,6 +96,7 @@ class MainFrame: public wxFrame {
     void ToggleOptionPanel();
     void InvalidateLayout();
     void InvalidateMask();
+    void ApplySkin(const wxString& skinName);
 
     void SetRotated(bool rotated);
 
@@ -114,6 +118,8 @@ class MainFrame: public wxFrame {
     void OnImageButtonClick(wxCommandEvent& evt);
     void OnIdle(wxIdleEvent& evt);
     void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
+    void OnMenuHelp(wxCommandEvent& evt);
+    void OnMenuAbout(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

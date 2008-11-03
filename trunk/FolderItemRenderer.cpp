@@ -18,6 +18,7 @@
 #include "Enumerations.h"
 #include "Controller.h"
 #include "MessageBoxes.h"
+#include "IconPanelFrame.h"
 
 
 extern Controller gController;
@@ -146,10 +147,44 @@ void FolderItemRenderer::OnLeftDown(wxMouseEvent& evt) {
 void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
 
-  if (mouseInside_ && mousePressed_) {
+  if (mouseInside_ && mousePressed_) {    
     FolderItemSP folderItem = GetFolderItem();
-    wxASSERT_MSG(folderItem.get(), _T("Folder item cannot be NULL"));
-    folderItem->Launch();
+
+    if (folderItem.get()) {
+      wxLogDebug(_T("%d"), folderItem->ChildrenCount());
+
+      if (!folderItem->IsGroup()) {
+
+        folderItem->Launch();
+
+      } else if (GetParent()) {
+
+        IconPanelFrame* f = new IconPanelFrame(NULL, wxID_ANY);
+        f->GetIconPanel()->SetFolderItemSource(ICON_PANEL_SOURCE_CUSTOM);
+        for (int i = 0; i < folderItem->ChildrenCount(); i++) {
+          FolderItemSP child = folderItem->GetChildAt(i);
+          if (!child.get()) continue;
+          f->GetIconPanel()->AddFolderItem(child->GetId());
+        }
+        f->GetIconPanel()->SetWidthInIcons(2);
+        f->GetIconPanel()->SetHeightInIcons(2);
+        f->FitToIconPanel();
+
+        int windowX = GetRect().GetLeft();
+        int windowY = GetRect().GetTop();
+
+        GetParent()->ClientToScreen(&windowX, &windowY);
+
+        windowX -= f->GetSize().GetWidth() / 2 - GetSize().GetWidth() / 2;
+        windowY -= f->GetSize().GetHeight();
+        
+        f->Move(windowX, windowY);
+
+        f->Show();
+      }      
+
+    }
+
   }
 
   mousePressed_ = false;

@@ -67,16 +67,14 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
 
   wxBitmap* workBitmap = NULL;
 
-  if (rotation_ == 90) {
+  if (rotation_ != 0) {
     if (!rotatedSourceBitmap_) {
       wxImage tempImage = sourceBitmap_->ConvertToImage();
-      tempImage = tempImage.Rotate90();
+      tempImage = tempImage.Rotate90(rotation_ == 90);
       rotatedSourceBitmap_ = new wxBitmap(tempImage);
     }
 
     workBitmap = rotatedSourceBitmap_;
-  } else if (rotation_ == -90) {
-    wxASSERT_MSG(false, _T("Rotation by -90 is not implemented"));
   } else {
     workBitmap = sourceBitmap_;
   }
@@ -113,6 +111,15 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
     int h = grid.GetHeight();
     grid.SetTop(left);
     grid.SetLeft(sourceBitmap_->GetHeight() - bottom - 1);
+    grid.SetWidth(h);
+    grid.SetHeight(w);
+  } else if (rotation_ == -90) {
+    int top = grid.GetTop();
+    int right = grid.GetRight();
+    int w = grid.GetWidth();
+    int h = grid.GetHeight();
+    grid.SetTop(sourceBitmap_->GetWidth() - right - 1);
+    grid.SetLeft(top);
     grid.SetWidth(h);
     grid.SetHeight(w);
   }

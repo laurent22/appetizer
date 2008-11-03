@@ -16,6 +16,7 @@ class OptionButton: public ImageButton {
   public:
 
     OptionButton(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
+    void ApplySkin(const wxString& skinName);
 
 };
 

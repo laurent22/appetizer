@@ -334,6 +334,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IconPanelFrame.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Localization.cpp"
 				>
 			</File>
@@ -517,6 +521,10 @@
 			</File>
 			<File
 				RelativePath=".\IconPanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IconPanelFrame.h"
 				>
 			</File>
 			<File

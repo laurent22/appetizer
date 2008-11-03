@@ -26,6 +26,53 @@ FolderItem::FolderItem() {
 }
 
 
+bool FolderItem::IsGroup() {
+  return children_.size() > 0;
+}
+
+
+void FolderItem::AddChild(FolderItemSP folderItem) {
+  children_.push_back(folderItem);
+}
+
+
+void FolderItem::RemoveChild(FolderItemSP folderItem) {
+  for (int i = 0; i < children_.size(); i++) {
+    if (children_.at(i)->GetId() == folderItem->GetId()) {
+      children_.erase(children_.begin() + i);
+      return;
+    }
+  }
+}
+
+
+FolderItemSP FolderItem::GetChildAt(int index) {
+  return children_.at(index);
+}
+
+
+FolderItemSP FolderItem::GetChildById(int folderItemId, bool recurse) {
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP folderItem = children_.at(i);
+
+    if (folderItem->GetId() == folderItemId) return folderItem;
+
+    if (recurse && folderItem->IsGroup()) {
+      FolderItemSP temp = folderItem->GetChildById(folderItemId, recurse);
+      if (temp.get()) return temp;
+    }
+  }
+
+  FolderItemSP nullOutput;
+  return nullOutput;
+}
+
+
+int FolderItem::ChildrenCount() {
+  return children_.size();
+}
+
+
 int FolderItem::GetId() const {
   return id_;
 }
@@ -131,7 +178,7 @@ void FolderItem::LaunchWithArguments(const wxString& arguments) {
 }
 
 
-TiXmlElement* FolderItem::ToXML() {
+TiXmlElement* FolderItem::ToXml() {
   TiXmlElement* xml = new TiXmlElement("FolderItem");
 
   XmlUtil::AppendTextElement(xml, "FilePath", GetFilePath().mb_str());
@@ -139,17 +186,42 @@ TiXmlElement* FolderItem::ToXML() {
   XmlUtil::AppendTextElement(xml, "AutomaticallyAdded", GetAutomaticallyAdded());
   XmlUtil::AppendTextElement(xml, "MultiLaunchGroup", BelongsToMultiLaunchGroup());
 
+  if (IsGroup()) {
+    TiXmlElement* childrenXml = new TiXmlElement("Children");
+    xml->LinkEndChild(childrenXml);
+
+    for (int i = 0; i < children_.size(); i++) {
+      FolderItemSP folderItem = children_.at(i);
+      if (!folderItem.get()) continue;
+      childrenXml->LinkEndChild(folderItem->ToXml());
+    }    
+  }
+
   return xml;
 }
 
 
-void FolderItem::FromXML(TiXmlElement* xml) {
+void FolderItem::FromXml(TiXmlElement* xml) {
   TiXmlHandle handle(xml);
 
   SetName(XmlUtil::ReadElementText(handle, "Name"));
   SetFilePath(XmlUtil::ReadElementText(handle, "FilePath"));
   SetAutomaticallyAdded(XmlUtil::ReadElementTextAsBool(handle, "AutomaticallyAdded"));
   belongsToMultiLaunchGroup_ = XmlUtil::ReadElementTextAsBool(handle, "MultiLaunchGroup");
+
+  children_.clear();
+  TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();
+  if (childrenXml) {
+    for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
+      wxString elementName = wxString(element->Value(), wxConvUTF8);
+      if (elementName != _T("FolderItem")) continue;
+      
+      FolderItemSP folderItem(new FolderItem());
+      folderItem->FromXml(element);
+      children_.push_back(folderItem);
+    }
+  }
+
 }
 
 

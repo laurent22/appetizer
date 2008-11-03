@@ -74,7 +74,7 @@ void User::Save(bool force) {
 
   for (int i = 0; i < folderItems_.size(); i++) {
     FolderItemSP folderItem = folderItems_.at(i);
-    xmlRoot->LinkEndChild(folderItem->ToXML());   
+    xmlRoot->LinkEndChild(folderItem->ToXml());   
   }
 
   FilePaths::CreateSettingsDirectory();
@@ -101,7 +101,7 @@ void User::Load() {
 
     if (elementName == _T("FolderItem")) {
       FolderItemSP folderItem(new FolderItem());
-      folderItem->FromXML(element);
+      folderItem->FromXml(element);
       folderItems_.push_back(folderItem);
     } else if (elementName == _T("ExcludedPath")) {
       wxString path = wxString(element->GetText(), wxConvUTF8);
@@ -122,8 +122,16 @@ std::vector<FolderItemSP> User::GetFolderItems() {
 
 FolderItemSP User::GetFolderItemById(int folderItemId) {
   for (int i = 0; i < folderItems_.size(); i++) {
-    if (folderItems_.at(i)->GetId() == folderItemId) return folderItems_.at(i);
+    FolderItemSP folderItem = folderItems_.at(i);
+
+    if (folderItem->GetId() == folderItemId) return folderItem;
+
+    if (folderItem->IsGroup()) {
+      FolderItemSP temp = folderItem->GetChildById(folderItemId, true);
+      if (temp.get()) return temp;
+    }
   }
+
   FolderItemSP nullPointer;
   return nullPointer;
 }

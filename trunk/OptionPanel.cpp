@@ -12,20 +12,12 @@
 #include "Styles.h"
 #include "MainFrame.h"
 #include "Localization.h"
-#include "gui/AboutDialog.h"
 #include <wx/cursor.h>
 #include <wx/filename.h>
-#include <wx/menu.h>
 
 
 extern Controller gController;
 extern MainFrame* gMainFrame;
-
-
-BEGIN_EVENT_TABLE(OptionPanel, NineSlicesPanel)
-  EVT_MENU(ID_MENU_OptionPanel_Help, OptionPanel::OnMenuHelp)
-  EVT_MENU(ID_MENU_OptionPanel_About, OptionPanel::OnMenuAbout)
-END_EVENT_TABLE()
 
 
 OptionPanel::OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
@@ -37,9 +29,9 @@ NineSlicesPanel(owner, id, point, size) {
   SetGrid(Styles::OptionPanel.ScaleGrid);
 
   wxStringList buttonNames;
-  buttonNames.Add(_T("Close"));
-  buttonNames.Add(_T("Minimize"));
-  buttonNames.Add(_T("Help"));
+  //buttonNames.Add(_T("Close"));
+  //buttonNames.Add(_T("Minimize"));
+  //buttonNames.Add(_T("Help"));
   buttonNames.Add(_T("Eject"));
   buttonNames.Add(_T("AddShortcut"));
   buttonNames.Add(_T("Config"));
@@ -78,32 +70,27 @@ NineSlicesPanel(owner, id, point, size) {
 }
 
 
-void OptionPanel::SetRotated(bool rotated) {
-  if (rotated == rotated_) return;
-  rotated_ = rotated;
-  
-  SetBitmapRotation(rotated_ ? 90 : 0);
-  SetHorizontalFlip(rotated_);
+void OptionPanel::ApplySkin(const wxString& skinName) {
+  LoadImage(FilePaths::SkinDirectory + _T("/OptionPanel.png"));
+
+  for (int i = 0; i < buttons_.size(); i++) {    
+    OptionButton* button = buttons_[i];
+
+    button->ApplySkin(skinName);
+    button->SetIcon(new wxBitmap(FilePaths::IconsDirectory + _T("/ButtonIcon_") + button->GetName() + _T(".png"), wxBITMAP_TYPE_PNG));
+  }
 
   InvalidateLayout();
 }
 
 
-void OptionPanel::OnMenuHelp(wxCommandEvent& evt) {  
-  wxString helpFile = FilePaths::HelpDirectory + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
-  if (!wxFileName::FileExists(helpFile)) {
-    // Default to english
-    helpFile = FilePaths::HelpDirectory + _T("/en/") + HELP_FILE_NAME;
-  }
+void OptionPanel::SetRotated(bool rotated) {
+  if (rotated == rotated_) return;
+  rotated_ = rotated;
+  
+  SetBitmapRotation(rotated_ ? -90 : 0);
 
-  FolderItem::Launch(helpFile);
-}
-
-
-void OptionPanel::OnMenuAbout(wxCommandEvent& evt) {
-  AboutDialog aboutDialog;
-  aboutDialog.LoadContent();
-  aboutDialog.ShowModal();
+  InvalidateLayout();
 }
 
 
@@ -237,12 +224,6 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     gMainFrame->Close();
 
-  } else if (buttonName == _T("Minimize")) {
-    //***************************************************************************
-    // MINIMIZE
-    //***************************************************************************
-    gMainFrame->Hide();
-
   } else if (buttonName == _T("Eject")) {
     //***************************************************************************
     // EJECT
@@ -267,18 +248,6 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     if (!configDialog_) configDialog_ = new ConfigDialog();
     configDialog_->LoadSettings();
     configDialog_->ShowModal();
-  } else if (buttonName == _T("Help")) {
-    //***************************************************************************
-    // HELP
-    //***************************************************************************
-    wxMenu menu;
-
-    menu.Append(ID_MENU_OptionPanel_Help, LOC(_T("OptionPanel.Help")));
-    menu.AppendSeparator();
-    menu.Append(ID_MENU_OptionPanel_About, LOC1(_T("OptionPanel.About"), APPLICATION_NAME));
-    
-    wxPoint pos(w->GetRect().GetLeft(), w->GetRect().GetBottom());
-    PopupMenu(&menu, pos);
   } else if (buttonName == _T("AddShortcut")) {
     //***************************************************************************
     // ADD SHORTCUT
