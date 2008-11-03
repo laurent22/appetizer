@@ -13,6 +13,10 @@
 #include "FilePaths.h"
 #include "Log.h"
 #include "Localization.h"
+#include "Controller.h"
+
+
+extern Controller gController;
 
 
 int FolderItem::uniqueID_ = 0;
@@ -24,6 +28,7 @@ FolderItem::FolderItem(bool isGroup) {
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
 
+  parent_ = NULL;
   isGroup_ = isGroup;
 
   automaticallyAdded_ = false;
@@ -32,15 +37,80 @@ FolderItem::FolderItem(bool isGroup) {
 
 
 FolderItem::~FolderItem() {
-  if (parent_.get()) {
-    // Reset the smart pointer to avoid circular reference
-    parent_.reset((FolderItem*)NULL);
-  }
+
 }
 
 
 bool FolderItem::IsGroup() {
   return isGroup_;
+}
+
+
+FolderItemSP FolderItem::GetChildByResolvedPath(const wxString& filePath) {
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP child = children_.at(i);
+    if (child->GetResolvedPath() == filePath) {
+      return child;
+    } else {
+      FolderItemSP found = child->GetChildByResolvedPath(filePath);
+      if (found.get()) return found;
+    }
+  }
+  FolderItemSP nullOutput;
+  return nullOutput;
+}
+
+
+void FolderItem::DoMultiLaunch() {
+  if (!IsGroup()) {
+    if (BelongsToMultiLaunchGroup()) Launch();
+  } else {
+    for (int i = 0; i < children_.size(); i++) {
+      FolderItemSP folderItem = children_.at(i);
+      folderItem->DoMultiLaunch();
+    }
+  }
+}
+
+
+void FolderItem::MoveChild(FolderItemSP folderItemToMove, int insertionIndex) {
+  // Create the new vector of folder items that
+  // is going to replace the old one
+  FolderItemVector newFolderItems;
+
+  bool isPushed = false;
+
+  if (insertionIndex < 0) {
+    newFolderItems.push_back(folderItemToMove);
+    isPushed = true;
+  }
+
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP folderItem = children_.at(i);
+
+    // If the current folder item is the one
+    // we want to move, skip it
+    if (folderItem->GetId() == folderItemToMove->GetId()) continue;
+
+    if (i == insertionIndex && !isPushed) {
+      // If we are at the insertion index, insert the
+      // the folder item
+      newFolderItems.push_back(folderItemToMove);
+      isPushed = true;
+    }
+
+    // Keep copying the other folder items
+    newFolderItems.push_back(folderItem);
+  }
+
+  // If we didn't insert the folder item, do it now
+  if (!isPushed) newFolderItems.push_back(folderItemToMove);
+
+  // Swap the vectors
+  children_ = newFolderItems;
+
+  // Notify everybody that we've changed the item collection
+  gController.FolderItems_CollectionChange();
 }
 
 
@@ -50,16 +120,23 @@ FolderItemVector FolderItem::GetChildren() {
 
 
 void FolderItem::AddChild(FolderItemSP folderItem) {
-  FolderItemSP smartPointer(this);
-  folderItem->SetParent(smartPointer);
+  folderItem->SetParent(this);
   children_.push_back(folderItem);
 }
 
 
 void FolderItem::RemoveChild(FolderItemSP folderItem) {
   for (int i = 0; i < children_.size(); i++) {
-    if (children_.at(i)->GetId() == folderItem->GetId()) {
+    FolderItemSP child = children_.at(i);
+    if (child->GetId() == folderItem->GetId()) {
+
+      if (folderItem->GetAutomaticallyAdded()) {
+        gController.GetUser()->AddAutoAddExclusion(folderItem->GetResolvedPath());
+      }
+
       children_.erase(children_.begin() + i);
+
+      gController.FolderItems_CollectionChange();
       return;
     }
   }
@@ -93,12 +170,12 @@ int FolderItem::ChildrenCount() {
 }
 
 
-void FolderItem::SetParent(FolderItemSP folderItem) {
+void FolderItem::SetParent(FolderItem* folderItem) {
   parent_ = folderItem;
 }
 
 
-FolderItemSP FolderItem::GetParent() {
+FolderItem* FolderItem::GetParent() {
   return parent_;
 }
 

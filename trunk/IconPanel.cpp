@@ -73,7 +73,7 @@ void IconPanel::AddFolderItem(int folderItemId) {
 
 
 void IconPanel::OnBrowseButtonMenu(wxCommandEvent& evt) {
-  FolderItemSP folderItem = gController.GetUser()->GetFolderItemById(evt.GetId());
+  FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
   if (!folderItem.get()) {
     evt.Skip();
   } else {
@@ -116,7 +116,7 @@ wxMenu* IconPanel::GetContextMenu() {
 
 
 void IconPanel::OnMenuNewShortcut(wxCommandEvent& evt) {
-  gController.GetUser()->EditNewFolderItem();
+  gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem());
 }
 
 
@@ -209,7 +209,8 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
     ilog(wxString::Format(_T("Drop index: %d"), index));
 
     if (index >= 0) {
-      gController.GetUser()->MoveFolderItem(folderItem->GetId(), index);
+      gController.GetUser()->GetRootFolderItem()->MoveChild(folderItem, index);
+      //gController.GetUser()->MoveFolderItem(folderItem->GetId(), index);
     }
 
     return true;
@@ -240,7 +241,9 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       for (int i = 0; i < filenames.Count(); i++) {
         wxFileName filename(filenames[i]);
         filename.Normalize();
-        gController.GetUser()->AddNewFolderItemFromPath(filename.GetFullPath());
+        gController.GetUser()->AddNewFolderItemFromPath(
+          gController.GetUser()->GetRootFolderItem(),
+          filename.GetFullPath());
         didSomething = true;
       }
     }
@@ -345,17 +348,16 @@ void IconPanel::SetFolderItemSource(int source) {
 void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
-  std::vector<FolderItemSP> folderItems;
+  FolderItemVector folderItems;
 
-  if (folderItemSource_ == ICON_PANEL_SOURCE_USER) {  
-    // @todo: It shouldn't be possible to access the FolderItem vector directly.
-    // Need to implement GetFolderItemAt() and GetFolderItemCount() to iterate
-    // through the folder items.
-    folderItems = gController.GetUser()->GetFolderItems();
+  if (folderItemSource_ == ICON_PANEL_SOURCE_USER) {      
+
+    folderItems = gController.GetUser()->GetRootFolderItem()->GetChildren();
+
   } else {
     
     for (int i = 0; i < folderItemIds_.size(); i++) {
-      FolderItemSP folderItem = gController.GetUser()->GetFolderItemById(folderItemIds_.at(i));
+      FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(folderItemIds_.at(i));
       if (!folderItem.get()) {
         folderItemIds_.erase(folderItemIds_.begin() + i);
         i--;
@@ -387,7 +389,14 @@ void IconPanel::RefreshIcons() {
 
     bool found = false;
     for (int j = 0; j < folderItemRenderers_.size(); j++) {
-      if (folderItemRenderers_.at(j)->GetFolderItem()->GetId() == folderItem->GetId()) {
+      FolderItemSP rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
+      
+      if (!rFolderItem.get()) {
+        elog("Folder item shouldn't be null");
+        continue;
+      }
+
+      if (rFolderItem->GetId() == folderItem->GetId()) {
         found = true;
         break;
       }

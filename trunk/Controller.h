@@ -30,8 +30,8 @@ class Controller {
      * GLOBAL EVENTS
      */
 
-    void User_FolderItemCollectionChange();
-    void User_FolderItemChange(FolderItemSP folderItem);
+    void FolderItems_CollectionChange();
+    void FolderItems_FolderItemChange(FolderItemSP folderItem);
     void User_LocaleChange();
     void User_IconSizeChange();
 

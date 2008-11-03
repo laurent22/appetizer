@@ -239,7 +239,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // MULTI-LAUNCH
     //***************************************************************************
-    gController.GetUser()->DoMultiLaunch();
+    gController.GetUser()->GetRootFolderItem()->DoMultiLaunch();
 
   } else if (buttonName == _T("Config")) {
     //***************************************************************************
@@ -252,7 +252,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // ADD SHORTCUT
     //***************************************************************************
-    gController.GetUser()->EditNewFolderItem();
+    gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem());
   }
 }
 

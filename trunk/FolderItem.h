@@ -54,23 +54,29 @@ public:
 
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);
+  void DoMultiLaunch();
 
+  // ***************************************************************
+  // Methods to work with children
+  // ***************************************************************
   bool IsGroup();
   FolderItemVector GetChildren();
   void AddChild(FolderItemSP folderItem);
-  FolderItemSP GetParent();
-  void SetParent(FolderItemSP folderItem);
+  FolderItem* GetParent();
+  void SetParent(FolderItem* folderItem);
   void RemoveChild(FolderItemSP folderItem);
   FolderItemSP GetChildAt(int index);
   int ChildrenCount();
   FolderItemSP GetChildById(int folderItemId, bool recurse = true);
+  void MoveChild(FolderItemSP folderItemToMove, int insertionIndex);
+  FolderItemSP GetChildByResolvedPath(const wxString& filePath);
 
 private:
 
   static int uniqueID_;
 
   bool isGroup_;
-  FolderItemSP parent_;
+  FolderItem* parent_;
   int id_;
   FolderItemVector children_;
   bool belongsToMultiLaunchGroup_;

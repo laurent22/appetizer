@@ -63,7 +63,7 @@ FolderItemRenderer::~FolderItemRenderer() {
 
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
-  return gController.GetUser()->GetFolderItemById(folderItemId_);
+  return gController.GetUser()->GetRootFolderItem()->GetChildById(folderItemId_);
 }
 
 
@@ -77,7 +77,7 @@ void FolderItemRenderer::OnMenuAddToMultiLaunch(wxCommandEvent& evt) {
     GetFolderItem()->AddToMultiLaunchGroup();
   }
 
-  gController.User_FolderItemChange(folderItem);
+  gController.FolderItems_FolderItemChange(folderItem);
 }
 
 
@@ -85,7 +85,11 @@ void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
   int result = MessageBoxes::ShowConfirmation(LOC(_T("IconPanel.DeleteConfirmation")));
   if (result != wxID_YES) return;
 
-  gController.GetUser()->DeleteFolderItem(folderItemId_);
+  FolderItemSP folderItem = GetFolderItem();
+  FolderItem* parent = folderItem->GetParent();
+  if (!parent) return;
+
+  parent->RemoveChild(GetFolderItem());
 }
 
 
@@ -287,7 +291,11 @@ void FolderItemRenderer::UpdateControlBitmap() {
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
   if (icon->IsOk()) {  
-    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);
+    int yOffset = 0;
+    if (mouseInside_ && !mousePressed_) {
+      yOffset = -1;
+    }
+    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top + yOffset);
   }
 
   if (folderItem->BelongsToMultiLaunchGroup()) {

@@ -78,7 +78,7 @@ FolderItemSP Controller::GetDraggedFolderItem() {
     FolderItemSP nullOutput;
     return nullOutput;
   }
-  return user_->GetFolderItemById(draggedFolderItemId_);
+  return user_->GetRootFolderItem()->GetChildById(draggedFolderItemId_);
 }
 
 
@@ -87,13 +87,13 @@ UserSP Controller::GetUser() {
 }
 
 
-void Controller::User_FolderItemCollectionChange() {
+void Controller::FolderItems_CollectionChange() {
   gMainFrame->GetIconPanel()->InvalidateIcons();
   GetUser()->ScheduleSave();
 }
 
 
-void Controller::User_FolderItemChange(FolderItemSP folderItem) {
+void Controller::FolderItems_FolderItemChange(FolderItemSP folderItem) {
   FolderItemRendererSP renderer = gMainFrame->GetIconPanel()->GetRendererFromFolderItem(*folderItem);
   if (!renderer.get()) {
     // The folder item is not on the icon panel. It

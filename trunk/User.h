@@ -15,8 +15,6 @@
 #include "FolderItem.h"
 #include "Enumerations.h"
 #include "UserSettings.h"
-#include <vector>
-using namespace std;
 #include "boost/shared_ptr.hpp"
 #include "gui/ShortcutEditorDialog.h"
 
@@ -32,24 +30,20 @@ public:
   void Save(bool force = false);
   void Load();
   
-  std::vector<FolderItemSP> GetFolderItems();
-  FolderItemSP GetFolderItemById(int folderItemId);
   int EditFolderItem(FolderItemSP folderItem);
-  FolderItemSP EditNewFolderItem();
-  FolderItemSP AddNewFolderItemFromPath(wxString folderItemPath);
-  void DeleteFolderItem(int folderItemId);
-  void MoveFolderItem(int folderItemId, int insertionIndex);
-  void DumpFolderItems();
-  void DoMultiLaunch();
+  FolderItemSP EditNewFolderItem(FolderItemSP parent);
+  FolderItemSP AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath);
   void AddAutoAddExclusion(const wxString& filePath);
   bool IsAutoAddExclusion(const wxString& filePath);
+
+  FolderItemSP GetRootFolderItem();
 
   void OnTimer(wxTimerEvent& evt);
 
 private:
 
+  FolderItemSP rootFolderItem_;
   wxTimer* scheduledSaveTimer_;
-  std::vector<FolderItemSP> folderItems_;
   wxStringList folderItemExclusions_;
   UserSettingsSP settings_;
   ShortcutEditorDialog* shortcutEditorDialog_;

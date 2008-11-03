@@ -41,7 +41,7 @@ void TreeViewDialog::Localize() {
 
 
 void TreeViewDialog::LoadUser(UserSP user) {
-  LoadFolderItems(user->GetFolderItems());
+  LoadFolderItems(user->GetRootFolderItem()->GetChildren());
 }
 
 
