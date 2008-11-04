@@ -9,17 +9,25 @@
 #include "../utilities/StringUtil.h"
 #include "../utilities/VersionInfo.h"
 #include "../Localization.h"
+#include "../FilePaths.h"
 #include "../Constants.h"
 
 
 BEGIN_EVENT_TABLE(AboutDialog, wxDialog)
   EVT_BUTTON(ID_ABOUT_DLG_BUTTON_OK, AboutDialog::OnOkButtonClick)
+  EVT_SHOW(AboutDialog::OnShow)
 END_EVENT_TABLE()
 
 
 AboutDialog::AboutDialog()
 : AboutDialogBase(NULL, wxID_ANY, wxEmptyString) {
+  iconBitmap->SetBitmap(wxBitmap(FilePaths::BaseSkinDirectory + _T("/ApplicationIcon48.png"), wxBITMAP_TYPE_PNG));
   Localize();
+}
+
+
+void AboutDialog::OnShow(wxShowEvent& evt) {
+  iconBitmap->GetParent()->Layout();
 }
 
 

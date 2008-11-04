@@ -65,6 +65,7 @@ public:
 
   void OnRightDown(wxMouseEvent& evt);
   void OnMenuNewShortcut(wxCommandEvent& evt);
+  void OnMenuNewGroup(wxCommandEvent& evt);
   void OnBrowseButtonMenu(wxCommandEvent& evt);
 
   void OnSize(wxSizeEvent& evt);

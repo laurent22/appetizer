@@ -368,14 +368,16 @@ void FolderItem::ClearCachedIcons() {
 
 wxIconSP FolderItem::GetIcon(int iconSize) {
   if (iconSize == 16) {
+    if (IsGroup() && !icon16_.get()) icon16_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+
     if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon16_.get()) {
-      // Note: IconGetter::GetFolderItemIcon() should normally already return a
-      // default icon if there is any problem. 
       icon16_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/DefaultIcon16.png"), wxBITMAP_TYPE_PNG));
     }
     return icon16_;
   } else {
+    if (IsGroup() && !icon32_.get()) icon32_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
+
     if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon32_.get()) {
       icon32_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/DefaultIcon32.png"), wxBITMAP_TYPE_PNG));

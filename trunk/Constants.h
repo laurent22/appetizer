@@ -9,7 +9,7 @@
 
 #include "wx/wx.h" 
 
-const wxString APPLICATION_NAME = _T("Mini Launch Bar");
+const wxString APPLICATION_NAME = _T("Appetizer");
 const wxColor MASK_COLOR = wxColor(255, 0, 255);
 const wxString DATA_FOLDER_NAME = _T("Data");
 const wxString SETTING_FILE_NAME = _T("Settings.xml");
@@ -20,7 +20,7 @@ const wxString LOCALES_FOLDER_NAME = _T("Locales");
 const wxString ICONS_FOLDER_NAME = _T("Icons");
 const wxString HELP_FOLDER_NAME = _T("Help");
 const wxString WINDOW_FILE_NAME = _T("Window.xml");
-const wxString HELP_FILE_NAME = _T("MiniLaunchBar.pdf");
+const wxString HELP_FILE_NAME = _T("Appetizer.pdf");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
 const wxString CHECK_VERSION_URL = _T("http://minilaunchbar.pogopixels.com/VersionInfo.xml");
 const int CHECK_VERSION_DAY_INTERVAL = 2;

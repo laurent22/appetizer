@@ -9,6 +9,7 @@
 
 enum {
   ID_MENU_NewShortcut,
+  ID_MENU_NewGroup,
   ID_MENU_Delete,
   ID_MENU_Properties,
   ID_MENU_AddToMultiLaunch,

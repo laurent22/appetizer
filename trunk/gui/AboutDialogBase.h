@@ -33,6 +33,7 @@ private:
 
 protected:
     // begin wxGlade: AboutDialogBase::attributes
+    wxStaticBitmap* iconBitmap;
     wxTextCtrl* versionLabel;
     wxStaticText* label_2;
     wxStaticText* creditLabel;

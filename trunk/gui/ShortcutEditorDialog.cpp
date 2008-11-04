@@ -28,8 +28,8 @@ END_EVENT_TABLE()
 
 ShortcutEditorDialog::ShortcutEditorDialog()
 : ShortcutEditorDialogBase(NULL, wxID_ANY, wxEmptyString) {
-  selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FolderIcon.png"), wxBITMAP_TYPE_PNG));
-  selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FileIcon.png"), wxBITMAP_TYPE_PNG));
+  selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+  selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FileIcon16.png"), wxBITMAP_TYPE_PNG));
   Localize();
 }
 

@@ -23,6 +23,7 @@ public:
 private:
 
   void OnOkButtonClick(wxCommandEvent& evt);
+  void OnShow(wxShowEvent& evt);
 
   DECLARE_EVENT_TABLE();
 

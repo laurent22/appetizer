@@ -168,30 +168,23 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
 
         folderItem->Launch();
 
-      } else if (GetParent()) {
+      } else {
 
-        IconPanelFrame* f = new IconPanelFrame(NULL, wxID_ANY);
-        f->GetIconPanel()->SetFolderItemSource(ICON_PANEL_SOURCE_CUSTOM);
+        wxMenu menu;
+
         for (int i = 0; i < folderItem->ChildrenCount(); i++) {
           FolderItemSP child = folderItem->GetChildAt(i);
-          if (!child.get()) continue;
-          f->GetIconPanel()->AddFolderItem(child->GetId());
+          wxMenuItem* menuItem = child->ToMenuItem(&menu);
+          menu.Append(menuItem);
         }
-        f->GetIconPanel()->SetWidthInIcons(2);
-        f->GetIconPanel()->SetHeightInIcons(2);
-        f->FitToIconPanel();
 
-        int windowX = GetRect().GetLeft();
-        int windowY = GetRect().GetTop();
+        if (menu.GetMenuItemCount() > 0) menu.AppendSeparator();
 
-        GetParent()->ClientToScreen(&windowX, &windowY);
+        menu.Append(
+          wxID_ANY,
+          LOC(_T("Icon.EditShortcuts")));
 
-        windowX -= f->GetSize().GetWidth() / 2 - GetSize().GetWidth() / 2;
-        windowY -= f->GetSize().GetHeight();
-        
-        f->Move(windowX, windowY);
-
-        f->Show();
+        PopupMenu(&menu, wxPoint(0, GetSize().GetHeight()));
       }      
 
     }

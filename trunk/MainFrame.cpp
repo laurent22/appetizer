@@ -118,7 +118,7 @@ MainFrame::MainFrame()
   helpSideButton_->FitToImage();
   helpSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
-  frameIcon_.LoadFile(FilePaths::IconsDirectory + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
+  frameIcon_.LoadFile(FilePaths::BaseSkinDirectory + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   taskBarIcon_.SetIcon(frameIcon_);
 
   SetIcon(frameIcon_);

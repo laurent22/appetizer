@@ -4,12 +4,12 @@
   found in the LICENSE file.
 */
 
-#include "IconPanel.h"
 #include <wx/cursor.h>
 #include <wx/filename.h>
+#include <wx/textdlg.h>
+#include "IconPanel.h"
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
-#include "boost/shared_ptr.hpp"
 #include "FilePaths.h"
 #include "Log.h"
 #include "Styles.h"
@@ -26,6 +26,7 @@ extern MainFrame* gMainFrame;
 BEGIN_EVENT_TABLE(IconPanel, NineSlicesPanel)
   EVT_RIGHT_DOWN(IconPanel::OnRightDown)
   EVT_MENU(ID_MENU_NewShortcut, IconPanel::OnMenuNewShortcut)
+  EVT_MENU(ID_MENU_NewGroup, IconPanel::OnMenuNewGroup)
 END_EVENT_TABLE()
 
 
@@ -110,6 +111,7 @@ wxMenu* IconPanel::GetContextMenu() {
   wxMenu* menu = new wxMenu();
   
   menu->Append(ID_MENU_NewShortcut, LOC(_T("IconPanel.PopupMenu.NewShortcut")));
+  menu->Append(ID_MENU_NewGroup, LOC(_T("IconPanel.PopupMenu.NewGroup")));
   
   return menu;
 }
@@ -117,6 +119,18 @@ wxMenu* IconPanel::GetContextMenu() {
 
 void IconPanel::OnMenuNewShortcut(wxCommandEvent& evt) {
   gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem());
+}
+
+
+void IconPanel::OnMenuNewGroup(wxCommandEvent& evt) {
+  wxTextEntryDialog* dialog = new wxTextEntryDialog(
+    this, 
+    LOC(_T("AddGroupDialog.Title")));
+  if (dialog->ShowModal() != wxID_OK) return;
+
+  FolderItemSP newGroup(new FolderItem(true));
+  gController.GetUser()->GetRootFolderItem()->AddChild(newGroup);
+  gController.FolderItems_CollectionChange();
 }
 
 

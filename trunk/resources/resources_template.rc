@@ -1,4 +1,4 @@
-amain ICON "Data/Skin/Default/Icons/Application.ico"
+amain ICON "Data/Skin/Application.ico"
 
 #include "wx/msw/wx.rc"
 
