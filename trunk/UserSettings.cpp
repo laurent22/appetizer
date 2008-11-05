@@ -135,7 +135,7 @@ void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, b
 
 
 void UserSettings::Load() {
-  TiXmlDocument doc(FilePaths::SettingsFile.mb_str());
+  TiXmlDocument doc(FilePaths::GetSettingsFile().mb_str());
   doc.LoadFile();
 
   TiXmlElement* root = doc.FirstChildElement("Settings");
@@ -155,7 +155,7 @@ void UserSettings::Save() {
   xmlRoot->SetAttribute("version", "1.0");
   doc.LinkEndChild(xmlRoot);
 
-  wxString filePath = FilePaths::SettingsFile;
+  wxString filePath = FilePaths::GetSettingsFile();
 
   FilePaths::CreateSettingsDirectory();
   doc.SaveFile(filePath.mb_str());

@@ -25,7 +25,7 @@ NineSlicesPanel(owner, id, point, size) {
   rotated_ = false;
   configDialog_ = NULL;
 
-  LoadImage(FilePaths::SkinDirectory + _T("/OptionPanel.png"));
+  LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
   SetGrid(Styles::OptionPanel.ScaleGrid);
 
   wxStringList buttonNames;
@@ -42,20 +42,20 @@ NineSlicesPanel(owner, id, point, size) {
     wxString n = buttonNames[i];
 
     if (n == _T("Eject")) {
-      #ifdef __WIN32__
-      UINT result = GetDriveType(FilePaths::ApplicationDrive);
+      #ifdef __WINDOWS__
+      UINT result = GetDriveType(FilePaths::GetApplicationDrive());
       // Don't show the eject button if we are not on a removable drive.
       // However, to be safe, do show it if the call to GetDriveType
       // failed (result = 0 or 1)
       if (result >= 2 && result != DRIVE_REMOVABLE) continue;
-      #endif // __WIN32__
+      #endif // __WINDOWS__
     }
 
     OptionButton* button = new OptionButton(this, wxID_ANY);
 
     button->SetCursor(wxCursor(wxCURSOR_HAND));
     button->SetName(n);
-    button->SetIcon(new wxBitmap(FilePaths::IconsDirectory + _T("/ButtonIcon_") + n + _T(".png"), wxBITMAP_TYPE_PNG));
+    button->SetIcon(new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ButtonIcon_") + n + _T(".png"), wxBITMAP_TYPE_PNG));
     buttons_.push_back(button);
 
     button->Connect(
@@ -71,13 +71,13 @@ NineSlicesPanel(owner, id, point, size) {
 
 
 void OptionPanel::ApplySkin(const wxString& skinName) {
-  LoadImage(FilePaths::SkinDirectory + _T("/OptionPanel.png"));
+  LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
 
   for (int i = 0; i < buttons_.size(); i++) {    
     OptionButton* button = buttons_[i];
 
     button->ApplySkin(skinName);
-    button->SetIcon(new wxBitmap(FilePaths::IconsDirectory + _T("/ButtonIcon_") + button->GetName() + _T(".png"), wxBITMAP_TYPE_PNG));
+    button->SetIcon(new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ButtonIcon_") + button->GetName() + _T(".png"), wxBITMAP_TYPE_PNG));
   }
 
   InvalidateLayout();
@@ -229,7 +229,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     // EJECT
     //***************************************************************************
     gMainFrame->Close();
-    #ifdef __WIN32__
+    #ifdef __WINDOWS__
     wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
     #else
     elog("TO BE IMPLEMENTED");

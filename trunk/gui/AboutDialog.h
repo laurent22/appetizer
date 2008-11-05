@@ -24,6 +24,7 @@ private:
 
   void OnOkButtonClick(wxCommandEvent& evt);
   void OnShow(wxShowEvent& evt);
+  void OnAuthorLabelMouseDown(wxMouseEvent& evt);
 
   DECLARE_EVENT_TABLE();
 

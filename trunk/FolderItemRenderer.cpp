@@ -266,13 +266,13 @@ void FolderItemRenderer::UpdateControlBitmap() {
     if (mousePressed_) { // DOWN state      
       if (!iconOverlayPainterDown_.get()) {
         iconOverlayPainterDown_.reset(new NineSlicesPainter());
-        iconOverlayPainterDown_->LoadImage(FilePaths::SkinDirectory + _T("/IconOverlayDown.png"));
+        iconOverlayPainterDown_->LoadImage(FilePaths::GetSkinDirectory() + _T("/IconOverlayDown.png"));
       }
       iconOverlayPainterDown_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     } else { // UP state      
       if (!iconOverlayPainterUp_.get()) {
         iconOverlayPainterUp_.reset(new NineSlicesPainter());
-        iconOverlayPainterUp_->LoadImage(FilePaths::SkinDirectory + _T("/IconOverlayUp.png"));
+        iconOverlayPainterUp_->LoadImage(FilePaths::GetSkinDirectory() + _T("/IconOverlayUp.png"));
       }
       iconOverlayPainterUp_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     }
@@ -293,7 +293,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   if (folderItem->BelongsToMultiLaunchGroup()) {
     if (!multiLaunchIcon_.get()) {
-      multiLaunchIcon_.reset(new wxBitmap(FilePaths::IconsDirectory + _T("/MultiLaunchIcon.png"), wxBITMAP_TYPE_PNG));
+      multiLaunchIcon_.reset(new wxBitmap(FilePaths::GetIconsDirectory() + _T("/MultiLaunchIcon.png"), wxBITMAP_TYPE_PNG));
     }
     if (multiLaunchIcon_->IsOk()) {
       destDC.DrawBitmap(

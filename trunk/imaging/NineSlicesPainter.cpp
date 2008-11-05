@@ -55,6 +55,7 @@ void NineSlicesPainter::LoadImage(const wxString& filePath, bool forceAlpha) {
         pixelAlpha = 254;
       }
       
+      wxDELETE(sourceBitmap_);
       sourceBitmap_ = new wxBitmap(tempImage);
     }
   }  

@@ -70,21 +70,21 @@ MainFrame::MainFrame()
   openCloseAnimationDuration_ = 50;
 
   // Load the mask and background images
-  maskNineSlices_.LoadImage(FilePaths::SkinDirectory + _T("/BarBackgroundRegion.png"), false);
+  maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackgroundRegion.png"), false);
 
   windowDragData_.DraggingStarted = false;
 
   arrowButton_ = new ImageButton(this, ID_BUTTON_Arrow, wxPoint(0, 0), wxSize(10, 10));
-  arrowButton_->LoadImage(FilePaths::SkinDirectory + _T("/ArrowButton"));
+  arrowButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/ArrowButton"));
   arrowButton_->SetGrid(Styles::OptionPanel.ArrowButtonScaleGrid);
 
   arrowButton_->SetCursor(wxCursor(wxCURSOR_HAND));
-  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
-  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
+  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
+  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
   arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
-  backgroundPanel_->LoadImage(FilePaths::SkinDirectory + _T("/BarBackground.png"));
+  backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
   backgroundPanel_->SetGrid(Styles::MainPanel.ScaleGrid);
 
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
@@ -94,7 +94,7 @@ MainFrame::MainFrame()
   optionPanel_ = new OptionPanel(this);
 
   resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  resizerPanel_->LoadImage(FilePaths::SkinDirectory + _T("/Resizer.png"));
+  resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
   resizerPanel_->FitToContent();
   resizerPanel_->SetCursor(wxCursor(wxCURSOR_HAND));
 
@@ -109,16 +109,16 @@ MainFrame::MainFrame()
   iconPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
   closeSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_CloseButton);
-  closeSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/CloseButton"));
+  closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
   closeSideButton_->FitToImage();
   closeSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
   helpSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_HelpButton);
-  helpSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/HelpButton"));
+  helpSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/HelpButton"));
   helpSideButton_->FitToImage();
   helpSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
-  frameIcon_.LoadFile(FilePaths::BaseSkinDirectory + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
+  frameIcon_.LoadFile(FilePaths::GetBaseSkinDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   taskBarIcon_.SetIcon(frameIcon_);
 
   SetIcon(frameIcon_);
@@ -126,7 +126,7 @@ MainFrame::MainFrame()
 
 
 
-  TiXmlDocument doc(FilePaths::WindowFile.mb_str());
+  TiXmlDocument doc(FilePaths::GetWindowFile().mb_str());
   doc.LoadFile();
 
   TiXmlElement* root = doc.FirstChildElement("Window");
@@ -192,28 +192,26 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 
 
 void MainFrame::ApplySkin(const wxString& skinName) {
-  FilePaths::SkinDirectory = FilePaths::BaseSkinDirectory + _T("/") + gController.GetUser()->GetSettings()->Skin;
-  Styles::LoadSkinFile(FilePaths::SkinDirectory + _T("/") + SKIN_FILE_NAME);
-  FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("/") + ICONS_FOLDER_NAME;
+  Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
 
   wxDELETE(arrowButtonOpenIcon_);
   wxDELETE(arrowButtonCloseIcon_);
 
-  maskNineSlices_.LoadImage(FilePaths::SkinDirectory + _T("/BarBackgroundRegion.png"), false);
+  maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackgroundRegion.png"), false);
 
-  arrowButton_->LoadImage(FilePaths::SkinDirectory + _T("/ArrowButton"));
-  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
-  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::IconsDirectory + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
+  arrowButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/ArrowButton"));
+  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
+  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
   arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
 
-  backgroundPanel_->LoadImage(FilePaths::SkinDirectory + _T("/BarBackground.png"));
-  resizerPanel_->LoadImage(FilePaths::SkinDirectory + _T("/Resizer.png"));
-  closeSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/CloseButton"));
-  helpSideButton_->LoadImage(FilePaths::SkinDirectory + _T("/HelpButton"));
+  backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
+  resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
+  closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
+  helpSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/HelpButton"));
   iconPanel_->ApplySkin(skinName);
   optionPanel_->ApplySkin(skinName);
 
-  frameIcon_.LoadFile(FilePaths::IconsDirectory + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
+  frameIcon_.LoadFile(FilePaths::GetIconsDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   taskBarIcon_.SetIcon(frameIcon_);
 
   InvalidateMask();
@@ -221,12 +219,15 @@ void MainFrame::ApplySkin(const wxString& skinName) {
 }
 
 
-void MainFrame::SetRotated(bool rotated) {
+void MainFrame::SetRotated(bool rotated, bool swapWidthAndHeight) {
   if (rotated == rotated_) return;
   rotated_ = rotated;
 
+  int previousWidth = GetSize().GetWidth();
+  int previousHeight = GetSize().GetHeight();
+
   optionPanel_->SetRotated(rotated);
-  optionPanel_->UpdateLayout(); // We need a layout update to get a valid "required width" property
+  optionPanel_->UpdateLayout(); // We need a layout update to get a valid "required width" property, needed by ToggleOptionPanel()
   arrowButton_->SetBitmapRotation(rotated ? -90 : 0);
   backgroundPanel_->SetBitmapRotation(rotated ? -90 : 0);
   resizerPanel_->SetBitmapRotation(rotated ? -90 : 0);
@@ -234,15 +235,19 @@ void MainFrame::SetRotated(bool rotated) {
   UpdateLayout();
   UpdateMask();
 
+  if (swapWidthAndHeight) {
+    SetSize(previousHeight, previousWidth);    
+  } else {
+    SetSize(previousWidth, previousHeight);
+  }
+
+  // Need an update here to make sure that GetRect() returns the current width and height
+  // (and not the previous one). Needed by ToggleOptionPanel()
+  Update();
+  
+  // Open and close (or close and open) the option panel to force a relayout
   ToggleOptionPanel();
   ToggleOptionPanel();
-
-  int newWidth = GetSize().GetWidth();
-  int newHeight = GetSize().GetHeight();
-  if (GetSize().GetWidth() < GetMinWidth()) newWidth = GetMinWidth(); 
-  if (GetSize().GetHeight() < GetMinHeight()) newHeight = GetMinHeight();
-
-  SetSize(newWidth, newHeight);
 }
 
 
@@ -604,7 +609,6 @@ void MainFrame::InvalidateMask() {
   Refresh();
 }
 
-
 void MainFrame::OnClose(wxCloseEvent& evt) {  
   gController.GetUser()->Save();
 
@@ -647,7 +651,7 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   XmlUtil::AppendTextElement(xmlRoot, "VerticalGap", vGap);
 
   FilePaths::CreateSettingsDirectory();
-  doc.SaveFile(FilePaths::WindowFile.mb_str());
+  doc.SaveFile(FilePaths::GetWindowFile().mb_str());
 
   wxDELETE(Localization::Instance);
 
@@ -656,10 +660,10 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
 
 
 void MainFrame::OnMenuHelp(wxCommandEvent& evt) {  
-  wxString helpFile = FilePaths::HelpDirectory + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
+  wxString helpFile = FilePaths::GetHelpDirectory() + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
   if (!wxFileName::FileExists(helpFile)) {
     // Default to english
-    helpFile = FilePaths::HelpDirectory + _T("/en/") + HELP_FILE_NAME;
+    helpFile = FilePaths::GetHelpDirectory() + _T("/en/") + HELP_FILE_NAME;
   }
 
   FolderItem::Launch(helpFile);

@@ -77,7 +77,7 @@ void User::Save(bool force) {
   }
 
   FilePaths::CreateSettingsDirectory();
-  doc.SaveFile(FilePaths::FolderItemsFile.mb_str());
+  doc.SaveFile(FilePaths::GetFolderItemsFile().mb_str());
 }
 
 
@@ -86,7 +86,7 @@ void User::Load() {
 
   autoAddExclusions_.Clear();
 
-  TiXmlDocument doc(FilePaths::FolderItemsFile.mb_str());
+  TiXmlDocument doc(FilePaths::GetFolderItemsFile().mb_str());
   doc.LoadFile();
 
   TiXmlElement* root = doc.FirstChildElement("FolderItems");

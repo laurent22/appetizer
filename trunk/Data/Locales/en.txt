@@ -1,6 +1,20 @@
 ﻿// English
 // @author = Laurent Cozic
 // @email.rot13 = ynherag@pbmvp.arg
+//
+// Some guidelines on how to create your own translation :
+//
+// * The first line of the file must be the language name preceded by "//". The language name
+//   should be written in your own language (ie. "Español" and not "Spanish")
+//
+// * Leave the %0%, %1% etc. variables in as they will be replaced at runtime by a string.
+//   For example "About %0%..." will be replaced by "About Appetizer...".
+//   However you can change their order if it makes more sense in your language.
+//
+// * If a line start with a space " ", leave it in. It means that it's part of a multiline string.
+//   See for example "Updater.NewVersion"
+//
+// * If you provide an email address, please rot13 it first (See http://www.rot13.com/)
 
 Global.Error = Error
 Global.Cancel = Cancel
@@ -48,9 +62,11 @@ AboutDialog.License = License
 
 ConfigDialog.Title = Configuration
 ConfigDialog.GeneralTab = General
+ConfigDialog.AppearanceTab = Appearance
 ConfigDialog.LanguageLabel = Language:
 ConfigDialog.IconSizeLabel = Icon size:
-ConfigDialog.Orientation = Orientation
+ConfigDialog.SkinLabel = Skin:
+ConfigDialog.Orientation = Orientation:
 ConfigDialog.HorizontalOrientation = Horizontal
 ConfigDialog.VerticalOrientation = Vertical
 ConfigDialog.UpdateButton = Check for update

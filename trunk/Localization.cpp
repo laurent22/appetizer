@@ -204,7 +204,7 @@ wxString Localization::GetString(const wxString& stringId, const wxString& param
 
 void Localization::Initialize() {
   Localization::Instance = new Localization();
-  Localization::Instance->LoadLocale(_T("en"), FilePaths::LocalesDirectory);
+  Localization::Instance->LoadLocale(_T("en"), FilePaths::GetLocalesDirectory());
 }
 
 

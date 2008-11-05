@@ -6,6 +6,7 @@
 
 #include "AboutDialog.h"
 #include <wx/arrstr.h>
+#include <wx/font.h>
 #include "../utilities/StringUtil.h"
 #include "../utilities/VersionInfo.h"
 #include "../Localization.h"
@@ -21,8 +22,21 @@ END_EVENT_TABLE()
 
 AboutDialog::AboutDialog()
 : AboutDialogBase(NULL, wxID_ANY, wxEmptyString) {
-  iconBitmap->SetBitmap(wxBitmap(FilePaths::BaseSkinDirectory + _T("/ApplicationIcon48.png"), wxBITMAP_TYPE_PNG));
+  iconBitmap->SetBitmap(wxBitmap(FilePaths::GetBaseSkinDirectory() + _T("/ApplicationIcon48.png"), wxBITMAP_TYPE_PNG));
+  
+  //wxFont authorLabelFont(authorLabel->GetFont());
+  //authorLabelFont.SetUnderlined(true);
+  //authorLabel->SetFont(authorLabelFont);
+  //authorLabel->SetForegroundColour(wxColour(0,0,255));
+  //authorLabel->SetCursor(wxCursor(wxCURSOR_HAND));
+  //authorLabel->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(AboutDialog::OnAuthorLabelMouseDown), NULL, this);
+  
   Localize();
+}
+
+
+void AboutDialog::OnAuthorLabelMouseDown(wxMouseEvent& evt) {
+  ::wxLaunchDefaultBrowser(_T("mailto:laurent@cozic.net"));
 }
 
 

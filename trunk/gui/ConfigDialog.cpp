@@ -45,8 +45,10 @@ void ConfigDialog::OnShow(wxShowEvent& evt) {
 void ConfigDialog::Localize() {
   SetTitle(LOC(_T("ConfigDialog.Title")));  
   notebook->SetPageText(0, LOC(_T("ConfigDialog.GeneralTab")));
+  notebook->SetPageText(1, LOC(_T("ConfigDialog.AppearanceTab")));
   languageLabel->SetLabel(LOC(_T("ConfigDialog.LanguageLabel")));
   iconSizeLabel->SetLabel(LOC(_T("ConfigDialog.IconSizeLabel")));
+  skinLabel->SetLabel(LOC(_T("ConfigDialog.SkinLabel")));
   saveButton->SetLabel(LOC(_T("Global.Save")));
   cancelButton->SetLabel(LOC(_T("Global.Cancel")));
   orientationLabel->SetLabel(LOC(_T("ConfigDialog.Orientation")));
@@ -61,7 +63,7 @@ void ConfigDialog::LoadSettings() {
   // Populate language dropdown list
   //***************************************************************************
 
-  wxString localeFolderPath = FilePaths::LocalesDirectory;
+  wxString localeFolderPath = FilePaths::GetLocalesDirectory();
 
   wxArrayString foundFilePaths;
   wxDir localeFolder;
@@ -120,7 +122,7 @@ void ConfigDialog::LoadSettings() {
   //***************************************************************************
 
   skinComboBox->Clear();
-  wxString skinFolderPath = FilePaths::BaseSkinDirectory;
+  wxString skinFolderPath = FilePaths::GetBaseSkinDirectory();
 
   foundFilePaths.Clear();
   wxDir skinFolder;
@@ -170,7 +172,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   
   if (localeCode != userSettings->Locale) {
     userSettings->Locale = localeCode;
-    Localization::Instance->LoadLocale(localeCode, FilePaths::LocalesDirectory);
+    Localization::Instance->LoadLocale(localeCode, FilePaths::GetLocalesDirectory());
     Localization::Instance->SetCurrentLocale(localeCode);
     gController.User_LocaleChange();
   }
@@ -196,7 +198,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (rotated != userSettings->Rotated) {
     userSettings->Rotated = rotated;
-    gMainFrame->SetRotated(rotated);
+    gMainFrame->SetRotated(rotated, true);
   }
 
   //***************************************************************************

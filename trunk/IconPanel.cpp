@@ -37,7 +37,7 @@ NineSlicesPanel(owner, id, point, size) {
   dropTarget->SetAssociatedIconPanel(this);
   SetDropTarget(dropTarget);
   
-  LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
+  LoadImage(FilePaths::GetSkinDirectory() + _T("/BarInnerPanel.png"));
   SetGrid(Styles::InnerPanel.ScaleGrid);
 
   folderItemSource_ = ICON_PANEL_SOURCE_USER;
@@ -46,7 +46,7 @@ NineSlicesPanel(owner, id, point, size) {
   iconsInvalidated_ = true;
 
   browseButton_ = new ImageButton(this);
-  browseButton_->LoadImage(FilePaths::SkinDirectory + _T("/BrowseArrowButton"));
+  browseButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BrowseArrowButton"));
   browseButton_->FitToImage();
   browseButton_->Hide();
   browseButton_->SetCursor(wxCursor(wxCURSOR_HAND));
@@ -60,8 +60,8 @@ NineSlicesPanel(owner, id, point, size) {
 
 
 void IconPanel::ApplySkin(const wxString& skinName) {
-  LoadImage(FilePaths::SkinDirectory + _T("/BarInnerPanel.png"));
-  browseButton_->LoadImage(FilePaths::SkinDirectory + _T("/BrowseArrowButton"));
+  LoadImage(FilePaths::GetSkinDirectory() + _T("/BarInnerPanel.png"));
+  browseButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BrowseArrowButton"));
   browseButton_->FitToImage();
 
   InvalidateLayout();
@@ -111,7 +111,7 @@ wxMenu* IconPanel::GetContextMenu() {
   wxMenu* menu = new wxMenu();
   
   menu->Append(ID_MENU_NewShortcut, LOC(_T("IconPanel.PopupMenu.NewShortcut")));
-  menu->Append(ID_MENU_NewGroup, LOC(_T("IconPanel.PopupMenu.NewGroup")));
+  //menu->Append(ID_MENU_NewGroup, LOC(_T("IconPanel.PopupMenu.NewGroup")));
   
   return menu;
 }

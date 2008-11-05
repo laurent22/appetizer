@@ -8,9 +8,14 @@ Global.Yes = Ja
 Global.No = Nein
 Global.Save = Speichern
 Global.OpenDialog.AllFiles = Alle Dateien
+Global.BrowserError = Browser startet nicht
 
-OptionPanel.Help = Hilfe Themen
-OptionPanel.About = Über %0%...
+MessageBox.Info = Information
+MessageBox.Warning = Warnung
+MessageBox.Confirmation = Bestätigung
+
+HelpPopup.Help = Hilfethemen
+HelpPopup.About = über %0%...
 
 FolderItem.LaunchFileError = Diese Datei existiert nicht oder wurde gelöscht (Fehler %0%)
 
@@ -19,6 +24,7 @@ IconPanel.PopupMenu.Delete = Löschen...
 IconPanel.PopupMenu.Properties = Eigenschaften
 IconPanel.PopupMenu.AddToQuickLaunch = Zur Schnellstart-Gruppe hinzufügen
 IconPanel.DeleteConfirmation = Wollen Sie diese Verknüpfung wirklich löschen?
+
 EditFolderItemForm.Title = Verknüpfungseigenschaften
 EditFolderItemForm.NameLabel = Name:
 EditFolderItemForm.LocationLabel = Ort:
@@ -42,13 +48,28 @@ AboutDialog.License = Lizenz
 ConfigDialog.Title = Einstellungen
 ConfigDialog.GeneralTab = Allgemein
 ConfigDialog.LanguageLabel = Sprache:
-ConfigDialog.IconSizeLabel = Größe der Symbole:
+ConfigDialog.IconSizeLabel = Symbolgröße
+ConfigDialog.Orientation = Ausrichtung
+ConfigDialog.HorizontalOrientation = Horizontal
+ConfigDialog.VerticalOrientation = Vertikal
+ConfigDialog.UpdateButton = nach Update suchen
+ConfigDialog.UpdateButtonWait = Bitte warten...
 
-OptionPanel.MinimizeToolTip = Minimieren
 OptionPanel.CloseToolTip = Schließen
+OptionPanel.MinimizeToolTip = Minimieren
 OptionPanel.ConfigToolTip = Einstellungen
 OptionPanel.EjectToolTip = Eject
 OptionPanel.AddShortcutToolTip = Neue Verknüpfung
 OptionPanel.HelpToolTip = Hilfe
 OptionPanel.KeyToolTip = Verschlüsseln / Entschlüsseln
 OptionPanel.MultiLaunchToolTip = Schnellstart-Gruppe
+
+Updater.NoNewVersion = Sie haben die aktuelle Version.
+Updater.NewVersion = Eine neue Version ist erhältlich!
+ 
+ Ihre Version: %0%
+ Neueste version: %1%
+ Was ist neu in: %2%
+ 
+ Möchten Sie sie jetzt herunterladen
+Updater.Error = Keine Updateinformation erhältlich

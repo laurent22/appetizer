@@ -36,6 +36,9 @@ protected:
     wxStaticBitmap* iconBitmap;
     wxTextCtrl* versionLabel;
     wxStaticText* label_2;
+    wxStaticText* authorLabel;
+    wxStaticText* label_1;
+    wxStaticText* linkLabel;
     wxStaticText* creditLabel;
     wxTextCtrl* creditTextBox;
     wxPanel* notebook_1_pane_1;

@@ -28,8 +28,8 @@ END_EVENT_TABLE()
 
 ShortcutEditorDialog::ShortcutEditorDialog()
 : ShortcutEditorDialogBase(NULL, wxID_ANY, wxEmptyString) {
-  selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
-  selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::IconsDirectory + _T("/FileIcon16.png"), wxBITMAP_TYPE_PNG));
+  selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::GetIconsDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+  selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::GetIconsDirectory() + _T("/FileIcon16.png"), wxBITMAP_TYPE_PNG));
   Localize();
 }
 
@@ -59,7 +59,7 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   wxString folderItemName = nameTextBox->GetValue();
 
   wxFileName filename(FolderItem::ResolvePath(folderItemFilePath));
-  if (!filename.FileExists() && !wxFileName::DirExists(folderItemFilePath)) {
+  if (!filename.FileExists() && !wxFileName::DirExists(filename.GetFullPath())) {
     // If the shortcut location doesn't exist, just show a warning but allow
     // the user to continue. Invalid shortcuts are allowed since they
     // might be referencing files from a different computer.

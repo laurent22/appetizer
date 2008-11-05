@@ -261,7 +261,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
     // Open folder
     //***************************************************************************
 
-    #ifdef __WIN32__
+    #ifdef __WINDOWS__
     wxString command = _T("explorer ") + filename.GetFullPath();
     wxExecute(command);
     #else
@@ -368,19 +368,19 @@ void FolderItem::ClearCachedIcons() {
 
 wxIconSP FolderItem::GetIcon(int iconSize) {
   if (iconSize == 16) {
-    if (IsGroup() && !icon16_.get()) icon16_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+    if (IsGroup() && !icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
 
     if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon16_.get()) {
-      icon16_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/DefaultIcon16.png"), wxBITMAP_TYPE_PNG));
+      icon16_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/DefaultIcon16.png"), wxBITMAP_TYPE_PNG));
     }
     return icon16_;
   } else {
-    if (IsGroup() && !icon32_.get()) icon32_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
+    if (IsGroup() && !icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
 
     if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon32_.get()) {
-      icon32_.reset(new wxIcon(FilePaths::IconsDirectory + _T("/DefaultIcon32.png"), wxBITMAP_TYPE_PNG));
+      icon32_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/DefaultIcon32.png"), wxBITMAP_TYPE_PNG));
     }
     return icon32_;
   }
@@ -409,7 +409,7 @@ wxString FolderItem::GetResolvedPath() {
 wxString FolderItem::ResolvePath(const wxString& filePath) {
   wxString result(filePath);
   result.Trim();
-  result.Replace(_T("%DRIVE%"), FilePaths::ApplicationDrive);
+  result.Replace(_T("%DRIVE%"), FilePaths::GetApplicationDrive());
   return result;
 }
 
@@ -418,9 +418,9 @@ wxString FolderItem::ConvertToRelativePath(const wxString& filePath) {
   wxString result(filePath);
 
   wxString test1 = result.Mid(0, 2).Upper();
-  wxString test2 = FilePaths::ApplicationDrive.Upper();
+  wxString test2 = FilePaths::GetApplicationDrive().Upper();
   
-  if (result.Mid(0, 2).Upper() == FilePaths::ApplicationDrive.Upper()) {
+  if (result.Mid(0, 2).Upper() == FilePaths::GetApplicationDrive().Upper()) {
     result = _T("%DRIVE%") + result.Mid(2, result.Len());
   }
 

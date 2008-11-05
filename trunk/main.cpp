@@ -8,14 +8,23 @@
 #include <wx/sysopt.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
+#include <wx/cmdline.h>
+
+#ifdef __WXDEBUG__
+#ifdef __WINDOWS__
+// To find memory leaks, add _CrtSetBreakAlloc(int memoryBlock)
+// just at the beginning of MiniLaunchBar::OnInit
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#endif // __WINDOWS__
+#endif // __WXDEBUG__
+
 #include "MainFrame.h"
 #include "Controller.h"
 #include "Constants.h"
 #include "FilePaths.h"
 #include "Styles.h"
 #include "Localization.h"
-
-
 
 
 // The application class. An instance is created and initialized
@@ -36,51 +45,44 @@ Controller gController;
 MainFrame* gMainFrame;
 
 
+wxCmdLineParser gCommandLine;
+
+
 bool MiniLaunchBar::OnInit() {
+
+  wxCmdLineEntryDesc cmdLineDesc[] = {
+    { wxCMD_LINE_SWITCH, _T("p"), _T("portable"), _T("Enable portable mode.") },
+    { wxCMD_LINE_OPTION, _T("d"), _T("datapath"),  _T("Set user data path (-p will be ignored)") },
+    { wxCMD_LINE_NONE }
+  };
+
+  gCommandLine.SetDesc(cmdLineDesc);
+  gCommandLine.SetCmdLine(argc, argv);
+  gCommandLine.Parse(); 
+
   // Required to enabled PNG support
   wxInitAllImageHandlers();
 
   // Setting this option to "0" removed the flickering.
   wxSystemOptions::SetOption(_T("msw.window.no-clip-children"), _T("0"));
 
-  wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
-  wxString applicationDirectory = executablePath.GetPath();
-  wxString applicationDrive;
-  wxFileName::SplitPath(executablePath.GetPath(), &applicationDrive, NULL, NULL, NULL, false, wxPATH_NATIVE);
-
-  FilePaths::ApplicationDrive = applicationDrive;
-  #ifdef __WIN32__
-  FilePaths::ApplicationDrive += _T(":");
-  #endif // __WIN32__
-
-  FilePaths::ApplicationDirectory = applicationDirectory;
-  FilePaths::DataDirectory = applicationDirectory + _T("/") + DATA_FOLDER_NAME;
-  FilePaths::SettingsDirectory = FilePaths::DataDirectory + _T("/") + SETTING_FOLDER_NAME;
-  FilePaths::LocalesDirectory = FilePaths::DataDirectory + _T("/") + LOCALES_FOLDER_NAME;
-  FilePaths::SettingsFile = FilePaths::SettingsDirectory + _T("/") + SETTING_FILE_NAME;
-  FilePaths::FolderItemsFile = FilePaths::SettingsDirectory + _T("/") + FOLDER_ITEMS_FILE_NAME;
-  FilePaths::WindowFile = FilePaths::SettingsDirectory + _T("/") + WINDOW_FILE_NAME;  
-  FilePaths::HelpDirectory = FilePaths::DataDirectory + _T("/") + HELP_FOLDER_NAME;  
-  FilePaths::BaseSkinDirectory = FilePaths::DataDirectory + _T("/") + SKIN_FOLDER_NAME; 
+  FilePaths::InitializePaths();
 
   gController.GetUser()->Load();
 
-  FilePaths::SkinDirectory = FilePaths::BaseSkinDirectory + _T("/") + gController.GetUser()->GetSettings()->Skin;
-  Styles::LoadSkinFile(FilePaths::SkinDirectory + _T("/") + SKIN_FILE_NAME);
-  FilePaths::IconsDirectory = FilePaths::SkinDirectory + _T("/") + ICONS_FOLDER_NAME;
+  Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
 
   Localization::Initialize();
-  Localization::Instance->LoadLocale(gController.GetUser()->GetSettings()->Locale, FilePaths::LocalesDirectory);
+  Localization::Instance->LoadLocale(gController.GetUser()->GetSettings()->Locale, FilePaths::GetLocalesDirectory());
   Localization::Instance->SetCurrentLocale(gController.GetUser()->GetSettings()->Locale);
 
   gMainFrame = new MainFrame();
   gMainFrame->Show(true);
-  
-  gController.GetUser()->AutomaticallyAddNewApps();
+  gMainFrame->SetRotated(gController.GetUser()->GetSettings()->Rotated);  
 
   SetTopWindow(gMainFrame);
 
-  gMainFrame->SetRotated(gController.GetUser()->GetSettings()->Rotated);
+  gController.GetUser()->AutomaticallyAddNewApps();
 
   return true;
 } 

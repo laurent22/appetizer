@@ -14,12 +14,12 @@ extern Controller gController;
 
 OptionButton::OptionButton(wxWindow *owner, int id, wxPoint point, wxSize size):
 ImageButton(owner, id, point, size) {
-  LoadImage(FilePaths::SkinDirectory + _T("/OptionButton"));
+  LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionButton"));
   FitToImage();
 }
 
 
 void OptionButton::ApplySkin(const wxString& skinName) {
-  LoadImage(FilePaths::SkinDirectory + _T("/OptionButton"));
+  LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionButton"));
   FitToImage();
 }

@@ -29,10 +29,10 @@ IconPanelFrame::IconPanelFrame(wxWindow* parent, wxWindowID id, const wxString& 
   layoutInvalidated_ = true;
   maskInvalidated_ = true;
 
-  maskNineSlices_.LoadImage(FilePaths::SkinDirectory + _T("/BarBackgroundRegion.png"), false);
+  maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackgroundRegion.png"), false);
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(10,10));
-  backgroundPanel_->LoadImage(FilePaths::SkinDirectory + _T("/IconPanelFrameBackground.png"));
+  backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/IconPanelFrameBackground.png"));
   
   iconPanel_ = new IconPanel(backgroundPanel_, wxID_ANY, wxPoint(0,0), wxSize(10,10));  
 

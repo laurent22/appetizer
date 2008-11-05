@@ -13,21 +13,36 @@ class FilePaths {
 
 public:
 
-  static wxString ApplicationDrive;
-  static wxString ApplicationDirectory;
-  static wxString DataDirectory;
-  static wxString SettingsDirectory;
-  static wxString BaseSkinDirectory;
-  static wxString SkinDirectory;
-  static wxString LocalesDirectory;
-  static wxString HelpDirectory;
-  static wxString UserSettingsFile;
-  static wxString IconsDirectory;
-  static wxString SettingsFile;
-  static wxString FolderItemsFile;
-  static wxString WindowFile;
+  static wxString GetApplicationDrive();
+  static wxString GetApplicationDirectory();
+  static wxString GetDataDirectory();
+  static wxString GetSettingsDirectory();
+  static wxString GetBaseSkinDirectory();
+  static wxString GetSkinDirectory();
+  static wxString GetLocalesDirectory();
+  static wxString GetHelpDirectory();
+  static wxString GetIconsDirectory();
+  static wxString GetSettingsFile();
+  static wxString GetFolderItemsFile();
+  static wxString GetWindowFile();
 
   static void CreateSettingsDirectory();
+  static void InitializePaths();
+
+private:
+
+  static wxString ApplicationDrive_;
+  static wxString ApplicationDirectory_;
+  static wxString DataDirectory_;
+  static wxString SettingsDirectory_;
+  static wxString BaseSkinDirectory_;
+  static wxString SkinDirectory_;
+  static wxString LocalesDirectory_;
+  static wxString HelpDirectory_;
+  static wxString IconsDirectory_;
+  static wxString SettingsFile_;
+  static wxString FolderItemsFile_;
+  static wxString WindowFile_;
 
 };
 

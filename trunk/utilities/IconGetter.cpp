@@ -29,7 +29,7 @@ wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
 
 
 wxIcon* IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
-  #ifdef __WIN32__
+  #ifdef __WINDOWS__
 
   wxString desktopIniFilePath = filePath + wxT("/Desktop.ini");
   wxFileName filename(desktopIniFilePath);
@@ -73,14 +73,14 @@ wxIcon* IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
     return icon;
   }
 
-  #endif // __WIN32__
+  #endif // __WINDOWS__
 
   return NULL;
 }
 
 
 wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
-  #ifdef __WIN32__
+  #ifdef __WINDOWS__
 
   // Get the file type from the file extension
   wxFileType* fileType = NULL;
@@ -130,14 +130,14 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
     // Noticed some problems with .pdf and .sln files among others
   }
   
-  #endif // __WIN32__
+  #endif // __WINDOWS__
   
   return NULL;
 }
 
 
 wxIcon* IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize) {  
-  #ifdef __WIN32__
+  #ifdef __WINDOWS__
 
   HICON smallIcon;
   HICON largeIcon;
@@ -166,7 +166,7 @@ wxIcon* IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize) {
     return icon;
   }
 
-  #endif // __WIN32__
+  #endif // __WINDOWS__
 
   return NULL;
 }
