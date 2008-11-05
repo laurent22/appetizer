@@ -37,7 +37,6 @@ protected:
     wxTextCtrl* versionLabel;
     wxStaticText* label_2;
     wxStaticText* authorLabel;
-    wxStaticText* label_1;
     wxStaticText* linkLabel;
     wxStaticText* creditLabel;
     wxTextCtrl* creditTextBox;

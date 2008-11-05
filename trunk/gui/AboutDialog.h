@@ -16,7 +16,7 @@ class AboutDialog: public AboutDialogBase {
 
 public:
 
-  AboutDialog();
+  AboutDialog(wxWindow* parent = NULL, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE, const wxString& name = _T("dialogBox"));
   void LoadContent();
   void Localize();
 

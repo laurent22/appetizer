@@ -225,15 +225,15 @@ void ImageButton::OnMouseUp(wxMouseEvent& evt) {
 
   wxRect zeroRect(0, 0, GetSize().GetWidth(), GetSize().GetHeight());
 
+  pressed_ = false;
+  SetState(_T("Up"));
+  Update();
+
   if (zeroRect.Contains(evt.GetPosition())) {
     wxCommandEvent newEvent(wxeEVT_CLICK);
     newEvent.SetEventObject(this);
     GetEventHandler()->ProcessEvent(newEvent);
   }
-
-  pressed_ = false;
-  SetState(_T("Up"));
-  Update();
 }
 
 

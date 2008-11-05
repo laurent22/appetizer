@@ -19,10 +19,9 @@ AboutDialogBase::AboutDialogBase(wxWindow* parent, int id, const wxString& title
     versionLabel = new wxTextCtrl(notebook_1_pane_1, wxID_ANY, wxT("NAME VERSION"), wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxNO_BORDER);
     label_2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Copyright (C) 2008 "));
     authorLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Laurent Cozic"));
-    label_1 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
-    linkLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("http://code.google.com/p/minilaunchbar/"));
+    linkLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("http://appetizer.sourceforge.net"));
     creditLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Credits:"));
-    creditTextBox = new wxTextCtrl(notebook_1_pane_1, wxID_ANY, wxT("Translators: Simeon, Pieter Kerstens, Michal Trzebiatowski\n\nThis software uses a number of open source libraries including:\n\n- Simpleini by Brodie Thiesfield\n- TinyXml by Yves Berquin\n- The Boost C++ Libraries\n- wxWidgets by their respective authors\n\nSome windows are built using wxGlade by Alberto Griggio."), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_LINEWRAP|wxTE_WORDWRAP);
+    creditTextBox = new wxTextCtrl(notebook_1_pane_1, wxID_ANY, wxT("Translators: Simeon, Pieter Kerstens, Micha? Trzebiatowski\n\nThis software uses a number of open source libraries including:\n\n- Simpleini by Brodie Thiesfield\n- TinyXml by Yves Berquin\n- The Boost C++ Libraries\n- wxWidgets by their respective authors\n\nDialog boxes are built using wxGlade by Alberto Griggio."), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_LINEWRAP|wxTE_WORDWRAP);
     text_ctrl_1 = new wxTextCtrl(notebook_pane_2, wxID_ANY, wxT("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. \n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_LINEWRAP|wxTE_WORDWRAP);
     okButton = new wxButton(this, ID_ABOUT_DLG_BUTTON_OK, wxT("OK"));
 
@@ -59,9 +58,8 @@ void AboutDialogBase::do_layout()
     sizer_7->Add(label_2, 0, wxBOTTOM, 10);
     sizer_7->Add(authorLabel, 0, 0, 0);
     sizer_6->Add(sizer_7, 1, wxEXPAND, 0);
+    sizer_6->Add(linkLabel, 0, wxBOTTOM, 4);
     headerGridSizer->Add(sizer_6, 1, wxLEFT|wxEXPAND, 8);
-    headerGridSizer->Add(label_1, 0, 0, 0);
-    headerGridSizer->Add(linkLabel, 0, 0, 0);
     headerGridSizer->AddGrowableCol(1);
     grid_sizer_1->Add(headerGridSizer, 1, wxBOTTOM|wxEXPAND, 6);
     sizer_4->Add(creditLabel, 0, wxBOTTOM, 6);

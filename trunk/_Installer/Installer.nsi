@@ -11,7 +11,7 @@
 ;General
 
 !define APP_NAME "Appetizer"
-!define VERSION "0.9.4.804"
+!define VERSION "0.9.4.906"
 !define SOURCE_FOLDER "..\_Release\Standard"
 
   ;Name and file

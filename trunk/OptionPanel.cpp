@@ -264,7 +264,7 @@ ConfigDialog* OptionPanel::GetConfigDialog() {
 
 OptionPanel::~OptionPanel() {
   if (configDialog_) {
-    wxDELETE(configDialog_);
+    configDialog_->Destroy();
     configDialog_ = NULL;
   }
 }

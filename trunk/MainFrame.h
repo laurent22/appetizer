@@ -20,6 +20,7 @@
 #include "TypeDefinitions.h"
 #include "OptionPanel.h"
 #include "ApplicationTrayIcon.h"
+#include "gui/AboutDialog.h"
 
 
 enum {
@@ -43,6 +44,7 @@ class MainFrame: public wxFrame {
     bool needLayoutUpdate_;
     bool needMaskUpdate_;
     bool optionPanelOpen_;
+    AboutDialog* aboutDialog_;
     NineSlicesPanel* backgroundPanel_;
     IconPanel* iconPanel_;
     NineSlicesPainter maskNineSlices_;

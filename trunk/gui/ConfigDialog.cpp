@@ -38,7 +38,10 @@ ConfigDialog::ConfigDialog()
 
 
 void ConfigDialog::OnShow(wxShowEvent& evt) {
+  // Update "General" panel
   languageLabel->GetParent()->Layout();
+  // Update "Appearance" panel
+  skinLabel->GetParent()->Layout();
 }
 
 

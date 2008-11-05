@@ -54,6 +54,7 @@ MainFrame::MainFrame()
   )
 {  
   logWindow_ = NULL;
+  aboutDialog_ = NULL;
   rotated_ = false;
 
   #ifdef __WXDEBUG__
@@ -612,6 +613,10 @@ void MainFrame::InvalidateMask() {
 void MainFrame::OnClose(wxCloseEvent& evt) {  
   gController.GetUser()->Save();
 
+  if (aboutDialog_) aboutDialog_->Destroy();
+  if (optionPanel_) optionPanel_->Destroy();
+  if (iconPanel_) iconPanel_->Destroy();
+
   TiXmlDocument doc;
   doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
   TiXmlElement* xmlRoot = new TiXmlElement("Window");;
@@ -671,9 +676,9 @@ void MainFrame::OnMenuHelp(wxCommandEvent& evt) {
 
 
 void MainFrame::OnMenuAbout(wxCommandEvent& evt) {
-  AboutDialog aboutDialog;
-  aboutDialog.LoadContent();
-  aboutDialog.ShowModal();
+  if (!aboutDialog_) aboutDialog_ = new AboutDialog();
+  aboutDialog_->LoadContent();
+  aboutDialog_->ShowModal();
 }
 
 
