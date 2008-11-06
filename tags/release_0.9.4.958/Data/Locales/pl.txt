@@ -1,0 +1,49 @@
+﻿// Polski
+// @author = Michał Trzebiatowski
+// @email.rot13 = uvccvr_1968@ubgznvy.pbz
+
+Global.Error = Błąd
+Global.Cancel = Anuluj
+Global.OK = OK
+Global.Yes = Tak
+Global.No = Nie
+Global.Save = Zapisz
+Global.OpenDialog.AllFiles = Wszystkie pliki
+
+FolderItem.LaunchFileError = Nie można znaleźć pliku lub został on usunięty (błąd %0%)
+
+IconPanel.PopupMenu.NewShortcut = Nowy skrót...
+IconPanel.PopupMenu.Delete = Usuń...
+IconPanel.PopupMenu.Properties = Właściwości
+IconPanel.PopupMenu.AddToQuickLaunch = Dodaj do grupy wielokrotnego uruchamiania
+IconPanel.DeleteConfirmation = Czy chcesz to usunąć?
+
+EditFolderItemForm.Title = Właściwości skrótu
+EditFolderItemForm.NameLabel = Nazwa:
+EditFolderItemForm.LocationLabel = Ścieżka:
+EditFolderItemForm.LocationWarning = Cel skrótu nie istnieje. Czy chcesz kontynuować?
+
+TrayIcon.Close = Zamknij
+TrayIcon.Hide = Ukryj
+TrayIcon.Show = Pokaż
+
+SelectFolderOrFileDialog.Title = Wybierz folder lub plik
+SelectFolderOrFileDialog.SelectFile = Wybierz folder
+SelectFolderOrFileDialog.SelectFolder = Wybierz plik
+
+Icon.Size16 = Małe
+Icon.Size32 = Duże
+
+ConfigDialog.Title = Konfiguracja
+ConfigDialog.GeneralTab = Ogólne
+ConfigDialog.LanguageLabel = Język:
+ConfigDialog.IconSizeLabel = Rozmiar ikon:
+
+OptionPanel.CloseToolTip = Zamknij
+OptionPanel.MinimizeToolTip = Minimalizuj
+OptionPanel.ConfigToolTip = Konfiguruj
+OptionPanel.EjectToolTip = Wysuń
+OptionPanel.AddShortcutToolTip = Nowy skrót
+OptionPanel.HelpToolTip = Pomoc
+OptionPanel.KeyToolTip = Zaszyfruj / Rozszyfruj
+OptionPanel.MultiLaunchToolTip = Multi-startowanie
