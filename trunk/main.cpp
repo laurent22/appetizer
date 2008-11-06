@@ -25,6 +25,7 @@
 #include "FilePaths.h"
 #include "Styles.h"
 #include "Localization.h"
+#include "utilities/Utilities.h"
 
 
 // The application class. An instance is created and initialized
@@ -40,6 +41,8 @@ IMPLEMENT_APP(MiniLaunchBar)
 // Initialize the global controller
 Controller gController;
 
+Utilities gUtilities;
+
 // We can't use a smart pointer for the main frame
 // since it's going to be owned by the wxApp
 MainFrame* gMainFrame;
@@ -51,8 +54,8 @@ wxCmdLineParser gCommandLine;
 bool MiniLaunchBar::OnInit() {
 
   wxCmdLineEntryDesc cmdLineDesc[] = {
-    { wxCMD_LINE_SWITCH, _T("p"), _T("portable"), _T("Enable portable mode.") },
-    { wxCMD_LINE_OPTION, _T("d"), _T("datapath"),  _T("Set user data path (-p will be ignored)") },
+    { wxCMD_LINE_SWITCH, _T("u"), _T("useuserdatadir"), _T("Use user data directory to save settings.") },
+    { wxCMD_LINE_OPTION, _T("d"), _T("datapath"),  _T("Set user data path (-u will be ignored)") },
     { wxCMD_LINE_NONE }
   };
 
@@ -68,6 +71,7 @@ bool MiniLaunchBar::OnInit() {
 
   FilePaths::InitializePaths();
 
+  gController.SetIsFirstLaunch(!wxFileName::FileExists(FilePaths::GetSettingsFile()));
   gController.GetUser()->Load();
 
   Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
@@ -83,6 +87,13 @@ bool MiniLaunchBar::OnInit() {
   SetTopWindow(gMainFrame);
 
   gController.GetUser()->AutomaticallyAddNewApps();
+
+  if (gController.IsFirstLaunch()) {
+    gMainFrame->InvalidateLayout();
+    gMainFrame->InvalidateMask();
+    gMainFrame->Update();
+    gMainFrame->OpenOptionPanel();
+  }
 
   return true;
 } 

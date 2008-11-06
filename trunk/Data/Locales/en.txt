@@ -35,10 +35,10 @@ HelpPopup.About = About %0%...
 FolderItem.LaunchFileError = This file doesn't exist or has been deleted (Error %0%)
 
 IconPanel.PopupMenu.NewShortcut = New shortcut...
-IconPanel.PopupMenu.Delete = Delete...
+IconPanel.PopupMenu.Delete = Remove...
 IconPanel.PopupMenu.Properties = Properties
 IconPanel.PopupMenu.AddToQuickLaunch = Add to Multi Launch group
-IconPanel.DeleteConfirmation = Do you wish to delete this item?
+IconPanel.DeleteConfirmation = Do you wish to remove this icon?
 
 EditFolderItemForm.Title = Shorcut Properties
 EditFolderItemForm.NameLabel = Name:
@@ -72,10 +72,10 @@ ConfigDialog.VerticalOrientation = Vertical
 ConfigDialog.UpdateButton = Check for update
 ConfigDialog.UpdateButtonWait = Please wait...
 
-OptionPanel.CloseToolTip = Close
+OptionPanel.CloseToolTip = Minimize to tray
 OptionPanel.MinimizeToolTip = Minimize
 OptionPanel.ConfigToolTip = Config
-OptionPanel.EjectToolTip = Eject
+OptionPanel.EjectToolTip = Eject drive
 OptionPanel.AddShortcutToolTip = New shortcut
 OptionPanel.HelpToolTip = Help
 OptionPanel.KeyToolTip = Encrypt / Decrypt

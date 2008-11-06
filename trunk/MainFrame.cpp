@@ -20,6 +20,7 @@
 #include "utilities/XmlUtil.h"
 #include "utilities/Updater.h"
 #include "utilities/VersionInfo.h"
+#include "utilities/Utilities.h"
 #include "gui/AboutDialog.h"
 #include "bitmap_controls/ImageButton.h"
 
@@ -27,6 +28,8 @@
 
 
 extern Controller gController;
+extern Utilities gUtilities;
+
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
@@ -38,8 +41,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_COMMAND(wxID_ANY, wxeEVT_CLICK, MainFrame::OnImageButtonClick)
   EVT_IDLE(MainFrame::OnIdle)
   EVT_MOUSE_CAPTURE_LOST(MainFrame::OnMouseCaptureLost)
-  EVT_MENU(ID_MENU_OptionPanel_Help, MainFrame::OnMenuHelp)
-  EVT_MENU(ID_MENU_OptionPanel_About, MainFrame::OnMenuAbout)
 END_EVENT_TABLE()
 
 
@@ -113,11 +114,27 @@ MainFrame::MainFrame()
   closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
   closeSideButton_->FitToImage();
   closeSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
+  closeSideButton_->SetToolTip(LOC(_T("OptionPanel.CloseToolTip")));
 
-  helpSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_HelpButton);
-  helpSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/HelpButton"));
-  helpSideButton_->FitToImage();
-  helpSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
+  bool showEjectSideButton = true;
+
+  #ifdef __WINDOWS__
+  UINT result = GetDriveType(FilePaths::GetApplicationDrive());
+  // Don't show the eject button if we are not on a removable drive.
+  // However, to be safe, do show it if the call to GetDriveType
+  // failed (result = 0 or 1)
+  if (result >= 2 && result != DRIVE_REMOVABLE) showEjectSideButton = false;
+  #endif // __WINDOWS__
+
+  if (showEjectSideButton) {
+    ejectSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_EjectButton);
+    ejectSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/EjectButton"));
+    ejectSideButton_->FitToImage();
+    ejectSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
+    ejectSideButton_->SetToolTip(LOC(_T("OptionPanel.EjectToolTip")));
+  } else {
+    ejectSideButton_ = NULL;
+  }
 
   frameIcon_.LoadFile(FilePaths::GetBaseSkinDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   taskBarIcon_.SetIcon(frameIcon_);
@@ -208,7 +225,7 @@ void MainFrame::ApplySkin(const wxString& skinName) {
   backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
   resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
   closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
-  helpSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/HelpButton"));
+  if (ejectSideButton_) ejectSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/HelpButton"));
   iconPanel_->ApplySkin(skinName);
   optionPanel_->ApplySkin(skinName);
 
@@ -384,9 +401,11 @@ void MainFrame::UpdateLayout(int width, int height) {
       Styles::MainPanel.Padding.Bottom,
       0);
 
-    helpSideButton_->Move(
-      closeSideButton_->GetRect().GetRight() + sideButtonGap,
-      closeSideButton_->GetRect().GetTop());
+    if (ejectSideButton_) {
+      ejectSideButton_->Move(
+        closeSideButton_->GetRect().GetRight() + sideButtonGap,
+        closeSideButton_->GetRect().GetTop());
+    }
 
   } else {
     arrowButton_->SetSize(
@@ -420,9 +439,11 @@ void MainFrame::UpdateLayout(int width, int height) {
       bgPanelWidth - closeSideButton_->GetSize().GetWidth(),
       Styles::MainPanel.Padding.Top);
 
-    helpSideButton_->Move(
-      closeSideButton_->GetRect().GetLeft(),
-      closeSideButton_->GetRect().GetBottom() + sideButtonGap);
+    if (ejectSideButton_) {
+      ejectSideButton_->Move(
+        closeSideButton_->GetRect().GetLeft(),
+        closeSideButton_->GetRect().GetBottom() + sideButtonGap);
+    }
   }
   
   needLayoutUpdate_ = false;
@@ -659,26 +680,9 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   doc.SaveFile(FilePaths::GetWindowFile().mb_str());
 
   wxDELETE(Localization::Instance);
+  gUtilities.~Utilities();
 
   Destroy();
-}
-
-
-void MainFrame::OnMenuHelp(wxCommandEvent& evt) {  
-  wxString helpFile = FilePaths::GetHelpDirectory() + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
-  if (!wxFileName::FileExists(helpFile)) {
-    // Default to english
-    helpFile = FilePaths::GetHelpDirectory() + _T("/en/") + HELP_FILE_NAME;
-  }
-
-  FolderItem::Launch(helpFile);
-}
-
-
-void MainFrame::OnMenuAbout(wxCommandEvent& evt) {
-  if (!aboutDialog_) aboutDialog_ = new AboutDialog();
-  aboutDialog_->LoadContent();
-  aboutDialog_->ShowModal();
 }
 
 
@@ -697,16 +701,9 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
       Hide();
       break;
 
-    case ID_BUTTON_MainFrame_HelpButton: {
+    case ID_BUTTON_MainFrame_EjectButton: {
 
-      wxMenu menu;
-
-      menu.Append(ID_MENU_OptionPanel_Help, LOC(_T("HelpPopup.Help")));
-      menu.AppendSeparator();
-      menu.Append(ID_MENU_OptionPanel_About, LOC1(_T("HelpPopup.About"), APPLICATION_NAME));
-      
-      wxPoint pos(w->GetRect().GetLeft(), w->GetRect().GetBottom());
-      PopupMenu(&menu, pos);
+      gUtilities.EjectDriveAndExit();
 
     } break;
 

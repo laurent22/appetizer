@@ -162,7 +162,6 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
     FolderItemSP folderItem = GetFolderItem();
 
     if (folderItem.get()) {
-      wxLogDebug(_T("%d"), folderItem->ChildrenCount());
 
       if (!folderItem->IsGroup()) {
 

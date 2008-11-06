@@ -65,7 +65,7 @@ class MainFrame: public wxFrame {
     ApplicationTrayIcon taskBarIcon_;
     bool firstIdleEventSent_;
     ImageButton* closeSideButton_;
-    ImageButton* helpSideButton_;
+    ImageButton* ejectSideButton_;
     ImageButton* minimizeSideButton_;
 
     void UpdateMask();
@@ -120,8 +120,6 @@ class MainFrame: public wxFrame {
     void OnImageButtonClick(wxCommandEvent& evt);
     void OnIdle(wxIdleEvent& evt);
     void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
-    void OnMenuHelp(wxCommandEvent& evt);
-    void OnMenuAbout(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

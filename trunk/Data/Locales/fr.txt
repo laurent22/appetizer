@@ -24,7 +24,7 @@ IconPanel.PopupMenu.NewShortcut = Nouveau raccourci...
 IconPanel.PopupMenu.Delete = Supprimer...
 IconPanel.PopupMenu.Properties = Propriétés
 IconPanel.PopupMenu.AddToQuickLaunch = Ajouter au groupe de Lancements Multiples
-IconPanel.DeleteConfirmation = Souhaitez-vous supprimer cet objet ?
+IconPanel.DeleteConfirmation = Souhaitez-vous supprimer cette icône ?
 
 EditFolderItemForm.Title = Propriétés du raccourci
 EditFolderItemForm.NameLabel = Nom :
@@ -58,10 +58,10 @@ ConfigDialog.VerticalOrientation = Verticale
 ConfigDialog.UpdateButton = Rechercher des mises à jour
 ConfigDialog.UpdateButtonWait = Veuillez patienter...
 
-OptionPanel.CloseToolTip = Fermer
+OptionPanel.CloseToolTip = Minimiser dans la zone de notification
 OptionPanel.MinimizeToolTip = Minimiser
 OptionPanel.ConfigToolTip = Configuration
-OptionPanel.EjectToolTip = Ejecter
+OptionPanel.EjectToolTip = Ejecter le disque amovible
 OptionPanel.AddShortcutToolTip = Nouveau raccourci
 OptionPanel.HelpToolTip = Aide
 OptionPanel.KeyToolTip = Crypter / Décrypter

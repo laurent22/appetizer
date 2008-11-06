@@ -12,12 +12,20 @@
 #include "Styles.h"
 #include "MainFrame.h"
 #include "Localization.h"
+#include "utilities/Utilities.h"
 #include <wx/cursor.h>
 #include <wx/filename.h>
 
 
 extern Controller gController;
 extern MainFrame* gMainFrame;
+extern Utilities gUtilities;
+
+
+BEGIN_EVENT_TABLE(OptionPanel, NineSlicesPanel)
+  EVT_MENU(ID_MENU_OptionPanel_Help, OptionPanel::OnMenuHelp)
+  EVT_MENU(ID_MENU_OptionPanel_About, OptionPanel::OnMenuAbout)
+END_EVENT_TABLE()
 
 
 OptionPanel::OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
@@ -31,8 +39,8 @@ NineSlicesPanel(owner, id, point, size) {
   wxStringList buttonNames;
   //buttonNames.Add(_T("Close"));
   //buttonNames.Add(_T("Minimize"));
-  //buttonNames.Add(_T("Help"));
-  buttonNames.Add(_T("Eject"));
+  buttonNames.Add(_T("Help"));
+  //buttonNames.Add(_T("Eject"));
   buttonNames.Add(_T("AddShortcut"));
   buttonNames.Add(_T("Config"));
   //buttonNames.Add(_T("Key"));
@@ -40,16 +48,6 @@ NineSlicesPanel(owner, id, point, size) {
 
   for (int i = 0; i < buttonNames.size(); i++) {    
     wxString n = buttonNames[i];
-
-    if (n == _T("Eject")) {
-      #ifdef __WINDOWS__
-      UINT result = GetDriveType(FilePaths::GetApplicationDrive());
-      // Don't show the eject button if we are not on a removable drive.
-      // However, to be safe, do show it if the call to GetDriveType
-      // failed (result = 0 or 1)
-      if (result >= 2 && result != DRIVE_REMOVABLE) continue;
-      #endif // __WINDOWS__
-    }
 
     OptionButton* button = new OptionButton(this, wxID_ANY);
 
@@ -67,6 +65,16 @@ NineSlicesPanel(owner, id, point, size) {
   }
 
   Localize();
+}
+
+
+void OptionPanel::OnMenuHelp(wxCommandEvent& evt) {  
+  gUtilities.ShowHelpFile();
+}
+
+
+void OptionPanel::OnMenuAbout(wxCommandEvent& evt) {
+  gUtilities.ShowAboutDialog();
 }
 
 
@@ -224,35 +232,37 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     gMainFrame->Close();
 
-  } else if (buttonName == _T("Eject")) {
+  } else if (buttonName == _T("Help")) {
     //***************************************************************************
-    // EJECT
+    // HELP
     //***************************************************************************
-    gMainFrame->Close();
-    #ifdef __WINDOWS__
-    wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
-    #else
-    elog("TO BE IMPLEMENTED");
-    #endif
+    wxMenu menu;
+
+    menu.Append(ID_MENU_OptionPanel_Help, LOC(_T("HelpPopup.Help")));
+    menu.AppendSeparator();
+    menu.Append(ID_MENU_OptionPanel_About, LOC1(_T("HelpPopup.About"), APPLICATION_NAME));
+    
+    wxPoint pos(w->GetRect().GetLeft(), w->GetRect().GetBottom());
+    PopupMenu(&menu, pos);
 
   } else if (buttonName == _T("MultiLaunch")) {
     //***************************************************************************
     // MULTI-LAUNCH
     //***************************************************************************
-    gController.GetUser()->GetRootFolderItem()->DoMultiLaunch();
+    gUtilities.DoMultiLaunch();
 
   } else if (buttonName == _T("Config")) {
     //***************************************************************************
     // CONFIG
     //***************************************************************************
-    if (!configDialog_) configDialog_ = new ConfigDialog();
-    configDialog_->LoadSettings();
-    configDialog_->ShowModal();
+    gUtilities.ShowConfigDialog();
+
   } else if (buttonName == _T("AddShortcut")) {
     //***************************************************************************
     // ADD SHORTCUT
     //***************************************************************************
-    gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem());
+    gUtilities.CreateNewShortcut();
+
   }
 }
 

@@ -25,6 +25,8 @@ class Controller {
     FolderItemSP GetDraggedFolderItem();
     long GetTimer();
     void CheckForNewVersion(bool silent = false);
+    bool IsFirstLaunch();
+    void SetIsFirstLaunch(bool value);
 
     /**
      * GLOBAL EVENTS
@@ -37,6 +39,7 @@ class Controller {
 
   private:
       
+    bool isFirstLaunch_;
     UserSP user_;
     wxString applicationDrive_;
     int draggedFolderItemId_;

@@ -205,7 +205,7 @@ wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
 
   const wxIcon* icon = GetIcon(16).get();
   if (!icon->IsOk()) {
-    wxLogDebug(_T("Icon is not ok for: %s"), GetName());
+    elog(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
   } else {
     wxBitmap* iconBitmap = new wxBitmap(*icon);
     menuItem->SetBitmap(*iconBitmap);

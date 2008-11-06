@@ -18,7 +18,7 @@ enum {
   ID_TIMER_User_ScheduleSave,
   ID_BUTTON_IconPanel_BrowseButton,
   ID_BUTTON_MainFrame_CloseButton,
-  ID_BUTTON_MainFrame_HelpButton
+  ID_BUTTON_MainFrame_EjectButton
 };
 
 #endif // __Enumerations_H

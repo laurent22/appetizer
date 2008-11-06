@@ -3,6 +3,8 @@
 
 
 wxString VersionInfo::GetFileDescription(const wxString& filePath) {
+  #ifdef __WINDOWS__
+
   TCHAR fullpath[MAX_PATH + 10];
 
   int success;
@@ -83,6 +85,8 @@ wxString VersionInfo::GetFileDescription(const wxString& filePath) {
   wxDELETE(pBlock);
   wxDELETE(str);
 
+  #endif // __WINDOWS__
+
   if (outputString == wxEmptyString) {
     wxFileName filename(filePath);
     return filename.GetName(); 
@@ -93,7 +97,7 @@ wxString VersionInfo::GetFileDescription(const wxString& filePath) {
 
 
 wxString VersionInfo::GetVersionString(const wxString& filePath) {
-  // Borrowed from FileZilla
+  #ifdef __WINDOWS__
 
 	//Fill the version info
   TCHAR fullpath[MAX_PATH + 10];
@@ -147,5 +151,10 @@ wxString VersionInfo::GetVersionString(const wxString& filePath) {
 
 	delete [] str;
 	delete [] pBlock;
+
 	return version;
+
+  #endif // __WINDOWS__
+
+  return wxEmptyString;
 }

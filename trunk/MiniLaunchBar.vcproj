@@ -431,6 +431,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\utilities\Utilities.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\utilities\VersionInfo.cpp"
 					>
 				</File>
@@ -626,6 +630,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\Updater.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\Utilities.h"
 					>
 				</File>
 				<File

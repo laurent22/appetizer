@@ -18,9 +18,20 @@ extern MainFrame* gMainFrame;
 
 
 Controller::Controller() {
+  isFirstLaunch_ = false;
   draggedFolderItemId_ = -1;  
   stopWatch_.Start();
   user_.reset(new User());
+}
+
+
+void Controller::SetIsFirstLaunch(bool value) {
+  isFirstLaunch_ = value;
+}
+
+
+bool Controller::IsFirstLaunch() {
+  return isFirstLaunch_;
 }
 
 

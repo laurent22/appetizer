@@ -8,8 +8,11 @@
 #define __VersionInfo_H
 
 #include <wx/wx.h>
+
+#ifdef __WINDOWS__
 #include <windows.h>
 #include <winver.h>
+#endif // __WINDOWS__
 
 
 class VersionInfo {

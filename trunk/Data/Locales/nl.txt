@@ -1,4 +1,4 @@
-﻿// Dutch
+﻿// Nederlands
 // @author = Pieter Kerstens
 
 Global.Error = Fout
@@ -8,6 +8,14 @@ Global.Yes = Ja
 Global.No = Nee
 Global.Save = Opslaan
 Global.OpenDialog.AllFiles = Alle Bestanden
+Global.BrowserError = Fout bij het opstarten van de webbrowser
+
+MessageBox.Info = Informatie
+MessageBox.Warning = Waarschuwing
+MessageBox.Confirmation = Bevestiging
+
+HelpPopup.Help = Hulp Topics
+HelpPopup.About = Over %0%...
 
 FolderItem.LaunchFileError = Dit bestand bestaat niet of werd verwijderd (Error %0%)
 
@@ -20,6 +28,7 @@ IconPanel.DeleteConfirmation = Wil u dit item verwijderen?
 EditFolderItemForm.Title = Snelkoppeling Eigenschappen
 EditFolderItemForm.NameLabel = Naam:
 EditFolderItemForm.LocationLabel = Lokatie:
+EditFolderItemForm.LocationWarning = De snelkoppeling lokatie bestaat niet. Wilt u verdergaan?
 
 TrayIcon.Close = Sluiten
 TrayIcon.Hide = Verbergen
@@ -32,7 +41,36 @@ SelectFolderOrFileDialog.SelectFolder = Selecteer map
 Icon.Size16 = Klein
 Icon.Size32 = Groot
 
+AboutDialog.Title = Over %0%...
+AboutDialog.AboutTab = Over
+AboutDialog.License = Licentie
+
 ConfigDialog.Title = Configuratie
 ConfigDialog.GeneralTab = Algemeen
 ConfigDialog.LanguageLabel = Taal:
 ConfigDialog.IconSizeLabel = Icon grootte:
+ConfigDialog.SkinLabel = Skin:
+ConfigDialog.Orientation = Orientatie
+ConfigDialog.HorizontalOrientation = Horizontaal
+ConfigDialog.VerticalOrientation = Verticaal
+ConfigDialog.UpdateButton = Controleer op updates
+ConfigDialog.UpdateButtonWait = Wacht aub...
+
+OptionPanel.CloseToolTip = Sluiten
+OptionPanel.MinimizeToolTip = Minimaliseren
+OptionPanel.ConfigToolTip = Configuratie
+OptionPanel.EjectToolTip = Eject
+OptionPanel.AddShortcutToolTip = Nieuwe snelkoppeling
+OptionPanel.HelpToolTip = Hulp
+OptionPanel.KeyToolTip = Encrypteer / Decrypteer
+OptionPanel.MultiLaunchToolTip = Multi-launch
+
+Updater.NoNewVersion = U hebt de nieuwste versie.
+Updater.NewVersion = Een nieuwe versie is beschikbaar!
+ 
+ Uw versie: %0%
+ Huidige versie: %1%
+ Release notes: %2%
+ 
+Wilt u het nu downloaden?
+Updater.Error = Kon geen update informatie krijgen
