@@ -33,6 +33,8 @@ END_EVENT_TABLE()
 IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
 
+  rotated_ = false;
+
   IconPanelDropTarget* dropTarget = new IconPanelDropTarget();
   dropTarget->SetAssociatedIconPanel(this);
   SetDropTarget(dropTarget);
@@ -56,6 +58,16 @@ NineSlicesPanel(owner, id, point, size) {
     wxCommandEventHandler(IconPanel::OnBrowseButtonClick),
     NULL,
     this);
+}
+
+
+void IconPanel::SetRotated(bool rotated) {
+  if (rotated == rotated_) return;
+  rotated_ = rotated;
+  
+  SetBitmapRotation(rotated_ ? -90 : 0);
+
+  InvalidateLayout();
 }
 
 

@@ -52,6 +52,8 @@ public:
   int GetInsertionIndexAtPoint(const wxPoint& point);
   int GetRendererIndexAtPoint(const wxPoint& point);
 
+  void SetRotated(bool rotated);
+
   FolderItemRendererSP GetRendererFromFolderItem(const FolderItem& folderItem);
 
   wxMenu* GetContextMenu();
@@ -75,6 +77,7 @@ public:
 
 private:
 
+  bool rotated_;
   int folderItemSource_;
   std::vector<int> folderItemIds_;
   int firstOffScreenIconIndex_;

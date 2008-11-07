@@ -222,14 +222,19 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
 
     //***************************************************************************
     // Launch executable
-    //***************************************************************************
+    //***************************************************************************   
 
     if (filename.GetExt().Upper() == _T("EXE")) {
+      // Set the current directory to the app directory
+      wxString saveCurrentDirectory = wxGetCwd();
+      wxSetWorkingDirectory(filename.GetPath());
       if (arguments == wxEmptyString) {
         wxExecute(filePath);
       } else {
         wxExecute(wxString::Format(_T("%s %s"), filePath, arguments));
       }
+      // Restore the current directory
+      wxSetWorkingDirectory(saveCurrentDirectory);
       return;
     }
 

@@ -3,12 +3,13 @@
 
 
 wxString VersionInfo::GetFileDescription(const wxString& filePath) {
+  wxString outputString;
+
   #ifdef __WINDOWS__
 
   TCHAR fullpath[MAX_PATH + 10];
 
-  int success;
-  wxString outputString;
+  int success;  
 
   const wxChar* filePathChars = filePath.c_str();  
   for (int i = 0; i < filePath.Len(); i++) {

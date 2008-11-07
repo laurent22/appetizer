@@ -8,7 +8,10 @@
 
 
 void log__(wxString type, wxString s) {
+  #ifdef __WINDOWS__
+  // Doesn't work on Ubuntu:
   wxLogDebug(_T("[%s] %s"), type, s);
+  #endif
 }
 
 void ilog(wxString s) {

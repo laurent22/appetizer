@@ -190,11 +190,13 @@ MainFrame::MainFrame()
 
 void MainFrame::OnIdle(wxIdleEvent& evt) {
   if (!firstIdleEventSent_) {
+    #ifdef __WINDOWS__
     firstIdleEventSent_ = true;
 
     ilog("Update check...");
 
     wxDateTime now = wxDateTime::Now();
+    // The line below doesn't work on Ubuntu
     wxDateTime nextUpdateTime = gController.GetUser()->GetSettings()->NextUpdateCheckTime;
     ilog(wxString::Format(_T("Now is %s"), now.Format()));
     ilog(wxString::Format(_T("Next update check on %s"), nextUpdateTime.Format()));
@@ -205,7 +207,8 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 
     gController.GetUser()->GetSettings()->NextUpdateCheckTime = now;
     gController.GetUser()->GetSettings()->NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
-  }  
+    #endif //__WINDOWS__
+  }
 }
 
 
@@ -242,11 +245,12 @@ void MainFrame::SetRotated(bool rotated, bool swapWidthAndHeight) {
   int previousHeight = GetSize().GetHeight();
 
   optionPanel_->SetRotated(rotated);
+  iconPanel_->SetRotated(rotated);
   optionPanel_->UpdateLayout(); // We need a layout update to get a valid "required width" property, needed by ToggleOptionPanel()
   arrowButton_->SetBitmapRotation(rotated ? -90 : 0);
   backgroundPanel_->SetBitmapRotation(rotated ? -90 : 0);
   resizerPanel_->SetBitmapRotation(rotated ? -90 : 0);
-
+  
   UpdateLayout();
   UpdateMask();
 

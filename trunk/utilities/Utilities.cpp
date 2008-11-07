@@ -11,6 +11,7 @@
 #include "../FilePaths.h"
 #include "../Constants.h"
 #include "../FolderItem.h"
+#include "../Log.h"
 
 
 extern Controller gController;
