@@ -1,0 +1,78 @@
+﻿// Français
+// @author = Laurent Cozic
+// @email.rot13 = ynherag@pbmvp.arg
+
+Global.Error = Erreur
+Global.Cancel = Annuler
+Global.OK = OK
+Global.Yes = Oui
+Global.No = Non
+Global.Save = Sauvegarder
+Global.OpenDialog.AllFiles = Tous les fichiers
+Global.BrowserError = Impossible de lancer le butineur
+
+MessageBox.Info = Information
+MessageBox.Warning = Avertissement
+MessageBox.Confirmation = Confirmation
+
+HelpPopup.Help = Rubriques d'aide
+HelpPopup.About = À propos de %0%...
+
+FolderItem.LaunchFileError = Ce fichier n'existe pas ou a été effacé (Erreur %0%)
+
+IconPanel.PopupMenu.NewShortcut = Nouveau raccourci...
+IconPanel.PopupMenu.Delete = Supprimer...
+IconPanel.PopupMenu.Properties = Propriétés
+IconPanel.PopupMenu.AddToQuickLaunch = Ajouter au groupe de Lancements Multiples
+IconPanel.DeleteConfirmation = Souhaitez-vous supprimer cette icône ?
+
+EditFolderItemForm.Title = Propriétés du raccourci
+EditFolderItemForm.NameLabel = Nom :
+EditFolderItemForm.LocationLabel = Emplacement :
+EditFolderItemForm.LocationWarning = La cible de ce raccourci n'existe pas. Souhaitez-vous continuer ?
+
+TrayIcon.Close = Fermer
+TrayIcon.Hide = Masquer
+TrayIcon.Show = Montrer
+
+SelectFolderOrFileDialog.Title = Sélectionnez un fichier ou un dossier
+SelectFolderOrFileDialog.SelectFile = Sélectionner un fichier
+SelectFolderOrFileDialog.SelectFolder = Veuillez sélectionner un dossier
+
+Icon.Size16 = Petite
+Icon.Size32 = Grande
+
+AboutDialog.Title = À propos d'%0%...
+AboutDialog.AboutTab = À propos
+AboutDialog.License = Licence
+
+ConfigDialog.Title = Configuration
+ConfigDialog.GeneralTab = Général
+ConfigDialog.AppearanceTab = Apparence
+ConfigDialog.LanguageLabel = Langue :
+ConfigDialog.IconSizeLabel = Taille des icônes :
+ConfigDialog.SkinLabel = Apparence :
+ConfigDialog.Orientation = Orientation
+ConfigDialog.HorizontalOrientation = Horizontale
+ConfigDialog.VerticalOrientation = Verticale
+ConfigDialog.UpdateButton = Rechercher des mises à jour
+ConfigDialog.UpdateButtonWait = Veuillez patienter...
+
+OptionPanel.CloseToolTip = Minimiser dans la zone de notification
+OptionPanel.MinimizeToolTip = Minimiser
+OptionPanel.ConfigToolTip = Configuration
+OptionPanel.EjectToolTip = Ejecter le disque amovible
+OptionPanel.AddShortcutToolTip = Nouveau raccourci
+OptionPanel.HelpToolTip = Aide
+OptionPanel.KeyToolTip = Crypter / Décrypter
+OptionPanel.MultiLaunchToolTip = Lancement multiple
+
+Updater.NoNewVersion = Vous avez la dernière version
+Updater.NewVersion = Une nouvelle version est disponible !
+ 
+ Votre version : %0%
+ Nouvelle version : %1%
+ Notes : %2%
+ 
+ Souhaitez-vous la télécharger maintenant ?
+Updater.Error = Impossible de récupérer les informations de mise à jour.
