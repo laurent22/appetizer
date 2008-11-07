@@ -26,6 +26,7 @@ ImageButton::ImageButton(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
   state_ = _T("Up");  
 
+  downIconOffset_ = wxPoint(0,0);
   rotatedIconBitmap_ = NULL;
   iconBitmap_ = NULL;
   pressed_ = false;  
@@ -34,6 +35,17 @@ BitmapControl(owner, id, point, size) {
   nineSlicesPainterOver_ = NULL;
   nineSlicesPainterDown_ = NULL;
   nineSlicesPainterDisabled_ = NULL;
+}
+
+
+const wxPoint& ImageButton::GetDownIconOffset() {
+  return downIconOffset_;
+}
+
+
+void ImageButton::SetDownIconOffset(const wxPoint& point) {
+  if (point.x == downIconOffset_.x && point.y == downIconOffset_.y) return;
+  downIconOffset_ = wxPoint(point.x, point.y);
 }
 
 
@@ -150,6 +162,9 @@ void ImageButton::UpdateControlBitmap() {
   painter->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
   
   if (iconBitmap_) {
+    
+    wxPoint iconOffset(0,0);
+    if (state_ == _T("Down")) iconOffset = downIconOffset_;
 
     wxASSERT_MSG(iconBitmap_->IsOk(), _T("Invalid icon"));
     
@@ -163,14 +178,14 @@ void ImageButton::UpdateControlBitmap() {
 
       destDC.DrawBitmap(
         *rotatedIconBitmap_,
-        (GetSize().GetWidth() - rotatedIconBitmap_->GetWidth()) / 2,
-        (GetSize().GetHeight() - rotatedIconBitmap_->GetHeight()) / 2);
+        (GetSize().GetWidth() - rotatedIconBitmap_->GetWidth()) / 2 + iconOffset.x,
+        (GetSize().GetHeight() - rotatedIconBitmap_->GetHeight()) / 2 + iconOffset.y);
 
     } else {    
       destDC.DrawBitmap(
         *iconBitmap_,
-        (GetSize().GetWidth() - iconBitmap_->GetWidth()) / 2,
-        (GetSize().GetHeight() - iconBitmap_->GetHeight()) / 2);
+        (GetSize().GetWidth() - iconBitmap_->GetWidth()) / 2 + iconOffset.x,
+        (GetSize().GetHeight() - iconBitmap_->GetHeight()) / 2 + iconOffset.y);
     }
   }  
   

@@ -42,6 +42,7 @@ class OptionPanelStyle { public:
   wxRect ScaleGrid;
   int ButtonHGap;
   int ButtonVGap;
+  wxPoint ButtonDownIconOffset;
 };
 
 class IconStyle { public:

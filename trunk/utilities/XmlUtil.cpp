@@ -73,3 +73,19 @@ bool XmlUtil::ReadElementTextAsRect(TiXmlHandle handle, const char* elementName,
   resultRect = wxRect(x, y, w, h);
   return true;
 }
+
+
+bool XmlUtil::ReadElementTextAsPoint(TiXmlHandle handle, const char* elementName, wxPoint& resultPoint, wxPoint defaultValue) {
+  wxString s = XmlUtil::ReadElementText(handle, elementName);
+
+  wxArrayString splitted;
+  StringUtil::Split(s, splitted, _T(","));
+  if (splitted.Count() < 2) return false;
+
+  long x; if (!splitted[0].ToLong(&x)) return false;
+  long y; if (!splitted[1].ToLong(&y)) return false;
+
+  resultPoint = wxPoint(x, y);
+  return true;
+}
+

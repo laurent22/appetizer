@@ -24,6 +24,7 @@ public:
   static bool ReadElementTextAsBool(TiXmlHandle handle, const char* elementName, bool defaultValue = false);
   static int ReadElementTextAsInt(TiXmlHandle handle, const char* elementName, int defaultValue = 0);
   static bool ReadElementTextAsRect(TiXmlHandle handle, const char* elementName, wxRect& resultRect, wxRect defaultValue = wxRect(0,0,0,0));
+  static bool ReadElementTextAsPoint(TiXmlHandle handle, const char* elementName, wxPoint& resultPoint, wxPoint defaultValue = wxPoint(0,0));
 
 };
 

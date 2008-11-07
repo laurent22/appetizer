@@ -225,12 +225,9 @@ void MainFrame::ApplySkin(const wxString& skinName) {
   backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
   resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
   closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
-  if (ejectSideButton_) ejectSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/HelpButton"));
+  if (ejectSideButton_) ejectSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/EjectButton"));
   iconPanel_->ApplySkin(skinName);
   optionPanel_->ApplySkin(skinName);
-
-  frameIcon_.LoadFile(FilePaths::GetIconsDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
-  taskBarIcon_.SetIcon(frameIcon_);
 
   InvalidateMask();
   InvalidateLayout();

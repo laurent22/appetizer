@@ -25,6 +25,8 @@ class ImageButton: public BitmapControl {
     void UpdateControlBitmap();
     void SetGrid(int left, int top, int width, int height);
     void SetGrid(const wxRect& rect);
+    const wxPoint& GetDownIconOffset();
+    void SetDownIconOffset(const wxPoint& point);
     void FitToImage();
     void SetIcon(wxBitmap* iconBitmap, bool ownIt = true);
 
@@ -40,6 +42,7 @@ class ImageButton: public BitmapControl {
 
     wxBitmap* iconBitmap_;
     wxBitmap* rotatedIconBitmap_;
+    wxPoint downIconOffset_;
     bool ownIcon_;
     bool pressed_;
     wxRect grid_;

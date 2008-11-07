@@ -23,4 +23,4 @@ xcopy Data _Release\Debug\Data /Y/E/S
 del _Release\Debug\Data\Settings\*.* /Q
 del _Release\Standard\Data\*.odt /S/Q
 
-upx _Release\Standard\Appetizer.exe
+upx -9 _Release\Standard\Appetizer.exe

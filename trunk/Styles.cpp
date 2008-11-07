@@ -69,6 +69,10 @@ void Styles::LoadSkinFile(const wxString& filePath) {
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
       Styles::Icon.Padding.FromRect(resultRect);
     }
+
+    if (elementName == _T("OptionButton")) {
+      XmlUtil::ReadElementTextAsPoint(handle, "DownIconOffset", Styles::OptionPanel.ButtonDownIconOffset);
+    }
   }
 
 }
