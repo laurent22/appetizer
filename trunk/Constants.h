@@ -22,6 +22,7 @@ const wxString HELP_FOLDER_NAME = _T("Help");
 const wxString WINDOW_FILE_NAME = _T("Window.xml");
 const wxString HELP_FILE_NAME = _T("Appetizer.pdf");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
+const wxString DEFAULT_SKIN = _T("Default");
 const wxString CHECK_VERSION_URL = _T("http://minilaunchbar.pogopixels.com/VersionInfo.xml");
 const int CHECK_VERSION_DAY_INTERVAL = 2;
 const int WINDOW_VISIBILITY_BORDER = 20;

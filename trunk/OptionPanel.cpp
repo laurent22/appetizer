@@ -33,27 +33,20 @@ NineSlicesPanel(owner, id, point, size) {
   rotated_ = false;
   configDialog_ = NULL;
 
-  LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
-  SetGrid(Styles::OptionPanel.ScaleGrid);
-
   wxStringList buttonNames;
-  //buttonNames.Add(_T("Close"));
-  //buttonNames.Add(_T("Minimize"));
   buttonNames.Add(_T("Help"));
-  //buttonNames.Add(_T("Eject"));
   buttonNames.Add(_T("AddShortcut"));
   buttonNames.Add(_T("Config"));
-  //buttonNames.Add(_T("Key"));
   buttonNames.Add(_T("MultiLaunch"));
 
-  for (int i = 0; i < buttonNames.size(); i++) {    
+  for (int i = 0; i < buttonNames.size(); i++) { 
     wxString n = buttonNames[i];
 
     OptionButton* button = new OptionButton(this, wxID_ANY);
 
     button->SetCursor(wxCursor(wxCURSOR_HAND));
     button->SetName(n);
-    button->SetIcon(new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ButtonIcon_") + n + _T(".png"), wxBITMAP_TYPE_PNG));
+
     buttons_.push_back(button);
 
     button->Connect(
@@ -78,14 +71,17 @@ void OptionPanel::OnMenuAbout(wxCommandEvent& evt) {
 }
 
 
-void OptionPanel::ApplySkin(const wxString& skinName) {
+void OptionPanel::ApplySkin() {
   LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
+  SetGrid(Styles::OptionPanel.ScaleGrid);
 
   for (int i = 0; i < buttons_.size(); i++) {    
     OptionButton* button = buttons_[i];
 
-    button->ApplySkin(skinName);
-    button->SetIcon(new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ButtonIcon_") + button->GetName() + _T(".png"), wxBITMAP_TYPE_PNG));
+    wxImage image(FilePaths::GetSkinFile(_T("ButtonIcon_") + button->GetName() + _T(".png")));
+    Imaging::ColorizeImage(image, Styles::OptionPanel.ButtonIconColor);
+    button->SetIcon(new wxBitmap(image));
+    button->ApplySkin();
   }
 
   InvalidateLayout();
@@ -159,6 +155,7 @@ void OptionPanel::UpdateLayout() {
 
   int buttonsTop;
   int buttonsBottom = 0;
+  requiredWidth_ = 0;
 
   for (int i = 0; i < buttons_.size(); i++) {
     OptionButton* b = buttons_[i];
@@ -219,6 +216,8 @@ void OptionPanel::UpdateLayout() {
       b->Move(b->GetRect().GetLeft(), b->GetRect().GetTop() + topOffset);
     }
   }
+
+  if (requiredWidth_ <= 0) requiredWidth_ = 20;
 }
 
 

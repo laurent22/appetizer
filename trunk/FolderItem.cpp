@@ -215,6 +215,32 @@ wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
 }
 
 
+/**
+ * Search for the first folder item having a filename that matches the given string. The match mode
+ * can take any of these values:
+ * 1: A folder item's name must start with the specified string to be a match.
+ * 2: A folder item's name can contain the string anywhere inside it to be a match. 
+ * 3: A folder item's name must exactly match the string to be a match.
+ * @param filename The filename to search for.
+ * @param matchMode The matching behavior
+ */
+FolderItemSP FolderItem::SearchChildByFilename(const wxString& filename, int matchMode) { 
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP folderItem = children_.at(i);
+    if (!folderItem.get()) continue;
+    if (folderItem->IsGroup()) continue;
+
+    wxString folderItemFilename = folderItem->GetFileName().Lower();
+    if (folderItemFilename.Find(filename.Lower()) != wxNOT_FOUND) return folderItem;
+    FolderItemSP foundFolderItem = folderItem->SearchChildByFilename(filename, matchMode);
+    if (foundFolderItem.get()) return foundFolderItem;
+  }    
+
+  FolderItemSP nullOutput;
+  return nullOutput;
+}
+
+
 void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
 
@@ -373,19 +399,19 @@ void FolderItem::ClearCachedIcons() {
 
 wxIconSP FolderItem::GetIcon(int iconSize) {
   if (iconSize == 16) {
-    if (IsGroup() && !icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+    if (IsGroup() && !icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
 
     if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon16_.get()) {
-      icon16_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/DefaultIcon16.png"), wxBITMAP_TYPE_PNG));
+      icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/DefaultIcon16.png"), wxBITMAP_TYPE_PNG));
     }
     return icon16_;
   } else {
-    if (IsGroup() && !icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
+    if (IsGroup() && !icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
 
     if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon32_.get()) {
-      icon32_.reset(new wxIcon(FilePaths::GetIconsDirectory() + _T("/DefaultIcon32.png"), wxBITMAP_TYPE_PNG));
+      icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/DefaultIcon32.png"), wxBITMAP_TYPE_PNG));
     }
     return icon32_;
   }
@@ -398,6 +424,13 @@ void FolderItem::SetFilePath(const wxString& filePath) {
   ClearCachedIcons();
   filePath_ = wxString(filePath);
   filePath_.Trim();
+}
+
+
+wxString FolderItem::GetFileName(bool includeExtension) {
+  wxFileName f(GetResolvedPath());
+  if (includeExtension) return f.GetFullName();
+  return f.GetName();
 }
 
 

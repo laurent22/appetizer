@@ -34,7 +34,7 @@ public:
   ConfigDialog* GetConfigDialog();
   void Localize();
   void SetRotated(bool rotated);
-  void ApplySkin(const wxString& skinName);
+  void ApplySkin();
 
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);

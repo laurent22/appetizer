@@ -110,7 +110,6 @@ void ImageButton::LoadImage(const wxString& filePathPrefix) {
   // value of at least one pixel must be set to 254 or less.
 
   InvalidateControlBitmap();
-  Refresh();
 }
 
 

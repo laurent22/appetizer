@@ -32,6 +32,7 @@ public:
   void AutoSetName();
   wxString GetName();
   wxString GetResolvedPath();
+  wxString GetFileName(bool includeExtension = true);
   wxString GetFilePath();
   wxIconSP GetIcon(int iconSize);
   void SetFilePath(const wxString& filePath);
@@ -70,6 +71,7 @@ public:
   FolderItemSP GetChildById(int folderItemId, bool recurse = true);
   void MoveChild(FolderItemSP folderItemToMove, int insertionIndex);
   FolderItemSP GetChildByResolvedPath(const wxString& filePath);
+  FolderItemSP SearchChildByFilename(const wxString& filename, int matchMode = 2);
 
 private:
 

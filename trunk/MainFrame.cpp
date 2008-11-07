@@ -56,10 +56,12 @@ MainFrame::MainFrame()
 {  
   logWindow_ = NULL;
   aboutDialog_ = NULL;
+  arrowButtonOpenIcon_ = NULL;
+  arrowButtonCloseIcon_ = NULL;
   rotated_ = false;
 
   #ifdef __WXDEBUG__
-    logWindow_ = new wxLogWindow(this, wxEmptyString, true);
+  logWindow_ = new wxLogWindow(this, wxEmptyString, true);
   #endif // __WXDEBUG__
 
   firstIdleEventSent_ = false;
@@ -77,18 +79,9 @@ MainFrame::MainFrame()
   windowDragData_.DraggingStarted = false;
 
   arrowButton_ = new ImageButton(this, ID_BUTTON_Arrow, wxPoint(0, 0), wxSize(10, 10));
-  arrowButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/ArrowButton"));
-  arrowButton_->SetGrid(Styles::OptionPanel.ArrowButtonScaleGrid);
-
   arrowButton_->SetCursor(wxCursor(wxCURSOR_HAND));
-  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
-  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
-  arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
-  backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
-  backgroundPanel_->SetGrid(Styles::MainPanel.ScaleGrid);
-
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
@@ -96,25 +89,18 @@ MainFrame::MainFrame()
   optionPanel_ = new OptionPanel(this);
 
   resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
-  resizerPanel_->FitToContent();
   resizerPanel_->SetCursor(wxCursor(wxCURSOR_HAND));
-
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnResizerMouseDown), NULL, this);
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnResizerMouseUp), NULL, this);
   resizerPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnResizerMouseMove), NULL, this);
 
   iconPanel_ = new IconPanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
-
   iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   iconPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   iconPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
 
   closeSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_CloseButton);
-  closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
-  closeSideButton_->FitToImage();
   closeSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
-  closeSideButton_->SetToolTip(LOC(_T("OptionPanel.CloseToolTip")));
 
   bool showEjectSideButton = true;
 
@@ -128,10 +114,7 @@ MainFrame::MainFrame()
 
   if (showEjectSideButton) {
     ejectSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_EjectButton);
-    ejectSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/EjectButton"));
-    ejectSideButton_->FitToImage();
     ejectSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
-    ejectSideButton_->SetToolTip(LOC(_T("OptionPanel.EjectToolTip")));
   } else {
     ejectSideButton_ = NULL;
   }
@@ -141,6 +124,8 @@ MainFrame::MainFrame()
 
   SetIcon(frameIcon_);
   SetTitle(APPLICATION_NAME);
+
+  ApplySkin();
 
 
 
@@ -213,24 +198,42 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 
 
 void MainFrame::ApplySkin(const wxString& skinName) {
-  Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
+  wxString tSkinName;
 
-  wxDELETE(arrowButtonOpenIcon_);
-  wxDELETE(arrowButtonCloseIcon_);
+  if (skinName == wxEmptyString) {
+    tSkinName = gController.GetUser()->GetSettings()->Skin;
+  } else {
+    tSkinName = skinName;
+  }
+
+  Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
 
   maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackgroundRegion.png"), false);
 
   arrowButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/ArrowButton"));
-  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
-  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::GetIconsDirectory() + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
+  arrowButton_->SetGrid(Styles::OptionPanel.ArrowButtonScaleGrid);
+  wxDELETE(arrowButtonOpenIcon_);
+  wxDELETE(arrowButtonCloseIcon_);
+  arrowButtonOpenIcon_ = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
+  arrowButtonCloseIcon_ = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
   arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
 
-  backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
   resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
+  resizerPanel_->FitToContent();
+
+  backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
+  backgroundPanel_->SetGrid(Styles::MainPanel.ScaleGrid);
+  
   closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
-  if (ejectSideButton_) ejectSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/EjectButton"));
-  iconPanel_->ApplySkin(skinName);
-  optionPanel_->ApplySkin(skinName);
+  closeSideButton_->FitToImage();   
+
+  if (ejectSideButton_) {
+    ejectSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/EjectButton"));
+    ejectSideButton_->FitToImage();      
+  }
+
+  iconPanel_->ApplySkin();
+  optionPanel_->ApplySkin();
 
   InvalidateMask();
   InvalidateLayout();
@@ -277,6 +280,8 @@ OptionPanel* MainFrame::GetOptionPanel() {
 
 void MainFrame::Localize() {
   if (optionPanel_) optionPanel_->Localize();
+  closeSideButton_->SetToolTip(LOC(_T("OptionPanel.CloseToolTip")));
+  ejectSideButton_->SetToolTip(LOC(_T("OptionPanel.EjectToolTip")));
 }
 
 

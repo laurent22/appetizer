@@ -58,7 +58,7 @@ int XmlUtil::ReadElementTextAsInt(TiXmlHandle handle, const char* elementName, i
 }
 
 
-bool XmlUtil::ReadElementTextAsRect(TiXmlHandle handle, const char* elementName, wxRect& resultRect, wxRect defaultValue) {
+bool XmlUtil::ReadElementTextAsRect(TiXmlHandle handle, const char* elementName, wxRect& resultRect) {
   wxString s = XmlUtil::ReadElementText(handle, elementName);
 
   wxArrayString splitted;
@@ -75,7 +75,7 @@ bool XmlUtil::ReadElementTextAsRect(TiXmlHandle handle, const char* elementName,
 }
 
 
-bool XmlUtil::ReadElementTextAsPoint(TiXmlHandle handle, const char* elementName, wxPoint& resultPoint, wxPoint defaultValue) {
+bool XmlUtil::ReadElementTextAsPoint(TiXmlHandle handle, const char* elementName, wxPoint& resultPoint) {
   wxString s = XmlUtil::ReadElementText(handle, elementName);
 
   wxArrayString splitted;
@@ -89,3 +89,18 @@ bool XmlUtil::ReadElementTextAsPoint(TiXmlHandle handle, const char* elementName
   return true;
 }
 
+
+bool XmlUtil::ReadElementTextAsColor(TiXmlHandle handle, const char* elementName, wxColour& resultColor) {
+  wxString s = XmlUtil::ReadElementText(handle, elementName);
+
+  wxArrayString splitted;
+  StringUtil::Split(s, splitted, _T(","));
+  if (splitted.Count() < 3) return false;
+
+  long r; if (!splitted[0].ToLong(&r)) return false;
+  long g; if (!splitted[1].ToLong(&g)) return false;
+  long b; if (!splitted[1].ToLong(&b)) return false;
+
+  resultColor = wxColour(r,g,b);
+  return true;
+}

@@ -87,6 +87,16 @@ void Utilities::ShowHelpFile() {
     helpFile = FilePaths::GetHelpDirectory() + _T("/en/") + HELP_FILE_NAME;
   }
 
+  wxFileName f(helpFile);
+  f.Normalize();
+  helpFile = f.GetFullPath();
+
+  FolderItemSP pdfReaderFolderItem = gController.GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
+  if (pdfReaderFolderItem.get()) {
+    pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
+    return;
+  }
+
   FolderItem::Launch(helpFile);
 }
 

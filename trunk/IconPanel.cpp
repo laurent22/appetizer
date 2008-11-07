@@ -38,9 +38,6 @@ NineSlicesPanel(owner, id, point, size) {
   IconPanelDropTarget* dropTarget = new IconPanelDropTarget();
   dropTarget->SetAssociatedIconPanel(this);
   SetDropTarget(dropTarget);
-  
-  LoadImage(FilePaths::GetSkinDirectory() + _T("/BarInnerPanel.png"));
-  SetGrid(Styles::InnerPanel.ScaleGrid);
 
   folderItemSource_ = ICON_PANEL_SOURCE_USER;
   firstOffScreenIconIndex_ = -1; // Means all the icons are visible
@@ -48,8 +45,6 @@ NineSlicesPanel(owner, id, point, size) {
   iconsInvalidated_ = true;
 
   browseButton_ = new ImageButton(this);
-  browseButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BrowseArrowButton"));
-  browseButton_->FitToImage();
   browseButton_->Hide();
   browseButton_->SetCursor(wxCursor(wxCURSOR_HAND));
   browseButton_->Connect(
@@ -71,8 +66,10 @@ void IconPanel::SetRotated(bool rotated) {
 }
 
 
-void IconPanel::ApplySkin(const wxString& skinName) {
+void IconPanel::ApplySkin() {
   LoadImage(FilePaths::GetSkinDirectory() + _T("/BarInnerPanel.png"));
+  SetGrid(Styles::InnerPanel.ScaleGrid);
+
   browseButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BrowseArrowButton"));
   browseButton_->FitToImage();
 

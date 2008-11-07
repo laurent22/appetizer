@@ -57,7 +57,7 @@ public:
   FolderItemRendererSP GetRendererFromFolderItem(const FolderItem& folderItem);
 
   wxMenu* GetContextMenu();
-  void ApplySkin(const wxString& skinName);
+  void ApplySkin();
 
   void AddFolderItem(int folderItemId);
   //void RemoveFolderItem(int folderItemId);

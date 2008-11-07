@@ -7,7 +7,8 @@
 #ifndef __Styles_H
 #define __Styles_H
 
-#include "wx/wx.h"
+#include <wx/wx.h>
+#include <wx/colour.h>
 
 
 class PaddingStyle {
@@ -43,6 +44,7 @@ class OptionPanelStyle { public:
   int ButtonHGap;
   int ButtonVGap;
   wxPoint ButtonDownIconOffset;
+  wxColour ButtonIconColor;
 };
 
 class IconStyle { public:

@@ -14,7 +14,8 @@
 
 enum {
   ID_MENU_Exit,
-  ID_MENU_HideShow
+  ID_MENU_HideShow,
+  ID_MENU_Config
 };
 
 
@@ -27,6 +28,7 @@ public:
 
   void OnMenuHideShow(wxCommandEvent& evt);
   void OnMenuExit(wxCommandEvent& evt);
+  void OnMenuConfig(wxCommandEvent& evt);
   void OnLeftUp(wxTaskBarIconEvent& evt);
 
   DECLARE_EVENT_TABLE()

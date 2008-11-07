@@ -212,7 +212,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (skinName != userSettings->Skin) {
     userSettings->Skin = skinName;
-    gMainFrame->ApplySkin(skinName);
+    gMainFrame->ApplySkin();
   }
 
   gController.GetUser()->Save(true);

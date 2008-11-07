@@ -21,9 +21,8 @@ wxString FilePaths::ApplicationDirectory_ = _T("");
 wxString FilePaths::DataDirectory_ = _T("");
 wxString FilePaths::SettingsDirectory_ = _T("");
 wxString FilePaths::BaseSkinDirectory_ = _T("");
-wxString FilePaths::SkinDirectory_ = _T("");
+wxString FilePaths::DefaultSkinDirectory_ = _T("");
 wxString FilePaths::LocalesDirectory_ = _T("");
-wxString FilePaths::IconsDirectory_ = _T("");
 wxString FilePaths::SettingsFile_ = _T("");
 wxString FilePaths::FolderItemsFile_ = _T("");
 wxString FilePaths::WindowFile_ = _T("");
@@ -36,13 +35,26 @@ wxString FilePaths::GetDataDirectory() { return FilePaths::DataDirectory_; }
 wxString FilePaths::GetSettingsDirectory() { return FilePaths::SettingsDirectory_; }
 wxString FilePaths::GetBaseSkinDirectory() { return FilePaths::BaseSkinDirectory_; }
 wxString FilePaths::GetSkinDirectory() { return FilePaths::BaseSkinDirectory_ + _T("/") + gController.GetUser()->GetSettings()->Skin;; }
+wxString FilePaths::GetDefaultSkinDirectory() { return FilePaths::DefaultSkinDirectory_; }
 wxString FilePaths::GetLocalesDirectory() { return FilePaths::LocalesDirectory_; }
 wxString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }
-wxString FilePaths::GetIconsDirectory() { return FilePaths::GetSkinDirectory() + _T("/") + ICONS_FOLDER_NAME; }
 wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
 
+
+/**
+ * This method look for the given filename in the right directory. It first checks
+ * the current skin directory then, if it can't find the file, it checks the default
+ * skin directory.
+ * @param filename The file to look for
+ * @return The path to the file
+ */
+wxString FilePaths::GetSkinFile(const wxString& filename) {
+  wxString output = FilePaths::GetSkinDirectory() + _T("/") + filename;
+  if (wxFileName::FileExists(output)) return output;
+  return GetDefaultSkinDirectory() + _T("/") + filename;
+}
 
 
 void FilePaths::CreateSettingsDirectory() {
@@ -82,4 +94,5 @@ void FilePaths::InitializePaths() {
   FilePaths::WindowFile_ = FilePaths::GetSettingsDirectory() + _T("/") + WINDOW_FILE_NAME;  
   FilePaths::HelpDirectory_ = FilePaths::GetDataDirectory() + _T("/") + HELP_FOLDER_NAME;  
   FilePaths::BaseSkinDirectory_ = FilePaths::GetDataDirectory() + _T("/") + SKIN_FOLDER_NAME; 
+  FilePaths::DefaultSkinDirectory_ = FilePaths::BaseSkinDirectory_ + _T("/") + DEFAULT_SKIN;
 }

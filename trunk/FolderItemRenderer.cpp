@@ -292,7 +292,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   if (folderItem->BelongsToMultiLaunchGroup()) {
     if (!multiLaunchIcon_.get()) {
-      multiLaunchIcon_.reset(new wxBitmap(FilePaths::GetIconsDirectory() + _T("/MultiLaunchIcon.png"), wxBITMAP_TYPE_PNG));
+      multiLaunchIcon_.reset(new wxBitmap(FilePaths::GetSkinDirectory() + _T("/MultiLaunchIcon.png"), wxBITMAP_TYPE_PNG));
     }
     if (multiLaunchIcon_->IsOk()) {
       destDC.DrawBitmap(

@@ -102,3 +102,19 @@ void Imaging::DrawIconWithTransparency(wxDC* destination, const wxIcon& icon, in
     destination->DrawIcon(icon, destX, destY);
   }
 }
+
+
+void Imaging::ColorizeImage(wxImage& image, unsigned char red, unsigned char green, unsigned char blue) {
+  int imageWidth = image.GetWidth();
+  int imageHeight = image.GetHeight();
+  for (int i = 0; i < imageWidth; i++) {
+    for (int j = 0; j < imageHeight; j++) {
+      image.SetRGB(i, j, red, green, blue);
+    }
+  }
+}
+
+
+void Imaging::ColorizeImage(wxImage& image, const wxColour& color) {
+  Imaging::ColorizeImage(image, color.Red(), color.Green(), color.Blue());
+}

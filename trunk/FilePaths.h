@@ -18,16 +18,17 @@ public:
   static wxString GetDataDirectory();
   static wxString GetSettingsDirectory();
   static wxString GetBaseSkinDirectory();
+  static wxString GetDefaultSkinDirectory();
   static wxString GetSkinDirectory();
   static wxString GetLocalesDirectory();
   static wxString GetHelpDirectory();
-  static wxString GetIconsDirectory();
   static wxString GetSettingsFile();
   static wxString GetFolderItemsFile();
   static wxString GetWindowFile();
 
   static void CreateSettingsDirectory();
   static void InitializePaths();
+  static wxString GetSkinFile(const wxString& filename);
 
 private:
 
@@ -36,10 +37,9 @@ private:
   static wxString DataDirectory_;
   static wxString SettingsDirectory_;
   static wxString BaseSkinDirectory_;
-  static wxString SkinDirectory_;
+  static wxString DefaultSkinDirectory_;
   static wxString LocalesDirectory_;
   static wxString HelpDirectory_;
-  static wxString IconsDirectory_;
   static wxString SettingsFile_;
   static wxString FolderItemsFile_;
   static wxString WindowFile_;

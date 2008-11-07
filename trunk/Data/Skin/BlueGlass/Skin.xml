@@ -22,6 +22,7 @@
 		<Padding>4,4,4,4</Padding>
 	</Icon>
 	<OptionButton>
+		<IconColor>130,130,130</IconColor>
 		<DownIconOffset>0,1</DownIconOffset>
 	</OptionButton>
 </Skin>

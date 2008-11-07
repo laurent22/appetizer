@@ -98,7 +98,7 @@ class MainFrame: public wxFrame {
     void ToggleOptionPanel();
     void InvalidateLayout();
     void InvalidateMask();
-    void ApplySkin(const wxString& skinName);
+    void ApplySkin(const wxString& skinName = wxEmptyString);
 
     void SetRotated(bool rotated, bool swapWidthAndHeight = false);
 

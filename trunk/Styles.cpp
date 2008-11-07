@@ -34,7 +34,15 @@ void Styles::LoadSkinFile(const wxString& filePath) {
     wlog("Styles::LoadSkinFile: Could not load XML. No Skin element found.");
     return;
   }
+
+  // *****************************************************************
+  // Set default values
+  // *****************************************************************
+  Styles::OptionPanel.ButtonIconColor = wxColour(255,255,255);
   
+  // *****************************************************************
+  // Load the XML
+  // *****************************************************************
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
     TiXmlHandle handle(element);
@@ -72,6 +80,7 @@ void Styles::LoadSkinFile(const wxString& filePath) {
 
     if (elementName == _T("OptionButton")) {
       XmlUtil::ReadElementTextAsPoint(handle, "DownIconOffset", Styles::OptionPanel.ButtonDownIconOffset);
+      XmlUtil::ReadElementTextAsColor(handle, "IconColor", Styles::OptionPanel.ButtonIconColor);
     }
   }
 
