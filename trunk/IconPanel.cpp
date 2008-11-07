@@ -7,6 +7,7 @@
 #include <wx/cursor.h>
 #include <wx/filename.h>
 #include <wx/textdlg.h>
+#include "utilities/Utilities.h"
 #include "IconPanel.h"
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
@@ -19,6 +20,7 @@
 #include "MainFrame.h"
 
 
+extern Utilities gUtilities;
 extern Controller gController;
 extern MainFrame* gMainFrame;
 
@@ -87,7 +89,11 @@ void IconPanel::OnBrowseButtonMenu(wxCommandEvent& evt) {
   if (!folderItem.get()) {
     evt.Skip();
   } else {
-    folderItem->Launch();
+    if (folderItem->IsGroup()) {
+      gUtilities.ShowTreeViewDialog(evt.GetId());
+    } else {
+      folderItem->Launch();
+    }
   }
 }
 
@@ -101,8 +107,7 @@ void IconPanel::OnBrowseButtonClick(wxCommandEvent& evt) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
     FolderItemSP folderItem = renderer->GetFolderItem();
 
-    wxMenuItem* menuItem = folderItem->ToMenuItem(&menu);*
-    menu.Append(menuItem);
+    folderItem->AppendAsMenuItem(&menu);
   }
 
   menu.Connect(
@@ -120,7 +125,7 @@ wxMenu* IconPanel::GetContextMenu() {
   wxMenu* menu = new wxMenu();
   
   menu->Append(ID_MENU_NewShortcut, LOC(_T("IconPanel.PopupMenu.NewShortcut")));
-  //menu->Append(ID_MENU_NewGroup, LOC(_T("IconPanel.PopupMenu.NewGroup")));
+  menu->Append(ID_MENU_NewGroup, LOC(_T("IconPanel.PopupMenu.NewGroup")));
   
   return menu;
 }
@@ -372,15 +377,16 @@ void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
   FolderItemVector folderItems;
+  FolderItemSP rootFolderItem = gController.GetUser()->GetRootFolderItem();
 
   if (folderItemSource_ == ICON_PANEL_SOURCE_USER) {      
 
-    folderItems = gController.GetUser()->GetRootFolderItem()->GetChildren();
+    folderItems = rootFolderItem->GetChildren();
 
   } else {
     
     for (int i = 0; i < folderItemIds_.size(); i++) {
-      FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(folderItemIds_.at(i));
+      FolderItemSP folderItem = rootFolderItem->GetChildById(folderItemIds_.at(i));
       if (!folderItem.get()) {
         folderItemIds_.erase(folderItemIds_.begin() + i);
         i--;
@@ -394,11 +400,13 @@ void IconPanel::RefreshIcons() {
 
   /****************************************************************************
    * Remove renderers that match a folder item that has been deleted
+   * Also remove renderers that are no longer at the root
    ***************************************************************************/
 
   for (int i = folderItemRenderers_.size() - 1; i >= 0; i--) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
-    if (!renderer->GetFolderItem().get()) {
+    if (!renderer->GetFolderItem().get() ||
+         renderer->GetFolderItem()->GetParent()->GetId() != rootFolderItem->GetId()) {
       folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
     }
   }
@@ -410,6 +418,7 @@ void IconPanel::RefreshIcons() {
   for (int i = 0; i < folderItems.size(); i++) {
     FolderItemSP folderItem = folderItems.at(i);
 
+    // Check if the folder item is already loaded in a renderer
     bool found = false;
     for (int j = 0; j < folderItemRenderers_.size(); j++) {
       FolderItemSP rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
@@ -424,9 +433,10 @@ void IconPanel::RefreshIcons() {
         break;
       }
     }
+    
+    if (found) continue; // The folder item is already on the dock
 
-    if (found) continue;
-
+    // Create a new renderer and add it to the panel
     FolderItemRendererSP renderer(new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(0, 0)));
     
     renderer->LoadData(folderItem->GetId());

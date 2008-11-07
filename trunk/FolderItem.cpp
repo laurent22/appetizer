@@ -7,9 +7,11 @@
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
+#include "utilities/Utilities.h"
 #include <wx/filename.h>
 #include <wx/mimetype.h>
 #include "MessageBoxes.h"
+#include "Enumerations.h"
 #include "FilePaths.h"
 #include "Log.h"
 #include "Localization.h"
@@ -17,6 +19,7 @@
 
 
 extern Controller gController;
+extern Utilities gUtilities;
 
 
 int FolderItem::uniqueID_ = 0;
@@ -38,6 +41,33 @@ FolderItem::FolderItem(bool isGroup) {
 
 FolderItem::~FolderItem() {
 
+}
+
+
+void FolderItem::InsertChildBefore(FolderItemSP toAdd, FolderItemSP previousFolderItem) {
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP child = children_.at(i);
+    if (child->GetId() == previousFolderItem->GetId()) {
+      MoveChild(toAdd, i);
+      break;
+    }
+  }
+}
+
+
+void FolderItem::InsertChildAfter(FolderItemSP toAdd, FolderItemSP previousFolderItem) {  
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP child = children_.at(i);
+    if (child->GetId() == previousFolderItem->GetId()) {
+      MoveChild(toAdd, i + 1);
+      break;
+    }
+  }
+}
+
+
+void FolderItem::PrependChild(FolderItemSP toAdd) {
+  MoveChild(toAdd, 0);
 }
 
 
@@ -109,6 +139,8 @@ void FolderItem::MoveChild(FolderItemSP folderItemToMove, int insertionIndex) {
   // Swap the vectors
   children_ = newFolderItems;
 
+  folderItemToMove->SetParent(this);
+
   // Notify everybody that we've changed the item collection
   gController.FolderItems_CollectionChange();
 }
@@ -134,6 +166,7 @@ void FolderItem::RemoveChild(FolderItemSP folderItem) {
         gController.GetUser()->AddAutoAddExclusion(folderItem->GetResolvedPath());
       }
 
+      child->SetParent(NULL);
       children_.erase(children_.begin() + i);
 
       gController.FolderItems_CollectionChange();
@@ -200,10 +233,71 @@ bool FolderItem::BelongsToMultiLaunchGroup() {
 }
 
 
-wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
-  wxMenuItem* menuItem = new wxMenuItem(parentMenu, GetId(), GetName());
+void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
+  FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
+  if (!folderItem.get()) {
+    evt.Skip();
+  } else {
+    if (folderItem->IsGroup()) {
+      gUtilities.ShowTreeViewDialog(evt.GetId());
+    } else {
+      folderItem->Launch();
+    }
+  }
+}
 
-  const wxIcon* icon = GetIcon(16).get();
+
+void FolderItem::AppendAsMenuItem(wxMenu* parentMenu) {
+  if (IsGroup()) {
+    wxMenu* menu = ToMenu();
+    wxMenuItem* menuItem = parentMenu->AppendSubMenu(menu, GetName(true));
+  } else {
+    wxMenuItem* menuItem = ToMenuItem(parentMenu);
+    parentMenu->Append(menuItem);
+  }
+}
+
+
+wxMenu* FolderItem::ToMenu() {
+  if (!IsGroup()) {
+    elog(_T("A non-group folder item cannot be converted to a menu. Call ToMenuItem() instead"));
+    return NULL;
+  }
+
+  wxMenu* menu = new wxMenu();
+
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP child = children_.at(i);
+    if (!child.get()) continue;
+    child->AppendAsMenuItem(menu);
+  } 
+
+  if (menu->GetMenuItemCount() > 0) menu->AppendSeparator();
+
+  menu->Append(
+    GetId(),
+    LOC(_T("FolderItem.EditShortcuts")));  
+
+  menu->Connect(
+    wxID_ANY,
+    wxEVT_COMMAND_MENU_SELECTED,
+    wxCommandEventHandler(FolderItem::OnMenuItemClick),
+    NULL,
+    this);
+
+  return menu;
+}
+
+
+wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
+  if (IsGroup()) {
+    elog(_T("A group cannot be converted to a menu item. Call ToMenu() instead"));
+    return NULL;
+  }
+
+  wxMenuItem* menuItem = new wxMenuItem(parentMenu, GetId(), GetName(true));
+
+  const wxIcon* icon = GetIcon(SMALL_ICON_SIZE).get();
   if (!icon->IsOk()) {
     elog(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
   } else {
@@ -228,12 +322,14 @@ FolderItemSP FolderItem::SearchChildByFilename(const wxString& filename, int mat
   for (int i = 0; i < children_.size(); i++) {
     FolderItemSP folderItem = children_.at(i);
     if (!folderItem.get()) continue;
-    if (folderItem->IsGroup()) continue;
-
-    wxString folderItemFilename = folderItem->GetFileName().Lower();
-    if (folderItemFilename.Find(filename.Lower()) != wxNOT_FOUND) return folderItem;
-    FolderItemSP foundFolderItem = folderItem->SearchChildByFilename(filename, matchMode);
-    if (foundFolderItem.get()) return foundFolderItem;
+    
+    if (folderItem->IsGroup()) {
+      FolderItemSP foundFolderItem = folderItem->SearchChildByFilename(filename, matchMode);
+      if (foundFolderItem.get()) return foundFolderItem;
+    } else {
+      wxString folderItemFilename = folderItem->GetFileName().Lower();
+      if (folderItemFilename.Find(filename.Lower()) != wxNOT_FOUND) return folderItem;
+    }
   }    
 
   FolderItemSP nullOutput;
@@ -358,7 +454,7 @@ void FolderItem::FromXml(TiXmlElement* xml) {
       
       FolderItemSP folderItem(new FolderItem());
       folderItem->FromXml(element);
-      children_.push_back(folderItem);
+      AddChild(folderItem);
     }
   }
 
@@ -376,18 +472,21 @@ void FolderItem::SetAutomaticallyAdded(bool automaticallyAdded) {
 
 
 void FolderItem::AutoSetName() {
-  name_ = VersionInfo::GetFileDescription(GetResolvedPath());
-  //DelphiToolsInterface::GetFileDescription(GetResolvedPath(), name_);
+  SetName(VersionInfo::GetFileDescription(GetResolvedPath()));
 }
 
 
-wxString FolderItem::GetName() {
+wxString FolderItem::GetName(bool returnUnnamedIfEmpty) {
+  if (returnUnnamedIfEmpty) {
+    if (name_ == wxEmptyString) return LOC(_T("Global.Unnamed"));
+  }
   return name_;
 }
 
 
 void FolderItem::SetName(const wxString& name) {
-  name_ = name;
+  name_ = wxString(name);
+  name_.Trim(true).Trim(false);
 }
 
 
@@ -398,8 +497,11 @@ void FolderItem::ClearCachedIcons() {
 
 
 wxIconSP FolderItem::GetIcon(int iconSize) {
-  if (iconSize == 16) {
-    if (IsGroup() && !icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+  if (iconSize == SMALL_ICON_SIZE) {
+
+    if (IsGroup() && !icon16_.get()) {
+      icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+    }
 
     if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon16_.get()) {
@@ -407,7 +509,9 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
     }
     return icon16_;
   } else {
-    if (IsGroup() && !icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
+    if (IsGroup() && !icon32_.get()) {
+      icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
+    }
 
     if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon32_.get()) {

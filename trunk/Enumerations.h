@@ -13,6 +13,7 @@ enum {
   ID_MENU_Delete,
   ID_MENU_Properties,
   ID_MENU_AddToMultiLaunch,
+  ID_MENU_EditShortcutGroup,
   ID_MENU_OptionPanel_Help,
   ID_MENU_OptionPanel_About,
   ID_TIMER_User_ScheduleSave,
@@ -20,5 +21,6 @@ enum {
   ID_BUTTON_MainFrame_CloseButton,
   ID_BUTTON_MainFrame_EjectButton
 };
+
 
 #endif // __Enumerations_H

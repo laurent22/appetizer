@@ -11,6 +11,7 @@
 #include <wx/wx.h>
 #include "../gui/ConfigDialog.h"
 #include "../gui/AboutDialog.h"
+#include "../gui/TreeViewDialog.h"
 
 
 class Utilities {
@@ -24,12 +25,14 @@ public:
   void ShowConfigDialog();
   void ShowHelpFile();
   void ShowAboutDialog();
+  void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void CreateNewShortcut();
 
 private:
 
   AboutDialog* aboutDialog_;
   ConfigDialog* configDialog_;
+  TreeViewDialog* treeViewDialog_;
 
 };
 

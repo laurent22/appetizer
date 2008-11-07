@@ -8,6 +8,7 @@
 #include "FolderItem.h"
 #include "Log.h"
 #include "utilities/IconGetter.h"
+#include "utilities/Utilities.h"
 #include "imaging/Imaging.h"
 #include <wx/log.h>
 #include <wx/menu.h>
@@ -24,6 +25,7 @@
 
 extern Controller gController;
 extern MainFrame* gMainFrame;
+extern Utilities gUtilities;
 
 
 int FolderItemRenderer::uniqueID_ = 0;
@@ -94,7 +96,11 @@ void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnMenuProperties(wxCommandEvent& evt) {
-  gController.GetUser()->EditFolderItem(GetFolderItem());
+  if (GetFolderItem()->IsGroup()) {
+    gUtilities.ShowTreeViewDialog(GetFolderItem()->GetId());
+  } else {
+    gController.GetUser()->EditFolderItem(GetFolderItem());
+  }
 }
 
 
@@ -152,38 +158,16 @@ void FolderItemRenderer::OnLeftDown(wxMouseEvent& evt) {
 void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
 
-  //TreeViewDialog* d = new TreeViewDialog();
-  //d->SetSize(200,200);
-  //d->LoadUser(gController.GetUser());
-  //d->ShowModal();
-  //return;
-
   if (mouseInside_ && mousePressed_) {    
     FolderItemSP folderItem = GetFolderItem();
 
     if (folderItem.get()) {
 
       if (!folderItem->IsGroup()) {
-
         folderItem->Launch();
-
       } else {
-
-        wxMenu menu;
-
-        for (int i = 0; i < folderItem->ChildrenCount(); i++) {
-          FolderItemSP child = folderItem->GetChildAt(i);
-          wxMenuItem* menuItem = child->ToMenuItem(&menu);
-          menu.Append(menuItem);
-        }
-
-        if (menu.GetMenuItemCount() > 0) menu.AppendSeparator();
-
-        menu.Append(
-          wxID_ANY,
-          LOC(_T("Icon.EditShortcuts")));
-
-        PopupMenu(&menu, wxPoint(0, GetSize().GetHeight()));
+        wxMenu* menu = folderItem->ToMenu();
+        PopupMenu(menu, wxPoint(0, GetSize().GetHeight()));
       }      
 
     }
@@ -304,7 +288,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   destDC.SelectObject(wxNullBitmap);
 
-  SetToolTip(folderItem->GetName());
+  SetToolTip(folderItem->GetName(true));
 }
 
 

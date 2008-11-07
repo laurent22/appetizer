@@ -22,7 +22,7 @@ typedef boost::shared_ptr<FolderItem> FolderItemSP;
 typedef std::vector<FolderItemSP> FolderItemVector;
 
 
-class FolderItem {
+class FolderItem : public wxEvtHandler {
 
 public:
 
@@ -30,7 +30,7 @@ public:
   ~FolderItem();
   int GetId() const;
   void AutoSetName();
-  wxString GetName();
+  wxString GetName(bool returnUnnamedIfEmpty = false);
   wxString GetResolvedPath();
   wxString GetFileName(bool includeExtension = true);
   wxString GetFilePath();
@@ -38,6 +38,9 @@ public:
   void SetFilePath(const wxString& filePath);
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
+  void AppendAsMenuItem(wxMenu* parentMenu);
+  wxMenu* ToMenu();
+  wxMenuItem* ToMenuItem(wxMenu* parentMenu);
   void Launch();
   void LaunchWithArguments(const wxString& arguments);
   static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString);
@@ -49,9 +52,7 @@ public:
 
   void AddToMultiLaunchGroup();
   void RemoveFromMultiLaunchGroup();
-  bool BelongsToMultiLaunchGroup();
-
-  wxMenuItem* ToMenuItem(wxMenu* parentMenu);
+  bool BelongsToMultiLaunchGroup();  
 
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);
@@ -61,17 +62,25 @@ public:
   // Methods to work with children
   // ***************************************************************
   bool IsGroup();
-  FolderItemVector GetChildren();
-  void AddChild(FolderItemSP folderItem);
+  FolderItemVector GetChildren();  
   FolderItem* GetParent();
   void SetParent(FolderItem* folderItem);
   void RemoveChild(FolderItemSP folderItem);
-  FolderItemSP GetChildAt(int index);
-  int ChildrenCount();
-  FolderItemSP GetChildById(int folderItemId, bool recurse = true);
   void MoveChild(FolderItemSP folderItemToMove, int insertionIndex);
-  FolderItemSP GetChildByResolvedPath(const wxString& filePath);
   FolderItemSP SearchChildByFilename(const wxString& filename, int matchMode = 2);
+
+  int ChildrenCount();
+
+  FolderItemSP GetChildAt(int index);
+  FolderItemSP GetChildById(int folderItemId, bool recurse = true);
+  FolderItemSP GetChildByResolvedPath(const wxString& filePath);
+
+  void InsertChildBefore(FolderItemSP toAdd, FolderItemSP previousFolderItem);
+  void InsertChildAfter(FolderItemSP toAdd, FolderItemSP previousFolderItem);
+  void PrependChild(FolderItemSP toAdd);
+  void AddChild(FolderItemSP folderItem);
+
+  void OnMenuItemClick(wxCommandEvent& evt);
 
 private:
 

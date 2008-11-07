@@ -37,9 +37,10 @@ class TreeViewDialog: public TreeViewDialogBase {
 public:
 
   TreeViewDialog();
+  ~TreeViewDialog();
   void Localize();
-  void LoadUser(UserSP user);
-  void LoadFolderItems(FolderItemVector folderItems);
+  void LoadFolderItem(FolderItemSP folderItem);
+  void SelectAndExpandFolderItem(FolderItemSP folderItem);
 
   void OnTreeBeginDrag(wxTreeEvent& evt);
   void OnTreeEndDrag(wxTreeEvent& evt);
@@ -49,6 +50,7 @@ private:
   wxTreeItemId PrependFolderItem(const wxTreeItemId& parent, FolderItemSP folderItem);
   wxTreeItemId InsertFolderItemAfter(const wxTreeItemId& parent, FolderItemSP folderItem, const wxTreeItemId& previous);
   wxTreeItemId AppendFolderItem(const wxTreeItemId& parent, FolderItemSP folderItem);
+  wxTreeItemId GetTreeItemFromFolderItem(wxTreeItemId startItemId, FolderItemSP folderItem);
   void SetItemImage(const wxTreeItemId& item, FolderItemSP folderItem);
 
   wxTreeItemId draggedTreeItemId_;

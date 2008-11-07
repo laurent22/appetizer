@@ -21,14 +21,17 @@ extern MainFrame* gMainFrame;
 Utilities::Utilities() {
   configDialog_ = NULL;
   aboutDialog_ = NULL;
+  treeViewDialog_ = NULL;
 }
 
 
 Utilities::~Utilities() {
   if (configDialog_) configDialog_->Destroy();
   if (aboutDialog_) aboutDialog_->Destroy();
+  if (treeViewDialog_) treeViewDialog_->Destroy();
   configDialog_ = NULL;
   aboutDialog_ = NULL;
+  treeViewDialog_ = NULL;
 }
 
 
@@ -105,4 +108,18 @@ void Utilities::ShowAboutDialog() {
   if (!aboutDialog_) aboutDialog_ = new AboutDialog();
   aboutDialog_->LoadContent();
   aboutDialog_->ShowModal();
+}
+
+
+void Utilities::ShowTreeViewDialog(int selectedFolderItemId) {
+  if (!treeViewDialog_) {
+    treeViewDialog_ = new TreeViewDialog();
+    treeViewDialog_->SetSize(300,500);
+  }
+
+  FolderItemSP selectedFolderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
+  
+  treeViewDialog_->LoadFolderItem(gController.GetUser()->GetRootFolderItem());
+  treeViewDialog_->SelectAndExpandFolderItem(selectedFolderItem);
+  treeViewDialog_->Show();
 }
