@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -13,7 +13,6 @@
 #include <wx/log.h>
 #include <wx/menu.h>
 #include "FilePaths.h"
-#include "Localization.h"
 #include "Styles.h"
 #include "MainFrame.h"
 #include "Enumerations.h"
@@ -84,7 +83,7 @@ void FolderItemRenderer::OnMenuAddToMultiLaunch(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
-  int result = MessageBoxes::ShowConfirmation(LOC(_T("IconPanel.DeleteConfirmation")));
+  int result = MessageBoxes::ShowConfirmation(_("Do you wish to remove this icon?"));
   if (result != wxID_YES) return;
 
   FolderItemSP folderItem = GetFolderItem();
@@ -108,14 +107,14 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   wxMenu* menu = gMainFrame->GetIconPanel()->GetContextMenu();
 
   menu->AppendSeparator();
-  menu->Append(ID_MENU_Delete, LOC(_T("IconPanel.PopupMenu.Delete")));
+  menu->Append(ID_MENU_Delete, _("Remove..."));
 
-  wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_AddToMultiLaunch, LOC(_T("IconPanel.PopupMenu.AddToQuickLaunch")), wxEmptyString, wxITEM_CHECK);
+  wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_AddToMultiLaunch, _("Add to Multi Launch group"), wxEmptyString, wxITEM_CHECK);
   menu->Append(menuItem);
   menuItem->Check(GetFolderItem()->BelongsToMultiLaunchGroup());
 
   menu->AppendSeparator();
-  menu->Append(ID_MENU_Properties, LOC(_T("IconPanel.PopupMenu.Properties")));
+  menu->Append(ID_MENU_Properties, _("Properties"));
 
   PopupMenu(menu, wxDefaultPosition);
 

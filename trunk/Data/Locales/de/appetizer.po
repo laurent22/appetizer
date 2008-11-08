@@ -1,0 +1,292 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-08 20:22+0000\n"
+"PO-Revision-Date: 2008-11-08 13:43-0000\n"
+"Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: ApplicationTrayIcon.cpp:30
+msgid "Hide"
+msgstr "Minimieren"
+
+#: ApplicationTrayIcon.cpp:30
+msgid "Show"
+msgstr "Zeigen"
+
+#: ApplicationTrayIcon.cpp:32 OptionPanel.cpp:106 gui\ConfigDialog.cpp:51
+msgid "Configuration"
+msgstr "Einstellungen"
+
+#: ApplicationTrayIcon.cpp:34
+msgid "Close"
+msgstr "Schließen"
+
+#: Controller.cpp:60
+msgid "Could not initialize locale."
+msgstr ""
+
+#: Controller.cpp:89
+msgid "Could not get update information"
+msgstr "Keine Information zu neuen Versionen erhältlich..."
+
+#: Controller.cpp:103
+msgid "You have the latest version."
+msgstr "Sie haben die aktuelle Version."
+
+#: Controller.cpp:110
+#, c-format
+msgid ""
+"A new version is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"\n"
+"Do you wish to download it now?"
+msgstr ""
+
+#: Controller.cpp:116
+msgid "Error launching web browser"
+msgstr "Browser startet nicht"
+
+#: FolderItem.cpp:276
+msgid "Edit this group"
+msgstr ""
+
+#: FolderItem.cpp:366 FolderItem.cpp:373 FolderItem.cpp:396
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr ""
+
+#: FolderItem.cpp:479
+msgid "Group"
+msgstr ""
+
+#: FolderItemRenderer.cpp:86
+msgid "Do you wish to remove this icon?"
+msgstr "Wollen Sie diese Verknüpfung wirklich löschen?"
+
+#: FolderItemRenderer.cpp:110
+msgid "Remove..."
+msgstr "Verknüpfung löschen..."
+
+#: FolderItemRenderer.cpp:112
+msgid "Add to Multi Launch group"
+msgstr "Zur Schnellstart-Gruppe hinzufügen"
+
+#: FolderItemRenderer.cpp:117
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: IconPanel.cpp:126 OptionPanel.cpp:105
+msgid "New shortcut..."
+msgstr "Neue Verknüpfung"
+
+#: IconPanel.cpp:127
+#, fuzzy
+msgid "New group..."
+msgstr "Neue Verknüpfung"
+
+#: IconPanel.cpp:141
+msgid "Edit group"
+msgstr ""
+
+#: main.cpp:56
+msgid "Use user data directory to save settings."
+msgstr ""
+
+#: main.cpp:57
+msgid "Set user data path (-u will be ignored)"
+msgstr ""
+
+#: MainFrame.cpp:283
+msgid "Minimize to tray"
+msgstr "Schließen"
+
+#: MainFrame.cpp:284
+msgid "Eject drive"
+msgstr "Externes Laufwerk abmelden"
+
+#: MessageBoxes.cpp:12
+msgid "Error"
+msgstr "Fehler"
+
+#: MessageBoxes.cpp:18
+msgid "Information"
+msgstr "Information"
+
+#: MessageBoxes.cpp:24
+msgid "Warning "
+msgstr "Warnung"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Bestätigung"
+
+#: OptionPanel.cpp:104
+msgid "Help"
+msgstr ""
+
+#: OptionPanel.cpp:107
+msgid "Multi-launch"
+msgstr ""
+
+#: OptionPanel.cpp:240
+msgid "Help Topics"
+msgstr "Hilfethemen"
+
+#: OptionPanel.cpp:242 gui\AboutDialog.cpp:48
+#, fuzzy, c-format
+msgid "About %s..."
+msgstr "Über %s..."
+
+#: gui\AboutDialog.cpp:49
+msgid "About"
+msgstr "Über %s..."
+
+#: gui\AboutDialog.cpp:50
+msgid "License"
+msgstr "Lizenz"
+
+#: gui\AboutDialog.cpp:51
+msgid "OK"
+msgstr "OK"
+
+#: gui\AboutDialog.cpp:52
+msgid "Credits"
+msgstr ""
+
+#: gui\AboutDialog.cpp:54
+#, c-format
+msgid ""
+"Translators: %s\n"
+"\n"
+"This software uses a number of open source libraries including:\n"
+"\n"
+"- Simpleini by Brodie Thiesfield\n"
+"- TinyXml by Yves Berquin\n"
+"- The Boost C++ Libraries and wxWidgets by their respective authors\n"
+"\n"
+"Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr ""
+
+#: gui\AboutDialog.cpp:56
+#, c-format
+msgid "Copyright © %s"
+msgstr ""
+
+#: gui\AboutDialog.cpp:57
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+
+#: gui\AboutDialog.cpp:64
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:52
+msgid "General"
+msgstr "Allgemein"
+
+#: gui\ConfigDialog.cpp:53
+msgid "Appearance"
+msgstr "Aussehen"
+
+#: gui\ConfigDialog.cpp:54
+msgid "Language:"
+msgstr "Sprache:"
+
+#: gui\ConfigDialog.cpp:55
+msgid "Icon size:"
+msgstr "Symbolgröße"
+
+#: gui\ConfigDialog.cpp:56
+msgid "Skin:"
+msgstr " Design"
+
+#: gui\ConfigDialog.cpp:57 gui\ShortcutEditorDialog.cpp:40
+msgid "Save"
+msgstr "Speichern"
+
+#: gui\ConfigDialog.cpp:58 gui\ShortcutEditorDialog.cpp:41
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Orientation:"
+msgstr "Ausrichtung"
+
+#: gui\ConfigDialog.cpp:60 gui\ConfigDialog.cpp:158
+msgid "Check for update"
+msgstr "Nach neuer Version suchen"
+
+#: gui\ConfigDialog.cpp:107
+msgid "Small"
+msgstr "Klein"
+
+#: gui\ConfigDialog.cpp:108
+msgid "Large"
+msgstr "Groß"
+
+#: gui\ConfigDialog.cpp:121
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: gui\ConfigDialog.cpp:122
+msgid "Vertical"
+msgstr "Vertikal"
+
+#: gui\ConfigDialog.cpp:153
+msgid "Please wait..."
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:37
+msgid "Shorcut Properties"
+msgstr "Verknüpfungseigenschaften"
+
+#: gui\ShortcutEditorDialog.cpp:38
+msgid "Name:"
+msgstr "Name:"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Location:"
+msgstr "Ort:"
+
+#: gui\ShortcutEditorDialog.cpp:65
+msgid "The shorcut location doesn't exist. Do you wish to continue?"
+msgstr ""
+"Der Zielort für diese Verknüpfung existiert nicht. Möchten Sie fortfahren?"
+
+#: gui\ShortcutEditorDialog.cpp:83
+msgid "Select file"
+msgstr "Datei auswählen"
+
+#: gui\ShortcutEditorDialog.cpp:97
+msgid "Select folder"
+msgstr "Ordner auswählen"
+
+#~ msgid "Check for updateWait"
+#~ msgstr "Bitte warten..."

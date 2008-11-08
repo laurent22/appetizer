@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -24,7 +24,6 @@
 #include "Constants.h"
 #include "FilePaths.h"
 #include "Styles.h"
-#include "Localization.h"
 #include "utilities/Utilities.h"
 
 
@@ -47,15 +46,15 @@ Utilities gUtilities;
 // since it's going to be owned by the wxApp
 MainFrame* gMainFrame;
 
-
 wxCmdLineParser gCommandLine;
 
 
 bool MiniLaunchBar::OnInit() {
+  _CrtSetBreakAlloc(9067);
 
   wxCmdLineEntryDesc cmdLineDesc[] = {
-    { wxCMD_LINE_SWITCH, _T("u"), _T("useuserdatadir"), _T("Use user data directory to save settings.") },
-    { wxCMD_LINE_OPTION, _T("d"), _T("datapath"),  _T("Set user data path (-u will be ignored)") },
+    { wxCMD_LINE_SWITCH, _T("u"), _T("useuserdatadir"), _("Use user data directory to save settings.") },
+    { wxCMD_LINE_OPTION, _T("d"), _T("datapath"),  _("Set user data path (-u will be ignored)") },
     { wxCMD_LINE_NONE }
   };
 
@@ -71,14 +70,11 @@ bool MiniLaunchBar::OnInit() {
 
   FilePaths::InitializePaths();
 
+  gController.InitializeLocalization();
   gController.SetIsFirstLaunch(!wxFileName::FileExists(FilePaths::GetSettingsFile()));
   gController.GetUser()->Load();
 
   Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
-
-  Localization::Initialize();
-  Localization::Instance->LoadLocale(gController.GetUser()->GetSettings()->Locale, FilePaths::GetLocalesDirectory());
-  Localization::Instance->SetCurrentLocale(gController.GetUser()->GetSettings()->Locale);
 
   gMainFrame = new MainFrame();
   gMainFrame->Show(true);
@@ -93,7 +89,9 @@ bool MiniLaunchBar::OnInit() {
     gMainFrame->InvalidateMask();
     gMainFrame->Update();
     gMainFrame->OpenOptionPanel();
-  }
+  } 
+
+  gMainFrame->Localize();
 
   return true;
 } 

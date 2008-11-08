@@ -1,19 +1,21 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
 */
 
 #include "ConfigDialog.h"
-#include "../Localization.h"
 #include "../FilePaths.h"
 #include "../Controller.h"
 #include "../UserSettings.h"
 #include "../MainFrame.h"
+#include "../Localization.h"
+#include "../Log.h"
 #include <wx/arrstr.h>
 #include <wx/dir.h>
 #include <wx/clntdata.h>
 #include <wx/filename.h>
+
 
 
 extern Controller gController;
@@ -46,16 +48,16 @@ void ConfigDialog::OnShow(wxShowEvent& evt) {
 
 
 void ConfigDialog::Localize() {
-  SetTitle(LOC(_T("ConfigDialog.Title")));  
-  notebook->SetPageText(0, LOC(_T("ConfigDialog.GeneralTab")));
-  notebook->SetPageText(1, LOC(_T("ConfigDialog.AppearanceTab")));
-  languageLabel->SetLabel(LOC(_T("ConfigDialog.LanguageLabel")));
-  iconSizeLabel->SetLabel(LOC(_T("ConfigDialog.IconSizeLabel")));
-  skinLabel->SetLabel(LOC(_T("ConfigDialog.SkinLabel")));
-  saveButton->SetLabel(LOC(_T("Global.Save")));
-  cancelButton->SetLabel(LOC(_T("Global.Cancel")));
-  orientationLabel->SetLabel(LOC(_T("ConfigDialog.Orientation")));
-  checkForUpdateButton->SetLabel(LOC(_T("ConfigDialog.UpdateButton")));
+  SetTitle(_("Configuration"));  
+  notebook->SetPageText(0, _("General"));
+  notebook->SetPageText(1, _("Appearance"));
+  languageLabel->SetLabel(_("Language:"));
+  iconSizeLabel->SetLabel(_("Icon size:"));
+  skinLabel->SetLabel(_("Skin:"));
+  saveButton->SetLabel(_("Save"));
+  cancelButton->SetLabel(_("Cancel"));
+  orientationLabel->SetLabel(_("Orientation:"));
+  checkForUpdateButton->SetLabel(_("Check for update"));
 }
 
 
@@ -88,7 +90,7 @@ void ConfigDialog::LoadSettings() {
     wxString localeCode = filename.GetName();
 
     // Get the language name from the file
-    wxString languageName = Localization::GetLanguageName(filePath);
+    wxString languageName = Localization::Instance()->GetLanguageName(localeCode);
     wxStringClientData* clientData = new wxStringClientData(localeCode);
 
     if (localeCode == currentLocaleCode) selectedIndex = i;
@@ -102,8 +104,8 @@ void ConfigDialog::LoadSettings() {
   //***************************************************************************
 
   iconSizeComboBox->Clear();
-  iconSizeComboBox->Append(LOC(_T("Icon.Size16")), new wxStringClientData(_T("16")));
-  iconSizeComboBox->Append(LOC(_T("Icon.Size32")), new wxStringClientData(_T("32")));
+  iconSizeComboBox->Append(_("Small"), new wxStringClientData(_T("16")));
+  iconSizeComboBox->Append(_("Large"), new wxStringClientData(_T("32")));
 
   if (userSettings->IconSize == 16) {
     iconSizeComboBox->Select(0);
@@ -116,8 +118,8 @@ void ConfigDialog::LoadSettings() {
   //***************************************************************************
 
   orientationComboBox->Clear();
-  orientationComboBox->Append(LOC(_T("ConfigDialog.HorizontalOrientation")), new wxStringClientData(_T("h")));
-  orientationComboBox->Append(LOC(_T("ConfigDialog.VerticalOrientation")), new wxStringClientData(_T("v")));
+  orientationComboBox->Append(_("Horizontal"), new wxStringClientData(_T("h")));
+  orientationComboBox->Append(_("Vertical"), new wxStringClientData(_T("v")));
   orientationComboBox->Select(userSettings->Rotated ? 1 : 0);
 
   //***************************************************************************
@@ -148,12 +150,12 @@ void ConfigDialog::LoadSettings() {
 
 
 void ConfigDialog::OnCheckForUpdateButtonClick(wxCommandEvent& evt) {
-  checkForUpdateButton->SetLabel(LOC(_T("ConfigDialog.UpdateButtonWait")));
+  checkForUpdateButton->SetLabel(_("Please wait..."));
   checkForUpdateButton->Disable();
   checkForUpdateButton->Update();
   gController.CheckForNewVersion(false);
   checkForUpdateButton->Enable();
-  checkForUpdateButton->SetLabel(LOC(_T("ConfigDialog.UpdateButton")));
+  checkForUpdateButton->SetLabel(_("Check for update"));
 }
 
 
@@ -174,10 +176,10 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   wxString localeCode = clientData->GetData();
   
   if (localeCode != userSettings->Locale) {
-    userSettings->Locale = localeCode;
-    Localization::Instance->LoadLocale(localeCode, FilePaths::GetLocalesDirectory());
-    Localization::Instance->SetCurrentLocale(localeCode);
-    gController.User_LocaleChange();
+    if (gController.ChangeLocale(localeCode)) {
+      userSettings->Locale = localeCode;
+      gController.User_LocaleChange();
+    }
   }
 
   //***************************************************************************

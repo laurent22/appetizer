@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -8,7 +8,6 @@
 #include <wx/filename.h>
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
-#include "../Localization.h"
 #include "../FilePaths.h"
 #include "../Controller.h"
 #include "../MessageBoxes.h"
@@ -35,11 +34,11 @@ ShortcutEditorDialog::ShortcutEditorDialog()
 
 
 void ShortcutEditorDialog::Localize() {
-  SetTitle(LOC(_T("EditFolderItemForm.Title")));
-  nameLabel->SetLabel(LOC(_T("EditFolderItemForm.NameLabel")));
-  locationLabel->SetLabel(LOC(_T("EditFolderItemForm.LocationLabel")));
-  saveButton->SetLabel(LOC(_T("Global.Save")));
-  cancelButton->SetLabel(LOC(_T("Global.Cancel")));
+  SetTitle(_("Shorcut Properties"));
+  nameLabel->SetLabel(_("Name:"));
+  locationLabel->SetLabel(_("Location:"));
+  saveButton->SetLabel(_("Save"));
+  cancelButton->SetLabel(_("Cancel"));
 }
 
 
@@ -63,7 +62,7 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     // If the shortcut location doesn't exist, just show a warning but allow
     // the user to continue. Invalid shortcuts are allowed since they
     // might be referencing files from a different computer.
-    int result = MessageBoxes::ShowWarning(LOC(_T("EditFolderItemForm.LocationWarning")), wxYES | wxNO);
+    int result = MessageBoxes::ShowWarning(_("The shorcut location doesn't exist. Do you wish to continue?"), wxYES | wxNO);
     if (result == wxID_NO) return;
   }
 
@@ -81,7 +80,7 @@ void ShortcutEditorDialog::UpdateFromFolderItem() {
 
 
 void ShortcutEditorDialog::OnSelectFileButtonClick(wxCommandEvent& evt) {
-  wxFileDialog fileDialog(this, LOC(_T("SelectFolderOrFileDialog.SelectFile")));
+  wxFileDialog fileDialog(this, _("Select file"));
   int result = fileDialog.ShowModal();
   if (result != wxID_OK) return;
 
@@ -95,7 +94,7 @@ void ShortcutEditorDialog::OnSelectFileButtonClick(wxCommandEvent& evt) {
 
 
 void ShortcutEditorDialog::OnSelectFolderButtonClick(wxCommandEvent& evt) {
-  wxDirDialog dirDialog(this, LOC(_T("SelectFolderOrFileDialog.SelectFolder")));
+  wxDirDialog dirDialog(this, _("Select folder"));
   int result = dirDialog.ShowModal();
   if (result != wxID_OK) return;
 

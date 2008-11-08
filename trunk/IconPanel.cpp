@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -15,7 +15,6 @@
 #include "Log.h"
 #include "Styles.h"
 #include "Enumerations.h"
-#include "Localization.h"
 #include "Controller.h"
 #include "MainFrame.h"
 
@@ -124,8 +123,8 @@ void IconPanel::OnBrowseButtonClick(wxCommandEvent& evt) {
 wxMenu* IconPanel::GetContextMenu() {
   wxMenu* menu = new wxMenu();
   
-  menu->Append(ID_MENU_NewShortcut, LOC(_T("IconPanel.PopupMenu.NewShortcut")));
-  menu->Append(ID_MENU_NewGroup, LOC(_T("IconPanel.PopupMenu.NewGroup")));
+  menu->Append(ID_MENU_NewShortcut, _("New shortcut..."));
+  menu->Append(ID_MENU_NewGroup, _("New group..."));
   
   return menu;
 }
@@ -139,7 +138,7 @@ void IconPanel::OnMenuNewShortcut(wxCommandEvent& evt) {
 void IconPanel::OnMenuNewGroup(wxCommandEvent& evt) {
   wxTextEntryDialog* dialog = new wxTextEntryDialog(
     this, 
-    LOC(_T("AddGroupDialog.Title")));
+    _("Edit group"));
   if (dialog->ShowModal() != wxID_OK) return;
 
   FolderItemSP newGroup(new FolderItem(true));

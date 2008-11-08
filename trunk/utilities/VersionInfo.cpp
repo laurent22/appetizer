@@ -1,4 +1,4 @@
-#include "VersionInfo.h"
+﻿#include "VersionInfo.h"
 #include <wx/filename.h>
 
 

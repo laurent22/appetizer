@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -22,6 +22,13 @@ Utilities::Utilities() {
   configDialog_ = NULL;
   aboutDialog_ = NULL;
   treeViewDialog_ = NULL;
+}
+
+
+void Utilities::Localize() {
+  if (configDialog_) configDialog_->Localize();
+  if (aboutDialog_) aboutDialog_->Localize();
+  if (treeViewDialog_) treeViewDialog_->Localize();
 }
 
 

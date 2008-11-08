@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -15,8 +15,8 @@
 #include "Controller.h"
 #include "MessageBoxes.h"
 #include "FilePaths.h"
-#include "Localization.h"
 #include "Styles.h"
+#include "Localization.h"
 #include "utilities/XmlUtil.h"
 #include "utilities/Updater.h"
 #include "utilities/VersionInfo.h"
@@ -280,8 +280,8 @@ OptionPanel* MainFrame::GetOptionPanel() {
 
 void MainFrame::Localize() {
   if (optionPanel_) optionPanel_->Localize();
-  closeSideButton_->SetToolTip(LOC(_T("OptionPanel.CloseToolTip")));
-  ejectSideButton_->SetToolTip(LOC(_T("OptionPanel.EjectToolTip")));
+  if (closeSideButton_) closeSideButton_->SetToolTip(_("Minimize to tray"));
+  if (ejectSideButton_) ejectSideButton_->SetToolTip(_("Eject drive"));
 }
 
 
@@ -685,8 +685,9 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   FilePaths::CreateSettingsDirectory();
   doc.SaveFile(FilePaths::GetWindowFile().mb_str());
 
-  wxDELETE(Localization::Instance);
   gUtilities.~Utilities();
+  Localization::Destroy();
+  gController.~Controller();
 
   Destroy();
 }

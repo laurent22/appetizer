@@ -1,4 +1,4 @@
-#include "Updater.h"
+﻿#include "Updater.h"
 #include "XmlUtil.h"
 #include "StringUtil.h"
 #include <wx/url.h>

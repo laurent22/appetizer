@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -11,7 +11,6 @@
 #include "Log.h"
 #include "Styles.h"
 #include "MainFrame.h"
-#include "Localization.h"
 #include "utilities/Utilities.h"
 #include <wx/cursor.h>
 #include <wx/filename.h>
@@ -101,15 +100,16 @@ void OptionPanel::SetRotated(bool rotated) {
 void OptionPanel::Localize() {
   if (configDialog_) configDialog_->Localize();
 
+  ButtonTooltipHashMap tooltipHashMap;
+  tooltipHashMap[_T("Help")] = _("Help");
+  tooltipHashMap[_T("AddShortcut")] = _("New shortcut...");
+  tooltipHashMap[_T("Config")] = _("Configuration");
+  tooltipHashMap[_T("MultiLaunch")] = _("Multi-launch");
+
   for (int i = 0; i < buttons_.size(); i++) {
     OptionButton* button = buttons_.at(i);
     wxString buttonName = button->GetName();
-    wxString stringId = _T("OptionPanel.");
-    stringId += buttonName;
-    stringId += _T("ToolTip");
-
-    wxString toolTip = LOC(stringId);
-    button->SetToolTip(toolTip);
+    button->SetToolTip(tooltipHashMap[buttonName]);
   }
 }
 
@@ -237,9 +237,9 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     wxMenu menu;
 
-    menu.Append(ID_MENU_OptionPanel_Help, LOC(_T("HelpPopup.Help")));
+    menu.Append(ID_MENU_OptionPanel_Help, _("Help Topics"));
     menu.AppendSeparator();
-    menu.Append(ID_MENU_OptionPanel_About, LOC1(_T("HelpPopup.About"), APPLICATION_NAME));
+    menu.Append(ID_MENU_OptionPanel_About, wxString::Format(_("About %s..."), APPLICATION_NAME));
     
     wxPoint pos(w->GetRect().GetLeft(), w->GetRect().GetBottom());
     PopupMenu(&menu, pos);

@@ -35,13 +35,13 @@ protected:
     // begin wxGlade: AboutDialogBase::attributes
     wxStaticBitmap* iconBitmap;
     wxTextCtrl* versionLabel;
-    wxStaticText* label_2;
+    wxStaticText* copyrightLabel;
     wxStaticText* authorLabel;
     wxStaticText* linkLabel;
     wxStaticText* creditLabel;
     wxTextCtrl* creditTextBox;
     wxPanel* notebook_1_pane_1;
-    wxTextCtrl* text_ctrl_1;
+    wxTextCtrl* licenseTextBox;
     wxPanel* notebook_pane_2;
     wxNotebook* notebook;
     wxButton* okButton;

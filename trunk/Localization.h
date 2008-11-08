@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -8,33 +8,11 @@
 #define __Localization_H
 
 #include <wx/wx.h>
-#include <wx/textfile.h>
-#include <wx/arrstr.h>
-#include <vector>
+#include <wx/hashmap.h>
 
 
-struct LocalizationString {
-  wxString Id;
-  wxString Text;
-};
-
-
-class LocalizationLocale {
-
-public:
-
-  LocalizationLocale(const wxString& code);
-  ~LocalizationLocale();
-  wxString GetString(const wxString& stringId);
-  wxString GetCode();
-  void AddString(const wxString& stringId, const wxString& stringText);
-
-private:
-
-  std::vector<LocalizationString*> strings_;
-  wxString code_;
-
-};
+WX_DECLARE_STRING_HASH_MAP(wxString, LanguageCodeHashMap);
+WX_DECLARE_STRING_HASH_MAP(wxString, LanguageCodeHashMapS);
 
 
 class Localization {
@@ -43,37 +21,17 @@ public:
 
   Localization();
   ~Localization();
-  void LoadLocale(const wxString& localeCode, const wxString& localeFolderPath);
-  bool LocaleLoaded(const wxString& localeCode);
-  static wxString GetLanguageName(const wxString& localeFilePath);
-  void SetCurrentLocale(const wxString& localeCode);
-  wxString GetString(const wxString& stringId, wxArrayString* parameters = NULL);
-  static Localization* Instance;
-
-  /**
-   * Shortcut method which automatically creates the wxArrayString
-   * @param stringId The string identifier
-   * @param param1 Parameter that should replace %0%
-   * @return The string
-   */
-  wxString GetString(const wxString& stringId, const wxString& param1);
-  wxString GetString(const wxString& stringId, const wxString& param1, const wxString& param2);
-  wxString GetString(const wxString& stringId, const wxString& param1, const wxString& param2, const wxString& param3);
-
-  static void Initialize();
+  static void Destroy();
+  static Localization* Instance();
+  wxString GetLanguageName(const wxString& languageCode, bool defaultToEnglish = true);
+  wxString GetLanguageNameInEnglish(const wxString& languageCode);
 
 private:
 
-  wxString currentLocaleCode_;
-  std::vector<LocalizationLocale*> loadedLocales_;
-
+  static Localization* instance_;
+  LanguageCodeHashMap languageCodeHashMap_;
+  LanguageCodeHashMapS languageCodeHashMapS_;
+  
 };
-
-// NOTE: Localization::Initialize() must have 
-// been called for these macros to work
-#define LOC(stringId) Localization::Instance->GetString(stringId)
-#define LOC1(stringId, param1) Localization::Instance->GetString(stringId, param1)
-#define LOC2(stringId, param1, param2) Localization::Instance->GetString(stringId, param1, param2)
-#define LOC3(stringId, param1, param2, param3) Localization::Instance->GetString(stringId, param1, param2, param3)
 
 #endif // __Localization_H

@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -7,19 +7,18 @@
 #ifndef __Controller_H
 #define __Controller_H
 
-#include "wx/wx.h" 
+#include <wx/wx.h>
+#include <wx/stopwatch.h>
 #include "MainFrame.h"
 #include "Constants.h"
 #include "User.h"
-#include "boost/shared_ptr.hpp"
-#include <wx/stopwatch.h>
-
 
 class Controller {
 
   public:
 
-    Controller();      
+    Controller();   
+    ~Controller();
     UserSP GetUser();
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
@@ -27,6 +26,8 @@ class Controller {
     void CheckForNewVersion(bool silent = false);
     bool IsFirstLaunch();
     void SetIsFirstLaunch(bool value);
+    void InitializeLocalization();
+    bool ChangeLocale(const wxString& localeCode);
 
     /**
      * GLOBAL EVENTS
@@ -39,6 +40,7 @@ class Controller {
 
   private:
       
+    wxLocale* locale_;
     bool isFirstLaunch_;
     UserSP user_;
     wxString applicationDrive_;
@@ -46,7 +48,5 @@ class Controller {
     wxStopWatch stopWatch_;
 
 };
-
-typedef boost::shared_ptr<Controller> ControllerSP;
 
 #endif

@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -9,7 +9,6 @@
 #include <wx/font.h>
 #include "../utilities/StringUtil.h"
 #include "../utilities/VersionInfo.h"
-#include "../Localization.h"
 #include "../FilePaths.h"
 #include "../Constants.h"
 
@@ -46,23 +45,29 @@ void AboutDialog::OnShow(wxShowEvent& evt) {
 
 
 void AboutDialog::Localize() {
-  SetTitle(LOC1(_T("AboutDialog.Title"), APPLICATION_NAME));  
-  notebook->SetPageText(0, LOC(_T("AboutDialog.AboutTab")));
-  notebook->SetPageText(1, LOC(_T("AboutDialog.License")));
-  okButton->SetLabel(LOC(_T("Global.OK")));
-}
-
-
-void AboutDialog::LoadContent() {
-  Localize();
+  SetTitle(wxString::Format(_("About %s..."), APPLICATION_NAME));  
+  notebook->SetPageText(0, _("About"));
+  notebook->SetPageText(1, _("License"));
+  okButton->SetLabel(_("OK"));
+  creditLabel->SetLabel(_("Credits"));
+  creditTextBox->SetValue(wxString::Format(
+    _("Translators: %s\n\nThis software uses a number of open source libraries including:\n\n- Simpleini by Brodie Thiesfield\n- TinyXml by Yves Berquin\n- The Boost C++ Libraries and wxWidgets by their respective authors\n\nDialog boxes are built using wxGlade by Alberto Griggio."),
+    _T("Simeon, Pieter Kerstens, Michał Trzebiatowski")));
+  copyrightLabel->SetLabel(wxString::Format(_("Copyright © %s"), _T("2008")));
+  licenseTextBox->SetValue(_("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."));
 
   wxString version = VersionInfo::GetVersionString();
   wxArrayString versionSplit;
   StringUtil::Split(version, versionSplit, _T("."));
   while (versionSplit.Count() < 4) versionSplit.Add(_T("0"));
 
-  wxString versionText = wxString::Format(_T("%s, Version %s.%s.%s (Build #%s)"), APPLICATION_NAME, versionSplit[0], versionSplit[1], versionSplit[2], versionSplit[3]);
+  wxString versionText = wxString::Format(_("%s, Version %s.%s.%s (Build #%s)"), APPLICATION_NAME, versionSplit[0], versionSplit[1], versionSplit[2], versionSplit[3]);
   versionLabel->SetValue(versionText);
+}
+
+
+void AboutDialog::LoadContent() {
+  Localize();
 }
 
 

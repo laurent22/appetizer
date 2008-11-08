@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -14,7 +14,6 @@
 #include "Enumerations.h"
 #include "FilePaths.h"
 #include "Log.h"
-#include "Localization.h"
 #include "Controller.h"
 
 
@@ -274,9 +273,7 @@ wxMenu* FolderItem::ToMenu() {
 
   if (menu->GetMenuItemCount() > 0) menu->AppendSeparator();
 
-  menu->Append(
-    GetId(),
-    LOC(_T("FolderItem.EditShortcuts")));  
+  menu->Append(GetId(), _("Edit this group"));  
 
   menu->Connect(
     wxID_ANY,
@@ -366,18 +363,19 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
 
     wxFileType* fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
     if (!fileType) {
-      MessageBoxes::ShowError(LOC1(_T("FolderItem.LaunchFileError"), _T("UnknownMimeType")));
+      MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("UnknownMimeType")));
       return;
     }
 
     wxString command; 
     bool ok = fileType->GetOpenCommand(&command, wxFileType::MessageParameters(filePath, wxEmptyString)); 
     if (!ok) {
-      MessageBoxes::ShowError(LOC1(_T("FolderItem.LaunchFileError"), _T("CannotBuildCommand")));
-      return;
+      MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("CannotBuildCommand")));
+    } else {
+      wxExecute(command);
     }
 
-    wxExecute(command);
+    wxDELETE(fileType);    
 
   } else if (wxFileName::DirExists(filePath)) {
     // Strangely enough filename.DirExists() returns true
@@ -395,7 +393,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
     elog("TO BE IMPLEMENTED");
     #endif
   } else {
-    MessageBoxes::ShowError(LOC1(_T("FolderItem.LaunchFileError"), _T("DoesNotExist")));
+    MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("DoesNotExist")));
   }
 }
 
@@ -478,7 +476,7 @@ void FolderItem::AutoSetName() {
 
 wxString FolderItem::GetName(bool returnUnnamedIfEmpty) {
   if (returnUnnamedIfEmpty) {
-    if (name_ == wxEmptyString) return LOC(_T("Global.Unnamed"));
+    if (name_ == wxEmptyString) return _("Group");
   }
   return name_;
 }
