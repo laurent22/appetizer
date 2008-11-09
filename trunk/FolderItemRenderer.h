@@ -54,6 +54,7 @@ private:
   void OnMenuDelete(wxCommandEvent& evt);
   void OnMenuProperties(wxCommandEvent& evt);
   void OnMenuAddToMultiLaunch(wxCommandEvent& evt);
+  void OnMenuEditShortcutGroup(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

@@ -32,6 +32,7 @@ FolderItem::FolderItem(bool isGroup) {
 
   parent_ = NULL;
   isGroup_ = isGroup;
+  uuid_ = wxEmptyString;
 
   automaticallyAdded_ = false;
   belongsToMultiLaunchGroup_ = false;
@@ -40,6 +41,12 @@ FolderItem::FolderItem(bool isGroup) {
 
 FolderItem::~FolderItem() {
 
+}
+
+
+wxString FolderItem::GetUUID() {
+  if (uuid_ == wxEmptyString) uuid_ = gUtilities.CreateUUID();
+  return uuid_;
 }
 
 
@@ -180,6 +187,23 @@ FolderItemSP FolderItem::GetChildAt(int index) {
 }
 
 
+FolderItemSP FolderItem::GetChildByUUID(const wxString& uuid, bool recurse) {
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP folderItem = children_.at(i);
+
+    if (folderItem->GetUUID() == uuid) return folderItem;
+
+    if (recurse && folderItem->IsGroup()) {
+      FolderItemSP temp = folderItem->GetChildByUUID(uuid, recurse);
+      if (temp.get()) return temp;
+    }
+  }
+
+  FolderItemSP nullOutput;
+  return nullOutput;
+}
+
+
 FolderItemSP FolderItem::GetChildById(int folderItemId, bool recurse) {
   for (int i = 0; i < children_.size(); i++) {
     FolderItemSP folderItem = children_.at(i);
@@ -232,6 +256,13 @@ bool FolderItem::BelongsToMultiLaunchGroup() {
 }
 
 
+void FolderItem::SetGroupIcon(FolderItemSP folderItem) {
+  if (groupIconUUID_ == folderItem->GetUUID()) return;
+  groupIconUUID_ = folderItem->GetUUID();
+  ClearCachedIcons();
+}
+
+
 void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
   FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
   if (!folderItem.get()) {
@@ -246,18 +277,18 @@ void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
 }
 
 
-void FolderItem::AppendAsMenuItem(wxMenu* parentMenu) {
+void FolderItem::AppendAsMenuItem(wxMenu* parentMenu, int iconSize) {
   if (IsGroup()) {
-    wxMenu* menu = ToMenu();
+    wxMenu* menu = ToMenu(iconSize);
     wxMenuItem* menuItem = parentMenu->AppendSubMenu(menu, GetName(true));
   } else {
-    wxMenuItem* menuItem = ToMenuItem(parentMenu);
+    wxMenuItem* menuItem = ToMenuItem(parentMenu, iconSize);
     parentMenu->Append(menuItem);
   }
 }
 
 
-wxMenu* FolderItem::ToMenu() {
+wxMenu* FolderItem::ToMenu(int iconSize) {
   if (!IsGroup()) {
     elog(_T("A non-group folder item cannot be converted to a menu. Call ToMenuItem() instead"));
     return NULL;
@@ -268,12 +299,12 @@ wxMenu* FolderItem::ToMenu() {
   for (int i = 0; i < children_.size(); i++) {
     FolderItemSP child = children_.at(i);
     if (!child.get()) continue;
-    child->AppendAsMenuItem(menu);
+    child->AppendAsMenuItem(menu, iconSize);
   } 
 
   if (menu->GetMenuItemCount() > 0) menu->AppendSeparator();
 
-  menu->Append(GetId(), _("Edit this group"));  
+  menu->Append(GetId(), _("Organize group shortcuts"));  
 
   menu->Connect(
     wxID_ANY,
@@ -286,7 +317,7 @@ wxMenu* FolderItem::ToMenu() {
 }
 
 
-wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
+wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize) {
   if (IsGroup()) {
     elog(_T("A group cannot be converted to a menu item. Call ToMenu() instead"));
     return NULL;
@@ -294,7 +325,7 @@ wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu) {
 
   wxMenuItem* menuItem = new wxMenuItem(parentMenu, GetId(), GetName(true));
 
-  const wxIcon* icon = GetIcon(SMALL_ICON_SIZE).get();
+  const wxIcon* icon = GetIcon(iconSize).get();
   if (!icon->IsOk()) {
     elog(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
   } else {
@@ -418,6 +449,8 @@ TiXmlElement* FolderItem::ToXml() {
   XmlUtil::AppendTextElement(xml, "AutomaticallyAdded", GetAutomaticallyAdded());
   XmlUtil::AppendTextElement(xml, "MultiLaunchGroup", BelongsToMultiLaunchGroup());
   XmlUtil::AppendTextElement(xml, "IsGroup", IsGroup());
+  XmlUtil::AppendTextElement(xml, "UUID", uuid_);
+  XmlUtil::AppendTextElement(xml, "GroupIconUUID", groupIconUUID_);
 
   if (IsGroup()) {
     TiXmlElement* childrenXml = new TiXmlElement("Children");
@@ -442,6 +475,8 @@ void FolderItem::FromXml(TiXmlElement* xml) {
   SetAutomaticallyAdded(XmlUtil::ReadElementTextAsBool(handle, "AutomaticallyAdded"));
   belongsToMultiLaunchGroup_ = XmlUtil::ReadElementTextAsBool(handle, "MultiLaunchGroup");
   isGroup_ = XmlUtil::ReadElementTextAsBool(handle, "IsGroup");
+  uuid_ = XmlUtil::ReadElementText(handle, "UUID");
+  groupIconUUID_ = XmlUtil::ReadElementText(handle, "GroupIconUUID");
 
   children_.clear();
   TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();
@@ -497,8 +532,17 @@ void FolderItem::ClearCachedIcons() {
 wxIconSP FolderItem::GetIcon(int iconSize) {
   if (iconSize == SMALL_ICON_SIZE) {
 
+
     if (IsGroup() && !icon16_.get()) {
-      icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+      if (groupIconUUID_ != wxEmptyString) {
+        FolderItemSP associatedFolderItem = GetChildByUUID(groupIconUUID_);
+        if (associatedFolderItem.get()) {
+          wxIconSP t = associatedFolderItem->GetIcon(iconSize);
+          icon16_.reset(new wxIcon(*t));
+        }
+      }
+
+      if (!icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
     }
 
     if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
@@ -506,9 +550,21 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
       icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/DefaultIcon16.png"), wxBITMAP_TYPE_PNG));
     }
     return icon16_;
+
+
+
   } else {
+
     if (IsGroup() && !icon32_.get()) {
-      icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
+      if (groupIconUUID_ != wxEmptyString) {
+        FolderItemSP associatedFolderItem = GetChildByUUID(groupIconUUID_);
+        if (associatedFolderItem.get()) {
+          wxIconSP t = associatedFolderItem->GetIcon(iconSize);
+          icon32_.reset(new wxIcon(*t));
+        }
+      }
+
+      if (!icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
     }
 
     if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));

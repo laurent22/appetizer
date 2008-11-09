@@ -7,3 +7,7 @@ msgmerge -U Data\Locales\en\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\de\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\nl\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\pl\appetizer.po Data\Locales\appetizer.pot
+
+xgettext --from-code=utf-8 -C -n -k_ -o Data\Help\appetizer.pot generate_help\main.cpp
+msgmerge -U Data\Help\fr\Appetizer.po Data\help\appetizer.pot
+msgmerge -U Data\Help\en\Appetizer.po Data\help\appetizer.pot

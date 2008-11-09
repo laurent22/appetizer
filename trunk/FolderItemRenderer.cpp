@@ -40,6 +40,7 @@ BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
   EVT_MENU(ID_MENU_Delete, FolderItemRenderer::OnMenuDelete)
   EVT_MENU(ID_MENU_Properties, FolderItemRenderer::OnMenuProperties)
   EVT_MENU(ID_MENU_AddToMultiLaunch, FolderItemRenderer::OnMenuAddToMultiLaunch)
+  EVT_MENU(ID_MENU_EditShortcutGroup, FolderItemRenderer::OnMenuEditShortcutGroup)
   EVT_MOUSE_CAPTURE_LOST(FolderItemRenderer::OnMouseCaptureLost)
 END_EVENT_TABLE()
 
@@ -65,6 +66,11 @@ FolderItemRenderer::~FolderItemRenderer() {
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
   return gController.GetUser()->GetRootFolderItem()->GetChildById(folderItemId_);
+}
+
+
+void FolderItemRenderer::OnMenuEditShortcutGroup(wxCommandEvent& evt) {
+  gUtilities.ShowTreeViewDialog(GetFolderItem()->GetId());
 }
 
 
@@ -95,25 +101,31 @@ void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnMenuProperties(wxCommandEvent& evt) {
-  if (GetFolderItem()->IsGroup()) {
-    gUtilities.ShowTreeViewDialog(GetFolderItem()->GetId());
-  } else {
-    gController.GetUser()->EditFolderItem(GetFolderItem());
-  }
+  gController.GetUser()->EditFolderItem(GetFolderItem());
 }
 
 
 void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
+  FolderItemSP folderItem = GetFolderItem();
+
   wxMenu* menu = gMainFrame->GetIconPanel()->GetContextMenu();
 
   menu->AppendSeparator();
   menu->Append(ID_MENU_Delete, _("Remove..."));
 
-  wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_AddToMultiLaunch, _("Add to Multi Launch group"), wxEmptyString, wxITEM_CHECK);
-  menu->Append(menuItem);
-  menuItem->Check(GetFolderItem()->BelongsToMultiLaunchGroup());
+  if (!folderItem->IsGroup()) {
+    wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_AddToMultiLaunch, _("Add to Multi Launch group"), wxEmptyString, wxITEM_CHECK);
+    menu->Append(menuItem);
+    menuItem->Check(GetFolderItem()->BelongsToMultiLaunchGroup());
+  }
 
   menu->AppendSeparator();
+
+  if (folderItem->IsGroup()) {
+    wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_EditShortcutGroup, _("Organize group shortcuts"));
+    menu->Append(menuItem);
+  }
+
   menu->Append(ID_MENU_Properties, _("Properties"));
 
   PopupMenu(menu, wxDefaultPosition);

@@ -27,6 +27,7 @@ public:
   void ShowAboutDialog();
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void CreateNewShortcut();
+  wxString CreateUUID();
   void Localize();
 
 private:

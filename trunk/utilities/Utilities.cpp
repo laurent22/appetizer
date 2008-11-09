@@ -13,6 +13,10 @@
 #include "../FolderItem.h"
 #include "../Log.h"
 
+#ifdef __WINDOWS__
+#include <Rpc.h>
+#pragma comment(lib, "Rpcrt4.lib")
+#endif // __WINDOWS__
 
 extern Controller gController;
 extern MainFrame* gMainFrame;
@@ -29,6 +33,29 @@ void Utilities::Localize() {
   if (configDialog_) configDialog_->Localize();
   if (aboutDialog_) aboutDialog_->Localize();
   if (treeViewDialog_) treeViewDialog_->Localize();
+}
+
+
+wxString Utilities::CreateUUID() {
+  // http://nogeekhere.blogspot.com/2008/07/how-to-generate-uuid-guid-in-c.html
+
+  #ifdef __WINDOWS__
+  UUID uuid;
+  ::ZeroMemory(&uuid, sizeof(UUID));
+  ::UuidCreate(&uuid);
+
+  // If you want to convert uuid to string, use UuidToString() function
+  RPC_WSTR wszUuid = NULL;
+  ::UuidToStringW(&uuid, &wszUuid);
+  if(wszUuid != NULL) {
+    wxString output((TCHAR*)wszUuid, wxConvUTF8);
+    ::RpcStringFree(&wszUuid);
+    wszUuid = NULL;
+    return output;
+  }
+  #endif // __WINDOWS__
+
+  return wxEmptyString;
 }
 
 
@@ -128,5 +155,5 @@ void Utilities::ShowTreeViewDialog(int selectedFolderItemId) {
   
   treeViewDialog_->LoadFolderItem(gController.GetUser()->GetRootFolderItem());
   treeViewDialog_->SelectAndExpandFolderItem(selectedFolderItem);
-  treeViewDialog_->Show();
+  treeViewDialog_->ShowModal();
 }

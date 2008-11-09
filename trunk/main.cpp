@@ -50,7 +50,7 @@ wxCmdLineParser gCommandLine;
 
 
 bool MiniLaunchBar::OnInit() {
-  _CrtSetBreakAlloc(9067);
+  //_CrtSetBreakAlloc(9067);
 
   wxCmdLineEntryDesc cmdLineDesc[] = {
     { wxCMD_LINE_SWITCH, _T("u"), _T("useuserdatadir"), _("Use user data directory to save settings.") },

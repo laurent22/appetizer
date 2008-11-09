@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-08 20:22+0000\n"
+"POT-Creation-Date: 2008-11-09 13:54+0000\n"
 "PO-Revision-Date: 2008-11-08 13:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -61,32 +61,32 @@ msgstr ""
 msgid "Error launching web browser"
 msgstr ""
 
-#: FolderItem.cpp:276
-msgid "Edit this group"
+#: FolderItem.cpp:307 FolderItemRenderer.cpp:125
+msgid "Organize group shortcuts"
 msgstr ""
 
-#: FolderItem.cpp:366 FolderItem.cpp:373 FolderItem.cpp:396
+#: FolderItem.cpp:397 FolderItem.cpp:404 FolderItem.cpp:427
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr ""
 
-#: FolderItem.cpp:479
+#: FolderItem.cpp:514
 msgid "Group"
 msgstr ""
 
-#: FolderItemRenderer.cpp:86
+#: FolderItemRenderer.cpp:92
 msgid "Do you wish to remove this icon?"
 msgstr ""
 
-#: FolderItemRenderer.cpp:110
+#: FolderItemRenderer.cpp:114
 msgid "Remove..."
 msgstr ""
 
-#: FolderItemRenderer.cpp:112
+#: FolderItemRenderer.cpp:117
 msgid "Add to Multi Launch group"
 msgstr ""
 
-#: FolderItemRenderer.cpp:117
+#: FolderItemRenderer.cpp:129
 msgid "Properties"
 msgstr ""
 
@@ -226,11 +226,13 @@ msgstr ""
 msgid "Skin:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:57 gui\ShortcutEditorDialog.cpp:40
+#: gui\ConfigDialog.cpp:57 gui\GroupEditorDialog.cpp:37
+#: gui\ShortcutEditorDialog.cpp:40
 msgid "Save"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:58 gui\ShortcutEditorDialog.cpp:41
+#: gui\ConfigDialog.cpp:58 gui\GroupEditorDialog.cpp:38
+#: gui\ShortcutEditorDialog.cpp:41
 msgid "Cancel"
 msgstr ""
 
@@ -262,11 +264,11 @@ msgstr ""
 msgid "Please wait..."
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:37
+#: gui\GroupEditorDialog.cpp:35 gui\ShortcutEditorDialog.cpp:37
 msgid "Shorcut Properties"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:38
+#: gui\GroupEditorDialog.cpp:36 gui\ShortcutEditorDialog.cpp:38
 msgid "Name:"
 msgstr ""
 

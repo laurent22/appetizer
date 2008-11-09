@@ -26,6 +26,7 @@ END_EVENT_TABLE()
 User::User() {
   scheduledSaveTimer_ = NULL;
   shortcutEditorDialog_ = NULL;
+  groupEditorDialog_ = NULL;
   rootFolderItem_.reset(new FolderItem(true));
   settings_.reset(new UserSettings());  
 }
@@ -129,8 +130,9 @@ FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folder
 }
 
 
-FolderItemSP User::EditNewFolderItem(FolderItemSP parent) {
-  FolderItemSP folderItem(new FolderItem());
+FolderItemSP User::EditNewFolderItem(FolderItemSP parent, bool isGroup) {
+  FolderItemSP folderItem(new FolderItem(isGroup));
+
   int result = EditFolderItem(folderItem);
 
   if (result == wxID_OK) {
@@ -145,15 +147,25 @@ FolderItemSP User::EditNewFolderItem(FolderItemSP parent) {
 
 
 int User::EditFolderItem(FolderItemSP folderItem) {
-  shortcutEditorDialog_ = new ShortcutEditorDialog();
-  shortcutEditorDialog_->LoadFolderItem(folderItem);
-  int result = shortcutEditorDialog_->ShowModal();
-  shortcutEditorDialog_->Destroy();
-  shortcutEditorDialog_ = NULL;
+  int result;
+
+  if (folderItem->IsGroup()) {
+    groupEditorDialog_ = new GroupEditorDialog();
+    groupEditorDialog_->LoadFolderItem(folderItem);
+    result = groupEditorDialog_->ShowModal();
+    groupEditorDialog_->Destroy();
+    groupEditorDialog_ = NULL;
+  } else {
+    shortcutEditorDialog_ = new ShortcutEditorDialog();
+    shortcutEditorDialog_->LoadFolderItem(folderItem);
+    int result = shortcutEditorDialog_->ShowModal();
+    shortcutEditorDialog_->Destroy();
+    shortcutEditorDialog_ = NULL;
+  }
 
   if (result == wxID_OK) gController.FolderItems_FolderItemChange(folderItem);
 
-  return result;
+  return result;   
 }
 
 

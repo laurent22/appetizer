@@ -10,7 +10,8 @@
 #include <wx/wx.h>
 #include <wx/menuitem.h>
 #include <vector>
-#include "boost/shared_ptr.hpp"
+#include <boost/shared_ptr.hpp>
+#include "Constants.h"
 #include "TypeDefinitions.h"
 #include "utilities/XmlUtil.h"
 
@@ -28,6 +29,7 @@ public:
 
   FolderItem(bool isGroup = false);
   ~FolderItem();
+  wxString GetUUID();
   int GetId() const;
   void AutoSetName();
   wxString GetName(bool returnUnnamedIfEmpty = false);
@@ -38,9 +40,9 @@ public:
   void SetFilePath(const wxString& filePath);
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
-  void AppendAsMenuItem(wxMenu* parentMenu);
-  wxMenu* ToMenu();
-  wxMenuItem* ToMenuItem(wxMenu* parentMenu);
+  void AppendAsMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
+  wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE);
+  wxMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
   void Launch();
   void LaunchWithArguments(const wxString& arguments);
   static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString);
@@ -57,6 +59,7 @@ public:
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);
   void DoMultiLaunch();
+  void SetGroupIcon(FolderItemSP folderItem);
 
   // ***************************************************************
   // Methods to work with children
@@ -73,6 +76,7 @@ public:
 
   FolderItemSP GetChildAt(int index);
   FolderItemSP GetChildById(int folderItemId, bool recurse = true);
+  FolderItemSP GetChildByUUID(const wxString& uuid, bool recurse = true);
   FolderItemSP GetChildByResolvedPath(const wxString& filePath);
 
   void InsertChildBefore(FolderItemSP toAdd, FolderItemSP previousFolderItem);
@@ -95,6 +99,8 @@ private:
   wxString filePath_;
   wxIconSP icon16_;
   wxIconSP icon32_;  
+  wxString uuid_;
+  wxString groupIconUUID_;
   bool automaticallyAdded_;
 
 };

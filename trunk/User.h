@@ -16,6 +16,7 @@
 #include "Enumerations.h"
 #include "UserSettings.h"
 #include "boost/shared_ptr.hpp"
+#include "gui/GroupEditorDialog.h"
 #include "gui/ShortcutEditorDialog.h"
 
 
@@ -31,7 +32,7 @@ public:
   void Load();
   
   int EditFolderItem(FolderItemSP folderItem);
-  FolderItemSP EditNewFolderItem(FolderItemSP parent);
+  FolderItemSP EditNewFolderItem(FolderItemSP parent, bool isGroup = false);
   FolderItemSP AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath);
   void AddAutoAddExclusion(const wxString& filePath);
   bool IsAutoAddExclusion(const wxString& filePath);
@@ -47,6 +48,7 @@ private:
   wxStringList folderItemExclusions_;
   UserSettingsSP settings_;
   ShortcutEditorDialog* shortcutEditorDialog_;
+  GroupEditorDialog* groupEditorDialog_;
   wxArrayString autoAddExclusions_;
 
   DECLARE_EVENT_TABLE()
