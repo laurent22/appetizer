@@ -38,6 +38,10 @@ protected:
     wxStaticText* languageLabel;
     wxComboBox* languageComboBox;
     wxStaticText* label_1;
+    wxCheckBox* autohideCheckBox;
+    wxStaticText* label_2;
+    wxCheckBox* alwaysOnTopCheckBox;
+    wxStaticText* label_3;
     wxButton* checkForUpdateButton;
     wxPanel* notebook_1_pane_1;
     wxStaticText* iconSizeLabel;

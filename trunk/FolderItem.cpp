@@ -15,13 +15,15 @@
 #include "FilePaths.h"
 #include "Log.h"
 #include "Controller.h"
+#include "MainFrame.h"
 
 
 extern Controller gController;
 extern Utilities gUtilities;
+extern MainFrame* gMainFrame;
 
 
-int FolderItem::uniqueID_ = 0;
+int FolderItem::uniqueID_ = 1000;
 
 
 FolderItem::FolderItem(bool isGroup) {
@@ -41,6 +43,18 @@ FolderItem::FolderItem(bool isGroup) {
 
 FolderItem::~FolderItem() {
 
+}
+
+
+void FolderItem::SetParameters(const wxString& parameters) {
+  if (parameters_ == parameters) return;
+  parameters_ = wxString(parameters);
+  parameters_.Trim(true).Trim(false);
+}
+
+
+wxString FolderItem::GetParameters() {
+  return parameters_;
 }
 
 
@@ -257,8 +271,12 @@ bool FolderItem::BelongsToMultiLaunchGroup() {
 
 
 void FolderItem::SetGroupIcon(FolderItemSP folderItem) {
-  if (groupIconUUID_ == folderItem->GetUUID()) return;
-  groupIconUUID_ = folderItem->GetUUID();
+  if (!folderItem.get()) {
+    groupIconUUID_ = wxEmptyString;
+  } else {
+    if (groupIconUUID_ == folderItem->GetUUID()) return;
+    groupIconUUID_ = folderItem->GetUUID();    
+  }
   ClearCachedIcons();
 }
 
@@ -272,6 +290,7 @@ void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
       gUtilities.ShowTreeViewDialog(evt.GetId());
     } else {
       folderItem->Launch();
+      gMainFrame->DoAutoHide();
     }
   }
 }
@@ -329,8 +348,8 @@ wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize) {
   if (!icon->IsOk()) {
     elog(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
   } else {
-    wxBitmap* iconBitmap = new wxBitmap(*icon);
-    menuItem->SetBitmap(*iconBitmap);
+    wxBitmap iconBitmap(*icon);
+    menuItem->SetBitmap(iconBitmap);
   }
 
   return menuItem;
@@ -381,7 +400,14 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
       if (arguments == wxEmptyString) {
         wxExecute(filePath);
       } else {
-        wxExecute(wxString::Format(_T("%s %s"), filePath, arguments));
+        wxString tArguments(arguments); 
+        // If the argument is a file path, then check that it has double quotes        
+        if (wxFileName::FileExists(tArguments)) {
+          if (tArguments[0] != _T('"') && tArguments[arguments.Len() - 1] != _T('"')) {
+            tArguments = _T('"') + tArguments + _T('"');
+          }
+        }
+        wxExecute(wxString::Format(_T("%s %s"), filePath, tArguments));
       }
       // Restore the current directory
       wxSetWorkingDirectory(saveCurrentDirectory);
@@ -430,8 +456,12 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
 
 
 void FolderItem::Launch() {
-  wxString resolvedFilePath = GetResolvedPath();
-  FolderItem::Launch(resolvedFilePath);
+  if (parameters_ != wxEmptyString) {
+    LaunchWithArguments(parameters_);
+  } else {
+    wxString resolvedFilePath = GetResolvedPath();
+    FolderItem::Launch(resolvedFilePath);
+  }
 }
 
 
@@ -451,6 +481,7 @@ TiXmlElement* FolderItem::ToXml() {
   XmlUtil::AppendTextElement(xml, "IsGroup", IsGroup());
   XmlUtil::AppendTextElement(xml, "UUID", uuid_);
   XmlUtil::AppendTextElement(xml, "GroupIconUUID", groupIconUUID_);
+  XmlUtil::AppendTextElement(xml, "Parameters", parameters_);
 
   if (IsGroup()) {
     TiXmlElement* childrenXml = new TiXmlElement("Children");
@@ -477,6 +508,7 @@ void FolderItem::FromXml(TiXmlElement* xml) {
   isGroup_ = XmlUtil::ReadElementTextAsBool(handle, "IsGroup");
   uuid_ = XmlUtil::ReadElementText(handle, "UUID");
   groupIconUUID_ = XmlUtil::ReadElementText(handle, "GroupIconUUID");
+  parameters_ = XmlUtil::ReadElementText(handle, "Parameters");
 
   children_.clear();
   TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();

@@ -80,6 +80,8 @@ class MainFrame: public wxFrame {
     IconPanel* GetIconPanel();
     OptionPanel* GetOptionPanel();
 
+    void DoAutoHide();
+
     int GetMinHeight();
     int GetMinWidth();
     int GetMaxHeight();

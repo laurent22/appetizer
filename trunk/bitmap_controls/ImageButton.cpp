@@ -88,6 +88,7 @@ void ImageButton::SetGrid(const wxRect& rect) {
 
 void ImageButton::SetIcon(wxBitmap* iconBitmap, bool ownIt) {
   if (iconBitmap_ == iconBitmap) return;
+  if (ownIcon_) wxDELETE(iconBitmap_);
   iconBitmap_ = iconBitmap;
   ownIcon_ = ownIt;
   wxDELETE(rotatedIconBitmap_);

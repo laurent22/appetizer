@@ -4,9 +4,15 @@
   found in the LICENSE file.
 */
 
+#include <wx/arrstr.h>
 #include "Styles.h"
 #include "Log.h"
+#include "Constants.h"
+#include "MessageBoxes.h"
 #include "utilities/XmlUtil.h"
+#include "utilities/StringUtil.h"
+#include "utilities/VersionInfo.h"
+
 
 
 MainPanelStyle Styles::MainPanel;
@@ -25,6 +31,27 @@ void PaddingStyle::FromRect(const wxRect& rect) {
 }
 
 
+void Styles::GetSkinMetadata(const wxString& filePath, SkinMetadata& skinMetadata) {
+  TiXmlDocument doc(filePath.mb_str());
+  doc.LoadFile();
+
+  TiXmlElement* root = doc.FirstChildElement("Skin");
+  if (!root) {
+    wlog("Styles::LoadSkinFile: Could not load XML. No Skin element found.");
+    return;
+  }
+
+  Styles::GetSkinMetadata(root, skinMetadata);
+}
+
+
+void Styles::GetSkinMetadata(TiXmlElement* skinDocumentRoot, SkinMetadata& skinMetadata) {
+  skinMetadata.CompatibleVersion = wxString(skinDocumentRoot->Attribute("compatibleVersion"), wxConvUTF8);
+  skinMetadata.Name = wxString(skinDocumentRoot->Attribute("name"), wxConvUTF8);
+  skinMetadata.Author = wxString(skinDocumentRoot->Attribute("author"), wxConvUTF8);
+}
+
+
 void Styles::LoadSkinFile(const wxString& filePath) {
   TiXmlDocument doc(filePath.mb_str());
   doc.LoadFile();
@@ -32,6 +59,14 @@ void Styles::LoadSkinFile(const wxString& filePath) {
   TiXmlElement* root = doc.FirstChildElement("Skin");
   if (!root) {
     wlog("Styles::LoadSkinFile: Could not load XML. No Skin element found.");
+    return;
+  }
+
+  SkinMetadata skinMetadata;
+  Styles::GetSkinMetadata(root, skinMetadata);
+
+  if (!Styles::IsSkinVersionCompatible(skinMetadata.CompatibleVersion)) {
+    MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
     return;
   }
 
@@ -84,4 +119,19 @@ void Styles::LoadSkinFile(const wxString& filePath) {
     }
   }
 
+}
+
+
+bool Styles::IsSkinVersionCompatible(const wxString& skinVersion) {
+  double dSkinVersion;
+  skinVersion.ToDouble(&dSkinVersion);
+  
+  double dThisVersion;
+  wxString fullVersion = VersionInfo::GetVersionString();
+  wxArrayString splitted;
+  StringUtil::Split(fullVersion, splitted, _T("."));
+  wxString tdVersion = splitted[0] + _T(".") + splitted[1];
+  tdVersion.ToDouble(&dThisVersion);
+
+  return true;
 }

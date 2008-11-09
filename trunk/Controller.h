@@ -19,7 +19,7 @@ class Controller {
 
     Controller();   
     ~Controller();
-    UserSP GetUser();
+    User* GetUser();
     void SetDraggedFolderItem(int folderItemId);
     FolderItemSP GetDraggedFolderItem();
     long GetTimer();
@@ -42,7 +42,7 @@ class Controller {
       
     wxLocale* locale_;
     bool isFirstLaunch_;
-    UserSP user_;
+    User* user_;
     wxString applicationDrive_;
     int draggedFolderItemId_;
     wxStopWatch stopWatch_;

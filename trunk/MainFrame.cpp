@@ -51,7 +51,7 @@ MainFrame::MainFrame()
   wxEmptyString,
   wxDefaultPosition,
   wxDefaultSize,
-  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR 
+  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR | (gController.GetUser()->GetSettings()->AlwaysOnTop ? wxSTAY_ON_TOP : 0)
   )
 {  
   logWindow_ = NULL;
@@ -173,6 +173,11 @@ MainFrame::MainFrame()
 } 
 
 
+void MainFrame::DoAutoHide() {
+  if (gController.GetUser()->GetSettings()->AutoHideApplication) Hide();
+}
+
+
 void MainFrame::OnIdle(wxIdleEvent& evt) {
   if (!firstIdleEventSent_) {
     #ifdef __WINDOWS__
@@ -216,7 +221,7 @@ void MainFrame::ApplySkin(const wxString& skinName) {
   wxDELETE(arrowButtonCloseIcon_);
   arrowButtonOpenIcon_ = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
   arrowButtonCloseIcon_ = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
-  arrowButton_->SetIcon(arrowButtonCloseIcon_, false);
+  arrowButton_->SetIcon(optionPanelOpen_ ? arrowButtonOpenIcon_ : arrowButtonCloseIcon_, false);
 
   resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
   resizerPanel_->FitToContent();
@@ -559,7 +564,24 @@ void MainFrame::OnMouseMove(wxMouseEvent& evt) {
   if (windowDragData_.DraggingStarted && evt.Dragging() && evt.LeftIsDown() && !windowDragData_.Resizing) {
     wxPoint mousePos = ClientToScreen(evt.GetPosition());
     wxPoint mouseOffset = mousePos - windowDragData_.InitMousePos;
-    Move(mouseOffset.x + windowDragData_.InitWindowPos.x, mouseOffset.y + windowDragData_.InitWindowPos.y);
+
+    int newX = mouseOffset.x + windowDragData_.InitWindowPos.x;
+    int newY = mouseOffset.y + windowDragData_.InitWindowPos.y;
+
+    // Do snapping
+    int newRight = newX + GetRect().GetWidth();
+    int newBottom = newY + GetRect().GetHeight();
+    int snappingGap = 10;
+
+    wxDisplay display(GetDisplayIndex());
+    wxRect r = display.GetClientArea();
+
+    if (abs(newX - r.GetLeft()) < snappingGap) newX = r.GetLeft();
+    if (abs(newRight - r.GetRight()) < snappingGap) newX = r.GetRight() - GetRect().GetWidth();
+    if (abs(newY - r.GetTop()) < snappingGap) newY = r.GetTop();
+    if (abs(newBottom - r.GetBottom()) < snappingGap) newY = r.GetBottom() - GetRect().GetHeight();    
+
+    Move(newX, newY);
   }
 }
 
@@ -710,7 +732,8 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
 
     case ID_BUTTON_MainFrame_EjectButton: {
 
-      gUtilities.EjectDriveAndExit();
+      int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"));
+      if (answer == wxID_YES) gUtilities.EjectDriveAndExit();
 
     } break;
 

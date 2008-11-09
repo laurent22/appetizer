@@ -25,6 +25,7 @@ class User : public wxEvtHandler {
 public:
 
   User();  
+  ~User();
   void AutomaticallyAddNewApps();
   UserSettingsSP GetSettings();
   void ScheduleSave();
@@ -54,9 +55,6 @@ private:
   DECLARE_EVENT_TABLE()
 
 };
-
-
-typedef boost::shared_ptr<User> UserSP;
 
 
 #endif

@@ -41,6 +41,8 @@ protected:
     wxTextCtrl* locationTextBox;
     wxBitmapButton* selectFileButton;
     wxBitmapButton* selectFolderButton;
+    wxStaticText* parametersLabel;
+    wxTextCtrl* parametersTextBox;
     wxButton* saveButton;
     wxButton* cancelButton;
     // end wxGlade

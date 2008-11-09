@@ -27,6 +27,8 @@ public:
   wxString Skin;
   bool Rotated;
   wxDateTime NextUpdateCheckTime;
+  bool AlwaysOnTop;
+  bool AutoHideApplication;
 
   void Save();
   void Load();

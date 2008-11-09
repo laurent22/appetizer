@@ -43,6 +43,7 @@ public:
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);
   void OnImageButtonClick(wxCommandEvent& evt);
+  void OnMenuGetSupport(wxCommandEvent& evt);
   void OnMenuHelp(wxCommandEvent& evt);
   void OnMenuAbout(wxCommandEvent& evt);
 

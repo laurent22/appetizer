@@ -9,6 +9,7 @@
 
 #include <wx/wx.h>
 #include <wx/colour.h>
+#include "utilities/XmlUtil.h"
 
 
 class PaddingStyle {
@@ -24,7 +25,6 @@ public:
   void FromRect(const wxRect& rect);
 
 };
-
 
 class MainPanelStyle { public:
   PaddingStyle Padding;
@@ -51,6 +51,13 @@ class IconStyle { public:
   PaddingStyle Padding;
 };
 
+struct SkinMetadata {
+  wxString Name;
+  wxString CompatibleVersion;
+  wxString Author;
+};
+
+
 class Styles {
 
 public:
@@ -60,7 +67,10 @@ public:
   static IconStyle Icon;
   static OptionPanelStyle OptionPanel;
 
+  static void GetSkinMetadata(TiXmlElement* skinDocumentRoot, SkinMetadata& skinMetadata);
+  static void GetSkinMetadata(const wxString& filePath, SkinMetadata& skinMetadata);
   static void LoadSkinFile(const wxString& filePath);
+  static bool IsSkinVersionCompatible(const wxString& skinVersion);
 
 };
 

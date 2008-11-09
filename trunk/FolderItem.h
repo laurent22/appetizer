@@ -49,6 +49,9 @@ public:
   TiXmlElement* ToXml();
   void FromXml(TiXmlElement* xml);
 
+  void SetParameters(const wxString& parameters);
+  wxString GetParameters();
+
   bool GetAutomaticallyAdded();
   void SetAutomaticallyAdded(bool automaticallyAdded);
 
@@ -90,6 +93,7 @@ private:
 
   static int uniqueID_;
 
+  wxString parameters_;
   bool isGroup_;
   FolderItem* parent_;
   int id_;

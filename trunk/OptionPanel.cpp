@@ -24,6 +24,7 @@ extern Utilities gUtilities;
 BEGIN_EVENT_TABLE(OptionPanel, NineSlicesPanel)
   EVT_MENU(ID_MENU_OptionPanel_Help, OptionPanel::OnMenuHelp)
   EVT_MENU(ID_MENU_OptionPanel_About, OptionPanel::OnMenuAbout)
+  EVT_MENU(ID_MENU_OptionPanel_GetSupport, OptionPanel::OnMenuGetSupport)
 END_EVENT_TABLE()
 
 
@@ -57,6 +58,11 @@ NineSlicesPanel(owner, id, point, size) {
   }
 
   Localize();
+}
+
+
+void OptionPanel::OnMenuGetSupport(wxCommandEvent& evt) {
+  ::wxLaunchDefaultBrowser(_T("https://sourceforge.net/forum/?group_id=244299"), wxBROWSER_NEW_WINDOW);
 }
 
 
@@ -238,6 +244,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     wxMenu menu;
 
     menu.Append(ID_MENU_OptionPanel_Help, _("Help Topics"));
+    menu.Append(ID_MENU_OptionPanel_GetSupport, _("Get Support"));
     menu.AppendSeparator();
     menu.Append(ID_MENU_OptionPanel_About, wxString::Format(_("About %s..."), APPLICATION_NAME));
     
@@ -276,4 +283,6 @@ OptionPanel::~OptionPanel() {
     configDialog_->Destroy();
     configDialog_ = NULL;
   }
+
+  this->DestroyChildren();
 }

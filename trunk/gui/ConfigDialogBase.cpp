@@ -19,6 +19,10 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     const wxString *languageComboBox_choices = NULL;
     languageComboBox = new wxComboBox(notebook_1_pane_1, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, languageComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
     label_1 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
+    autohideCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Hide after launching an application"));
+    label_2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
+    alwaysOnTopCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Always on top"));
+    label_3 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     checkForUpdateButton = new wxButton(notebook_1_pane_1, ID_CDLG_BUTTON_CheckForUpdate, wxT("Check for update"));
     iconSizeLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Icon size:"));
     const wxString *iconSizeComboBox_choices = NULL;
@@ -42,7 +46,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(323, 243));
+    SetSize(wxSize(374, 243));
     // end wxGlade
 }
 
@@ -59,6 +63,10 @@ void ConfigDialogBase::do_layout()
     generalGridSizer->Add(languageLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     generalGridSizer->Add(languageComboBox, 0, wxEXPAND, 0);
     generalGridSizer->Add(label_1, 0, 0, 0);
+    generalGridSizer->Add(autohideCheckBox, 0, 0, 0);
+    generalGridSizer->Add(label_2, 0, 0, 0);
+    generalGridSizer->Add(alwaysOnTopCheckBox, 0, 0, 0);
+    generalGridSizer->Add(label_3, 0, 0, 0);
     generalGridSizer->Add(checkForUpdateButton, 0, wxEXPAND, 0);
     generalGridSizer->AddGrowableCol(1);
     sizer_3->Add(generalGridSizer, 1, wxALL|wxEXPAND, 10);

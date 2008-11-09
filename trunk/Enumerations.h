@@ -16,6 +16,8 @@ enum {
   ID_MENU_EditShortcutGroup,
   ID_MENU_OptionPanel_Help,
   ID_MENU_OptionPanel_About,
+  ID_MENU_OptionPanel_GetSupport,
+  ID_MENU_DefaultGroupIcon,
   ID_TIMER_User_ScheduleSave,
   ID_BUTTON_IconPanel_BrowseButton,
   ID_BUTTON_MainFrame_CloseButton,

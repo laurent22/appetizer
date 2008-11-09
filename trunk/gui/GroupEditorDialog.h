@@ -24,6 +24,8 @@ public:
 private:
 
   FolderItemSP folderItem_;
+  FolderItemSP iconFolderItem_;
+  bool hasSelectedDefaultIcon_;
 
   void UpdateFromFolderItem();
 

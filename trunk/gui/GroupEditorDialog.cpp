@@ -40,27 +40,44 @@ void GroupEditorDialog::Localize() {
 
 
 void GroupEditorDialog::LoadFolderItem(FolderItemSP folderItem) {
+  hasSelectedDefaultIcon_ = false;
   folderItem_ = folderItem;
   UpdateFromFolderItem();
 }
 
 
 void GroupEditorDialog::OnMenuItemClick(wxCommandEvent& evt) {
-  FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
+  int itemId = evt.GetId();
+
+  hasSelectedDefaultIcon_ = false;
+  FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(itemId);
+
   if (!folderItem.get()) {
-    evt.Skip();
+    if (itemId == ID_MENU_DefaultGroupIcon) {
+      hasSelectedDefaultIcon_ = true;
+      iconBitmap->SetBitmap(wxBitmap(FilePaths::GetSkinFile(_T("FolderIcon32.png")), wxBITMAP_TYPE_PNG));
+    } else {
+      evt.Skip();
+    }
   } else {
-    // @todo: Shouldn't change the group icon right now.
-    // We should wait till Save()
-    folderItem_->SetGroupIcon(folderItem);
-    UpdateFromFolderItem();
+    wxIconSP icon = folderItem->GetIcon(LARGE_ICON_SIZE);
+    wxBitmap bitmap(*icon);
+    iconBitmap->SetBitmap(bitmap);
+    iconFolderItem_ = folderItem;
   }
 }
 
 
 void GroupEditorDialog::OnChangeIconButtonClick(wxCommandEvent& evt) {
   wxMenu menu;
-  
+
+  wxMenuItem* defaultMenuItem = new wxMenuItem(&menu, ID_MENU_DefaultGroupIcon, _("Default"));
+  wxBitmap iconBitmap(FilePaths::GetSkinFile(_T("FolderIcon16.png")), wxBITMAP_TYPE_PNG);
+  defaultMenuItem->SetBitmap(iconBitmap);
+
+  menu.Append(defaultMenuItem);
+  menu.AppendSeparator();
+
   for (int i = 0; i < folderItem_->ChildrenCount(); i++) {
     FolderItemSP child = folderItem_->GetChildAt(i);
     child->AppendAsMenuItem(&menu);
@@ -83,20 +100,16 @@ void GroupEditorDialog::OnCancelButtonClick(wxCommandEvent& evt) {
 
 
 void GroupEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
-  //wxString folderItemFilePath = locationTextBox->GetValue();
-  //wxString folderItemName = nameTextBox->GetValue();
+  folderItem_->SetName(nameTextBox->GetValue());
 
-  //wxFileName filename(FolderItem::ResolvePath(folderItemFilePath));
-  //if (!filename.FileExists() && !wxFileName::DirExists(filename.GetFullPath())) {
-  //  // If the shortcut location doesn't exist, just show a warning but allow
-  //  // the user to continue. Invalid shortcuts are allowed since they
-  //  // might be referencing files from a different computer.
-  //  int result = MessageBoxes::ShowWarning(_("The shorcut location doesn't exist. Do you wish to continue?"), wxYES | wxNO);
-  //  if (result == wxID_NO) return;
-  //}
-
-  //folderItem_->SetFilePath(folderItemFilePath);
-  //folderItem_->SetName(folderItemName);
+  if (hasSelectedDefaultIcon_) {
+    FolderItemSP nullFolderItem;
+    folderItem_->SetGroupIcon(nullFolderItem);
+  } else {
+    if (iconFolderItem_.get()) {
+      folderItem_->SetGroupIcon(iconFolderItem_);
+    }
+  }
 
   EndDialog(wxID_OK);
 }

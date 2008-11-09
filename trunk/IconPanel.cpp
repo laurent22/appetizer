@@ -136,14 +136,7 @@ void IconPanel::OnMenuNewShortcut(wxCommandEvent& evt) {
 
 
 void IconPanel::OnMenuNewGroup(wxCommandEvent& evt) {
-  wxTextEntryDialog* dialog = new wxTextEntryDialog(
-    this, 
-    _("Edit group"));
-  if (dialog->ShowModal() != wxID_OK) return;
-
-  FolderItemSP newGroup(new FolderItem(true));
-  gController.GetUser()->GetRootFolderItem()->AddChild(newGroup);
-  gController.FolderItems_CollectionChange();
+  gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem(), true);
 }
 
 

@@ -10,7 +10,9 @@
 #include "../UserSettings.h"
 #include "../MainFrame.h"
 #include "../Localization.h"
+#include "../MessageBoxes.h"
 #include "../Log.h"
+#include "../Styles.h"
 #include <wx/arrstr.h>
 #include <wx/dir.h>
 #include <wx/clntdata.h>
@@ -58,11 +60,14 @@ void ConfigDialog::Localize() {
   cancelButton->SetLabel(_("Cancel"));
   orientationLabel->SetLabel(_("Orientation:"));
   checkForUpdateButton->SetLabel(_("Check for update"));
+  autohideCheckBox->SetLabel(_("Auto-hide after launching an application"));
+  alwaysOnTopCheckBox->SetLabel(_("Always on top"));
 }
 
 
 void ConfigDialog::LoadSettings() {
   UserSettingsSP userSettings = gController.GetUser()->GetSettings();
+  wxArrayString foundFilePaths;
 
   //***************************************************************************
   // Populate language dropdown list
@@ -70,32 +75,32 @@ void ConfigDialog::LoadSettings() {
 
   wxString localeFolderPath = FilePaths::GetLocalesDirectory();
 
-  wxArrayString foundFilePaths;
-  wxDir localeFolder;
-
-  // Get all the text files in the locale folder
-  localeFolder.GetAllFiles(localeFolderPath, &foundFilePaths, _T("*.txt"));
-
   languageComboBox->Clear();
-
-  int selectedIndex = 0;
   wxString currentLocaleCode = userSettings->Locale;
 
-  for (int i = 0; i < foundFilePaths.Count(); i++) {
-    wxString filePath = foundFilePaths[i];
+  foundFilePaths.Clear();
+  wxDir localeFolder;
 
-    // Get the locale code from the filename
-    wxFileName filename(filePath);
-    filename.ClearExt();
-    wxString localeCode = filename.GetName();
+  int selectedIndex = 0;
+  if (wxFileName::DirExists(localeFolderPath) && localeFolder.Open(localeFolderPath)) {
+    wxString folderName;
+    bool success = localeFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
+    int i = 0;
 
-    // Get the language name from the file
-    wxString languageName = Localization::Instance()->GetLanguageName(localeCode);
-    wxStringClientData* clientData = new wxStringClientData(localeCode);
+    while (success) {
+      // Note: The folder name is the locale code
 
-    if (localeCode == currentLocaleCode) selectedIndex = i;
-    languageComboBox->Append(languageName, clientData);
-  }
+      // Get the language name from the file
+      wxString languageName = Localization::Instance()->GetLanguageName(folderName);
+      wxStringClientData* clientData = new wxStringClientData(folderName);  
+
+      languageComboBox->Append(languageName, clientData);
+
+      success = localeFolder.GetNext(&folderName);
+      if (folderName == currentLocaleCode) selectedIndex = i;
+      i++;
+    }
+  } 
 
   languageComboBox->Select(selectedIndex);
 
@@ -138,12 +143,22 @@ void ConfigDialog::LoadSettings() {
     int i = 0;
 
     while (success) {
-      skinComboBox->Append(folderName, new wxStringClientData(folderName));
+      SkinMetadata skinMetadata;
+      wxString skinFile = skinFolderPath + _T("/") + folderName + _T("/") + SKIN_FILE_NAME;
+      Styles::GetSkinMetadata(skinFile, skinMetadata);
+
+      skinComboBox->Append(skinMetadata.Name, new wxStringClientData(folderName));
       success = skinFolder.GetNext(&folderName);
       if (folderName == userSettings->Skin) selectedIndex = i;
       i++;
     }
   } 
+
+  //***************************************************************************
+  // "Auto-hide" and "Always on top"
+  //***************************************************************************
+  autohideCheckBox->SetValue(userSettings->AutoHideApplication);
+  alwaysOnTopCheckBox->SetValue(userSettings->AlwaysOnTop);
 
   skinComboBox->Select(selectedIndex);
 }
@@ -167,6 +182,8 @@ void ConfigDialog::OnCancelButtonClick(wxCommandEvent& evt) {
 void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   UserSettingsSP userSettings = gController.GetUser()->GetSettings();
   wxStringClientData* clientData;
+
+  bool mustRestart = false;
   
   //***************************************************************************
   // Apply changes to locale code
@@ -217,7 +234,20 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     gMainFrame->ApplySkin();
   }
 
+  if (userSettings->AutoHideApplication != autohideCheckBox->GetValue()) {
+    userSettings->AutoHideApplication = autohideCheckBox->GetValue();
+  }
+
+  if (userSettings->AlwaysOnTop != alwaysOnTopCheckBox->GetValue()) {
+    userSettings->AlwaysOnTop = alwaysOnTopCheckBox->GetValue();
+    mustRestart = true;
+  }
+
   gController.GetUser()->Save(true);
+
+  if (mustRestart) {
+    MessageBoxes::ShowInformation(_("your settings have been saved, but you must restart the application for some of the changes to take effect."));
+  }
 
   EndDialog(wxID_OK);
 }

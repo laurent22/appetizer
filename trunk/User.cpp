@@ -32,6 +32,12 @@ User::User() {
 }
 
 
+User::~User() {
+  if (groupEditorDialog_) groupEditorDialog_->Destroy();
+  if (shortcutEditorDialog_) shortcutEditorDialog_->Destroy();
+}
+
+
 FolderItemSP User::GetRootFolderItem() {
   return rootFolderItem_;
 }
@@ -150,17 +156,13 @@ int User::EditFolderItem(FolderItemSP folderItem) {
   int result;
 
   if (folderItem->IsGroup()) {
-    groupEditorDialog_ = new GroupEditorDialog();
+    if (!groupEditorDialog_) groupEditorDialog_ = new GroupEditorDialog();
     groupEditorDialog_->LoadFolderItem(folderItem);
     result = groupEditorDialog_->ShowModal();
-    groupEditorDialog_->Destroy();
-    groupEditorDialog_ = NULL;
   } else {
-    shortcutEditorDialog_ = new ShortcutEditorDialog();
+    if (!shortcutEditorDialog_) shortcutEditorDialog_ = new ShortcutEditorDialog();
     shortcutEditorDialog_->LoadFolderItem(folderItem);
-    int result = shortcutEditorDialog_->ShowModal();
-    shortcutEditorDialog_->Destroy();
-    shortcutEditorDialog_ = NULL;
+    result = shortcutEditorDialog_->ShowModal();
   }
 
   if (result == wxID_OK) gController.FolderItems_FolderItemChange(folderItem);

@@ -27,6 +27,8 @@ UserSettings::UserSettings() {
   VideosPath = _T("%DRIVE%/Documents/Videos");
   Skin = _T("Default");
   Rotated = false;
+  AlwaysOnTop = false;
+  AutoHideApplication = false;
 
   NextUpdateCheckTime = wxDateTime::Now();
   NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
@@ -46,6 +48,8 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "Skin", Skin);
   AppendSettingToXml(xml, "Rotated", Rotated);
   AppendSettingToXml(xml, "NextUpdateCheckTime", NextUpdateCheckTime.Format());
+  AppendSettingToXml(xml, "AlwaysOnTop", AlwaysOnTop);
+  AppendSettingToXml(xml, "AutoHideApplication", AutoHideApplication);
 
   return xml;
 }
@@ -86,6 +90,8 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("Skin")) Skin = v;
     if (n == _T("Rotated")) Rotated = v.Lower() == _T("true");
     if (n == _T("NextUpdateCheckTime")) NextUpdateCheckTime.ParseFormat(v);
+    if (n == _T("AlwaysOnTop")) AlwaysOnTop = v.Lower() == _T("true");
+    if (n == _T("AutoHideApplication")) AutoHideApplication = v.Lower() == _T("true");
 
   }
 }

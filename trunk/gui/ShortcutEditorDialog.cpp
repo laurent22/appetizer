@@ -37,6 +37,7 @@ void ShortcutEditorDialog::Localize() {
   SetTitle(_("Shorcut Properties"));
   nameLabel->SetLabel(_("Name:"));
   locationLabel->SetLabel(_("Location:"));
+  parametersLabel->SetLabel(_("Parameters:"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));
 }
@@ -68,6 +69,7 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   folderItem_->SetFilePath(folderItemFilePath);
   folderItem_->SetName(folderItemName);
+  folderItem_->SetParameters(parametersTextBox->GetValue());
 
   EndDialog(wxID_OK);
 }
@@ -76,6 +78,7 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 void ShortcutEditorDialog::UpdateFromFolderItem() {  
   nameTextBox->SetValue(folderItem_->GetName());
   locationTextBox->SetValue(folderItem_->GetFilePath());
+  parametersTextBox->SetValue(folderItem_->GetParameters());
 }
 
 

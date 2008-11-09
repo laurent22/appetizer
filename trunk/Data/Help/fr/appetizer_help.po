@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 17:26+0000\n"
+"POT-Creation-Date: 2008-11-09 18:37+0000\n"
 "PO-Revision-Date: 2008-11-09 14:56-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -17,15 +17,19 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: generate_help\main.cpp:78
+#: generate_help\main.cpp:77
+msgid "Appetizer Help Topics"
+msgstr ""
+
+#: generate_help\main.cpp:83
 msgid "Introduction"
 msgstr "Introdution"
 
-#: generate_help\main.cpp:79
+#: generate_help\main.cpp:84
 msgid "About Appetizer"
 msgstr "A propos d'Appetizer"
 
-#: generate_help\main.cpp:80
+#: generate_help\main.cpp:85
 #, fuzzy
 msgid ""
 "Appetizer is a dock bar that allows you to organize, display and launch your "
@@ -42,45 +46,45 @@ msgstr ""
 "logiciel le détecte et ajoute automatiquement  tous vos logiciels ainsi que "
 "vos dossiers 'Documents', 'Videos', 'Music' et 'Pictures'."
 
-#: generate_help\main.cpp:85
+#: generate_help\main.cpp:90
 msgid "Features"
 msgstr ""
 
-#: generate_help\main.cpp:88
+#: generate_help\main.cpp:93
 msgid ""
 "Resizable dock, which allows displaying the icons both horizontally or "
 "vertically."
 msgstr ""
 
-#: generate_help\main.cpp:89
+#: generate_help\main.cpp:94
 msgid "Two size of icons supported: Small and large"
 msgstr ""
 
-#: generate_help\main.cpp:90
+#: generate_help\main.cpp:95
 msgid "Move the bar by clicking and dragging its border"
 msgstr ""
 
-#: generate_help\main.cpp:91
+#: generate_help\main.cpp:96
 msgid "Organize the icons by drag & dropping them"
 msgstr ""
 
-#: generate_help\main.cpp:92
+#: generate_help\main.cpp:97
 msgid "'Multi-launch' functionality"
 msgstr ""
 
-#: generate_help\main.cpp:93
+#: generate_help\main.cpp:98
 msgid "Support for multiple languages"
 msgstr ""
 
-#: generate_help\main.cpp:94
+#: generate_help\main.cpp:99
 msgid "Minimize to tray icon functionality"
 msgstr ""
 
-#: generate_help\main.cpp:102
+#: generate_help\main.cpp:107
 msgid "Using Appetizer"
 msgstr ""
 
-#: generate_help\main.cpp:103
+#: generate_help\main.cpp:108
 msgid ""
 "Appetizer is made to be simple and intuitive. To get more information about "
 "an icon or a button, simply move the mouse over it. Additionally, try right-"
@@ -88,108 +92,102 @@ msgid ""
 "such as the icons or the icon panel provide various contextual actions."
 msgstr ""
 
-#: generate_help\main.cpp:108
+#: generate_help\main.cpp:113
 msgid "Adding, removing and changing a shortcut"
 msgstr ""
 
-#: generate_help\main.cpp:110
+#: generate_help\main.cpp:115
 msgid ""
 "To add a shortcut, right-click anywhere on the icon panel and select 'New "
 "shortcut...';"
 msgstr ""
 
-#: generate_help\main.cpp:111
+#: generate_help\main.cpp:116
 msgid "To remove a shortcut, right-click on it and select 'Delete';"
 msgstr ""
 
-#: generate_help\main.cpp:112
+#: generate_help\main.cpp:117
 msgid ""
 "To change the properties of an icon, such as its name or location, right-"
 "click on it and select 'Properties';"
 msgstr ""
 
-#: generate_help\main.cpp:113
+#: generate_help\main.cpp:118
 msgid "To move an icon to a different location, click it and drag it."
 msgstr ""
 
-#: generate_help\main.cpp:119
-msgid "The tray icon"
-msgstr ""
-
-#: generate_help\main.cpp:120
-msgid ""
-"The tray icon (visible next to the clock on Windows) provides a few "
-"additional options:"
-msgstr ""
-
-#: generate_help\main.cpp:122
-msgid ""
-"Click on it to bring the dock to the front or to make it visible (if it was "
-"hidden)"
-msgstr ""
-
-#: generate_help\main.cpp:123
-msgid "Right-click on it for additional options"
+#: generate_help\main.cpp:124
+msgid "Minimizing / Maximizing the dock"
 msgstr ""
 
 #: generate_help\main.cpp:125
 msgid ""
-"Note: whenever you click on the 'Close' button, the application is actually "
-"minimized to the tray. To definitely close it, right-click on the tray icon "
-"and select 'Close'."
+"The dock can be minimized to the tray icon by clicking on the 'X' button. To "
+"bring it back to front, simply click on the icon."
 msgstr ""
 
-#: generate_help\main.cpp:130
+#: generate_help\main.cpp:126
+msgid "Right-click on the tray icon for additional options."
+msgstr ""
+
+#: generate_help\main.cpp:132
 msgid "The option panel"
 msgstr ""
 
-#: generate_help\main.cpp:131
+#: generate_help\main.cpp:133
 msgid ""
-"The option panel pops up when you click on the big arrow button on the left "
-"of the dock. If you move the mouse over any of its button, a tooltip will "
-"show up giving you more information."
+"The option panel pops up when you click on the big arrow button. If you move "
+"the mouse over any of its buttons, a tooltip will show up giving you more "
+"information."
 msgstr ""
 
-#: generate_help\main.cpp:136
-msgid "The configuration dialogue"
+#: generate_help\main.cpp:138
+msgid "Launching several application simultaneously"
 msgstr ""
 
-#: generate_help\main.cpp:137
+#: generate_help\main.cpp:139
 msgid ""
-"The configuration dialogue is accessible by clicking on the 'Configuration' "
-"button in the option panel."
+"Appetizer provides a functionality to launch several applications at the "
+"click of a button. This is equivalent to the Startup menu on Windows, except "
+"that it launches the app on your portable drive. To use this 'Multi-launch' "
+"group, follow these steps:"
 msgstr ""
 
-#: generate_help\main.cpp:142
-msgid "The 'Multi-launch' group"
-msgstr ""
-
-#: generate_help\main.cpp:143
-msgid ""
-"The 'Multi-launch' group allows you to launch several application at the "
-"click of a button. To use this functionality, follow these steps:"
-msgstr ""
-
-#: generate_help\main.cpp:145
+#: generate_help\main.cpp:141
 msgid ""
 "Right-click on any icon and select 'Multi-launch group' from the context menu"
 msgstr ""
 
-#: generate_help\main.cpp:146
+#: generate_help\main.cpp:142
 msgid "You can add as many shortcuts as you wish"
 msgstr ""
 
-#: generate_help\main.cpp:147
+#: generate_help\main.cpp:143
 msgid ""
-"To trigger the 'Multi-launch' group, open the option panel and click on the "
-"'Multi-launch' button"
+"To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] "
+"and click on the 'Multi-launch' button"
 msgstr ""
 
-#: generate_help\main.cpp:154
+#: generate_help\main.cpp:149
+#, fuzzy
+msgid "Configuring Appetizer"
+msgstr "A propos d'Appetizer"
+
+#: generate_help\main.cpp:150
+msgid "The configuration dialogue"
+msgstr ""
+
+#: generate_help\main.cpp:151
+msgid ""
+"The configuration dialogue is accessible by clicking on the 'Configuration' "
+"button in the [#OptionPanel option panel]."
+msgstr ""
+
+#: generate_help\main.cpp:157
 msgid "Other tips"
 msgstr ""
 
-#: generate_help\main.cpp:156
+#: generate_help\main.cpp:159
 msgid ""
 "You can resize the dock by clicking and dragging its bottom right corner"
 msgstr ""

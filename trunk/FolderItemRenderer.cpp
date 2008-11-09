@@ -176,6 +176,7 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
 
       if (!folderItem->IsGroup()) {
         folderItem->Launch();
+        gMainFrame->DoAutoHide();
       } else {
         wxMenu* menu = folderItem->ToMenu();
         PopupMenu(menu, wxPoint(0, GetSize().GetHeight()));

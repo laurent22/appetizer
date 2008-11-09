@@ -50,7 +50,7 @@ wxCmdLineParser gCommandLine;
 
 
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(9067);
+  //_CrtSetBreakAlloc(7471);
 
   wxCmdLineEntryDesc cmdLineDesc[] = {
     { wxCMD_LINE_SWITCH, _T("u"), _T("useuserdatadir"), _("Use user data directory to save settings.") },
@@ -77,7 +77,7 @@ bool MiniLaunchBar::OnInit() {
   Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
 
   gMainFrame = new MainFrame();
-  gMainFrame->Show(true);
+  gMainFrame->Show();
   gMainFrame->SetRotated(gController.GetUser()->GetSettings()->Rotated);  
 
   SetTopWindow(gMainFrame);
@@ -92,6 +92,10 @@ bool MiniLaunchBar::OnInit() {
   } 
 
   gMainFrame->Localize();
+
+  wxString skinName = _T("BlueGlass");
+  gController.GetUser()->GetSettings()->Skin = skinName;
+  gMainFrame->ApplySkin();
 
   return true;
 } 

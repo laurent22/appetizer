@@ -11,6 +11,7 @@
 #include <wx/intl.h>
 #include <wx/arrstr.h>
 #include <wx/file.h>
+#include <wx/regex.h>
 
 
 // The application class. An instance is created and initialized
@@ -48,6 +49,7 @@ void BR() { gCurrentString += _T("<br/>\n"); }
 void StartList() { gCurrentString += _T("<ul>\n"); } 
 void EndList() { gCurrentString += _T("</ul>\n"); } 
 void LI(const wxString& text) { gCurrentString += _T("<li>") + text + _T("</li>\n"); }
+void A(const wxString& text, const wxString& href, const wxString& name) { gCurrentString += _T("<a href='") + href + _T("'") + _T(" name='") + name + _T("'>") + text + _T("</a>"); }
 
 
 wxString GenerateHTMLString() {
@@ -70,6 +72,9 @@ wxString GenerateHTMLString() {
   AddStringLn(_T("</head>"));
   AddStringLn(_T("<body>"));
 
+
+
+  H1(_("Appetizer Help Topics"));
 
   // *******************************************************************************
   // INTRODUCTION
@@ -114,38 +119,36 @@ wxString GenerateHTMLString() {
   EndList();
 
   // -------------------------------------------------
-  // The tray icon
+  // Minimizing / Maximizing the dock
   // -------------------------------------------------
-  H3(_("The tray icon"));
-  P(_("The tray icon (visible next to the clock on Windows) provides a few additional options:"));
-  StartList();
-  LI(_("Click on it to bring the dock to the front or to make it visible (if it was hidden)"));
-  LI(_("Right-click on it for additional options"));
-  EndList();
-  P(_("Note: whenever you click on the 'Close' button, the application is actually minimized to the tray. To definitely close it, right-click on the tray icon and select 'Close'."));
+  H3(_("Minimizing / Maximizing the dock"));
+  P(_("The dock can be minimized to the tray icon by clicking on the 'X' button. To bring it back to front, simply click on the icon."));
+  P(_("Right-click on the tray icon for additional options."));
 
   // -------------------------------------------------
   // The option panel
   // -------------------------------------------------
+  A(_T(""), _T(""), _T("OptionPanel"));
   H3(_("The option panel"));
-  P(_("The option panel pops up when you click on the big arrow button on the left of the dock. If you move the mouse over any of its button, a tooltip will show up giving you more information."));
+  P(_("The option panel pops up when you click on the big arrow button. If you move the mouse over any of its buttons, a tooltip will show up giving you more information."));
 
   // -------------------------------------------------
-  // The configuration dialogue
+  // Launching several application simultaneously
   // -------------------------------------------------
-  H3(_("The configuration dialogue"));
-  P(_("The configuration dialogue is accessible by clicking on the 'Configuration' button in the option panel."));
-
-  // -------------------------------------------------
-  // The Multi-launch group
-  // -------------------------------------------------
-  H3(_("The 'Multi-launch' group"));
-  P(_("The 'Multi-launch' group allows you to launch several application at the click of a button. To use this functionality, follow these steps:"));
+  H3(_("Launching several application simultaneously"));
+  P(_("Appetizer provides a functionality to launch several applications at the click of a button. This is equivalent to the Startup menu on Windows, except that it launches the app on your portable drive. To use this 'Multi-launch' group, follow these steps:"));
   StartList();
   LI(_("Right-click on any icon and select 'Multi-launch group' from the context menu"));
   LI(_("You can add as many shortcuts as you wish"));
-  LI(_("To trigger the 'Multi-launch' group, open the option panel and click on the 'Multi-launch' button"));
+  LI(_("To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] and click on the 'Multi-launch' button"));
   EndList();
+
+  // *******************************************************************************
+  // CONFIGURING APPETIZER
+  // *******************************************************************************
+  H2(_("Configuring Appetizer"));
+  H3(_("The configuration dialogue"));
+  P(_("The configuration dialogue is accessible by clicking on the 'Configuration' button in the [#OptionPanel option panel]."));
 
 
   // *******************************************************************************
@@ -179,9 +182,19 @@ bool GenerateHelp::OnInit() {
     wxLocale locale;
     locale.Init(info->Language);
     locale.AddCatalogLookupPathPrefix(_T("Data/Help"));
-    locale.AddCatalog(_T("help"));
+    locale.AddCatalog(_T("appetizer_help"));
 
-    WriteHelp(_T("Data/Help/") + localeCode + _T("/Appetizer.html"), GenerateHTMLString()); 
+    wxString htmlString = GenerateHTMLString();
+
+    wxRegEx urlRegEx(_T("\\[((ftp|http|https)://[^\\s]+)\\s([^\\]]+)\\]"), wxRE_ADVANCED);    
+    wxRegEx strongRegEx(_T("\\[b\\](.*)\\[\\/b\\]"), wxRE_ADVANCED);
+    wxRegEx internalUrlRegEx(_T("\\[(#[^\\s]+)\\s([^\\]]+)\\]"), wxRE_ADVANCED);
+
+    urlRegEx.ReplaceAll(&htmlString, _T("<a href='\\1'>\\3</a>"));
+    strongRegEx.ReplaceAll(&htmlString, _T("<b>\\1</b>"));
+    internalUrlRegEx.ReplaceAll(&htmlString, _T("<a href='\\1'>\\2</a>"));
+
+    WriteHelp(_T("Data/Help/") + localeCode + _T("/Appetizer.html"), htmlString); 
   }
 
   return false;

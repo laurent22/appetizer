@@ -25,12 +25,13 @@ Controller::Controller() {
   locale_ = NULL;
   draggedFolderItemId_ = -1;  
   stopWatch_.Start();
-  user_.reset(new User());
+  user_ = new User();
 }
 
 
 Controller::~Controller() {
   wxDELETE(locale_);
+  wxDELETE(user_);
 }
 
 
@@ -132,7 +133,7 @@ FolderItemSP Controller::GetDraggedFolderItem() {
 }
 
 
-UserSP Controller::GetUser() {
+User* Controller::GetUser() {
   return user_;
 }
 
