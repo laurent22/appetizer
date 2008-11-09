@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<Skin>
+<Skin compatibleVersion="1.0" author="Laurent Cozic" name="Blue Glass">
 	<ArrowButton>
 		<ScaleGrid>8,35,2,1</ScaleGrid>
 		<Width>16</Width>
