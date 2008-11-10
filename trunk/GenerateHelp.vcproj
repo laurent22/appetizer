@@ -160,14 +160,13 @@
 		</Configuration>
 		<Configuration
 			Name="Unicode Debug|Win32"
-			OutputDirectory="$(SolutionDir)_$(ConfigurationName)"
-			IntermediateDirectory="_$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)_GenerateHelp"
+			IntermediateDirectory="_GenerateHelp"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description=""
 				CommandLine=""
 			/>
 			<Tool

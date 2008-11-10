@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 13:54+0000\n"
+"POT-Creation-Date: 2008-11-10 22:18+0000\n"
 "PO-Revision-Date: 2008-11-08 13:59-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -17,35 +17,89 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: ApplicationTrayIcon.cpp:30
+#: ApplicationTrayIcon.cpp:25
 msgid "Hide"
 msgstr "Verbergen"
 
-#: ApplicationTrayIcon.cpp:30
+#: ApplicationTrayIcon.cpp:25
 msgid "Show"
 msgstr "Toon"
 
-#: ApplicationTrayIcon.cpp:32 OptionPanel.cpp:106 gui\ConfigDialog.cpp:51
+#: ApplicationTrayIcon.cpp:33 MainFrame.cpp:273
+msgid "Eject drive"
+msgstr "Eject"
+
+#: ApplicationTrayIcon.cpp:34 OptionPanel.cpp:105 gui\ConfigDialog.cpp:48
 msgid "Configuration"
 msgstr "Configuratie"
 
-#: ApplicationTrayIcon.cpp:34
+#: ApplicationTrayIcon.cpp:36 gui\TreeViewDialog.cpp:65
 msgid "Close"
 msgstr "Sluiten"
 
-#: Controller.cpp:60
+#: FolderItem.cpp:320 gui\TreeViewDialog.cpp:64
+#, fuzzy
+msgid "Organize shortcuts"
+msgstr "Nieuwe snelkoppeling..."
+
+#: FolderItem.cpp:418 FolderItem.cpp:425 FolderItem.cpp:448
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr ""
+
+#: FolderItem.cpp:541
+msgid "Group"
+msgstr ""
+
+#: FolderItemRenderer.cpp:95
+msgid "Do you wish to remove this icon?"
+msgstr "Wil u dit item verwijderen?"
+
+#: FolderItemRenderer.cpp:117
+msgid "Remove..."
+msgstr "Verwijder..."
+
+#: FolderItemRenderer.cpp:120
+msgid "Add to Multi Launch group"
+msgstr "Toevoegen aan Multi Launch groep"
+
+#: FolderItemRenderer.cpp:128
+msgid "Organize group shortcuts"
+msgstr ""
+
+#: FolderItemRenderer.cpp:132
+msgid "Properties"
+msgstr "Eigenschappen"
+
+#: IconPanel.cpp:124 OptionPanel.cpp:104
+msgid "New shortcut..."
+msgstr "Nieuwe snelkoppeling..."
+
+#: IconPanel.cpp:125
+msgid "New group..."
+msgstr ""
+
+#: main.cpp:53
+msgid "Use user data directory to save settings."
+msgstr ""
+
+#: main.cpp:54
+msgid "Set user data path (-u will be ignored)"
+msgstr ""
+
+#: main.cpp:85
 msgid "Could not initialize locale."
 msgstr ""
 
-#: Controller.cpp:89
+#: main.cpp:227
 msgid "Could not get update information"
 msgstr "Kon geen update informatie krijgen"
 
-#: Controller.cpp:103
+#: main.cpp:241
 msgid "You have the latest version."
 msgstr "U hebt de nieuwste versie."
 
-#: Controller.cpp:110
+#: main.cpp:248
 #, c-format
 msgid ""
 "A new version is available!\n"
@@ -57,99 +111,60 @@ msgid ""
 "Do you wish to download it now?"
 msgstr ""
 
-#: Controller.cpp:116
+#: main.cpp:254
 msgid "Error launching web browser"
 msgstr "Fout bij het opstarten van de webbrowser"
 
-#: FolderItem.cpp:307 FolderItemRenderer.cpp:125
-msgid "Organize group shortcuts"
-msgstr ""
-
-#: FolderItem.cpp:397 FolderItem.cpp:404 FolderItem.cpp:427
-#, c-format
-msgid "This file doesn't exist or has been deleted (Error %s)"
-msgstr ""
-
-#: FolderItem.cpp:514
-msgid "Group"
-msgstr ""
-
-#: FolderItemRenderer.cpp:92
-msgid "Do you wish to remove this icon?"
-msgstr "Wil u dit item verwijderen?"
-
-#: FolderItemRenderer.cpp:114
-msgid "Remove..."
-msgstr "Verwijder..."
-
-#: FolderItemRenderer.cpp:117
-msgid "Add to Multi Launch group"
-msgstr "Toevoegen aan Multi Launch groep"
-
-#: FolderItemRenderer.cpp:129
-msgid "Properties"
-msgstr "Eigenschappen"
-
-#: IconPanel.cpp:126 OptionPanel.cpp:105
-msgid "New shortcut..."
-msgstr "Nieuwe snelkoppeling..."
-
-#: IconPanel.cpp:127
-msgid "New group..."
-msgstr ""
-
-#: IconPanel.cpp:141
-msgid "Edit group"
-msgstr ""
-
-#: main.cpp:56
-msgid "Use user data directory to save settings."
-msgstr ""
-
-#: main.cpp:57
-msgid "Set user data path (-u will be ignored)"
-msgstr ""
-
-#: MainFrame.cpp:283
+#: MainFrame.cpp:272
 msgid "Minimize to tray"
 msgstr "Sluiten"
 
-#: MainFrame.cpp:284
-msgid "Eject drive"
-msgstr "Eject"
-
-#: MessageBoxes.cpp:12
+#: MessageBoxes.cpp:13
 msgid "Error"
 msgstr "Fout"
 
-#: MessageBoxes.cpp:18
+#: MessageBoxes.cpp:19
 msgid "Information"
 msgstr "Informatie"
 
-#: MessageBoxes.cpp:24
+#: MessageBoxes.cpp:25
 msgid "Warning "
 msgstr "Waarschuwing"
 
-#: MessageBoxes.cpp:30
+#: MessageBoxes.cpp:31
 msgid "Confirmation"
 msgstr "Bevestiging"
 
-#: OptionPanel.cpp:104
+#: OptionPanel.cpp:103
 msgid "Help"
 msgstr ""
 
-#: OptionPanel.cpp:107
+#: OptionPanel.cpp:106
 msgid "Multi-launch"
 msgstr ""
 
-#: OptionPanel.cpp:240
+#: OptionPanel.cpp:239
 msgid "Help Topics"
 msgstr "Hulp Topics"
+
+#: OptionPanel.cpp:240
+msgid "Get Support"
+msgstr ""
 
 #: OptionPanel.cpp:242 gui\AboutDialog.cpp:48
 #, fuzzy, c-format
 msgid "About %s..."
 msgstr "Over %s..."
+
+#: Styles.cpp:69
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr ""
+
+#: utilities\Utilities.cpp:82
+#, fuzzy
+msgid "Do you wish to eject the drive?"
+msgstr "Wil u dit item verwijderen?"
 
 #: gui\AboutDialog.cpp:49
 msgid "About"
@@ -206,85 +221,122 @@ msgstr ""
 msgid "%s, Version %s.%s.%s (Build #%s)"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:52
+#: gui\ConfigDialog.cpp:49
 msgid "General"
 msgstr "Algemeen"
 
-#: gui\ConfigDialog.cpp:53
+#: gui\ConfigDialog.cpp:50
 msgid "Appearance"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:54
+#: gui\ConfigDialog.cpp:51
 msgid "Language:"
 msgstr "Taal:"
 
-#: gui\ConfigDialog.cpp:55
+#: gui\ConfigDialog.cpp:52
 msgid "Icon size:"
 msgstr "Icon grootte:"
 
-#: gui\ConfigDialog.cpp:56
+#: gui\ConfigDialog.cpp:53
 msgid "Skin:"
 msgstr "Skin:"
 
-#: gui\ConfigDialog.cpp:57 gui\GroupEditorDialog.cpp:37
-#: gui\ShortcutEditorDialog.cpp:40
+#: gui\ConfigDialog.cpp:54 gui\GroupEditorDialog.cpp:34
+#: gui\ShortcutEditorDialog.cpp:38
 msgid "Save"
 msgstr "Opslaan"
 
-#: gui\ConfigDialog.cpp:58 gui\GroupEditorDialog.cpp:38
-#: gui\ShortcutEditorDialog.cpp:41
+#: gui\ConfigDialog.cpp:55 gui\GroupEditorDialog.cpp:35
+#: gui\ShortcutEditorDialog.cpp:39
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: gui\ConfigDialog.cpp:59
+#: gui\ConfigDialog.cpp:56
 msgid "Orientation:"
 msgstr "Orientatie"
 
-#: gui\ConfigDialog.cpp:60 gui\ConfigDialog.cpp:158
+#: gui\ConfigDialog.cpp:57 gui\ConfigDialog.cpp:170
 msgid "Check for update"
 msgstr "Controleer op updates"
 
-#: gui\ConfigDialog.cpp:107
+#: gui\ConfigDialog.cpp:58
+msgid "Auto-hide after launching an application"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:59
+msgid "Always on top"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:60
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:108
 msgid "Small"
 msgstr "Klein"
 
-#: gui\ConfigDialog.cpp:108
+#: gui\ConfigDialog.cpp:109
 msgid "Large"
 msgstr "Groot"
 
-#: gui\ConfigDialog.cpp:121
+#: gui\ConfigDialog.cpp:122
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: gui\ConfigDialog.cpp:122
+#: gui\ConfigDialog.cpp:123
 msgid "Vertical"
 msgstr "Verticaal"
 
-#: gui\ConfigDialog.cpp:153
+#: gui\ConfigDialog.cpp:165
 msgid "Please wait..."
 msgstr ""
 
-#: gui\GroupEditorDialog.cpp:35 gui\ShortcutEditorDialog.cpp:37
+#: gui\ConfigDialog.cpp:250
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
+msgstr ""
+
+#: gui\GroupEditorDialog.cpp:32 gui\ShortcutEditorDialog.cpp:34
 msgid "Shorcut Properties"
 msgstr ""
 
-#: gui\GroupEditorDialog.cpp:36 gui\ShortcutEditorDialog.cpp:38
+#: gui\GroupEditorDialog.cpp:33 gui\ShortcutEditorDialog.cpp:35
 msgid "Name:"
 msgstr "Naam:"
 
-#: gui\ShortcutEditorDialog.cpp:39
+#: gui\GroupEditorDialog.cpp:71
+msgid "Default"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:36
 msgid "Location:"
 msgstr "Lokatie:"
+
+#: gui\ShortcutEditorDialog.cpp:37
+msgid "Parameters:"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:40
+#, fuzzy
+msgid "Select a file"
+msgstr "Selecteer bestand"
+
+#: gui\ShortcutEditorDialog.cpp:41
+#, fuzzy
+msgid "Select a folder"
+msgstr "Selecteer map"
 
 #: gui\ShortcutEditorDialog.cpp:65
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr "De snelkoppeling lokatie bestaat niet. Wilt u verdergaan?"
 
-#: gui\ShortcutEditorDialog.cpp:83
+#: gui\ShortcutEditorDialog.cpp:85
 msgid "Select file"
 msgstr "Selecteer bestand"
 
-#: gui\ShortcutEditorDialog.cpp:97
+#: gui\ShortcutEditorDialog.cpp:99
 msgid "Select folder"
 msgstr "Selecteer map"
 

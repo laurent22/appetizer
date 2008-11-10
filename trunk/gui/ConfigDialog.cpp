@@ -92,8 +92,9 @@ void ConfigDialog::LoadSettings() {
 
       languageComboBox->Append(languageName, clientData);
 
-      success = localeFolder.GetNext(&folderName);
       if (folderName == currentLocaleCode) selectedIndex = i;
+
+      success = localeFolder.GetNext(&folderName);      
       i++;
     }
   } 
@@ -144,8 +145,9 @@ void ConfigDialog::LoadSettings() {
       Styles::GetSkinMetadata(skinFile, skinMetadata);
 
       skinComboBox->Append(skinMetadata.Name, new wxStringClientData(folderName));
-      success = skinFolder.GetNext(&folderName);
       if (folderName == userSettings->Skin) selectedIndex = i;
+
+      success = skinFolder.GetNext(&folderName);      
       i++;
     }
   } 
@@ -247,7 +249,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   wxGetApp().GetUser()->Save(true);
 
   if (mustRestart) {
-    MessageBoxes::ShowInformation(_("your settings have been saved, but you must restart the application for some of the changes to take effect."));
+    MessageBoxes::ShowInformation(_("Some of these changes will only be applied until after you restart the application."));
   }
 
   EndDialog(wxID_OK);

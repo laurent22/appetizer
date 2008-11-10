@@ -140,10 +140,13 @@ void Utilities::ShowHelpFile() {
   f.Normalize();
   helpFile = f.GetFullPath();
 
-  FolderItemSP pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
-  if (pdfReaderFolderItem.get()) {
-    pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
-    return;
+  if (false) {
+    // Keep support for PDF in case some languages don't work with CHM files
+    FolderItemSP pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
+    if (pdfReaderFolderItem.get()) {
+      pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
+      return;
+    }    
   }
 
   FolderItem::Launch(helpFile);

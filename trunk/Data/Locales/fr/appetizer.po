@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-09 13:54+0000\n"
-"PO-Revision-Date: 2008-11-08 23:45-0000\n"
+"POT-Creation-Date: 2008-11-10 22:18+0000\n"
+"PO-Revision-Date: 2008-11-10 22:29-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -18,35 +18,96 @@ msgstr ""
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: ApplicationTrayIcon.cpp:30
+#: ApplicationTrayIcon.cpp:25
 msgid "Hide"
 msgstr "Masquer"
 
-#: ApplicationTrayIcon.cpp:30
+#: ApplicationTrayIcon.cpp:25
 msgid "Show"
 msgstr "Montrer"
 
-#: ApplicationTrayIcon.cpp:32 OptionPanel.cpp:106 gui\ConfigDialog.cpp:51
+#: ApplicationTrayIcon.cpp:33
+#: MainFrame.cpp:273
+msgid "Eject drive"
+msgstr "Ejecter le disque amovible"
+
+#: ApplicationTrayIcon.cpp:34
+#: OptionPanel.cpp:105
+#: gui\ConfigDialog.cpp:48
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ApplicationTrayIcon.cpp:34
+#: ApplicationTrayIcon.cpp:36
+#: gui\TreeViewDialog.cpp:65
 msgid "Close"
 msgstr "Fermer"
 
-#: Controller.cpp:60
+#: FolderItem.cpp:320
+#: gui\TreeViewDialog.cpp:64
+msgid "Organize shortcuts"
+msgstr "Organiser les raccourcis"
+
+#: FolderItem.cpp:418
+#: FolderItem.cpp:425
+#: FolderItem.cpp:448
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "The fichier n'existe pas ou a été effacé (Erreur %s)"
+
+#: FolderItem.cpp:541
+msgid "Group"
+msgstr "Groupe"
+
+#: FolderItemRenderer.cpp:95
+msgid "Do you wish to remove this icon?"
+msgstr "Souhaitez-vous supprimer cette icône ?"
+
+#: FolderItemRenderer.cpp:117
+msgid "Remove..."
+msgstr "Enlever..."
+
+#: FolderItemRenderer.cpp:120
+msgid "Add to Multi Launch group"
+msgstr "Groupe de Lancements Multiples"
+
+#: FolderItemRenderer.cpp:128
+msgid "Organize group shortcuts"
+msgstr "Organiser les raccourcis"
+
+#: FolderItemRenderer.cpp:132
+msgid "Properties"
+msgstr "Propriétés"
+
+#: IconPanel.cpp:124
+#: OptionPanel.cpp:104
+msgid "New shortcut..."
+msgstr "Nouveau raccourci..."
+
+#: IconPanel.cpp:125
+msgid "New group..."
+msgstr "Nouveau groupe..."
+
+#: main.cpp:53
+msgid "Use user data directory to save settings."
+msgstr "Utilise le dosser d'utilisateur par défaut pour sauvegarder les données"
+
+#: main.cpp:54
+msgid "Set user data path (-u will be ignored)"
+msgstr "Initialise le chemin du dossier de données (-u sera ignoré)"
+
+#: main.cpp:85
 msgid "Could not initialize locale."
 msgstr "Impossible d'initialiser les translations."
 
-#: Controller.cpp:89
+#: main.cpp:227
 msgid "Could not get update information"
 msgstr "Impossible de récupérer les informations de mise à jour."
 
-#: Controller.cpp:103
+#: main.cpp:241
 msgid "You have the latest version."
 msgstr "Vous avez la dernière version"
 
-#: Controller.cpp:110
+#: main.cpp:248
 #, c-format
 msgid ""
 "A new version is available!\n"
@@ -65,100 +126,60 @@ msgstr ""
 "\n"
 "Souhaitez-vous la télécharger maintenant ?"
 
-#: Controller.cpp:116
+#: main.cpp:254
 msgid "Error launching web browser"
 msgstr "Impossible de lancer le butineur"
 
-#: FolderItem.cpp:307 FolderItemRenderer.cpp:125
-msgid "Organize group shortcuts"
-msgstr ""
-
-#: FolderItem.cpp:397 FolderItem.cpp:404 FolderItem.cpp:427
-#, c-format
-msgid "This file doesn't exist or has been deleted (Error %s)"
-msgstr "The fichier n'existe pas ou a été effacé (Erreur %s)"
-
-#: FolderItem.cpp:514
-msgid "Group"
-msgstr "Groupe"
-
-#: FolderItemRenderer.cpp:92
-msgid "Do you wish to remove this icon?"
-msgstr "Souhaitez-vous supprimer cette icône ?"
-
-#: FolderItemRenderer.cpp:114
-msgid "Remove..."
-msgstr "Enlever..."
-
-#: FolderItemRenderer.cpp:117
-msgid "Add to Multi Launch group"
-msgstr "Groupe de Lancements Multiples"
-
-#: FolderItemRenderer.cpp:129
-msgid "Properties"
-msgstr "Propriétés"
-
-#: IconPanel.cpp:126 OptionPanel.cpp:105
-msgid "New shortcut..."
-msgstr "Nouveau raccourci..."
-
-#: IconPanel.cpp:127
-msgid "New group..."
-msgstr "Nouveau groupe..."
-
-#: IconPanel.cpp:141
-msgid "Edit group"
-msgstr "Editer groupe"
-
-#: main.cpp:56
-msgid "Use user data directory to save settings."
-msgstr ""
-"Utilise le dosser d'utilisateur par défaut pour sauvegarder les données"
-
-#: main.cpp:57
-msgid "Set user data path (-u will be ignored)"
-msgstr "Initialise le chemin du dossier de données (-u sera ignoré)"
-
-#: MainFrame.cpp:283
+#: MainFrame.cpp:272
 msgid "Minimize to tray"
 msgstr "Minimiser dans la zone de notification"
 
-#: MainFrame.cpp:284
-msgid "Eject drive"
-msgstr "Ejecter le disque amovible"
-
-#: MessageBoxes.cpp:12
+#: MessageBoxes.cpp:13
 msgid "Error"
 msgstr "Erreur"
 
-#: MessageBoxes.cpp:18
+#: MessageBoxes.cpp:19
 msgid "Information"
 msgstr "Information"
 
-#: MessageBoxes.cpp:24
+#: MessageBoxes.cpp:25
 msgid "Warning "
 msgstr "Avertissement"
 
-#: MessageBoxes.cpp:30
+#: MessageBoxes.cpp:31
 msgid "Confirmation"
 msgstr "Confirmation"
 
-#: OptionPanel.cpp:104
+#: OptionPanel.cpp:103
 msgid "Help"
 msgstr "Aide"
 
-#: OptionPanel.cpp:107
+#: OptionPanel.cpp:106
 msgid "Multi-launch"
 msgstr "Multi-lancement"
 
-#: OptionPanel.cpp:240
+#: OptionPanel.cpp:239
 msgid "Help Topics"
 msgstr "Rubriques d'aide"
 
-#: OptionPanel.cpp:242 gui\AboutDialog.cpp:48
+#: OptionPanel.cpp:240
+msgid "Get Support"
+msgstr "Obtenir de l'aide"
+
+#: OptionPanel.cpp:242
+#: gui\AboutDialog.cpp:48
 #, c-format
 msgid "About %s..."
 msgstr "À propos d'%s..."
+
+#: Styles.cpp:69
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Cette skin n'est pas compatible avec votre version d'%s"
+
+#: utilities\Utilities.cpp:82
+msgid "Do you wish to eject the drive?"
+msgstr "Souhaitez-vous éjecter le disque ?"
 
 #: gui\AboutDialog.cpp:49
 msgid "About"
@@ -206,133 +227,159 @@ msgstr "Copyright © %s"
 
 #: gui\AboutDialog.cpp:57
 msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le "
-"modifier suivant les termes de la “GNU General Public License” telle que "
-"publiée par la Free Software Foundation : soit la version 3 de cette "
-"licence, soit (à votre gré) toute version ultérieure.\n"
+"Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le modifier suivant les termes de la “GNU General Public License” telle que publiée par la Free Software Foundation : soit la version 3 de cette licence, soit (à votre gré) toute version ultérieure.\n"
 "\n"
-"Ce programme est distribué dans l’espoir qu’il vous sera utile, mais SANS "
-"AUCUNE GARANTIE : sans même la garantie implicite de COMMERCIALISABILITÉ ni "
-"d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la Licence Générale "
-"Publique GNU pour plus de détails.\n"
+"Ce programme est distribué dans l’espoir qu’il vous sera utile, mais SANS AUCUNE GARANTIE : sans même la garantie implicite de COMMERCIALISABILITÉ ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la Licence Générale Publique GNU pour plus de détails.\n"
 "\n"
-"Vous devriez avoir reçu une copie de la Licence Générale Publique GNU avec "
-"ce programme ; si ce n’est pas le cas, consultez : <http://www.gnu.org/"
-"licenses/>."
+"Vous devriez avoir reçu une copie de la Licence Générale Publique GNU avec ce programme ; si ce n’est pas le cas, consultez : <http://www.gnu.org/licenses/>."
 
 #: gui\AboutDialog.cpp:64
 #, c-format
 msgid "%s, Version %s.%s.%s (Build #%s)"
 msgstr "%s, Version %s.%s.%s (Compilation #%s)"
 
-#: gui\ConfigDialog.cpp:52
+#: gui\ConfigDialog.cpp:49
 msgid "General"
 msgstr "Général"
 
-#: gui\ConfigDialog.cpp:53
+#: gui\ConfigDialog.cpp:50
 msgid "Appearance"
 msgstr "Apparence"
 
-#: gui\ConfigDialog.cpp:54
+#: gui\ConfigDialog.cpp:51
 msgid "Language:"
 msgstr "Langue :"
 
-#: gui\ConfigDialog.cpp:55
+#: gui\ConfigDialog.cpp:52
 msgid "Icon size:"
 msgstr "Taille des icônes :"
 
-#: gui\ConfigDialog.cpp:56
+#: gui\ConfigDialog.cpp:53
 msgid "Skin:"
 msgstr "Apparence :"
 
-#: gui\ConfigDialog.cpp:57 gui\GroupEditorDialog.cpp:37
-#: gui\ShortcutEditorDialog.cpp:40
+#: gui\ConfigDialog.cpp:54
+#: gui\GroupEditorDialog.cpp:34
+#: gui\ShortcutEditorDialog.cpp:38
 msgid "Save"
 msgstr "Sauvegarder"
 
-#: gui\ConfigDialog.cpp:58 gui\GroupEditorDialog.cpp:38
-#: gui\ShortcutEditorDialog.cpp:41
+#: gui\ConfigDialog.cpp:55
+#: gui\GroupEditorDialog.cpp:35
+#: gui\ShortcutEditorDialog.cpp:39
 msgid "Cancel"
 msgstr "Annuler"
 
-#: gui\ConfigDialog.cpp:59
+#: gui\ConfigDialog.cpp:56
 msgid "Orientation:"
 msgstr "Orientation :"
 
-#: gui\ConfigDialog.cpp:60 gui\ConfigDialog.cpp:158
+#: gui\ConfigDialog.cpp:57
+#: gui\ConfigDialog.cpp:170
 msgid "Check for update"
 msgstr "Rechercher des mises à jour"
 
-#: gui\ConfigDialog.cpp:107
+#: gui\ConfigDialog.cpp:58
+msgid "Auto-hide after launching an application"
+msgstr "Cacher la barre après avoir lancé un programme"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Always on top"
+msgstr "Toujours visible"
+
+#: gui\ConfigDialog.cpp:60
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "N'autoriser qu'une seule copie d'%s à la fois."
+
+#: gui\ConfigDialog.cpp:108
 msgid "Small"
 msgstr "Petite"
 
-#: gui\ConfigDialog.cpp:108
+#: gui\ConfigDialog.cpp:109
 msgid "Large"
 msgstr "Grande"
 
-#: gui\ConfigDialog.cpp:121
+#: gui\ConfigDialog.cpp:122
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: gui\ConfigDialog.cpp:122
+#: gui\ConfigDialog.cpp:123
 msgid "Vertical"
 msgstr "Vertical"
 
-#: gui\ConfigDialog.cpp:153
+#: gui\ConfigDialog.cpp:165
 msgid "Please wait..."
 msgstr "Veuillez patienter..."
 
-#: gui\GroupEditorDialog.cpp:35 gui\ShortcutEditorDialog.cpp:37
+#: gui\ConfigDialog.cpp:250
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Certains de ces changements ne seront pris en compte qu'après le redémarrage du programme."
+
+#: gui\GroupEditorDialog.cpp:32
+#: gui\ShortcutEditorDialog.cpp:34
 msgid "Shorcut Properties"
 msgstr "Propriétés du raccourci"
 
-#: gui\GroupEditorDialog.cpp:36 gui\ShortcutEditorDialog.cpp:38
+#: gui\GroupEditorDialog.cpp:33
+#: gui\ShortcutEditorDialog.cpp:35
 msgid "Name:"
 msgstr "Nom :"
 
-#: gui\ShortcutEditorDialog.cpp:39
+#: gui\GroupEditorDialog.cpp:71
+msgid "Default"
+msgstr "Défaut"
+
+#: gui\ShortcutEditorDialog.cpp:36
 msgid "Location:"
 msgstr "Emplacement :"
+
+#: gui\ShortcutEditorDialog.cpp:37
+msgid "Parameters:"
+msgstr "Paramètres :"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Select a file"
+msgstr "Sélectionner un fichier"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Select a folder"
+msgstr "Selectionner un dossier"
 
 #: gui\ShortcutEditorDialog.cpp:65
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr "La cible de ce raccourci n'existe pas. Souhaitez-vous continuer ?"
 
-#: gui\ShortcutEditorDialog.cpp:83
+#: gui\ShortcutEditorDialog.cpp:85
 msgid "Select file"
 msgstr "Sélectionner un fichier"
 
-#: gui\ShortcutEditorDialog.cpp:97
+#: gui\ShortcutEditorDialog.cpp:99
 msgid "Select folder"
 msgstr "Veuillez sélectionner un dossier"
 
+#~ msgid ""
+#~ "your settings have been saved, but you must restart the application for "
+#~ "some of the changes to take effect."
+#~ msgstr "Vos paramètres ont été sauvegardé, mais vous devez redémarrer"
+#~ msgid "Edit group"
+#~ msgstr "Editer groupe"
 #~ msgid "Edit this group"
 #~ msgstr "Editer ce groupe"
-
 #~ msgid "FolderItem.EditShortcuts"
 #~ msgstr "FolderItem.EditShortcuts"
-
 #~ msgid "Global.Unnamed"
 #~ msgstr "Global.Unnamed"
-
 #~ msgid "Check for updateWait"
 #~ msgstr "Veuillez patienter..."
-
 #~ msgid "IconPanel.PopupMenu.NewGroup"
 #~ msgstr "IconPanel.PopupMenu.NewGroup"
-
 #~ msgid "AddGroupDialog.Title"
 #~ msgstr "AddGroupDialog.Title"
+

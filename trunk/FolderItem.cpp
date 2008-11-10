@@ -317,7 +317,7 @@ wxMenu* FolderItem::ToMenu(int iconSize) {
 
   if (menu->GetMenuItemCount() > 0) menu->AppendSeparator();
 
-  menu->Append(GetId(), _("Organize group shortcuts"));  
+  menu->Append(GetId(), _("Organize shortcuts"));  
 
   menu->Connect(
     wxID_ANY,
@@ -400,6 +400,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
           if (tArguments[0] != _T('"') && tArguments[arguments.Len() - 1] != _T('"')) {
             tArguments = _T('"') + tArguments + _T('"');
           }
+          tArguments = FolderItem::ResolvePath(tArguments);
         }
         wxExecute(wxString::Format(_T("%s %s"), filePath, tArguments));
       }

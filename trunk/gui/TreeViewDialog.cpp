@@ -45,6 +45,11 @@ void TreeViewDialog::OnButton(wxCommandEvent& evt) {
       EndDialog(wxID_CLOSE);
       break;
 
+    default:
+
+      evt.Skip();
+      break;
+
   }
 }
 
