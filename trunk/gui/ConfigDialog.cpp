@@ -10,6 +10,7 @@
 #include "../UserSettings.h"
 #include "../MainFrame.h"
 #include "../Localization.h"
+#include "../Constants.h"
 #include "../MessageBoxes.h"
 #include "../Log.h"
 #include "../Styles.h"
@@ -62,6 +63,7 @@ void ConfigDialog::Localize() {
   checkForUpdateButton->SetLabel(_("Check for update"));
   autohideCheckBox->SetLabel(_("Auto-hide after launching an application"));
   alwaysOnTopCheckBox->SetLabel(_("Always on top"));
+  oneInstanceCheckBox->SetLabel(wxString::Format(_("Allow only one instance of %s at a time"), APPLICATION_NAME));
 }
 
 
@@ -159,6 +161,7 @@ void ConfigDialog::LoadSettings() {
   //***************************************************************************
   autohideCheckBox->SetValue(userSettings->AutoHideApplication);
   alwaysOnTopCheckBox->SetValue(userSettings->AlwaysOnTop);
+  oneInstanceCheckBox->SetValue(userSettings->UniqueApplicationInstance);
 
   skinComboBox->Select(selectedIndex);
 }
@@ -241,6 +244,10 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   if (userSettings->AlwaysOnTop != alwaysOnTopCheckBox->GetValue()) {
     userSettings->AlwaysOnTop = alwaysOnTopCheckBox->GetValue();
     mustRestart = true;
+  }
+
+  if (userSettings->UniqueApplicationInstance != oneInstanceCheckBox->GetValue()) {
+    userSettings->UniqueApplicationInstance = oneInstanceCheckBox->GetValue();
   }
 
   gController.GetUser()->Save(true);

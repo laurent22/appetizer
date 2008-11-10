@@ -13,6 +13,7 @@
 #include "MessageBoxes.h"
 #include "Enumerations.h"
 #include "FilePaths.h"
+#include "Styles.h"
 #include "Log.h"
 #include "Controller.h"
 #include "MainFrame.h"
@@ -574,12 +575,12 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
         }
       }
 
-      if (!icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
+      if (!icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetSkinFile(_T("FolderIcon16.png")), wxBITMAP_TYPE_PNG));
     }
 
     if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon16_.get()) {
-      icon16_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/DefaultIcon16.png"), wxBITMAP_TYPE_PNG));
+      icon16_.reset(new wxIcon(FilePaths::GetSkinFile(_T("DefaultIcon16.png")), wxBITMAP_TYPE_PNG));
     }
     return icon16_;
 
@@ -596,12 +597,12 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
         }
       }
 
-      if (!icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/FolderIcon32.png"), wxBITMAP_TYPE_PNG));
+      if (!icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetSkinFile(_T("FolderIcon32.png")), wxBITMAP_TYPE_PNG));
     }
 
     if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     if (!icon32_.get()) {
-      icon32_.reset(new wxIcon(FilePaths::GetSkinDirectory() + _T("/DefaultIcon32.png"), wxBITMAP_TYPE_PNG));
+      icon32_.reset(new wxIcon(FilePaths::GetSkinFile(_T("DefaultIcon32.png")), wxBITMAP_TYPE_PNG));
     }
     return icon32_;
   }

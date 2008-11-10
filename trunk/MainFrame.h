@@ -19,6 +19,7 @@
 #include "IconPanel.h"
 #include "TypeDefinitions.h"
 #include "OptionPanel.h"
+#include "MiniLaunchBar.h"
 #include "ApplicationTrayIcon.h"
 #include "gui/AboutDialog.h"
 
@@ -27,6 +28,7 @@ enum {
   ID_BUTTON_Arrow,
   ID_TIMER_OpenCloseAnimation
 };
+
 
 class MainFrame: public wxFrame {
 

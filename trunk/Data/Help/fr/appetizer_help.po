@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Appetizer Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-09 18:37+0000\n"
-"PO-Revision-Date: 2008-11-09 14:56-0000\n"
+"PO-Revision-Date: 2008-11-09 22:57-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -27,33 +27,18 @@ msgstr "Introdution"
 
 #: generate_help\main.cpp:84
 msgid "About Appetizer"
-msgstr "A propos d'Appetizer"
+msgstr "À propos d'Appetizer"
 
 #: generate_help\main.cpp:85
-#, fuzzy
-msgid ""
-"Appetizer is a dock bar that allows you to organize, display and launch your "
-"applications and other shortcuts. Currently it is possible to add "
-"executables, documents and folders to the dock. Additionally, if you use "
-"Appetizer on a USB key in the [http://portableapps.com PortableApps] format, "
-"the application will detect it and automatically add all your applications "
-"along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."
-msgstr ""
-"Appetizer est un utilitaire de type \"dock\" qui permet d'organiser et de "
-"lancer ses applications et autres raccourcis. Entre autre il est possible "
-"d'ajouter des logiciels, documents et dossiers sur la barre. En outre, si "
-"vous utilisez Appetizer depuis une clef USB au format PortableApps.com, le "
-"logiciel le détecte et ajoute automatiquement  tous vos logiciels ainsi que "
-"vos dossiers 'Documents', 'Videos', 'Music' et 'Pictures'."
+msgid "Appetizer is a dock bar that allows you to organize, display and launch your applications and other shortcuts. Currently it is possible to add executables, documents and folders to the dock. Additionally, if you use Appetizer on a USB key in the [http://portableapps.com PortableApps] format, the application will detect it and automatically add all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."
+msgstr "Appetizer est un utilitaire qui permet de gérer ses programmes et raccourcis depuis une barre d'icônes. Entre autre il est possible d'ajouter des logiciels, des documents et dossiers sur la barre. En outre, si vous utilisez Appetizer depuis une clef USB au format [http://portableapps.com PortableApps], le logiciel le détecte et ajoute automatiquement sur la barre tous vos logiciels ainsi que vos dossiers 'Documents', 'Videos', 'Music' et 'Pictures'."
 
 #: generate_help\main.cpp:90
 msgid "Features"
 msgstr ""
 
 #: generate_help\main.cpp:93
-msgid ""
-"Resizable dock, which allows displaying the icons both horizontally or "
-"vertically."
+msgid "Resizable dock, which allows displaying the icons both horizontally or vertically."
 msgstr ""
 
 #: generate_help\main.cpp:94
@@ -85,11 +70,7 @@ msgid "Using Appetizer"
 msgstr ""
 
 #: generate_help\main.cpp:108
-msgid ""
-"Appetizer is made to be simple and intuitive. To get more information about "
-"an icon or a button, simply move the mouse over it. Additionally, try right-"
-"clicking the dock in different places - certain parts of the application "
-"such as the icons or the icon panel provide various contextual actions."
+msgid "Appetizer is made to be simple and intuitive. To get more information about an icon or a button, simply move the mouse over it. Additionally, try right-clicking the dock in different places - certain parts of the application such as the icons or the icon panel provide various contextual actions."
 msgstr ""
 
 #: generate_help\main.cpp:113
@@ -97,9 +78,7 @@ msgid "Adding, removing and changing a shortcut"
 msgstr ""
 
 #: generate_help\main.cpp:115
-msgid ""
-"To add a shortcut, right-click anywhere on the icon panel and select 'New "
-"shortcut...';"
+msgid "To add a shortcut, right-click anywhere on the icon panel and select 'New shortcut...';"
 msgstr ""
 
 #: generate_help\main.cpp:116
@@ -107,9 +86,7 @@ msgid "To remove a shortcut, right-click on it and select 'Delete';"
 msgstr ""
 
 #: generate_help\main.cpp:117
-msgid ""
-"To change the properties of an icon, such as its name or location, right-"
-"click on it and select 'Properties';"
+msgid "To change the properties of an icon, such as its name or location, right-click on it and select 'Properties';"
 msgstr ""
 
 #: generate_help\main.cpp:118
@@ -121,9 +98,7 @@ msgid "Minimizing / Maximizing the dock"
 msgstr ""
 
 #: generate_help\main.cpp:125
-msgid ""
-"The dock can be minimized to the tray icon by clicking on the 'X' button. To "
-"bring it back to front, simply click on the icon."
+msgid "The dock can be minimized to the tray icon by clicking on the 'X' button. To bring it back to front, simply click on the icon."
 msgstr ""
 
 #: generate_help\main.cpp:126
@@ -135,10 +110,7 @@ msgid "The option panel"
 msgstr ""
 
 #: generate_help\main.cpp:133
-msgid ""
-"The option panel pops up when you click on the big arrow button. If you move "
-"the mouse over any of its buttons, a tooltip will show up giving you more "
-"information."
+msgid "The option panel pops up when you click on the big arrow button. If you move the mouse over any of its buttons, a tooltip will show up giving you more information."
 msgstr ""
 
 #: generate_help\main.cpp:138
@@ -146,16 +118,11 @@ msgid "Launching several application simultaneously"
 msgstr ""
 
 #: generate_help\main.cpp:139
-msgid ""
-"Appetizer provides a functionality to launch several applications at the "
-"click of a button. This is equivalent to the Startup menu on Windows, except "
-"that it launches the app on your portable drive. To use this 'Multi-launch' "
-"group, follow these steps:"
+msgid "Appetizer provides a functionality to launch several applications at the click of a button. This is equivalent to the Startup menu on Windows, except that it launches the app on your portable drive. To use this 'Multi-launch' group, follow these steps:"
 msgstr ""
 
 #: generate_help\main.cpp:141
-msgid ""
-"Right-click on any icon and select 'Multi-launch group' from the context menu"
+msgid "Right-click on any icon and select 'Multi-launch group' from the context menu"
 msgstr ""
 
 #: generate_help\main.cpp:142
@@ -163,24 +130,19 @@ msgid "You can add as many shortcuts as you wish"
 msgstr ""
 
 #: generate_help\main.cpp:143
-msgid ""
-"To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] "
-"and click on the 'Multi-launch' button"
+msgid "To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] and click on the 'Multi-launch' button"
 msgstr ""
 
 #: generate_help\main.cpp:149
-#, fuzzy
 msgid "Configuring Appetizer"
-msgstr "A propos d'Appetizer"
+msgstr ""
 
 #: generate_help\main.cpp:150
 msgid "The configuration dialogue"
 msgstr ""
 
 #: generate_help\main.cpp:151
-msgid ""
-"The configuration dialogue is accessible by clicking on the 'Configuration' "
-"button in the [#OptionPanel option panel]."
+msgid "The configuration dialogue is accessible by clicking on the 'Configuration' button in the [#OptionPanel option panel]."
 msgstr ""
 
 #: generate_help\main.cpp:157
@@ -188,6 +150,6 @@ msgid "Other tips"
 msgstr ""
 
 #: generate_help\main.cpp:159
-msgid ""
-"You can resize the dock by clicking and dragging its bottom right corner"
+msgid "You can resize the dock by clicking and dragging its bottom right corner"
 msgstr ""
+

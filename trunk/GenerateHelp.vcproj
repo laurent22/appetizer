@@ -167,8 +167,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				Description="Generating version info and incrementing build number..."
-				CommandLine="resources\\CreateResources.exe"
+				Description=""
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -312,6 +312,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\generate_help\HtmlEntities.h"
+				>
+			</File>
 			<File
 				RelativePath=".\generate_help\main.cpp"
 				>

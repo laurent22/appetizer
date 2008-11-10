@@ -64,6 +64,16 @@ FolderItemRenderer::~FolderItemRenderer() {
 }
 
 
+void FolderItemRenderer::ApplySkin() {
+  // All the renderer's assets are lazily created on UpdateControlBitmap()
+  // so just reset everything here, and invalidate the bitmap.
+  iconOverlayPainterDown_.reset();
+  iconOverlayPainterUp_.reset();
+  multiLaunchIcon_.reset();
+  InvalidateControlBitmap();
+}
+
+
 FolderItemSP FolderItemRenderer::GetFolderItem() {
   return gController.GetUser()->GetRootFolderItem()->GetChildById(folderItemId_);
 }
@@ -281,7 +291,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   if (icon->IsOk()) {  
     int yOffset = 0;
     if (mouseInside_ && !mousePressed_) {
-      yOffset = -1;
+      //yOffset = -1;
     }
     Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top + yOffset);
   }

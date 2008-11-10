@@ -566,6 +566,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MiniLaunchBar.h"
+				>
+			</File>
+			<File
 				RelativePath=".\OptionButton.h"
 				>
 			</File>

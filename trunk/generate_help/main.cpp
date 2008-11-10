@@ -12,6 +12,10 @@
 #include <wx/arrstr.h>
 #include <wx/file.h>
 #include <wx/regex.h>
+#include "HtmlEntities.h"
+
+extern wxArrayString heSymbols;
+extern wxArrayString heCode;
 
 
 // The application class. An instance is created and initialized
@@ -41,15 +45,39 @@ void AddStringLn(const wxString& s) {
 }
 
 
-void H1(const wxString& text) { gCurrentString += _T("\n<h1>") + text + _T("</h1>\n"); }
-void H2(const wxString& text) { gCurrentString += _T("\n<h2>") + text + _T("</h2>\n"); }
-void H3(const wxString& text) { gCurrentString += _T("\n<h3>") + text + _T("</h3>\n"); }
-void P(const wxString& text) { gCurrentString += _T("<p>") + text + _T("</p>\n"); }
+wxString Sanitize(const wxString& text) {
+  wxString output;
+  for (int i = 0; i < text.Len(); i++) {
+    wxString c1 = text.Mid(i, 1);
+    
+    bool done = false;
+    for (int j = 0; j < heSymbols.Count(); j++) {
+      wxString c2 = heSymbols[j];
+
+      if (c1 == c2) {
+        output += heCodes[j];
+        done = true;
+        break;
+      }
+    }
+
+    if (!done) output += c1;
+
+  }
+
+  return output;
+}
+
+
+void H1(const wxString& text) { gCurrentString += _T("\n<h1>") + Sanitize(text) + _T("</h1>\n"); }
+void H2(const wxString& text) { gCurrentString += _T("\n<h2>") + Sanitize(text) + _T("</h2>\n"); }
+void H3(const wxString& text) { gCurrentString += _T("\n<h3>") + Sanitize(text) + _T("</h3>\n"); }
+void P(const wxString& text) { gCurrentString += _T("<p>") + Sanitize(text) + _T("</p>\n"); }
 void BR() { gCurrentString += _T("<br/>\n"); }
 void StartList() { gCurrentString += _T("<ul>\n"); } 
 void EndList() { gCurrentString += _T("</ul>\n"); } 
-void LI(const wxString& text) { gCurrentString += _T("<li>") + text + _T("</li>\n"); }
-void A(const wxString& text, const wxString& href, const wxString& name) { gCurrentString += _T("<a href='") + href + _T("'") + _T(" name='") + name + _T("'>") + text + _T("</a>"); }
+void LI(const wxString& text) { gCurrentString += _T("<li>") + Sanitize(text) + _T("</li>\n"); }
+void A(const wxString& text, const wxString& href, const wxString& name) { gCurrentString += _T("<a href='") + Sanitize(href) + _T("'") + _T(" name='") + name + _T("'>") + Sanitize(text) + _T("</a>"); }
 
 
 wxString GenerateHTMLString() {
@@ -167,6 +195,8 @@ wxString GenerateHTMLString() {
 
 
 bool GenerateHelp::OnInit() {
+  InitializeHtmlEntities();
+
   wxArrayString localeCodes;
   localeCodes.Add(_T("en"));
   localeCodes.Add(_T("fr"));  

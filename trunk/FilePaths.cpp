@@ -9,11 +9,11 @@
 #include <wx/cmdline.h>
 #include "FilePaths.h"
 #include "Constants.h"
+#include "MiniLaunchBar.h"
 #include "Controller.h"
 
 
 extern Controller gController;
-extern wxCmdLineParser gCommandLine;
 
 
 wxString FilePaths::ApplicationDrive_ = _T("");
@@ -76,13 +76,15 @@ void FilePaths::InitializePaths() {
   #endif // __WINDOWS__
 
   FilePaths::ApplicationDirectory_ = applicationDirectory;
-  FilePaths::DataDirectory_ = applicationDirectory + _T("/") + DATA_FOLDER_NAME;   
+  FilePaths::DataDirectory_ = applicationDirectory + _T("/") + DATA_FOLDER_NAME;  
+
+  const wxCmdLineParser& commandLine = wxGetApp().GetCommandLine();
 
   wxString userDataPath;
-  bool found = gCommandLine.Found(_T("d"), &userDataPath);
+  bool found = commandLine.Found(_T("d"), &userDataPath);
   if (found) {
     FilePaths::SettingsDirectory_ = userDataPath;
-  } else if (gCommandLine.Found(_T("u"))) {
+  } else if (commandLine.Found(_T("u"))) {
     FilePaths::SettingsDirectory_ = wxString::Format(_T("%s/%s/%s"), wxStandardPaths().GetUserConfigDir(), APPLICATION_NAME, SETTING_FOLDER_NAME);
   } else {
     FilePaths::SettingsDirectory_ = FilePaths::GetDataDirectory() + _T("/") + SETTING_FOLDER_NAME;

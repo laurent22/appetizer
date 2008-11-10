@@ -29,6 +29,7 @@ public:
   wxDateTime NextUpdateCheckTime;
   bool AlwaysOnTop;
   bool AutoHideApplication;
+  bool UniqueApplicationInstance;
 
   void Save();
   void Load();

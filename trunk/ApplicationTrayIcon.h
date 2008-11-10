@@ -10,13 +10,7 @@
 #include <wx/wx.h>
 #include <wx/taskbar.h>
 #include <wx/menu.h>
-
-
-enum {
-  ID_MENU_Exit,
-  ID_MENU_HideShow,
-  ID_MENU_Config
-};
+#include "Enumerations.h"
 
 
 class ApplicationTrayIcon : public wxTaskBarIcon {
@@ -26,10 +20,8 @@ public:
   ApplicationTrayIcon();
   wxMenu* CreatePopupMenu();
 
-  void OnMenuHideShow(wxCommandEvent& evt);
-  void OnMenuExit(wxCommandEvent& evt);
-  void OnMenuConfig(wxCommandEvent& evt);
   void OnLeftUp(wxTaskBarIconEvent& evt);
+  void OnMenuItemClick(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

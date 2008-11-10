@@ -27,8 +27,8 @@ END_EVENT_TABLE()
 
 ShortcutEditorDialog::ShortcutEditorDialog()
 : ShortcutEditorDialogBase(NULL, wxID_ANY, wxEmptyString) {
-  selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::GetSkinDirectory() + _T("/FolderIcon16.png"), wxBITMAP_TYPE_PNG));
-  selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::GetSkinDirectory() + _T("/FileIcon16.png"), wxBITMAP_TYPE_PNG));
+  selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::GetSkinFile(_T("FolderIcon16.png")), wxBITMAP_TYPE_PNG));
+  selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::GetSkinFile(_T("FileIcon16.png")), wxBITMAP_TYPE_PNG));
   Localize();
 }
 
@@ -40,6 +40,8 @@ void ShortcutEditorDialog::Localize() {
   parametersLabel->SetLabel(_("Parameters:"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));
+  selectFileButton->SetToolTip(_("Select a file"));
+  selectFolderButton->SetToolTip(_("Select a folder"));
 }
 
 

@@ -74,6 +74,11 @@ void IconPanel::ApplySkin() {
   browseButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BrowseArrowButton"));
   browseButton_->FitToImage();
 
+  for (int i = 0; i < folderItemRenderers_.size(); i++) {
+    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    renderer->ApplySkin();
+  }
+
   InvalidateLayout();
 }
 
@@ -170,6 +175,20 @@ int IconPanel::GetInsertionIndexAtPoint(const wxPoint& point) {
     // The point is somewhere in the second half of the renderer
     return i + 1;
   }
+
+  if (folderItemRenderers_.size() <= 0) return -1;
+
+  FolderItemRendererSP firstRenderer = folderItemRenderers_.at(0);
+  int x = firstRenderer->GetRect().GetRight();
+  int y = firstRenderer->GetRect().GetBottom();
+  ClientToScreen(&x, &y);
+  if (point.x <= x && point.y <= y) return 0;
+
+  FolderItemRendererSP lastRenderer = folderItemRenderers_.at(folderItemRenderers_.size() - 1);
+  x = lastRenderer->GetRect().GetLeft();
+  y = lastRenderer->GetRect().GetTop();
+  ClientToScreen(&x, &y);
+  if (point.x >= x && point.y >= y) return folderItemRenderers_.size();
 
   // The point is off bounds
   return -1;

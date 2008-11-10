@@ -28,6 +28,7 @@ UserSettings::UserSettings() {
   Skin = _T("Default");
   Rotated = false;
   AlwaysOnTop = false;
+  UniqueApplicationInstance = true;
   AutoHideApplication = false;
 
   NextUpdateCheckTime = wxDateTime::Now();
@@ -50,6 +51,7 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "NextUpdateCheckTime", NextUpdateCheckTime.Format());
   AppendSettingToXml(xml, "AlwaysOnTop", AlwaysOnTop);
   AppendSettingToXml(xml, "AutoHideApplication", AutoHideApplication);
+  AppendSettingToXml(xml, "UniqueApplicationInstance", UniqueApplicationInstance);
 
   return xml;
 }
@@ -92,6 +94,7 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("NextUpdateCheckTime")) NextUpdateCheckTime.ParseFormat(v);
     if (n == _T("AlwaysOnTop")) AlwaysOnTop = v.Lower() == _T("true");
     if (n == _T("AutoHideApplication")) AutoHideApplication = v.Lower() == _T("true");
+    if (n == _T("UniqueApplicationInstance")) UniqueApplicationInstance = v.Lower() == _T("true");
 
   }
 }

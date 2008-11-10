@@ -102,15 +102,7 @@ MainFrame::MainFrame()
   closeSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_CloseButton);
   closeSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
-  bool showEjectSideButton = true;
-
-  #ifdef __WINDOWS__
-  UINT result = GetDriveType(FilePaths::GetApplicationDrive());
-  // Don't show the eject button if we are not on a removable drive.
-  // However, to be safe, do show it if the call to GetDriveType
-  // failed (result = 0 or 1)
-  if (result >= 2 && result != DRIVE_REMOVABLE) showEjectSideButton = false;
-  #endif // __WINDOWS__
+  bool showEjectSideButton = gUtilities.IsApplicationOnRemoteDrive();
 
   if (showEjectSideButton) {
     ejectSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_EjectButton);
@@ -732,8 +724,7 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
 
     case ID_BUTTON_MainFrame_EjectButton: {
 
-      int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"));
-      if (answer == wxID_YES) gUtilities.EjectDriveAndExit();
+      gUtilities.EjectDriveAndExit();
 
     } break;
 

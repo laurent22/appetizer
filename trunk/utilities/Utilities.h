@@ -20,13 +20,14 @@ public:
 
   Utilities();
   ~Utilities();
-  void EjectDriveAndExit();
+  void EjectDriveAndExit(bool askForConfirmation = true);
   void DoMultiLaunch();
   void ShowConfigDialog();
   void ShowHelpFile();
   void ShowAboutDialog();
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void CreateNewShortcut();
+  bool IsApplicationOnRemoteDrive();
   wxString CreateUUID();
   void Localize();
 

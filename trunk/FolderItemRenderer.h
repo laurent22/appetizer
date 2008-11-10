@@ -29,6 +29,7 @@ public:
   void UpdateControlBitmap();
   void FitToContent();
   FolderItemSP GetFolderItem();
+  void ApplySkin();
 
 private:
 

@@ -42,6 +42,8 @@ protected:
     wxStaticText* label_2;
     wxCheckBox* alwaysOnTopCheckBox;
     wxStaticText* label_3;
+    wxCheckBox* oneInstanceCheckBox;
+    wxStaticText* label_4;
     wxButton* checkForUpdateButton;
     wxPanel* notebook_1_pane_1;
     wxStaticText* iconSizeLabel;

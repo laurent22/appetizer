@@ -6,6 +6,7 @@
 
 #include <wx/filename.h>
 #include "Utilities.h"
+#include "../MessageBoxes.h"
 #include "../Controller.h"
 #include "../MainFrame.h"
 #include "../FilePaths.h"
@@ -69,7 +70,22 @@ Utilities::~Utilities() {
 }
 
 
-void Utilities::EjectDriveAndExit() {
+bool Utilities::IsApplicationOnRemoteDrive() {
+  #ifdef __WINDOWS__
+  UINT result = GetDriveType(FilePaths::GetApplicationDrive());
+  // Don't show the eject button if we are not on a removable drive.
+  // However, to be safe, do show it if the call to GetDriveType
+  // failed (result = 0 or 1)
+  if (result >= 2 && result != DRIVE_REMOVABLE) return false;
+  #endif // __WINDOWS__
+  return true;
+}
+
+
+void Utilities::EjectDriveAndExit(bool askForConfirmation) {
+  int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"));
+  if (answer != wxID_YES) return;
+
   #ifdef __WINDOWS__
 
   // In order to eject the drive we need to:
