@@ -13,6 +13,7 @@ TreeViewDialogBase::TreeViewDialogBase(wxWindow* parent, int id, const wxString&
 {
     // begin wxGlade: TreeViewDialogBase::TreeViewDialogBase
     treeControl = new wxTreeCtrl(this, ID_TREEVIEW_DLG_treeControl, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS|wxTR_LINES_AT_ROOT|wxTR_DEFAULT_STYLE|wxSUNKEN_BORDER);
+    closeButton = new wxButton(this, ID_TREEVIEW_DLG_closeButton, wxT("Close"));
 
     set_properties();
     do_layout();
@@ -35,6 +36,7 @@ void TreeViewDialogBase::do_layout()
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxVERTICAL);
     sizer_2->Add(treeControl, 1, wxEXPAND, 0);
+    sizer_2->Add(closeButton, 0, wxTOP|wxEXPAND, 8);
     sizer_1->Add(sizer_2, 1, wxALL|wxEXPAND, 8);
     SetSizer(sizer_1);
     Layout();

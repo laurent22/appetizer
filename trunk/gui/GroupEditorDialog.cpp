@@ -9,12 +9,9 @@
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
 #include "../FilePaths.h"
-#include "../Controller.h"
+#include "../MiniLaunchBar.h"
 #include "../MessageBoxes.h"
 #include "../utilities/VersionInfo.h"
-
-
-extern Controller gController;
 
 
 BEGIN_EVENT_TABLE(GroupEditorDialog, wxDialog)
@@ -50,7 +47,7 @@ void GroupEditorDialog::OnMenuItemClick(wxCommandEvent& evt) {
   int itemId = evt.GetId();
 
   hasSelectedDefaultIcon_ = false;
-  FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(itemId);
+  FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(itemId);
 
   if (!folderItem.get()) {
     if (itemId == ID_MENU_DefaultGroupIcon) {

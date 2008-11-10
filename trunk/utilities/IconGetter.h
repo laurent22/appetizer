@@ -33,7 +33,7 @@ class IconGetter {
      * @param iconSize The icon size (only 16 and 32 are currently supported)
      * @return The icon or wxNullIcon in case of error
      */
-    static wxIcon* GetExecutableIcon(const wxString& filePath, int iconSize = 32);
+    static wxIcon* GetExecutableIcon(const wxString& filePath, int iconSize = 32, int iconIndex = 0);
     
     /**
      * Gets the icon of a non-executable file, or a default icon if the file

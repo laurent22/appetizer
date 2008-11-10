@@ -60,9 +60,6 @@ public:
   void ApplySkin();
 
   void AddFolderItem(int folderItemId);
-  //void RemoveFolderItem(int folderItemId);
-  //void GetFolderItemAt(int index);
-  //void GetFolderItemCount();
   void SetFolderItemSource(int source);
 
   void OnRightDown(wxMouseEvent& evt);

@@ -6,9 +6,8 @@
 
 #include "ConfigDialog.h"
 #include "../FilePaths.h"
-#include "../Controller.h"
 #include "../UserSettings.h"
-#include "../MainFrame.h"
+#include "../MiniLaunchBar.h"
 #include "../Localization.h"
 #include "../Constants.h"
 #include "../MessageBoxes.h"
@@ -18,11 +17,6 @@
 #include <wx/dir.h>
 #include <wx/clntdata.h>
 #include <wx/filename.h>
-
-
-
-extern Controller gController;
-extern MainFrame* gMainFrame;
 
 
 BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
@@ -68,7 +62,7 @@ void ConfigDialog::Localize() {
 
 
 void ConfigDialog::LoadSettings() {
-  UserSettingsSP userSettings = gController.GetUser()->GetSettings();
+  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
   wxArrayString foundFilePaths;
 
   //***************************************************************************
@@ -171,7 +165,7 @@ void ConfigDialog::OnCheckForUpdateButtonClick(wxCommandEvent& evt) {
   checkForUpdateButton->SetLabel(_("Please wait..."));
   checkForUpdateButton->Disable();
   checkForUpdateButton->Update();
-  gController.CheckForNewVersion(false);
+  wxGetApp().CheckForNewVersion(false);
   checkForUpdateButton->Enable();
   checkForUpdateButton->SetLabel(_("Check for update"));
 }
@@ -183,7 +177,7 @@ void ConfigDialog::OnCancelButtonClick(wxCommandEvent& evt) {
 
 
 void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
-  UserSettingsSP userSettings = gController.GetUser()->GetSettings();
+  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
   wxStringClientData* clientData;
 
   bool mustRestart = false;
@@ -196,9 +190,9 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   wxString localeCode = clientData->GetData();
   
   if (localeCode != userSettings->Locale) {
-    if (gController.ChangeLocale(localeCode)) {
+    if (wxGetApp().ChangeLocale(localeCode)) {
       userSettings->Locale = localeCode;
-      gController.User_LocaleChange();
+      wxGetApp().User_LocaleChange();
     }
   }
 
@@ -212,7 +206,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (newIconSize != userSettings->IconSize) {
     userSettings->IconSize = newIconSize;
-    gController.User_IconSizeChange();
+    wxGetApp().User_IconSizeChange();
   }
 
   //***************************************************************************
@@ -223,7 +217,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (rotated != userSettings->Rotated) {
     userSettings->Rotated = rotated;
-    gMainFrame->SetRotated(rotated, true);
+    wxGetApp().GetMainFrame()->SetRotated(rotated, true);
   }
 
   //***************************************************************************
@@ -234,7 +228,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (skinName != userSettings->Skin) {
     userSettings->Skin = skinName;
-    gMainFrame->ApplySkin();
+    wxGetApp().GetMainFrame()->ApplySkin();
   }
 
   if (userSettings->AutoHideApplication != autohideCheckBox->GetValue()) {
@@ -250,7 +244,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     userSettings->UniqueApplicationInstance = oneInstanceCheckBox->GetValue();
   }
 
-  gController.GetUser()->Save(true);
+  wxGetApp().GetUser()->Save(true);
 
   if (mustRestart) {
     MessageBoxes::ShowInformation(_("your settings have been saved, but you must restart the application for some of the changes to take effect."));

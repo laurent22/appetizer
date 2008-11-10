@@ -7,7 +7,6 @@
 #include "FolderItem.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
-#include "utilities/Utilities.h"
 #include <wx/filename.h>
 #include <wx/mimetype.h>
 #include "MessageBoxes.h"
@@ -15,13 +14,7 @@
 #include "FilePaths.h"
 #include "Styles.h"
 #include "Log.h"
-#include "Controller.h"
-#include "MainFrame.h"
-
-
-extern Controller gController;
-extern Utilities gUtilities;
-extern MainFrame* gMainFrame;
+#include "MiniLaunchBar.h"
 
 
 int FolderItem::uniqueID_ = 1000;
@@ -60,7 +53,7 @@ wxString FolderItem::GetParameters() {
 
 
 wxString FolderItem::GetUUID() {
-  if (uuid_ == wxEmptyString) uuid_ = gUtilities.CreateUUID();
+  if (uuid_ == wxEmptyString) uuid_ = wxGetApp().GetUtilities().CreateUUID();
   return uuid_;
 }
 
@@ -163,7 +156,7 @@ void FolderItem::MoveChild(FolderItemSP folderItemToMove, int insertionIndex) {
   folderItemToMove->SetParent(this);
 
   // Notify everybody that we've changed the item collection
-  gController.FolderItems_CollectionChange();
+  wxGetApp().FolderItems_CollectionChange();
 }
 
 
@@ -184,13 +177,13 @@ void FolderItem::RemoveChild(FolderItemSP folderItem) {
     if (child->GetId() == folderItem->GetId()) {
 
       if (folderItem->GetAutomaticallyAdded()) {
-        gController.GetUser()->AddAutoAddExclusion(folderItem->GetResolvedPath());
+        wxGetApp().GetUser()->AddAutoAddExclusion(folderItem->GetResolvedPath());
       }
 
       child->SetParent(NULL);
       children_.erase(children_.begin() + i);
 
-      gController.FolderItems_CollectionChange();
+      wxGetApp().FolderItems_CollectionChange();
       return;
     }
   }
@@ -283,15 +276,15 @@ void FolderItem::SetGroupIcon(FolderItemSP folderItem) {
 
 
 void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
-  FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
+  FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
   if (!folderItem.get()) {
     evt.Skip();
   } else {
     if (folderItem->IsGroup()) {
-      gUtilities.ShowTreeViewDialog(evt.GetId());
+      wxGetApp().GetUtilities().ShowTreeViewDialog(evt.GetId());
     } else {
       folderItem->Launch();
-      gMainFrame->DoAutoHide();
+      wxGetApp().GetMainFrame()->DoAutoHide();
     }
   }
 }

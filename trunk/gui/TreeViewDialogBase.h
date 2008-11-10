@@ -13,7 +13,8 @@
 
 // begin wxGlade: ::extracode
 enum {
-ID_TREEVIEW_DLG_treeControl
+ID_TREEVIEW_DLG_treeControl,
+ID_TREEVIEW_DLG_closeButton
 };
 // end wxGlade
 
@@ -34,6 +35,7 @@ private:
 protected:
     // begin wxGlade: TreeViewDialogBase::attributes
     wxTreeCtrl* treeControl;
+    wxButton* closeButton;
     // end wxGlade
 }; // wxGlade: end class
 

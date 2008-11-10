@@ -316,10 +316,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Controller.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\FilePaths.cpp"
 				>
 			</File>
@@ -519,10 +515,6 @@
 			</File>
 			<File
 				RelativePath=".\Constants.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Controller.h"
 				>
 			</File>
 			<File

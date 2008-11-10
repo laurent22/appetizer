@@ -7,8 +7,7 @@
 #include <wx/filename.h>
 #include "Utilities.h"
 #include "../MessageBoxes.h"
-#include "../Controller.h"
-#include "../MainFrame.h"
+#include "../MiniLaunchBar.h"
 #include "../FilePaths.h"
 #include "../Constants.h"
 #include "../FolderItem.h"
@@ -18,9 +17,6 @@
 #include <Rpc.h>
 #pragma comment(lib, "Rpcrt4.lib")
 #endif // __WINDOWS__
-
-extern Controller gController;
-extern MainFrame* gMainFrame;
 
 
 Utilities::Utilities() {
@@ -112,12 +108,12 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   elog("TO BE IMPLEMENTED");
   #endif
 
-  gMainFrame->Close();
+  wxGetApp().GetMainFrame()->Close();
 }
 
 
 void Utilities::DoMultiLaunch() {
-  gController.GetUser()->GetRootFolderItem()->DoMultiLaunch();
+  wxGetApp().GetUser()->GetRootFolderItem()->DoMultiLaunch();
 }
 
 
@@ -129,12 +125,12 @@ void Utilities::ShowConfigDialog() {
 
 
 void Utilities::CreateNewShortcut() {
-  gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem());
+  wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
 }
 
 
 void Utilities::ShowHelpFile() {
-  wxString helpFile = FilePaths::GetHelpDirectory() + _T("/") + gController.GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
+  wxString helpFile = FilePaths::GetHelpDirectory() + _T("/") + wxGetApp().GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
   if (!wxFileName::FileExists(helpFile)) {
     // Default to english
     helpFile = FilePaths::GetHelpDirectory() + _T("/en/") + HELP_FILE_NAME;
@@ -144,7 +140,7 @@ void Utilities::ShowHelpFile() {
   f.Normalize();
   helpFile = f.GetFullPath();
 
-  FolderItemSP pdfReaderFolderItem = gController.GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
+  FolderItemSP pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
   if (pdfReaderFolderItem.get()) {
     pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
     return;
@@ -167,9 +163,9 @@ void Utilities::ShowTreeViewDialog(int selectedFolderItemId) {
     treeViewDialog_->SetSize(300,500);
   }
 
-  FolderItemSP selectedFolderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
+  FolderItemSP selectedFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
   
-  treeViewDialog_->LoadFolderItem(gController.GetUser()->GetRootFolderItem());
+  treeViewDialog_->LoadFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
   treeViewDialog_->SelectAndExpandFolderItem(selectedFolderItem);
   treeViewDialog_->ShowModal();
 }

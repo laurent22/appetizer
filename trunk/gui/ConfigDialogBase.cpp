@@ -48,7 +48,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(374, 272));
+    SetSize(wxSize(374, 250));
     // end wxGlade
 }
 

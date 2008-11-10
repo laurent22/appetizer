@@ -44,6 +44,7 @@ public:
 
   void OnTreeBeginDrag(wxTreeEvent& evt);
   void OnTreeEndDrag(wxTreeEvent& evt);
+  void OnButton(wxCommandEvent& evt);
 
 private:
 

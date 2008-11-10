@@ -5,20 +5,13 @@
 */
 
 #include "OptionPanel.h"
-#include "Controller.h"
 #include "Constants.h"
 #include "FilePaths.h"
 #include "Log.h"
 #include "Styles.h"
-#include "MainFrame.h"
-#include "utilities/Utilities.h"
+#include "MiniLaunchBar.h"
 #include <wx/cursor.h>
 #include <wx/filename.h>
-
-
-extern Controller gController;
-extern MainFrame* gMainFrame;
-extern Utilities gUtilities;
 
 
 BEGIN_EVENT_TABLE(OptionPanel, NineSlicesPanel)
@@ -67,12 +60,12 @@ void OptionPanel::OnMenuGetSupport(wxCommandEvent& evt) {
 
 
 void OptionPanel::OnMenuHelp(wxCommandEvent& evt) {  
-  gUtilities.ShowHelpFile();
+  wxGetApp().GetUtilities().ShowHelpFile();
 }
 
 
 void OptionPanel::OnMenuAbout(wxCommandEvent& evt) {
-  gUtilities.ShowAboutDialog();
+  wxGetApp().GetUtilities().ShowAboutDialog();
 }
 
 
@@ -235,7 +228,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // CLOSE
     //***************************************************************************
-    gMainFrame->Close();
+    wxGetApp().GetMainFrame()->Close();
 
   } else if (buttonName == _T("Help")) {
     //***************************************************************************
@@ -255,19 +248,19 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // MULTI-LAUNCH
     //***************************************************************************
-    gUtilities.DoMultiLaunch();
+    wxGetApp().GetUtilities().DoMultiLaunch();
 
   } else if (buttonName == _T("Config")) {
     //***************************************************************************
     // CONFIG
     //***************************************************************************
-    gUtilities.ShowConfigDialog();
+    wxGetApp().GetUtilities().ShowConfigDialog();
 
   } else if (buttonName == _T("AddShortcut")) {
     //***************************************************************************
     // ADD SHORTCUT
     //***************************************************************************
-    gUtilities.CreateNewShortcut();
+    wxGetApp().GetUtilities().CreateNewShortcut();
 
   }
 }
@@ -284,5 +277,8 @@ OptionPanel::~OptionPanel() {
     configDialog_ = NULL;
   }
 
-  this->DestroyChildren();
+  for (int i = 0; i < buttons_.size(); i++) {
+    OptionButton* button = buttons_.at(i);
+    button->Destroy();
+  }
 }

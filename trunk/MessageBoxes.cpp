@@ -6,31 +6,28 @@
 
 #include "MessageBoxes.h"
 #include <wx/msgdlg.h>
-#include "MainFrame.h"
-
-
-extern MainFrame* gMainFrame;
+#include "MiniLaunchBar.h"
 
 
 int MessageBoxes::ShowError(const wxString& message, long style) {
-  wxMessageDialog dialog(gMainFrame, message, _("Error"), style | wxICON_ERROR);
+  wxMessageDialog dialog(wxGetApp().GetMainFrame(), message, _("Error"), style | wxICON_ERROR);
   return dialog.ShowModal();
 }
 
 
 int MessageBoxes::ShowInformation(const wxString& message, long style) {
-  wxMessageDialog dialog(gMainFrame, message, _("Information"), style | wxICON_INFORMATION);
+  wxMessageDialog dialog(wxGetApp().GetMainFrame(), message, _("Information"), style | wxICON_INFORMATION);
   return dialog.ShowModal();
 }
 
 
 int MessageBoxes::ShowWarning(const wxString& message, long style) {
-  wxMessageDialog dialog(gMainFrame, message, _("Warning "), style | wxICON_EXCLAMATION);
+  wxMessageDialog dialog(wxGetApp().GetMainFrame(), message, _("Warning "), style | wxICON_EXCLAMATION);
   return dialog.ShowModal();
 }
 
 
 int MessageBoxes::ShowConfirmation(const wxString& message, long style) {
-  wxMessageDialog dialog(gMainFrame, message, _("Confirmation"), style | wxICON_QUESTION);
+  wxMessageDialog dialog(wxGetApp().GetMainFrame(), message, _("Confirmation"), style | wxICON_QUESTION);
   return dialog.ShowModal();
 }

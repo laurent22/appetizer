@@ -11,10 +11,10 @@
 #include "Constants.h"
 #include "Log.h"
 #include "FilePaths.h"
-#include "Controller.h"
+#include "MiniLaunchBar.h"
 
 
-extern Controller gController;
+
 
 
 UserSettings::UserSettings() {

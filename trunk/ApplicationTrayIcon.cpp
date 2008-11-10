@@ -6,12 +6,8 @@
 
 #include <wx/font.h>
 #include "ApplicationTrayIcon.h"
-#include "MainFrame.h"
+#include "MiniLaunchBar.h"
 #include "utilities/Utilities.h"
-
-
-extern MainFrame* gMainFrame;
-extern Utilities gUtilities;
 
 
 BEGIN_EVENT_TABLE(ApplicationTrayIcon, wxTaskBarIcon)
@@ -26,7 +22,7 @@ ApplicationTrayIcon::ApplicationTrayIcon() {}
 wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
   wxMenu* menu = new wxMenu();
 
-  wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_HideShow, gMainFrame->IsVisible() ? _("Hide") : _("Show"));
+  wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_HideShow, wxGetApp().GetMainFrame()->IsVisible() ? _("Hide") : _("Show"));
   #ifdef __WINDOWS__
   wxFont font(menuItem->GetFont());
   font.SetWeight(wxFONTWEIGHT_BOLD);
@@ -34,7 +30,7 @@ wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
   #endif
   menu->Append(menuItem);
   menu->AppendSeparator();
-  if (gUtilities.IsApplicationOnRemoteDrive()) menu->Append(ID_MENU_Eject, _("Eject drive"));
+  if (wxGetApp().GetUtilities().IsApplicationOnRemoteDrive()) menu->Append(ID_MENU_Eject, _("Eject drive"));
   menu->Append(ID_MENU_Config, _("Configuration"));
   menu->AppendSeparator();
   menu->Append(ID_MENU_Exit, _("Close"));
@@ -50,22 +46,22 @@ void ApplicationTrayIcon::OnMenuItemClick(wxCommandEvent& evt) {
 
     case ID_MENU_Eject:
 
-      gUtilities.EjectDriveAndExit();
+      wxGetApp().GetUtilities().EjectDriveAndExit();
       break;
 
     case ID_MENU_HideShow:
 
-      gMainFrame->Show(!gMainFrame->IsVisible());
+      wxGetApp().GetMainFrame()->Show(!wxGetApp().GetMainFrame()->IsVisible());
       break;
 
     case ID_MENU_Config:
 
-      gUtilities.ShowConfigDialog();
+      wxGetApp().GetUtilities().ShowConfigDialog();
       break;
 
     case ID_MENU_Exit:
 
-      gMainFrame->Close();
+      wxGetApp().GetMainFrame()->Close();
       break;
 
   }
@@ -73,10 +69,10 @@ void ApplicationTrayIcon::OnMenuItemClick(wxCommandEvent& evt) {
 
 
 void ApplicationTrayIcon::OnLeftUp(wxTaskBarIconEvent& evt) {
-  if (!gMainFrame->IsVisible()) {
-    gMainFrame->Show();
-    gMainFrame->Raise();
+  if (!wxGetApp().GetMainFrame()->IsVisible()) {
+    wxGetApp().GetMainFrame()->Show();
+    wxGetApp().GetMainFrame()->Raise();
   } else {
-    gMainFrame->Raise();
+    wxGetApp().GetMainFrame()->Raise();
   }
 }

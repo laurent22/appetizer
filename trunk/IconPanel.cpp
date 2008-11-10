@@ -7,7 +7,6 @@
 #include <wx/cursor.h>
 #include <wx/filename.h>
 #include <wx/textdlg.h>
-#include "utilities/Utilities.h"
 #include "IconPanel.h"
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
@@ -15,13 +14,7 @@
 #include "Log.h"
 #include "Styles.h"
 #include "Enumerations.h"
-#include "Controller.h"
-#include "MainFrame.h"
-
-
-extern Utilities gUtilities;
-extern Controller gController;
-extern MainFrame* gMainFrame;
+#include "MiniLaunchBar.h"
 
 
 BEGIN_EVENT_TABLE(IconPanel, NineSlicesPanel)
@@ -89,12 +82,12 @@ void IconPanel::AddFolderItem(int folderItemId) {
 
 
 void IconPanel::OnBrowseButtonMenu(wxCommandEvent& evt) {
-  FolderItemSP folderItem = gController.GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
+  FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
   if (!folderItem.get()) {
     evt.Skip();
   } else {
     if (folderItem->IsGroup()) {
-      gUtilities.ShowTreeViewDialog(evt.GetId());
+      wxGetApp().GetUtilities().ShowTreeViewDialog(evt.GetId());
     } else {
       folderItem->Launch();
     }
@@ -136,12 +129,12 @@ wxMenu* IconPanel::GetContextMenu() {
 
 
 void IconPanel::OnMenuNewShortcut(wxCommandEvent& evt) {
-  gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem());
+  wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
 }
 
 
 void IconPanel::OnMenuNewGroup(wxCommandEvent& evt) {
-  gController.GetUser()->EditNewFolderItem(gController.GetUser()->GetRootFolderItem(), true);
+  wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem(), true);
 }
 
 
@@ -231,7 +224,7 @@ FolderItemRendererSP IconPanel::GetRendererFromFolderItem(const FolderItem& fold
 
 
 bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  FolderItemSP folderItem = gController.GetDraggedFolderItem();  
+  FolderItemSP folderItem = wxGetApp().GetDraggedFolderItem();  
 
   int screenX = x;
   int screenY = y;
@@ -248,8 +241,8 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
     ilog(wxString::Format(_T("Drop index: %d"), index));
 
     if (index >= 0) {
-      gController.GetUser()->GetRootFolderItem()->MoveChild(folderItem, index);
-      //gController.GetUser()->MoveFolderItem(folderItem->GetId(), index);
+      wxGetApp().GetUser()->GetRootFolderItem()->MoveChild(folderItem, index);
+      //wxGetApp().GetUser()->MoveFolderItem(folderItem->GetId(), index);
     }
 
     return true;
@@ -280,8 +273,8 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       for (int i = 0; i < filenames.Count(); i++) {
         wxFileName filename(filenames[i]);
         filename.Normalize();
-        gController.GetUser()->AddNewFolderItemFromPath(
-          gController.GetUser()->GetRootFolderItem(),
+        wxGetApp().GetUser()->AddNewFolderItemFromPath(
+          wxGetApp().GetUser()->GetRootFolderItem(),
           filename.GetFullPath());
         didSomething = true;
       }
@@ -295,7 +288,7 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
 
 void IconPanel::SetWidthInIcons(int numberOfIcons) {
-  int w = gController.GetUser()->GetSettings()->IconSize;
+  int w = wxGetApp().GetUser()->GetSettings()->IconSize;
   w += Styles::Icon.Padding.Width;
   w *= numberOfIcons;
   w += Styles::InnerPanel.Padding.Width;
@@ -305,7 +298,7 @@ void IconPanel::SetWidthInIcons(int numberOfIcons) {
 
 
 void IconPanel::SetHeightInIcons(int numberOfIcons) {
-  int h = gController.GetUser()->GetSettings()->IconSize;
+  int h = wxGetApp().GetUser()->GetSettings()->IconSize;
   h += Styles::Icon.Padding.Height;
   h *= numberOfIcons;
   h += Styles::InnerPanel.Padding.Height;
@@ -316,7 +309,7 @@ void IconPanel::SetHeightInIcons(int numberOfIcons) {
 
 int IconPanel::GetMinWidth() {
   return 
-    gController.GetUser()->GetSettings()->IconSize +
+    wxGetApp().GetUser()->GetSettings()->IconSize +
     Styles::Icon.Padding.Width +
     Styles::InnerPanel.Padding.Width;
 }
@@ -324,7 +317,7 @@ int IconPanel::GetMinWidth() {
 
 int IconPanel::GetMinHeight() {
   return 
-    gController.GetUser()->GetSettings()->IconSize +
+    wxGetApp().GetUser()->GetSettings()->IconSize +
     Styles::Icon.Padding.Height +
     Styles::InnerPanel.Padding.Height;
 }
@@ -388,7 +381,7 @@ void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
   FolderItemVector folderItems;
-  FolderItemSP rootFolderItem = gController.GetUser()->GetRootFolderItem();
+  FolderItemSP rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
 
   if (folderItemSource_ == ICON_PANEL_SOURCE_USER) {      
 

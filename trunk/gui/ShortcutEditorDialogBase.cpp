@@ -50,7 +50,7 @@ void ShortcutEditorDialogBase::do_layout()
     inputSizers->Add(nameLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     inputSizers->Add(nameTextBox, 0, wxEXPAND, 0);
     inputSizers->Add(locationLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
-    sizer_4->Add(locationTextBox, 1, wxRIGHT|wxEXPAND, 8);
+    sizer_4->Add(locationTextBox, 1, wxRIGHT|wxALIGN_CENTER_VERTICAL, 8);
     sizer_4->Add(selectFileButton, 0, wxRIGHT, 4);
     sizer_4->Add(selectFolderButton, 0, 0, 0);
     inputSizers->Add(sizer_4, 1, wxEXPAND, 0);

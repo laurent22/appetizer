@@ -7,16 +7,14 @@
 #include "TreeViewDialog.h"
 #include "../Constants.h"
 #include "../TypeDefinitions.h"
-#include "../Controller.h"
+#include "../MiniLaunchBar.h"
 #include "../Log.h"
-
-
-extern Controller gController;
 
 
 BEGIN_EVENT_TABLE(TreeViewDialog, wxDialog)
   EVT_TREE_BEGIN_DRAG(ID_TREEVIEW_DLG_treeControl, TreeViewDialog::OnTreeBeginDrag)
   EVT_TREE_END_DRAG(ID_TREEVIEW_DLG_treeControl, TreeViewDialog::OnTreeEndDrag)
+  EVT_BUTTON(wxID_ANY, TreeViewDialog::OnButton)
 END_EVENT_TABLE()
 
 
@@ -33,9 +31,21 @@ FolderItemSP FolderItemTreeItemData::GetFolderItem() {
 TreeViewDialog::TreeViewDialog()
 : TreeViewDialogBase(NULL, wxID_ANY, wxEmptyString) {
   
-  imageList_ = NULL;
+  imageList_ = NULL;  
+}
 
-  Localize();
+
+void TreeViewDialog::OnButton(wxCommandEvent& evt) {
+  int buttonId = evt.GetId();
+
+  switch (buttonId) {
+
+    case ID_TREEVIEW_DLG_closeButton:
+
+      EndDialog(wxID_CLOSE);
+      break;
+
+  }
 }
 
 
@@ -46,7 +56,8 @@ TreeViewDialog::~TreeViewDialog() {
 
 
 void TreeViewDialog::Localize() {
-
+  SetTitle(_("Organize shortcuts"));
+  closeButton->SetLabel(_("Close"));
 }
 
 
@@ -89,6 +100,8 @@ wxTreeItemId TreeViewDialog::GetTreeItemFromFolderItem(wxTreeItemId startItemId,
 
 
 void TreeViewDialog::LoadFolderItem(FolderItemSP folderItem) {
+  Localize();
+
   FolderItemVector folderItems = folderItem->GetChildren();
 
   if (imageList_) {
@@ -241,5 +254,5 @@ void TreeViewDialog::OnTreeEndDrag(wxTreeEvent& evt) {
     
   }
 
-  gController.FolderItems_CollectionChange();
+  wxGetApp().FolderItems_CollectionChange();
 }

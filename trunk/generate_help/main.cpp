@@ -88,19 +88,8 @@ wxString GenerateHTMLString() {
   AddStringLn(_T("<head>"));
   AddStringLn(_T("<meta http-equiv='content-type' content='text/html; charset=Western-1252'>"));
   AddStringLn(_T("<title>Appetizer</title>"));
-  //AddStringLn(_T("	<STYLE TYPE='text/css'>"));
-  //AddStringLn(_T("	<!--"));
-  //AddStringLn(_T("		body { padding: 0px }"));
-  //AddStringLn(_T("		P { margin-bottom: 0px }"));
-  //AddStringLn(_T("		H1 { margin-bottom: 0px }"));
-  //AddStringLn(_T("		H2 { margin-bottom: 0px }"));
-  //AddStringLn(_T("		H3 { margin-bottom: 0px }"));
-  //AddStringLn(_T("	-->"));
-  //AddStringLn(_T("	</STYLE>"));
   AddStringLn(_T("</head>"));
   AddStringLn(_T("<body>"));
-
-
 
   H1(_("Appetizer Help Topics"));
 

@@ -30,6 +30,8 @@ wxBitmap* Imaging::IconToBitmapWithAlpha(const wxIcon& icon) {
   // when drawn on a bitmap initialized with UseAlpha()
 
   if (wxBitmap(icon).GetMask()) {
+    int maskTolerancy = 4;
+
     wxColour maskColor(255, 0, 255);
     wxPen pen;  
 
@@ -58,7 +60,7 @@ wxBitmap* Imaging::IconToBitmapWithAlpha(const wxIcon& icon) {
 
     wxColour pixelColor;
 
-    // HACK: To force the image to have an 8-bit alpha channel
+    // @hack: To force the image to have an 8-bit alpha channel
     // we set one of the pixel alpha value to 1 or 254. Otherwise we'll get
     // a 1 bit alpha channel which still won't render properly.
     bool hackedPixelSet = false;
@@ -67,7 +69,17 @@ wxBitmap* Imaging::IconToBitmapWithAlpha(const wxIcon& icon) {
       for (int y = 0; y < bitmap.GetHeight(); y++) {
         memDC.GetPixel(x, y, &pixelColor); 
 
-        if (pixelColor == maskColor) {
+        // @yetanotherhack: It looks like some icons (like c:\windows\shell32.dll,0) have
+        // a nearly invisible gray layer on top of them. It means that when they
+        // are drawn on top of the mask color, it doesn't produce rgb(255, 0, 255) as it should
+        // but rgb(251, 4, 251). Because of that, we need to allow for some tolerancy when looking
+        // for the mask color. 4 seems to work well.
+        // Note: on a second though, maybe it has something to do with the icon using a palette, and
+        // the pink color being adjusted to fit within that palette? In theory, it shouldn't since the
+        // bitmap we draw on is 32-bits but who knows...
+        if (abs(pixelColor.Red() - maskColor.Red()) <= maskTolerancy &&
+            abs(pixelColor.Green() - maskColor.Green()) <= maskTolerancy &&
+            abs(pixelColor.Blue() - maskColor.Blue()) <= maskTolerancy) {
           if (!hackedPixelSet) {
             image.SetAlpha(x, y, 1);
             hackedPixelSet = true;
@@ -81,6 +93,8 @@ wxBitmap* Imaging::IconToBitmapWithAlpha(const wxIcon& icon) {
     }
 
     if (!hackedPixelSet) {
+      // Haven't set the hacked pixel transparency yet, probably because
+      // all the pixels are opaque, so we do it:
       if (image.GetWidth() > 0 && image.GetHeight() > 0) image.SetAlpha(0, 0, 254);
     }    
 

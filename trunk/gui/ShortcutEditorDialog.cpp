@@ -9,12 +9,9 @@
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
 #include "../FilePaths.h"
-#include "../Controller.h"
+#include "../MiniLaunchBar.h"
 #include "../MessageBoxes.h"
 #include "../utilities/VersionInfo.h"
-
-
-extern Controller gController;
 
 
 BEGIN_EVENT_TABLE(ShortcutEditorDialog, wxDialog)

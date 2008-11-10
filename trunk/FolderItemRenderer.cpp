@@ -8,23 +8,16 @@
 #include "FolderItem.h"
 #include "Log.h"
 #include "utilities/IconGetter.h"
-#include "utilities/Utilities.h"
 #include "imaging/Imaging.h"
 #include <wx/log.h>
 #include <wx/menu.h>
 #include "FilePaths.h"
 #include "Styles.h"
-#include "MainFrame.h"
+#include "MiniLaunchBar.h"
 #include "Enumerations.h"
-#include "Controller.h"
 #include "MessageBoxes.h"
 #include "IconPanelFrame.h"
 #include "gui/TreeViewDialog.h"
-
-
-extern Controller gController;
-extern MainFrame* gMainFrame;
-extern Utilities gUtilities;
 
 
 int FolderItemRenderer::uniqueID_ = 0;
@@ -75,12 +68,12 @@ void FolderItemRenderer::ApplySkin() {
 
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
-  return gController.GetUser()->GetRootFolderItem()->GetChildById(folderItemId_);
+  return wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(folderItemId_);
 }
 
 
 void FolderItemRenderer::OnMenuEditShortcutGroup(wxCommandEvent& evt) {
-  gUtilities.ShowTreeViewDialog(GetFolderItem()->GetId());
+  wxGetApp().GetUtilities().ShowTreeViewDialog(GetFolderItem()->GetId());
 }
 
 
@@ -94,7 +87,7 @@ void FolderItemRenderer::OnMenuAddToMultiLaunch(wxCommandEvent& evt) {
     GetFolderItem()->AddToMultiLaunchGroup();
   }
 
-  gController.FolderItems_FolderItemChange(folderItem);
+  wxGetApp().FolderItems_FolderItemChange(folderItem);
 }
 
 
@@ -111,14 +104,14 @@ void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnMenuProperties(wxCommandEvent& evt) {
-  gController.GetUser()->EditFolderItem(GetFolderItem());
+  wxGetApp().GetUser()->EditFolderItem(GetFolderItem());
 }
 
 
 void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   FolderItemSP folderItem = GetFolderItem();
 
-  wxMenu* menu = gMainFrame->GetIconPanel()->GetContextMenu();
+  wxMenu* menu = wxGetApp().GetMainFrame()->GetIconPanel()->GetContextMenu();
 
   menu->AppendSeparator();
   menu->Append(ID_MENU_Delete, _("Remove..."));
@@ -186,10 +179,11 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
 
       if (!folderItem->IsGroup()) {
         folderItem->Launch();
-        gMainFrame->DoAutoHide();
+        wxGetApp().GetMainFrame()->DoAutoHide();
       } else {
         wxMenu* menu = folderItem->ToMenu();
         PopupMenu(menu, wxPoint(0, GetSize().GetHeight()));
+        wxDELETE(menu);
       }      
 
     }
@@ -219,7 +213,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       // Tell the main controller that we've started dragging
       // a folder item. Other objects can then do GetDraggedFolderItem()
       // to know if a folder item is being dragged.
-      gController.SetDraggedFolderItem(folderItem->GetId());
+      wxGetApp().SetDraggedFolderItem(folderItem->GetId());
 
       wxFileDataObject fileData;
       fileData.AddFile(folderItem->GetResolvedPath());
@@ -230,7 +224,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
       // Tell the main controller that we've finished dragging
       // the folder item
-      gController.SetDraggedFolderItem(-1);
+      wxGetApp().SetDraggedFolderItem(-1);
       mousePressed_ = false;
       draggingStarted_ = false;
 
@@ -245,8 +239,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(gController.GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Width,
-          gController.GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Height);
+  SetSize(wxGetApp().GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Width,
+          wxGetApp().GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Height);
 }
 
 
@@ -260,7 +254,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
     return;
   }
 
-  UserSettingsSP userSettings = gController.GetUser()->GetSettings();
+  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);
 
@@ -285,7 +279,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   // Get the icon from the folder item
-  wxIconSP icon = folderItem->GetIcon(gController.GetUser()->GetSettings()->IconSize);
+  wxIconSP icon = folderItem->GetIcon(wxGetApp().GetUser()->GetSettings()->IconSize);
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
   if (icon->IsOk()) {  

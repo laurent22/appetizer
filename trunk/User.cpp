@@ -7,15 +7,13 @@
 #include "User.h"
 #include <wx/dir.h>
 #include <wx/filename.h>
-#include "Controller.h"
+#include "MiniLaunchBar.h"
 #include "Constants.h"
 #include "Log.h"
 #include "FolderItem.h"
 #include "utilities/StringUtil.h"
 #include "FilePaths.h"
 #include "third_party/tinyxml/tinyxml.h"
-
-extern Controller gController;
 
 
 BEGIN_EVENT_TABLE(User, wxEvtHandler)
@@ -130,7 +128,7 @@ FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folder
   folderItem->AutoSetName();
 
   parent->AddChild(folderItem);
-  gController.FolderItems_CollectionChange();
+  wxGetApp().FolderItems_CollectionChange();
 
   return folderItem;
 }
@@ -143,7 +141,7 @@ FolderItemSP User::EditNewFolderItem(FolderItemSP parent, bool isGroup) {
 
   if (result == wxID_OK) {
     parent->AddChild(folderItem);
-    gController.FolderItems_CollectionChange();
+    wxGetApp().FolderItems_CollectionChange();
     return folderItem;
   }
 
@@ -165,7 +163,7 @@ int User::EditFolderItem(FolderItemSP folderItem) {
     result = shortcutEditorDialog_->ShowModal();
   }
 
-  if (result == wxID_OK) gController.FolderItems_FolderItemChange(folderItem);
+  if (result == wxID_OK) wxGetApp().FolderItems_FolderItemChange(folderItem);
 
   return result;   
 }
@@ -260,7 +258,7 @@ void User::AutomaticallyAddNewApps() {
   }
 
   // Notify the controller that we've updated the folder items
-  if (folderItemsChanged) gController.FolderItems_CollectionChange();
+  if (folderItemsChanged) wxGetApp().FolderItems_CollectionChange();
 }
 
 

@@ -5,12 +5,9 @@
 */
 
 #include "OptionButton.h"
-#include "Controller.h"
+#include "MiniLaunchBar.h"
 #include "FilePaths.h"
 #include "Styles.h"
-
-
-extern Controller gController;
 
 
 OptionButton::OptionButton(wxWindow *owner, int id, wxPoint point, wxSize size):

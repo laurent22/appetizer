@@ -12,7 +12,7 @@
 #include "MainFrame.h"
 #include "Log.h"
 #include "Constants.h"
-#include "Controller.h"
+#include "MiniLaunchBar.h"
 #include "MessageBoxes.h"
 #include "FilePaths.h"
 #include "Styles.h"
@@ -20,16 +20,8 @@
 #include "utilities/XmlUtil.h"
 #include "utilities/Updater.h"
 #include "utilities/VersionInfo.h"
-#include "utilities/Utilities.h"
 #include "gui/AboutDialog.h"
 #include "bitmap_controls/ImageButton.h"
-
-
-
-
-extern Controller gController;
-extern Utilities gUtilities;
-
 
 
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
@@ -51,7 +43,7 @@ MainFrame::MainFrame()
   wxEmptyString,
   wxDefaultPosition,
   wxDefaultSize,
-  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR | (gController.GetUser()->GetSettings()->AlwaysOnTop ? wxSTAY_ON_TOP : 0)
+  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR | (wxGetApp().GetUser()->GetSettings()->AlwaysOnTop ? wxSTAY_ON_TOP : 0)
   )
 {  
   logWindow_ = NULL;
@@ -102,7 +94,7 @@ MainFrame::MainFrame()
   closeSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_CloseButton);
   closeSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
-  bool showEjectSideButton = gUtilities.IsApplicationOnRemoteDrive();
+  bool showEjectSideButton = wxGetApp().GetUtilities().IsApplicationOnRemoteDrive();
 
   if (showEjectSideButton) {
     ejectSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_EjectButton);
@@ -166,7 +158,7 @@ MainFrame::MainFrame()
 
 
 void MainFrame::DoAutoHide() {
-  if (gController.GetUser()->GetSettings()->AutoHideApplication) Hide();
+  if (wxGetApp().GetUser()->GetSettings()->AutoHideApplication) Hide();
 }
 
 
@@ -179,16 +171,16 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 
     wxDateTime now = wxDateTime::Now();
     // The line below doesn't work on Ubuntu
-    wxDateTime nextUpdateTime = gController.GetUser()->GetSettings()->NextUpdateCheckTime;
+    wxDateTime nextUpdateTime = wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime;
     ilog(wxString::Format(_T("Now is %s"), now.Format()));
     ilog(wxString::Format(_T("Next update check on %s"), nextUpdateTime.Format()));
 
     if (nextUpdateTime.IsLaterThan(now)) return;
 
-    gController.CheckForNewVersion(true);
+    wxGetApp().CheckForNewVersion(true);
 
-    gController.GetUser()->GetSettings()->NextUpdateCheckTime = now;
-    gController.GetUser()->GetSettings()->NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
+    wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime = now;
+    wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
     #endif //__WINDOWS__
   }
 }
@@ -198,7 +190,7 @@ void MainFrame::ApplySkin(const wxString& skinName) {
   wxString tSkinName;
 
   if (skinName == wxEmptyString) {
-    tSkinName = gController.GetUser()->GetSettings()->Skin;
+    tSkinName = wxGetApp().GetUser()->GetSettings()->Skin;
   } else {
     tSkinName = skinName;
   }
@@ -651,9 +643,7 @@ void MainFrame::InvalidateMask() {
   Refresh();
 }
 
-void MainFrame::OnClose(wxCloseEvent& evt) {  
-  gController.GetUser()->Save();
-
+void MainFrame::OnClose(wxCloseEvent& evt) {
   if (aboutDialog_) aboutDialog_->Destroy();
   if (optionPanel_) optionPanel_->Destroy();
   if (iconPanel_) iconPanel_->Destroy();
@@ -699,9 +689,7 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   FilePaths::CreateSettingsDirectory();
   doc.SaveFile(FilePaths::GetWindowFile().mb_str());
 
-  gUtilities.~Utilities();
-  Localization::Destroy();
-  gController.~Controller();
+  wxGetApp().CloseApplication();
 
   Destroy();
 }
@@ -724,7 +712,7 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
 
     case ID_BUTTON_MainFrame_EjectButton: {
 
-      gUtilities.EjectDriveAndExit();
+      wxGetApp().GetUtilities().EjectDriveAndExit();
 
     } break;
 
