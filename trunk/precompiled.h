@@ -26,6 +26,7 @@
 #include <wx/treebase.h>
 #include <wx/msgdlg.h>
 #include <wx/treectrl.h>
+#include <wx/checkbox.h>
 #include <wx/imaglist.h>
 #include <wx/stdpaths.h>
 #include <wx/bitmap.h>
@@ -39,6 +40,7 @@
 #include <wx/log.h>
 #include <wx/icon.h>
 #include <wx/display.h>
+#include <wx/statbmp.h>
 #include <wx/snglinst.h>
 #include <wx/cmdline.h>
 #include <wx/hashmap.h>
@@ -62,6 +64,7 @@
 #include <wx/url.h>
 #include <wx/sstream.h>
 #include <wx/protocol/http.h>
+#include <wx/stattext.h>
 
 #include <math.h>
 #include <vector>

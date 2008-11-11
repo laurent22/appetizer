@@ -18,6 +18,7 @@
 #include "utilities/Updater.h"
 #include "utilities/VersionInfo.h"
 #include "gui/AboutDialog.h"
+#include "gui/BetterMessageDialog.h"
 #include "bitmap_controls/ImageButton.h"
 
 
@@ -686,6 +687,10 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   FilePaths::CreateSettingsDirectory();
   doc.SaveFile(FilePaths::GetWindowFile().mb_str());
 
+  arrowButton_->SetIcon(NULL);
+  wxDELETE(arrowButtonCloseIcon_);
+  wxDELETE(arrowButtonOpenIcon_);  
+
   wxGetApp().CloseApplication();
 
   Destroy();
@@ -702,15 +707,14 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
       ToggleOptionPanel();
       break;
 
-    case ID_BUTTON_MainFrame_CloseButton:
-      
+    case ID_BUTTON_MainFrame_CloseButton: {
+
       Hide();
-      break;
+    } break;
 
     case ID_BUTTON_MainFrame_EjectButton: {
 
       wxGetApp().GetUtilities().EjectDriveAndExit();
-
     } break;
 
     default:
@@ -797,7 +801,5 @@ void MainFrame::ToggleOptionPanel() {
 
 
 MainFrame::~MainFrame() {
-  arrowButton_->SetIcon(NULL);
-  wxDELETE(arrowButtonCloseIcon_);
-  wxDELETE(arrowButtonOpenIcon_);
+
 }

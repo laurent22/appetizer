@@ -75,8 +75,13 @@ bool Utilities::IsApplicationOnRemoteDrive() {
 
 
 void Utilities::EjectDriveAndExit(bool askForConfirmation) {
-  int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"));
-  if (answer != wxID_YES) return;
+  if (wxGetApp().GetUser()->GetSettings()->ShowEjectDriveMessage) {
+    int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"), wxYES | wxNO, _("Don't show this message again"), false);
+    if (!answer) return;
+    wxGetApp().GetUser()->GetSettings()->ShowEjectDriveMessage = !MessageBoxes::GetCheckBoxState();
+    wxGetApp().GetUser()->ScheduleSave();
+    if (answer != wxID_YES) return;
+  }
 
   #ifdef __WINDOWS__
 
@@ -98,6 +103,8 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
 
   // Set the current directory and call the eject dialog
   wxSetWorkingDirectory(windowsPath);
+
+  // Note: this call creates the memory leak when the main frame is closed just after it.
   int result = wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
 
   #else

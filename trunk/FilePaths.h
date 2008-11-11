@@ -25,6 +25,7 @@ public:
   static wxString GetSettingsFile();
   static wxString GetFolderItemsFile();
   static wxString GetWindowFile();
+  static wxString GetWindowsDirectory();
 
   static void CreateSettingsDirectory();
   static void InitializePaths();
@@ -43,6 +44,7 @@ private:
   static wxString SettingsFile_;
   static wxString FolderItemsFile_;
   static wxString WindowFile_;
+  static wxString WindowsDirectory_;
 
 };
 

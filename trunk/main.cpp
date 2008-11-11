@@ -13,6 +13,7 @@
 #include "FilePaths.h"
 #include "Localization.h"
 #include "Styles.h"
+#include "gui/BetterMessageDialog.h"
 #include "Log.h"
 #include "utilities/VersionInfo.h"
 #include "utilities/Updater.h"
@@ -26,7 +27,7 @@ IMPLEMENT_APP(MiniLaunchBar)
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(7398);
+  //_CrtSetBreakAlloc(10775);
 
   singleInstanceChecker_ = NULL;
   mainFrame_ = NULL;
@@ -331,6 +332,7 @@ void MiniLaunchBar::CloseApplication() {
   wxDELETE(singleInstanceChecker_);
   wxDELETE(locale_);
 
+  BetterMessageDialog::DestroyInstance();
   Localization::Destroy();
   utilities_.~Utilities();
 }

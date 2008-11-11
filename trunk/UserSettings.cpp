@@ -27,6 +27,9 @@ UserSettings::UserSettings() {
   UniqueApplicationInstance = true;
   AutoHideApplication = false;
 
+  ShowDeleteIconMessage = true;
+  ShowEjectDriveMessage = true;
+
   NextUpdateCheckTime = wxDateTime::Now();
   NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
 }
@@ -48,6 +51,8 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "AlwaysOnTop", AlwaysOnTop);
   AppendSettingToXml(xml, "AutoHideApplication", AutoHideApplication);
   AppendSettingToXml(xml, "UniqueApplicationInstance", UniqueApplicationInstance);
+  AppendSettingToXml(xml, "ShowDeleteIconMessage", ShowDeleteIconMessage);
+  AppendSettingToXml(xml, "ShowEjectDriveMessage", ShowEjectDriveMessage);
 
   return xml;
 }
@@ -64,7 +69,7 @@ void UserSettings::FromXml(TiXmlElement* xml) {
 
     const char* cSettingName = element->Attribute("name");
     if (!cSettingName) {
-      wlog("UserSettings::FromXml: setting doesn t have a name");
+      wlog("UserSettings::FromXml: setting doesn't have a name");
       continue;
     }
 
@@ -78,6 +83,8 @@ void UserSettings::FromXml(TiXmlElement* xml) {
       v = wxString(cSettingValue, wxConvUTF8);
     }
 
+    v.Trim(true).Trim(false);
+
     if (n == _T("IconSize")) AssignSettingValue(IconSize, v);
     if (n == _T("Locale")) Locale = v;
     if (n == _T("PortableAppsPath")) PortableAppsPath = v;
@@ -86,13 +93,21 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("PicturesPath")) PicturesPath = v;
     if (n == _T("VideosPath")) VideosPath = v;
     if (n == _T("Skin")) Skin = v;
-    if (n == _T("Rotated")) Rotated = v.Lower() == _T("true");
+    if (n == _T("Rotated")) Rotated = ParseBoolean(v);
     if (n == _T("NextUpdateCheckTime")) NextUpdateCheckTime.ParseFormat(v);
-    if (n == _T("AlwaysOnTop")) AlwaysOnTop = v.Lower() == _T("true");
-    if (n == _T("AutoHideApplication")) AutoHideApplication = v.Lower() == _T("true");
-    if (n == _T("UniqueApplicationInstance")) UniqueApplicationInstance = v.Lower() == _T("true");
+    if (n == _T("AlwaysOnTop")) AlwaysOnTop = ParseBoolean(v);
+    if (n == _T("AutoHideApplication")) AutoHideApplication = ParseBoolean(v);
+    if (n == _T("UniqueApplicationInstance")) UniqueApplicationInstance = ParseBoolean(v);
+    if (n == _T("ShowDeleteIconMessage")) ShowDeleteIconMessage = ParseBoolean(v);
+    if (n == _T("ShowEjectDriveMessage")) ShowEjectDriveMessage = ParseBoolean(v);
 
   }
+}
+
+
+bool UserSettings::ParseBoolean(const wxString& toParse) {
+  wxString t = toParse.Lower();
+  return t == _T("true") || t == _T("1");
 }
 
 
@@ -135,7 +150,7 @@ void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, w
 
 
 void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, bool value) {
-  AppendSettingToXml(element, name, value ? "true" : "false");
+  AppendSettingToXml(element, name, value ? "1" : "0");
 }
 
 

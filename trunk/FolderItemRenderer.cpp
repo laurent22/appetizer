@@ -92,8 +92,14 @@ void FolderItemRenderer::OnMenuAddToMultiLaunch(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
-  int result = MessageBoxes::ShowConfirmation(_("Do you wish to remove this icon?"));
-  if (result != wxID_YES) return;
+  if (wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage) {
+    int result = MessageBoxes::ShowConfirmation(_("Do you wish to remove this icon?"), wxYES | wxNO, _("Don't show this message again"), false);
+    if (!result) return;
+
+    wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage = !MessageBoxes::GetCheckBoxState();
+    wxGetApp().GetUser()->ScheduleSave();
+    if (result != wxID_YES) return;
+  }
 
   FolderItemSP folderItem = GetFolderItem();
   FolderItem* parent = folderItem->GetParent();

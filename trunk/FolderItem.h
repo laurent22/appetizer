@@ -88,7 +88,7 @@ public:
   void PrependChild(FolderItemSP toAdd);
   void AddChild(FolderItemSP folderItem);
 
-  void OnMenuItemClick(wxCommandEvent& evt);
+  void OnMenuItemClick(wxCommandEvent& evt);  
 
 private:
 
@@ -108,12 +108,8 @@ private:
   wxString groupIconUUID_;
   bool automaticallyAdded_;
   
-  static std::vector<FolderItemProcess*> processVector_;
+  static FolderItemProcessVector processVector_;
 
 };
-
-
-
-
 
 #endif // __FolderItem_H

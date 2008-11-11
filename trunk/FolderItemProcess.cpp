@@ -9,6 +9,12 @@
 #include "FolderItemProcess.h"
 
 
+FolderItemProcess::FolderItemProcess() :
+wxProcess() {
+
+}
+
+
 FolderItemProcess::FolderItemProcess(wxEvtHandler* parent, int id) :
 wxProcess(parent, id) {
 

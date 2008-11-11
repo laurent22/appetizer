@@ -22,6 +22,7 @@ wxString FilePaths::SettingsFile_ = _T("");
 wxString FilePaths::FolderItemsFile_ = _T("");
 wxString FilePaths::WindowFile_ = _T("");
 wxString FilePaths::HelpDirectory_ = _T("");
+wxString FilePaths::WindowsDirectory_ = _T("");
 
 
 wxString FilePaths::GetApplicationDrive() { return FilePaths::ApplicationDrive_; }
@@ -36,6 +37,31 @@ wxString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }
 wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
+wxString FilePaths::GetWindowsDirectory() {
+  if (FilePaths::WindowsDirectory_ != wxEmptyString) return FilePaths::WindowsDirectory_;
+
+  wxString output;
+
+  // LPTSTR is wchar_t if UNICODE is enabled, or a char otherwise
+  LPTSTR buffer = new TCHAR[MAX_PATH];
+  int success = GetSystemDirectory(buffer, MAX_PATH);   
+
+  if (!success) {
+    wxLogDebug(_T("WARNING: coulnd't get Windows directory"));
+    output = _T("c:\\window");
+  } else {
+    // Convert the LPTSTR to a char*
+    char cString[MAX_PATH];
+    wcstombs(cString, buffer, MAX_PATH);
+    output = wxString::FromAscii(cString);
+  }
+
+  wxDELETE(buffer);
+
+  FilePaths::WindowsDirectory_ = output;
+
+  return output;
+}
 
 
 /**

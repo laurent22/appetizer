@@ -31,6 +31,8 @@ public:
   bool AlwaysOnTop;
   bool AutoHideApplication;
   bool UniqueApplicationInstance;
+  bool ShowDeleteIconMessage;
+  bool ShowEjectDriveMessage;
 
   void Save();
   void Load();
@@ -46,6 +48,8 @@ private:
   void AppendSettingToXml(TiXmlElement* element, const char* name, bool value);
   void AssignSettingValue(int& setting, wxString value, int defaultValue);
   void AssignSettingValue(int& setting, wxString value);
+
+  bool ParseBoolean(const wxString& toParse);
 
 };
 

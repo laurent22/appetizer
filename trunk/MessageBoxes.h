@@ -14,10 +14,11 @@ class MessageBoxes {
 
 public:
 
-  static int ShowWarning(const wxString& message, long style = wxOK);
-  static int ShowError(const wxString& message, long style = wxOK);
-  static int ShowInformation(const wxString& message, long style = wxOK);
-  static int ShowConfirmation(const wxString& message, long style = wxYES | wxNO);
+  static int ShowWarning(const wxString& message, long style = wxOK, const wxString& checkBoxLabel = wxEmptyString, bool checkBoxState = false);
+  static int ShowError(const wxString& message, long style = wxOK, const wxString& checkBoxLabel = wxEmptyString, bool checkBoxState = false);
+  static int ShowInformation(const wxString& message, long style = wxOK, const wxString& checkBoxLabel = wxEmptyString, bool checkBoxState = false);
+  static int ShowConfirmation(const wxString& message, long style = wxYES | wxNO, const wxString& checkBoxLabel = wxEmptyString, bool checkBoxState = false);
+  static bool GetCheckBoxState();
 
 };
 

@@ -10,21 +10,18 @@
 #define __FolderItemProcess_H
 
 
-class FolderItemProcess;
-typedef std::vector<FolderItemProcess*> FolderItemProcessVector;
-
-
 class FolderItemProcess : public wxProcess {
 
 public:
 
-  FolderItemProcess(wxEvtHandler * parent = NULL, int id = -1);
-
-private:
-
-  void OnTerminate(int pid, int status);
+  FolderItemProcess();
+  FolderItemProcess(wxEvtHandler * parent, int id = -1);
+  virtual void OnTerminate(int pid, int status); 
 
 };
+
+
+typedef std::vector<FolderItemProcess*> FolderItemProcessVector;
 
 
 #endif // __FolderItemProcess_H
