@@ -4,9 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "XmlUtil.h"
 #include "StringUtil.h"
-#include <wx/arrstr.h>
 
 
 void XmlUtil::AppendTextElement(TiXmlElement* targetElement, const char* elementName, const char* elementText) {

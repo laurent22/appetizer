@@ -4,9 +4,8 @@
   found in the LICENSE file.
 */
 
-#include <wx/filename.h>
-#include <wx/stdpaths.h>
-#include <wx/cmdline.h>
+#include "precompiled.h"
+
 #include "FilePaths.h"
 #include "Constants.h"
 #include "MiniLaunchBar.h"

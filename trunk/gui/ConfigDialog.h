@@ -4,11 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __ConfigDialog_H
 #define __ConfigDialog_H
 
 
-#include <wx/wx.h>
 #include "ConfigDialogBase.h"
 
 

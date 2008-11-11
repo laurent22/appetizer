@@ -4,10 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __OptionButton_H
 #define __OptionButton_H
 
-#include "wx/wx.h" 
+
 #include "bitmap_controls/ImageButton.h"
 
 

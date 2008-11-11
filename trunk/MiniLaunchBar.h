@@ -4,13 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __MiniLaunchBar_H
 #define __MiniLaunchBar_H
 
 
-#include <wx/wx.h>
-#include <wx/snglinst.h>
-#include <wx/cmdline.h>
 #include "MainFrame.h"
 #include "FolderItem.h"
 #include "utilities/Utilities.h"
@@ -55,6 +54,7 @@ private:
   int draggedFolderItemId_;
   User* user_;
   wxLocale* locale_;
+  LongVector launchedProcessIds_;
 
 };
 

@@ -4,17 +4,13 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "UserSettings.h"
-#include <wx/fileconf.h>
-#include <wx/datetime.h>
-#include <wx/filename.h>
 #include "Constants.h"
 #include "Log.h"
 #include "FilePaths.h"
 #include "MiniLaunchBar.h"
-
-
-
 
 
 UserSettings::UserSettings() {

@@ -4,10 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __Log_H
 #define __Log_H
-
-#include <wx/wx.h>
 
 
 void log__(wxString type, wxString s);

@@ -4,11 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __MathUtil_H
 #define __MathUtil_H
-
-#include "wx/wx.h"
-
 
 
 class MathUtil {

@@ -4,14 +4,14 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "OptionPanel.h"
 #include "Constants.h"
 #include "FilePaths.h"
 #include "Log.h"
 #include "Styles.h"
 #include "MiniLaunchBar.h"
-#include <wx/cursor.h>
-#include <wx/filename.h>
 
 
 BEGIN_EVENT_TABLE(OptionPanel, NineSlicesPanel)

@@ -187,6 +187,8 @@
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(BOOST_ROOT)&quot;"
 				PreprocessorDefinitions="WINVER=0x0400;wxUSE_GUI=1;__WXDEBUG__"
 				RuntimeLibrary="1"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="precompiled.h"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -324,6 +326,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FolderItemProcess.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FolderItemRenderer.cpp"
 				>
 			</File>
@@ -364,6 +370,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\precompiled.cpp"
+				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\Styles.cpp"
 				>
 			</File>
@@ -381,18 +399,50 @@
 				<File
 					RelativePath=".\bitmap_controls\BitmapControl.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\bitmap_controls\ImageButton.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\bitmap_controls\ImagePanel.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\bitmap_controls\NineSlicesPanel.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -401,10 +451,26 @@
 				<File
 					RelativePath=".\imaging\Imaging.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\imaging\NineSlicesPainter.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -413,30 +479,86 @@
 				<File
 					RelativePath=".\utilities\IconGetter.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\MathUtil.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\StringUtil.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\Updater.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\Utilities.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\VersionInfo.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\XmlUtil.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -445,18 +567,50 @@
 				<File
 					RelativePath=".\third_party\tinyxml\tinystr.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\third_party\tinyxml\tinyxml.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\third_party\tinyxml\tinyxmlerror.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\third_party\tinyxml\tinyxmlparser.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -465,42 +619,122 @@
 				<File
 					RelativePath=".\gui\AboutDialog.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\AboutDialogBase.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ConfigDialog.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ConfigDialogBase.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\GroupEditorDialog.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\GroupEditorDialogBase.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ShortcutEditorDialog.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ShortcutEditorDialogBase.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\TreeViewDialog.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../precompiled.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\TreeViewDialogBase.cpp"
 					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>
@@ -527,6 +761,10 @@
 			</File>
 			<File
 				RelativePath=".\FolderItem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FolderItemProcess.h"
 				>
 			</File>
 			<File
@@ -567,6 +805,10 @@
 			</File>
 			<File
 				RelativePath=".\OptionPanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\precompiled.h"
 				>
 			</File>
 			<File

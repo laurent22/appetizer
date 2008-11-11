@@ -4,11 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __Localization_H
 #define __Localization_H
-
-#include <wx/wx.h>
-#include <wx/hashmap.h>
 
 
 WX_DECLARE_STRING_HASH_MAP(wxString, LanguageCodeHashMap);

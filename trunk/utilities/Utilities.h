@@ -4,11 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __Utilities_H
 #define __Utilities_H
 
 
-#include <wx/wx.h>
 #include "../gui/ConfigDialog.h"
 #include "../gui/AboutDialog.h"
 #include "../gui/TreeViewDialog.h"

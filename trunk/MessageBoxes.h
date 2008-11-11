@@ -4,10 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __MessageBoxes_H
 #define __MessageBoxes_H
-
-#include "wx/wx.h"
 
 
 class MessageBoxes {

@@ -4,10 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __IconGetter_H
 #define __IconGetter_H
 
-#include "wx/wx.h"
 
 /**
  * Some static functions to get the icons associated with a file, folder or executable.

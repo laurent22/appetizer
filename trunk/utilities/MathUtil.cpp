@@ -4,8 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "MathUtil.h"
-#include <math.h>
+
 
 double MathUtil::GetPointDistance(const wxPoint& a, const wxPoint& b) {
   double p1 = pow((double)(b.x - a.x), 2);

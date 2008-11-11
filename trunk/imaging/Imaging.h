@@ -4,11 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __Imaging_H
 #define __Imaging_H
 
-#include <wx/wx.h>
-#include <wx/bitmap.h>
 
 class Imaging {
 

@@ -4,19 +4,8 @@
   found in the LICENSE file.
 */
 
-#include <wx/wx.h>
-#include <wx/sysopt.h>
-#include <wx/stdpaths.h>
-#include <wx/filename.h>
+#include "precompiled.h"
 
-#ifdef __WXDEBUG__
-#ifdef __WINDOWS__
-// To find memory leaks, add _CrtSetBreakAlloc(int memoryBlock)
-// just at the beginning of MiniLaunchBar::OnInit
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-#endif // __WINDOWS__
-#endif // __WXDEBUG__
 
 #include "MiniLaunchBar.h"
 #include "MessageBoxes.h"

@@ -4,18 +4,14 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __User_H
 #define __User_H
 
-#include <wx/wx.h>
-#include <wx/event.h>
-#include <wx/timer.h>
-#include <wx/list.h>
-#include <wx/arrstr.h>
 #include "FolderItem.h"
 #include "Enumerations.h"
 #include "UserSettings.h"
-#include "boost/shared_ptr.hpp"
 #include "gui/GroupEditorDialog.h"
 #include "gui/ShortcutEditorDialog.h"
 

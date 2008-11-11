@@ -4,20 +4,21 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __FolderItem_H
 #define __FolderItem_H
 
-#include <wx/wx.h>
-#include <wx/menuitem.h>
-#include <vector>
-#include <boost/shared_ptr.hpp>
+
 #include "Constants.h"
+#include "FolderItemProcess.h"
 #include "TypeDefinitions.h"
 #include "utilities/XmlUtil.h"
 
 
 // Forward declaration so that we can create the typedef below
 class FolderItem;
+class FolderItemProcess;
 
 typedef boost::shared_ptr<FolderItem> FolderItemSP;
 typedef std::vector<FolderItemSP> FolderItemVector;
@@ -106,6 +107,8 @@ private:
   wxString uuid_;
   wxString groupIconUUID_;
   bool automaticallyAdded_;
+  
+  static std::vector<FolderItemProcess*> processVector_;
 
 };
 

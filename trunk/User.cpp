@@ -4,16 +4,15 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "User.h"
-#include <wx/dir.h>
-#include <wx/filename.h>
 #include "MiniLaunchBar.h"
 #include "Constants.h"
 #include "Log.h"
 #include "FolderItem.h"
 #include "utilities/StringUtil.h"
 #include "FilePaths.h"
-#include "third_party/tinyxml/tinyxml.h"
 
 
 BEGIN_EVENT_TABLE(User, wxEvtHandler)

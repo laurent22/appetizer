@@ -4,7 +4,8 @@
   found in the LICENSE file.
 */
 
-#include <wx/filename.h>
+#include "../precompiled.h"
+
 #include "Utilities.h"
 #include "../MessageBoxes.h"
 #include "../MiniLaunchBar.h"
@@ -12,11 +13,6 @@
 #include "../Constants.h"
 #include "../FolderItem.h"
 #include "../Log.h"
-
-#ifdef __WINDOWS__
-#include <Rpc.h>
-#pragma comment(lib, "Rpcrt4.lib")
-#endif // __WINDOWS__
 
 
 Utilities::Utilities() {

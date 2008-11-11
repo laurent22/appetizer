@@ -4,8 +4,9 @@
   found in the LICENSE file.
 */
 
-#include "NineSlicesPanel.h"
+#include "../precompiled.h"
 
+#include "NineSlicesPanel.h"
 
 
 NineSlicesPanel::NineSlicesPanel(wxWindow *owner, int id, wxPoint point, wxSize size):

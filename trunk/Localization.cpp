@@ -4,6 +4,8 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "Localization.h"
 
 
@@ -152,7 +154,7 @@ Localization::Localization() {
   languageCodeHashMap_[_T("zu")] = _T("Zulu");
 
   languageCodeHashMapS_[_T("da")] = _T("Dansk");
-  languageCodeHashMapS_[_T("de")] = _T("Deutch");
+  languageCodeHashMapS_[_T("de")] = _T("Deutsch");
   languageCodeHashMapS_[_T("en")] = _T("English");
   languageCodeHashMapS_[_T("es")] = _T("Español");
   languageCodeHashMapS_[_T("fr")] = _T("Français");

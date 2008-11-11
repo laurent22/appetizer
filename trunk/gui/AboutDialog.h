@@ -4,11 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __AboutDialog_H
 #define __AboutDialog_H
 
 
-#include <wx/wx.h>
 #include "AboutDialogBase.h"
 
 

@@ -4,10 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __ImagePanel_H
 #define __ImagePanel_H
 
-#include "wx/wx.h"
+
 #include "BitmapControl.h"
 
 class ImagePanel: public BitmapControl {

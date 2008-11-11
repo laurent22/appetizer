@@ -4,11 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __Styles_H
 #define __Styles_H
 
-#include <wx/wx.h>
-#include <wx/colour.h>
 #include "utilities/XmlUtil.h"
 
 

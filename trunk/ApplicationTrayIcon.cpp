@@ -4,7 +4,8 @@
   found in the LICENSE file.
 */
 
-#include <wx/font.h>
+#include "precompiled.h"
+
 #include "ApplicationTrayIcon.h"
 #include "MiniLaunchBar.h"
 #include "utilities/Utilities.h"

@@ -4,15 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __VersionInfo_H
 #define __VersionInfo_H
-
-#include <wx/wx.h>
-
-#ifdef __WINDOWS__
-#include <windows.h>
-#include <winver.h>
-#endif // __WINDOWS__
 
 
 class VersionInfo {

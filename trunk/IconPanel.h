@@ -4,17 +4,15 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __IconPanel_H
 #define __IconPanel_H
 
-#include <wx/wx.h>
-#include <wx/dnd.h>
-#include <wx/menu.h>
+
 #include "bitmap_controls/NineSlicesPanel.h"
 #include "bitmap_controls/ImageButton.h"
 #include "FolderItemRenderer.h"
-#include <vector>
-using namespace std;
 
 
 enum {

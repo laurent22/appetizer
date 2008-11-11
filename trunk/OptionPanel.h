@@ -4,13 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __OptionPanel_H
 #define __OptionPanel_H
 
-#include "wx/wx.h" 
 #include "bitmap_controls/NineSlicesPanel.h"
-#include <vector>
-#include <wx/hashmap.h>
 #include "OptionButton.h"
 #include "gui/ConfigDialog.h"
 

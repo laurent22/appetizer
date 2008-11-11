@@ -4,6 +4,8 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "OptionButton.h"
 #include "MiniLaunchBar.h"
 #include "FilePaths.h"

@@ -4,10 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __FilePaths_H
 #define __FilePaths_H
-
-#include "wx/wx.h"
 
 class FilePaths {
 

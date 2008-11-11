@@ -4,6 +4,8 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "StringUtil.h"
 
 #define Slice(str, start, end) (str.Mid(start, end))

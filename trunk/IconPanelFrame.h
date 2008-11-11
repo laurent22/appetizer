@@ -4,10 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __IconPanelFrame_H
 #define __IconPanelFrame_H
 
-#include <wx/wx.h>
 #include "IconPanel.h"
 #include "bitmap_controls/NineSlicesPanel.h"
 #include "imaging/NineSlicesPainter.h"

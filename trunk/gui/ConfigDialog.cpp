@@ -4,6 +4,8 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "ConfigDialog.h"
 #include "../FilePaths.h"
 #include "../UserSettings.h"
@@ -13,10 +15,6 @@
 #include "../MessageBoxes.h"
 #include "../Log.h"
 #include "../Styles.h"
-#include <wx/arrstr.h>
-#include <wx/dir.h>
-#include <wx/clntdata.h>
-#include <wx/filename.h>
 
 
 BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)

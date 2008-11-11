@@ -4,16 +4,10 @@
   found in the LICENSE file.
 */
 
-#include "IconGetter.h"
-#include "wx/wx.h"
-#include "StringUtil.h"
-#include "../third_party/simpleini/SimpleIni.h"
-#include "wx/mimetype.h"
-#include "wx/filename.h"
+#include "../precompiled.h"
 
-#ifdef __WINDOWS__
-#include <wx/msw/registry.h>
-#endif // __WINDOWS__
+#include "IconGetter.h"
+#include "StringUtil.h"
 
 
 wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {

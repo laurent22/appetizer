@@ -4,11 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __ShortcutEditorDialogBase_H
 #define __ShortcutEditorDialogBase_H
 
 
-#include <wx/wx.h>
 #include "ShortcutEditorDialogBase.h"
 #include "../FolderItem.h"
 

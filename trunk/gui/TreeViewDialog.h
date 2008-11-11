@@ -4,15 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __TreeViewDialog_H
 #define __TreeViewDialog_H
 
-
-#include <wx/wx.h>
-#include <wx/treebase.h>
-#include <wx/treectrl.h>
-#include <vector>
-#include <wx/imaglist.h>
 #include "TreeViewDialogBase.h"
 #include "../User.h"
 #include "../FolderItem.h"

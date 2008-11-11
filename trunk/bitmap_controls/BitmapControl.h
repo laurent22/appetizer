@@ -4,10 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __BitmapControl_H
 #define __BitmapControl_H
-
-#include "wx/wx.h"
 
 
 /**

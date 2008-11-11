@@ -4,12 +4,13 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __UserSettings_H
 #define __UserSettings_H
 
-#include "boost/shared_ptr.hpp"
 #include "utilities/XmlUtil.h"
-#include <wx/datetime.h>
+
 
 class UserSettings {
 

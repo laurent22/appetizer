@@ -4,9 +4,9 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "AboutDialog.h"
-#include <wx/arrstr.h>
-#include <wx/font.h>
 #include "../utilities/StringUtil.h"
 #include "../utilities/VersionInfo.h"
 #include "../FilePaths.h"

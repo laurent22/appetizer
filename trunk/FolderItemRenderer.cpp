@@ -4,13 +4,13 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "FolderItemRenderer.h"
 #include "FolderItem.h"
 #include "Log.h"
 #include "utilities/IconGetter.h"
 #include "imaging/Imaging.h"
-#include <wx/log.h>
-#include <wx/menu.h>
 #include "FilePaths.h"
 #include "Styles.h"
 #include "MiniLaunchBar.h"

@@ -4,11 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "FolderItem.h"
+#include "FolderItemProcess.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
-#include <wx/filename.h>
-#include <wx/mimetype.h>
 #include "MessageBoxes.h"
 #include "Enumerations.h"
 #include "FilePaths.h"
@@ -21,8 +22,6 @@ int FolderItem::uniqueID_ = 1000;
 
 
 FolderItem::FolderItem(bool isGroup) {
-
-  // @todo: Should use wxNewId()
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
 
@@ -382,7 +381,6 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
 
   if (filename.FileExists()) {
-
     //***************************************************************************
     // Launch executable
     //***************************************************************************   
@@ -392,7 +390,9 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
       wxString saveCurrentDirectory = wxGetCwd();
       wxSetWorkingDirectory(filename.GetPath());
       if (arguments == wxEmptyString) {
-        wxExecute(filePath);
+        //FolderItemProcess* process = new FolderItemProcess();
+        //FolderItem::processVector_.push_back(process);
+        //wxExecute(filePath, wxEXEC_ASYNC, process);
       } else {
         wxString tArguments(arguments); 
         // If the argument is a file path, then check that it has double quotes        

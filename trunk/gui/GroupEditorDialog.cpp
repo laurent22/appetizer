@@ -4,10 +4,9 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "GroupEditorDialog.h"
-#include <wx/filename.h>
-#include <wx/dirdlg.h>
-#include <wx/filedlg.h>
 #include "../FilePaths.h"
 #include "../MiniLaunchBar.h"
 #include "../MessageBoxes.h"

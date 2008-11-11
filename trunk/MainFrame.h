@@ -4,14 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __MainFrame_H
 #define __MainFrame_H
 
-#include <wx/wx.h>
-#include <wx/timer.h>
-#include <wx/log.h>
-#include <wx/icon.h>
-#include <wx/display.h>
+
 #include "imaging/NineSlicesPainter.h"
 #include "bitmap_controls/ImagePanel.h"
 #include "bitmap_controls/NineSlicesPanel.h"

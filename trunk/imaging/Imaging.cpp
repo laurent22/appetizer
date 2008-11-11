@@ -4,6 +4,8 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "Imaging.h"
 
 

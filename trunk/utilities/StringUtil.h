@@ -4,10 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __StringUtil_H
 #define __StringUtil_H
 
-#include <wx/wx.h>
 
 class StringUtil {
 

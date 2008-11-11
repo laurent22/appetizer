@@ -4,9 +4,9 @@
   found in the LICENSE file.
 */
 
-#include "ImageButton.h"
-#include <wx/filename.h>
+#include "../precompiled.h"
 
+#include "ImageButton.h"
 
 
 DEFINE_EVENT_TYPE(wxeEVT_CLICK)

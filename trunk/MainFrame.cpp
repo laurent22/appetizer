@@ -4,11 +4,8 @@
   found in the LICENSE file.
 */
 
-#include <wx/dcbuffer.h>
-#include <wx/cursor.h>
-#include <wx/datetime.h>
-#include <wx/filename.h>
-#include <wx/menu.h>
+#include "precompiled.h"
+
 #include "MainFrame.h"
 #include "Log.h"
 #include "Constants.h"

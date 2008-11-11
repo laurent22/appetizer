@@ -4,6 +4,8 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __Enumerations_H
 #define __Enumerations_H
 

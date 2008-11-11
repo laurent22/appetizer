@@ -4,10 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __Constants_H
 #define __Constants_H
-
-#include "wx/wx.h" 
 
 const wxString APPLICATION_NAME = _T("Appetizer");
 const wxColor MASK_COLOR = wxColor(255, 0, 255);

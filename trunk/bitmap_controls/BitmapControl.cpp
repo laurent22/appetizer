@@ -4,8 +4,9 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #include "BitmapControl.h"
-#include "wx/dcbuffer.h"
 
 
 BEGIN_EVENT_TABLE(BitmapControl, wxPanel)

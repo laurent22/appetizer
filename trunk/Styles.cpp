@@ -4,7 +4,8 @@
   found in the LICENSE file.
 */
 
-#include <wx/arrstr.h>
+#include "precompiled.h"
+
 #include "Styles.h"
 #include "Log.h"
 #include "Constants.h"
@@ -12,7 +13,6 @@
 #include "utilities/XmlUtil.h"
 #include "utilities/StringUtil.h"
 #include "utilities/VersionInfo.h"
-
 
 
 MainPanelStyle Styles::MainPanel;

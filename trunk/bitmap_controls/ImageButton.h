@@ -4,10 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __ImageButton_H
 #define __ImageButton_H
 
-#include "wx/wx.h"
+
 #include "BitmapControl.h"
 #include "../imaging/NineSlicesPainter.h"
 #include "ImagePanel.h"

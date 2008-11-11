@@ -4,11 +4,12 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __GroupEditorDialog_H
 #define __GroupEditorDialog_H
 
 
-#include <wx/wx.h>
 #include "GroupEditorDialogBase.h"
 #include "../FolderItem.h"
 

@@ -4,17 +4,16 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __FolderItemRenderer_H
 #define __FolderItemRenderer_H
 
-#include "wx/wx.h"
+
 #include "bitmap_controls/BitmapControl.h"
 #include "imaging/NineSlicesPainter.h"
 #include "FolderItem.h"
-#include <wx/dataobj.h>
-#include <wx/dnd.h>
 #include "utilities/MathUtil.h"
-#include "boost/shared_ptr.hpp"
 #include "TypeDefinitions.h"
 
 

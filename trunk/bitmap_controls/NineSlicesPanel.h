@@ -4,10 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __NineSlicesPanel_H
 #define __NineSlicesPanel_H
 
-#include "wx/wx.h"
 #include "../imaging/NineSlicesPainter.h"
 #include "BitmapControl.h"
 

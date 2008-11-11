@@ -4,8 +4,9 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #include "MessageBoxes.h"
-#include <wx/msgdlg.h>
 #include "MiniLaunchBar.h"
 
 

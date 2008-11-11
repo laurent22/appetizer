@@ -4,12 +4,11 @@
   found in the LICENSE file.
 */
 
+#include "precompiled.h"
+
 #ifndef __ApplicationTrayIcon_H
 #define __ApplicationTrayIcon_H
 
-#include <wx/wx.h>
-#include <wx/taskbar.h>
-#include <wx/menu.h>
 #include "Enumerations.h"
 
 

@@ -1,11 +1,14 @@
-﻿#include "Updater.h"
+﻿/*
+  Copyright (C) 2008 Laurent Cozic. All right reserved.
+  Use of this source code is governed by a GNU/GPL license that can be
+  found in the LICENSE file.
+*/
+
+#include "../precompiled.h"
+
+#include "Updater.h"
 #include "XmlUtil.h"
 #include "StringUtil.h"
-#include <wx/url.h>
-#include <wx/sstream.h>
-#include <wx/protocol/http.h>
-#include <wx/arrstr.h>
-#include <wx/stopwatch.h>
 
 
 bool Updater::CheckVersion(const wxString& url, UpdaterVersionInfo& versionInfoResult) {

@@ -4,11 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __Updater_H
 #define __Updater_H
-
-#include <wx/wx.h>
-
 
 
 struct UpdaterVersionInfo {

@@ -4,9 +4,9 @@
   found in the LICENSE file.
 */
 
-#include <wx/cursor.h>
-#include <wx/filename.h>
-#include <wx/textdlg.h>
+
+#include "precompiled.h"
+
 #include "IconPanel.h"
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"

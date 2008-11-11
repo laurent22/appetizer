@@ -4,12 +4,10 @@
   found in the LICENSE file.
 */
 
+#include "../precompiled.h"
+
 #ifndef __XmlUtil_H
 #define __XmlUtil_H
-
-#include <wx/wx.h>
-#include <wx/colour.h>
-#include "../third_party/tinyxml/tinyxml.h"
 
 
 class XmlUtil {
