@@ -339,7 +339,7 @@ wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize) {
 
   wxMenuItem* menuItem = new wxMenuItem(parentMenu, GetId(), GetName(true));
 
-  const wxIcon* icon = GetIcon(iconSize).get();
+  wxIconSP icon = GetIcon(iconSize);
   if (!icon->IsOk()) {
     elog(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
   } else {
@@ -558,50 +558,104 @@ void FolderItem::ClearCachedIcons() {
 }
 
 
-wxIconSP FolderItem::GetIcon(int iconSize) {
-  if (iconSize == SMALL_ICON_SIZE) {
+void FolderItem::CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSize) {
+  wxASSERT_MSG(icon.get(), _T("Couldn't cache icon: null pointer"));
+  wxASSERT_MSG(icon->IsOk(), _T("Couldn't cache icon: is not ok"));
+  wxASSERT_MSG(hash != wxEmptyString, _T("Couldn't cache icon: empty hash"));
+
+  wxBitmap bitmap(*icon);
+  bitmap.SaveFile(wxString::Format(_T("%s/%s-%d.png"), FilePaths::GetDataDirectory() + _T("/IconCache"), hash, iconSize), wxBITMAP_TYPE_PNG);
+}
 
 
-    if (IsGroup() && !icon16_.get()) {
-      if (groupIconUUID_ != wxEmptyString) {
-        FolderItemSP associatedFolderItem = GetChildByUUID(groupIconUUID_);
-        if (associatedFolderItem.get()) {
-          wxIconSP t = associatedFolderItem->GetIcon(iconSize);
-          icon16_.reset(new wxIcon(*t));
-        }
-      }
+wxString FolderItem::GetIconDiskCacheHash() {
+  if (IsGroup()) return wxEmptyString;
+  if (iconCacheHash_ != wxEmptyString) return iconCacheHash_;
 
-      if (!icon16_.get()) icon16_.reset(new wxIcon(FilePaths::GetSkinFile(_T("FolderIcon16.png")), wxBITMAP_TYPE_PNG));
-    }
+  wxFileName filename(GetResolvedPath());
+  if (!filename.IsOk()) return _T("");
 
-    if (!icon16_.get()) icon16_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
-    if (!icon16_.get()) {
-      icon16_.reset(new wxIcon(FilePaths::GetSkinFile(_T("DefaultIcon16.png")), wxBITMAP_TYPE_PNG));
-    }
-    return icon16_;
+  wxString toHash;
 
+  if (!wxFileName::DirExists(filename.GetFullPath())) {
+    wxString modString(_T(""));
+    wxString createString(_T(""));
+    wxDateTime dtMod;
+    wxDateTime dtCreate;
+    filename.GetTimes(NULL, &dtMod, &dtCreate);  
+    if (dtMod.IsValid()) modString = dtMod.Format();
+    if (dtCreate.IsValid()) createString = dtCreate.Format();
 
-
+    toHash = wxString::Format(_T("%s:%d:%s:%s"), filename.GetName(), filename.GetSize(), modString, createString);
   } else {
-
-    if (IsGroup() && !icon32_.get()) {
-      if (groupIconUUID_ != wxEmptyString) {
-        FolderItemSP associatedFolderItem = GetChildByUUID(groupIconUUID_);
-        if (associatedFolderItem.get()) {
-          wxIconSP t = associatedFolderItem->GetIcon(iconSize);
-          icon32_.reset(new wxIcon(*t));
-        }
-      }
-
-      if (!icon32_.get()) icon32_.reset(new wxIcon(FilePaths::GetSkinFile(_T("FolderIcon32.png")), wxBITMAP_TYPE_PNG));
-    }
-
-    if (!icon32_.get()) icon32_.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
-    if (!icon32_.get()) {
-      icon32_.reset(new wxIcon(FilePaths::GetSkinFile(_T("DefaultIcon32.png")), wxBITMAP_TYPE_PNG));
-    }
-    return icon32_;
+    toHash = wxString::Format(_T("%s"), GetFilePath());
   }
+  
+  wxMD5 md5(toHash);
+  iconCacheHash_ = md5.GetDigest();
+
+  return iconCacheHash_;
+}
+
+
+wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
+  wxString cacheDirectory = FilePaths::GetDataDirectory() + _T("/IconCache");
+
+  wxIconSP output;
+
+  if (hash != wxEmptyString) {
+    // Look for it in the cache first
+    wxString filePath = wxString::Format(_T("%s/%s-%d.png"), cacheDirectory, hash, iconSize);
+    if (wxFileName::FileExists(filePath)) {
+      output.reset(new wxIcon(filePath, wxBITMAP_TYPE_PNG));
+    }
+  }
+
+  return output;
+}
+
+
+wxIconSP FolderItem::GetIcon(int iconSize) {
+  wxIconSP output;
+  
+  if (iconSize == SMALL_ICON_SIZE) {
+    output = icon16_;
+  } else {
+    output = icon32_;
+  }
+
+  bool cacheEnabled = false;
+  wxString cacheHash;
+
+  if (cacheEnabled) {
+    cacheHash = GetIconDiskCacheHash();
+    wxIconSP cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
+    if (cachedIcon.get()) return cachedIcon;
+  }
+
+  if (IsGroup()) {
+    if (groupIconUUID_ != wxEmptyString) {
+      FolderItemSP associatedFolderItem = GetChildByUUID(groupIconUUID_);
+      if (associatedFolderItem.get()) {
+        wxIconSP t = associatedFolderItem->GetIcon(iconSize);
+        output.reset(new wxIcon(*t));
+        return output;
+      }
+    }
+
+    output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
+    return output;
+  }
+
+  output.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
+  if (output.get()) {
+    if (cacheEnabled) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
+    return output;
+  }
+
+  output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("DefaultIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
+
+  return output;
 }
 
 

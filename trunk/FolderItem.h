@@ -41,12 +41,19 @@ public:
   void SetFilePath(const wxString& filePath);
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
+
+  wxString GetIconDiskCacheHash();
+  static void CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSize);
+  static wxIconSP GetIconFromDiskCache(const wxString& hash, int iconSize);
+
   void AppendAsMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
   wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE);
   wxMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
+
   void Launch();
   void LaunchWithArguments(const wxString& arguments);
   static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString);
+
   TiXmlElement* ToXml();
   void FromXml(TiXmlElement* xml);
 
@@ -107,6 +114,7 @@ private:
   wxString uuid_;
   wxString groupIconUUID_;
   bool automaticallyAdded_;
+  wxString iconCacheHash_;
   
   static FolderItemProcessVector processVector_;
 

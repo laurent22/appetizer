@@ -109,7 +109,7 @@ wxString GenerateHTMLString() {
 
   H2(_("Introduction"));
   H3(_("About Appetizer"));
-  P(_("Appetizer is a dock bar that allows you to organize, display and launch your applications and other shortcuts. Currently it is possible to add executables, documents and folders to the dock. Additionally, if you use Appetizer on a USB key in the [http://portableapps.com PortableApps] format, the application will detect it and automatically add all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."));
+  P(_("Appetizer is a dock bar that allows you to organize, display and launch your applications and other shortcuts. Currently it is possible to add executables, documents and folders to the dock. Additionally, if you use Appetizer on a USB key in the [http://portableapps.com PortableApps] format, the application will detect it and automatically import all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."));
   
   // -------------------------------------------------
   // Features

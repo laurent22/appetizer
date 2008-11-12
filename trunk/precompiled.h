@@ -72,5 +72,6 @@
 
 #include "third_party/tinyxml/tinyxml.h"
 #include "third_party/simpleini/SimpleIni.h"
+#include "third_party/wxMD5/wxMD5.h"
 
 #endif // __MiniLaunchBarPrecompiled_H

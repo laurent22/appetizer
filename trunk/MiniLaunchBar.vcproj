@@ -612,6 +612,46 @@
 						/>
 					</FileConfiguration>
 				</File>
+				<Filter
+					Name="wxMD5"
+					>
+					<File
+						RelativePath=".\third_party\wxMD5\md5c.c"
+						>
+						<FileConfiguration
+							Name="Unicode Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\third_party\wxMD5\mddriver.c"
+						>
+						<FileConfiguration
+							Name="Unicode Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\third_party\wxMD5\wxMD5.cpp"
+						>
+						<FileConfiguration
+							Name="Unicode Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="gui"
@@ -918,6 +958,22 @@
 					RelativePath=".\third_party\tinyxml\tinyxml.h"
 					>
 				</File>
+				<Filter
+					Name="wxMD5"
+					>
+					<File
+						RelativePath=".\third_party\wxMD5\global.h"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\wxMD5\md5.h"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\wxMD5\wxMD5.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="gui"
