@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<Skin compatibleVersion="1.0" author="Laurent Cozic" name="Blue Glass">
+	<ArrowButton>
+		<ScaleGrid>8,35,2,1</ScaleGrid>
+		<Width>16</Width>
+	</ArrowButton>
+	<BarBackground>
+		<ScaleGrid>30,35,1,1</ScaleGrid>
+		<Padding>8,8,16,8</Padding>
+	</BarBackground>
+	<OptionPanel>
+		<ScaleGrid>20,30,1,1</ScaleGrid>
+		<Padding>6,4,6,4</Padding>
+		<HGap>4</HGap>
+		<VGap>3</VGap>
+	</OptionPanel>
+	<IconPanel>
+		<ScaleGrid>20,24,8,1</ScaleGrid>
+		<Padding>8,4,8,4</Padding>
+	</IconPanel>
+	<Icon>
+		<Padding>4,4,4,4</Padding>
+	</Icon>
+	<OptionButton>
+		<IconColor>130,130,130</IconColor>
+		<DownIconOffset>0,1</DownIconOffset>
+	</OptionButton>
+</Skin>
