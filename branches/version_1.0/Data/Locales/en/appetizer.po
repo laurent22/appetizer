@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-10 22:18+0000\n"
+"POT-Creation-Date: 2008-11-12 19:14+0000\n"
 "PO-Revision-Date: 2008-11-08 13:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -17,27 +17,27 @@ msgstr ""
 "X-Poedit-Language: English\n"
 "X-Poedit-Country: UNITED STATES\n"
 
-#: ApplicationTrayIcon.cpp:25
+#: ApplicationTrayIcon.cpp:26
 msgid "Hide"
 msgstr ""
 
-#: ApplicationTrayIcon.cpp:25
+#: ApplicationTrayIcon.cpp:26
 msgid "Show"
 msgstr ""
 
-#: ApplicationTrayIcon.cpp:33 MainFrame.cpp:273
+#: ApplicationTrayIcon.cpp:34 MainFrame.cpp:270
 msgid "Eject drive"
 msgstr ""
 
-#: ApplicationTrayIcon.cpp:34 OptionPanel.cpp:105 gui\ConfigDialog.cpp:48
+#: ApplicationTrayIcon.cpp:35 OptionPanel.cpp:105 gui\ConfigDialog.cpp:46
 msgid "Configuration"
 msgstr ""
 
-#: ApplicationTrayIcon.cpp:36 gui\TreeViewDialog.cpp:65
+#: ApplicationTrayIcon.cpp:37 gui\TreeViewDialog.cpp:67
 msgid "Close"
 msgstr ""
 
-#: FolderItem.cpp:320 gui\TreeViewDialog.cpp:64
+#: FolderItem.cpp:319 gui\TreeViewDialog.cpp:66
 msgid "Organize shortcuts"
 msgstr ""
 
@@ -78,27 +78,27 @@ msgstr ""
 msgid "New group..."
 msgstr ""
 
-#: main.cpp:53
+#: main.cpp:42
 msgid "Use user data directory to save settings."
 msgstr ""
 
-#: main.cpp:54
+#: main.cpp:43
 msgid "Set user data path (-u will be ignored)"
 msgstr ""
 
-#: main.cpp:85
+#: main.cpp:80
 msgid "Could not initialize locale."
 msgstr ""
 
-#: main.cpp:227
+#: main.cpp:216
 msgid "Could not get update information"
 msgstr ""
 
-#: main.cpp:241
+#: main.cpp:230
 msgid "You have the latest version."
 msgstr ""
 
-#: main.cpp:248
+#: main.cpp:237
 #, c-format
 msgid ""
 "A new version is available!\n"
@@ -110,27 +110,27 @@ msgid ""
 "Do you wish to download it now?"
 msgstr ""
 
-#: main.cpp:254
+#: main.cpp:243
 msgid "Error launching web browser"
 msgstr ""
 
-#: MainFrame.cpp:272
+#: MainFrame.cpp:269
 msgid "Minimize to tray"
 msgstr ""
 
-#: MessageBoxes.cpp:13
+#: MessageBoxes.cpp:14
 msgid "Error"
 msgstr ""
 
-#: MessageBoxes.cpp:19
+#: MessageBoxes.cpp:20
 msgid "Information"
 msgstr ""
 
-#: MessageBoxes.cpp:25
+#: MessageBoxes.cpp:26
 msgid "Warning "
 msgstr ""
 
-#: MessageBoxes.cpp:31
+#: MessageBoxes.cpp:32
 msgid "Confirmation"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 msgid "This skin is not compatible with the current version of %s."
 msgstr ""
 
-#: utilities\Utilities.cpp:82
+#: utilities\Utilities.cpp:78
 msgid "Do you wish to eject the drive?"
 msgstr ""
 
@@ -219,70 +219,70 @@ msgstr ""
 msgid "%s, Version %s.%s.%s (Build #%s)"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:49
+#: gui\ConfigDialog.cpp:47
 msgid "General"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:50
+#: gui\ConfigDialog.cpp:48
 msgid "Appearance"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:51
+#: gui\ConfigDialog.cpp:49
 msgid "Language:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:52
+#: gui\ConfigDialog.cpp:50
 msgid "Icon size:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:53
+#: gui\ConfigDialog.cpp:51
 msgid "Skin:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:54 gui\GroupEditorDialog.cpp:34
-#: gui\ShortcutEditorDialog.cpp:38
+#: gui\ConfigDialog.cpp:52 gui\GroupEditorDialog.cpp:33
+#: gui\ShortcutEditorDialog.cpp:37
 msgid "Save"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:55 gui\GroupEditorDialog.cpp:35
-#: gui\ShortcutEditorDialog.cpp:39
+#: gui\ConfigDialog.cpp:53 gui\GroupEditorDialog.cpp:34
+#: gui\ShortcutEditorDialog.cpp:38
 msgid "Cancel"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:56
+#: gui\ConfigDialog.cpp:54
 msgid "Orientation:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:57 gui\ConfigDialog.cpp:170
+#: gui\ConfigDialog.cpp:55 gui\ConfigDialog.cpp:170
 msgid "Check for update"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:58
+#: gui\ConfigDialog.cpp:56
 msgid "Auto-hide after launching an application"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:59
+#: gui\ConfigDialog.cpp:57
 msgid "Always on top"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:60
+#: gui\ConfigDialog.cpp:58
 #, c-format
 msgid "Allow only one instance of %s at a time"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:108
+#: gui\ConfigDialog.cpp:107
 msgid "Small"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:109
+#: gui\ConfigDialog.cpp:108
 msgid "Large"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:122
+#: gui\ConfigDialog.cpp:121
 msgid "Horizontal"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:123
+#: gui\ConfigDialog.cpp:122
 msgid "Vertical"
 msgstr ""
 
@@ -296,42 +296,54 @@ msgid ""
 "application."
 msgstr ""
 
-#: gui\GroupEditorDialog.cpp:32 gui\ShortcutEditorDialog.cpp:34
-msgid "Shorcut Properties"
+#: gui\GroupEditorDialog.cpp:31
+msgid "Group Properties"
 msgstr ""
 
-#: gui\GroupEditorDialog.cpp:33 gui\ShortcutEditorDialog.cpp:35
+#: gui\GroupEditorDialog.cpp:32 gui\ShortcutEditorDialog.cpp:34
 msgid "Name:"
 msgstr ""
 
-#: gui\GroupEditorDialog.cpp:71
+#: gui\GroupEditorDialog.cpp:35
+msgid "Icon"
+msgstr ""
+
+#: gui\GroupEditorDialog.cpp:36
+msgid "Select a different icon"
+msgstr ""
+
+#: gui\GroupEditorDialog.cpp:72
 msgid "Default"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:36
+#: gui\ShortcutEditorDialog.cpp:33
+msgid "Shorcut Properties"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:35
 msgid "Location:"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:37
+#: gui\ShortcutEditorDialog.cpp:36
 msgid "Parameters:"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:40
+#: gui\ShortcutEditorDialog.cpp:39
 msgid "Select a file"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:41
+#: gui\ShortcutEditorDialog.cpp:40
 msgid "Select a folder"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:65
+#: gui\ShortcutEditorDialog.cpp:64
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:85
+#: gui\ShortcutEditorDialog.cpp:84
 msgid "Select file"
 msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:99
+#: gui\ShortcutEditorDialog.cpp:98
 msgid "Select folder"
 msgstr ""

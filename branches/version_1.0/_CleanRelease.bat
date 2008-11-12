@@ -1,23 +1,23 @@
 @echo off
 
-mkdir _Release
-del _Release\*.* /Q/S
-rmdir _Release\*.* /Q/S
+REM Copy all the files needed for a release in the "_Release" folder
 
-mkdir "_Unicode Release\Data"
-mkdir "_Unicode Debug\Data"
-xcopy Data "_Unicode Release\Data" /Y/E/S
-xcopy Data "_Unicode Debug\Data" /Y/E/S
+SET RELEASE_DIR=_Release\%date:~6,4%-%date:~3,2%-%date:~0,2%_%time:~0,2%-%time:~3,2%-%time:~6,2%
 
-mkdir _Release\Standard
-mkdir _Release\Standard\Data
-copy "Appetizer.exe" "_Release\Standard"
-xcopy Data _Release\Standard\Data /Y/E/S
-del _Release\Standard\Data\Settings\*.* /Q
-del _Release\Standard\Data\Help\*.html /S/Q
-del _Release\Standard\Data\*.po~ /S/Q
-del _Release\Standard\Data\*.pot /S/Q
-rmdir _Release\Standard\Data\Help\en\images /Q/S
-rmdir _Release\Standard\Data\Help\fr\images /Q/S
+mkdir %RELEASE_DIR%
+mkdir %RELEASE_DIR%\Data
+copy "Appetizer.exe" "%RELEASE_DIR%"
+xcopy Data %RELEASE_DIR%\Data /Y/E/S
 
-upx -9 _Release\Standard\Appetizer.exe
+del %RELEASE_DIR%\Data\IconCache\*.* /Q
+del %RELEASE_DIR%\Data\Settings\*.* /Q
+del %RELEASE_DIR%\Data\Help\*.html /S/Q
+del %RELEASE_DIR%\Data\*.po~ /S/Q
+del %RELEASE_DIR%\Data\*.pot /S/Q
+rmdir %RELEASE_DIR%\Data\Help\en\images /Q/S
+rmdir %RELEASE_DIR%\Data\Help\fr\images /Q/S
+
+REM A enlever :
+rmdir %RELEASE_DIR%\Data\Help\fr /Q/S
+
+upx -9 %RELEASE_DIR%\Appetizer.exe
