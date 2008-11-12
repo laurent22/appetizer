@@ -28,10 +28,12 @@ GroupEditorDialog::GroupEditorDialog(wxWindow* parent, wxWindowID id, const wxSt
 
 
 void GroupEditorDialog::Localize() {
-  SetTitle(_("Shorcut Properties"));
+  SetTitle(_("Group Properties"));
   nameLabel->SetLabel(_("Name:"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));
+  iconLabel->SetLabel(_("Icon"));
+  changeIconButton->SetLabel(_("Select a different icon"));
 }
 
 
