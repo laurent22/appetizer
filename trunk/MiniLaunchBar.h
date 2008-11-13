@@ -12,6 +12,7 @@
 
 #include "MainFrame.h"
 #include "FolderItem.h"
+#include "Enumerations.h"
 #include "utilities/Utilities.h"
 
 
@@ -35,6 +36,9 @@ public:
   void CheckForNewVersion(bool silent = false);
   bool ChangeLocale(const wxString& localeCode);
   void CloseApplication();
+  int GetOSValidIconSize(int requiredIconSize);
+  IntVector GetAllowedIconSizes();
+  wxString GetIconSizeName(int iconSize);
 
   void FolderItems_CollectionChange();
   void FolderItems_FolderItemChange(FolderItemSP folderItem);
@@ -55,6 +59,11 @@ private:
   User* user_;
   wxLocale* locale_;
   LongVector launchedProcessIds_;
+  IntVector allowedIconSizes_;
+
+  #ifdef __WINDOWS__
+  OSVERSIONINFO osInfo_;
+  #endif
 
 };
 

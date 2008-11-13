@@ -104,14 +104,20 @@ void ConfigDialog::LoadSettings() {
   //***************************************************************************
 
   iconSizeComboBox->Clear();
-  iconSizeComboBox->Append(_("Small"), new wxStringClientData(_T("16")));
-  iconSizeComboBox->Append(_("Large"), new wxStringClientData(_T("32")));
 
-  if (userSettings->IconSize == 16) {
-    iconSizeComboBox->Select(0);
-  } else {
-    iconSizeComboBox->Select(1);
+  IntVector allowedIconSizes = wxGetApp().GetAllowedIconSizes();
+  selectedIndex = 0;
+
+  for (int i = 0; i < allowedIconSizes.size(); i++) {
+    int iconSize = allowedIconSizes.at(i);
+    wxString iconName = wxGetApp().GetIconSizeName(iconSize);
+    wxString iconSizeString = wxString::Format(_T("%d"), iconSize);
+    iconSizeComboBox->Append(iconName, new wxStringClientData(iconSizeString));
+
+    if (iconSize == userSettings->IconSize) selectedIndex = i;
   }
+
+  iconSizeComboBox->Select(selectedIndex);
 
   //***************************************************************************
   // Populate "Orientation" dropdown list

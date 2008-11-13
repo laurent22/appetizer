@@ -111,6 +111,8 @@ private:
   wxString filePath_;
   wxIconSP icon16_;
   wxIconSP icon32_;  
+  wxIconSP icon48_;
+  wxIconSP icon256_;  
   wxString uuid_;
   wxString groupIconUUID_;
   bool automaticallyAdded_;

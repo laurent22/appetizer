@@ -58,6 +58,11 @@ TiXmlElement* UserSettings::ToXml() {
 }
 
 
+int UserSettings::GetValidatedIconSize() {
+  return wxGetApp().GetOSValidIconSize(IconSize);
+}
+
+
 void UserSettings::FromXml(TiXmlElement* xml) {
   for (TiXmlElement* element = xml->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
@@ -102,6 +107,8 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("ShowEjectDriveMessage")) ShowEjectDriveMessage = ParseBoolean(v);
 
   }
+
+  IconSize = wxGetApp().GetOSValidIconSize(IconSize);
 }
 
 

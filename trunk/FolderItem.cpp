@@ -617,6 +617,8 @@ wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
 
 wxIconSP FolderItem::GetIcon(int iconSize) {
   wxIconSP output;
+
+  iconSize = wxGetApp().GetOSValidIconSize(iconSize);
   
   if (iconSize == SMALL_ICON_SIZE) {
     output = icon16_;

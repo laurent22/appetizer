@@ -155,7 +155,7 @@ wxString GenerateHTMLString() {
   // Adding a group
   // -------------------------------------------------  
   H3(_("Adding a group of shortcuts"));
-  P(_("To create a group of shortcuts, right-click anywhere on the icon panel, select 'New group', give a name to the group, and click 'Save'. To add shortcuts to this group, click or right-click on it and select 'Organize group shortcuts'. The newly opened window display all your shortcuts in a tree-like control. You can drag & drop these icons to add them to the group. You can also reorder them in a different, still by drag & dropping them. Once this is done, click the 'Close' button."));  
+  P(_("To create a group of shortcuts, right-click anywhere on the icon panel, select 'New group', give a name to the group, and click 'Save'. To add shortcuts to this group, click or right-click on it and select 'Organize group shortcuts'. The newly opened window display all your shortcuts in a tree-like control. You can drag & drop these icons to add them to the group. You can also reorder them, still by drag & dropping them. Once this is done, click the 'Close' button."));  
 
   // -------------------------------------------------
   // Changing the icon of a group
@@ -232,20 +232,20 @@ wxString GenerateHTMLString() {
   // *******************************************************************************
   A(_T(""), _T(""), _T("Translating"));
   H2(_("Translating Appetizer"));
-  P(_("If Appetizer is not available in your own language, you can easily create your own translation. To do so, please follow these steps:"));
-  StartList();
-  LI(_("[http://www.poedit.net/ Download Poedit] and install it. This is a utility that makes it easier to create and maintain translation files."));
-  LI(_("Open the folder where you've installed Appetizer and open the Data\\Locale folder"));
-  LI(_("Copy and paste the 'en' folder."));
-  LI(_("Within that folder, open 'appetizer.po' with Poedit."));
-  LI(_("In Poedit, go into the Catalog menu and click Configuration. Change 'Country' and 'Language' to your own country and language."));
-  LI(_("Now, to translate a line of text, click on it and add your translated text in the bottom text field."));
-  LI(_("Once all the text is translated, please email 'appetizer.po' and 'appetizer.mo' to appetizer@cozic.net"));
-  EndList();
-  P(_("Your translation will be added in the next release."));
+  P(wxString::Format(_("If Appetizer is not available in your own language, you can easily create your own translation. Please [%s follow this link] for more information."), _T("http://appetizer.sourceforge.net/translations/")));
+  //StartList();
+  //LI(_("[http://www.poedit.net/ Download Poedit] and install it. This is a utility that makes it easier to create and maintain translation files."));
+  //LI(_("Open the folder where you've installed Appetizer and open the Data\\Locale folder"));
+  //LI(_("Copy and paste the 'en' folder."));
+  //LI(_("Within that folder, open 'appetizer.po' with Poedit."));
+  //LI(_("In Poedit, go into the Catalog menu and click Configuration. Change 'Country' and 'Language' to your own country and language."));
+  //LI(_("Now, to translate a line of text, click on it and add your translated text in the bottom text field."));
+  //LI(_("Once all the text is translated, please email 'appetizer.po' and 'appetizer.mo' to appetizer@cozic.net"));
+  //EndList();
+  //P(_("Your translation will be added in the next release."));
 
-  H3(_("Translating the help file"));
-  P(_("If you wish to translate the help file, follow the same steps as above and edit the file in Data\\Help\\en\\appetizer.po."));
+  //H3(_("Translating the help file"));
+  //P(_("If you wish to translate the help file, follow the same steps as above and edit the file in Data\\Help\\en\\appetizer.po."));
 
   AddStringLn(_T("</body>"));
   AddStringLn(_T("</html>"));
@@ -286,6 +286,9 @@ bool GenerateHelp::OnInit() {
     urlRegEx.ReplaceAll(&htmlString, _T("<a href='\\1'>\\3</a>"));
     strongRegEx.ReplaceAll(&htmlString, _T("<b>\\1</b>"));
     internalUrlRegEx.ReplaceAll(&htmlString, _T("<a href='\\1'>\\2</a>"));
+
+    wxString s = _T("appetizer"); s += _T("@"); s += _T("cozic"); s += _T("."); s += _T("net");
+    htmlString.Replace(s, wxString::Format(_T("<a href='mailto:%s'>%s</a>"), s, s));
 
     WriteHelp(_T("Data/Help/") + localeCode + _T("/Appetizer.html"), htmlString); 
   }

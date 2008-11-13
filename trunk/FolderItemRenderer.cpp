@@ -245,13 +245,13 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(wxGetApp().GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Width,
-          wxGetApp().GetUser()->GetSettings()->IconSize + Styles::Icon.Padding.Height);
+  SetSize(wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() + Styles::Icon.Padding.Width,
+          wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() + Styles::Icon.Padding.Height);
 }
 
 
 void FolderItemRenderer::UpdateControlBitmap() {
-  BitmapControl::UpdateControlBitmap();
+  BitmapControl::UpdateControlBitmap();  
 
   FolderItemSP folderItem = GetFolderItem();
 
@@ -261,6 +261,8 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
+  int userSettingsIconSize = userSettings->GetValidatedIconSize();
+
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);
 
@@ -285,15 +287,25 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   // Get the icon from the folder item
-  wxIconSP icon = folderItem->GetIcon(wxGetApp().GetUser()->GetSettings()->IconSize);
+  wxIconSP icon = folderItem->GetIcon(userSettingsIconSize);
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
   if (icon->IsOk()) {  
-    int yOffset = 0;
-    if (mouseInside_ && !mousePressed_) {
-      //yOffset = -1;
-    }
-    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top + yOffset);
+
+    // The commented code below converts the icon to a usable wxImage object
+    //
+    //wxImage image;
+    //
+    //if (wxBitmap(*icon).GetMask()) {
+    //  wxBitmap* tempBitmap = Imaging::IconToBitmapWithAlpha(*icon);      
+    //  image = tempBitmap->ConvertToImage();
+    //  wxDELETE(tempBitmap);
+    //} else {
+    //  image = wxBitmap(*icon).ConvertToImage();
+    //}
+    //destDC.DrawBitmap(wxBitmap(image), Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);    
+
+    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);
   }
 
   if (folderItem->BelongsToMultiLaunchGroup()) {
@@ -303,8 +315,8 @@ void FolderItemRenderer::UpdateControlBitmap() {
     if (multiLaunchIcon_->IsOk()) {
       destDC.DrawBitmap(
         *multiLaunchIcon_,
-        Styles::Icon.Padding.Left + userSettings->IconSize / 2 - multiLaunchIcon_->GetWidth() / 2,
-        Styles::Icon.Padding.Top + userSettings->IconSize - multiLaunchIcon_->GetHeight() / 2);
+        Styles::Icon.Padding.Left + userSettingsIconSize / 2 - multiLaunchIcon_->GetWidth() / 2,
+        Styles::Icon.Padding.Top + userSettingsIconSize - multiLaunchIcon_->GetHeight() / 2);
     }
   }
 

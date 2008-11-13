@@ -9,11 +9,49 @@
 #include "IconGetter.h"
 #include "StringUtil.h"
 
+#ifdef __WINDOWS__
+#include <shlobj.h>
+#include <shlguid.h> 
+#include <shellapi.h>
+#include <commctrl.h>
+#include <commoncontrols.h>
+#endif // __WINDOWS__
+
 
 wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
+
   if (wxFileName::DirExists(filePath)) {
+
     return GetFolderIcon(filePath, iconSize);
+
   } else {
+
+    if (iconSize >= 48) {
+      // Get the icon index using SHGetFileInfo
+      SHFILEINFOW sfi = {0};
+      SHGetFileInfo(filePath, -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
+
+      // Retrieve the system image list.
+      // To get the 48x48 icons, use SHIL_EXTRALARGE
+      // To get the 256x256 icons (Vista only), use SHIL_JUMBO
+      HIMAGELIST* imageList;
+      HRESULT hResult = SHGetImageList(iconSize == 48 ? SHIL_EXTRALARGE : SHIL_JUMBO, IID_IImageList, (void**)&imageList);
+
+      if (hResult == S_OK) {
+        // Get the icon we need from the list. Note that the HIMAGELIST we retrieved
+        // earlier needs to be casted to the IImageList interface before use.
+        HICON hIcon;
+        hResult = ((IImageList*)imageList)->GetIcon(sfi.iIcon, ILD_TRANSPARENT, &hIcon);
+
+        if (hResult == S_OK) {
+          wxIcon* icon = new wxIcon();
+          icon->SetHICON((WXHICON)hIcon);
+          icon->SetSize(iconSize, iconSize);
+          return icon;
+        }      
+      }
+    }
+
     wxFileName filename(filePath);
 
     if ((filename.GetExt().CmpNoCase(wxT("exe")) == 0) || (filename.GetExt().CmpNoCase(wxT("ico")) == 0)) {
@@ -48,7 +86,7 @@ wxIcon* IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
       iconFileName.Normalize(wxPATH_NORM_ALL, filePath);
       iconFileValue = iconFileName.GetFullPath();
       
-      return GetExecutableIcon(iconFileValue, iconSize);
+      return GetFolderItemIcon(iconFileValue, iconSize);
     }
   }
 

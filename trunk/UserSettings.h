@@ -40,6 +40,8 @@ public:
   TiXmlElement* ToXml();
   void FromXml(TiXmlElement* xml);
 
+  int GetValidatedIconSize();
+
 private:
 
   void AppendSettingToXml(TiXmlElement* element, const char* name, const char* value);

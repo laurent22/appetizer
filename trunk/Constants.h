@@ -30,5 +30,7 @@ const int MAIN_FRAME_DEFAULT_WIDTH = 300;
 const int MAIN_FRAME_DEFAULT_HEIGHT = 80;
 const int SMALL_ICON_SIZE = 16;
 const int LARGE_ICON_SIZE = 32;
+const int EXTRA_LARGE_ICON_SIZE = 48;
+const int JUMBO_ICON_SIZE = 256;
 
 #endif // __Constants_H

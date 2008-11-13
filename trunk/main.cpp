@@ -35,6 +35,20 @@ bool MiniLaunchBar::OnInit() {
   stopWatch_.Start();
   user_ = new User();
 
+  allowedIconSizes_.push_back(SMALL_ICON_SIZE);
+  allowedIconSizes_.push_back(LARGE_ICON_SIZE);
+  allowedIconSizes_.push_back(EXTRA_LARGE_ICON_SIZE);
+  allowedIconSizes_.push_back(JUMBO_ICON_SIZE);
+
+  #ifdef __WINDOWS__
+  osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+  BOOL gotInfo = GetVersionEx(&osInfo_);
+  if (!gotInfo) {
+    osInfo_.dwMajorVersion = 5; // Assume Windows 2000
+    osInfo_.dwMinorVersion = 0;
+  }
+  #endif // __WINDOWS__
+
   // ***********************************************************************************
   // Initialize the command line object
   // ***********************************************************************************
@@ -132,6 +146,24 @@ bool MiniLaunchBar::OnInit() {
 
   return true;
 } 
+
+
+IntVector MiniLaunchBar::GetAllowedIconSizes() {
+  return allowedIconSizes_;
+}
+
+
+wxString MiniLaunchBar::GetIconSizeName(int iconSize) {
+  switch (iconSize) {
+
+    case LARGE_ICON_SIZE: return _("Large"); break;
+    case EXTRA_LARGE_ICON_SIZE: return _("Extra Large (XP and above)"); break;
+    case JUMBO_ICON_SIZE: return _("Jumbo (Vista and above)"); break;
+
+  }
+
+  return _T("Small");
+}
 
 
 /**
@@ -243,6 +275,39 @@ void MiniLaunchBar::CheckForNewVersion(bool silent) {
     bool wasLaunched = ::wxLaunchDefaultBrowser(versionInfo.PageURL, wxBROWSER_NEW_WINDOW);
     if (!wasLaunched) MessageBoxes::ShowError(_("Error launching web browser"));
   }
+}
+
+
+int MiniLaunchBar::GetOSValidIconSize(int requiredIconSize) {
+  #ifdef __WINDOWS__
+
+  int major = osInfo_.dwMajorVersion;
+  int minor = osInfo_.dwMinorVersion;
+
+  if (major < 5) {
+
+    // Before Windows 2000
+    if (requiredIconSize > 32) return 32;
+
+  } else if (major == 5) {
+
+    if (minor < 1) {
+      // Windows 2000
+      if (requiredIconSize > 32) return 32;
+    } else {
+      // Windows XP
+      if (requiredIconSize > 48) return 48;
+    }
+
+  } else {
+    
+    // Vista and above
+    if (requiredIconSize > 256) return 256;
+  }
+
+  #endif // __WINDOWS__
+
+  return requiredIconSize;
 }
 
 

@@ -288,7 +288,7 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
 
 void IconPanel::SetWidthInIcons(int numberOfIcons) {
-  int w = wxGetApp().GetUser()->GetSettings()->IconSize;
+  int w = wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize();
   w += Styles::Icon.Padding.Width;
   w *= numberOfIcons;
   w += Styles::InnerPanel.Padding.Width;
@@ -298,7 +298,7 @@ void IconPanel::SetWidthInIcons(int numberOfIcons) {
 
 
 void IconPanel::SetHeightInIcons(int numberOfIcons) {
-  int h = wxGetApp().GetUser()->GetSettings()->IconSize;
+  int h = wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize();
   h += Styles::Icon.Padding.Height;
   h *= numberOfIcons;
   h += Styles::InnerPanel.Padding.Height;
@@ -309,7 +309,7 @@ void IconPanel::SetHeightInIcons(int numberOfIcons) {
 
 int IconPanel::GetMinWidth() {
   return 
-    wxGetApp().GetUser()->GetSettings()->IconSize +
+    wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() +
     Styles::Icon.Padding.Width +
     Styles::InnerPanel.Padding.Width;
 }
@@ -317,7 +317,7 @@ int IconPanel::GetMinWidth() {
 
 int IconPanel::GetMinHeight() {
   return 
-    wxGetApp().GetUser()->GetSettings()->IconSize +
+    wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() +
     Styles::Icon.Padding.Height +
     Styles::InnerPanel.Padding.Height;
 }
