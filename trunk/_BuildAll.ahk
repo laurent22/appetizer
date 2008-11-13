@@ -7,6 +7,7 @@ sevenZipExe = c:\Program Files\7-Zip\7z.exe
 nsisExe = C:\Program Files\NSIS\makensisw.exe
 pafSourceDir = _PAF!\Other\Source
 pafAppInfoDir = _PAF!\App\AppInfo
+releaseDir = _Sourceforge\Releases
 
 FormatTime timeString, %A_Now%, yyyy-MM-dd_HH-mm-ss
 
@@ -70,12 +71,11 @@ FileRemoveDir %releaseDirectory%\Data\Help\fr, 1
 command = %upxExe% -9 %releaseDirectory%\Appetizer.exe
 RunWait %command%
 
-command = %sevenZipExe% a -tzip Appetizer_%appVersion%.zip *
+zipFileName = Appetizer_%appVersion%.zip
+command = %sevenZipExe% a -tzip %zipFileName% *
 RunWait %command%, %releaseDirectory%
 
-pafVersionFile = %pafDirectory%\Version.nsh
-FileDelete %pafVersionFile%
-FileAppend !define , %pafVersionFile%
+FileMove %releaseDirectory%\%zipFileName%, %releaseDir%\%zipFileName%, 1
 
 
 

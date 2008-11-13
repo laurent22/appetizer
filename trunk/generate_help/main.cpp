@@ -4,6 +4,11 @@
   found in the LICENSE file.
 */
 
+// NOTE: Once written, the generated files must be open with a text editor 
+// and converted to ANSI (which is the only format that HHC seems to support)
+// For example in Notepad++: Menu Format > Convert to ANSI
+
+
 #include <wx/wx.h>
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
@@ -17,11 +22,7 @@
 extern wxArrayString heSymbols;
 extern wxArrayString heCode;
 
-bool writeUTF8 = false;
 
-
-// The application class. An instance is created and initialized
-// below in IMPLEMENT_APP()
 class GenerateHelp: public wxApp {
   virtual bool OnInit();
 };
@@ -39,12 +40,6 @@ void WriteHelp(const wxString& filePath, const wxString& htmlString) {
   file.Open(filePath, wxFile::write);
 
   file.Write(htmlString, wxConvUTF8);
-
-  //if (writeUTF8) {
-  //  file.Write(htmlString, wxConvUTF8);
-  //} else {
-  //  file.Write(htmlString, wxConvISO8859_1);
-  //}
   
   file.Close();
 }
@@ -98,6 +93,9 @@ wxString GenerateHTMLString() {
   AddStringLn(_T("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0 Transitional//EN'>"));
   AddStringLn(_T("<html>"));
   AddStringLn(_T("<head>"));
+  // Although the file is going to be written as UTF-8, we set the charset here to
+  // Western-1252, which is the only format supported by CHM files. The generated HTML files
+  // then need to be converted to ANSI using a text editor.
   AddStringLn(_T("<meta http-equiv='content-type' content='text/html; charset=Western-1252'>"));
   AddStringLn(_T("<title>Appetizer</title>"));
 
