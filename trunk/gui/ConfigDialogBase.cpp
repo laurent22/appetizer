@@ -12,19 +12,19 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE)
 {
     // begin wxGlade: ConfigDialogBase::ConfigDialogBase
-    notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
+    notebook = new wxNotebook(this, ID_CDLG_MainNotebook, wxDefaultPosition, wxDefaultSize, 0);
+    notebook_pane_3 = new wxPanel(notebook, wxID_ANY);
     notebook_pane_2 = new wxPanel(notebook, wxID_ANY);
+    hotKeyGroupSizer_staticbox = new wxStaticBox(notebook_pane_3, -1, wxT("Hot key"));
     notebook_1_pane_1 = new wxPanel(notebook, wxID_ANY);
     languageLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Language:"));
     const wxString *languageComboBox_choices = NULL;
     languageComboBox = new wxComboBox(notebook_1_pane_1, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, languageComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
     label_1 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
-    autohideCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Hide after launching an application"));
-    label_2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     alwaysOnTopCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Always on top"));
-    label_3 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
+    label_2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     oneInstanceCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Allow only one instance of %s at a time"));
-    label_4 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
+    label_5 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     checkForUpdateButton = new wxButton(notebook_1_pane_1, ID_CDLG_BUTTON_CheckForUpdate, wxT("Check for update"));
     iconSizeLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Icon size:"));
     const wxString *iconSizeComboBox_choices = NULL;
@@ -35,6 +35,13 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     skinLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Skin:"));
     const wxString *skinComboBox_choices = NULL;
     skinComboBox = new wxComboBox(notebook_pane_2, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, skinComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
+    autohideCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Hide after launching an application"));
+    multiLaunchAutoRunCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Run multi-launch group on startup*"));
+    hotKeyCtrlCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Ctrl +"));
+    hotKeyAltCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Alt +"));
+    hotKeyShiftCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Shift +"));
+    const wxString *hotKeyComboBox_choices = NULL;
+    hotKeyComboBox = new wxComboBox(notebook_pane_3, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, hotKeyComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
     cancelButton = new wxButton(this, ID_CDLG_BUTTON_Cancel, wxT("Cancel"));
 
@@ -58,6 +65,10 @@ void ConfigDialogBase::do_layout()
     // begin wxGlade: ConfigDialogBase::do_layout
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* sizer_5 = new wxBoxSizer(wxHORIZONTAL);
+    wxFlexGridSizer* grid_sizer_2 = new wxFlexGridSizer(3, 1, 8, 8);
+    wxStaticBoxSizer* hotKeyGroupSizer = new wxStaticBoxSizer(hotKeyGroupSizer_staticbox, wxHORIZONTAL);
+    wxFlexGridSizer* grid_sizer_3 = new wxFlexGridSizer(1, 4, 8, 8);
     wxBoxSizer* sizer_4 = new wxBoxSizer(wxHORIZONTAL);
     wxFlexGridSizer* grid_sizer_1 = new wxFlexGridSizer(3, 2, 8, 8);
     wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
@@ -65,12 +76,10 @@ void ConfigDialogBase::do_layout()
     generalGridSizer->Add(languageLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     generalGridSizer->Add(languageComboBox, 0, wxEXPAND, 0);
     generalGridSizer->Add(label_1, 0, 0, 0);
-    generalGridSizer->Add(autohideCheckBox, 0, 0, 0);
-    generalGridSizer->Add(label_2, 0, 0, 0);
     generalGridSizer->Add(alwaysOnTopCheckBox, 0, 0, 0);
-    generalGridSizer->Add(label_3, 0, 0, 0);
+    generalGridSizer->Add(label_2, 0, 0, 0);
     generalGridSizer->Add(oneInstanceCheckBox, 0, 0, 0);
-    generalGridSizer->Add(label_4, 0, 0, 0);
+    generalGridSizer->Add(label_5, 0, 0, 0);
     generalGridSizer->Add(checkForUpdateButton, 0, wxEXPAND, 0);
     generalGridSizer->AddGrowableCol(1);
     sizer_3->Add(generalGridSizer, 1, wxALL|wxEXPAND, 10);
@@ -84,8 +93,20 @@ void ConfigDialogBase::do_layout()
     grid_sizer_1->AddGrowableCol(1);
     sizer_4->Add(grid_sizer_1, 1, wxALL|wxEXPAND, 10);
     notebook_pane_2->SetSizer(sizer_4);
+    grid_sizer_2->Add(autohideCheckBox, 0, wxEXPAND, 0);
+    grid_sizer_2->Add(multiLaunchAutoRunCheckBox, 0, wxEXPAND, 0);
+    grid_sizer_3->Add(hotKeyCtrlCheckBox, 0, 0, 0);
+    grid_sizer_3->Add(hotKeyAltCheckBox, 0, 0, 0);
+    grid_sizer_3->Add(hotKeyShiftCheckBox, 0, 0, 0);
+    grid_sizer_3->Add(hotKeyComboBox, 0, 0, 0);
+    hotKeyGroupSizer->Add(grid_sizer_3, 1, wxALL|wxEXPAND, 6);
+    grid_sizer_2->Add(hotKeyGroupSizer, 1, wxEXPAND, 0);
+    grid_sizer_2->AddGrowableCol(0);
+    sizer_5->Add(grid_sizer_2, 1, wxALL|wxEXPAND, 10);
+    notebook_pane_3->SetSizer(sizer_5);
     notebook->AddPage(notebook_1_pane_1, wxT("General"));
     notebook->AddPage(notebook_pane_2, wxT("Appearance"));
+    notebook->AddPage(notebook_pane_3, wxT("Operations*"));
     sizer_1->Add(notebook, 1, wxLEFT|wxRIGHT|wxTOP|wxEXPAND, 4);
     sizer_2->Add(saveButton, 0, wxRIGHT|wxALIGN_BOTTOM, 8);
     sizer_2->Add(cancelButton, 0, wxALIGN_BOTTOM, 0);

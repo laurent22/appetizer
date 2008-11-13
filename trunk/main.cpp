@@ -144,6 +144,8 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
   mainFrame_->Localize();
 
+  if (GetUser()->GetSettings()->RunMultiLaunchOnStartUp) utilities_.DoMultiLaunch();
+
   return true;
 } 
 
@@ -164,6 +166,15 @@ wxString MiniLaunchBar::GetIconSizeName(int iconSize) {
 
   return _T("Small");
 }
+
+
+wxString MiniLaunchBar::GetContactEmail() {
+  wxString e(_T("tizer@c"));
+  e += _T("ozic.net");
+  e.Prepend(_T("appe"));
+  return e;
+}
+
 
 
 /**

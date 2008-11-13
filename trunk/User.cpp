@@ -113,7 +113,7 @@ void User::Load() {
       wxString path = wxString(element->GetText(), wxConvUTF8);
       path.Trim(true).Trim(false);
       if (path == wxEmptyString) continue;
-      AddAutoAddExclusion(path);
+      AddAutoAddExclusion(FolderItem::ConvertToRelativePath(path));
     } else {
       wlog(wxString::Format(_T("User::Load: Unknown element: %s"), elementName));
     }
@@ -234,20 +234,19 @@ void User::AutomaticallyAddNewApps() {
   for (int i = 0; i < foundFilePaths.GetCount(); i++) {
     wxString filePath = foundFilePaths[i];
     wxString resolvedPath = FolderItem::ResolvePath(filePath);
+    wxString relativePath = FolderItem::ConvertToRelativePath(filePath);
 
     // This path has previously been deleted by the user
     // so don't automatically add it again.
-    if (IsAutoAddExclusion(filePath)) continue;
+    if (IsAutoAddExclusion(relativePath)) continue;
 
     // Check if there is already a folder item
     // for this file path. If so: skip it.
     FolderItemSP foundFolderItem = rootFolderItem_->GetChildByResolvedPath(resolvedPath);
     if (foundFolderItem.get()) continue;
 
-    //if (alreadyExists) continue;
-
     FolderItemSP folderItem(new FolderItem());
-    folderItem->SetFilePath(FolderItem::ConvertToRelativePath(filePath));
+    folderItem->SetFilePath(relativePath);
     folderItem->AutoSetName();
     folderItem->SetAutomaticallyAdded(true);
     

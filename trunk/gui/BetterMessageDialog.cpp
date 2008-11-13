@@ -187,7 +187,10 @@ int BetterMessageDialog::ShowMessage(
 
   BetterMessageDialog::messageDialog_ = new BetterMessageDialog(message, title, style, showCheckBox, checkBoxState, checkBoxLabel, parent);
   int result = BetterMessageDialog::messageDialog_->ShowModal();
-  if (BetterMessageDialog::messageDialog_) BetterMessageDialog::messageDialog_->Destroy();
+  if (BetterMessageDialog::messageDialog_) {
+    BetterMessageDialog::messageDialog_->Destroy();
+    BetterMessageDialog::messageDialog_ = NULL;
+  }
 
   return result;
 }

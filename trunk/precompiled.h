@@ -27,10 +27,12 @@
 #include <wx/msgdlg.h>
 #include <wx/treectrl.h>
 #include <wx/checkbox.h>
+#include <wx/combobox.h>
 #include <wx/imaglist.h>
 #include <wx/stdpaths.h>
 #include <wx/bitmap.h>
 #include <wx/cmdline.h>
+#include <wx/notebook.h>
 #include <wx/colour.h>
 #include <wx/taskbar.h>
 #include <wx/menu.h>

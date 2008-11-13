@@ -69,6 +69,7 @@ public:
   void OnPaint(wxPaintEvent& evt);
   bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames); 
   void OnBrowseButtonClick(wxCommandEvent& evt);
+  void OnMenuItemClick(wxCommandEvent& evt);
 
 private:
 

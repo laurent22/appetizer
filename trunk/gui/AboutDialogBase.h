@@ -36,8 +36,10 @@ protected:
     wxStaticBitmap* iconBitmap;
     wxTextCtrl* versionLabel;
     wxStaticText* copyrightLabel;
-    wxStaticText* authorLabel;
+    wxStaticText* webLabel;
     wxStaticText* linkLabel;
+    wxStaticText* contactLabel;
+    wxStaticText* contactLabel2;
     wxStaticText* creditLabel;
     wxTextCtrl* creditTextBox;
     wxPanel* notebook_1_pane_1;

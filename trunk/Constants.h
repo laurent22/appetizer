@@ -24,6 +24,7 @@ const wxString HELP_FILE_NAME = _T("Appetizer.chm");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
 const wxString DEFAULT_SKIN = _T("Default");
 const wxString CHECK_VERSION_URL = _T("http://appetizer.sourceforge.net/VersionInfo.xml");
+const int HOT_KEY_ID = 0xBAFF;
 const int CHECK_VERSION_DAY_INTERVAL = 2;
 const int WINDOW_VISIBILITY_BORDER = 20;
 const int MAIN_FRAME_DEFAULT_WIDTH = 300;

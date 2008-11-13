@@ -31,6 +31,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_COMMAND(wxID_ANY, wxeEVT_CLICK, MainFrame::OnImageButtonClick)
   EVT_IDLE(MainFrame::OnIdle)
   EVT_MOUSE_CAPTURE_LOST(MainFrame::OnMouseCaptureLost)
+  EVT_HOTKEY(HOT_KEY_ID, MainFrame::OnHotKey)
 END_EVENT_TABLE()
 
 
@@ -52,8 +53,10 @@ MainFrame::MainFrame()
 
   #ifdef __WXDEBUG__
   logWindow_ = new wxLogWindow(this, wxEmptyString, true);
+  wxLog::SetActiveTarget(logWindow_);
   #endif // __WXDEBUG__
 
+  hotKeyRegistered_ = false;
   firstIdleEventSent_ = false;
   needLayoutUpdate_ = true;
   needMaskUpdate_ = true;
@@ -79,7 +82,7 @@ MainFrame::MainFrame()
   optionPanel_ = new OptionPanel(this);
 
   resizerPanel_ = new ImagePanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(50, 50));
-  resizerPanel_->SetCursor(wxCursor(wxCURSOR_HAND));
+  resizerPanel_->SetCursor(wxCursor(wxCURSOR_SIZENWSE));
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnResizerMouseDown), NULL, this);
   resizerPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnResizerMouseUp), NULL, this);
   resizerPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnResizerMouseMove), NULL, this);
@@ -108,6 +111,8 @@ MainFrame::MainFrame()
   SetTitle(APPLICATION_NAME);
 
   ApplySkin();
+
+  RegisterHideShowHotKey();
 
 
 
@@ -153,6 +158,52 @@ MainFrame::MainFrame()
     SetSize(x, y, width, height);
   }
 } 
+
+
+bool MainFrame::RegisterHideShowHotKey() {
+  UnregisterHideShowHotKey();
+  
+  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
+  
+  if (userSettings->HotKeyKey <= 0) return false;
+
+  int modifiers = 0;
+  if (userSettings->HotKeyControl) modifiers |= wxMOD_CONTROL;
+  if (userSettings->HotKeyAlt) modifiers |= wxMOD_ALT;
+  if (userSettings->HotKeyShift) modifiers |= wxMOD_SHIFT;
+
+  if (modifiers == 0) return false;
+
+  int success = RegisterHotKey(HOT_KEY_ID, modifiers, userSettings->HotKeyKey);
+  hotKeyRegistered_ = success;
+  
+  if (hotKeyRegistered_) {
+    ilog("Hot key registered successfully");
+  } else {
+    MessageBoxes::ShowError(_("There was an error registering the hot key. Another application may already have registered it."));
+  }
+
+  return hotKeyRegistered_;
+}
+
+
+void MainFrame::UnregisterHideShowHotKey() {
+  if (!hotKeyRegistered_) return;
+
+  UnregisterHotKey(HOT_KEY_ID);
+  ilog("Hot key unregistered");
+  hotKeyRegistered_ = false;
+}
+
+
+void MainFrame::OnHotKey(wxKeyEvent& evt) {
+  if (!IsVisible()) {
+    Show();
+    Raise();
+  } else {
+    Raise();
+  }
+}
 
 
 void MainFrame::DoAutoHide() {

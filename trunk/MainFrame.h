@@ -67,6 +67,7 @@ class MainFrame: public wxFrame {
     ImageButton* closeSideButton_;
     ImageButton* ejectSideButton_;
     ImageButton* minimizeSideButton_;
+    bool hotKeyRegistered_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -102,6 +103,9 @@ class MainFrame: public wxFrame {
     void InvalidateMask();
     void ApplySkin(const wxString& skinName = wxEmptyString);
 
+    void UnregisterHideShowHotKey();
+    bool RegisterHideShowHotKey();
+
     void SetRotated(bool rotated, bool swapWidthAndHeight = false);
 
     int GetDisplayIndex();
@@ -122,6 +126,7 @@ class MainFrame: public wxFrame {
     void OnImageButtonClick(wxCommandEvent& evt);
     void OnIdle(wxIdleEvent& evt);
     void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
+    void OnHotKey(wxKeyEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

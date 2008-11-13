@@ -14,7 +14,7 @@
 
 
 UserSettings::UserSettings() {
-  IconSize = 32;
+  IconSize = wxGetApp().GetOSValidIconSize(EXTRA_LARGE_ICON_SIZE);
   Locale = _T("en");
   PortableAppsPath = _T("%DRIVE%/PortableApps");
   DocumentsPath = _T("%DRIVE%/Documents");
@@ -26,6 +26,11 @@ UserSettings::UserSettings() {
   AlwaysOnTop = false;
   UniqueApplicationInstance = true;
   AutoHideApplication = false;
+  RunMultiLaunchOnStartUp = false;
+  HotKeyControl = false;
+  HotKeyAlt = false;
+  HotKeyShift = false;
+  HotKeyKey = 0;
 
   ShowDeleteIconMessage = true;
   ShowEjectDriveMessage = true;
@@ -53,6 +58,11 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "UniqueApplicationInstance", UniqueApplicationInstance);
   AppendSettingToXml(xml, "ShowDeleteIconMessage", ShowDeleteIconMessage);
   AppendSettingToXml(xml, "ShowEjectDriveMessage", ShowEjectDriveMessage);
+  AppendSettingToXml(xml, "RunMultiLaunchOnStartUp", RunMultiLaunchOnStartUp);
+  AppendSettingToXml(xml, "HotKeyControl", HotKeyControl);
+  AppendSettingToXml(xml, "HotKeyAlt", HotKeyAlt);
+  AppendSettingToXml(xml, "HotKeyShift", HotKeyShift);
+  AppendSettingToXml(xml, "HotKeyKey", HotKeyKey);
 
   return xml;
 }
@@ -105,10 +115,12 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("UniqueApplicationInstance")) UniqueApplicationInstance = ParseBoolean(v);
     if (n == _T("ShowDeleteIconMessage")) ShowDeleteIconMessage = ParseBoolean(v);
     if (n == _T("ShowEjectDriveMessage")) ShowEjectDriveMessage = ParseBoolean(v);
-
+    if (n == _T("RunMultiLaunchOnStartUp")) RunMultiLaunchOnStartUp = ParseBoolean(v);
+    if (n == _T("HotKeyControl")) HotKeyControl = ParseBoolean(v);
+    if (n == _T("HotKeyAlt")) HotKeyAlt = ParseBoolean(v);
+    if (n == _T("HotKeyShift")) HotKeyShift = ParseBoolean(v);
+    if (n == _T("HotKeyKey")) AssignSettingValue(HotKeyKey, v);
   }
-
-  IconSize = wxGetApp().GetOSValidIconSize(IconSize);
 }
 
 

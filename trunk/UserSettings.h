@@ -33,6 +33,11 @@ public:
   bool UniqueApplicationInstance;
   bool ShowDeleteIconMessage;
   bool ShowEjectDriveMessage;
+  bool RunMultiLaunchOnStartUp;
+  bool HotKeyControl;
+  bool HotKeyAlt;
+  bool HotKeyShift;
+  int HotKeyKey;
 
   void Save();
   void Load();

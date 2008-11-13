@@ -18,8 +18,10 @@ AboutDialogBase::AboutDialogBase(wxWindow* parent, int id, const wxString& title
     iconBitmap = new wxStaticBitmap(notebook_1_pane_1, wxID_ANY, wxNullBitmap);
     versionLabel = new wxTextCtrl(notebook_1_pane_1, wxID_ANY, wxT("NAME VERSION"), wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxNO_BORDER);
     copyrightLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Copyright (C) 2008"));
-    authorLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Laurent Cozic"));
+    webLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("*Web:"));
     linkLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("http://appetizer.sourceforge.net"));
+    contactLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("*Contact:"));
+    contactLabel2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("nothing@nothing.com"));
     creditLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Credits:"));
     creditTextBox = new wxTextCtrl(notebook_1_pane_1, wxID_ANY, wxT("Translators: Simeon, Pieter Kerstens, Michal Trzebiatowski\n\nThis software uses a number of open source libraries including:\n\n- Simpleini by Brodie Thiesfield\n- TinyXml by Yves Berquin\n- The Boost C++ Libraries\n- wxWidgets by their respective authors\n\nDialog boxes are built using wxGlade by Alberto Griggio."), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_LINEWRAP|wxTE_WORDWRAP);
     licenseTextBox = new wxTextCtrl(notebook_pane_2, wxID_ANY, wxT("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. \n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_LINEWRAP|wxTE_WORDWRAP);
@@ -35,7 +37,7 @@ void AboutDialogBase::set_properties()
 {
     // begin wxGlade: AboutDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(334, 388));
+    SetSize(wxSize(334, 440));
     versionLabel->SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DHILIGHT));
     // end wxGlade
 }
@@ -52,13 +54,15 @@ void AboutDialogBase::do_layout()
     wxBoxSizer* sizer_4 = new wxBoxSizer(wxVERTICAL);
     wxFlexGridSizer* headerGridSizer = new wxFlexGridSizer(1, 2, 0, 0);
     wxBoxSizer* sizer_6 = new wxBoxSizer(wxVERTICAL);
-    wxBoxSizer* sizer_7 = new wxBoxSizer(wxHORIZONTAL);
+    wxFlexGridSizer* grid_sizer_2 = new wxFlexGridSizer(2, 2, 6, 6);
     headerGridSizer->Add(iconBitmap, 0, 0, 0);
     sizer_6->Add(versionLabel, 0, wxBOTTOM|wxEXPAND, 6);
-    sizer_7->Add(copyrightLabel, 0, wxBOTTOM, 10);
-    sizer_7->Add(authorLabel, 0, wxLEFT, 4);
-    sizer_6->Add(sizer_7, 1, wxEXPAND, 0);
-    sizer_6->Add(linkLabel, 0, wxBOTTOM, 4);
+    sizer_6->Add(copyrightLabel, 0, wxBOTTOM, 10);
+    grid_sizer_2->Add(webLabel, 0, 0, 0);
+    grid_sizer_2->Add(linkLabel, 0, wxBOTTOM, 4);
+    grid_sizer_2->Add(contactLabel, 0, 0, 0);
+    grid_sizer_2->Add(contactLabel2, 0, 0, 0);
+    sizer_6->Add(grid_sizer_2, 1, wxBOTTOM|wxEXPAND, 6);
     headerGridSizer->Add(sizer_6, 1, wxLEFT|wxEXPAND, 8);
     headerGridSizer->AddGrowableCol(1);
     grid_sizer_1->Add(headerGridSizer, 1, wxBOTTOM|wxEXPAND, 6);

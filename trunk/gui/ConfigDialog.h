@@ -20,6 +20,7 @@ public:
   ConfigDialog();
   void Localize();
   void LoadSettings();
+  void UpdatePage(int pageIndex);
 
 private:
 
@@ -27,6 +28,9 @@ private:
   void OnSaveButtonClick(wxCommandEvent& evt);
   void OnShow(wxShowEvent& evt);
   void OnCheckForUpdateButtonClick(wxCommandEvent& evt);
+  void OnNoteBookPageChanged(wxNotebookEvent& evt);
+
+  std::vector<bool> updatedPages_;
 
   DECLARE_EVENT_TABLE();
 

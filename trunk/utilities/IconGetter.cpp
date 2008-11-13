@@ -20,17 +20,23 @@
 
 wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
 
+  wxIcon* output = NULL;
+
   if (wxFileName::DirExists(filePath)) {
+    output = GetFolderIcon(filePath, iconSize);
+  }
 
-    return GetFolderIcon(filePath, iconSize);
+  if (output) return output;
 
-  } else {
 
-    if (iconSize >= 48) {
-      // Get the icon index using SHGetFileInfo
-      SHFILEINFOW sfi = {0};
-      SHGetFileInfo(filePath, -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
+  if (iconSize >= 48) {
+    // Get the icon index using SHGetFileInfo
+    SHFILEINFOW sfi = {0};
+    SHGetFileInfo(filePath, -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
 
+    // If iIcon is 0, we get a weird default icon representing a hand,
+    // so don't continue.
+    if (sfi.iIcon > 0) {
       // Retrieve the system image list.
       // To get the 48x48 icons, use SHIL_EXTRALARGE
       // To get the 256x256 icons (Vista only), use SHIL_JUMBO
@@ -50,15 +56,17 @@ wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
           return icon;
         }      
       }
+
     }
 
-    wxFileName filename(filePath);
+  }
 
-    if ((filename.GetExt().CmpNoCase(wxT("exe")) == 0) || (filename.GetExt().CmpNoCase(wxT("ico")) == 0)) {
-      return GetExecutableIcon(filePath, iconSize);
-    } else {
-      return GetDocumentIcon(filePath, iconSize);
-    }
+  wxFileName filename(filePath);
+
+  if ((filename.GetExt().CmpNoCase(wxT("exe")) == 0) || (filename.GetExt().CmpNoCase(wxT("ico")) == 0)) {
+    return GetExecutableIcon(filePath, iconSize);
+  } else {
+    return GetDocumentIcon(filePath, iconSize);
   }
 
   return NULL;
@@ -91,14 +99,14 @@ wxIcon* IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
   }
 
   SHFILEINFO fileInfo;
-  int success;
+  int success = 0;
 
   wxFileName fileName(filePath);
   
   if (iconSize == 32) {
     success = SHGetFileInfo(fileName.GetPath().c_str(), FILE_ATTRIBUTE_DIRECTORY, &fileInfo,
                             sizeof(fileInfo), SHGFI_ICON | SHGFI_LARGEICON);    
-  } else {
+  } else if (iconSize == 16) {
     success = SHGetFileInfo(fileName.GetPath().c_str(), FILE_ATTRIBUTE_DIRECTORY, &fileInfo,
                             sizeof(fileInfo), SHGFI_ICON | SHGFI_SMALLICON);
   }
@@ -158,15 +166,17 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
   wxIconLocation iconLocation;
   bool success = fileType->GetIcon(&iconLocation);
 
-  // Fixes a bug in wxWidgets: Sometime the icon is negative, in which case the wxIconLocation will be invalid
-  if (iconLocation.GetIndex() < 0) iconLocation.SetIndex(0);
+  if (success) {
+    // Fixes a bug in wxWidgets: Sometime the icon is negative, in which case the wxIconLocation will be invalid
+    if (iconLocation.GetIndex() < 0) iconLocation.SetIndex(0);
 
-  // Fixes a bug in wxWidgets: The filename is sometime surrounded by quotes, and so the wxIconLocation will
-  // again be invalid. We remove the quotes below:
-  wxString iconLocFile = iconLocation.GetFileName();
-  while (iconLocFile[0] == _T('"')) iconLocFile = iconLocFile.Mid(1, iconLocFile.Len());
-  while (iconLocFile[iconLocFile.Len() - 1] == _T('"')) iconLocFile = iconLocFile.Mid(0, iconLocFile.Len() - 1);
-  iconLocation.SetFileName(iconLocFile);
+    // Fixes a bug in wxWidgets: The filename is sometime surrounded by quotes, and so the wxIconLocation will
+    // again be invalid. We remove the quotes below:
+    wxString iconLocFile = iconLocation.GetFileName();
+    while (iconLocFile[0] == _T('"')) iconLocFile = iconLocFile.Mid(1, iconLocFile.Len());
+    while (iconLocFile[iconLocFile.Len() - 1] == _T('"')) iconLocFile = iconLocFile.Mid(0, iconLocFile.Len() - 1);
+    iconLocation.SetFileName(iconLocFile);
+  }
 
   wxDELETE(fileType);
 

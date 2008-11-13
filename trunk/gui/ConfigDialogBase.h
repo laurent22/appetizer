@@ -13,6 +13,7 @@
 
 // begin wxGlade: ::extracode
 enum {
+ID_CDLG_MainNotebook,
 ID_CDLG_BUTTON_Save,
 ID_CDLG_BUTTON_Cancel,
 ID_CDLG_BUTTON_CheckForUpdate
@@ -35,15 +36,14 @@ private:
 
 protected:
     // begin wxGlade: ConfigDialogBase::attributes
+    wxStaticBox* hotKeyGroupSizer_staticbox;
     wxStaticText* languageLabel;
     wxComboBox* languageComboBox;
     wxStaticText* label_1;
-    wxCheckBox* autohideCheckBox;
-    wxStaticText* label_2;
     wxCheckBox* alwaysOnTopCheckBox;
-    wxStaticText* label_3;
+    wxStaticText* label_2;
     wxCheckBox* oneInstanceCheckBox;
-    wxStaticText* label_4;
+    wxStaticText* label_5;
     wxButton* checkForUpdateButton;
     wxPanel* notebook_1_pane_1;
     wxStaticText* iconSizeLabel;
@@ -53,6 +53,13 @@ protected:
     wxStaticText* skinLabel;
     wxComboBox* skinComboBox;
     wxPanel* notebook_pane_2;
+    wxCheckBox* autohideCheckBox;
+    wxCheckBox* multiLaunchAutoRunCheckBox;
+    wxCheckBox* hotKeyCtrlCheckBox;
+    wxCheckBox* hotKeyAltCheckBox;
+    wxCheckBox* hotKeyShiftCheckBox;
+    wxComboBox* hotKeyComboBox;
+    wxPanel* notebook_pane_3;
     wxNotebook* notebook;
     wxButton* saveButton;
     wxButton* cancelButton;

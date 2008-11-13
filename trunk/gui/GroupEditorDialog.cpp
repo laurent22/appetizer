@@ -40,6 +40,7 @@ void GroupEditorDialog::Localize() {
 void GroupEditorDialog::LoadFolderItem(FolderItemSP folderItem) {
   hasSelectedDefaultIcon_ = false;
   folderItem_ = folderItem;
+  Localize();
   UpdateFromFolderItem();
 }
 

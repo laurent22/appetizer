@@ -39,6 +39,7 @@ public:
   int GetOSValidIconSize(int requiredIconSize);
   IntVector GetAllowedIconSizes();
   wxString GetIconSizeName(int iconSize);
+  wxString GetContactEmail();
 
   void FolderItems_CollectionChange();
   void FolderItems_FolderItemChange(FolderItemSP folderItem);

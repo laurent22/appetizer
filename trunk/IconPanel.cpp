@@ -19,8 +19,7 @@
 
 BEGIN_EVENT_TABLE(IconPanel, NineSlicesPanel)
   EVT_RIGHT_DOWN(IconPanel::OnRightDown)
-  EVT_MENU(ID_MENU_NewShortcut, IconPanel::OnMenuNewShortcut)
-  EVT_MENU(ID_MENU_NewGroup, IconPanel::OnMenuNewGroup)
+  EVT_MENU(wxID_ANY, IconPanel::OnMenuItemClick)
 END_EVENT_TABLE()
 
 
@@ -123,18 +122,28 @@ wxMenu* IconPanel::GetContextMenu() {
   
   menu->Append(ID_MENU_NewShortcut, _("New shortcut..."));
   menu->Append(ID_MENU_NewGroup, _("New group..."));
+
+  //wxMenu* specialMenu = new wxMenu();
+  //specialMenu->Append(wxID_ANY, _("Control Panel"))
   
   return menu;
 }
 
 
-void IconPanel::OnMenuNewShortcut(wxCommandEvent& evt) {
-  wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
-}
+void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
+  switch (evt.GetId()) {
 
+    case ID_MENU_NewShortcut:
 
-void IconPanel::OnMenuNewGroup(wxCommandEvent& evt) {
-  wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem(), true);
+      wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
+      break;
+
+    case ID_MENU_NewGroup:
+
+      wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem(), true);
+      break;
+
+  }
 }
 
 

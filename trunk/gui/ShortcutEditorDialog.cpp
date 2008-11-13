@@ -43,6 +43,7 @@ void ShortcutEditorDialog::Localize() {
 
 void ShortcutEditorDialog::LoadFolderItem(FolderItemSP folderItem) {
   folderItem_ = folderItem;
+  Localize();
   UpdateFromFolderItem();
 }
 
