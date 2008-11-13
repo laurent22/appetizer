@@ -10,10 +10,11 @@ copy "Appetizer.exe" "%RELEASE_DIR%"
 xcopy Data %RELEASE_DIR%\Data /Y/E/S
 
 del %RELEASE_DIR%\Data\IconCache\*.* /Q
-del %RELEASE_DIR%\Data\Settings\*.* /Q
 del %RELEASE_DIR%\Data\Help\*.html /S/Q
 del %RELEASE_DIR%\Data\*.po~ /S/Q
 del %RELEASE_DIR%\Data\*.pot /S/Q
+
+rmdir %RELEASE_DIR%\Data\Settings /Q/S
 rmdir %RELEASE_DIR%\Data\Help\en\images /Q/S
 rmdir %RELEASE_DIR%\Data\Help\fr\images /Q/S
 

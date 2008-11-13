@@ -390,9 +390,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
       wxString saveCurrentDirectory = wxGetCwd();
       wxSetWorkingDirectory(filename.GetPath());
       if (arguments == wxEmptyString) {
-        //FolderItemProcess* process = new FolderItemProcess();
-        //FolderItem::processVector_.push_back(process);
-        //wxExecute(filePath, wxEXEC_ASYNC, process);
+        wxExecute(filePath, wxEXEC_ASYNC);
       } else {
         wxString tArguments(arguments); 
         // If the argument is a file path, then check that it has double quotes        

@@ -79,7 +79,7 @@ void ConfigDialogBase::do_layout()
     grid_sizer_1->Add(iconSizeComboBox, 0, wxEXPAND, 0);
     grid_sizer_1->Add(orientationLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_1->Add(orientationComboBox, 0, wxEXPAND, 0);
-    grid_sizer_1->Add(skinLabel, 0, 0, 0);
+    grid_sizer_1->Add(skinLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_1->Add(skinComboBox, 0, wxEXPAND, 0);
     grid_sizer_1->AddGrowableCol(1);
     sizer_4->Add(grid_sizer_1, 1, wxALL|wxEXPAND, 10);

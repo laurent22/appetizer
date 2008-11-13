@@ -17,6 +17,8 @@
 extern wxArrayString heSymbols;
 extern wxArrayString heCode;
 
+bool writeUTF8 = false;
+
 
 // The application class. An instance is created and initialized
 // below in IMPLEMENT_APP()
@@ -35,7 +37,15 @@ void WriteHelp(const wxString& filePath, const wxString& htmlString) {
   wxFile file;
   file.Create(filePath, true);
   file.Open(filePath, wxFile::write);
-  file.Write(htmlString, wxConvISO8859_1);
+
+  file.Write(htmlString, wxConvUTF8);
+
+  //if (writeUTF8) {
+  //  file.Write(htmlString, wxConvUTF8);
+  //} else {
+  //  file.Write(htmlString, wxConvISO8859_1);
+  //}
+  
   file.Close();
 }
 
@@ -252,6 +262,7 @@ bool GenerateHelp::OnInit() {
   wxArrayString localeCodes;
   localeCodes.Add(_T("en"));
   localeCodes.Add(_T("fr"));  
+  localeCodes.Add(_T("de"));  
 
   for (int i = 0; i < localeCodes.Count(); i++) {
     wxString localeCode = localeCodes[i];
