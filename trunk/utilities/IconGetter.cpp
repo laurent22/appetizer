@@ -131,14 +131,25 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
   wxFileType* fileType = NULL;
 
   wxFileName filename = wxFileName(filePath);
-  wxString fileExtension = filename.GetExt();
+  wxString fileExtension = filename.GetExt().Lower();
   if (fileExtension != wxEmptyString) {
     fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(fileExtension);
   }
 
-  if (!fileType) {
-    // The file type is not registered on the system, so try to get the default
-    // icon from shell32.dll (works on Windows XP - not sure on Vista)
+  // Try to get the icon location from the file type
+  wxIconLocation iconLocation;
+  bool gotIconLocation = false; 
+  if (fileType) {
+    gotIconLocation = fileType->GetIcon(&iconLocation);
+  }
+
+  if (!fileType || (fileType && gotIconLocation && iconLocation.GetIndex() <= 0)) {
+    // Note: the second condition means: we got the file type and the icon location
+    // BUT wxWidgets returned an invalid icon index.
+
+    // Below we try to get some default icon depending on the type
+
+    wxDELETE(fileType);
 
     // LPTSTR is wchar_t if UNICODE is enabled, or a char otherwise
     LPTSTR buffer = new TCHAR[MAX_PATH];
@@ -149,24 +160,46 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
     wcstombs(cString, buffer, MAX_PATH);
     wxDELETE(buffer);
 
-    wxString shell32Path;
-    if (success) {
-      shell32Path = wxString::FromAscii(cString);
-      shell32Path += wxT("\\SHELL32.DLL");
-    } else {
-      // If we couldn't get the system directory, try to guess it.
-      // If the file doesn't exist, GetExecutableIcon() will return NULL anyway
-      shell32Path = wxT("C:\\WINDOWS\\SYSTEM32\\SHELL32.DLL");
+    wxString system32Path = _T("C:\\WINDOWS\\SYSTEM32");
+    if (success) system32Path = wxString::FromAscii(cString);
+
+    wxString shell32Path = system32Path + _T("\\SHELL32.DLL");
+
+    // By default, the icon is going to be %shell32path%\SHELL32.DLL,0
+
+    wxString libFilePath = shell32Path;
+    int iconIndex = 0;
+    wxString e = fileExtension;
+
+    if (e == _T("inf") || e == _T("ini")) {
+      iconIndex = 69;
+    } else if (e == _T("txt")) {
+      iconIndex = 70;
+    } else if (e == _T("bat")) {
+      iconIndex = 169;
+    } else if (e == _T("jpg") || e == _T("jpeg") || e == _T("png") || e == _T("gif") || e == _T("bmp") || e == _T("tif") || e == _T("tiff")) {
+      libFilePath = shell32Path + _T("\\mspaint.exe");
+      iconIndex = 1;
+    } else if (e == _T("wmv") || e == _T("avi") || e == _T("mpg") || e == _T("mpeg")) {
+      iconIndex = 115;
+    } else if (e == _T("mp3") || e == _T("wav") || e == _T("mid")) {
+      iconIndex = 116;
+    } else if (e == _T("html") || e == _T("htm")) {
+      wxFileName ieFileName(_T("%ProgramFiles%\\Internet Explorer\\IEXPLORE.EXE"));
+      ieFileName.Normalize();
+      if (ieFileName.FileExists()) {
+        libFilePath = ieFileName.GetFullPath();
+        iconIndex = 1;
+      }
     }
 
-    return GetExecutableIcon(shell32Path, iconSize);
+    return GetExecutableIcon(libFilePath, iconSize, iconIndex);
   }
 
-  // Try to get the icon location from the file type
-  wxIconLocation iconLocation;
-  bool success = fileType->GetIcon(&iconLocation);
+  wxDELETE(fileType);
 
-  if (success) {
+
+  if (gotIconLocation) {
     // Fixes a bug in wxWidgets: Sometime the icon is negative, in which case the wxIconLocation will be invalid
     if (iconLocation.GetIndex() < 0) iconLocation.SetIndex(0);
 
@@ -176,11 +209,9 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
     while (iconLocFile[0] == _T('"')) iconLocFile = iconLocFile.Mid(1, iconLocFile.Len());
     while (iconLocFile[iconLocFile.Len() - 1] == _T('"')) iconLocFile = iconLocFile.Mid(0, iconLocFile.Len() - 1);
     iconLocation.SetFileName(iconLocFile);
-  }
+  }  
 
-  wxDELETE(fileType);
-
-  if (success) {
+  if (gotIconLocation) {
     wxIcon* icon = new wxIcon(iconLocation);
     icon->SetSize(iconSize, iconSize);
     return icon;

@@ -127,15 +127,15 @@ wxMenu* IconPanel::GetContextMenu() {
   wxMenu* specialMenu = new wxMenu();
   specialMenu->Append(ID_MENU_SpecialItem_ControlPanel, _("Control Panel"));
   specialMenu->Append(ID_MENU_SpecialItem_MyComputer, _("My Computer"));
-  specialMenu->Append(ID_MENU_SpecialItem_MyNetwork, _("My Network"));
+  specialMenu->Append(ID_MENU_SpecialItem_MyNetwork, _("My Network Places"));
   specialMenu->Append(ID_MENU_SpecialItem_RecycleBin, _("Recycle Bin"));
-  specialMenu->Append(ID_MENU_SpecialItem_Desktop, _("Desktop"));
-  specialMenu->Append(ID_MENU_SpecialItem_Explorer, _("Explorer"));
+  specialMenu->Append(ID_MENU_SpecialItem_Desktop, _("Show Desktop"));
+  specialMenu->Append(ID_MENU_SpecialItem_Explorer, _("Windows Explorer"));
   specialMenu->Append(ID_MENU_SpecialItem_Search, _("Search"));
-  specialMenu->Append(ID_MENU_SpecialItem_MyDocuments, _("My Documents"));
-  specialMenu->Append(ID_MENU_SpecialItem_MyPictures, _("My Pictures"));
-  specialMenu->Append(ID_MENU_SpecialItem_MyMusic, _("My Music"));
-  specialMenu->Append(ID_MENU_SpecialItem_MyVideos, _("My Videos"));
+  //specialMenu->Append(ID_MENU_SpecialItem_MyDocuments, _("My Documents"));
+  //specialMenu->Append(ID_MENU_SpecialItem_MyPictures, _("My Pictures"));
+  //specialMenu->Append(ID_MENU_SpecialItem_MyMusic, _("My Music"));
+  //specialMenu->Append(ID_MENU_SpecialItem_MyVideos, _("My Videos"));
 
   menu->AppendSubMenu(specialMenu, _("Add special item"));
   
@@ -165,13 +165,13 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
     case ID_MENU_SpecialItem_MyComputer:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_COMPUTER%")); break;
     case ID_MENU_SpecialItem_MyNetwork:    user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_NETWORK%")); break;
     case ID_MENU_SpecialItem_RecycleBin:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_RECYCLE_BIN%")); break;
-    case ID_MENU_SpecialItem_Desktop:      user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_DESKTOP%")); break;
+    case ID_MENU_SpecialItem_Desktop:      user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_SHOW_DESKTOP%")); break;
     case ID_MENU_SpecialItem_Explorer:     user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_EXPLORER%")); break;
     case ID_MENU_SpecialItem_Search:       user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_SEARCH%")); break;
     case ID_MENU_SpecialItem_MyDocuments:  user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_DOCUMENTS%")); break;
     case ID_MENU_SpecialItem_MyPictures:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_PICTURES%")); break;
     case ID_MENU_SpecialItem_MyMusic:      user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_MUSIC%")); break;
-    case ID_MENU_SpecialItem_MyVideos:     user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_VIDEOS%")); break;
+    case ID_MENU_SpecialItem_MyVideos:     user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_VIDEO%")); break;
 
     default:
 
@@ -303,6 +303,38 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       FolderItemSP folderItem = folderItemRenderers_.at(index)->GetFolderItem();
       if (!folderItem.get()) return false;
 
+      if (folderItem->GetFilePath().Index(_T("%AZ_")) != wxNOT_FOUND) {
+        if (folderItem->GetFilePath() == _T("%AZ_RECYCLE_BIN%")) {
+          // Delete the files to the recycle bin
+
+          for (int i = 0; i < filenames.Count(); i++) {
+            wxFileName filename(filenames[i]);
+            filename.Normalize();           
+
+            #ifdef __WINDOWS__
+
+            wchar_t* cFullPath = new wchar_t[filename.GetFullPath().Len() + 2];
+            mbstowcs(cFullPath, filename.GetFullPath().mb_str(), filename.GetFullPath().Len());
+            cFullPath[filename.GetFullPath().Len()] = _T('\0');
+            cFullPath[filename.GetFullPath().Len()+1] = _T('\0');
+
+            SHFILEOPSTRUCT operation;
+            operation.wFunc = FO_DELETE;
+            operation.pFrom = cFullPath;
+            operation.fFlags = FOF_ALLOWUNDO;
+            SHFileOperation(&operation);
+
+            wxDELETE(cFullPath);
+
+            #endif // __WINDOWS__
+          }   
+
+        } else {
+          folderItem->Launch();
+        }
+        return true;
+      }
+
       for (int i = 0; i < filenames.Count(); i++) {
         wxFileName filename(filenames[i]);
         filename.Normalize();
@@ -317,9 +349,11 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       for (int i = 0; i < filenames.Count(); i++) {
         wxFileName filename(filenames[i]);
         filename.Normalize();
+        wxString fullPath = filename.GetFullPath();
+
         wxGetApp().GetUser()->AddNewFolderItemFromPath(
           wxGetApp().GetUser()->GetRootFolderItem(),
-          filename.GetFullPath());
+          fullPath);
         didSomething = true;
       }
     }

@@ -27,7 +27,7 @@ IMPLEMENT_APP(MiniLaunchBar)
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(7976);
+  //_CrtSetBreakAlloc(11998);
 
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);

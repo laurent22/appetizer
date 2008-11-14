@@ -461,27 +461,123 @@ void FolderItem::Launch() {
 
   if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
     if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
+
+
       filePath = FilePaths::GetSystem32Directory() + _T("\\control.exe");
+
+
     } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+
+
     } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+      parameters = _T(",::{208D2C60-3AEA-1069-A2D7-08002B30309D}");  
+
 
     } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
 
-    } else if (uFilePath == _T("%AZ_DESKTOP%")) {
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+      parameters = _T(",::{645FF040-5081-101B-9F08-00AA002F954E}");  
+
+
+    } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
+
+      wxString showDesktopFilePath = wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("ShowDesktop.scf"));
+      if (!wxFileName::FileExists(showDesktopFilePath)) {
+        wxString fileContent;
+        fileContent += _T("[Shell]\n");
+        fileContent += _T("Command=2\n");
+        fileContent += _T("IconFile=explorer.exe,3\n");
+        fileContent += _T("[Taskbar]\n");
+        fileContent += _T("Command=ToggleDesktop\n");
+
+        wxFile file;
+        bool success = file.Create(showDesktopFilePath);
+        if (!success) {
+          elog(_T("Couldn't create ShowDesktop.scf"));
+          return;
+        }
+        file.Open(showDesktopFilePath, wxFile::write);
+        file.Write(fileContent);
+        file.Close();        
+      }
+      filePath = showDesktopFilePath;
+
 
     } else if (uFilePath == _T("%AZ_EXPLORER%")) {
 
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+
+
     } else if (uFilePath == _T("%AZ_SEARCH%")) {
+      
+      wxString findFilePath = wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("FindFile.vbs"));
+      if (!wxFileName::FileExists(findFilePath)) {
+        wxString fileContent;
+        fileContent += _T("CreateObject(\"Shell.Application\").FindFiles");
+
+        wxFile file;
+        bool success = file.Create(findFilePath);
+        if (!success) {
+          elog(_T("Couldn't create FindFile.vbs"));
+          return;
+        }
+        file.Open(findFilePath, wxFile::write);
+        file.Write(fileContent);
+        file.Close();
+      }
+
+      filePath = wxString::Format(_T("%s\\FindFile.vbs"), FilePaths::GetSettingsDirectory());
 
     } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
 
+      wxLogNull logNo;
+
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("Personal"), filePath);
+      } else {
+        elog(_T("Couldn't get My Documents path"));
+      }
+
     } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
+
+      wxLogNull logNo;
+
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("My Pictures"), filePath);
+      } else {
+        elog(_T("Couldn't get My Pictures path"));
+      }
+
 
     } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
 
-    } else if (uFilePath == _T("%AZ_MY_VIDEOS%")) {
+      wxLogNull logNo;                          
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("My Music"), filePath);
+      } else {
+        elog(_T("Couldn't get My Music path"));
+      }
+
+
+    } else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
+
+      wxLogNull logNo;
+
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("My Video"), filePath);
+      } else {
+        elog(_T("Couldn't get My Video path"));
+      }
+
 
     }
   } else {
@@ -568,9 +664,6 @@ void FolderItem::SetAutomaticallyAdded(bool automaticallyAdded) {
 }
 
 
-void FolderItem::AutoSetName() {
-  SetName(VersionInfo::GetFileDescription(GetResolvedPath()));
-}
 
 
 wxString FolderItem::GetName(bool returnUnnamedIfEmpty) {
@@ -656,13 +749,12 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
 
   iconSize = wxGetApp().GetOSValidIconSize(iconSize);
 
-
   // If the icon has already been generated, return it
   if (icons_.find(iconSize) != icons_.end()) return icons_[iconSize];
 
   wxIconSP output;
 
-  bool cacheEnabled = true;
+  bool cacheEnabled = !true;
   wxString cacheHash;
 
   if (cacheEnabled) {
@@ -692,29 +784,30 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
 
     if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
       wxString dllPath = FilePaths::GetSystem32Directory() + _T("\\shell32.dll");
+      int inc = iconSize >= 48 ? 1 : 0;
 
       if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL + inc));
       } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER + inc));
       } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK + inc));
       } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN));
-      } else if (uFilePath == _T("%AZ_DESKTOP%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN + inc));
+      } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP + inc));
       } else if (uFilePath == _T("%AZ_EXPLORER%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER + inc));
       } else if (uFilePath == _T("%AZ_SEARCH%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH + inc));
       } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS + inc));
       } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES + inc));
       } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC));
-      } else if (uFilePath == _T("%AZ_MY_VIDEOS%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS));
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc));
+      } else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc));
       }
     }
   }
@@ -735,6 +828,46 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
 
   return output;
 }
+
+
+void FolderItem::AutoSetName() {
+  wxString uFilePath = filePath_.Upper();
+  wxString theName;
+
+  if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
+    if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
+      theName = _("Control Panel");
+    } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+      theName = _("My Computer");
+    } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+      theName = _("My Network Places");
+    } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
+      theName = _("Recycle Bin");
+    } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
+      theName = _("Show Desktop");
+    } else if (uFilePath == _T("%AZ_EXPLORER%")) {
+      theName = _("Windows Explorer");
+    } else if (uFilePath == _T("%AZ_SEARCH%")) {
+      theName = _("Search");
+    } 
+    //else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
+    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS));
+    //} else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
+    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES));
+    //} else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
+    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC));
+    //} else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
+    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS));
+    //}
+  }
+
+  if (theName != wxEmptyString) {
+    SetName(theName);    
+  } else {
+    SetName(VersionInfo::GetFileDescription(GetResolvedPath()));
+  }
+}
+
 
 
 void FolderItem::SetFilePath(const wxString& filePath) {
@@ -770,7 +903,8 @@ wxString FolderItem::ResolvePath(const wxString& filePath) {
   result.Replace(_T("%AZ_DRIVE%"), FilePaths::GetApplicationDrive());
   result.Replace(_T("%AZ_SYSTEM32%"), FilePaths::GetSystem32Directory());
   result.Replace(_T("%AZ_WINDOWS%"), FilePaths::GetWindowsDirectory());
-  //result.Replace(_T("%AZ_CONTROL_PANEL%"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
+  result.Replace(_T("%AZ_CONTROL_PANEL%"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
+  result.Replace(_T("%AZ_MY_COMPUTER%"), FilePaths::GetWindowsDirectory() + _T("\\explorer.exe"));
   return result;
 }
 

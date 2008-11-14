@@ -30,6 +30,7 @@
 #include <wx/combobox.h>
 #include <wx/imaglist.h>
 #include <wx/stdpaths.h>
+#include <wx/file.h>
 #include <wx/bitmap.h>
 #include <wx/cmdline.h>
 #include <wx/notebook.h>
