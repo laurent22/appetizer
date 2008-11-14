@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #ifndef __OptionPanel_H
 #define __OptionPanel_H

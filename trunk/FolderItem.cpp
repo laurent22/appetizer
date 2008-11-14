@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #include "FolderItem.h"
 #include "FolderItemProcess.h"
@@ -453,11 +453,46 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
 
 
 void FolderItem::Launch() {
-  if (parameters_ != wxEmptyString) {
-    LaunchWithArguments(parameters_);
+
+  wxString parameters;
+  wxString filePath;
+
+  wxString uFilePath = filePath_.Upper();
+
+  if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
+    if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
+      filePath = FilePaths::GetSystem32Directory() + _T("\\control.exe");
+    } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+      parameters = _T(",::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
+    } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+
+    } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
+
+    } else if (uFilePath == _T("%AZ_DESKTOP%")) {
+
+    } else if (uFilePath == _T("%AZ_EXPLORER%")) {
+
+    } else if (uFilePath == _T("%AZ_SEARCH%")) {
+
+    } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
+
+    } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
+
+    } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
+
+    } else if (uFilePath == _T("%AZ_MY_VIDEOS%")) {
+
+    }
   } else {
-    wxString resolvedFilePath = GetResolvedPath();
-    FolderItem::Launch(resolvedFilePath);
+    parameters = parameters_;
+    filePath = GetResolvedPath();
+  }
+    
+  if (parameters != wxEmptyString) {
+    FolderItem::Launch(filePath, parameters);
+  } else {
+    FolderItem::Launch(filePath);
   }
 }
 
@@ -653,6 +688,37 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
     if (!output.get()) {
       output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
     }
+  } else {
+
+    wxString uFilePath = filePath_.Upper();
+
+    if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
+      wxString dllPath = FilePaths::GetSystem32Directory() + _T("\\shell32.dll");
+
+      if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL));
+      } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER));
+      } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK));
+      } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN));
+      } else if (uFilePath == _T("%AZ_DESKTOP%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP));
+      } else if (uFilePath == _T("%AZ_EXPLORER%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER));
+      } else if (uFilePath == _T("%AZ_SEARCH%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH));
+      } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS));
+      } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES));
+      } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC));
+      } else if (uFilePath == _T("%AZ_MY_VIDEOS%")) {
+        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS));
+      }
+    }
   }
 
   if (!output.get()) {
@@ -710,6 +776,10 @@ wxString FolderItem::ResolvePath(const wxString& filePath) {
   wxString result(filePath);
   result.Trim();
   result.Replace(_T("%DRIVE%"), FilePaths::GetApplicationDrive());
+  result.Replace(_T("%AZ_DRIVE%"), FilePaths::GetApplicationDrive());
+  result.Replace(_T("%AZ_SYSTEM32%"), FilePaths::GetSystem32Directory());
+  result.Replace(_T("%AZ_WINDOWS%"), FilePaths::GetWindowsDirectory());
+  //result.Replace(_T("%AZ_CONTROL_PANEL%"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
   return result;
 }
 

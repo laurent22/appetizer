@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "../precompiled.h"
+#include "../stdafx.h"
 
 #include "Utilities.h"
 #include "../MessageBoxes.h"
@@ -104,7 +104,7 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   // Set the current directory and call the eject dialog
   wxSetWorkingDirectory(windowsPath);
 
-  // Note: this call creates the memory leak when the main frame is closed just after it.
+  // Note: this call creates a memory leak when the main frame is closed just after it.
   int result = wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
 
   #else

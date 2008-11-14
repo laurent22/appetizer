@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "../precompiled.h"
+#include "../stdafx.h"
 
 #include "BetterMessageDialog.h"
 #include "../utilities/IconGetter.h"
@@ -49,7 +49,7 @@ wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE, name) {
   // 3: "Error" icon
   // 4: "Information" icon
 
-  wxString user32DllPath = FilePaths::GetWindowsDirectory() + _T("\\user32.dll");
+  wxString user32DllPath = FilePaths::GetSystem32Directory() + _T("\\user32.dll");
   int iconSize = 32;
 
   if (style & wxICON_EXCLAMATION) {

@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #include "ApplicationTrayIcon.h"
 #include "MiniLaunchBar.h"

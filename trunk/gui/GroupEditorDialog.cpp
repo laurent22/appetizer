@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "../precompiled.h"
+#include "../stdafx.h"
 
 #include "GroupEditorDialog.h"
 #include "../FilePaths.h"

@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #ifndef __Enumerations_H
 #define __Enumerations_H
@@ -13,6 +13,17 @@ enum {
   ID_MENU_NewShortcut,
   ID_MENU_NewGroup,
   ID_MENU_AddSpecialItem,
+  ID_MENU_SpecialItem_ControlPanel,
+  ID_MENU_SpecialItem_MyComputer,
+  ID_MENU_SpecialItem_MyNetwork,
+  ID_MENU_SpecialItem_RecycleBin,
+  ID_MENU_SpecialItem_Desktop,
+  ID_MENU_SpecialItem_Explorer,
+  ID_MENU_SpecialItem_Search,
+  ID_MENU_SpecialItem_MyDocuments,
+  ID_MENU_SpecialItem_MyPictures,
+  ID_MENU_SpecialItem_MyMusic,
+  ID_MENU_SpecialItem_MyVideos,
   ID_MENU_Delete,
   ID_MENU_Properties,
   ID_MENU_Exit,

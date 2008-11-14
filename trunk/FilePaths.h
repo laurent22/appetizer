@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #ifndef __FilePaths_H
 #define __FilePaths_H
@@ -26,6 +26,7 @@ public:
   static wxString GetFolderItemsFile();
   static wxString GetWindowFile();
   static wxString GetWindowsDirectory();
+  static wxString GetSystem32Directory();
 
   static void CreateSettingsDirectory();
   static void InitializePaths();
@@ -44,6 +45,7 @@ private:
   static wxString SettingsFile_;
   static wxString FolderItemsFile_;
   static wxString WindowFile_;
+  static wxString System32Directory_;
   static wxString WindowsDirectory_;
 
 };

@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "../precompiled.h"
+#include "../stdafx.h"
 
 #include "IconGetter.h"
 #include "StringUtil.h"
@@ -28,8 +28,8 @@ wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
 
   if (output) return output;
 
-
   if (iconSize >= 48) {
+
     // Get the icon index using SHGetFileInfo
     SHFILEINFOW sfi = {0};
     SHGetFileInfo(filePath, -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
@@ -278,30 +278,44 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
 wxIcon* IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize, int iconIndex) {  
   #ifdef __WINDOWS__
 
-  HICON smallIcon;
-  HICON largeIcon;
-  int result;
-
-  if (iconSize == 16) {
-    result = ExtractIconEx(filePath.c_str(), iconIndex, NULL, &smallIcon, 1);	
-  } else {
-    result = ExtractIconEx(filePath.c_str(), iconIndex, &largeIcon, NULL, 1);	
-  }
-
-  // If the function succeeds, the return value is the handle to an icon.
-  // If the file specified was not an executable file, DLL, or icon file,
-  // the return value is 1. If no icons were found in the file, the return 
-  // value is NULL. If the file didn't exist, the return value is < 0
-  if (result > 0) {
-    wxIcon* icon = new wxIcon();
+  if (iconSize <= 32) {
+    HICON smallIcon;
+    HICON largeIcon;
+    int result;
 
     if (iconSize == 16) {
-      icon->SetHICON((WXHICON)smallIcon);
-      icon->SetSize(16, 16);
+      result = ExtractIconEx(filePath.c_str(), iconIndex, NULL, &smallIcon, 1);	
     } else {
-      icon->SetHICON((WXHICON)largeIcon);
-      icon->SetSize(32, 32);
+      result = ExtractIconEx(filePath.c_str(), iconIndex, &largeIcon, NULL, 1);	
     }
+
+    // If the function succeeds, the return value is the handle to an icon.
+    // If the file specified was not an executable file, DLL, or icon file,
+    // the return value is 1. If no icons were found in the file, the return 
+    // value is NULL. If the file didn't exist, the return value is < 0
+    if (result > 0) {
+      wxIcon* icon = new wxIcon();
+
+      if (iconSize == 16) {
+        icon->SetHICON((WXHICON)smallIcon);
+        icon->SetSize(16, 16);
+      } else {
+        icon->SetHICON((WXHICON)largeIcon);
+        icon->SetSize(32, 32);
+      }
+      return icon;
+    }
+  } else {
+    HINSTANCE hDll = ::LoadLibrary(filePath);
+    if (!hDll) return NULL;
+
+    HANDLE handle = ::LoadImage(hDll, MAKEINTRESOURCE(iconIndex), IMAGE_ICON, iconSize, iconSize, LR_LOADTRANSPARENT);
+    if (!handle) return NULL;
+
+    wxIcon* icon = new wxIcon();
+    icon->SetHICON((WXHICON)handle);
+    icon->SetSize(iconSize, iconSize);
+
     return icon;
   }
 

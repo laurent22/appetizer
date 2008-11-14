@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #ifndef __Constants_H
 #define __Constants_H
@@ -24,6 +24,19 @@ const wxString HELP_FILE_NAME = _T("Appetizer.chm");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
 const wxString DEFAULT_SKIN = _T("Default");
 const wxString CHECK_VERSION_URL = _T("http://appetizer.sourceforge.net/VersionInfo.xml");
+
+const int SHELL32_ICON_INDEX_MY_COMPUTER = 16;
+const int SHELL32_ICON_INDEX_MY_NETWORK = 18;
+const int SHELL32_ICON_INDEX_CONTROL_PANEL = 22;
+const int SHELL32_ICON_INDEX_RECYCLE_BIN = 32;
+const int SHELL32_ICON_INDEX_DESKTOP = 35;
+const int SHELL32_ICON_INDEX_EXPLORER = 46;
+const int SHELL32_ICON_INDEX_SEARCH = 56;
+const int SHELL32_ICON_INDEX_MY_DOCUMENTS = 127;
+const int SHELL32_ICON_INDEX_MY_PICTURES = 128;
+const int SHELL32_ICON_INDEX_MY_MUSIC = 129;
+const int SHELL32_ICON_INDEX_MY_VIDEOS = 130;
+
 const int HOT_KEY_ID = 0xBAFF;
 const int CHECK_VERSION_DAY_INTERVAL = 2;
 const int WINDOW_VISIBILITY_BORDER = 20;

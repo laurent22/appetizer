@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #include "FilePaths.h"
 #include "Constants.h"
@@ -23,6 +23,7 @@ wxString FilePaths::FolderItemsFile_ = _T("");
 wxString FilePaths::WindowFile_ = _T("");
 wxString FilePaths::HelpDirectory_ = _T("");
 wxString FilePaths::WindowsDirectory_ = _T("");
+wxString FilePaths::System32Directory_ = _T("");
 
 
 wxString FilePaths::GetApplicationDrive() { return FilePaths::ApplicationDrive_; }
@@ -37,8 +38,10 @@ wxString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }
 wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
-wxString FilePaths::GetWindowsDirectory() {
-  if (FilePaths::WindowsDirectory_ != wxEmptyString) return FilePaths::WindowsDirectory_;
+
+
+wxString FilePaths::GetSystem32Directory() {
+  if (FilePaths::System32Directory_ != wxEmptyString) return FilePaths::System32Directory_;
 
   wxString output;
 
@@ -47,8 +50,8 @@ wxString FilePaths::GetWindowsDirectory() {
   int success = GetSystemDirectory(buffer, MAX_PATH);   
 
   if (!success) {
-    wxLogDebug(_T("WARNING: coulnd't get Windows directory"));
-    output = _T("c:\\window");
+    wxLogDebug(_T("WARNING: coulnd't get System32 directory"));
+    output = _T("c:\\window\\system32");
   } else {
     // Convert the LPTSTR to a char*
     char cString[MAX_PATH];
@@ -58,9 +61,27 @@ wxString FilePaths::GetWindowsDirectory() {
 
   wxDELETE(buffer);
 
-  FilePaths::WindowsDirectory_ = output;
+  FilePaths::System32Directory_ = output;
 
   return output;
+}
+
+
+wxString FilePaths::GetWindowsDirectory() {
+  if (FilePaths::WindowsDirectory_ != wxEmptyString) return FilePaths::WindowsDirectory_;
+
+  LPTSTR buffer = new TCHAR[MAX_PATH];
+  int success = ::GetWindowsDirectory(buffer, MAX_PATH);
+  wxString windowsPath;
+  if (!success) {
+    windowsPath = _T("c:\\windows");
+  } else {
+    windowsPath = wxString(buffer, wxConvUTF8);
+  }
+
+  FilePaths::WindowsDirectory_ = windowsPath;
+
+  return FilePaths::WindowsDirectory_;
 }
 
 

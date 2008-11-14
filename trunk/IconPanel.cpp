@@ -5,7 +5,7 @@
 */
 
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #include "IconPanel.h"
 #include "FolderItem.h"
@@ -13,6 +13,7 @@
 #include "FilePaths.h"
 #include "Log.h"
 #include "Styles.h"
+#include "User.h"
 #include "Enumerations.h"
 #include "MiniLaunchBar.h"
 
@@ -123,14 +124,31 @@ wxMenu* IconPanel::GetContextMenu() {
   menu->Append(ID_MENU_NewShortcut, _("New shortcut..."));
   menu->Append(ID_MENU_NewGroup, _("New group..."));
 
-  //wxMenu* specialMenu = new wxMenu();
-  //specialMenu->Append(wxID_ANY, _("Control Panel"))
+  wxMenu* specialMenu = new wxMenu();
+  specialMenu->Append(ID_MENU_SpecialItem_ControlPanel, _("Control Panel"));
+  specialMenu->Append(ID_MENU_SpecialItem_MyComputer, _("My Computer"));
+  specialMenu->Append(ID_MENU_SpecialItem_MyNetwork, _("My Network"));
+  specialMenu->Append(ID_MENU_SpecialItem_RecycleBin, _("Recycle Bin"));
+  specialMenu->Append(ID_MENU_SpecialItem_Desktop, _("Desktop"));
+  specialMenu->Append(ID_MENU_SpecialItem_Explorer, _("Explorer"));
+  specialMenu->Append(ID_MENU_SpecialItem_Search, _("Search"));
+  specialMenu->Append(ID_MENU_SpecialItem_MyDocuments, _("My Documents"));
+  specialMenu->Append(ID_MENU_SpecialItem_MyPictures, _("My Pictures"));
+  specialMenu->Append(ID_MENU_SpecialItem_MyMusic, _("My Music"));
+  specialMenu->Append(ID_MENU_SpecialItem_MyVideos, _("My Videos"));
+
+  menu->AppendSubMenu(specialMenu, _("Add special item"));
   
   return menu;
 }
 
 
 void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
+  wxMenuItem* w = static_cast<wxMenuItem*>(evt.GetEventObject());
+
+  User* user = wxGetApp().GetUser();
+  FolderItemSP rootFolderItem = user->GetRootFolderItem();
+
   switch (evt.GetId()) {
 
     case ID_MENU_NewShortcut:
@@ -141,6 +159,23 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
     case ID_MENU_NewGroup:
 
       wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem(), true);
+      break;
+
+    case ID_MENU_SpecialItem_ControlPanel: user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_CONTROL_PANEL%")); break;
+    case ID_MENU_SpecialItem_MyComputer:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_COMPUTER%")); break;
+    case ID_MENU_SpecialItem_MyNetwork:    user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_NETWORK%")); break;
+    case ID_MENU_SpecialItem_RecycleBin:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_RECYCLE_BIN%")); break;
+    case ID_MENU_SpecialItem_Desktop:      user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_DESKTOP%")); break;
+    case ID_MENU_SpecialItem_Explorer:     user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_EXPLORER%")); break;
+    case ID_MENU_SpecialItem_Search:       user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_SEARCH%")); break;
+    case ID_MENU_SpecialItem_MyDocuments:  user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_DOCUMENTS%")); break;
+    case ID_MENU_SpecialItem_MyPictures:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_PICTURES%")); break;
+    case ID_MENU_SpecialItem_MyMusic:      user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_MUSIC%")); break;
+    case ID_MENU_SpecialItem_MyVideos:     user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_VIDEOS%")); break;
+
+    default:
+
+      evt.Skip();
       break;
 
   }

@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "precompiled.h"
+#include "stdafx.h"
 
 #include "FolderItemRenderer.h"
 #include "FolderItem.h"
@@ -16,7 +16,6 @@
 #include "MiniLaunchBar.h"
 #include "Enumerations.h"
 #include "MessageBoxes.h"
-#include "IconPanelFrame.h"
 #include "gui/TreeViewDialog.h"
 
 
