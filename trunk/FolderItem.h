@@ -24,6 +24,9 @@ typedef boost::shared_ptr<FolderItem> FolderItemSP;
 typedef std::vector<FolderItemSP> FolderItemVector;
 
 
+WX_DECLARE_HASH_MAP(int, wxIconSP, wxIntegerHash, wxIntegerEqual, IconHashMap);
+
+
 class FolderItem : public wxEvtHandler {
 
 public:
@@ -109,10 +112,7 @@ private:
   bool belongsToMultiLaunchGroup_;
   wxString name_;
   wxString filePath_;
-  wxIconSP icon16_;
-  wxIconSP icon32_;  
-  wxIconSP icon48_;
-  wxIconSP icon256_;  
+  IconHashMap icons_;
   wxString uuid_;
   wxString groupIconUUID_;
   bool automaticallyAdded_;
@@ -121,5 +121,6 @@ private:
   static FolderItemProcessVector processVector_;
 
 };
+
 
 #endif // __FolderItem_H

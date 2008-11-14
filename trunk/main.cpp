@@ -27,7 +27,16 @@ IMPLEMENT_APP(MiniLaunchBar)
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(10775);
+  //_CrtSetBreakAlloc(7976);
+
+  #ifdef __WINDOWS__
+  osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+  BOOL gotInfo = GetVersionEx(&osInfo_);
+  if (!gotInfo) {
+    osInfo_.dwMajorVersion = 5; // Assume Windows 2000
+    osInfo_.dwMinorVersion = 0;
+  }
+  #endif // __WINDOWS__
 
   singleInstanceChecker_ = NULL;
   mainFrame_ = NULL;
@@ -39,15 +48,6 @@ bool MiniLaunchBar::OnInit() {
   allowedIconSizes_.push_back(LARGE_ICON_SIZE);
   allowedIconSizes_.push_back(EXTRA_LARGE_ICON_SIZE);
   allowedIconSizes_.push_back(JUMBO_ICON_SIZE);
-
-  #ifdef __WINDOWS__
-  osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-  BOOL gotInfo = GetVersionEx(&osInfo_);
-  if (!gotInfo) {
-    osInfo_.dwMajorVersion = 5; // Assume Windows 2000
-    osInfo_.dwMinorVersion = 0;
-  }
-  #endif // __WINDOWS__
 
   // ***********************************************************************************
   // Initialize the command line object

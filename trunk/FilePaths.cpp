@@ -79,6 +79,8 @@ wxString FilePaths::GetWindowsDirectory() {
     windowsPath = wxString(buffer, wxConvUTF8);
   }
 
+  wxDELETE(buffer);
+
   FilePaths::WindowsDirectory_ = windowsPath;
 
   return FilePaths::WindowsDirectory_;

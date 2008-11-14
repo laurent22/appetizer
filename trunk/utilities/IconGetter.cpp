@@ -155,7 +155,7 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
       shell32Path += wxT("\\SHELL32.DLL");
     } else {
       // If we couldn't get the system directory, try to guess it.
-      // If the file doesn't exist, GetExecutableIcon() will return wxNullIcon
+      // If the file doesn't exist, GetExecutableIcon() will return NULL anyway
       shell32Path = wxT("C:\\WINDOWS\\SYSTEM32\\SHELL32.DLL");
     }
 
@@ -209,10 +209,15 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
     // This is a special module which displays the icon depending on the file content. It
     // may actually display two different icons for the same file extension. For example,
     // a C# .sln file is going to be displayed differently than a C++ .sln file. These cases
-    // are hopefully rare enough to ignore them.
+    // are hopefully rare enough to ignore them. Note: the SHGetImageList / SHGetFileInfo method
+    // seems to make use of the icon handler.
+
+    // Disable wxWidgets built-in error messages, such as the ones that
+    // show up when a key can't be read.
+    wxLogNull* logNo = new wxLogNull();
 
     wxRegKey* regKey = new wxRegKey(_T("HKEY_CLASSES_ROOT\\.") + fileExtension);
-    wxString iconPath;
+    wxString iconPath;    
 
     if (regKey->Exists()) {
       wxString extensionLink = regKey->QueryDefaultValue();    
@@ -236,10 +241,11 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
       }
     }
 
+    wxDELETE(logNo); // Re-enable wxWidgets built-in error messages
     wxDELETE(regKey);
      
     if (iconPath != wxEmptyString) {
-      // The icon path may be specified with coma or followed by the icon index, as in:
+      // The icon path may be specified with coma followed by the icon index, as in:
       // c:\WINDOWS\Installer\{AC76BA86-7AD7-1033-7B44-A90000000001}\PDFFile_8.ico,0
       // So we need to split the string and extract the file path and index.
 
@@ -254,7 +260,7 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
       iconPath = splitted[0];
       long iconIndex = 0;
 
-      // If the conversion to long fails, we default to "0" which should be safe
+      // If the conversion to "long" fails, we default to "0" which should be safe
       if (splitted.Count() > 1) splitted[1].ToLong(&iconIndex);
       
       // Sometime, the icon index is negative, for example for .resx files. Not sure

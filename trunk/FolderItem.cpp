@@ -588,8 +588,10 @@ void FolderItem::SetName(const wxString& name) {
 
 
 void FolderItem::ClearCachedIcons() {
-  icon16_.reset();
-  icon32_.reset();
+  icons_.clear();
+
+  //icon16_.reset();
+  //icon32_.reset();
 }
 
 
@@ -651,29 +653,25 @@ wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
 
 
 wxIconSP FolderItem::GetIcon(int iconSize) {
-  wxIconSP output;
 
   iconSize = wxGetApp().GetOSValidIconSize(iconSize);
-  
-  if (iconSize == SMALL_ICON_SIZE) {
-    output = icon16_;
-  } else if (iconSize == LARGE_ICON_SIZE) {
-    output = icon32_;
-  } else if (iconSize == EXTRA_LARGE_ICON_SIZE) {
-    output = icon48_;
-  } else if (iconSize == JUMBO_ICON_SIZE) {
-    output = icon256_;
-  }
 
-  if (output.get()) return output;
 
-  bool cacheEnabled = false;
+  // If the icon has already been generated, return it
+  if (icons_.find(iconSize) != icons_.end()) return icons_[iconSize];
+
+  wxIconSP output;
+
+  bool cacheEnabled = true;
   wxString cacheHash;
 
   if (cacheEnabled) {
     cacheHash = GetIconDiskCacheHash();
     wxIconSP cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
-    if (cachedIcon.get()) return cachedIcon;
+    if (cachedIcon.get()) {
+      icons_[iconSize] = cachedIcon;
+      return cachedIcon;
+    }
   }
 
   if (IsGroup()) {
@@ -732,15 +730,8 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
     output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("DefaultIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
   }
 
-  if (iconSize == SMALL_ICON_SIZE) {
-    icon16_ = output;
-  } else if (iconSize == LARGE_ICON_SIZE) {
-    icon32_ = output;
-  } else if (iconSize == EXTRA_LARGE_ICON_SIZE) {
-    icon48_ = output;
-  } else if (iconSize == JUMBO_ICON_SIZE) {
-    icon256_ = output;
-  }
+  // Cache the icon
+  icons_[iconSize] = output;
 
   return output;
 }
