@@ -26,7 +26,7 @@ class IconGetter {
      * @param iconSize The icon size (only 16 and 32 are currently supported)
      * @return The icon or wxNullIcon in case of error
      */
-    static wxIcon* GetFolderItemIcon(const wxString& filePath, int iconSize = 32);
+    static wxIcon* GetFolderItemIcon(const wxString& filePath, int iconSize = 32, bool alwaysReturnDefault = false);
 
     /**
      * Gets the (first) icon within an executable, dll or ico file

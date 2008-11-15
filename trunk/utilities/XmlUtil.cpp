@@ -105,3 +105,13 @@ bool XmlUtil::ReadElementTextAsColor(TiXmlHandle handle, const char* elementName
   resultColor = wxColour(r,g,b);
   return true;
 }
+
+
+bool XmlUtil::ReadElementTextAsArrayString(TiXmlHandle handle, const char* elementName, wxArrayString& result) {
+  wxString s = XmlUtil::ReadElementText(handle, elementName);
+
+  wxArrayString splitted;
+  StringUtil::Split(s, result, _T(","));
+
+  return true;
+}

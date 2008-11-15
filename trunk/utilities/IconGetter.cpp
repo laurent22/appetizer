@@ -18,7 +18,7 @@
 #endif // __WINDOWS__
 
 
-wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
+wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize, bool alwaysReturnDefault) {
 
   wxIcon* output = NULL;
 
@@ -64,12 +64,16 @@ wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize) {
   wxFileName filename(filePath);
 
   if ((filename.GetExt().CmpNoCase(wxT("exe")) == 0) || (filename.GetExt().CmpNoCase(wxT("ico")) == 0)) {
-    return GetExecutableIcon(filePath, iconSize);
+    output = GetExecutableIcon(filePath, iconSize);
   } else {
-    return GetDocumentIcon(filePath, iconSize);
+    output = GetDocumentIcon(filePath, iconSize);
   }
 
-  return NULL;
+  if (!output && alwaysReturnDefault) {
+    return GetDocumentIcon(_T("doesntexist.ekflaekm"), iconSize);
+  }
+
+  return output;
 }
 
 
@@ -101,15 +105,26 @@ wxIcon* IconGetter::GetFolderIcon(const wxString& filePath, int iconSize) {
   SHFILEINFO fileInfo;
   int success = 0;
 
-  wxFileName fileName(filePath);
+  if (filePath[filePath.Len() - 1] == _T(':')) {
+    filename = wxFileName(filePath + _T("\\")); // Add "\" if it's a drive, otherwise SHGetFileInfo will fail
+  } else {
+    filename = wxFileName(filePath);
+  }  
   
+  wchar_t* cFullPath = new wchar_t[filename.GetFullPath().Len() + 2];
+  mbstowcs(cFullPath, filename.GetFullPath().mb_str(), filename.GetFullPath().Len());
+  cFullPath[filename.GetFullPath().Len()] = _T('\0');
+  cFullPath[filename.GetFullPath().Len()+1] = _T('\0');
+
   if (iconSize == 32) {
-    success = SHGetFileInfo(fileName.GetPath().c_str(), FILE_ATTRIBUTE_DIRECTORY, &fileInfo,
+    success = SHGetFileInfo(cFullPath, FILE_ATTRIBUTE_DIRECTORY, &fileInfo,
                             sizeof(fileInfo), SHGFI_ICON | SHGFI_LARGEICON);    
   } else if (iconSize == 16) {
-    success = SHGetFileInfo(fileName.GetPath().c_str(), FILE_ATTRIBUTE_DIRECTORY, &fileInfo,
+    success = SHGetFileInfo(cFullPath, FILE_ATTRIBUTE_DIRECTORY, &fileInfo,
                             sizeof(fileInfo), SHGFI_ICON | SHGFI_SMALLICON);
   }
+
+  wxDELETE(cFullPath);
  
   if (success != 0) {
     wxIcon* icon = new wxIcon();
@@ -184,6 +199,8 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
       iconIndex = 115;
     } else if (e == _T("mp3") || e == _T("wav") || e == _T("mid")) {
       iconIndex = 116;
+    } else if (e == _T("dll") || e == _T("ocx") || e == _T("sys")) {
+      iconIndex = 72;
     } else if (e == _T("html") || e == _T("htm")) {
       wxFileName ieFileName(_T("%ProgramFiles%\\Internet Explorer\\IEXPLORE.EXE"));
       ieFileName.Normalize();
@@ -212,98 +229,104 @@ wxIcon* IconGetter::GetDocumentIcon(const wxString& filePath, int iconSize) {
   }  
 
   if (gotIconLocation) {
+    // NOTE: iconLocation.GetFileName() is not always a path, it may also be a filename 
+    // to be looked for in the "system32" folder (example: "shimgvw.dll")
+    wxLogNull logNull;
     wxIcon* icon = new wxIcon(iconLocation);
-    icon->SetSize(iconSize, iconSize);
-    return icon;
-  } else {
-
-    // If we couldn't find the icon at this stage, look for it in the registry. The icon file path
-    // may be stored in many different places. We need to look in:
-    //
-    // HKEY_CLASSES_ROOT\.<extension>\DefaultIcon\<defaultValue>
-    // HKEY_CLASSES_ROOT\<documentType>\DefaultIcon\<defaultValue>
-    // HKEY_CLASSES_ROOT\CLSID\<classId>\DefaultIcon\<defaultValue>
-    //
-    // The document type can be read at HKEY_CLASSES_ROOT\.<extension>\<defaultValue>
-    // The class ID is (sometime) at HKEY_CLASSES_ROOT\<documentType>\CLSID\<defaultValue>
-    // 
-    // Note: all the DefaultIcon values already seem to be handled by wxWidgets so we
-    // only care about the CLSID case below.
-    // 
-    // If there is no class ID, we could also look in:
-    // HKEY_CLASSES_ROOT\<documentType>\shell\open\command
-    // then get the associated executable from there and, finally, get the icon.
-    // This is currently not implemented.
-    //
-    // Finally, some icons are displayed using an icon handler that can be found at:
-    // HKEY_CLASSES_ROOT\<documentType>\ShellEx\IconHandler\<defaultValue>
-    // This is a special module which displays the icon depending on the file content. It
-    // may actually display two different icons for the same file extension. For example,
-    // a C# .sln file is going to be displayed differently than a C++ .sln file. These cases
-    // are hopefully rare enough to ignore them. Note: the SHGetImageList / SHGetFileInfo method
-    // seems to make use of the icon handler.
-
-    // Disable wxWidgets built-in error messages, such as the ones that
-    // show up when a key can't be read.
-    wxLogNull* logNo = new wxLogNull();
-
-    wxRegKey* regKey = new wxRegKey(_T("HKEY_CLASSES_ROOT\\.") + fileExtension);
-    wxString iconPath;    
-
-    if (regKey->Exists()) {
-      wxString extensionLink = regKey->QueryDefaultValue();    
-
-      if (extensionLink != wxEmptyString) {
-        wxDELETE(regKey);
-        regKey = new wxRegKey(_T("HKEY_CLASSES_ROOT\\") + extensionLink + _T("\\CLSID"));
-
-        if (regKey->Exists()) {
-          wxString classIdLink = regKey->QueryDefaultValue();
-
-          if (classIdLink != wxEmptyString) {
-            wxDELETE(regKey);
-            regKey = new wxRegKey(_T("HKEY_CLASSES_ROOT\\CLSID\\") + classIdLink + _T("\\DefaultIcon"));
-            
-            if (regKey->Exists()) {
-              iconPath = regKey->QueryDefaultValue();
-            }            
-          }
-        }   
-      }
+    if (!icon->IsOk()) {
+      wxDELETE(icon);
+    } else {
+      icon->SetSize(iconSize, iconSize);
+      return icon;
     }
+  }
 
-    wxDELETE(logNo); // Re-enable wxWidgets built-in error messages
-    wxDELETE(regKey);
-     
-    if (iconPath != wxEmptyString) {
-      // The icon path may be specified with coma followed by the icon index, as in:
-      // c:\WINDOWS\Installer\{AC76BA86-7AD7-1033-7B44-A90000000001}\PDFFile_8.ico,0
-      // So we need to split the string and extract the file path and index.
 
-      wxArrayString splitted;
+  // If we couldn't find the icon at this stage, look for it in the registry. The icon file path
+  // may be stored in many different places. We need to look in:
+  //
+  // HKEY_CLASSES_ROOT\.<extension>\DefaultIcon\<defaultValue>
+  // HKEY_CLASSES_ROOT\<documentType>\DefaultIcon\<defaultValue>
+  // HKEY_CLASSES_ROOT\CLSID\<classId>\DefaultIcon\<defaultValue>
+  //
+  // The document type can be read at HKEY_CLASSES_ROOT\.<extension>\<defaultValue>
+  // The class ID is (sometime) at HKEY_CLASSES_ROOT\<documentType>\CLSID\<defaultValue>
+  // 
+  // Note: all the DefaultIcon values already seem to be handled by wxWidgets so we
+  // only care about the CLSID case below.
+  // 
+  // If there is no class ID, we could also look in:
+  // HKEY_CLASSES_ROOT\<documentType>\shell\open\command
+  // then get the associated executable from there and, finally, get the icon.
+  // This is currently not implemented.
+  //
+  // Finally, some icons are displayed using an icon handler that can be found at:
+  // HKEY_CLASSES_ROOT\<documentType>\ShellEx\IconHandler\<defaultValue>
+  // This is a special module which displays the icon depending on the file content. It
+  // may actually display two different icons for the same file extension. For example,
+  // a C# .sln file is going to be displayed differently than a C++ .sln file. These cases
+  // are hopefully rare enough to ignore them. Note: the SHGetImageList / SHGetFileInfo method
+  // seems to make use of the icon handler.
 
-      if (iconPath.Find(_T(';')) != wxNOT_FOUND) {
-        StringUtil::Split(iconPath, splitted, _T(";"));
-      } else {
-        StringUtil::Split(iconPath, splitted, _T(","));
-      }
-      
-      iconPath = splitted[0];
-      long iconIndex = 0;
+  // Disable wxWidgets built-in error messages, such as the ones that
+  // show up when a key can't be read.
+  wxLogNull* logNo = new wxLogNull();
 
-      // If the conversion to "long" fails, we default to "0" which should be safe
-      if (splitted.Count() > 1) splitted[1].ToLong(&iconIndex);
-      
-      // Sometime, the icon index is negative, for example for .resx files. Not sure
-      // why since the icon actually displayed by Windows is at index 0.
-      if (iconIndex < 0) iconIndex = 0;
+  wxRegKey* regKey = new wxRegKey(_T("HKEY_CLASSES_ROOT\\.") + fileExtension);
+  wxString iconPath;    
 
-      wxFileName f(iconPath);
-      wxString e = f.GetExt().Lower();
-      // Normally, it shouldn't be anything other than ico, exe or dll. If it is, we just return NULL for now.
-      if (e == _T("ico") || e == _T("exe") || e == _T("dll")) return IconGetter::GetExecutableIcon(iconPath, iconSize, iconIndex);
+  if (regKey->Exists()) {
+    wxString extensionLink = regKey->QueryDefaultValue();    
+
+    if (extensionLink != wxEmptyString) {
+      wxDELETE(regKey);
+      regKey = new wxRegKey(_T("HKEY_CLASSES_ROOT\\") + extensionLink + _T("\\CLSID"));
+
+      if (regKey->Exists()) {
+        wxString classIdLink = regKey->QueryDefaultValue();
+
+        if (classIdLink != wxEmptyString) {
+          wxDELETE(regKey);
+          regKey = new wxRegKey(_T("HKEY_CLASSES_ROOT\\CLSID\\") + classIdLink + _T("\\DefaultIcon"));
+          
+          if (regKey->Exists()) {
+            iconPath = regKey->QueryDefaultValue();
+          }            
+        }
+      }   
     }
+  }
 
+  wxDELETE(logNo); // Re-enable wxWidgets built-in error messages
+  wxDELETE(regKey);
+   
+  if (iconPath != wxEmptyString) {
+    // The icon path may be specified with coma followed by the icon index, as in:
+    // c:\WINDOWS\Installer\{AC76BA86-7AD7-1033-7B44-A90000000001}\PDFFile_8.ico,0
+    // So we need to split the string and extract the file path and index.
+
+    wxArrayString splitted;
+
+    if (iconPath.Find(_T(';')) != wxNOT_FOUND) {
+      StringUtil::Split(iconPath, splitted, _T(";"));
+    } else {
+      StringUtil::Split(iconPath, splitted, _T(","));
+    }
+    
+    iconPath = splitted[0];
+    long iconIndex = 0;
+
+    // If the conversion to "long" fails, we default to "0" which should be safe
+    if (splitted.Count() > 1) splitted[1].ToLong(&iconIndex);
+    
+    // Sometime, the icon index is negative, for example for .resx files. Not sure
+    // why since the icon actually displayed by Windows is at index 0.
+    if (iconIndex < 0) iconIndex = 0;
+
+    wxFileName f(iconPath);
+    wxString e = f.GetExt().Lower();
+    // Normally, it shouldn't be anything other than ico, exe or dll. If it is, we just return NULL for now.
+    if (e == _T("ico") || e == _T("exe") || e == _T("dll") || e == _T("icl")) return IconGetter::GetExecutableIcon(iconPath, iconSize, iconIndex);
   }
   
   #endif // __WINDOWS__
@@ -341,7 +364,10 @@ wxIcon* IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize, in
         icon->SetSize(32, 32);
       }
       return icon;
+    } else {
+
     }
+
   } else {
     HINSTANCE hDll = ::LoadLibrary(filePath);
     if (!hDll) return NULL;

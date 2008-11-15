@@ -112,6 +112,8 @@ class MainFrame: public wxFrame {
     bool IsLeftOfDisplay();
     bool IsTopOfDisplay();
 
+    void RecurseCleanUp(wxWindow* window);
+
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);
     void OnMouseUp(wxMouseEvent& evt);

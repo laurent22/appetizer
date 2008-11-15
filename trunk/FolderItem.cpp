@@ -30,6 +30,7 @@ FolderItem::FolderItem(bool isGroup) {
   parent_ = NULL;
   isGroup_ = isGroup;
   uuid_ = wxEmptyString;
+  customIconIndex_ = 0;
 
   automaticallyAdded_ = false;
   belongsToMultiLaunchGroup_ = false;
@@ -38,6 +39,25 @@ FolderItem::FolderItem(bool isGroup) {
 
 FolderItem::~FolderItem() {
 
+}
+
+
+void FolderItem::SetCustomIcon(const wxString& filePath, int index) {
+  if (filePath == customIconPath_ && index == customIconIndex_) return;
+
+  customIconPath_ = filePath;
+  customIconIndex_ = index;
+  ClearCachedIcons();
+}
+
+
+wxString FolderItem::GetCustomIconPath() {
+  return customIconPath_;
+}
+
+
+int FolderItem::GetCustomIconIndex() {
+  return customIconIndex_;
 }
 
 
@@ -610,6 +630,10 @@ TiXmlElement* FolderItem::ToXml() {
   XmlUtil::AppendTextElement(xml, "UUID", uuid_);
   XmlUtil::AppendTextElement(xml, "GroupIconUUID", groupIconUUID_);
   XmlUtil::AppendTextElement(xml, "Parameters", parameters_);
+  
+  if (customIconPath_ != wxEmptyString) {
+    XmlUtil::AppendTextElement(xml, "CustomIcon", wxString::Format(_T("%s,%d"), customIconPath_, customIconIndex_));
+  }
 
   if (IsGroup()) {
     TiXmlElement* childrenXml = new TiXmlElement("Children");
@@ -637,6 +661,15 @@ void FolderItem::FromXml(TiXmlElement* xml) {
   uuid_ = XmlUtil::ReadElementText(handle, "UUID");
   groupIconUUID_ = XmlUtil::ReadElementText(handle, "GroupIconUUID");
   parameters_ = XmlUtil::ReadElementText(handle, "Parameters");
+
+  wxArrayString customIconData;
+  XmlUtil::ReadElementTextAsArrayString(handle, "CustomIcon", customIconData);
+  if (customIconData.Count() >= 2) {
+    customIconPath_ = customIconData[0];
+    customIconIndex_ = 0;
+    long t;
+    if (customIconData[1].ToLong(&t)) customIconIndex_ = (int)t;
+  }
 
   children_.clear();
   TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();

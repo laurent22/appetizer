@@ -25,6 +25,7 @@ public:
   static bool ReadElementTextAsRect(TiXmlHandle handle, const char* elementName, wxRect& resultRect);
   static bool ReadElementTextAsPoint(TiXmlHandle handle, const char* elementName, wxPoint& resultPoint);
   static bool ReadElementTextAsColor(TiXmlHandle handle, const char* elementName, wxColour& resultColor);
+  static bool ReadElementTextAsArrayString(TiXmlHandle handle, const char* elementName, wxArrayString& result);
 
 };
 

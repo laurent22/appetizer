@@ -66,6 +66,10 @@ public:
   bool GetAutomaticallyAdded();
   void SetAutomaticallyAdded(bool automaticallyAdded);
 
+  void SetCustomIcon(const wxString& filePath, int index = 0);
+  wxString GetCustomIconPath();
+  int GetCustomIconIndex();
+
   void AddToMultiLaunchGroup();
   void RemoveFromMultiLaunchGroup();
   bool BelongsToMultiLaunchGroup();  
@@ -117,6 +121,8 @@ private:
   wxString groupIconUUID_;
   bool automaticallyAdded_;
   wxString iconCacheHash_;
+  wxString customIconPath_;
+  int customIconIndex_;
   
   static FolderItemProcessVector processVector_;
 

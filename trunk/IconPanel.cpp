@@ -418,7 +418,8 @@ int IconPanel::GetMaxHeight() {
 void IconPanel::OnSize(wxSizeEvent& evt) {
   BitmapControl::OnSize(evt);
 
-  InvalidateIcons();
+  InvalidateLayout();
+  //InvalidateIcons();
 }
 
 

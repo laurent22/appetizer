@@ -701,6 +701,30 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\gui\FileExplorerControl.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\gui\FileOrFolderDialog.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\gui\GroupEditorDialog.cpp"
 					>
 					<FileConfiguration
@@ -721,6 +745,18 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\gui\IconDialog.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -979,11 +1015,23 @@
 					>
 				</File>
 				<File
+					RelativePath=".\gui\FileExplorerControl.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\FileOrFolderDialog.h"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\GroupEditorDialog.h"
 					>
 				</File>
 				<File
 					RelativePath=".\gui\GroupEditorDialogBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\IconDialog.h"
 					>
 				</File>
 				<File

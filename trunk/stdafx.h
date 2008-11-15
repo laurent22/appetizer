@@ -25,8 +25,11 @@
 
 #include <wx/treebase.h>
 #include <wx/msgdlg.h>
+#include <wx/object.h>
+#include <wx/generic/dirctrlg.h>
 #include <wx/treectrl.h>
 #include <wx/checkbox.h>
+#include <wx/filesys.h>
 #include <wx/combobox.h>
 #include <wx/imaglist.h>
 #include <wx/stdpaths.h>
@@ -51,13 +54,17 @@
 #include <wx/list.h>
 #include <wx/arrstr.h>
 #include <wx/sysopt.h>
+#include <wx/dynarray.h>
 #include <wx/cursor.h>
 #include <wx/datetime.h>
 #include <wx/dataobj.h>
 #include <wx/filename.h>
 #include <wx/dnd.h>
+#include <wx/listctrl.h>
 #include <wx/dcbuffer.h>
 #include <wx/font.h>
+#include <wx/busyinfo.h>
+#include <wx/artprov.h>
 #include <wx/dir.h>
 #include <wx/clntdata.h>
 #include <wx/dirdlg.h>

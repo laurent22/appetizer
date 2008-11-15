@@ -692,6 +692,32 @@ void MainFrame::InvalidateMask() {
   Refresh();
 }
 
+
+/**
+ * Ensures that any modal dialog is properly closed using
+ * EndModal() so that any object waiting for it
+ * receives an answer.
+ * @param wxWindow* A window to clean up
+ */
+void MainFrame::RecurseCleanUp(wxWindow* window) {
+  wxWindowList& children = window->GetChildren();
+  for (int i = children.size() - 1; i >= 0; i--) {
+    wxWindow* child = children[i];
+    
+    wxDialog* childAsDialog = dynamic_cast<wxDialog*>(child);
+    if (childAsDialog) {
+      if (childAsDialog->IsModal()) {
+        childAsDialog->EndModal(wxID_CLOSE);
+      } else {
+        childAsDialog->Close();
+      }
+    }
+
+    RecurseCleanUp(child);
+  }
+}
+
+
 void MainFrame::OnClose(wxCloseEvent& evt) {
   if (aboutDialog_) aboutDialog_->Destroy();
   if (optionPanel_) optionPanel_->Destroy();
@@ -743,6 +769,8 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   wxDELETE(arrowButtonOpenIcon_);  
 
   wxGetApp().CloseApplication();
+
+  RecurseCleanUp(this);
 
   Destroy();
 }
