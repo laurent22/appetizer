@@ -137,7 +137,11 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   wxString folderItemName = nameTextBox->GetValue();
 
   wxFileName filename(FolderItem::ResolvePath(folderItemFilePath));
-  if (!filename.FileExists() && !wxFileName::DirExists(filename.GetFullPath())) {
+  filename.Normalize();
+
+  wxString f = filename.GetFullPath();
+
+  if (!wxFileName::FileExists(f) && !wxFileName::DirExists(filename.GetFullPath())) {
     // If the shortcut location doesn't exist, just show a warning but allow
     // the user to continue. Invalid shortcuts are allowed since they
     // might be referencing files from a different computer.

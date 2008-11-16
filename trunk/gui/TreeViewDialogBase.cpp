@@ -9,7 +9,7 @@
 
 
 TreeViewDialogBase::TreeViewDialogBase(wxWindow* parent, int id, const wxString& title, const wxPoint& pos, const wxSize& size, long style):
-    wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxTHICK_FRAME)
+    wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER)
 {
     // begin wxGlade: TreeViewDialogBase::TreeViewDialogBase
     treeControl = new wxTreeCtrl(this, ID_TREEVIEW_DLG_treeControl, wxDefaultPosition, wxDefaultSize, wxTR_HAS_BUTTONS|wxTR_LINES_AT_ROOT|wxTR_DEFAULT_STYLE|wxSUNKEN_BORDER);

@@ -10,6 +10,10 @@
 #define __IconGetter_H
 
 
+WX_DECLARE_HASH_MAP(int, wxIcon*, wxIntegerHash, wxIntegerEqual, IconGetterIconHashMap);
+WX_DECLARE_HASH_MAP(wxString, wxIcon*, wxStringHash, wxStringEqual, IconGetterTypeIconHashMap);
+
+
 /**
  * Some static functions to get the icons associated with a file, folder or executable.
  * Each function can return a small or large icon
@@ -52,6 +56,22 @@ class IconGetter {
      * @return The icon or wxNullIcon in case of error
      */
     static wxIcon* GetFolderIcon(const wxString& filePath, int iconSize = 32);
+
+
+    static wxString GetSystem32Path();
+    static wxIcon* GetDefaultFileIcon(int iconSize);
+    static wxIcon* GetDefaultFolderIcon(int iconSize);
+    static wxIcon* GetDefaultTypeIcon(int iconSize, const wxString& extension);
+
+    static void Destroy();
+
+
+private:
+
+  static wxString system32Path_;
+  static IconGetterIconHashMap defaultFileIcon_;
+  static IconGetterIconHashMap defaultFolderIcon_;
+  static IconGetterTypeIconHashMap defaultDefaultTypeIcon_;
 
 };
 

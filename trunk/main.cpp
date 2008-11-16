@@ -15,6 +15,7 @@
 #include "Styles.h"
 #include "gui/BetterMessageDialog.h"
 #include "Log.h"
+#include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
 #include "utilities/Updater.h"
 
@@ -47,7 +48,7 @@ bool MiniLaunchBar::OnInit() {
   allowedIconSizes_.push_back(SMALL_ICON_SIZE);
   allowedIconSizes_.push_back(LARGE_ICON_SIZE);
   allowedIconSizes_.push_back(EXTRA_LARGE_ICON_SIZE);
-  allowedIconSizes_.push_back(JUMBO_ICON_SIZE);
+  //allowedIconSizes_.push_back(JUMBO_ICON_SIZE);
 
   // ***********************************************************************************
   // Initialize the command line object
@@ -411,6 +412,7 @@ void MiniLaunchBar::CloseApplication() {
   BetterMessageDialog::DestroyInstance();
   Localization::Destroy();
   utilities_.~Utilities();
+  IconGetter::Destroy();
 }
 
 

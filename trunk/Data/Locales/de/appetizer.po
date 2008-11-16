@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-12 23:57+0000\n"
+"POT-Creation-Date: 2008-11-16 17:39+0000\n"
 "PO-Revision-Date: 2008-11-12 22:34+0100\n"
 "Last-Translator: Werner Künkel <w.kuenkel@t-online.de>\n"
 "Language-Team: Appetizer Project\n"
@@ -25,11 +25,11 @@ msgstr "Minimieren"
 msgid "Show"
 msgstr "Zeigen"
 
-#: ApplicationTrayIcon.cpp:34 MainFrame.cpp:271
+#: ApplicationTrayIcon.cpp:34 MainFrame.cpp:322
 msgid "Eject drive"
 msgstr "Externes Laufwerk abmelden"
 
-#: ApplicationTrayIcon.cpp:35 OptionPanel.cpp:105 gui\ConfigDialog.cpp:46
+#: ApplicationTrayIcon.cpp:35 OptionPanel.cpp:107 gui\ConfigDialog.cpp:45
 msgid "Configuration"
 msgstr "Einstellungen"
 
@@ -37,72 +37,116 @@ msgstr "Einstellungen"
 msgid "Close"
 msgstr "Schließen"
 
-#: FolderItem.cpp:321 gui\TreeViewDialog.cpp:66
+#: FolderItem.cpp:337 gui\TreeViewDialog.cpp:66
 msgid "Organize shortcuts"
 msgstr "Neue Verknüpfung"
 
-#: FolderItem.cpp:420 FolderItem.cpp:427 FolderItem.cpp:450
+#: FolderItem.cpp:436 FolderItem.cpp:443 FolderItem.cpp:466
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Die gesuchte Datei fehlt (Fehler%s)"
 
-#: FolderItem.cpp:543
+#: FolderItem.cpp:698
 msgid "Group"
 msgstr "Kategorie"
 
-#: FolderItemRenderer.cpp:96
+#: FolderItem.cpp:883 IconPanel.cpp:129
+msgid "Control Panel"
+msgstr ""
+
+#: FolderItem.cpp:885 IconPanel.cpp:130
+msgid "My Computer"
+msgstr ""
+
+#: FolderItem.cpp:887 IconPanel.cpp:131
+msgid "My Network Places"
+msgstr ""
+
+#: FolderItem.cpp:889 IconPanel.cpp:132
+msgid "Recycle Bin"
+msgstr ""
+
+#: FolderItem.cpp:891 IconPanel.cpp:133
+msgid "Show Desktop"
+msgstr ""
+
+#: FolderItem.cpp:893 IconPanel.cpp:134
+msgid "Windows Explorer"
+msgstr ""
+
+#: FolderItem.cpp:895 IconPanel.cpp:135
+msgid "Search"
+msgstr ""
+
+#: FolderItemRenderer.cpp:95
 msgid "Do you wish to remove this icon?"
 msgstr "Wollen Sie diese Verknüpfung wirklich löschen?"
 
-#: FolderItemRenderer.cpp:96 utilities\Utilities.cpp:79
+#: FolderItemRenderer.cpp:95 utilities\Utilities.cpp:79
 msgid "Don't show this message again"
 msgstr ""
 
-#: FolderItemRenderer.cpp:123
+#: FolderItemRenderer.cpp:122
 msgid "Remove..."
 msgstr "Verknüpfung löschen..."
 
-#: FolderItemRenderer.cpp:126
+#: FolderItemRenderer.cpp:125
 msgid "Add to Multi Launch group"
 msgstr "Zur Schnellstart-Gruppe hinzufügen"
 
-#: FolderItemRenderer.cpp:134
+#: FolderItemRenderer.cpp:133
 msgid "Organize group shortcuts"
 msgstr "Kategorien verwalten"
 
-#: FolderItemRenderer.cpp:138
+#: FolderItemRenderer.cpp:137
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: IconPanel.cpp:124 OptionPanel.cpp:104
+#: IconPanel.cpp:125 OptionPanel.cpp:106
 msgid "New shortcut..."
 msgstr "Neue Verknüpfung"
 
-#: IconPanel.cpp:125
+#: IconPanel.cpp:126
 msgid "New group..."
 msgstr "Neue Kategorie"
 
-#: main.cpp:43
+#: IconPanel.cpp:141
+msgid "Add special item"
+msgstr ""
+
+#: main.cpp:57
 msgid "Use user data directory to save settings."
 msgstr "Einstellungen im Ordner \"Anwendungsdaten\" speichern"
 
-#: main.cpp:44
+#: main.cpp:58
 msgid "Set user data path (-u will be ignored)"
 msgstr "Pfad für die Sicherung der Einstellungen festlegen (-u wird ignoriert)"
 
-#: main.cpp:81
+#: main.cpp:95
 msgid "Could not initialize locale."
 msgstr "Sprachpaket nicht anwendbar"
 
-#: main.cpp:217
+#: main.cpp:161
+msgid "Large"
+msgstr "Groß"
+
+#: main.cpp:162
+msgid "Extra Large (XP and above)"
+msgstr ""
+
+#: main.cpp:163
+msgid "Jumbo (Vista and above)"
+msgstr ""
+
+#: main.cpp:260
 msgid "Could not get update information"
 msgstr "Keine Information zu neuen Versionen erhältlich..."
 
-#: main.cpp:231
+#: main.cpp:274
 msgid "You have the latest version."
 msgstr "Sie haben die aktuelle Version."
 
-#: main.cpp:238
+#: main.cpp:281
 #, c-format
 msgid ""
 "A new version is available!\n"
@@ -121,11 +165,17 @@ msgstr ""
 "\n"
 "Möchten Sie sie jetzt herunterladen"
 
-#: main.cpp:244
+#: main.cpp:287
 msgid "Error launching web browser"
 msgstr "Browser startet nicht"
 
-#: MainFrame.cpp:270
+#: MainFrame.cpp:183
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr ""
+
+#: MainFrame.cpp:321
 msgid "Minimize to tray"
 msgstr "Schließen"
 
@@ -146,26 +196,32 @@ msgstr "Warnung"
 msgid "Confirmation"
 msgstr "Bestätigung"
 
-#: OptionPanel.cpp:103
+#: OptionPanel.cpp:105
 msgid "Help"
 msgstr "Hilfe"
 
-#: OptionPanel.cpp:106
+#: OptionPanel.cpp:108
 msgid "Multi-launch"
 msgstr "Schnellstart-Gruppe"
 
-#: OptionPanel.cpp:239
+#: OptionPanel.cpp:241
 msgid "Help Topics"
 msgstr "Hilfethemen"
 
-#: OptionPanel.cpp:240
+#: OptionPanel.cpp:242
 msgid "Get Support"
 msgstr "Online Hilfe"
 
-#: OptionPanel.cpp:242 gui\AboutDialog.cpp:48
+#: OptionPanel.cpp:244 gui\AboutDialog.cpp:61
 #, c-format
 msgid "About %s..."
 msgstr "Über %s ..."
+
+#: OptionPanel.cpp:254
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr ""
 
 #: Styles.cpp:69
 #, c-format
@@ -176,23 +232,24 @@ msgstr "Dieses Design ist nicht für die vorhandene %sversion geeignet."
 msgid "Do you wish to eject the drive?"
 msgstr "Wollen Sie das externe Laufwerk wirklich abmelden?"
 
-#: gui\AboutDialog.cpp:49
+#: gui\AboutDialog.cpp:62
 msgid "About"
 msgstr "Über "
 
-#: gui\AboutDialog.cpp:50
+#: gui\AboutDialog.cpp:63
 msgid "License"
 msgstr "Lizenz"
 
-#: gui\AboutDialog.cpp:51 gui\BetterMessageDialog.cpp:108
+#: gui\AboutDialog.cpp:64 gui\BetterMessageDialog.cpp:108
+#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:99
 msgid "OK"
 msgstr "OK"
 
-#: gui\AboutDialog.cpp:52
+#: gui\AboutDialog.cpp:65
 msgid "Credits"
 msgstr "Danksagung"
 
-#: gui\AboutDialog.cpp:54
+#: gui\AboutDialog.cpp:67
 #, c-format
 msgid ""
 "Translators: %s\n"
@@ -215,12 +272,12 @@ msgstr ""
 "\n"
 "Dialogfenster wurden mit wxGlade von Alberto Griggio erstellt."
 
-#: gui\AboutDialog.cpp:56
+#: gui\AboutDialog.cpp:69
 #, c-format
 msgid "Copyright © %s"
 msgstr "Copyright © %s"
 
-#: gui\AboutDialog.cpp:57
+#: gui\AboutDialog.cpp:70
 msgid ""
 "This program is free software: you can redistribute it and/or modify it "
 "under the terms of the GNU General Public License as published by the Free "
@@ -247,7 +304,15 @@ msgstr ""
 "Sollten Sie keine Kopie der GNU General Public License mit diesem Programm "
 "erhalten haben, finden Sie sie unter <http://www.gnu.org/licenses/>."
 
-#: gui\AboutDialog.cpp:64
+#: gui\AboutDialog.cpp:71
+msgid "Web:"
+msgstr ""
+
+#: gui\AboutDialog.cpp:72
+msgid "Contact:"
+msgstr ""
+
+#: gui\AboutDialog.cpp:80
 #, c-format
 msgid "%s, Version %s.%s.%s (Build #%s)"
 msgstr "%s, Version %s.%s.%s (Build #%s)"
@@ -260,78 +325,193 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: gui\BetterMessageDialog.cpp:111 gui\ConfigDialog.cpp:53
-#: gui\GroupEditorDialog.cpp:34 gui\ShortcutEditorDialog.cpp:38
+#: gui\BetterMessageDialog.cpp:111 gui\ConfigDialog.cpp:50
+#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:100
+#: gui\ShortcutEditorDialog.cpp:42
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: gui\ConfigDialog.cpp:47
+#: gui\ConfigDialog.cpp:46
 msgid "General"
 msgstr "Allgemein"
 
-#: gui\ConfigDialog.cpp:48
+#: gui\ConfigDialog.cpp:47
 msgid "Appearance"
 msgstr "Aussehen"
 
-#: gui\ConfigDialog.cpp:49
-msgid "Language:"
-msgstr "Sprache:"
+#: gui\ConfigDialog.cpp:48
+#, fuzzy
+msgid "Operations"
+msgstr "Ausrichtung"
 
-#: gui\ConfigDialog.cpp:50
-msgid "Icon size:"
-msgstr "Symbolgröße"
-
-#: gui\ConfigDialog.cpp:51
-msgid "Skin:"
-msgstr "Design"
-
-#: gui\ConfigDialog.cpp:52 gui\GroupEditorDialog.cpp:33
-#: gui\ShortcutEditorDialog.cpp:37
+#: gui\ConfigDialog.cpp:49 gui\ShortcutEditorDialog.cpp:41
 msgid "Save"
 msgstr "Speichern"
 
-#: gui\ConfigDialog.cpp:54
-msgid "Orientation:"
-msgstr "Ausrichtung"
+#: gui\ConfigDialog.cpp:86
+msgid "Language:"
+msgstr "Sprache:"
 
-#: gui\ConfigDialog.cpp:55 gui\ConfigDialog.cpp:170
-msgid "Check for update"
-msgstr "Nach neuer Version suchen"
-
-#: gui\ConfigDialog.cpp:56
-msgid "Auto-hide after launching an application"
-msgstr "Nach Start einer Anwendung minimieren"
-
-#: gui\ConfigDialog.cpp:57
+#: gui\ConfigDialog.cpp:87
 msgid "Always on top"
 msgstr "Immer sichtbar"
 
-#: gui\ConfigDialog.cpp:58
+#: gui\ConfigDialog.cpp:88
 #, c-format
 msgid "Allow only one instance of %s at a time"
 msgstr "Nur ein %sfenster zulassen"
 
-#: gui\ConfigDialog.cpp:107
-msgid "Small"
-msgstr "Klein"
+#: gui\ConfigDialog.cpp:89 gui\ConfigDialog.cpp:376
+msgid "Check for update"
+msgstr "Nach neuer Version suchen"
 
-#: gui\ConfigDialog.cpp:108
-msgid "Large"
-msgstr "Groß"
+#: gui\ConfigDialog.cpp:151
+msgid "Icon size:"
+msgstr "Symbolgröße"
 
-#: gui\ConfigDialog.cpp:121
+#: gui\ConfigDialog.cpp:152
+msgid "Skin:"
+msgstr "Design"
+
+#: gui\ConfigDialog.cpp:153
+msgid "Orientation:"
+msgstr "Ausrichtung"
+
+#: gui\ConfigDialog.cpp:180
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: gui\ConfigDialog.cpp:122
+#: gui\ConfigDialog.cpp:181
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: gui\ConfigDialog.cpp:165
+#: gui\ConfigDialog.cpp:205
+msgid "Default"
+msgstr "Standard"
+
+#: gui\ConfigDialog.cpp:241
+msgid "Auto-hide after launching an application"
+msgstr "Nach Start einer Anwendung minimieren"
+
+#: gui\ConfigDialog.cpp:242
+msgid "Run multi-launch group on startup"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:243
+msgid "Hot key to hide / show the bar"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:244
+msgid "Control +"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:245
+msgid "Alt +"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:246
+msgid "Shift +"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:259
+msgid "<None>"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:301
+msgid "Numpad 0"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:302
+msgid "Numpad 1"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:303
+msgid "Numpad 2"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:304
+msgid "Numpad 3"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:305
+msgid "Numpad 4"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:306
+msgid "Numpad 5"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:307
+msgid "Numpad 6"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:308
+msgid "Numpad 7"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:309
+msgid "Numpad 8"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:310
+msgid "Numpad 9"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:312
+msgid "Backspace"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:313
+msgid "Tab"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:314
+msgid "Return"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:315
+msgid "Escape"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:316
+#, fuzzy
+msgid "Space"
+msgstr "Speichern"
+
+#: gui\ConfigDialog.cpp:317
+#, fuzzy
+msgid "Delete"
+msgstr "Standard"
+
+#: gui\ConfigDialog.cpp:319
+msgid "End"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:320
+msgid "Home"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:321
+msgid "Left"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:322
+msgid "Up"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:323
+msgid "Right"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:324
+msgid "Down"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:371
 msgid "Please wait..."
 msgstr "Bitte warten..."
 
-#: gui\ConfigDialog.cpp:250
+#: gui\ConfigDialog.cpp:540
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."
@@ -339,58 +519,99 @@ msgstr ""
 "Einige der vorgenommenen Änderungen werden erst nach Neustart des Programms "
 "wirksam."
 
-#: gui\GroupEditorDialog.cpp:31
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr ""
+
+#: gui\FileOrFolderDialog.cpp:110
+#, fuzzy
+msgid "Select a file or a folder"
+msgstr "Ordner auswählen"
+
+#: gui\IconDialog.cpp:97
+#, fuzzy
+msgid "Select an icon"
+msgstr "Ein anderes Symbol auswählen"
+
+#: gui\IconDialog.cpp:98
+msgid "Icon file or library:"
+msgstr ""
+
+#: gui\IconDialog.cpp:151
+msgid "All supported files"
+msgstr ""
+
+#: gui\IconDialog.cpp:152
+#, fuzzy
+msgid "Icons"
+msgstr "Symbol"
+
+#: gui\IconDialog.cpp:153
+msgid "Executables"
+msgstr ""
+
+#: gui\IconDialog.cpp:154
+msgid "Dynamic libraries"
+msgstr ""
+
+#: gui\IconDialog.cpp:155
+msgid "Icon libraries"
+msgstr ""
+
+#: gui\IconDialog.cpp:156
+#, fuzzy
+msgid "All files"
+msgstr "Datei auswählen"
+
+#: gui\IconDialog.cpp:158
+#, fuzzy
+msgid "Select an icon file or library"
+msgstr "Datei auswählen"
+
+#: gui\ShortcutEditorDialog.cpp:37
 msgid "Group Properties"
 msgstr "Eigenschaften für Kategorien"
 
-#: gui\GroupEditorDialog.cpp:32 gui\ShortcutEditorDialog.cpp:34
-msgid "Name:"
-msgstr "Name:"
-
-#: gui\GroupEditorDialog.cpp:35
-msgid "Icon"
-msgstr "Symbol"
-
-#: gui\GroupEditorDialog.cpp:36
-msgid "Select a different icon"
-msgstr "Ein anderes Symbol auswählen"
-
-#: gui\GroupEditorDialog.cpp:72
-msgid "Default"
-msgstr "Standard"
-
-#: gui\ShortcutEditorDialog.cpp:33
+#: gui\ShortcutEditorDialog.cpp:37
 msgid "Shorcut Properties"
 msgstr "Verknüpfungseigenschaften"
 
-#: gui\ShortcutEditorDialog.cpp:35
+#: gui\ShortcutEditorDialog.cpp:38
+msgid "Name:"
+msgstr "Name:"
+
+#: gui\ShortcutEditorDialog.cpp:39
 msgid "Location:"
 msgstr "Ort:"
 
-#: gui\ShortcutEditorDialog.cpp:36
+#: gui\ShortcutEditorDialog.cpp:40
 msgid "Parameters:"
 msgstr "Parameter:"
 
-#: gui\ShortcutEditorDialog.cpp:39
-msgid "Select a file"
-msgstr "Datei auswählen"
+#: gui\ShortcutEditorDialog.cpp:43
+#, fuzzy
+msgid "Icon:"
+msgstr "Symbol"
 
-#: gui\ShortcutEditorDialog.cpp:40
-msgid "Select a folder"
-msgstr "Ordner auswählen"
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Change icon..."
+msgstr ""
 
-#: gui\ShortcutEditorDialog.cpp:64
+#: gui\ShortcutEditorDialog.cpp:45
+#, fuzzy
+msgid "Use default"
+msgstr "Standard"
+
+#: gui\ShortcutEditorDialog.cpp:144
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr ""
 "Der Zielort für diese Verknüpfung existiert nicht. Möchten Sie fortfahren?"
 
-#: gui\ShortcutEditorDialog.cpp:84
-msgid "Select file"
-msgstr "Datei auswählen"
+#~ msgid "Small"
+#~ msgstr "Klein"
 
-#: gui\ShortcutEditorDialog.cpp:98
-msgid "Select folder"
-msgstr "Ordner auswählen"
+#~ msgid "Select folder"
+#~ msgstr "Ordner auswählen"
 
 #~ msgid "Check for updateWait"
 #~ msgstr "Bitte warten..."

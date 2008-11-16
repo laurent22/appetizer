@@ -1,4 +1,4 @@
-/*
+﻿/*
   Copyright (C) 2008 Laurent Cozic. All right reserved.
   Use of this source code is governed by a GNU/GPL license that can be
   found in the LICENSE file.
@@ -291,16 +291,15 @@ void FileExplorerControl::PopulateFolder(const wxTreeItemId& itemId) {
     wxArrayInt iconIds;
     wxGetAvailableDrives(paths, names, iconIds);
 
-    wxImageList* driveImageList = wxTheFileIconsTable->GetSmallImageList();
-
     for (int i = 0; i < paths.Count(); i++) {
       wxString path = paths[i];
       wxTreeItemId childId;
 
-      wxIcon icon = driveImageList->GetIcon(iconIds[i]);
+      wxIcon* icon = IconGetter::GetFolderIcon(path, iconSize);
 
-      if (icon.IsOk()) {
-        int iconIndex = imageList_->Add(icon);
+      if (icon) {
+        int iconIndex = imageList_->Add(*icon);
+        wxDELETE(icon);
         childId = AppendItem(itemId, path, iconIndex, -1, new FileExplorerControlItemData(path, true));
       } else {
         childId = AppendItem(itemId, path, -1, -1, new FileExplorerControlItemData(path, true));
@@ -327,7 +326,13 @@ void FileExplorerControl::PopulateFolder(const wxTreeItemId& itemId) {
       wxFileName filename(filePath);
       filename.Normalize();
 
-      wxIcon* icon = IconGetter::GetFolderItemIcon(filename.GetFullPath(), 16, true);
+      wxIcon* icon;
+      
+      if (isDirectory) {
+        icon = IconGetter::GetDefaultFolderIcon(iconSize);
+      } else {
+        icon = IconGetter::GetFolderItemIcon(filename.GetFullPath(), 16, true); 
+      }
 
       if (icon) {
         int iconIndex = imageList_->Add(*icon);

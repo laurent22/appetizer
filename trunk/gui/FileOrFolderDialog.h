@@ -22,7 +22,7 @@ class FileOrFolderDialog: public wxDialog {
 
 public:
 
-  FileOrFolderDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Select a file or a folder"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(350, 400), long style = wxDEFAULT_DIALOG_STYLE, const wxString& name = _T("fileOrFolderDialog"));
+  FileOrFolderDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(350, 400), long style = wxDEFAULT_DIALOG_STYLE, const wxString& name = _T("fileOrFolderDialog"));
   void Localize();
   wxString GetPath();
   void ExpandDirectory(const wxString& directory);

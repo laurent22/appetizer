@@ -260,7 +260,10 @@
 				Optimization="1"
 				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(BOOST_ROOT)&quot;"
 				PreprocessorDefinitions="WINVER=0x0400;wxUSE_GUI=1"
+				IgnoreStandardIncludePath="false"
 				RuntimeLibrary="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="stdafx.h"
 				DebugInformationFormat="0"
 			/>
 			<Tool
@@ -275,12 +278,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxtiff.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib wxbase28u_net.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib wxbase28u_net.lib"
 				OutputFile=".\Appetizer.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
+				IgnoreAllDefaultLibraries="false"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="false"
 				SubSystem="2"
+				OptimizeReferences="0"
+				EnableCOMDATFolding="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -316,54 +322,167 @@
 			<File
 				RelativePath=".\ApplicationTrayIcon.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\FilePaths.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\FolderItem.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\FolderItemProcess.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\FolderItemRenderer.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\IconPanel.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Localization.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Log.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\main.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\MainFrame.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\MessageBoxes.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\OptionButton.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\OptionPanel.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp"
@@ -376,18 +495,50 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Styles.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\User.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\UserSettings.cpp"
 				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
 			</File>
 			<Filter
 				Name="bitmap_controls"
@@ -403,6 +554,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\bitmap_controls\ImageButton.cpp"
@@ -412,6 +572,15 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -427,6 +596,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\bitmap_controls\NineSlicesPanel.cpp"
@@ -436,6 +614,15 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -455,6 +642,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\imaging\NineSlicesPainter.cpp"
@@ -464,6 +660,15 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -483,6 +688,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\MathUtil.cpp"
@@ -492,6 +706,15 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -507,6 +730,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\Updater.cpp"
@@ -516,6 +748,15 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -531,6 +772,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\VersionInfo.cpp"
@@ -543,6 +793,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\utilities\XmlUtil.cpp"
@@ -552,6 +811,15 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -571,12 +839,28 @@
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\third_party\tinyxml\tinyxml.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -595,12 +879,28 @@
 							UsePrecompiledHeader="0"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\third_party\tinyxml\tinyxmlparser.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -622,12 +922,28 @@
 								UsePrecompiledHeader="0"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Unicode Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath=".\third_party\wxMD5\wxMD5.cpp"
 						>
 						<FileConfiguration
 							Name="Unicode Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Unicode Release|Win32"
 							>
 							<Tool
 								Name="VCCLCompilerTool"
@@ -651,12 +967,29 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\AboutDialogBase.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -675,6 +1008,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ConfigDialog.cpp"
@@ -687,12 +1029,29 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ConfigDialogBase.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -711,6 +1070,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\FileOrFolderDialog.cpp"
@@ -720,6 +1088,15 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -735,6 +1112,15 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ShortcutEditorDialog.cpp"
@@ -747,12 +1133,29 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ShortcutEditorDialogBase.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -771,12 +1174,29 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\TreeViewDialogBase.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="0"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
