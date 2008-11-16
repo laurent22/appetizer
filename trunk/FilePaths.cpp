@@ -38,6 +38,7 @@ wxString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }
 wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
+wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
 
 
 wxString FilePaths::GetSystem32Directory() {

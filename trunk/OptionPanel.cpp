@@ -12,6 +12,8 @@
 #include "Log.h"
 #include "Styles.h"
 #include "MiniLaunchBar.h"
+#include "MessageBoxes.h"
+#include "gui/FileOrFolderDialog.h"
 
 
 BEGIN_EVENT_TABLE(OptionPanel, NineSlicesPanel)
@@ -248,7 +250,10 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // MULTI-LAUNCH
     //***************************************************************************
-    wxGetApp().GetUtilities().DoMultiLaunch();
+    if (!wxGetApp().GetUtilities().DoMultiLaunch()) {
+      int result = MessageBoxes::ShowConfirmation(_("The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"));
+      if (result == wxID_YES) wxGetApp().GetUtilities().ShowHelpFile(_T("Multilaunch"));
+    }
 
   } else if (buttonName == _T("Config")) {
     //***************************************************************************
@@ -260,7 +265,13 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // ADD SHORTCUT
     //***************************************************************************
-    wxGetApp().GetUtilities().CreateNewShortcut();
+    FileOrFolderDialog* d = new FileOrFolderDialog(this);
+    int result = d->ShowModal();
+    if (result == wxID_OK) {
+      wxGetApp().GetUser()->AddNewFolderItemFromPath(wxGetApp().GetUser()->GetRootFolderItem(), d->GetPath());
+    }  
+
+    d->Destroy();
 
   }
 }

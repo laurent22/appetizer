@@ -27,6 +27,7 @@ public:
   static wxString GetWindowFile();
   static wxString GetWindowsDirectory();
   static wxString GetSystem32Directory();
+  static wxString GetHHPath();
 
   static void CreateSettingsDirectory();
   static void InitializePaths();

@@ -287,9 +287,9 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   // Get the icon from the folder item
   wxIconSP icon = folderItem->GetIcon(userSettingsIconSize);
-  wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
+  wxASSERT_MSG(icon.get(), _T("Folder item icon cannot be NULL"));
 
-  if (icon->IsOk()) {  
+  if (icon.get() && icon->IsOk()) {  
 
     // The commented code below converts the icon to a usable wxImage object
     //
@@ -302,9 +302,12 @@ void FolderItemRenderer::UpdateControlBitmap() {
     //} else {
     //  image = wxBitmap(*icon).ConvertToImage();
     //}
-    //destDC.DrawBitmap(wxBitmap(image), Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);    
+    //destDC.DrawBitmap(wxBitmap(image), Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);   
 
-    Imaging::DrawIconWithTransparency(&destDC, *icon, Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);
+    int x = (GetSize().GetWidth() - icon->GetWidth()) / 2;
+    int y = (GetSize().GetHeight() - icon->GetHeight()) / 2;
+
+    Imaging::DrawIconWithTransparency(&destDC, *icon, x, y);
   }
 
   if (folderItem->BelongsToMultiLaunchGroup()) {

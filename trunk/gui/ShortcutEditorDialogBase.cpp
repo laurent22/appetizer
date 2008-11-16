@@ -16,10 +16,13 @@ ShortcutEditorDialogBase::ShortcutEditorDialogBase(wxWindow* parent, int id, con
     nameTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
     locationLabel = new wxStaticText(this, wxID_ANY, wxT("Location:"));
     locationTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
-    selectFileButton = new wxBitmapButton(this, ID_BUTTON_SelectFile, wxNullBitmap);
-    selectFolderButton = new wxBitmapButton(this, ID_BUTTON_SelectFolder, wxNullBitmap);
-    parametersLabel = new wxStaticText(this, wxID_ANY, wxT("Parameters"));
+    browseButton = new wxButton(this, ID_SHORTCUTDLG_BUTTON_Browse, wxT("..."));
+    parametersLabel = new wxStaticText(this, wxID_ANY, wxT("Parameters:"));
     parametersTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
+    iconLabel = new wxStaticText(this, wxID_ANY, wxT("Icon:"));
+    iconStaticBitmap = new wxStaticBitmap(this, wxID_ANY, wxNullBitmap);
+    changeIconButton = new wxButton(this, ID_SHORTCUTDLG_BUTTON_ChangeIcon, wxT("Change icon..."));
+    useDefaultIconButton = new wxButton(this, ID_SHORTCUTDLG_BUTTON_UseDefaultIcon, wxT("#Use default#"));
     saveButton = new wxButton(this, ID_BUTTON_Save, wxT("Save"));
     cancelButton = new wxButton(this, ID_BUTTON_Cancel, wxT("Cancel"));
 
@@ -33,9 +36,9 @@ void ShortcutEditorDialogBase::set_properties()
 {
     // begin wxGlade: ShortcutEditorDialogBase::set_properties
     SetTitle(wxT("Edit shortcut"));
-    SetSize(wxSize(336, 188));
-    selectFileButton->SetMinSize(wxSize(24, 24));
-    selectFolderButton->SetMinSize(wxSize(24, 24));
+    SetSize(wxSize(403, 234));
+    browseButton->SetMinSize(wxSize(25, -1));
+    iconStaticBitmap->SetMinSize(wxSize(32, 32));
     // end wxGlade
 }
 
@@ -46,16 +49,21 @@ void ShortcutEditorDialogBase::do_layout()
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* saveCancelSizer = new wxBoxSizer(wxHORIZONTAL);
     wxFlexGridSizer* inputSizers = new wxFlexGridSizer(4, 2, 10, 8);
+    wxFlexGridSizer* grid_sizer_1 = new wxFlexGridSizer(1, 3, 0, 8);
     wxBoxSizer* sizer_4 = new wxBoxSizer(wxHORIZONTAL);
     inputSizers->Add(nameLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     inputSizers->Add(nameTextBox, 0, wxEXPAND, 0);
     inputSizers->Add(locationLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     sizer_4->Add(locationTextBox, 1, wxRIGHT|wxALIGN_CENTER_VERTICAL, 8);
-    sizer_4->Add(selectFileButton, 0, wxRIGHT, 4);
-    sizer_4->Add(selectFolderButton, 0, 0, 0);
+    sizer_4->Add(browseButton, 0, 0, 0);
     inputSizers->Add(sizer_4, 1, wxEXPAND, 0);
     inputSizers->Add(parametersLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     inputSizers->Add(parametersTextBox, 0, wxEXPAND, 0);
+    inputSizers->Add(iconLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
+    grid_sizer_1->Add(iconStaticBitmap, 0, 0, 0);
+    grid_sizer_1->Add(changeIconButton, 0, wxALIGN_CENTER_VERTICAL, 0);
+    grid_sizer_1->Add(useDefaultIconButton, 0, wxALIGN_CENTER_VERTICAL, 0);
+    inputSizers->Add(grid_sizer_1, 1, wxEXPAND, 0);
     inputSizers->AddGrowableCol(1);
     mainSizer->Add(inputSizers, 0, wxALL|wxEXPAND, 10);
     saveCancelSizer->Add(saveButton, 0, wxRIGHT|wxALIGN_BOTTOM, 8);

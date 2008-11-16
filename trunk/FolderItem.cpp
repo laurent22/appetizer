@@ -45,7 +45,7 @@ FolderItem::~FolderItem() {
 void FolderItem::SetCustomIcon(const wxString& filePath, int index) {
   if (filePath == customIconPath_ && index == customIconIndex_) return;
 
-  customIconPath_ = filePath;
+  customIconPath_ = FolderItem::ConvertToRelativePath(filePath);
   customIconIndex_ = index;
   ClearCachedIcons();
 }
@@ -126,15 +126,22 @@ FolderItemSP FolderItem::GetChildByResolvedPath(const wxString& filePath) {
 }
 
 
-void FolderItem::DoMultiLaunch() {
+bool FolderItem::DoMultiLaunch() {
+  bool output = false;
+
   if (!IsGroup()) {
-    if (BelongsToMultiLaunchGroup()) Launch();
+    if (BelongsToMultiLaunchGroup()) {
+      Launch();
+      output = true;
+    }
   } else {
     for (int i = 0; i < children_.size(); i++) {
       FolderItemSP folderItem = children_.at(i);
-      folderItem->DoMultiLaunch();
+      if (folderItem->DoMultiLaunch()) output = true;
     }
   }
+
+  return output;
 }
 
 
@@ -282,17 +289,6 @@ void FolderItem::RemoveFromMultiLaunchGroup() {
 
 bool FolderItem::BelongsToMultiLaunchGroup() {
   return belongsToMultiLaunchGroup_;
-}
-
-
-void FolderItem::SetGroupIcon(FolderItemSP folderItem) {
-  if (!folderItem.get()) {
-    groupIconUUID_ = wxEmptyString;
-  } else {
-    if (groupIconUUID_ == folderItem->GetUUID()) return;
-    groupIconUUID_ = folderItem->GetUUID();    
-  }
-  ClearCachedIcons();
 }
 
 
@@ -628,7 +624,6 @@ TiXmlElement* FolderItem::ToXml() {
   XmlUtil::AppendTextElement(xml, "MultiLaunchGroup", BelongsToMultiLaunchGroup());
   XmlUtil::AppendTextElement(xml, "IsGroup", IsGroup());
   XmlUtil::AppendTextElement(xml, "UUID", uuid_);
-  XmlUtil::AppendTextElement(xml, "GroupIconUUID", groupIconUUID_);
   XmlUtil::AppendTextElement(xml, "Parameters", parameters_);
   
   if (customIconPath_ != wxEmptyString) {
@@ -659,7 +654,6 @@ void FolderItem::FromXml(TiXmlElement* xml) {
   belongsToMultiLaunchGroup_ = XmlUtil::ReadElementTextAsBool(handle, "MultiLaunchGroup");
   isGroup_ = XmlUtil::ReadElementTextAsBool(handle, "IsGroup");
   uuid_ = XmlUtil::ReadElementText(handle, "UUID");
-  groupIconUUID_ = XmlUtil::ReadElementText(handle, "GroupIconUUID");
   parameters_ = XmlUtil::ReadElementText(handle, "Parameters");
 
   wxArrayString customIconData;
@@ -778,6 +772,13 @@ wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
 }
 
 
+wxIconSP FolderItem::GetDefaultGroupIcon(int iconSize) {
+  wxIconSP output;
+  output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
+  return output;
+}
+
+
 wxIconSP FolderItem::GetIcon(int iconSize) {
 
   iconSize = wxGetApp().GetOSValidIconSize(iconSize);
@@ -785,12 +786,18 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
   // If the icon has already been generated, return it
   if (icons_.find(iconSize) != icons_.end()) return icons_[iconSize];
 
-  wxIconSP output;
+  wxIconSP output;  
 
-  bool cacheEnabled = !true;
-  wxString cacheHash;
+  if (customIconPath_ != wxEmptyString) {
+    if (customIconIndex_ > 0) {
+      output.reset(IconGetter::GetExecutableIcon(FolderItem::ResolvePath(customIconPath_), iconSize, customIconIndex_));
+    } else {
+      output.reset(IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(customIconPath_), iconSize, true));
+    }
+  }
 
-  if (cacheEnabled) {
+  #ifdef __MLB_USE_ICON_DISK_CACHE__
+    wxString cacheHash;
     cacheHash = GetIconDiskCacheHash();
     wxIconSP cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
     if (cachedIcon.get()) {
@@ -798,58 +805,25 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
       return cachedIcon;
     }
   }
+  #endif
 
   if (IsGroup()) {
-    if (groupIconUUID_ != wxEmptyString) {
-      FolderItemSP associatedFolderItem = GetChildByUUID(groupIconUUID_);
-      if (associatedFolderItem.get()) {
-        wxIconSP t = associatedFolderItem->GetIcon(iconSize);
-        output.reset(new wxIcon(*t));
-      }
-    }
 
-    if (!output.get()) {
-      output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
-    }
+    if (!output.get()) output = FolderItem::GetDefaultGroupIcon(iconSize);
+
   } else {
 
-    wxString uFilePath = filePath_.Upper();
+    if (!output.get()) output = FolderItem::GetDefaultSpecialItemIcon(GetFilePath(), iconSize);
 
-    if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
-      wxString dllPath = FilePaths::GetSystem32Directory() + _T("\\shell32.dll");
-      int inc = iconSize >= 48 ? 1 : 0;
-
-      if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL + inc));
-      } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER + inc));
-      } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK + inc));
-      } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN + inc));
-      } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP + inc));
-      } else if (uFilePath == _T("%AZ_EXPLORER%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER + inc));
-      } else if (uFilePath == _T("%AZ_SEARCH%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH + inc));
-      } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS + inc));
-      } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES + inc));
-      } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc));
-      } else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
-        output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc));
-      }
-    }
   }
 
   if (!output.get()) {
     output.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
+    #ifdef __MLB_USE_ICON_DISK_CACHE__
     if (output.get()) {
       if (cacheEnabled) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
     }
+    #endif
   }
 
   if (!output.get()) {
@@ -858,6 +832,43 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
 
   // Cache the icon
   icons_[iconSize] = output;
+
+  return output;
+}
+
+
+wxIconSP FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSize) {
+  wxString uFilePath = path.Upper();
+  wxIconSP output;
+
+  if (uFilePath.Index(_T("%AZ_")) == wxNOT_FOUND) return output;
+
+  wxString dllPath = FilePaths::GetSystem32Directory() + _T("\\shell32.dll");
+  int inc = iconSize >= 48 ? 1 : 0;
+
+  if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL + inc));
+  } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER + inc));
+  } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK + inc));
+  } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN + inc));
+  } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP + inc));
+  } else if (uFilePath == _T("%AZ_EXPLORER%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER + inc));
+  } else if (uFilePath == _T("%AZ_SEARCH%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH + inc));
+  } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS + inc));
+  } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES + inc));
+  } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc));
+  } else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
+    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc));
+  }
 
   return output;
 }
@@ -938,7 +949,10 @@ wxString FolderItem::ResolvePath(const wxString& filePath) {
   result.Replace(_T("%AZ_WINDOWS%"), FilePaths::GetWindowsDirectory());
   result.Replace(_T("%AZ_CONTROL_PANEL%"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
   result.Replace(_T("%AZ_MY_COMPUTER%"), FilePaths::GetWindowsDirectory() + _T("\\explorer.exe"));
-  return result;
+
+  wxFileName f(result);
+  f.Normalize();
+  return f.GetFullPath();
 }
 
 

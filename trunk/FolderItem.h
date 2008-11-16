@@ -45,6 +45,9 @@ public:
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
 
+  static wxIconSP GetDefaultSpecialItemIcon(const wxString& path, int iconSize);
+  static wxIconSP GetDefaultGroupIcon(int iconSize);
+
   wxString GetIconDiskCacheHash();
   static void CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSize);
   static wxIconSP GetIconFromDiskCache(const wxString& hash, int iconSize);
@@ -76,8 +79,7 @@ public:
 
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);
-  void DoMultiLaunch();
-  void SetGroupIcon(FolderItemSP folderItem);
+  bool DoMultiLaunch();
 
   // ***************************************************************
   // Methods to work with children
@@ -118,7 +120,6 @@ private:
   wxString filePath_;
   IconHashMap icons_;
   wxString uuid_;
-  wxString groupIconUUID_;
   bool automaticallyAdded_;
   wxString iconCacheHash_;
   wxString customIconPath_;

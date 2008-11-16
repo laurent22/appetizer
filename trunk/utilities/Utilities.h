@@ -22,9 +22,9 @@ public:
   Utilities();
   ~Utilities();
   void EjectDriveAndExit(bool askForConfirmation = true);
-  void DoMultiLaunch();
+  bool DoMultiLaunch();
   void ShowConfigDialog();
-  void ShowHelpFile();
+  void ShowHelpFile(const wxString& anchor = wxEmptyString);
   void ShowAboutDialog();
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void CreateNewShortcut();

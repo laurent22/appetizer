@@ -15,7 +15,10 @@ enum {
   ID_BUTTON_Save,
   ID_BUTTON_Cancel,
   ID_BUTTON_SelectFile,
-  ID_BUTTON_SelectFolder
+  ID_BUTTON_SelectFolder,
+  ID_SHORTCUTDLG_BUTTON_ChangeIcon,
+  ID_SHORTCUTDLG_BUTTON_UseDefaultIcon,
+  ID_SHORTCUTDLG_BUTTON_Browse
 };
 // end wxGlade
 
@@ -39,10 +42,13 @@ protected:
     wxTextCtrl* nameTextBox;
     wxStaticText* locationLabel;
     wxTextCtrl* locationTextBox;
-    wxBitmapButton* selectFileButton;
-    wxBitmapButton* selectFolderButton;
+    wxButton* browseButton;
     wxStaticText* parametersLabel;
     wxTextCtrl* parametersTextBox;
+    wxStaticText* iconLabel;
+    wxStaticBitmap* iconStaticBitmap;
+    wxButton* changeIconButton;
+    wxButton* useDefaultIconButton;
     wxButton* saveButton;
     wxButton* cancelButton;
     // end wxGlade

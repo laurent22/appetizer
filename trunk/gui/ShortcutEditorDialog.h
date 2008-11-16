@@ -25,13 +25,18 @@ public:
 private:
 
   FolderItemSP folderItem_;
+  wxString selectedIconPath_;
+  int selectedIconIndex_;
 
   void UpdateFromFolderItem();
+  void UpdateFolderItemIconFields();
+  void EnableDisableFields();
 
   void OnCancelButtonClick(wxCommandEvent& evt);
   void OnSaveButtonClick(wxCommandEvent& evt);
-  void OnSelectFileButtonClick(wxCommandEvent& evt);
-  void OnSelectFolderButtonClick(wxCommandEvent& evt);
+  void OnBrowseButtonClick(wxCommandEvent& evt);
+  void OnChangeIconButtonClick(wxCommandEvent& evt);
+  void OnUseDefaultIconButtonClick(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE();
 

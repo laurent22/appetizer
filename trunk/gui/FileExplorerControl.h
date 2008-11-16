@@ -17,12 +17,12 @@ public:
 
   FileExplorerControlItemData(const wxString& filePath, bool isDirectory);
   wxString GetPath();
-  bool IsDirectory();
+  bool IsDirectory();  
 
 private:
 
   wxString path_;
-  bool isDirectory_;
+  bool isDirectory_;  
 
 };
 
@@ -43,6 +43,7 @@ public:
   void PopulateFolder(const wxTreeItemId& itemId);
   size_t wxGetAvailableDrives(wxArrayString &paths, wxArrayString &names, wxArrayInt &icon_ids);
   wxString GetSelectedPath();
+  void ExpandDirectory(const wxString& directory);
 
   int OnCompareItems(const wxTreeItemId& item1, const wxTreeItemId& item2);
   void OnItemExpanding(wxTreeEvent& evt);
@@ -52,6 +53,8 @@ protected:
   wxTreeItemId rootId_;
   wxString rootPath_;
   wxImageList* imageList_;  
+
+  
 
   DECLARE_EVENT_TABLE()
 

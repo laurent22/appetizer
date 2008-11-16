@@ -7,6 +7,9 @@
 // NOTE: Once written, the generated files must be open with a text editor 
 // and converted to ANSI (which is the only format that HHC seems to support)
 // For example in Notepad++: Menu Format > Convert to ANSI
+//
+// To open a particular topic (when compiled with chmProcesador):
+// hh.exe mk:@MSITStore:c:\full\path\to\Appetizer.chm::1.htm#NameOfAnchor
 
 
 #include <wx/wx.h>
@@ -85,6 +88,8 @@ void StartList() { gCurrentString += _T("<ul>\n"); }
 void EndList() { gCurrentString += _T("</ul>\n"); } 
 void LI(const wxString& text) { gCurrentString += _T("<li>") + Sanitize(text) + _T("</li>\n"); }
 void A(const wxString& text, const wxString& href, const wxString& name) { gCurrentString += _T("<a href='") + Sanitize(href) + _T("'") + _T(" name='") + name + _T("'>") + Sanitize(text) + _T("</a>"); }
+void AddAnchor(const wxString& name) { A(_T(""), _T(""), name); }
+
 
 
 wxString GenerateHTMLString() {
@@ -142,6 +147,7 @@ wxString GenerateHTMLString() {
   // USING APPETIZER
   // *******************************************************************************
 
+  AddAnchor(_T("Usage"));
   H2(_("Using Appetizer"));
   P(_("Appetizer is made to be simple and intuitive. To get more information about an icon or a button, simply move the mouse over it. Additionally, try right-clicking the dock in different places - certain parts of the application such as the icons or the icon panel provide various contextual actions."));
   
@@ -179,7 +185,7 @@ wxString GenerateHTMLString() {
   // -------------------------------------------------
   // The option panel
   // -------------------------------------------------
-  A(_T(""), _T(""), _T("OptionPanel"));
+  AddAnchor(_T("OptionPanel"));
   H3(_("The option panel"));
   IMG(_T("images/OptionPanel.jpg"));
   P(_("The option panel pops up when you click on the big arrow button. If you move the mouse over any of its buttons, a tooltip will show up giving you more information."));
@@ -187,6 +193,7 @@ wxString GenerateHTMLString() {
   // -------------------------------------------------
   // Launching several application simultaneously
   // -------------------------------------------------
+  AddAnchor(_T("Multilaunch"));
   H3(_("Launching several application simultaneously"));
   P(_("Appetizer provides a functionality to launch several applications at the click of a button. This is equivalent to the Startup menu on Windows, except that it launches the app on your portable drive. To use this 'Multi-launch' group, follow these steps:"));
   StartList();
@@ -198,9 +205,11 @@ wxString GenerateHTMLString() {
   // *******************************************************************************
   // CONFIGURING APPETIZER
   // *******************************************************************************
+  AddAnchor(_T("Configuring"));
   H2(_("Configuring Appetizer"));
   P(_("The configuration dialogue is accessible by clicking on the 'Configuration' button in the [#OptionPanel option panel]. The description of each setting is given below:"));
 
+  AddAnchor(_T("ConfiguringGeneral"));
   H3(_("General"));
   StartList();
   LI(_("[b]Language:[/b] Select your language here. If you wish to contribute and translate Appetizer in your own language, please [#Translating follow this link]."));
@@ -210,6 +219,7 @@ wxString GenerateHTMLString() {
   LI(_("[b]Check for update:[/b] Click this button to check if a new update is available."));
   EndList();
 
+  AddAnchor(_T("ConfiguringAppearance"));
   H3(_("Appearance"));
   StartList();
   LI(_("[b]Icon size:[/b] Choose the size of the icons, as displayed on the bar."));
@@ -230,22 +240,9 @@ wxString GenerateHTMLString() {
   // *******************************************************************************
   // TRANSLATING APPETIZER
   // *******************************************************************************
-  A(_T(""), _T(""), _T("Translating"));
+  AddAnchor(_T("Translating"));
   H2(_("Translating Appetizer"));
   P(wxString::Format(_("If Appetizer is not available in your own language, you can easily create your own translation. Please [%s follow this link] for more information."), _T("http://appetizer.sourceforge.net/translations/")));
-  //StartList();
-  //LI(_("[http://www.poedit.net/ Download Poedit] and install it. This is a utility that makes it easier to create and maintain translation files."));
-  //LI(_("Open the folder where you've installed Appetizer and open the Data\\Locale folder"));
-  //LI(_("Copy and paste the 'en' folder."));
-  //LI(_("Within that folder, open 'appetizer.po' with Poedit."));
-  //LI(_("In Poedit, go into the Catalog menu and click Configuration. Change 'Country' and 'Language' to your own country and language."));
-  //LI(_("Now, to translate a line of text, click on it and add your translated text in the bottom text field."));
-  //LI(_("Once all the text is translated, please email 'appetizer.po' and 'appetizer.mo' to appetizer@cozic.net"));
-  //EndList();
-  //P(_("Your translation will be added in the next release."));
-
-  //H3(_("Translating the help file"));
-  //P(_("If you wish to translate the help file, follow the same steps as above and edit the file in Data\\Help\\en\\appetizer.po."));
 
   AddStringLn(_T("</body>"));
   AddStringLn(_T("</html>"));

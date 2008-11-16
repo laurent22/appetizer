@@ -704,10 +704,10 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
   for (int i = children.size() - 1; i >= 0; i--) {
     wxWindow* child = children[i];
     
-    wxDialog* childAsDialog = dynamic_cast<wxDialog*>(child);
+    wxDialog* childAsDialog = wxDynamicCast(child, wxDialog);
     if (childAsDialog) {
       if (childAsDialog->IsModal()) {
-        childAsDialog->EndModal(wxID_CLOSE);
+        childAsDialog->Close();
       } else {
         childAsDialog->Close();
       }
@@ -719,9 +719,11 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
 
 
 void MainFrame::OnClose(wxCloseEvent& evt) {
-  if (aboutDialog_) aboutDialog_->Destroy();
-  if (optionPanel_) optionPanel_->Destroy();
-  if (iconPanel_) iconPanel_->Destroy();
+  RecurseCleanUp(this);
+
+  //if (aboutDialog_) aboutDialog_->Destroy();
+  //if (optionPanel_) optionPanel_->Destroy();
+  //if (iconPanel_) iconPanel_->Destroy();
 
   TiXmlDocument doc;
   doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
@@ -766,11 +768,9 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
 
   arrowButton_->SetIcon(NULL);
   wxDELETE(arrowButtonCloseIcon_);
-  wxDELETE(arrowButtonOpenIcon_);  
+  wxDELETE(arrowButtonOpenIcon_);    
 
   wxGetApp().CloseApplication();
-
-  RecurseCleanUp(this);
 
   Destroy();
 }

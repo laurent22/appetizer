@@ -8,6 +8,7 @@
 
 #include "FileExplorerControl.h"
 #include "../utilities/IconGetter.h"
+#include "../utilities/StringUtil.h"
 
 
 // Required to get OnCompareItems() working
@@ -19,9 +20,49 @@ BEGIN_EVENT_TABLE(FileExplorerControl, wxTreeCtrl)
 END_EVENT_TABLE()
 
 
+
+
+
 FileExplorerControlItemData::FileExplorerControlItemData(const wxString& filePath, bool isDirectory) {
   path_ = wxString(filePath);
   isDirectory_ = isDirectory;
+}
+
+
+void FileExplorerControl::ExpandDirectory(const wxString& directory) {
+  Freeze();
+
+  wxFileName dir(directory);
+
+  wxArrayString splitted;
+  StringUtil::Split(dir.GetFullPath(), splitted, wxFileName::GetPathSeparator());
+
+  wxTreeItemId currentItemId = rootId_;
+  wxTreeItemId child;
+
+  for (int i = 0; i < splitted.Count(); i++) {
+    wxString n = splitted[i].Lower();
+
+    wxTreeItemIdValue cookie;
+    child = GetFirstChild(currentItemId, cookie);
+
+    while (child.IsOk()) {
+      
+      if (GetItemText(child).Lower() == n) {
+        currentItemId = child;
+        PopulateFolder(currentItemId);
+        Expand(currentItemId);
+        break;
+      }
+
+      child = GetNextChild(currentItemId, cookie);
+    }
+
+  }
+
+  if (child.IsOk()) SelectItem(child, true);
+
+  Thaw();
 }
 
 
@@ -63,7 +104,7 @@ void FileExplorerControl::SetRootPath(const wxString& rootPath) {
   rootId_ = AddRoot(_T("HiddenRoot"));
   SetItemData(rootId_, new FileExplorerControlItemData(rootPath, true));
 
-  PopulateFolder(rootId_);    
+  PopulateFolder(rootId_);
 }
 
 
@@ -250,14 +291,16 @@ void FileExplorerControl::PopulateFolder(const wxTreeItemId& itemId) {
     wxArrayInt iconIds;
     wxGetAvailableDrives(paths, names, iconIds);
 
+    wxImageList* driveImageList = wxTheFileIconsTable->GetSmallImageList();
+
     for (int i = 0; i < paths.Count(); i++) {
       wxString path = paths[i];
       wxTreeItemId childId;
-      wxIcon* icon = IconGetter::GetFolderItemIcon(path, iconSize, true);
 
-      if (icon) {
-        int iconIndex = imageList_->Add(*icon);
-        wxDELETE(icon);
+      wxIcon icon = driveImageList->GetIcon(iconIds[i]);
+
+      if (icon.IsOk()) {
+        int iconIndex = imageList_->Add(icon);
         childId = AppendItem(itemId, path, iconIndex, -1, new FileExplorerControlItemData(path, true));
       } else {
         childId = AppendItem(itemId, path, -1, -1, new FileExplorerControlItemData(path, true));
@@ -277,7 +320,7 @@ void FileExplorerControl::PopulateFolder(const wxTreeItemId& itemId) {
     int i = 0;    
 
     while (success) {
-      wxString filePath = itemObject->GetPath() + _T("/") + folderItemName;
+      wxString filePath = itemObject->GetPath() + wxFileName::GetPathSeparator() + folderItemName;
       bool isDirectory = wxFileName::DirExists(filePath);
       wxTreeItemId childId;
 

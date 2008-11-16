@@ -15,6 +15,7 @@
 #include "Styles.h"
 #include "User.h"
 #include "Enumerations.h"
+#include "gui/FileOrFolderDialog.h"
 #include "MiniLaunchBar.h"
 
 
@@ -151,15 +152,22 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
 
   switch (evt.GetId()) {
 
-    case ID_MENU_NewShortcut:
+    case ID_MENU_NewShortcut: {
 
-      wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
-      break;
+      FileOrFolderDialog* d = new FileOrFolderDialog(this);
+      int result = d->ShowModal();
+      if (result == wxID_OK) {
+        wxGetApp().GetUser()->AddNewFolderItemFromPath(wxGetApp().GetUser()->GetRootFolderItem(), d->GetPath());
+      }  
 
-    case ID_MENU_NewGroup:
+      d->Destroy();
+      } break;
+
+    case ID_MENU_NewGroup: {
 
       wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem(), true);
-      break;
+      
+      } break;
 
     case ID_MENU_SpecialItem_ControlPanel: user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_CONTROL_PANEL%")); break;
     case ID_MENU_SpecialItem_MyComputer:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_COMPUTER%")); break;

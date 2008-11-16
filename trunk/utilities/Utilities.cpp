@@ -115,8 +115,8 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
 }
 
 
-void Utilities::DoMultiLaunch() {
-  wxGetApp().GetUser()->GetRootFolderItem()->DoMultiLaunch();
+bool Utilities::DoMultiLaunch() {
+  return wxGetApp().GetUser()->GetRootFolderItem()->DoMultiLaunch();
 }
 
 
@@ -132,7 +132,7 @@ void Utilities::CreateNewShortcut() {
 }
 
 
-void Utilities::ShowHelpFile() {
+void Utilities::ShowHelpFile(const wxString& anchor) {
   wxString helpFile = FilePaths::GetHelpDirectory() + _T("/") + wxGetApp().GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
   if (!wxFileName::FileExists(helpFile)) {
     // Default to english
@@ -143,7 +143,7 @@ void Utilities::ShowHelpFile() {
   f.Normalize();
   helpFile = f.GetFullPath();
 
-  if (false) {
+  #ifdef __MLB_USE_PDF_HELP__
     // Keep support for PDF in case some languages don't work with CHM files
     FolderItemSP pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
     if (pdfReaderFolderItem.get()) {
@@ -151,8 +151,15 @@ void Utilities::ShowHelpFile() {
       return;
     }    
   }
+  #endif
 
-  FolderItem::Launch(helpFile);
+  if (anchor != wxEmptyString) {
+    // hh.exe mk:@MSITStore:c:\full\path\to\Appetizer.chm::1.htm#NameOfAnchor
+    wxString parameters = wxString::Format(_T("mk:@MSITStore:%s::1.htm#%s"), helpFile, anchor);
+    FolderItem::Launch(FilePaths::GetHHPath(), parameters);
+  } else {
+    FolderItem::Launch(helpFile);
+  }  
 }
 
 

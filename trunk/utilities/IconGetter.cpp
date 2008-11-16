@@ -369,17 +369,21 @@ wxIcon* IconGetter::GetExecutableIcon(const wxString& filePath, int iconSize, in
     }
 
   } else {
+
     HINSTANCE hDll = ::LoadLibrary(filePath);
-    if (!hDll) return NULL;
+    if (hDll) {
+      HANDLE handle = ::LoadImage(hDll, MAKEINTRESOURCE(iconIndex), IMAGE_ICON, iconSize, iconSize, LR_LOADTRANSPARENT);
+      if (handle) {
+        wxIcon* icon = new wxIcon();
+        icon->SetHICON((WXHICON)handle);
+        if (icon->IsOk()) {
+          icon->SetSize(iconSize, iconSize);
+          return icon;
+        }
+      }
+    }
 
-    HANDLE handle = ::LoadImage(hDll, MAKEINTRESOURCE(iconIndex), IMAGE_ICON, iconSize, iconSize, LR_LOADTRANSPARENT);
-    if (!handle) return NULL;
-
-    wxIcon* icon = new wxIcon();
-    icon->SetHICON((WXHICON)handle);
-    icon->SetSize(iconSize, iconSize);
-
-    return icon;
+    return IconGetter::GetExecutableIcon(filePath, 32, iconIndex);
   }
 
   #endif // __WINDOWS__

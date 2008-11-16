@@ -42,6 +42,7 @@ protected:
   wxImageList* listViewImageList;
 
   wxString iconSourcePath_;
+  bool firstIdleEvent_;
 
   void RefreshListView();
 
@@ -49,6 +50,8 @@ protected:
   void OnSourceTextBoxEnter(wxCommandEvent& evt);
   void OnSize(wxSizeEvent& evt);
   void OnIconActivated(wxListEvent& evt);
+  void OnSelectionChanged(wxListEvent& evt);
+  void OnIdle(wxIdleEvent& evt);
 
   DECLARE_EVENT_TABLE();
 

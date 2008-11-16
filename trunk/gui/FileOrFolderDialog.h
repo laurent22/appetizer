@@ -22,11 +22,14 @@ class FileOrFolderDialog: public wxDialog {
 
 public:
 
-  FileOrFolderDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Select a file or a folder"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(350, 400), long style = wxDEFAULT_DIALOG_STYLE, const wxString& name = _T("dialogBox"));
+  FileOrFolderDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Select a file or a folder"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(350, 400), long style = wxDEFAULT_DIALOG_STYLE, const wxString& name = _T("fileOrFolderDialog"));
   void Localize();
-  wxString GetSelectedPath();
+  wxString GetPath();
+  void ExpandDirectory(const wxString& directory);
 
   void OnTreeSelectionChanged(wxTreeEvent& evt);
+  void OnButtonClicked(wxCommandEvent& evt);
+  void OnIdle(wxIdleEvent& evt);
 
 protected:
 
@@ -35,7 +38,11 @@ protected:
   wxFlexGridSizer* buttonSizer;
   FileExplorerControl* explorerControl;
   wxButton* okButton;
-  wxButton* cancelButton;  
+  wxButton* cancelButton;    
+  wxStaticText* statusLabel;
+  bool firstIdleEvent_;
+
+  static wxString lastSelectedDirectory_;
 
   DECLARE_EVENT_TABLE()
 

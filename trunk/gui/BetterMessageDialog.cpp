@@ -116,7 +116,8 @@ wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE, name) {
   for (int i = 0; i < buttonFlags.size(); i++) {
     int buttonFlag = buttonFlags.at(i);
     if (!(style & buttonFlag)) continue;
-    int buttonId = buttonFlags.at(i);
+
+    int buttonId = buttonIds.at(i);
     wxString buttonLabel = buttonLabels[i];
 
     wxButton* button = new wxButton(this, buttonId, buttonLabel);
@@ -157,13 +158,13 @@ void BetterMessageDialog::OnButton(wxCommandEvent& evt) {
 
   if (checkbox_) BetterMessageDialog::lastCheckBoxState_ = checkbox_->GetValue();
 
-  if (buttonId == wxOK) {
+  if (buttonId == wxID_OK) {
     EndDialog(wxID_OK);
-  } else if (buttonId == wxYES) {
+  } else if (buttonId == wxID_YES) {
     EndDialog(wxID_YES);
-  } else if (buttonId == wxNO) {
+  } else if (buttonId == wxID_NO) {
     EndDialog(wxID_NO);
-  } else if (buttonId == wxCANCEL) {
+  } else if (buttonId == wxID_CANCEL) {
     EndDialog(wxID_CANCEL);
   } else {
     evt.Skip();

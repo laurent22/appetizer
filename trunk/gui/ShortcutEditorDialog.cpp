@@ -7,44 +7,123 @@
 #include "../stdafx.h"
 
 #include "ShortcutEditorDialog.h"
+#include "IconDialog.h"
+#include "FileOrFolderDialog.h"
+#include "../Constants.h"
 #include "../FilePaths.h"
 #include "../MiniLaunchBar.h"
 #include "../MessageBoxes.h"
+#include "../utilities/IconGetter.h"
 #include "../utilities/VersionInfo.h"
 
 
 BEGIN_EVENT_TABLE(ShortcutEditorDialog, wxDialog)
   EVT_BUTTON(ID_BUTTON_Cancel, ShortcutEditorDialog::OnCancelButtonClick)
   EVT_BUTTON(ID_BUTTON_Save, ShortcutEditorDialog::OnSaveButtonClick)
-  EVT_BUTTON(ID_BUTTON_SelectFile, ShortcutEditorDialog::OnSelectFileButtonClick)
-  EVT_BUTTON(ID_BUTTON_SelectFolder, ShortcutEditorDialog::OnSelectFolderButtonClick)
+  EVT_BUTTON(ID_SHORTCUTDLG_BUTTON_UseDefaultIcon, ShortcutEditorDialog::OnUseDefaultIconButtonClick)
+  EVT_BUTTON(ID_SHORTCUTDLG_BUTTON_ChangeIcon, ShortcutEditorDialog::OnChangeIconButtonClick)
+  EVT_BUTTON(ID_SHORTCUTDLG_BUTTON_Browse, ShortcutEditorDialog::OnBrowseButtonClick)
 END_EVENT_TABLE()
 
 
 ShortcutEditorDialog::ShortcutEditorDialog()
 : ShortcutEditorDialogBase(NULL, wxID_ANY, wxEmptyString) {
-  selectFolderButton->SetBitmapLabel(wxBitmap(FilePaths::GetSkinFile(_T("FolderIcon16.png")), wxBITMAP_TYPE_PNG));
-  selectFileButton->SetBitmapLabel(wxBitmap(FilePaths::GetSkinFile(_T("FileIcon16.png")), wxBITMAP_TYPE_PNG));
+
   Localize();
 }
 
 
 void ShortcutEditorDialog::Localize() {
-  SetTitle(_("Shorcut Properties"));
+  if (folderItem_.get()) SetTitle(folderItem_->IsGroup() ? _("Group Properties") : _("Shorcut Properties"));
   nameLabel->SetLabel(_("Name:"));
   locationLabel->SetLabel(_("Location:"));
   parametersLabel->SetLabel(_("Parameters:"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));
-  selectFileButton->SetToolTip(_("Select a file"));
-  selectFolderButton->SetToolTip(_("Select a folder"));
+  iconLabel->SetLabel(_("Icon:"));
+  changeIconButton->SetLabel(_("Change icon..."));
+  useDefaultIconButton->SetLabel(_("Use default"));
+}
+
+
+void ShortcutEditorDialog::EnableDisableFields() {
+  if (!folderItem_.get()) return;
+  bool isGroup = folderItem_->IsGroup();
+
+  locationLabel->Enable(!isGroup);
+  locationTextBox->Enable(!isGroup);
+  parametersLabel->Enable(!isGroup);
+  parametersTextBox->Enable(!isGroup);
+  browseButton->Enable(!isGroup);
 }
 
 
 void ShortcutEditorDialog::LoadFolderItem(FolderItemSP folderItem) {
   folderItem_ = folderItem;
+  selectedIconPath_ = folderItem_->GetCustomIconPath();
+  selectedIconIndex_ = folderItem_->GetCustomIconIndex();
+  
+  EnableDisableFields();
+
   Localize();
   UpdateFromFolderItem();
+}
+
+
+void ShortcutEditorDialog::UpdateFolderItemIconFields() {    
+
+  if (selectedIconPath_ != wxEmptyString) {
+    wxIcon* icon = NULL;
+
+    if (selectedIconIndex_ > 0) {
+      icon = IconGetter::GetExecutableIcon(selectedIconPath_, LARGE_ICON_SIZE, selectedIconIndex_);
+    } else {
+      icon = IconGetter::GetFolderItemIcon(selectedIconPath_, LARGE_ICON_SIZE);
+    }
+
+    if (icon) iconStaticBitmap->SetBitmap(*icon);
+    wxDELETE(icon);
+
+  } else {
+
+    if (folderItem_->IsGroup()) {
+      wxIconSP icon = FolderItem::GetDefaultGroupIcon(LARGE_ICON_SIZE);
+      if (icon.get()) iconStaticBitmap->SetBitmap(*icon);
+    } else {
+
+      wxIconSP icon = FolderItem::GetDefaultSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
+      if (icon.get()) {
+        iconStaticBitmap->SetBitmap(*icon);
+      } else {
+        wxIcon* icon = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);
+        if (icon) iconStaticBitmap->SetBitmap(*icon);
+        wxDELETE(icon);
+      }
+      
+    }
+
+  }
+
+  useDefaultIconButton->Enable(selectedIconPath_ != wxEmptyString);
+}
+
+
+void ShortcutEditorDialog::OnChangeIconButtonClick(wxCommandEvent& evt) {
+  IconDialog* d = new IconDialog(this);
+  int result = d->ShowModal();
+  if (result != wxID_OK) return;
+
+  selectedIconPath_ = d->GetIconSource();
+  selectedIconIndex_ = d->GetIconIndex();
+
+  UpdateFolderItemIconFields();
+}
+
+
+void ShortcutEditorDialog::OnUseDefaultIconButtonClick(wxCommandEvent& evt) {
+  selectedIconPath_ = wxEmptyString;
+  selectedIconIndex_ = 0;
+  UpdateFolderItemIconFields();
 }
 
 
@@ -66,6 +145,7 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     if (result == wxID_NO) return;
   }
 
+  folderItem_->SetCustomIcon(selectedIconPath_, selectedIconIndex_);
   folderItem_->SetFilePath(folderItemFilePath);
   folderItem_->SetName(folderItemName);
   folderItem_->SetParameters(parametersTextBox->GetValue());
@@ -78,34 +158,25 @@ void ShortcutEditorDialog::UpdateFromFolderItem() {
   nameTextBox->SetValue(folderItem_->GetName());
   locationTextBox->SetValue(folderItem_->GetFilePath());
   parametersTextBox->SetValue(folderItem_->GetParameters());
+
+  UpdateFolderItemIconFields();
 }
 
 
-void ShortcutEditorDialog::OnSelectFileButtonClick(wxCommandEvent& evt) {
-  wxFileDialog fileDialog(this, _("Select file"));
-  int result = fileDialog.ShowModal();
-  if (result != wxID_OK) return;
+void ShortcutEditorDialog::OnBrowseButtonClick(wxCommandEvent& evt) {
+  FileOrFolderDialog* d = new FileOrFolderDialog(this);
+  int result = d->ShowModal();
 
-  wxString newValue = FolderItem::ConvertToRelativePath(fileDialog.GetPath());
-  if (locationTextBox->GetValue() == newValue) return;
+  if (result == wxID_OK) {
+    wxString newValue = FolderItem::ConvertToRelativePath(d->GetPath());
+    if (locationTextBox->GetValue() == newValue) return;
 
-  locationTextBox->SetValue(newValue); 
-  
-  nameTextBox->SetValue(VersionInfo::GetFileDescription(FolderItem::ResolvePath(newValue)));
+    locationTextBox->SetValue(newValue); 
+    
+    nameTextBox->SetValue(VersionInfo::GetFileDescription(FolderItem::ResolvePath(newValue)));
+
+    UpdateFolderItemIconFields();
+  }  
+
+  d->Destroy();
 }
-
-
-void ShortcutEditorDialog::OnSelectFolderButtonClick(wxCommandEvent& evt) {
-  wxDirDialog dirDialog(this, _("Select folder"));
-  int result = dirDialog.ShowModal();
-  if (result != wxID_OK) return;
-
-  wxString newValue = FolderItem::ConvertToRelativePath(dirDialog.GetPath());
-  if (locationTextBox->GetValue() == newValue) return;
-
-  locationTextBox->SetValue(newValue);
-
-  nameTextBox->SetValue(VersionInfo::GetFileDescription(FolderItem::ResolvePath(newValue)));
-}
-
-

@@ -12,7 +12,6 @@
 #include "FolderItem.h"
 #include "Enumerations.h"
 #include "UserSettings.h"
-#include "gui/GroupEditorDialog.h"
 #include "gui/ShortcutEditorDialog.h"
 
 
@@ -45,7 +44,6 @@ private:
   wxStringList folderItemExclusions_;
   UserSettingsSP settings_;
   ShortcutEditorDialog* shortcutEditorDialog_;
-  GroupEditorDialog* groupEditorDialog_;
   wxArrayString autoAddExclusions_;
 
   DECLARE_EVENT_TABLE()
