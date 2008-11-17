@@ -25,6 +25,7 @@ typedef std::vector<FolderItemSP> FolderItemVector;
 
 
 WX_DECLARE_HASH_MAP(int, wxIconSP, wxIntegerHash, wxIntegerEqual, IconHashMap);
+WX_DECLARE_HASH_MAP(int, FolderItemSP, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
 
 
 class FolderItem : public wxEvtHandler {
@@ -33,6 +34,11 @@ public:
 
   FolderItem(bool isGroup = false);
   ~FolderItem();
+  static FolderItemSP CreateFolderItemSP(bool isGroup = false);
+  static FolderItemSP GetFolderItemById(int id);
+  void Dispose();
+  bool IsDisposed();
+
   wxString GetUUID();
   int GetId() const;
   void AutoSetName();
@@ -104,7 +110,7 @@ public:
   void PrependChild(FolderItemSP toAdd);
   void AddChild(FolderItemSP folderItem);
 
-  void OnMenuItemClick(wxCommandEvent& evt);  
+  void OnMenuItemClick(wxCommandEvent& evt);   
 
 private:
 
@@ -125,8 +131,10 @@ private:
   wxString customIconPath_;
   int customIconIndex_;
   wxString resolvedPath_;
+  bool isDisposed_;
   
   static FolderItemProcessVector processVector_;
+  static FolderItemIdHashMap folderItemIdHashMap_;
 
 };
 

@@ -15,6 +15,7 @@ public:
 
   static wxString GetApplicationDrive();
   static wxString GetApplicationDirectory();
+  static wxString GetApplicationPath();
   static wxString GetDataDirectory();
   static wxString GetSettingsDirectory();
   static wxString GetBaseSkinDirectory();
@@ -51,6 +52,7 @@ private:
   static wxString WindowFile_;
   static wxString System32Directory_;
   static wxString WindowsDirectory_;
+  static wxString ApplicationPath_;
 
 };
 

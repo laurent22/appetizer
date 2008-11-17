@@ -16,7 +16,8 @@ enum {
 ID_CDLG_MainNotebook,
 ID_CDLG_BUTTON_Save,
 ID_CDLG_BUTTON_Cancel,
-ID_CDLG_BUTTON_CheckForUpdate
+ID_CDLG_BUTTON_CheckForUpdate,
+ID_CDLG_BUTTON_InstallAutorunButton
 };
 // end wxGlade
 
@@ -44,6 +45,8 @@ protected:
     wxStaticText* label_2;
     wxCheckBox* oneInstanceCheckBox;
     wxStaticText* label_5;
+    wxButton* installAutorunButton;
+    wxStaticText* label_3;
     wxButton* checkForUpdateButton;
     wxPanel* notebook_1_pane_1;
     wxStaticText* iconSizeLabel;

@@ -67,7 +67,12 @@ void FolderItemRenderer::ApplySkin() {
 
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
-  return wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(folderItemId_);
+  FolderItemSP f = FolderItem::GetFolderItemById(folderItemId_);
+  if (f->IsDisposed()) {
+    FolderItemSP nullOutput;
+    return nullOutput;
+  }
+  return f;
 }
 
 
@@ -104,7 +109,8 @@ void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
   FolderItem* parent = folderItem->GetParent();
   if (!parent) return;
 
-  parent->RemoveChild(GetFolderItem());
+  parent->RemoveChild(folderItem);
+  folderItem->Dispose();
 }
 
 
@@ -244,8 +250,9 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  SetSize(wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() + Styles::Icon.Padding.Width,
-          wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() + Styles::Icon.Padding.Height);
+  int iconSize = wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize();
+  SetSize(iconSize + Styles::Icon.Padding.Width,
+          iconSize + Styles::Icon.Padding.Height);
 }
 
 
@@ -312,7 +319,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   if (folderItem->BelongsToMultiLaunchGroup()) {
     if (!multiLaunchIcon_.get()) {
-      multiLaunchIcon_.reset(new wxBitmap(FilePaths::GetSkinDirectory() + _T("/MultiLaunchIcon.png"), wxBITMAP_TYPE_PNG));
+      multiLaunchIcon_.reset(new wxBitmap(FilePaths::GetSkinFile(_T("/MultiLaunchIcon.png")), wxBITMAP_TYPE_PNG));
     }
     if (multiLaunchIcon_->IsOk()) {
       destDC.DrawBitmap(

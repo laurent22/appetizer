@@ -24,6 +24,7 @@
 #endif // __WINDOWS__
 
 #include <wx/treebase.h>
+#include <wx/filefn.h>
 #include <wx/msgdlg.h>
 #include <wx/object.h>
 #include <wx/generic/dirctrlg.h>

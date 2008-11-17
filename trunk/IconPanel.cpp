@@ -506,12 +506,16 @@ void IconPanel::RefreshIcons() {
    * Create new renderers for new folder items
    ***************************************************************************/
 
-  for (int i = 0; i < folderItems.size(); i++) {
+  int folderItemCount = folderItems.size();
+
+  for (int i = 0; i < folderItemCount; i++) {
     FolderItemSP folderItem = folderItems.at(i);
 
     // Check if the folder item is already loaded in a renderer
     bool found = false;
-    for (int j = 0; j < folderItemRenderers_.size(); j++) {
+    int folderItemRendererCount = folderItemRenderers_.size();
+
+    for (int j = 0; j < folderItemRendererCount; j++) {
       FolderItemSP rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
       
       if (!rFolderItem.get()) {
@@ -531,7 +535,7 @@ void IconPanel::RefreshIcons() {
     FolderItemRendererSP renderer(new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(0, 0)));
     
     renderer->LoadData(folderItem->GetId());
-    renderer->FitToContent();
+    renderer->Hide();
     renderer->SetCursor(wxCursor(wxCURSOR_HAND));
 
     folderItemRenderers_.push_back(renderer);
@@ -578,9 +582,13 @@ void IconPanel::UpdateLayout() {
 
   int iconSize = -1;
   firstOffScreenIconIndex_ = -1;
+
+  bool firstHiddenFound = false;
   
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+
+    if (!firstHiddenFound) renderer->FitToContent();
 
     int newX = x;
     int newY = y;
@@ -596,8 +604,9 @@ void IconPanel::UpdateLayout() {
     if (newY + iconSize > height - Styles::InnerPanel.Padding.Bottom) {
       if (firstOffScreenIconIndex_ < 0) firstOffScreenIconIndex_ = i;
       renderer->Hide();
+      firstHiddenFound = true;
     } else {
-      renderer->Show();
+      renderer->Show();          
     }
     
     renderer->Move(newX, newY);

@@ -21,6 +21,28 @@ wxString StringUtil::ZeroPadding(int number, int digits) {
 }
 
 
+wxString StringUtil::RemoveDriveFromPath(const wxString& path) {
+  wxFileName f(path);
+  f.Normalize();
+
+  wxString dataDirNoDrive = f.GetFullPath();
+  int colonIndex = dataDirNoDrive.Index(_T(":"));
+
+  if (colonIndex != wxNOT_FOUND) {
+    dataDirNoDrive = dataDirNoDrive.Mid(colonIndex + 1, dataDirNoDrive.Len());
+
+    for (int i = 0; i < dataDirNoDrive.Len(); i++) {
+      wxChar c = dataDirNoDrive[i];
+      if (c != wxFileName::GetPathSeparator()) break;
+      dataDirNoDrive = dataDirNoDrive.Mid(1, dataDirNoDrive.Len());
+      i--;
+    }
+  }
+
+  return dataDirNoDrive;
+}
+
+
 void StringUtil::Split(const wxString& toSplit, wxArrayString& resultArray, const wxString& delimiter) {
   wxString currentString;
   int delimiterLength = delimiter.Len();

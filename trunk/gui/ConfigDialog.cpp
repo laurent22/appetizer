@@ -21,6 +21,7 @@ BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
   EVT_BUTTON(ID_CDLG_BUTTON_Cancel, ConfigDialog::OnCancelButtonClick)
   EVT_BUTTON(ID_CDLG_BUTTON_Save, ConfigDialog::OnSaveButtonClick)
   EVT_BUTTON(ID_CDLG_BUTTON_CheckForUpdate, ConfigDialog::OnCheckForUpdateButtonClick)  
+  EVT_BUTTON(wxID_ANY, ConfigDialog::OnButtonClick)  
   EVT_SHOW(ConfigDialog::OnShow)
   EVT_NOTEBOOK_PAGE_CHANGED(ID_CDLG_MainNotebook, ConfigDialog::OnNoteBookPageChanged)
 END_EVENT_TABLE()
@@ -47,7 +48,7 @@ void ConfigDialog::Localize() {
   notebook->SetPageText(1, _("Appearance"));
   notebook->SetPageText(2, _("Operations"));
   saveButton->SetLabel(_("Save"));
-  cancelButton->SetLabel(_("Cancel"));
+  cancelButton->SetLabel(_("Cancel"));  
 }
 
 
@@ -87,6 +88,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       alwaysOnTopCheckBox->SetLabel(_("Always on top"));
       oneInstanceCheckBox->SetLabel(wxString::Format(_("Allow only one instance of %s at a time"), APPLICATION_NAME));
       checkForUpdateButton->SetLabel(_("Check for update"));
+      installAutorunButton->SetLabel(_("Install autorun file"));
 
       //---------------------------------------------------------------------------
       // Populate language dropdown list
@@ -125,6 +127,10 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
       alwaysOnTopCheckBox->SetValue(userSettings->AlwaysOnTop);
       oneInstanceCheckBox->SetValue(userSettings->UniqueApplicationInstance);
+
+      #ifndef __WXDEBUG__
+      installAutorunButton->Enable(wxGetApp().GetUtilities().IsApplicationOnRemoteDrive());
+      #endif
 
       languageLabel->GetParent()->Layout();
 
@@ -355,6 +361,27 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
 
   updatedPages_[pageIndex] = true;  
+}
+
+
+void ConfigDialog::OnButtonClick(wxCommandEvent& evt) {
+  switch (evt.GetId()) {
+
+    case ID_CDLG_BUTTON_InstallAutorunButton: {
+
+      int result = MessageBoxes::ShowConfirmation(_("By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n\nDo you wish to continue?"));
+      if (result == wxID_YES) {
+        wxGetApp().GetUtilities().InstallAutorunFile();
+      }
+
+      } break;
+
+    default:
+
+      evt.Skip();
+      break;
+
+  }
 }
 
 

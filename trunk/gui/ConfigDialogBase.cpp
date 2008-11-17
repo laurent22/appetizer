@@ -25,6 +25,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     label_2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     oneInstanceCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Allow only one instance of %s at a time"));
     label_5 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
+    installAutorunButton = new wxButton(notebook_1_pane_1, ID_CDLG_BUTTON_InstallAutorunButton, wxT("#Install autorun file#"));
+    label_3 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     checkForUpdateButton = new wxButton(notebook_1_pane_1, ID_CDLG_BUTTON_CheckForUpdate, wxT("Check for update"));
     iconSizeLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Icon size:"));
     const wxString *iconSizeComboBox_choices = NULL;
@@ -55,7 +57,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(374, 250));
+    SetSize(wxSize(374, 265));
     // end wxGlade
 }
 
@@ -72,7 +74,7 @@ void ConfigDialogBase::do_layout()
     wxBoxSizer* sizer_4 = new wxBoxSizer(wxHORIZONTAL);
     wxFlexGridSizer* grid_sizer_1 = new wxFlexGridSizer(3, 2, 8, 8);
     wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer* generalGridSizer = new wxFlexGridSizer(5, 2, 8, 8);
+    wxFlexGridSizer* generalGridSizer = new wxFlexGridSizer(6, 2, 8, 8);
     generalGridSizer->Add(languageLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     generalGridSizer->Add(languageComboBox, 0, wxEXPAND, 0);
     generalGridSizer->Add(label_1, 0, 0, 0);
@@ -80,6 +82,8 @@ void ConfigDialogBase::do_layout()
     generalGridSizer->Add(label_2, 0, 0, 0);
     generalGridSizer->Add(oneInstanceCheckBox, 0, 0, 0);
     generalGridSizer->Add(label_5, 0, 0, 0);
+    generalGridSizer->Add(installAutorunButton, 0, wxEXPAND, 0);
+    generalGridSizer->Add(label_3, 0, 0, 0);
     generalGridSizer->Add(checkForUpdateButton, 0, wxEXPAND, 0);
     generalGridSizer->AddGrowableCol(1);
     sizer_3->Add(generalGridSizer, 1, wxALL|wxEXPAND, 10);

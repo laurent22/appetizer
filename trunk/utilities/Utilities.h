@@ -29,6 +29,7 @@ public:
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void CreateNewShortcut();
   bool IsApplicationOnRemoteDrive();
+  void InstallAutorunFile();
   wxString CreateUUID();
   void Localize();
 

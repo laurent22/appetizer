@@ -7,6 +7,7 @@
 #include "../stdafx.h"
 
 #include "Utilities.h"
+#include "StringUtil.h"
 #include "../MessageBoxes.h"
 #include "../MiniLaunchBar.h"
 #include "../FilePaths.h"
@@ -19,6 +20,41 @@ Utilities::Utilities() {
   configDialog_ = NULL;
   aboutDialog_ = NULL;
   treeViewDialog_ = NULL;
+}
+
+
+void Utilities::InstallAutorunFile() {
+  wxString skinDir = StringUtil::RemoveDriveFromPath(FilePaths::GetBaseSkinDirectory());
+  wxString appPath = StringUtil::RemoveDriveFromPath(FilePaths::GetApplicationPath());
+
+  wxString fileContent;
+  fileContent += _T("[autorun]\n");
+  fileContent += wxString::Format(_T("Icon=%s\\Application.ico\n"), skinDir);
+  fileContent += wxString::Format(_T("Action=Start %s\n"), APPLICATION_NAME);
+  fileContent += wxString::Format(_T("Open=%s\n"), appPath);
+  fileContent += _T("UseAutoPlay=1\n");
+
+  wxString filePath = FilePaths::GetApplicationDrive() + _T("\\autorun.inf");
+
+  #ifdef __WINDOWS__
+  // Remove "read-only" attribute if set
+  SetFileAttributes(filePath.c_str(), FILE_ATTRIBUTE_NORMAL);
+  #endif
+  
+  bool deleted = wxRemoveFile(filePath);
+  if (!deleted) wlog("Couldn't delete autorun.inf");
+
+  wxFile f;
+  wxLogNull logNull;
+  f.Create(filePath, true);
+  bool opened = f.Open(filePath, wxFile::write);
+  if (!opened) {
+    MessageBoxes::ShowError(_("Could not create autorun.inf. Please try again."));
+    return;
+  }
+  
+  f.Write(fileContent, wxConvUTF8);
+  f.Close();
 }
 
 

@@ -21,6 +21,7 @@
 int FolderItem::uniqueID_ = 1000;
 
 FolderItemProcessVector FolderItem::processVector_;
+FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
 
 
 FolderItem::FolderItem(bool isGroup) {
@@ -29,6 +30,7 @@ FolderItem::FolderItem(bool isGroup) {
 
   resolvedPath_ = _T("*");
 
+  isDisposed_ = false;
   parent_ = NULL;
   isGroup_ = isGroup;
   uuid_ = wxEmptyString;
@@ -36,6 +38,17 @@ FolderItem::FolderItem(bool isGroup) {
 
   automaticallyAdded_ = false;
   belongsToMultiLaunchGroup_ = false;
+}
+
+
+void FolderItem::Dispose() {
+  if (isDisposed_) return;
+  isDisposed_ = true;
+}
+
+
+bool FolderItem::IsDisposed() {
+  return isDisposed_;
 }
 
 
@@ -412,9 +425,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
       wxString saveCurrentDirectory = wxGetCwd();
       wxSetWorkingDirectory(filename.GetPath());
       if (arguments == wxEmptyString) {
-        FolderItemProcess* process = new FolderItemProcess();
-        FolderItem::processVector_.push_back(process);
-        wxExecute(filePath, wxEXEC_ASYNC, process);
+        wxExecute(filePath, wxEXEC_ASYNC);
       } else {
         wxString tArguments(arguments); 
         // If the argument is a file path, then check that it has double quotes        
@@ -676,12 +687,24 @@ void FolderItem::FromXml(TiXmlElement* xml) {
       wxString elementName = wxString(element->Value(), wxConvUTF8);
       if (elementName != _T("FolderItem")) continue;
       
-      FolderItemSP folderItem(new FolderItem());
+      FolderItemSP folderItem = FolderItem::CreateFolderItemSP();
       folderItem->FromXml(element);
       AddChild(folderItem);
     }
   }
 
+}
+
+
+FolderItemSP FolderItem::CreateFolderItemSP(bool isGroup) {
+  FolderItemSP f(new FolderItem(isGroup));
+  folderItemIdHashMap_[f->GetId()] = f;
+  return f;
+}
+
+
+FolderItemSP FolderItem::GetFolderItemById(int id) {
+  return folderItemIdHashMap_[id];
 }
 
 

@@ -23,8 +23,8 @@ END_EVENT_TABLE()
 User::User() {
   scheduledSaveTimer_ = NULL;
   shortcutEditorDialog_ = NULL;
-  rootFolderItem_.reset(new FolderItem(true));
-  settings_.reset(new UserSettings());  
+  rootFolderItem_ = FolderItem::CreateFolderItemSP(true);
+  settings_.reset(new UserSettings());
 }
 
 
@@ -97,13 +97,14 @@ void User::Load() {
     return;
   }
 
-  rootFolderItem_.reset(new FolderItem(true));
+  rootFolderItem_ = FolderItem::CreateFolderItemSP(true);
+  //rootFolderItem_.reset(new FolderItem(true));
   
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
     if (elementName == _T("FolderItem")) {
-      FolderItemSP folderItem(new FolderItem());
+      FolderItemSP folderItem = FolderItem::CreateFolderItemSP();// (new FolderItem());
       folderItem->FromXml(element);
 
       rootFolderItem_->AddChild(folderItem);
@@ -120,7 +121,7 @@ void User::Load() {
 
 
 FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath) {
-  FolderItemSP folderItem(new FolderItem());
+  FolderItemSP folderItem = FolderItem::CreateFolderItemSP();//(new FolderItem());
   folderItem->SetFilePath(FolderItem::ConvertToRelativePath(folderItemPath));
   folderItem->AutoSetName();
 
@@ -132,7 +133,7 @@ FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folder
 
 
 FolderItemSP User::EditNewFolderItem(FolderItemSP parent, bool isGroup) {
-  FolderItemSP folderItem(new FolderItem(isGroup));
+  FolderItemSP folderItem = FolderItem::CreateFolderItemSP(isGroup);//(new FolderItem(isGroup));
 
   int result = EditFolderItem(folderItem);
 
@@ -297,7 +298,7 @@ void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddEx
     FolderItemSP foundFolderItem = rootFolderItem_->GetChildByResolvedPath(resolvedPath);
     if (foundFolderItem.get()) continue;
 
-    FolderItemSP folderItem(new FolderItem());
+    FolderItemSP folderItem = FolderItem::CreateFolderItemSP();//(new FolderItem());
     folderItem->SetFilePath(relativePath);
     folderItem->AutoSetName();
     folderItem->SetAutomaticallyAdded(true);

@@ -29,6 +29,7 @@ private:
   void OnShow(wxShowEvent& evt);
   void OnCheckForUpdateButtonClick(wxCommandEvent& evt);
   void OnNoteBookPageChanged(wxNotebookEvent& evt);
+  void OnButtonClick(wxCommandEvent& evt);
 
   std::vector<bool> updatedPages_;
 

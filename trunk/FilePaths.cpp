@@ -25,6 +25,7 @@ wxString FilePaths::WindowFile_ = _T("");
 wxString FilePaths::HelpDirectory_ = _T("");
 wxString FilePaths::WindowsDirectory_ = _T("");
 wxString FilePaths::System32Directory_ = _T("");
+wxString FilePaths::ApplicationPath_ = _T("");
 
 
 wxString FilePaths::GetApplicationDrive() { return FilePaths::ApplicationDrive_; }
@@ -40,10 +41,24 @@ wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
 wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
+
 wxString FilePaths::GetQuickLaunchDirectory() { 
   wxFileName f(_T("%APPDATA%\\Microsoft\\Internet Explorer\\Quick Launch"));
   f.Normalize();
   return f.GetFullPath();
+}
+
+
+wxString FilePaths::GetApplicationPath() {
+  if (ApplicationPath_ != wxEmptyString) return ApplicationPath_;
+
+  #ifdef __WINDOWS__
+  TCHAR cName[MAX_PATH + 10];
+	GetModuleFileName(0, cName, MAX_PATH + 10);
+  ApplicationPath_ = wxString(cName, wxConvUTF8);
+  #endif
+
+  return ApplicationPath_;
 }
 
 

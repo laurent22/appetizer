@@ -16,6 +16,7 @@ public:
 
   static wxString ZeroPadding(int number, int digits);
   static void Split(const wxString& toSplit, wxArrayString& resultArray, const wxString& delimiter);
+  static wxString RemoveDriveFromPath(const wxString& path);
 
 };
 

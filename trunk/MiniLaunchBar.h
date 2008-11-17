@@ -60,7 +60,7 @@ private:
   User* user_;
   wxLocale* locale_;
   LongVector launchedProcessIds_;
-  IntVector allowedIconSizes_;
+  IntVector allowedIconSizes_;  
 
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;
