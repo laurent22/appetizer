@@ -124,6 +124,7 @@ private:
   wxString iconCacheHash_;
   wxString customIconPath_;
   int customIconIndex_;
+  wxString resolvedPath_;
   
   static FolderItemProcessVector processVector_;
 

@@ -9,6 +9,7 @@
 #include "FilePaths.h"
 #include "Constants.h"
 #include "MiniLaunchBar.h"
+#include "Log.h"
 
 
 wxString FilePaths::ApplicationDrive_ = _T("");
@@ -39,6 +40,11 @@ wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
 wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
+wxString FilePaths::GetQuickLaunchDirectory() { 
+  wxFileName f(_T("%APPDATA%\\Microsoft\\Internet Explorer\\Quick Launch"));
+  f.Normalize();
+  return f.GetFullPath();
+}
 
 
 wxString FilePaths::GetSystem32Directory() {
@@ -85,6 +91,39 @@ wxString FilePaths::GetWindowsDirectory() {
   FilePaths::WindowsDirectory_ = windowsPath;
 
   return FilePaths::WindowsDirectory_;
+}
+
+
+wxString FilePaths::GetUserShellDirectory(const wxString& itemName) {
+  wxLogNull logNo;
+
+  wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
+  if (regKey.Exists()) {
+    wxString filePath;
+    regKey.QueryValue(itemName, filePath);
+    return filePath;
+  } else {
+    elog(_T("Couldn't get user path: ") + itemName);
+  }
+
+  return _T("");
+}
+
+
+wxString FilePaths::GetAllUsersShellDirectory(const wxString& itemName) {
+  wxLogNull logNo;
+
+  wxRegKey regKey(_T("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
+  if (regKey.Exists()) {
+    wxString filePath;
+    regKey.QueryValue(itemName, filePath);
+    return filePath;
+  } else {
+    elog(_T("Couldn't get user path: ") + itemName);
+  }
+
+  return _T("");
+
 }
 
 

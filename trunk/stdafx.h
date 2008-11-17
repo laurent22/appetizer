@@ -27,6 +27,7 @@
 #include <wx/msgdlg.h>
 #include <wx/object.h>
 #include <wx/generic/dirctrlg.h>
+#include <wx/progdlg.h>
 #include <wx/treectrl.h>
 #include <wx/checkbox.h>
 #include <wx/filesys.h>

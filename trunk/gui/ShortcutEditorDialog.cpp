@@ -111,6 +111,7 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
 void ShortcutEditorDialog::OnChangeIconButtonClick(wxCommandEvent& evt) {
   IconDialog* d = new IconDialog(this);
   int result = d->ShowModal();
+  d->Destroy();
   if (result != wxID_OK) return;
 
   selectedIconPath_ = d->GetIconSource();

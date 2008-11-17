@@ -13,6 +13,7 @@
 #include "Styles.h"
 #include "MiniLaunchBar.h"
 #include "MessageBoxes.h"
+#include "gui/ImportWizardDialog.h"
 #include "gui/FileOrFolderDialog.h"
 
 
@@ -33,6 +34,7 @@ NineSlicesPanel(owner, id, point, size) {
   buttonNames.Add(_T("AddShortcut"));
   buttonNames.Add(_T("Config"));
   buttonNames.Add(_T("MultiLaunch"));
+  buttonNames.Add(_T("Import"));
 
   for (int i = 0; i < buttonNames.size(); i++) { 
     wxString n = buttonNames[i];
@@ -106,6 +108,7 @@ void OptionPanel::Localize() {
   tooltipHashMap[_T("AddShortcut")] = _("New shortcut...");
   tooltipHashMap[_T("Config")] = _("Configuration");
   tooltipHashMap[_T("MultiLaunch")] = _("Multi-launch");
+  tooltipHashMap[_T("Import")] = _("Import shortcuts");
 
   for (int i = 0; i < buttons_.size(); i++) {
     OptionButton* button = buttons_.at(i);
@@ -273,7 +276,16 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
 
     d->Destroy();
 
+  } else if (buttonName == _T("Import")) {
+    //***************************************************************************
+    // IMPORT SHORTCUTS
+    //***************************************************************************
+    ImportWizardDialog* d = new ImportWizardDialog(this);
+    d->ShowModal();
+    d->Destroy();
+
   }
+
 }
 
 

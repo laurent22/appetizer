@@ -1123,6 +1123,18 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\gui\ImportWizardDialog.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\gui\ShortcutEditorDialog.cpp"
 					>
 					<FileConfiguration
@@ -1420,6 +1432,10 @@
 				</File>
 				<File
 					RelativePath=".\gui\IconDialog.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\ImportWizardDialog.h"
 					>
 				</File>
 				<File

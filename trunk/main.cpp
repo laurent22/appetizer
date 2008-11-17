@@ -13,8 +13,9 @@
 #include "FilePaths.h"
 #include "Localization.h"
 #include "Styles.h"
-#include "gui/BetterMessageDialog.h"
 #include "Log.h"
+#include "gui/BetterMessageDialog.h"
+#include "gui/ImportWizardDialog.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
 #include "utilities/Updater.h"
@@ -127,11 +128,6 @@ bool MiniLaunchBar::OnInit() {
 
   SetTopWindow(mainFrame_);
 
-  // ***********************************************************************************
-  // Check if there are any new applications in the app folder
-  // ***********************************************************************************
-  GetUser()->AutomaticallyAddNewApps();
-
   if (IsFirstLaunch()) {
     mainFrame_->InvalidateLayout();
     mainFrame_->InvalidateMask();
@@ -145,7 +141,17 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
   mainFrame_->Localize();
 
+  // ***********************************************************************************
+  // Check if there are any new applications in the app folder
+  // ***********************************************************************************
+
   if (GetUser()->GetSettings()->RunMultiLaunchOnStartUp) utilities_.DoMultiLaunch();
+
+  if (IsFirstLaunch()) {
+    ImportWizardDialog* d = new ImportWizardDialog(mainFrame_);
+    d->ShowModal();
+    d->Destroy();
+  }
 
   return true;
 } 

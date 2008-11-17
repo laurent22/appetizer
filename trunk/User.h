@@ -20,18 +20,25 @@ class User : public wxEvtHandler {
 public:
 
   User();  
-  ~User();
-  void AutomaticallyAddNewApps();
+  ~User();  
   UserSettingsSP GetSettings();
   void ScheduleSave();
   void Save(bool force = false);
   void Load();
+
+  void GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* result);
   
+  void PortableAppsFormatSynchronization();
+  void StartMenuSynchronization(wxProgressDialog* progressDialog = NULL);
+  void QuickLaunchSynchronization();
+
   int EditFolderItem(FolderItemSP folderItem);
   FolderItemSP EditNewFolderItem(FolderItemSP parent, bool isGroup = false);
   FolderItemSP AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath);
   void AddAutoAddExclusion(const wxString& filePath);
   bool IsAutoAddExclusion(const wxString& filePath);
+
+  void BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions = false, wxProgressDialog* progressDialog = NULL);
 
   FolderItemSP GetRootFolderItem();
 

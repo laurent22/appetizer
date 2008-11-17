@@ -27,6 +27,8 @@ FolderItem::FolderItem(bool isGroup) {
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
 
+  resolvedPath_ = _T("*");
+
   parent_ = NULL;
   isGroup_ = isGroup;
   uuid_ = wxEmptyString;
@@ -112,7 +114,9 @@ bool FolderItem::IsGroup() {
 
 
 FolderItemSP FolderItem::GetChildByResolvedPath(const wxString& filePath) {
-  for (int i = 0; i < children_.size(); i++) {
+  int childrenCount = children_.size();
+
+  for (int i = 0; i < childrenCount; i++) {
     FolderItemSP child = children_.at(i);
     if (child->GetResolvedPath() == filePath) {
       return child;
@@ -709,9 +713,6 @@ void FolderItem::SetName(const wxString& name) {
 
 void FolderItem::ClearCachedIcons() {
   icons_.clear();
-
-  //icon16_.reset();
-  //icon32_.reset();
 }
 
 
@@ -917,6 +918,7 @@ void FolderItem::AutoSetName() {
 void FolderItem::SetFilePath(const wxString& filePath) {
   if (filePath == filePath_) return;
 
+  resolvedPath_ = _T("*");
   ClearCachedIcons();
   filePath_ = wxString(filePath);
   filePath_.Trim();
@@ -936,19 +938,23 @@ wxString FolderItem::GetFilePath() {
 
 
 wxString FolderItem::GetResolvedPath() {
-  return FolderItem::ResolvePath(filePath_);
+  if (resolvedPath_ != _T("*")) return resolvedPath_;
+  resolvedPath_ = FolderItem::ResolvePath(filePath_);
+  return resolvedPath_;
 }
 
 
 wxString FolderItem::ResolvePath(const wxString& filePath) {
   wxString result(filePath);
-  result.Trim();
-  result.Replace(_T("%DRIVE%"), FilePaths::GetApplicationDrive());
-  result.Replace(_T("%AZ_DRIVE%"), FilePaths::GetApplicationDrive());
-  result.Replace(_T("%AZ_SYSTEM32%"), FilePaths::GetSystem32Directory());
-  result.Replace(_T("%AZ_WINDOWS%"), FilePaths::GetWindowsDirectory());
-  result.Replace(_T("%AZ_CONTROL_PANEL%"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
-  result.Replace(_T("%AZ_MY_COMPUTER%"), FilePaths::GetWindowsDirectory() + _T("\\explorer.exe"));
+
+  if (result.Index(_T("%")) != wxNOT_FOUND) {
+    result.Replace(_T("%DRIVE%"), FilePaths::GetApplicationDrive());
+    result.Replace(_T("%AZ_DRIVE%"), FilePaths::GetApplicationDrive());
+    result.Replace(_T("%AZ_SYSTEM32%"), FilePaths::GetSystem32Directory());
+    result.Replace(_T("%AZ_WINDOWS%"), FilePaths::GetWindowsDirectory());
+    result.Replace(_T("%AZ_CONTROL_PANEL%"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
+    result.Replace(_T("%AZ_MY_COMPUTER%"), FilePaths::GetWindowsDirectory() + _T("\\explorer.exe"));
+  }
 
   wxFileName f(result);
   f.Normalize();

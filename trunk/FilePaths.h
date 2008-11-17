@@ -28,6 +28,9 @@ public:
   static wxString GetWindowsDirectory();
   static wxString GetSystem32Directory();
   static wxString GetHHPath();
+  static wxString GetUserShellDirectory(const wxString& itemName);
+  static wxString GetAllUsersShellDirectory(const wxString& itemName);
+  static wxString GetQuickLaunchDirectory();
 
   static void CreateSettingsDirectory();
   static void InitializePaths();

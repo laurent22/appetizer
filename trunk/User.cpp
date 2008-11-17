@@ -179,13 +179,11 @@ UserSettingsSP User::GetSettings() {
 }
 
 
-void User::AutomaticallyAddNewApps() {
+void User::PortableAppsFormatSynchronization() {
   wxString portableAppsFolderPath = FolderItem::ResolvePath(GetSettings()->PortableAppsPath);
 
   wxArrayString foundFilePaths;
-  wxDir portableAppsFolder;
-
-  bool folderItemsChanged = false;
+  wxDir portableAppsFolder;  
 
   //***************************************************************************
   // Look for all the executable files two levels down the PortableApps folder
@@ -219,12 +217,74 @@ void User::AutomaticallyAddNewApps() {
   if (wxFileName::DirExists(picturesPath)) foundFilePaths.Add(picturesPath);
   if (wxFileName::DirExists(videosPath)) foundFilePaths.Add(videosPath);
 
+  BatchAddFolderItems(foundFilePaths, true);
+}
+
+
+void User::GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* result) {
+  wxArrayString shortcutPaths;
+  wxDir::GetAllFiles(folderPath, &shortcutPaths, _T("*.lnk"), wxDIR_FILES);
+
+  for (int i = 0; i < shortcutPaths.GetCount(); i++) {
+    wxFileName shortcutFN(shortcutPaths[i]);
+    shortcutFN.Normalize();
+    if (!shortcutFN.FileExists() && !wxFileName::DirExists(shortcutFN.GetFullPath())) continue;
+    if (shortcutFN.GetExt().Lower() != _T("exe")) continue;
+
+    result->Add(shortcutFN.GetFullPath());
+  }
+}
+
+
+void User::StartMenuSynchronization(wxProgressDialog* progressDialog) {
+
+  wxArrayString foundFilePaths;
+  wxString startMenuPath;
+
+  for (int folderIndex = 0; folderIndex < 2; folderIndex++) {
+
+    if (folderIndex == 0) {
+      startMenuPath = FilePaths::GetAllUsersShellDirectory(_T("Common Programs"));
+    } else {
+      startMenuPath = FilePaths::GetUserShellDirectory(_T("Programs"));
+    }
+   
+    wxDir startMenuFolder;  
+
+    GetShortcutsFromFolder(startMenuPath, &foundFilePaths);
+
+    if (wxFileName::DirExists(startMenuPath) && startMenuFolder.Open(startMenuPath)) {
+      wxString folderName;
+      bool success = startMenuFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
+      
+      while (success) {        
+        GetShortcutsFromFolder(startMenuFolder.GetName() + _T("/") + folderName, &foundFilePaths);
+
+        success = startMenuFolder.GetNext(&folderName);
+      }
+    }
+  } 
+
+  BatchAddFolderItems(foundFilePaths, true, progressDialog);
+}
+
+
+void User::QuickLaunchSynchronization() {
+  wxArrayString foundFilePaths; 
+  GetShortcutsFromFolder(FilePaths::GetQuickLaunchDirectory(), &foundFilePaths);
+  BatchAddFolderItems(foundFilePaths, true);
+}
+
+
+void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions, wxProgressDialog* progressDialog) {
+  bool folderItemsChanged = false;
+
   //***************************************************************************
-  // Loop through the files we've just found and create folder items
-  // when needed.
+  // Loop through the files and create folder items when needed.
   //***************************************************************************
-  for (int i = 0; i < foundFilePaths.GetCount(); i++) {
-    wxString filePath = foundFilePaths[i];
+
+  for (int i = 0; i < filePaths.GetCount(); i++) {   
+    wxString filePath = filePaths[i];
     wxString resolvedPath = FolderItem::ResolvePath(filePath);
     wxString relativePath = FolderItem::ConvertToRelativePath(filePath);
 

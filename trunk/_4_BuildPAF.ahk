@@ -7,16 +7,6 @@
 ; ___FULL_VERSION___ and ___SHORT_VERSION___ by actual numbers
 ; ****************************************************************
 
-ReplaceVersionNumbers(oldFile, newFile, appVersion, appShortVersion)
-{
-  FileDelete %newFile%
-  FileRead fileContent, %oldFile%  
-  StringReplace outputVar, fileContent, ___FULL_VERSION___, %appVersion%, All
-  StringReplace finalContent, outputVar, ___SHORT_VERSION___, %appShortVersion%, All
-  
-  FileAppend %finalContent%, %newFile%
-}
-
 ReplaceVersionNumbers("_PAFRES\appinfo.tmpl.ini", "_PAFRES\appinfo.ini", appVersion, appShortVersion)
 ReplaceVersionNumbers("_PAFRES\AppetizerLauncher.tmpl.nsi", "_PAFRES\AppetizerLauncher.nsi", appVersion, appShortVersion)
 ReplaceVersionNumbers("_PAFRES\PortableApps.comInstallerConfig.tmpl.nsh", "_PAFRES\PortableApps.comInstallerConfig.nsh", appVersion, appShortVersion)
