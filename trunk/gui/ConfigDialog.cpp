@@ -375,6 +375,8 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
     case 3: {
 
+      importExclusionSizer_staticbox->SetLabel(_("Exclude these items from import operations"));
+
       wxString exclusionString;
       wxArrayString exclusions = user->GetAutoAddExclusions();      
       for (int i = 0; i < exclusions.Count(); i++) exclusionString += exclusions[i] + _T("\n");

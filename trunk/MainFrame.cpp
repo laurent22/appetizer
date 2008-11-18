@@ -124,6 +124,7 @@ MainFrame::MainFrame()
     wlog("MainFrame: Could not load XML. No Window element found.");
 
     SetSize(0, 0, MAIN_FRAME_DEFAULT_WIDTH, MAIN_FRAME_DEFAULT_HEIGHT);
+    CentreOnScreen();
   } else {
     TiXmlHandle handle(root);
     int displayIndex = XmlUtil::ReadElementTextAsInt(handle, "DisplayIndex", 0);
