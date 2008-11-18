@@ -24,7 +24,6 @@ public:
 
 private:
 
-  void OnCancelButtonClick(wxCommandEvent& evt);
   void OnSaveButtonClick(wxCommandEvent& evt);
   void OnShow(wxShowEvent& evt);
   void OnCheckForUpdateButtonClick(wxCommandEvent& evt);

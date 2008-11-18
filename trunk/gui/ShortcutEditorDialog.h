@@ -32,7 +32,6 @@ private:
   void UpdateFolderItemIconFields();
   void EnableDisableFields();
 
-  void OnCancelButtonClick(wxCommandEvent& evt);
   void OnSaveButtonClick(wxCommandEvent& evt);
   void OnBrowseButtonClick(wxCommandEvent& evt);
   void OnChangeIconButtonClick(wxCommandEvent& evt);

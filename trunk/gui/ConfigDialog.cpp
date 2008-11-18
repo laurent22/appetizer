@@ -13,12 +13,12 @@
 #include "../Localization.h"
 #include "../Constants.h"
 #include "../MessageBoxes.h"
+#include "../utilities/StringUtil.h"
 #include "../Log.h"
 #include "../Styles.h"
 
 
 BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
-  EVT_BUTTON(ID_CDLG_BUTTON_Cancel, ConfigDialog::OnCancelButtonClick)
   EVT_BUTTON(ID_CDLG_BUTTON_Save, ConfigDialog::OnSaveButtonClick)
   EVT_BUTTON(ID_CDLG_BUTTON_CheckForUpdate, ConfigDialog::OnCheckForUpdateButtonClick)  
   EVT_BUTTON(wxID_ANY, ConfigDialog::OnButtonClick)  
@@ -47,6 +47,7 @@ void ConfigDialog::Localize() {
   notebook->SetPageText(0, _("General"));
   notebook->SetPageText(1, _("Appearance"));
   notebook->SetPageText(2, _("Operations"));
+  notebook->SetPageText(3, _("Import"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));  
 }
@@ -62,6 +63,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
   if (updatedPages_[pageIndex]) return;
 
   UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();  
+  User* user = wxGetApp().GetUser();
 
   wxArrayString foundFilePaths;
   int selectedIndex = 0;
@@ -355,6 +357,33 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       
       } break;
 
+
+
+
+
+
+
+
+
+
+
+    // *********************************************************************************************
+    //
+    // IMPORT TAB
+    //
+    // *********************************************************************************************
+
+    case 3: {
+
+      wxString exclusionString;
+      wxArrayString exclusions = user->GetAutoAddExclusions();      
+      for (int i = 0; i < exclusions.Count(); i++) exclusionString += exclusions[i] + _T("\n");
+      importExclusionTextBox->SetValue(exclusionString);
+
+      } break;
+
+
+
   }
 
 
@@ -369,9 +398,13 @@ void ConfigDialog::OnButtonClick(wxCommandEvent& evt) {
 
     case ID_CDLG_BUTTON_InstallAutorunButton: {
 
-      int result = MessageBoxes::ShowConfirmation(_("By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n\nDo you wish to continue?"));
+      int result = MessageBoxes::ShowConfirmation(wxString::Format(_("By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n\nDo you wish to continue?"), APPLICATION_NAME));
       if (result == wxID_YES) {
-        wxGetApp().GetUtilities().InstallAutorunFile();
+        if (!wxGetApp().GetUtilities().InstallAutorunFile()) {
+          MessageBoxes::ShowError(_("Could not install autorun file. Please try again."));
+        } else {
+          MessageBoxes::ShowInformation(_("The autorun file has been installed successfully"));
+        }
       }
 
       } break;
@@ -404,13 +437,10 @@ void ConfigDialog::OnCheckForUpdateButtonClick(wxCommandEvent& evt) {
 }
 
 
-void ConfigDialog::OnCancelButtonClick(wxCommandEvent& evt) {
-  EndDialog(wxID_CANCEL);
-}
-
-
 void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
+  User* user = wxGetApp().GetUser();
+  
   wxStringClientData* clientData;
 
   bool mustRestart = false;
@@ -559,9 +589,37 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   }
 
+
+
+
+
+
+  // *********************************************************************************************
+  //
+  // IMPORT TAB
+  //
+  // *********************************************************************************************
+
+  if (updatedPages_[3]) {
+    wxString str = importExclusionTextBox->GetValue();
+    str.Replace(_T("\r"), _T("\n"));
+    wxArrayString splitted;
+    StringUtil::Split(str, splitted, _T("\n"));
+
+    wxArrayString finalStrings;
+    
+    for (int i = 0; i < splitted.Count(); i++) {
+      wxString s = splitted[i];
+      s.Trim(true).Trim(false);
+      if (s == wxEmptyString) continue;
+      finalStrings.Add(s);
+    }
+
+    user->SetAutoAddExclusions(finalStrings);
+  }
   
 
-  wxGetApp().GetUser()->Save(true);
+  user->Save(true);
 
   if (mustRestart) {
     MessageBoxes::ShowInformation(_("Some of these changes will only be applied until after you restart the application."));

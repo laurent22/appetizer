@@ -29,16 +29,19 @@ public:
   void GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* result);
   
   void PortableAppsFormatSynchronization();
-  void StartMenuSynchronization(wxProgressDialog* progressDialog = NULL);
+  void StartMenuSynchronization();
   void QuickLaunchSynchronization();
 
   int EditFolderItem(FolderItemSP folderItem);
   FolderItemSP EditNewFolderItem(FolderItemSP parent, bool isGroup = false);
   FolderItemSP AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath);
+
   void AddAutoAddExclusion(const wxString& filePath);
   bool IsAutoAddExclusion(const wxString& filePath);
+  wxArrayString GetAutoAddExclusions();
+  void SetAutoAddExclusions(wxArrayString& arrayString);
 
-  void BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions = false, wxProgressDialog* progressDialog = NULL);
+  void BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions = false);
 
   FolderItemSP GetRootFolderItem();
 

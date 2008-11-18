@@ -28,8 +28,19 @@ User::User() {
 }
 
 
+wxArrayString User::GetAutoAddExclusions() {
+  return autoAddExclusions_;
+}
+
+
+void User::SetAutoAddExclusions(wxArrayString& arrayString) {
+  autoAddExclusions_ = arrayString;
+}
+
+
 User::~User() {
   if (shortcutEditorDialog_) shortcutEditorDialog_->Destroy();
+  wxDELETE(scheduledSaveTimer_);
 }
 
 
@@ -98,13 +109,12 @@ void User::Load() {
   }
 
   rootFolderItem_ = FolderItem::CreateFolderItemSP(true);
-  //rootFolderItem_.reset(new FolderItem(true));
   
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
     if (elementName == _T("FolderItem")) {
-      FolderItemSP folderItem = FolderItem::CreateFolderItemSP();// (new FolderItem());
+      FolderItemSP folderItem = FolderItem::CreateFolderItemSP();
       folderItem->FromXml(element);
 
       rootFolderItem_->AddChild(folderItem);
@@ -121,7 +131,7 @@ void User::Load() {
 
 
 FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath) {
-  FolderItemSP folderItem = FolderItem::CreateFolderItemSP();//(new FolderItem());
+  FolderItemSP folderItem = FolderItem::CreateFolderItemSP();
   folderItem->SetFilePath(FolderItem::ConvertToRelativePath(folderItemPath));
   folderItem->AutoSetName();
 
@@ -133,7 +143,7 @@ FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folder
 
 
 FolderItemSP User::EditNewFolderItem(FolderItemSP parent, bool isGroup) {
-  FolderItemSP folderItem = FolderItem::CreateFolderItemSP(isGroup);//(new FolderItem(isGroup));
+  FolderItemSP folderItem = FolderItem::CreateFolderItemSP(isGroup);
 
   int result = EditFolderItem(folderItem);
 
@@ -237,7 +247,7 @@ void User::GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* res
 }
 
 
-void User::StartMenuSynchronization(wxProgressDialog* progressDialog) {
+void User::StartMenuSynchronization() {
 
   wxArrayString foundFilePaths;
   wxString startMenuPath;
@@ -256,9 +266,10 @@ void User::StartMenuSynchronization(wxProgressDialog* progressDialog) {
 
     if (wxFileName::DirExists(startMenuPath) && startMenuFolder.Open(startMenuPath)) {
       wxString folderName;
-      bool success = startMenuFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
+      bool success = startMenuFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS | wxDIR_HIDDEN);
       
-      while (success) {        
+      while (success) {     
+        wxLogDebug(folderName);
         GetShortcutsFromFolder(startMenuFolder.GetName() + _T("/") + folderName, &foundFilePaths);
 
         success = startMenuFolder.GetNext(&folderName);
@@ -266,7 +277,7 @@ void User::StartMenuSynchronization(wxProgressDialog* progressDialog) {
     }
   } 
 
-  BatchAddFolderItems(foundFilePaths, true, progressDialog);
+  BatchAddFolderItems(foundFilePaths, true);
 }
 
 
@@ -277,7 +288,7 @@ void User::QuickLaunchSynchronization() {
 }
 
 
-void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions, wxProgressDialog* progressDialog) {
+void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions) {
   bool folderItemsChanged = false;
 
   //***************************************************************************

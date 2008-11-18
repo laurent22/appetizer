@@ -11,7 +11,6 @@
 
 
 #include "Constants.h"
-#include "FolderItemProcess.h"
 #include "TypeDefinitions.h"
 #include "utilities/XmlUtil.h"
 
@@ -133,7 +132,6 @@ private:
   wxString resolvedPath_;
   bool isDisposed_;
   
-  static FolderItemProcessVector processVector_;
   static FolderItemIdHashMap folderItemIdHashMap_;
 
 };

@@ -24,7 +24,7 @@ public:
     wxWindow* parent = NULL,
     int id = wxID_ANY,
     const wxPoint& pos = wxDefaultPosition,
-    const wxSize& size = wxSize(400, 50),
+    const wxSize& size = wxDefaultSize,
     const wxString& name = _T("dialogBox"));
 
   static int ShowMessage(

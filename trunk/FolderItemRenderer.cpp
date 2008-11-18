@@ -67,12 +67,7 @@ void FolderItemRenderer::ApplySkin() {
 
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
-  FolderItemSP f = FolderItem::GetFolderItemById(folderItemId_);
-  if (f->IsDisposed()) {
-    FolderItemSP nullOutput;
-    return nullOutput;
-  }
-  return f;
+  return FolderItem::GetFolderItemById(folderItemId_);
 }
 
 
@@ -106,10 +101,6 @@ void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
   }
 
   FolderItemSP folderItem = GetFolderItem();
-  FolderItem* parent = folderItem->GetParent();
-  if (!parent) return;
-
-  parent->RemoveChild(folderItem);
   folderItem->Dispose();
 }
 
@@ -242,9 +233,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       InvalidateControlBitmap();
     }
 
-  } else { // Folder item is being dragged
-
-  }
+  } 
 
 }
 

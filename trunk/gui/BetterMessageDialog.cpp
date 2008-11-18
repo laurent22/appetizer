@@ -34,6 +34,7 @@ BetterMessageDialog::BetterMessageDialog(
     const wxString& name):
 wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE, name) {
 
+  int maxWindowWidth = 400;
   int gap = 10;
 
   wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
@@ -74,12 +75,14 @@ wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE, name) {
   iconMessageSizer->Add(messageLabel, 1, 0, 0);
 
   if (iconBitmap) {
-    messageLabel->Wrap(size.GetWidth() - gap * 3 - icon->GetWidth());
+    messageLabel->Wrap(maxWindowWidth - gap * 3 - icon->GetWidth());
   } else {
-    messageLabel->Wrap(size.GetWidth() - gap * 2);
+    messageLabel->Wrap(maxWindowWidth - gap * 2);
   } 
 
   wxSize messageSize = messageLabel->GetBestSize();
+
+  
 
   topSizer->Add(iconMessageSizer, 1, wxEXPAND | wxLEFT | wxTOP | wxRIGHT, gap);
 
@@ -144,7 +147,11 @@ wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE, name) {
 
   wxDELETE(icon);
 
-  SetClientSize(size.GetWidth(), h);
+  int w = maxWindowWidth;
+  int iconMessageWidth = iconMessageSizer->GetSize().GetWidth() + gap * 2;
+  if (iconMessageWidth < w) w = iconMessageWidth;
+
+  SetClientSize(w, h);
 }
 
 

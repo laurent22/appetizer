@@ -32,6 +32,7 @@ public:
   static wxString GetUserShellDirectory(const wxString& itemName);
   static wxString GetAllUsersShellDirectory(const wxString& itemName);
   static wxString GetQuickLaunchDirectory();
+  static wxString GetIconCacheDirectory();
 
   static void CreateSettingsDirectory();
   static void InitializePaths();
@@ -53,6 +54,7 @@ private:
   static wxString System32Directory_;
   static wxString WindowsDirectory_;
   static wxString ApplicationPath_;
+  static wxString IconCacheDirectory_;
 
 };
 

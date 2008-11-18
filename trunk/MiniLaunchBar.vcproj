@@ -278,7 +278,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxmsw28u_adv.lib wxbase28u_net.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib"
 				OutputFile=".\Appetizer.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -354,18 +354,6 @@
 			</File>
 			<File
 				RelativePath=".\FolderItem.cpp"
-				>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\FolderItemProcess.cpp"
 				>
 				<FileConfiguration
 					Name="Unicode Debug|Win32"
@@ -1133,6 +1121,14 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\ShortcutEditorDialog.cpp"
@@ -1241,10 +1237,6 @@
 			</File>
 			<File
 				RelativePath=".\FolderItem.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FolderItemProcess.h"
 				>
 			</File>
 			<File

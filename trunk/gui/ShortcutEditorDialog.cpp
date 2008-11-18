@@ -18,7 +18,6 @@
 
 
 BEGIN_EVENT_TABLE(ShortcutEditorDialog, wxDialog)
-  EVT_BUTTON(ID_BUTTON_Cancel, ShortcutEditorDialog::OnCancelButtonClick)
   EVT_BUTTON(ID_BUTTON_Save, ShortcutEditorDialog::OnSaveButtonClick)
   EVT_BUTTON(ID_SHORTCUTDLG_BUTTON_UseDefaultIcon, ShortcutEditorDialog::OnUseDefaultIconButtonClick)
   EVT_BUTTON(ID_SHORTCUTDLG_BUTTON_ChangeIcon, ShortcutEditorDialog::OnChangeIconButtonClick)
@@ -125,11 +124,6 @@ void ShortcutEditorDialog::OnUseDefaultIconButtonClick(wxCommandEvent& evt) {
   selectedIconPath_ = wxEmptyString;
   selectedIconIndex_ = 0;
   UpdateFolderItemIconFields();
-}
-
-
-void ShortcutEditorDialog::OnCancelButtonClick(wxCommandEvent& evt) {
-  EndDialog(wxID_CANCEL);
 }
 
 

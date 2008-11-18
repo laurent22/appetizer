@@ -37,6 +37,7 @@ private:
 
 protected:
     // begin wxGlade: ConfigDialogBase::attributes
+    wxStaticBox* importExclusionSizer_staticbox;
     wxStaticBox* hotKeyGroupSizer_staticbox;
     wxStaticText* languageLabel;
     wxComboBox* languageComboBox;
@@ -63,6 +64,8 @@ protected:
     wxCheckBox* hotKeyShiftCheckBox;
     wxComboBox* hotKeyComboBox;
     wxPanel* notebook_pane_3;
+    wxTextCtrl* importExclusionTextBox;
+    wxPanel* notebook_pane_4;
     wxNotebook* notebook;
     wxButton* saveButton;
     wxButton* cancelButton;

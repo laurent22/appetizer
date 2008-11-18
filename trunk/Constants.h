@@ -21,6 +21,7 @@ const wxString ICONS_FOLDER_NAME = _T("Icons");
 const wxString HELP_FOLDER_NAME = _T("Help");
 const wxString WINDOW_FILE_NAME = _T("Window.xml");
 const wxString HELP_FILE_NAME = _T("Appetizer.chm");
+const wxString ICON_CACHE_FOLDER_NAME = _T("IconCache");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
 const wxString DEFAULT_SKIN = _T("Default");
 const wxString CHECK_VERSION_URL = _T("http://appetizer.sourceforge.net/VersionInfo.xml");

@@ -26,6 +26,7 @@ wxString FilePaths::HelpDirectory_ = _T("");
 wxString FilePaths::WindowsDirectory_ = _T("");
 wxString FilePaths::System32Directory_ = _T("");
 wxString FilePaths::ApplicationPath_ = _T("");
+wxString FilePaths::IconCacheDirectory_ = _T("");
 
 
 wxString FilePaths::GetApplicationDrive() { return FilePaths::ApplicationDrive_; }
@@ -40,6 +41,7 @@ wxString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }
 wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
+wxString FilePaths::GetIconCacheDirectory() { return FilePaths::IconCacheDirectory_; }
 wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
 
 wxString FilePaths::GetQuickLaunchDirectory() { 
@@ -196,4 +198,5 @@ void FilePaths::InitializePaths() {
   FilePaths::HelpDirectory_ = FilePaths::GetDataDirectory() + _T("/") + HELP_FOLDER_NAME;  
   FilePaths::BaseSkinDirectory_ = FilePaths::GetDataDirectory() + _T("/") + SKIN_FOLDER_NAME; 
   FilePaths::DefaultSkinDirectory_ = FilePaths::BaseSkinDirectory_ + _T("/") + DEFAULT_SKIN;
+  FilePaths::IconCacheDirectory_ = FilePaths::DataDirectory_ + _T("/") + ICON_CACHE_FOLDER_NAME;
 }

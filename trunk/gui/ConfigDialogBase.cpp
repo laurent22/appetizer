@@ -13,9 +13,11 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
 {
     // begin wxGlade: ConfigDialogBase::ConfigDialogBase
     notebook = new wxNotebook(this, ID_CDLG_MainNotebook, wxDefaultPosition, wxDefaultSize, 0);
+    notebook_pane_4 = new wxPanel(notebook, wxID_ANY);
     notebook_pane_3 = new wxPanel(notebook, wxID_ANY);
     notebook_pane_2 = new wxPanel(notebook, wxID_ANY);
     hotKeyGroupSizer_staticbox = new wxStaticBox(notebook_pane_3, -1, wxT("Hot key"));
+    importExclusionSizer_staticbox = new wxStaticBox(notebook_pane_4, -1, wxT("#Exclude these files and folders from import operations:#"));
     notebook_1_pane_1 = new wxPanel(notebook, wxID_ANY);
     languageLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Language:"));
     const wxString *languageComboBox_choices = NULL;
@@ -44,8 +46,9 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     hotKeyShiftCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Shift +"));
     const wxString *hotKeyComboBox_choices = NULL;
     hotKeyComboBox = new wxComboBox(notebook_pane_3, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, hotKeyComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
+    importExclusionTextBox = new wxTextCtrl(notebook_pane_4, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
-    cancelButton = new wxButton(this, ID_CDLG_BUTTON_Cancel, wxT("Cancel"));
+    cancelButton = new wxButton(this, wxID_CANCEL, wxT("Cancel"));
 
     set_properties();
     do_layout();
@@ -57,7 +60,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(374, 265));
+    SetSize(wxSize(374, 283));
     // end wxGlade
 }
 
@@ -67,6 +70,8 @@ void ConfigDialogBase::do_layout()
     // begin wxGlade: ConfigDialogBase::do_layout
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* sizer_6 = new wxBoxSizer(wxHORIZONTAL);
+    wxStaticBoxSizer* importExclusionSizer = new wxStaticBoxSizer(importExclusionSizer_staticbox, wxVERTICAL);
     wxBoxSizer* sizer_5 = new wxBoxSizer(wxHORIZONTAL);
     wxFlexGridSizer* grid_sizer_2 = new wxFlexGridSizer(3, 1, 8, 8);
     wxStaticBoxSizer* hotKeyGroupSizer = new wxStaticBoxSizer(hotKeyGroupSizer_staticbox, wxHORIZONTAL);
@@ -108,9 +113,13 @@ void ConfigDialogBase::do_layout()
     grid_sizer_2->AddGrowableCol(0);
     sizer_5->Add(grid_sizer_2, 1, wxALL|wxEXPAND, 10);
     notebook_pane_3->SetSizer(sizer_5);
+    importExclusionSizer->Add(importExclusionTextBox, 1, wxALL|wxEXPAND, 8);
+    sizer_6->Add(importExclusionSizer, 1, wxALL|wxEXPAND, 8);
+    notebook_pane_4->SetSizer(sizer_6);
     notebook->AddPage(notebook_1_pane_1, wxT("General"));
     notebook->AddPage(notebook_pane_2, wxT("Appearance"));
-    notebook->AddPage(notebook_pane_3, wxT("Operations*"));
+    notebook->AddPage(notebook_pane_3, wxT("Operations"));
+    notebook->AddPage(notebook_pane_4, wxT("#Import#"));
     sizer_1->Add(notebook, 1, wxLEFT|wxRIGHT|wxTOP|wxEXPAND, 4);
     sizer_2->Add(saveButton, 0, wxRIGHT|wxALIGN_BOTTOM, 8);
     sizer_2->Add(cancelButton, 0, wxALIGN_BOTTOM, 0);

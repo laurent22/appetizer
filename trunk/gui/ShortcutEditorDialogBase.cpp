@@ -24,7 +24,7 @@ ShortcutEditorDialogBase::ShortcutEditorDialogBase(wxWindow* parent, int id, con
     changeIconButton = new wxButton(this, ID_SHORTCUTDLG_BUTTON_ChangeIcon, wxT("Change icon..."));
     useDefaultIconButton = new wxButton(this, ID_SHORTCUTDLG_BUTTON_UseDefaultIcon, wxT("#Use default#"));
     saveButton = new wxButton(this, ID_BUTTON_Save, wxT("Save"));
-    cancelButton = new wxButton(this, ID_BUTTON_Cancel, wxT("Cancel"));
+    cancelButton = new wxButton(this, wxID_CANCEL, wxT("Cancel"));
 
     set_properties();
     do_layout();

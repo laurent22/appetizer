@@ -23,7 +23,7 @@ Utilities::Utilities() {
 }
 
 
-void Utilities::InstallAutorunFile() {
+bool Utilities::InstallAutorunFile() {
   wxString skinDir = StringUtil::RemoveDriveFromPath(FilePaths::GetBaseSkinDirectory());
   wxString appPath = StringUtil::RemoveDriveFromPath(FilePaths::GetApplicationPath());
 
@@ -48,13 +48,14 @@ void Utilities::InstallAutorunFile() {
   wxLogNull logNull;
   f.Create(filePath, true);
   bool opened = f.Open(filePath, wxFile::write);
-  if (!opened) {
-    MessageBoxes::ShowError(_("Could not create autorun.inf. Please try again."));
-    return;
+  if (!opened) {    
+    return false;
   }
   
   f.Write(fileContent, wxConvUTF8);
   f.Close();
+
+  return true;
 }
 
 

@@ -7,7 +7,6 @@
 #include "stdafx.h"
 
 #include "FolderItem.h"
-#include "FolderItemProcess.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
 #include "MessageBoxes.h"
@@ -20,7 +19,6 @@
 
 int FolderItem::uniqueID_ = 1000;
 
-FolderItemProcessVector FolderItem::processVector_;
 FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
 
 
@@ -28,7 +26,7 @@ FolderItem::FolderItem(bool isGroup) {
   FolderItem::uniqueID_++;
   id_ = FolderItem::uniqueID_;
 
-  resolvedPath_ = _T("*");
+  resolvedPath_ = _T("*"); // It means that it hasn't been resolved yet
 
   isDisposed_ = false;
   parent_ = NULL;
@@ -41,8 +39,41 @@ FolderItem::FolderItem(bool isGroup) {
 }
 
 
+FolderItemSP FolderItem::CreateFolderItemSP(bool isGroup) {
+  FolderItemSP f(new FolderItem(isGroup));
+  folderItemIdHashMap_[f->GetId()] = f;
+  return f;
+}
+
+
+FolderItemSP FolderItem::GetFolderItemById(int id) {
+  FolderItemSP sp = folderItemIdHashMap_[id];
+  
+  // The folder item is not (or no longer) in the hash map
+  if (!sp.get()) return sp;
+
+  if (sp->IsDisposed()) {
+    // The folder item has been disposed, so remove it
+    // from the hash map now and return NULL
+    folderItemIdHashMap_.erase(id);
+    FolderItemSP nullOutput;
+    return nullOutput;
+  }
+
+  // Otherwise return the pointer
+  return sp;
+}
+
+
 void FolderItem::Dispose() {
   if (isDisposed_) return;
+  
+  FolderItem* parent = GetParent();
+  if (parent) {
+    FolderItemSP thisAsSP = FolderItem::GetFolderItemById(id_);
+    if (thisAsSP.get()) parent->RemoveChild(thisAsSP);
+  }
+  
   isDisposed_ = true;
 }
 
@@ -696,18 +727,6 @@ void FolderItem::FromXml(TiXmlElement* xml) {
 }
 
 
-FolderItemSP FolderItem::CreateFolderItemSP(bool isGroup) {
-  FolderItemSP f(new FolderItem(isGroup));
-  folderItemIdHashMap_[f->GetId()] = f;
-  return f;
-}
-
-
-FolderItemSP FolderItem::GetFolderItemById(int id) {
-  return folderItemIdHashMap_[id];
-}
-
-
 bool FolderItem::GetAutomaticallyAdded() {
   return automaticallyAdded_;
 }
@@ -745,7 +764,9 @@ void FolderItem::CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSi
   wxASSERT_MSG(hash != wxEmptyString, _T("Couldn't cache icon: empty hash"));
 
   wxBitmap bitmap(*icon);
-  bitmap.SaveFile(wxString::Format(_T("%s/%s-%d.png"), FilePaths::GetDataDirectory() + _T("/IconCache"), hash, iconSize), wxBITMAP_TYPE_PNG);
+  wxString cacheDirectory = FilePaths::GetIconCacheDirectory();
+  if (!wxFileName::DirExists(cacheDirectory)) wxFileName::Mkdir(cacheDirectory);
+  bitmap.SaveFile(wxString::Format(_T("%s/%s-%d.png"), cacheDirectory, hash, iconSize), wxBITMAP_TYPE_PNG);
 }
 
 
@@ -780,9 +801,10 @@ wxString FolderItem::GetIconDiskCacheHash() {
 
 
 wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
-  wxString cacheDirectory = FilePaths::GetDataDirectory() + _T("/IconCache");
-
+  wxString cacheDirectory = FilePaths::GetIconCacheDirectory();
   wxIconSP output;
+
+  if (!wxFileName::DirExists(cacheDirectory)) return output;
 
   if (hash != wxEmptyString) {
     // Look for it in the cache first
@@ -821,13 +843,12 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
   }
 
   #ifdef __MLB_USE_ICON_DISK_CACHE__
-    wxString cacheHash;
-    cacheHash = GetIconDiskCacheHash();
-    wxIconSP cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
-    if (cachedIcon.get()) {
-      icons_[iconSize] = cachedIcon;
-      return cachedIcon;
-    }
+  wxString cacheHash;
+  cacheHash = GetIconDiskCacheHash();
+  wxIconSP cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
+  if (cachedIcon.get()) {
+    icons_[iconSize] = cachedIcon;
+    return cachedIcon;
   }
   #endif
 
@@ -844,9 +865,7 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
   if (!output.get()) {
     output.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     #ifdef __MLB_USE_ICON_DISK_CACHE__
-    if (output.get()) {
-      if (cacheEnabled) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
-    }
+    if (output.get()) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
     #endif
   }
 
