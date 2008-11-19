@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-18 15:44+0000\n"
-"PO-Revision-Date: 2008-11-18 16:48-0000\n"
+"POT-Creation-Date: 2008-11-19 19:04+0000\n"
+"PO-Revision-Date: 2008-11-19 19:08-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -155,6 +155,10 @@ msgstr "Très Large (XP minimum)"
 msgid "Jumbo (Vista and above)"
 msgstr "Jumbo (Vista minimum)"
 
+#: main.cpp:174
+msgid "Small"
+msgstr "Petite"
+
 #: main.cpp:267
 msgid "Could not get update information"
 msgstr "Impossible de récupérer les informations de mise à jour."
@@ -219,6 +223,7 @@ msgid "Multi-launch"
 msgstr "Multi-lancement"
 
 #: OptionPanel.cpp:111
+#: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
 msgstr "Importer les raccourcis"
 
@@ -243,7 +248,7 @@ msgstr "Le groupe de Lancement Multiple est vide. Souhaitez-vous ouvrir la rubri
 #: Styles.cpp:69
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
-msgstr "Cette skin n'est pas compatible avec votre version d'%s"
+msgstr "Ce thème n'est pas compatible avec votre version d'%s"
 
 #: utilities\Utilities.cpp:116
 msgid "Do you wish to eject the drive?"
@@ -335,6 +340,7 @@ msgstr "Non"
 #: gui\ConfigDialog.cpp:52
 #: gui\FileOrFolderDialog.cpp:112
 #: gui\IconDialog.cpp:100
+#: gui\ImportWizardDialog.cpp:76
 #: gui\ShortcutEditorDialog.cpp:41
 msgid "Cancel"
 msgstr "Annuler"
@@ -388,7 +394,7 @@ msgstr "Taille des icônes :"
 
 #: gui\ConfigDialog.cpp:160
 msgid "Skin:"
-msgstr "Apparence :"
+msgstr "Thème :"
 
 #: gui\ConfigDialog.cpp:161
 msgid "Orientation:"
@@ -597,6 +603,37 @@ msgstr "Tous les fichiers"
 msgid "Select an icon file or library"
 msgstr "Sélectionner un fichier d'icône ou une bibliothèque"
 
+#: gui\ImportWizardDialog.cpp:31
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Cet outil permet d'importer vos raccourcis dans %s.\n"
+"\n"
+"Veuillez sélectionner ci-dessous les endroits desquels vous souhaitez importer des icônes :"
+
+#: gui\ImportWizardDialog.cpp:42
+msgid "PortableApps applications"
+msgstr "Fichiers et dossiers PortableApps"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "Windows Quick Launch toolbar"
+msgstr "Barre de \"Lancement Rapide\" de Windows"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Start Menu programs"
+msgstr "Menu \"Démarrer\" de Windows"
+
+#: gui\ImportWizardDialog.cpp:72
+msgid "Start >>"
+msgstr "Démarrer >>"
+
+#: gui\ImportWizardDialog.cpp:112
+msgid "Importing shortcuts... Please wait."
+msgstr "Importation des raccourcis... Veuillez patienter."
+
 #: gui\ShortcutEditorDialog.cpp:36
 msgid "Group Properties"
 msgstr "Propriétés du groupe"
@@ -633,8 +670,6 @@ msgstr "Par défaut"
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr "La cible de ce raccourci n'existe pas. Souhaitez-vous continuer ?"
 
-#~ msgid "Small"
-#~ msgstr "Petite"
 #~ msgid "Select folder"
 #~ msgstr "Veuillez sélectionner un dossier"
 #~ msgid ""

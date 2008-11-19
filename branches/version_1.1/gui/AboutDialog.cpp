@@ -65,7 +65,7 @@ void AboutDialog::Localize() {
   creditLabel->SetLabel(_("Credits"));
   creditTextBox->SetValue(wxString::Format(
     _("Translators: %s\n\nThis software uses a number of open source libraries including:\n\n- Simpleini by Brodie Thiesfield\n- TinyXml by Yves Berquin\n- The Boost C++ Libraries and wxWidgets by their respective authors\n\nDialog boxes are built using wxGlade by Alberto Griggio."),
-    _T("Simeon, Pieter Kerstens, Michał Trzebiatowski")));
+    _T("Simeon, WT, Pieter Kerstens, Michał Trzebiatowski")));
   copyrightLabel->SetLabel(wxString::Format(_("Copyright © %s"), _T("2008 Laurent Cozic")));
   licenseTextBox->SetValue(_("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."));
   webLabel->SetLabel(_("Web:"));
