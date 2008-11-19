@@ -16,7 +16,7 @@
 
   ;Name and file
   Name "${APP_NAME}"
-  OutFile "..\_Sourceforge\Releases\${APP_NAME}_${VERSION}.exe"
+  OutFile "..\_Sourceforge\Releases\${APP_NAME}_Installer_${VERSION}.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\${APP_NAME}"

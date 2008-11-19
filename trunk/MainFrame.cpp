@@ -32,6 +32,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_IDLE(MainFrame::OnIdle)
   EVT_MOUSE_CAPTURE_LOST(MainFrame::OnMouseCaptureLost)
   EVT_HOTKEY(HOT_KEY_ID, MainFrame::OnHotKey)
+  EVT_ACTIVATE(MainFrame::OnActivate)
 END_EVENT_TABLE()
 
 
@@ -50,6 +51,7 @@ MainFrame::MainFrame()
   arrowButtonOpenIcon_ = NULL;
   arrowButtonCloseIcon_ = NULL;
   rotated_ = false;
+  activated_ = false;
 
   #ifdef __WXDEBUG__
   logWindow_ = new wxLogWindow(this, wxEmptyString, true);
@@ -197,12 +199,21 @@ void MainFrame::UnregisterHideShowHotKey() {
 }
 
 
+void MainFrame::OnActivate(wxActivateEvent& evt) {
+  activated_ = evt.GetActive();
+}
+
+
 void MainFrame::OnHotKey(wxKeyEvent& evt) {
   if (!IsVisible()) {
     Show();
     Raise();
   } else {
-    Raise();
+    if (!activated_) {
+      Raise();
+    } else {
+      Hide();
+    }
   }
 }
 

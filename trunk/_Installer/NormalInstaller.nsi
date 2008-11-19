@@ -11,12 +11,12 @@
 ;General
 
 !define APP_NAME "Appetizer"
-!define VERSION "1.0.2.43"
+!define VERSION "1.1.0.7"
 !define SOURCE_FOLDER "..\_PAF!\App\Appetizer"
 
   ;Name and file
   Name "${APP_NAME}"
-  OutFile "..\_Sourceforge\Releases\${APP_NAME}_${VERSION}.exe"
+  OutFile "..\_Sourceforge\Releases\${APP_NAME}_Installer_${VERSION}.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\${APP_NAME}"

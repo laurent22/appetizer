@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-18 15:44+0000\n"
+"POT-Creation-Date: 2008-11-19 19:04+0000\n"
 "PO-Revision-Date: 2008-11-08 13:59-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -139,6 +139,10 @@ msgstr ""
 msgid "Jumbo (Vista and above)"
 msgstr ""
 
+#: main.cpp:174
+msgid "Small"
+msgstr "Klein"
+
 #: main.cpp:267
 msgid "Could not get update information"
 msgstr "Kon geen update informatie krijgen"
@@ -198,7 +202,7 @@ msgstr ""
 msgid "Multi-launch"
 msgstr ""
 
-#: OptionPanel.cpp:111
+#: OptionPanel.cpp:111 gui\ImportWizardDialog.cpp:24
 #, fuzzy
 msgid "Import shortcuts"
 msgstr "Nieuwe snelkoppeling..."
@@ -306,7 +310,7 @@ msgstr ""
 
 #: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:52
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:100
-#: gui\ShortcutEditorDialog.cpp:41
+#: gui\ImportWizardDialog.cpp:76 gui\ShortcutEditorDialog.cpp:41
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -573,6 +577,35 @@ msgstr "Selecteer bestand"
 msgid "Select an icon file or library"
 msgstr "Selecteer bestand"
 
+#: gui\ImportWizardDialog.cpp:31
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:42
+msgid "PortableApps applications"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "Windows Quick Launch toolbar"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Start Menu programs"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:72
+msgid "Start >>"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:112
+#, fuzzy
+msgid "Importing shortcuts... Please wait."
+msgstr "Nieuwe snelkoppeling..."
+
 #: gui\ShortcutEditorDialog.cpp:36
 #, fuzzy
 msgid "Group Properties"
@@ -610,9 +643,6 @@ msgstr ""
 #: gui\ShortcutEditorDialog.cpp:143
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr "De snelkoppeling lokatie bestaat niet. Wilt u verdergaan?"
-
-#~ msgid "Small"
-#~ msgstr "Klein"
 
 #~ msgid "Select folder"
 #~ msgstr "Selecteer map"

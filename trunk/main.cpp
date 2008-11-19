@@ -171,7 +171,7 @@ wxString MiniLaunchBar::GetIconSizeName(int iconSize) {
 
   }
 
-  return _T("Small");
+  return _("Small");
 }
 
 

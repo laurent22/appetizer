@@ -14,7 +14,7 @@
 
 
 UserSettings::UserSettings() {
-  IconSize = wxGetApp().GetOSValidIconSize(EXTRA_LARGE_ICON_SIZE);
+  IconSize = wxGetApp().GetOSValidIconSize(LARGE_ICON_SIZE);
   Locale = _T("en");
   PortableAppsPath = _T("%DRIVE%/PortableApps");
   DocumentsPath = _T("%DRIVE%/Documents");

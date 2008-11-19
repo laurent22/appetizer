@@ -68,6 +68,7 @@ class MainFrame: public wxFrame {
     ImageButton* ejectSideButton_;
     ImageButton* minimizeSideButton_;
     bool hotKeyRegistered_;
+    bool activated_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -129,6 +130,7 @@ class MainFrame: public wxFrame {
     void OnIdle(wxIdleEvent& evt);
     void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
     void OnHotKey(wxKeyEvent& evt);
+    void OnActivate(wxActivateEvent& evt);
 
   DECLARE_EVENT_TABLE()
 
