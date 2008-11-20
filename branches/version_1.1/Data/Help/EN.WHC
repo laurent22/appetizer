@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Configuracion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ArchivoOrigen>S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\en\Appetizer.html</ArchivoOrigen>
+  <ArchivoOrigen>s:\Docs\PROGS\C++\MiniLaunchBar\branches\version_1.1\Data\Help\en\Appetizer.html</ArchivoOrigen>
   <DirectorioDestino>S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\en\Appetizer-project</DirectorioDestino>
   <HtmlCabecera />
   <HtmlPie />
@@ -15,7 +15,7 @@
   <NivelArbolContenidos>0</NivelArbolContenidos>
   <NivelTemasIndice>0</NivelTemasIndice>
   <Compilar>true</Compilar>
-  <ArchivoAyuda>S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\en\Appetizer.chm</ArchivoAyuda>
+  <ArchivoAyuda>s:\Docs\PROGS\C++\MiniLaunchBar\branches\version_1.1\Data\Help\en\Appetizer.chm</ArchivoAyuda>
   <CommandLine />
   <GeneratePdf>false</GeneratePdf>
   <PdfPath>S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\en\Appetizer.pdf</PdfPath>
