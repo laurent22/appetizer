@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuracion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArchivoOrigen>s:\Docs\PROGS\C++\MiniLaunchBar\branches\version_1.1\Data\Help\de\Appetizer.html</ArchivoOrigen>
+  <DirectorioDestino>S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\en\Appetizer-project</DirectorioDestino>
+  <HtmlCabecera />
+  <HtmlPie />
+  <TituloAyuda>Appetizer</TituloAyuda>
+  <NivelCorte>1</NivelCorte>
+  <GenerarWeb>false</GenerarWeb>
+  <ArchivosAdicionales>
+    <anyType xsi:type="xsd:string">S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\de\images</anyType>
+  </ArchivosAdicionales>
+  <AbrirProyecto>false</AbrirProyecto>
+  <DirectorioWeb>S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\en\Appetizer-web</DirectorioWeb>
+  <NivelArbolContenidos>0</NivelArbolContenidos>
+  <NivelTemasIndice>0</NivelTemasIndice>
+  <Compilar>true</Compilar>
+  <ArchivoAyuda>s:\Docs\PROGS\C++\MiniLaunchBar\branches\version_1.1\Data\Help\de\Appetizer.chm</ArchivoAyuda>
+  <CommandLine />
+  <GeneratePdf>false</GeneratePdf>
+  <PdfPath>S:\Docs\PROGS\C++\MiniLaunchBar\trunk\Data\Help\en\Appetizer.pdf</PdfPath>
+  <WebKeywords />
+  <WebDescription />
+  <WebHeaderFile />
+  <WebFooterFile />
+  <GenerateSitemap>false</GenerateSitemap>
+  <WebBase />
+  <ChangeFrequency>monthly</ChangeFrequency>
+  <WebLanguage>English</WebLanguage>
+  <ConfigurationVersion>1.3</ConfigurationVersion>
+  <FullTextSearch>false</FullTextSearch>
+</Configuracion>
