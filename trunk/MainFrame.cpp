@@ -97,7 +97,11 @@ MainFrame::MainFrame()
   closeSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_CloseButton);
   closeSideButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
+  #ifdef __WXDEBUG__
+  bool showEjectSideButton = true;
+  #else
   bool showEjectSideButton = wxGetApp().GetUtilities().IsApplicationOnRemoteDrive();
+  #endif // __WXDEBUG__
 
   if (showEjectSideButton) {
     ejectSideButton_ = new ImageButton(backgroundPanel_, ID_BUTTON_MainFrame_EjectButton);

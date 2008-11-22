@@ -25,7 +25,7 @@ void XmlUtil::AppendTextElement(TiXmlElement* targetElement, const char* element
 
 
 void XmlUtil::AppendTextElement(TiXmlElement* targetElement, const char* elementName, bool elementText) {
-  wxString s = elementText ? _T("true") : _T("false");
+  wxString s = elementText ? _T("1") : _T("0");
   XmlUtil::AppendTextElement(targetElement, elementName, s.mb_str());
 }
 

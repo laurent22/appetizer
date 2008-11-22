@@ -27,6 +27,14 @@ WX_DECLARE_HASH_MAP(int, wxIconSP, wxIntegerHash, wxIntegerEqual, IconHashMap);
 WX_DECLARE_HASH_MAP(int, FolderItemSP, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
 
 
+struct LaunchedFolderItem {
+  long ProcessId;
+  FolderItemProcess* Process;
+  wxString ExecutablePath;
+};
+
+
+
 class FolderItem : public wxEvtHandler {
 
 public:
@@ -61,6 +69,8 @@ public:
   wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE);
   wxMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
 
+  static void KillStartedProcesses();
+
   void Launch();
   void LaunchWithArguments(const wxString& arguments);
   static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString);
@@ -84,8 +94,10 @@ public:
 
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);
+  static wxString GetDisplayName(const wxString& unresolvedFilePath);
+  
   bool DoMultiLaunch();
-
+  
   // ***************************************************************
   // Methods to work with children
   // ***************************************************************
@@ -113,6 +125,8 @@ public:
 
 private:
 
+  void ConvertOldVariablesToNew(wxString& s);
+
   static int uniqueID_;
 
   wxString parameters_;
@@ -133,6 +147,7 @@ private:
   bool isDisposed_;
   
   static FolderItemIdHashMap folderItemIdHashMap_;
+  static std::vector<LaunchedFolderItem*> launchedFolderItems_;
 
 };
 

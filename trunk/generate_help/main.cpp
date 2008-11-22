@@ -104,7 +104,6 @@ wxString GenerateHTMLString() {
   // then need to be converted to ANSI using a text editor.
   AddStringLn(_T("<meta http-equiv='content-type' content='text/html; charset=Western-1252'>"));
   AddStringLn(_T("<title>Appetizer</title>"));
-
   AddStringLn(_T("<style TYPE='text/css'>"));
 	AddStringLn(_T("<!--"));
   AddStringLn(_T("h2 { color:#ff4f02; }"));
@@ -123,7 +122,7 @@ wxString GenerateHTMLString() {
 
   H2(_("Introduction"));
   H3(_("About Appetizer"));
-  P(_("Appetizer is a free application launcher, or dock, for Windows. It allows organizing and launching your applications and other shortcuts into a convenient dock. The app is skinable and entirely customizable. It is available in several different languages."));
+  P(_("Appetizer is a free application launcher, or dock, for Windows. It allows organizing and launching your applications and other shortcuts into a convenient dock. The app is skinable and entirely customizable."));
   P(_("Additionally, the application supports the [http://portableapps.com PortableApps] format. So if you use Appetizer on a removable drive in the PortableApps format, the application will detect it and automatically import all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."));
   
   // -------------------------------------------------
@@ -161,7 +160,7 @@ wxString GenerateHTMLString() {
   // Adding a shortcut
   // -------------------------------------------------
   H3(_("Adding a shortcut"));
-  P(_("To add a shortcut, right-click anywhere on the icon panel and select 'New shortcut', then select a file or folder."));  
+  P(_("To add a shortcut, right-click anywhere on the icon panel and select 'New shortcut', then select a file or folder. Alternatively, you may also directly drag and drop a file onto the dock."));
 
   // -------------------------------------------------
   // Adding a group
@@ -247,7 +246,7 @@ wxString GenerateHTMLString() {
   LI(_("[b]Language:[/b] Select your language here. If you wish to contribute and translate Appetizer in your own language, please [#Translating follow this link]."));  
   LI(_("[b]Always on top:[/b] If this is selected the bar will always remain on top of the other windows."));
   LI(_("[b]Allow only one instance of Appetizer at a time:[/b] If this is selected, only one instance of Appetizer can run at a time."));
-  LI(_("[b]Install autorun file:[/b] Clicking this button will install an autorun file on your removable drive. This will allow Appetizer to automatically start when you insert the drive."));
+  LI(_("[b]Install autorun file:[/b] Clicking this button will install an autorun file on your removable drive. This will allow Appetizer to automatically start when you insert the drive. However, note that in some instances Windows may prevent the autorun from being executed, for example for security reason or because the computer is set that way."));
   LI(_("[b]Check for update:[/b] Click this button to check if a new update is available."));
   EndList();
 

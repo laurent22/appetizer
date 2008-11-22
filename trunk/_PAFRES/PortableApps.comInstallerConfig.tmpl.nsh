@@ -29,12 +29,12 @@
 ;LAST UPDATED FOR INSTALLER VERSION: 0.10.4
 
 ;== Basic Information.  Basic information about the portable app
-!define NAME "Appetizer Portable"
-!define SHORTNAME "AppetizerPortable"
+!define NAME "Appetizer"
+!define SHORTNAME "Appetizer"
 !define VERSION "___FULL_VERSION___"
-!define FILENAME "Appetizer_Portable____FULL_VERSION___"
-!define CHECKRUNNING "AppetizerPortable.exe"
-!define CLOSENAME "Appetizer Portable "
+!define FILENAME "Appetizer____FULL_VERSION___"
+!define CHECKRUNNING "Appetizer.exe"
+!define CLOSENAME "Appetizer "
 !define ADDONSDIRECTORYPRESERVE "NONE" ;use "NONE" for no plugins directory or relative to install directory: App\AppName\plugins
 !define INSTALLERCOMMENTS "For additional details, visit http://appetizer.sourceforge.net/"
 !define INSTALLERADDITIONALTRADEMARKS "" ;end this entry with a period and a space if used

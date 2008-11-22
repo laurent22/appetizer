@@ -27,7 +27,7 @@
 
 ;=== Program Details
 Name "${NAME}"
-OutFile "..\..\${NAME}Portable.exe"
+OutFile "..\..\${NAME}.exe"
 Caption "${FRIENDLYNAME} | PortableApps.com"
 Icon "..\..\App\AppInfo\appicon.ico"
 VIProductVersion "${VER}"

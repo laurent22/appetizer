@@ -16,11 +16,11 @@
 UserSettings::UserSettings() {
   IconSize = wxGetApp().GetOSValidIconSize(LARGE_ICON_SIZE);
   Locale = _T("en");
-  PortableAppsPath = _T("%DRIVE%/PortableApps");
-  DocumentsPath = _T("%DRIVE%/Documents");
-  MusicPath = _T("%DRIVE%/Documents/Music");
-  PicturesPath = _T("%DRIVE%/Documents/Pictures");
-  VideosPath = _T("%DRIVE%/Documents/Videos");
+  PortableAppsPath = _T("$(Drive)/PortableApps");
+  DocumentsPath = _T("$(Drive)/Documents");
+  MusicPath = _T("$(Drive)/Documents/Music");
+  PicturesPath = _T("$(Drive)/Documents/Pictures");
+  VideosPath = _T("$(Drive)/Documents/Videos");
   Skin = _T("Default");
   Rotated = false;
   AlwaysOnTop = false;
@@ -36,7 +36,9 @@ UserSettings::UserSettings() {
   ShowEjectDriveMessage = true;
 
   NextUpdateCheckTime = wxDateTime::Now();
-  NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
+  // This is just to force an update check the first time the 
+  // app is launched.
+  NextUpdateCheckTime.Subtract(wxTimeSpan(24));
 }
 
 

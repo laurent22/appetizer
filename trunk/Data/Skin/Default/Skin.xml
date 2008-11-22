@@ -1,5 +1,28 @@
 <?xml version="1.0" ?>
 <Skin compatibleVersion="1.0" author="Laurent Cozic" name="Carbon">
+
+	<!-- 
+	
+	Some general notes about the Skin.xml file:
+	
+	- The scale grids are expressed as the (Left, Top, Width, Height) of the central part of the grid.
+	  See http://www.adobe.com/devnet/flex/articles/flex_skins_03.html for some information on how the grids work
+		
+	- The paddings are expressed as (Left, Top, Right, Bottom)
+	
+	- The option buttons can be customized by adding this tag to the XML:
+	
+		<OptionButton>
+			<IconColor>130,130,130</IconColor>
+			<DownIconOffset>0,1</DownIconOffset>
+		</OptionButton>
+			
+	- The colors are expressed as (Red, Green, Blue)
+	
+	- Many skin files are optional - see the BlueGlass skin for the files that are actually required.
+	
+	-->
+	
 	<ArrowButton>
 		<ScaleGrid>6,30,1,1</ScaleGrid>
 		<Width>16</Width>
@@ -11,8 +34,8 @@
 	<OptionPanel>
 		<ScaleGrid>20,30,1,1</ScaleGrid>
 		<Padding>6,4,6,4</Padding>
-		<HGap>4</HGap>
-		<VGap>3</VGap>
+		<HGap>4</HGap> <!-- The horizontal gap between the buttons -->
+		<VGap>3</VGap> <!-- The vertical gap between the buttons -->
 	</OptionPanel>
 	<IconPanel>
 		<ScaleGrid>23,23,1,1</ScaleGrid>

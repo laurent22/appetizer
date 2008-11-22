@@ -169,17 +169,17 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
       
       } break;
 
-    case ID_MENU_SpecialItem_ControlPanel: user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_CONTROL_PANEL%")); break;
-    case ID_MENU_SpecialItem_MyComputer:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_COMPUTER%")); break;
-    case ID_MENU_SpecialItem_MyNetwork:    user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_NETWORK%")); break;
-    case ID_MENU_SpecialItem_RecycleBin:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_RECYCLE_BIN%")); break;
-    case ID_MENU_SpecialItem_Desktop:      user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_SHOW_DESKTOP%")); break;
-    case ID_MENU_SpecialItem_Explorer:     user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_EXPLORER%")); break;
-    case ID_MENU_SpecialItem_Search:       user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_SEARCH%")); break;
-    case ID_MENU_SpecialItem_MyDocuments:  user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_DOCUMENTS%")); break;
-    case ID_MENU_SpecialItem_MyPictures:   user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_PICTURES%")); break;
-    case ID_MENU_SpecialItem_MyMusic:      user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_MUSIC%")); break;
-    case ID_MENU_SpecialItem_MyVideos:     user->AddNewFolderItemFromPath(rootFolderItem, _T("%AZ_MY_VIDEO%")); break;
+    case ID_MENU_SpecialItem_ControlPanel: user->AddNewFolderItemFromPath(rootFolderItem, _T("$(ControlPanel)")); break;
+    case ID_MENU_SpecialItem_MyComputer:   user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyComputer)")); break;
+    case ID_MENU_SpecialItem_MyNetwork:    user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyNetwork)")); break;
+    case ID_MENU_SpecialItem_RecycleBin:   user->AddNewFolderItemFromPath(rootFolderItem, _T("$(RecycleBin)")); break;
+    case ID_MENU_SpecialItem_Desktop:      user->AddNewFolderItemFromPath(rootFolderItem, _T("$(ShowDesktop)")); break;
+    case ID_MENU_SpecialItem_Explorer:     user->AddNewFolderItemFromPath(rootFolderItem, _T("$(Explorer)")); break;
+    case ID_MENU_SpecialItem_Search:       user->AddNewFolderItemFromPath(rootFolderItem, _T("$(Search)")); break;
+    case ID_MENU_SpecialItem_MyDocuments:  user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyDocuments)")); break;
+    case ID_MENU_SpecialItem_MyPictures:   user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyPictures)")); break;
+    case ID_MENU_SpecialItem_MyMusic:      user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyMusic)")); break;
+    case ID_MENU_SpecialItem_MyVideos:     user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyVideo)")); break;
 
     default:
 
@@ -294,7 +294,6 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
     if (index >= 0) {
       wxGetApp().GetUser()->GetRootFolderItem()->MoveChild(folderItem, index);
-      //wxGetApp().GetUser()->MoveFolderItem(folderItem->GetId(), index);
     }
 
     return true;
@@ -311,8 +310,8 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       FolderItemSP folderItem = folderItemRenderers_.at(index)->GetFolderItem();
       if (!folderItem.get()) return false;
 
-      if (folderItem->GetFilePath().Index(_T("%AZ_")) != wxNOT_FOUND) {
-        if (folderItem->GetFilePath() == _T("%AZ_RECYCLE_BIN%")) {
+      if (folderItem->GetFilePath().Index(_T("$(")) != wxNOT_FOUND) {
+        if (folderItem->GetFilePath() == _T("$(RecycleBin)")) {
           // Delete the files to the recycle bin
 
           for (int i = 0; i < filenames.Count(); i++) {

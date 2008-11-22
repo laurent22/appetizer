@@ -172,7 +172,7 @@ void ShortcutEditorDialog::OnBrowseButtonClick(wxCommandEvent& evt) {
 
     locationTextBox->SetValue(newValue); 
     
-    nameTextBox->SetValue(VersionInfo::GetFileDescription(FolderItem::ResolvePath(newValue)));
+    nameTextBox->SetValue(FolderItem::GetDisplayName(newValue));
 
     UpdateFolderItemIconFields();
   }  

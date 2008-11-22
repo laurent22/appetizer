@@ -14,9 +14,13 @@ class FolderItemProcess : public wxProcess {
 
 public:
 
-  FolderItemProcess();
   FolderItemProcess(wxEvtHandler * parent, int id = -1);
+  bool IsTerminated();
   virtual void OnTerminate(int pid, int status); 
+
+private:
+
+  bool terminated_;
 
 };
 

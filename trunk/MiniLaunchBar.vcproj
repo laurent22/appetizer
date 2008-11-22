@@ -203,7 +203,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib wxbase28ud_net.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib wxbase28ud_net.lib wxregexud.lib"
 				OutputFile=".\Appetizer-debug.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				GenerateDebugInformation="true"
@@ -278,7 +278,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib"
 				OutputFile=".\Appetizer.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -363,6 +363,10 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\FolderItemProcess.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\FolderItemRenderer.cpp"
@@ -724,6 +728,18 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\utilities\SystemUtil.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1240,6 +1256,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FolderItemProcess.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FolderItemRenderer.h"
 				>
 			</File>
@@ -1340,6 +1360,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\StringUtil.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\SystemUtil.h"
 					>
 				</File>
 				<File

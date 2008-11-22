@@ -54,7 +54,11 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
     choiceCheckBoxes.push_back(b);
     b->Connect(wxID_ANY, wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler(ImportWizardDialog::OnCheckBoxClicked), NULL, this);
 
-    if (n == _T("portableApps")) b->Enable(hasPortableAppsFolder);
+    if (n == _T("portableApps")) {
+      b->Enable(hasPortableAppsFolder);
+      if (hasPortableAppsFolder) b->SetValue(true);
+    }
+
     if (n == _T("quickLaunch")) b->Enable(wxFileName::DirExists(FilePaths::GetQuickLaunchDirectory()));
     
     y += b->GetSize().GetHeight() + gap;
@@ -71,7 +75,6 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
 
   startButton = new wxButton(this, ID_IMPORTWIZDLG_BUTTON_Start, _("Start >>"));
   startButton->SetSize(startButton->GetBestSize());
-  startButton->Enable(false);
 
   cancelButton = new wxButton(this, wxID_CANCEL, _("Cancel"));
   cancelButton->SetSize(cancelButton->GetBestSize());
@@ -83,6 +86,8 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
 
   y += gap;
   SetClientSize(windowWidth, y);
+
+  OnCheckBoxClicked(wxCommandEvent());
 }
 
 

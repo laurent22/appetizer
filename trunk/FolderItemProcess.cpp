@@ -9,18 +9,18 @@
 #include "FolderItemProcess.h"
 
 
-FolderItemProcess::FolderItemProcess() :
-wxProcess() {
-
-}
-
-
 FolderItemProcess::FolderItemProcess(wxEvtHandler* parent, int id) :
 wxProcess(parent, id) {
-
+  terminated_ = false;
 }
 
 
 void FolderItemProcess::OnTerminate(int pid, int status) {
-  wxLogDebug(_T("TERMINATED %d %d"), pid, status);
+  wxLogDebug(_T("Process terminated: %d %d"), pid, status);
+  terminated_ = true;
+}
+
+
+bool FolderItemProcess::IsTerminated() {
+  return terminated_;
 }

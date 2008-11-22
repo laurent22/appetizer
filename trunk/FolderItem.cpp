@@ -7,8 +7,10 @@
 #include "stdafx.h"
 
 #include "FolderItem.h"
+#include "FolderItemProcess.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
+#include "utilities/SystemUtil.h"
 #include "MessageBoxes.h"
 #include "Enumerations.h"
 #include "FilePaths.h"
@@ -20,6 +22,7 @@
 int FolderItem::uniqueID_ = 1000;
 
 FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
+std::vector<LaunchedFolderItem*> FolderItem::launchedFolderItems_;
 
 
 FolderItem::FolderItem(bool isGroup) {
@@ -443,6 +446,37 @@ FolderItemSP FolderItem::SearchChildByFilename(const wxString& filename, int mat
 }
 
 
+void FolderItem::KillStartedProcesses() {
+
+  for (int i = 0; i < launchedFolderItems_.size(); i++) {
+    LaunchedFolderItem* d = launchedFolderItems_.at(i);
+    if (d->Process->IsTerminated()) continue;
+
+    wxKillError error = wxProcess::Kill(d->ProcessId, wxSIGTERM, wxKILL_CHILDREN);
+
+    switch (error) {
+
+      case wxKILL_BAD_SIGNAL: // Try to kill it using the file name
+      case wxKILL_NO_PROCESS:
+      case wxKILL_ERROR:
+        {
+
+        wxFileName f(d->ExecutablePath);
+        wxString filename = f.GetName();
+        
+        }
+        break;
+
+      case wxKILL_ACCESS_DENIED: // Force the kill
+
+        wxProcess::Kill(d->Process->GetPid(), wxSIGKILL, wxKILL_CHILDREN);
+        break;
+
+    }
+  }
+}
+
+
 void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
 
@@ -455,9 +489,29 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
       // Set the current directory to the app directory
       wxString saveCurrentDirectory = wxGetCwd();
       wxSetWorkingDirectory(filename.GetPath());
+
       if (arguments == wxEmptyString) {
-        wxExecute(filePath, wxEXEC_ASYNC);
+
+        // ---------------------------
+        // Without arguments
+        // ---------------------------
+
+        FolderItemProcess* process = new FolderItemProcess(NULL);
+        
+        LaunchedFolderItem* d = new LaunchedFolderItem();
+        d->Process = process;
+        d->ExecutablePath = filePath;
+
+        launchedFolderItems_.push_back(d);
+        
+        d->ProcessId = wxExecute(filePath, wxEXEC_ASYNC, process);
+        
       } else {
+
+        // ---------------------------
+        // With arguments
+        // ---------------------------
+
         wxString tArguments(arguments); 
         // If the argument is a file path, then check that it has double quotes        
         if (wxFileName::FileExists(tArguments)) {
@@ -467,9 +521,12 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
           tArguments = FolderItem::ResolvePath(tArguments);
         }
         wxExecute(wxString::Format(_T("%s %s"), filePath, tArguments));
+
       }
+
       // Restore the current directory
       wxSetWorkingDirectory(saveCurrentDirectory);
+
       return;
     }
 
@@ -519,34 +576,32 @@ void FolderItem::Launch() {
   wxString parameters;
   wxString filePath;
 
-  wxString uFilePath = filePath_.Upper();
+  if (filePath_.Index(_T("$(")) != wxNOT_FOUND) {
 
-  if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
-    if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
-
+    if (filePath_ == _T("$(ControlPanel)")) {
 
       filePath = FilePaths::GetSystem32Directory() + _T("\\control.exe");
 
 
-    } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+    } else if (filePath_ == _T("$(MyComputer)")) {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
 
 
-    } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+    } else if (filePath_ == _T("$(MyNetwork)")) {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{208D2C60-3AEA-1069-A2D7-08002B30309D}");  
 
 
-    } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
+    } else if (filePath_ == _T("$(RecycleBin)")) {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{645FF040-5081-101B-9F08-00AA002F954E}");  
 
 
-    } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
+    } else if (filePath_ == _T("$(ShowDesktop)")) {
 
       wxString showDesktopFilePath = wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("ShowDesktop.scf"));
       if (!wxFileName::FileExists(showDesktopFilePath)) {
@@ -570,12 +625,12 @@ void FolderItem::Launch() {
       filePath = showDesktopFilePath;
 
 
-    } else if (uFilePath == _T("%AZ_EXPLORER%")) {
+    } else if (filePath_ == _T("$(Explorer)")) {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
 
 
-    } else if (uFilePath == _T("%AZ_SEARCH%")) {
+    } else if (filePath_ == _T("$(Search)")) {
       
       wxString findFilePath = wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("FindFile.vbs"));
       if (!wxFileName::FileExists(findFilePath)) {
@@ -595,7 +650,7 @@ void FolderItem::Launch() {
 
       filePath = wxString::Format(_T("%s\\FindFile.vbs"), FilePaths::GetSettingsDirectory());
 
-    } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
+    } else if (filePath_ == _T("$(MyDocuments)")) {
 
       wxLogNull logNo;
 
@@ -606,7 +661,7 @@ void FolderItem::Launch() {
         elog(_T("Couldn't get My Documents path"));
       }
 
-    } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
+    } else if (filePath_ == _T("$(MyPictures)")) {
 
       wxLogNull logNo;
 
@@ -618,7 +673,7 @@ void FolderItem::Launch() {
       }
 
 
-    } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
+    } else if (filePath_ == _T("$(MyMusic)")) {
 
       wxLogNull logNo;                          
       wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"));
@@ -629,7 +684,7 @@ void FolderItem::Launch() {
       }
 
 
-    } else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
+    } else if (filePath_ == _T("$(MyVideo)")) {
 
       wxLogNull logNo;
 
@@ -642,10 +697,14 @@ void FolderItem::Launch() {
 
 
     }
-  } else {
+  }
+
+
+  if (filePath == wxEmptyString) {
     parameters = parameters_;
     filePath = GetResolvedPath();
   }
+
     
   if (parameters != wxEmptyString) {
     FolderItem::Launch(filePath, parameters);
@@ -669,12 +728,9 @@ TiXmlElement* FolderItem::ToXml() {
   XmlUtil::AppendTextElement(xml, "AutomaticallyAdded", GetAutomaticallyAdded());
   XmlUtil::AppendTextElement(xml, "MultiLaunchGroup", BelongsToMultiLaunchGroup());
   XmlUtil::AppendTextElement(xml, "IsGroup", IsGroup());
-  XmlUtil::AppendTextElement(xml, "UUID", uuid_);
-  XmlUtil::AppendTextElement(xml, "Parameters", parameters_);
-  
-  if (customIconPath_ != wxEmptyString) {
-    XmlUtil::AppendTextElement(xml, "CustomIcon", wxString::Format(_T("%s,%d"), customIconPath_, customIconIndex_));
-  }
+  if (uuid_ != wxEmptyString) XmlUtil::AppendTextElement(xml, "UUID", uuid_);
+  if (parameters_ != wxEmptyString) XmlUtil::AppendTextElement(xml, "Parameters", parameters_);  
+  if (customIconPath_ != wxEmptyString) XmlUtil::AppendTextElement(xml, "CustomIcon", wxString::Format(_T("%s,%d"), customIconPath_, customIconIndex_));
 
   if (IsGroup()) {
     TiXmlElement* childrenXml = new TiXmlElement("Children");
@@ -724,6 +780,29 @@ void FolderItem::FromXml(TiXmlElement* xml) {
     }
   }
 
+
+
+  ConvertOldVariablesToNew(filePath_);
+  ConvertOldVariablesToNew(parameters_);
+  ConvertOldVariablesToNew(customIconPath_);
+}
+
+
+void FolderItem::ConvertOldVariablesToNew(wxString& s) {
+  if (s.Index(_T("%")) == wxNOT_FOUND) return;
+
+  s.Replace(_T("%AZ_CONTROL_PANEL%"), _T("$(ControlPanel)"));
+  s.Replace(_T("%AZ_MY_COMPUTER%"), _T("$(MyComputer)"));
+  s.Replace(_T("%AZ_MY_NETWORK%"), _T("$(MyNetwork)"));
+  s.Replace(_T("%AZ_RECYCLE_BIN%"), _T("$(RecycleBin)"));
+  s.Replace(_T("%AZ_SHOW_DESKTOP%"), _T("$(ShowDesktop)"));
+  s.Replace(_T("%AZ_EXPLORER%"), _T("$(Explorer)"));
+  s.Replace(_T("%AZ_SEARCH%"), _T("$(Search)"));
+  s.Replace(_T("%AZ_MY_DOCUMENTS%"), _T("$(MyDocuments)"));
+  s.Replace(_T("%AZ_MY_PICTURES%"), _T("$(MyPictures)"));
+  s.Replace(_T("%AZ_MY_MUSIC%"), _T("$(MyMusic)"));
+  s.Replace(_T("%AZ_MY_VIDEO%"), _T("$(MyVideo)"));
+  s.Replace(_T("%DRIVE%"), _T("$(Drive)"));
 }
 
 
@@ -741,7 +820,10 @@ void FolderItem::SetAutomaticallyAdded(bool automaticallyAdded) {
 
 wxString FolderItem::GetName(bool returnUnnamedIfEmpty) {
   if (returnUnnamedIfEmpty) {
-    if (name_ == wxEmptyString) return _("Group");
+    if (name_ == wxEmptyString) {
+      if (isGroup_) return _("Group");
+      return _("Unnamed");
+    }
   }
   return name_;
 }
@@ -757,6 +839,8 @@ void FolderItem::ClearCachedIcons() {
   icons_.clear();
 }
 
+
+#ifdef __MLB_USE_ICON_DISK_CACHE__
 
 void FolderItem::CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSize) {
   wxASSERT_MSG(icon.get(), _T("Couldn't cache icon: null pointer"));
@@ -817,6 +901,8 @@ wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
   return output;
 }
 
+#endif // __MLB_USE_ICON_DISK_CACHE__
+
 
 wxIconSP FolderItem::GetDefaultGroupIcon(int iconSize) {
   wxIconSP output;
@@ -850,23 +936,21 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
     icons_[iconSize] = cachedIcon;
     return cachedIcon;
   }
-  #endif
+  #endif // __MLB_USE_ICON_DISK_CACHE__
 
-  if (IsGroup()) {
-
-    if (!output.get()) output = FolderItem::GetDefaultGroupIcon(iconSize);
-
-  } else {
-
-    if (!output.get()) output = FolderItem::GetDefaultSpecialItemIcon(GetFilePath(), iconSize);
-
+  if (!output.get()) {
+    if (IsGroup()) {
+      output = FolderItem::GetDefaultGroupIcon(iconSize);
+    } else {
+      output = FolderItem::GetDefaultSpecialItemIcon(GetFilePath(), iconSize);
+    }
   }
 
   if (!output.get()) {
     output.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
     #ifdef __MLB_USE_ICON_DISK_CACHE__
     if (output.get()) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
-    #endif
+    #endif // __MLB_USE_ICON_DISK_CACHE__
   }
 
   if (!output.get()) {
@@ -881,35 +965,36 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
 
 
 wxIconSP FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSize) {
-  wxString uFilePath = path.Upper();
   wxIconSP output;
 
-  if (uFilePath.Index(_T("%AZ_")) == wxNOT_FOUND) return output;
+  if (path.Index(_T("$(")) == wxNOT_FOUND) return output;
 
   wxString dllPath = FilePaths::GetSystem32Directory() + _T("\\shell32.dll");
+
+  // 48x48 icons are always at the normal index + 1
   int inc = iconSize >= 48 ? 1 : 0;
 
-  if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
+  if (path == _T("$(ControlPanel)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL + inc));
-  } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+  } else if (path == _T("$(MyComputer)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER + inc));
-  } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+  } else if (path == _T("$(MyNetwork)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK + inc));
-  } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
+  } else if (path == _T("$(RecycleBin)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN + inc));
-  } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
+  } else if (path == _T("$(ShowDesktop)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP + inc));
-  } else if (uFilePath == _T("%AZ_EXPLORER%")) {
+  } else if (path == _T("$(Explorer)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER + inc));
-  } else if (uFilePath == _T("%AZ_SEARCH%")) {
+  } else if (path == _T("$(Search)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH + inc));
-  } else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
+  } else if (path == _T("$(MyDocuments)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS + inc));
-  } else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
+  } else if (path == _T("$(MyPictures)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES + inc));
-  } else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
+  } else if (path == _T("$(MyMusic)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc));
-  } else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
+  } else if (path == _T("$(MyVideo)")) {
     output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc));
   }
 
@@ -917,42 +1002,42 @@ wxIconSP FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSiz
 }
 
 
-void FolderItem::AutoSetName() {
-  wxString uFilePath = filePath_.Upper();
+wxString FolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
   wxString theName;
 
-  if (uFilePath.Index(_T("%AZ_")) != wxNOT_FOUND) {
-    if (uFilePath == _T("%AZ_CONTROL_PANEL%")) {
+  if (unresolvedFilePath.Index(_T("$(")) != wxNOT_FOUND) {
+    if (unresolvedFilePath == _T("$(ControlPanel)")) {
       theName = _("Control Panel");
-    } else if (uFilePath == _T("%AZ_MY_COMPUTER%")) {
+    } else if (unresolvedFilePath == _T("$(MyComputer)")) {
       theName = _("My Computer");
-    } else if (uFilePath == _T("%AZ_MY_NETWORK%")) {
+    } else if (unresolvedFilePath == _T("$(MyNetwork)")) {
       theName = _("My Network Places");
-    } else if (uFilePath == _T("%AZ_RECYCLE_BIN%")) {
+    } else if (unresolvedFilePath == _T("$(RecycleBin)")) {
       theName = _("Recycle Bin");
-    } else if (uFilePath == _T("%AZ_SHOW_DESKTOP%")) {
+    } else if (unresolvedFilePath == _T("$(ShowDesktop)")) {
       theName = _("Show Desktop");
-    } else if (uFilePath == _T("%AZ_EXPLORER%")) {
+    } else if (unresolvedFilePath == _T("$(Explorer)")) {
       theName = _("Windows Explorer");
-    } else if (uFilePath == _T("%AZ_SEARCH%")) {
+    } else if (unresolvedFilePath == _T("$(Search)")) {
       theName = _("Search");
-    } 
-    //else if (uFilePath == _T("%AZ_MY_DOCUMENTS%")) {
-    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS));
-    //} else if (uFilePath == _T("%AZ_MY_PICTURES%")) {
-    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES));
-    //} else if (uFilePath == _T("%AZ_MY_MUSIC%")) {
-    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC));
-    //} else if (uFilePath == _T("%AZ_MY_VIDEO%")) {
-    //  output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS));
-    //}
+    } else if (unresolvedFilePath == _T("$(Drive)")) {
+      theName = _("Current Drive");
+    }
   }
 
   if (theName != wxEmptyString) {
-    SetName(theName);    
+    return theName;    
   } else {
-    SetName(VersionInfo::GetFileDescription(GetResolvedPath()));
+    wxString s = VersionInfo::GetFileDescription(FolderItem::ResolvePath(unresolvedFilePath));
+    if (s != wxEmptyString) return s;
   }
+
+  return unresolvedFilePath;
+}
+
+
+void FolderItem::AutoSetName() {
+  SetName(FolderItem::GetDisplayName(filePath_));
 }
 
 
@@ -989,17 +1074,24 @@ wxString FolderItem::GetResolvedPath() {
 wxString FolderItem::ResolvePath(const wxString& filePath) {
   wxString result(filePath);
 
-  if (result.Index(_T("%")) != wxNOT_FOUND) {
-    result.Replace(_T("%DRIVE%"), FilePaths::GetApplicationDrive());
-    result.Replace(_T("%AZ_DRIVE%"), FilePaths::GetApplicationDrive());
-    result.Replace(_T("%AZ_SYSTEM32%"), FilePaths::GetSystem32Directory());
-    result.Replace(_T("%AZ_WINDOWS%"), FilePaths::GetWindowsDirectory());
-    result.Replace(_T("%AZ_CONTROL_PANEL%"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
-    result.Replace(_T("%AZ_MY_COMPUTER%"), FilePaths::GetWindowsDirectory() + _T("\\explorer.exe"));
+  if (result.Index(_T("$(")) != wxNOT_FOUND) {
+    result.Replace(_T("$(Drive)"), FilePaths::GetApplicationDrive());
+    result.Replace(_T("$(System32)"), FilePaths::GetSystem32Directory());
+    result.Replace(_T("$(Windows)"), FilePaths::GetWindowsDirectory());
+    result.Replace(_T("$(ControlPanel)"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
+    result.Replace(_T("$(MyComputer)"), FilePaths::GetWindowsDirectory() + _T("\\explorer.exe"));
   }
 
   wxFileName f(result);
+  
+  if (result.Len() <= 2) {
+    if (SystemUtil::IsPathADrive(result)) {
+      f = wxFileName(f.GetPathSeparator());
+    }
+  }
+  
   f.Normalize();
+
   return f.GetFullPath();
 }
 
@@ -1011,7 +1103,7 @@ wxString FolderItem::ConvertToRelativePath(const wxString& filePath) {
   wxString test2 = FilePaths::GetApplicationDrive().Upper();
   
   if (result.Mid(0, 2).Upper() == FilePaths::GetApplicationDrive().Upper()) {
-    result = _T("%DRIVE%") + result.Mid(2, result.Len());
+    result = _T("$(Drive)") + result.Mid(2, result.Len());
   }
 
   return result;
