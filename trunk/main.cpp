@@ -419,6 +419,7 @@ void MiniLaunchBar::CloseApplication() {
   Localization::Destroy();
   utilities_.~Utilities();
   IconGetter::Destroy();
+  FolderItem::DestroyStaticData();
 }
 
 

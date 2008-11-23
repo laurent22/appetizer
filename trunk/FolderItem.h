@@ -95,6 +95,8 @@ public:
   static wxString ResolvePath(const wxString& filePath);
   static wxString ConvertToRelativePath(const wxString& filePath);
   static wxString GetDisplayName(const wxString& unresolvedFilePath);
+
+  static void DestroyStaticData();
   
   bool DoMultiLaunch();
   

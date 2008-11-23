@@ -19,6 +19,9 @@
 
 
 wxString IconGetter::system32Path_ = wxEmptyString;
+HINSTANCE IconGetter::shell32Library_ = NULL;
+SHGetImageListType IconGetter::SHGetImageListFunction_ = NULL;
+
 
 IconGetterIconHashMap IconGetter::defaultFileIcon_;
 IconGetterIconHashMap IconGetter::defaultFolderIcon_;
@@ -45,6 +48,11 @@ void IconGetter::Destroy() {
     wxDELETE(icon);
   }
   defaultDefaultTypeIcon_.clear();
+
+  if (shell32Library_) {
+    FreeLibrary(shell32Library_);
+    shell32Library_ = NULL;
+  }
 }
 
 
@@ -303,31 +311,43 @@ wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize, bo
 
   if (iconSize >= 48) {
 
-    // Get the icon index using SHGetFileInfo
-    SHFILEINFOW sfi = {0};
-    SHGetFileInfo(filePath, -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
+    // Note: certain functions, like SHGetImageList don't exist in Windows 2000,
+    // so we need to load them dynamically, otherwise we get this error and the app doesn't start:
+    // "The ordinal 737 could not be located in the dynamic link library Shell32.dll"
 
-    // If iIcon is 0, we get a weird default icon representing a hand,
-    // so don't continue.
-    if (sfi.iIcon > 0) {
-      // Retrieve the system image list.
-      // To get the 48x48 icons, use SHIL_EXTRALARGE
-      // To get the 256x256 icons (Vista only), use SHIL_JUMBO
-      HIMAGELIST* imageList;
-      HRESULT hResult = SHGetImageList(iconSize == 48 ? SHIL_EXTRALARGE : SHIL_JUMBO, IID_IImageList, (void**)&imageList);
+    if (!shell32Library_) shell32Library_ = LoadLibrary(_T("SHELL32.DLL"));
+    if (!SHGetImageListFunction_) SHGetImageListFunction_ = (SHGetImageListType)GetProcAddress(shell32Library_, "SHGetImageList");
 
-      if (hResult == S_OK) {
-        // Get the icon we need from the list. Note that the HIMAGELIST we retrieved
-        // earlier needs to be casted to the IImageList interface before use.
-        HICON hIcon;
-        hResult = ((IImageList*)imageList)->GetIcon(sfi.iIcon, ILD_TRANSPARENT, &hIcon);
+    if (shell32Library_ && SHGetImageListFunction_) {
+
+      // Get the icon index using SHGetFileInfo
+      SHFILEINFOW sfi = {0};
+      SHGetFileInfo(filePath, -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
+
+      // If iIcon is 0, we get a weird default icon representing a hand,
+      // so don't continue.
+      if (sfi.iIcon > 0) {
+        // Retrieve the system image list.
+        // To get the 48x48 icons, use SHIL_EXTRALARGE
+        // To get the 256x256 icons (Vista only), use SHIL_JUMBO
+        HIMAGELIST* imageList;
+        //HRESULT hResult = SHGetImageList(iconSize == 48 ? SHIL_EXTRALARGE : SHIL_JUMBO, IID_IImageList, (void**)&imageList);
+        HRESULT hResult = SHGetImageListFunction_(iconSize == 48 ? SHIL_EXTRALARGE : SHIL_JUMBO, IID_IImageList, (void**)&imageList);
 
         if (hResult == S_OK) {
-          wxIcon* icon = new wxIcon();
-          icon->SetHICON((WXHICON)hIcon);
-          icon->SetSize(iconSize, iconSize);
-          return icon;
-        }      
+          // Get the icon we need from the list. Note that the HIMAGELIST we retrieved
+          // earlier needs to be casted to the IImageList interface before use.
+          HICON hIcon;
+          hResult = ((IImageList*)imageList)->GetIcon(sfi.iIcon, ILD_TRANSPARENT, &hIcon);
+
+          if (hResult == S_OK) {
+            wxIcon* icon = new wxIcon();
+            icon->SetHICON((WXHICON)hIcon);
+            icon->SetSize(iconSize, iconSize);
+            return icon;
+          }      
+        }
+
       }
 
     }

@@ -54,7 +54,7 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "VideosPath", VideosPath);
   AppendSettingToXml(xml, "Skin", Skin);
   AppendSettingToXml(xml, "Rotated", Rotated);
-  AppendSettingToXml(xml, "NextUpdateCheckTime", NextUpdateCheckTime.Format());
+  AppendSettingToXml(xml, "NextUpdateCheckTime", NextUpdateCheckTime.Format(ISO_DATE_FORMAT));
   AppendSettingToXml(xml, "AlwaysOnTop", AlwaysOnTop);
   AppendSettingToXml(xml, "AutoHideApplication", AutoHideApplication);
   AppendSettingToXml(xml, "UniqueApplicationInstance", UniqueApplicationInstance);
@@ -111,7 +111,10 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("VideosPath")) VideosPath = v;
     if (n == _T("Skin")) Skin = v;
     if (n == _T("Rotated")) Rotated = ParseBoolean(v);
-    if (n == _T("NextUpdateCheckTime")) NextUpdateCheckTime.ParseFormat(v);
+    if (n == _T("NextUpdateCheckTime")) {
+      const wxChar* c = NextUpdateCheckTime.ParseFormat(v, ISO_DATE_FORMAT);
+      if (!c) NextUpdateCheckTime = wxDateTime::Now();
+    }
     if (n == _T("AlwaysOnTop")) AlwaysOnTop = ParseBoolean(v);
     if (n == _T("AutoHideApplication")) AutoHideApplication = ParseBoolean(v);
     if (n == _T("UniqueApplicationInstance")) UniqueApplicationInstance = ParseBoolean(v);

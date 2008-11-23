@@ -10,11 +10,20 @@
 #define __SystemUtil_H
 
 
+struct SystemUtilProcess {
+  wxString name;
+  long id;
+};
+
+typedef std::vector<SystemUtilProcess*> SystemUtilProcessVector;
+
+
 class SystemUtil {
 
 public:
 
   static bool IsPathADrive(const wxString& path);
+  static SystemUtilProcessVector GetProcessList();
 
 };
 

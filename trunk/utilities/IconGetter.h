@@ -14,6 +14,10 @@ WX_DECLARE_HASH_MAP(int, wxIcon*, wxIntegerHash, wxIntegerEqual, IconGetterIconH
 WX_DECLARE_HASH_MAP(wxString, wxIcon*, wxStringHash, wxStringEqual, IconGetterTypeIconHashMap);
 
 
+// library function is: HRESULT SHGetImageList(int iImageList, REFIID riid, void **ppv)
+typedef HRESULT (CALLBACK* SHGetImageListType)(int, const IID&, void*);
+
+
 /**
  * Some static functions to get the icons associated with a file, folder or executable.
  * Each function can return a small or large icon
@@ -69,6 +73,8 @@ class IconGetter {
 private:
 
   static wxString system32Path_;
+  static SHGetImageListType SHGetImageListFunction_;
+  static HINSTANCE shell32Library_;
   static IconGetterIconHashMap defaultFileIcon_;
   static IconGetterIconHashMap defaultFolderIcon_;
   static IconGetterTypeIconHashMap defaultDefaultTypeIcon_;

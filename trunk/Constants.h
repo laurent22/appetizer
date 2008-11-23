@@ -25,6 +25,7 @@ const wxString ICON_CACHE_FOLDER_NAME = _T("IconCache");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
 const wxString DEFAULT_SKIN = _T("Default");
 const wxString CHECK_VERSION_URL = _T("http://appetizer.sourceforge.net/VersionInfo.xml");
+const wxString ISO_DATE_FORMAT = _T("%Y-%m-%d %H:%M:%S");
 
 const int SHELL32_ICON_INDEX_MY_COMPUTER = 15;
 const int SHELL32_ICON_INDEX_MY_NETWORK = 17;

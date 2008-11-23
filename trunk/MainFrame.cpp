@@ -246,6 +246,7 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 
     wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime = now;
     wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
+    wxGetApp().GetUser()->ScheduleSave();
     #endif //__WINDOWS__
   }
 }
@@ -736,10 +737,6 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
 
 void MainFrame::OnClose(wxCloseEvent& evt) {
   RecurseCleanUp(this);
-
-  //if (aboutDialog_) aboutDialog_->Destroy();
-  //if (optionPanel_) optionPanel_->Destroy();
-  //if (iconPanel_) iconPanel_->Destroy();
 
   TiXmlDocument doc;
   doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));

@@ -50,6 +50,7 @@ FolderItemSP User::GetRootFolderItem() {
 
 
 void User::OnTimer(wxTimerEvent& evt) {
+  ilog("Doing scheduled save");
   Save(true);
 }
 

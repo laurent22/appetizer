@@ -91,6 +91,17 @@ FolderItem::~FolderItem() {
 }
 
 
+void FolderItem::DestroyStaticData() {
+  for (int i = 0; i < launchedFolderItems_.size(); i++) {
+    LaunchedFolderItem* p = launchedFolderItems_.at(i);
+    wxDELETE(p);
+  }
+  launchedFolderItems_.clear();
+
+  folderItemIdHashMap_.clear();
+}
+
+
 void FolderItem::SetCustomIcon(const wxString& filePath, int index) {
   if (filePath == customIconPath_ && index == customIconIndex_) return;
 
@@ -448,9 +459,10 @@ FolderItemSP FolderItem::SearchChildByFilename(const wxString& filename, int mat
 
 void FolderItem::KillStartedProcesses() {
 
+  SystemUtilProcessVector processVector = SystemUtil::GetProcessList();
+
   for (int i = 0; i < launchedFolderItems_.size(); i++) {
     LaunchedFolderItem* d = launchedFolderItems_.at(i);
-    if (d->Process->IsTerminated()) continue;
 
     wxKillError error = wxProcess::Kill(d->ProcessId, wxSIGTERM, wxKILL_CHILDREN);
 
@@ -462,7 +474,12 @@ void FolderItem::KillStartedProcesses() {
         {
 
         wxFileName f(d->ExecutablePath);
-        wxString filename = f.GetName();
+        wxString filename = f.GetName().Lower();
+
+        for (int i = 0; i < processVector.size(); i++) {
+          if (processVector.at(i)->name.Lower() != filename) continue;
+          wxProcess::Kill(processVector.at(i)->id, wxSIGTERM, wxKILL_CHILDREN);
+        }
         
         }
         break;

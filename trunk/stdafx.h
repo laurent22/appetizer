@@ -13,6 +13,8 @@
 #include <windows.h>
 #include <winver.h>
 #include <Rpc.h>
+#include <tchar.h>
+#include <psapi.h>
 #pragma comment(lib, "Rpcrt4.lib")
 #include <wx/msw/registry.h>
 #ifdef __WXDEBUG__
