@@ -19,12 +19,13 @@ const wxString SKIN_FOLDER_NAME = _T("Skin");
 const wxString LOCALES_FOLDER_NAME = _T("Locales");
 const wxString ICONS_FOLDER_NAME = _T("Icons");
 const wxString HELP_FOLDER_NAME = _T("Help");
+const wxString TOOLS_FOLDER_NAME = _T("Tools");
 const wxString WINDOW_FILE_NAME = _T("Window.xml");
 const wxString HELP_FILE_NAME = _T("Appetizer.chm");
 const wxString ICON_CACHE_FOLDER_NAME = _T("IconCache");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
 const wxString DEFAULT_SKIN = _T("Default");
-const wxString CHECK_VERSION_URL = _T("http://appetizer.sourceforge.net/VersionInfo.xml");
+const wxString CHECK_VERSION_URL = _T("http://app.etizer.org/VersionInfo.xml");
 const wxString ISO_DATE_FORMAT = _T("%Y-%m-%d %H:%M:%S");
 
 const int SHELL32_ICON_INDEX_MY_COMPUTER = 15;

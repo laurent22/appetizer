@@ -14,8 +14,8 @@ class FilePaths {
 public:
 
   static wxString GetApplicationDrive();
-  static wxString GetApplicationDirectory();
-  static wxString GetApplicationPath();
+
+  static wxString GetApplicationDirectory();  
   static wxString GetDataDirectory();
   static wxString GetSettingsDirectory();
   static wxString GetBaseSkinDirectory();
@@ -23,16 +23,20 @@ public:
   static wxString GetSkinDirectory();
   static wxString GetLocalesDirectory();
   static wxString GetHelpDirectory();
+  static wxString GetToolsDirectory();
+  static wxString GetIconCacheDirectory();
+
+  static wxString GetApplicationPath();
   static wxString GetSettingsFile();
   static wxString GetFolderItemsFile();
   static wxString GetWindowFile();
+
   static wxString GetWindowsDirectory();
   static wxString GetSystem32Directory();
   static wxString GetHHPath();
   static wxString GetUserShellDirectory(const wxString& itemName);
   static wxString GetAllUsersShellDirectory(const wxString& itemName);
-  static wxString GetQuickLaunchDirectory();
-  static wxString GetIconCacheDirectory();
+  static wxString GetQuickLaunchDirectory();  
 
   static void CreateSettingsDirectory();
   static void InitializePaths();
@@ -55,6 +59,7 @@ private:
   static wxString WindowsDirectory_;
   static wxString ApplicationPath_;
   static wxString IconCacheDirectory_;
+  static wxString ToolsDirectory_;
 
 };
 

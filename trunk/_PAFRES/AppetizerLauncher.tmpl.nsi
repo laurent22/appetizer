@@ -1,6 +1,6 @@
 ;Copyright (C) 2004-2008 John T. Haller
 
-;Website: http://appetizer.sourceforge.net
+;Website: http://app.etizer.org
 
 ;This software is OSI Certified Open Source Software.
 ;OSI Certified is a certification mark of the Open Source Initiative.
@@ -23,7 +23,7 @@
 !define FRIENDLYNAME "Appetizer"
 !define APP "Appetizer"
 !define VER "___FULL_VERSION___"
-!define WEBSITE "http://appetizer.sourceforge.net"
+!define WEBSITE "http://app.etizer.org"
 
 ;=== Program Details
 Name "${NAME}"

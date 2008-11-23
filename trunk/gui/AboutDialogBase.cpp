@@ -19,7 +19,7 @@ AboutDialogBase::AboutDialogBase(wxWindow* parent, int id, const wxString& title
     versionLabel = new wxTextCtrl(notebook_1_pane_1, wxID_ANY, wxT("NAME VERSION"), wxDefaultPosition, wxDefaultSize, wxTE_READONLY|wxNO_BORDER);
     copyrightLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Copyright (C) 2008"));
     webLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("*Web:"));
-    linkLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("http://appetizer.sourceforge.net"));
+    linkLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("http://app.etizer.org"));
     contactLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("*Contact:"));
     contactLabel2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("nothing@nothing.com"));
     creditLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Credits:"));

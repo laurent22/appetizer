@@ -36,7 +36,7 @@
 !define CHECKRUNNING "Appetizer.exe"
 !define CLOSENAME "Appetizer "
 !define ADDONSDIRECTORYPRESERVE "NONE" ;use "NONE" for no plugins directory or relative to install directory: App\AppName\plugins
-!define INSTALLERCOMMENTS "For additional details, visit http://appetizer.sourceforge.net/"
+!define INSTALLERCOMMENTS "For additional details, visit http://app.etizer.org"
 !define INSTALLERADDITIONALTRADEMARKS "" ;end this entry with a period and a space if used
 !define INSTALLERLANGUAGE "English" ;one of the NSIS pre-defined languages supported: English, French, Italian, German, Japanese, SimpChinese
 

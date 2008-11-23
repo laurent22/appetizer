@@ -296,14 +296,14 @@ wxString GenerateHTMLString() {
   // *******************************************************************************
   AddAnchor(_T("Translating"));
   H2(_("Translating Appetizer"));
-  P(wxString::Format(_("If Appetizer is not available in your own language, you can easily create your own translation. Please [%s follow this link] for more information."), _T("http://appetizer.sourceforge.net/translations/")));
+  P(wxString::Format(_("If Appetizer is not available in your own language, you can easily create your own translation. Please [%s follow this link] for more information."), _T("http://app.etizer.org/translations/")));
 
   // *******************************************************************************
   // MORE LINKS
   // *******************************************************************************
   AddAnchor(_T("Links"));
   H2(_("Support and links"));
-  P(wxString::Format(_("Official home page: %s"), _T("[http://appetizer.sourceforge.net http://appetizer.sourceforge.net]")));
+  P(wxString::Format(_("Official home page: %s"), _T("[http://app.etizer.org http://app.etizer.org]")));
   P(wxString::Format(_("Project home page: %s"), _T("[https://sourceforge.net/projects/appetizer https://sourceforge.net/projects/appetizer]")));
   P(wxString::Format(_("Beta versions and preleases are usually on [%s PortableApps Beta Testing forum]"), _T("http://portableapps.com/forums/development/beta_testing")));
   P(wxString::Format(_("For bug reports, suggestions, comments or translations, please contact %s"), imayle));//wxString::Format(_T("<a href=\"mailto:%s\">%s</a> or post on the beta forum."), imayle, imayle)));

@@ -27,6 +27,7 @@ wxString FilePaths::WindowsDirectory_ = _T("");
 wxString FilePaths::System32Directory_ = _T("");
 wxString FilePaths::ApplicationPath_ = _T("");
 wxString FilePaths::IconCacheDirectory_ = _T("");
+wxString FilePaths::ToolsDirectory_ = _T("");
 
 
 wxString FilePaths::GetApplicationDrive() { return FilePaths::ApplicationDrive_; }
@@ -38,6 +39,7 @@ wxString FilePaths::GetSkinDirectory() { return FilePaths::BaseSkinDirectory_ + 
 wxString FilePaths::GetDefaultSkinDirectory() { return FilePaths::DefaultSkinDirectory_; }
 wxString FilePaths::GetLocalesDirectory() { return FilePaths::LocalesDirectory_; }
 wxString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }
+wxString FilePaths::GetToolsDirectory() { return FilePaths::ToolsDirectory_; }
 wxString FilePaths::GetSettingsFile() { return FilePaths::SettingsFile_; }
 wxString FilePaths::GetFolderItemsFile() { return FilePaths::FolderItemsFile_; }
 wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
@@ -199,4 +201,5 @@ void FilePaths::InitializePaths() {
   FilePaths::BaseSkinDirectory_ = FilePaths::GetDataDirectory() + _T("/") + SKIN_FOLDER_NAME; 
   FilePaths::DefaultSkinDirectory_ = FilePaths::BaseSkinDirectory_ + _T("/") + DEFAULT_SKIN;
   FilePaths::IconCacheDirectory_ = FilePaths::DataDirectory_ + _T("/") + ICON_CACHE_FOLDER_NAME;
+  FilePaths::ToolsDirectory_ = FilePaths::DataDirectory_ + _T("/") + TOOLS_FOLDER_NAME;
 }

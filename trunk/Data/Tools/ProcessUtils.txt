@@ -1,0 +1,18 @@
+This is a trimmed down version of NtSysInfo.exe by Zoltan Csizmadia. The original
+license is as follow:
+
+------------------------------------------------------------------------------------
+Written by Zoltan Csizmadia, zoltan_csizmadia@yahoo.com
+For companies(Austin,TX): If you would like to get my resume, send an email.
+The source is free, but if you want to use it, mention my name and e-mail address
+------------------------------------------------------------------------------------
+
+WEB: http://www.codeguru.com/Cpp/W-P/system/processesmodules/article.php/c2827/
+
+USAGE:
+
+ProcessUtils.exe /W processId
+ProcessUtils.exe /D drive
+
+     /W    Returns the window list for the given process.
+		 /D    Returns the processes that are locking the given drive. Drive must be specified without a trailing slash. eg. x:

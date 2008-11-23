@@ -184,8 +184,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(BOOST_ROOT)&quot;"
-				PreprocessorDefinitions="WINVER=0x0400;wxUSE_GUI=1;__WXDEBUG__"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(BOOST_ROOT)&quot;;C:\WINDDK\3790.1830\inc\mfc42"
+				PreprocessorDefinitions="wxUSE_GUI=1;__WXDEBUG__"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
@@ -278,7 +278,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib psapi.lib"
 				OutputFile=".\Appetizer.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -670,6 +670,26 @@
 				Name="utilities"
 				>
 				<File
+					RelativePath=".\utilities\EncryptionUtil.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\utilities\IconGetter.cpp"
 					>
 					<FileConfiguration
@@ -960,6 +980,50 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
+				<Filter
+					Name="coopfish"
+					>
+					<File
+						RelativePath=".\third_party\coopfish\blowfish.cpp"
+						>
+						<FileConfiguration
+							Name="Unicode Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								PrecompiledHeaderThrough="../../stdafx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Unicode Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								PrecompiledHeaderThrough="../../stdafx.h"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\third_party\coopfish\coopfish.cpp"
+						>
+						<FileConfiguration
+							Name="Unicode Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								PrecompiledHeaderThrough="../../stdafx.h"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Unicode Release|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								PrecompiledHeaderThrough="../../stdafx.h"
 							/>
 						</FileConfiguration>
 					</File>
@@ -1359,6 +1423,10 @@
 				Name="utilities"
 				>
 				<File
+					RelativePath=".\utilities\EncryptionUtil.h"
+					>
+				</File>
+				<File
 					RelativePath=".\utilities\IconGetter.h"
 					>
 				</File>
@@ -1419,6 +1487,14 @@
 					</File>
 					<File
 						RelativePath=".\third_party\wxMD5\wxMD5.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="coopfish"
+					>
+					<File
+						RelativePath=".\third_party\coopfish\blowfish.h"
 						>
 					</File>
 				</Filter>

@@ -111,6 +111,20 @@ bool Utilities::IsApplicationOnRemoteDrive() {
 }
 
 
+bool Utilities::KillLockingProcesses(const wxString& directoryPath, bool painless) {
+  #ifdef __WINDOWS__
+
+  wxArrayString output;
+  long exitCode = wxExecute(FilePaths::GetToolsDirectory() + _T("\\WhoUses.exe ") + directoryPath, output, wxEXEC_SYNC);
+
+  for (int i = 0; i < output.Count(); i++) wxLogDebug(output[i]);
+
+  #endif // __WINDOWS__
+  
+  return true;  
+}
+
+
 void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   if (wxGetApp().GetUser()->GetSettings()->ShowEjectDriveMessage) {
     int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"), wxYES | wxNO, _("Don't show this message again"), false);
