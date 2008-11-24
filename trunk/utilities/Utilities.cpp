@@ -111,13 +111,152 @@ bool Utilities::IsApplicationOnRemoteDrive() {
 }
 
 
-bool Utilities::KillLockingProcesses(const wxString& directoryPath, bool painless) {
+
+struct ProcessUtilModule {
+  long id;
+  wxString path;
+};
+
+struct ProcessUtilWindow {
+  HWND handle;
+  wxString title;
+};
+
+
+ProcessUtilModule parseProcessUtilLineD(const wxString& line) {
+  ProcessUtilModule output;
+
+  size_t spaceIndex = line.Index(_T(" "));
+
+  wxString processIdString = line.SubString(0, spaceIndex - 1);
+  if (!processIdString.ToLong(&(output.id))) output.id = -1;
+
+  output.path = line.SubString(spaceIndex, line.Len());
+  output.path.Trim(true).Trim(false);
+
+  return output;
+}
+
+
+ProcessUtilWindow parseProcessUtilLineW(const wxString& line) {
+  ProcessUtilWindow output;
+
+  size_t spaceIndex = line.Index(_T(" "));
+
+  wxString handleString = line.SubString(0, spaceIndex - 1);
+  long longHandle;
+  if (!handleString.ToLong(&longHandle)) longHandle = -1;
+  output.handle = (HWND)longHandle;
+
+  output.title = line.SubString(spaceIndex, line.Len());
+  output.title.Trim(true).Trim(false);
+
+  return output;
+}
+
+
+bool Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
   #ifdef __WINDOWS__
 
-  wxArrayString output;
-  long exitCode = wxExecute(FilePaths::GetToolsDirectory() + _T("\\WhoUses.exe ") + directoryPath, output, wxEXEC_SYNC);
+  // ***********************************************************************
+  // Get the list of modules that are locking the drive
+  // ***********************************************************************
 
-  for (int i = 0; i < output.Count(); i++) wxLogDebug(output[i]);
+  wxArrayString moduleData;
+  long exitCode = wxExecute(FilePaths::GetToolsDirectory() + _T("\\ProcessUtils.exe /d ") + drive, moduleData, wxEXEC_SYNC);
+
+  if (exitCode != 0) {
+    wxLogDebug(_T("[Error] 'ProcessUtils.exe /d' failed with code: %d"), exitCode);
+    return false;
+  }
+
+  // ***********************************************************************
+  // For each module, get its associated windows and send to each
+  // of them a CLOSE signal. This gives the app a chance to close
+  // properly, however it won't work if it has an opened modal dialog or
+  // if it ignores the CLOSE signal.
+  // ***********************************************************************
+
+  for (int i = 0; i < moduleData.Count(); i++) {
+    wxString moduleLine = moduleData[i];
+    ProcessUtilModule m = parseProcessUtilLineD(moduleLine);
+
+    if (m.id <= 0) {
+      elog(_T("Could not parse this line: ") + moduleLine);
+      continue;
+    }
+
+    wxArrayString windowData;
+    exitCode = wxExecute(FilePaths::GetToolsDirectory() + wxString::Format(_T("\\ProcessUtils.exe /w %d"), m.id), windowData, wxEXEC_SYNC);
+
+    if (exitCode != 0) {
+      wxLogDebug(_T("[Error] 'ProcessUtils.exe /w' failed with code: %d"), exitCode);
+      continue;
+    }
+
+    ilog(_T("Sending close messages to ") + m.path);
+
+    for (int j = 0; j < windowData.Count(); j++) {
+      wxString windowLine = windowData[j];
+      ProcessUtilWindow w = parseProcessUtilLineW(windowLine);
+
+      if (w.handle <= 0) {
+        elog(_T("Could not parse this line: ") + windowLine);
+        continue;
+      }
+
+      LRESULT result = SendMessageTimeout(w.handle, WM_CLOSE, NULL, NULL, SMTO_BLOCK, 1000, NULL);
+
+      if (!result) {
+        LPWSTR pBuffer = NULL;
+        FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPWSTR)&pBuffer, 0, NULL);
+        wxString s(pBuffer, wxConvUTF8); s.Trim(true).Trim(false);
+        wlog(_T("Could not close window: ") + s);
+        LocalFree(pBuffer);
+      } else {
+        ilog("Window closed successfully");  
+      }
+    }    
+  }
+
+  // ***********************************************************************
+  // If the 'painless' flag was set, exit now. At this point some windows
+  // may still be opened and the user will have to close manually.
+  // ***********************************************************************
+
+  if (painless) return true;
+
+  // ***********************************************************************
+  // Otherwise, get a second time the list of blocking processes (which 
+  // should now only contains the ones that haven't been closed previously),
+  // and kill the process directly.
+  // ***********************************************************************
+
+  wxSleep(1); // Wait for a second to allows windows to close properly
+
+  moduleData.Clear();
+  exitCode = wxExecute(FilePaths::GetToolsDirectory() + _T("\\ProcessUtils.exe /d ") + drive, moduleData, wxEXEC_SYNC);
+
+  if (exitCode != 0) {
+    wxLogDebug(_T("[Error] 'ProcessUtils.exe /d' failed with code: %d"), exitCode);
+    return false;
+  }
+
+  for (int i = 0; i < moduleData.Count(); i++) {
+    wxString moduleLine = moduleData[i];
+    ProcessUtilModule m = parseProcessUtilLineD(moduleLine);
+
+    if (m.id <= 0) {
+      elog(_T("Could not parse this line: ") + moduleLine);
+      continue;
+    }
+
+    ilog(_T("Killing ") + m.path);
+
+    wxLogNull logNull; // Disable wxWidgets useless error messages
+    wxKillError killError;
+    wxKill(m.id, wxSIGKILL, &killError, wxKILL_CHILDREN);
+  }  
 
   #endif // __WINDOWS__
   
@@ -135,6 +274,9 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   }
 
   #ifdef __WINDOWS__
+
+  //KillLockingProcesses(_T("f:"), false);
+  //return;
 
   // In order to eject the drive we need to:
   //

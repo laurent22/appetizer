@@ -30,7 +30,7 @@ public:
   void CreateNewShortcut();
   bool IsApplicationOnRemoteDrive();
   bool InstallAutorunFile();
-  bool KillLockingProcesses(const wxString& directoryPath, bool painless = true);
+  bool KillLockingProcesses(const wxString& drive, bool painless = true);
   wxString CreateUUID();
   void Localize();
 

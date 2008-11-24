@@ -111,7 +111,11 @@ MainFrame::MainFrame()
   }
 
   frameIcon_.LoadFile(FilePaths::GetBaseSkinDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
-  taskBarIcon_.SetIcon(frameIcon_);
+
+  // We need to provide a .ico file that only contains a 16x16 icon. If we give a .ico with
+  // multiple sizes (16, 32, 48), Windows is going to use the 32x32 size and resize it to 16x16 O_o
+  wxIcon trayIcon(FilePaths::GetBaseSkinDirectory() + _T("/Application16.ico"), wxBITMAP_TYPE_ICO);
+  taskBarIcon_.SetIcon(trayIcon);
 
   SetIcon(frameIcon_);
   SetTitle(APPLICATION_NAME);
