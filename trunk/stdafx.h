@@ -10,12 +10,14 @@
 #include <wx/wx.h>
 
 #ifdef __WINDOWS__
+#pragma comment(lib, "Rpcrt4.lib")
+//#pragma comment(lib, "atlthunk.lib") // WINDDK must be installed (required by ProcessUtil functions)
 #include <windows.h>
 #include <winver.h>
 #include <Rpc.h>
 #include <tchar.h>
+#include <process.h>
 #include <psapi.h>
-#pragma comment(lib, "Rpcrt4.lib")
 #include <wx/msw/registry.h>
 #ifdef __WXDEBUG__
 // To find memory leaks, add _CrtSetBreakAlloc(int memoryBlock)
@@ -88,5 +90,6 @@
 #include "third_party/tinyxml/tinyxml.h"
 #include "third_party/simpleini/SimpleIni.h"
 #include "third_party/wxMD5/wxMD5.h"
+#include "third_party/StdString.h"
 
 #endif // __MiniLaunchBarPrecompiled_H
