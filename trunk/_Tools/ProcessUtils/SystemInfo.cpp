@@ -15,6 +15,8 @@
 // 11/09/00  1.1         NT4 doesn't like if we bother the System process fix :)
 //                       SystemInfoUtils::GetDeviceFileName() fix (subst drives added)
 //                       NT Major version added to INtDLL class
+// 11/24/08  1.2       Modified by Laurent Cozic for use with Appetizer http://app.etizer.org
+//                     See NtSystemInfoTest.cpp for the full list of changes.
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -1054,19 +1056,19 @@ BOOL SystemWindowInformation::Refresh()
 BOOL CALLBACK SystemWindowInformation::EnumerateWindows( HWND hwnd, LPARAM lParam )
 {
 	SystemWindowInformation* _this = (SystemWindowInformation*)lParam;
-	WINDOW_INFO wi;
+	WINDOW_INFO* wi = new WINDOW_INFO();
 
-	wi.hWnd = hwnd;
-	GetWindowThreadProcessId(hwnd, &wi.ProcessId ) ;
+	wi->hWnd = hwnd;
+	GetWindowThreadProcessId(hwnd, &(wi->ProcessId) ) ;
 
 	// Filtering by process ID
-	if ( _this->m_processId == -1 || _this->m_processId == wi.ProcessId )
+	if ( _this->m_processId == -1 || _this->m_processId == wi->ProcessId )
 	{
-		GetWindowText( hwnd, wi.Caption, MaxCaptionSize );
+		GetWindowText( hwnd, wi->Caption, MaxCaptionSize );
 
 		// That is we are looking for
 		if ( GetLastError() == 0 )
-			_this->m_WindowInfos.push_back( &wi );
+			_this->m_WindowInfos.push_back(wi);
 	}
 
 	return TRUE;

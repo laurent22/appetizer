@@ -497,7 +497,7 @@ void FolderItem::KillStartedProcesses() {
 void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
 
-  if (filename.FileExists()) {
+  if (filename.FileExists() || filename.IsRelative()) {
     //***************************************************************************
     // Launch executable
     //***************************************************************************   
@@ -532,10 +532,10 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
         wxString tArguments(arguments); 
         // If the argument is a file path, then check that it has double quotes        
         if (wxFileName::FileExists(tArguments)) {
+          tArguments = FolderItem::ResolvePath(tArguments);
           if (tArguments[0] != _T('"') && tArguments[arguments.Len() - 1] != _T('"')) {
             tArguments = _T('"') + tArguments + _T('"');
-          }
-          tArguments = FolderItem::ResolvePath(tArguments);
+          }          
         }
         wxExecute(wxString::Format(_T("%s %s"), filePath, tArguments));
 
@@ -620,27 +620,15 @@ void FolderItem::Launch() {
 
     } else if (filePath_ == _T("$(ShowDesktop)")) {
 
-      wxString showDesktopFilePath = wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("ShowDesktop.scf"));
-      if (!wxFileName::FileExists(showDesktopFilePath)) {
-        wxString fileContent;
-        fileContent += _T("[Shell]\n");
-        fileContent += _T("Command=2\n");
-        fileContent += _T("IconFile=explorer.exe,3\n");
-        fileContent += _T("[Taskbar]\n");
-        fileContent += _T("Command=ToggleDesktop\n");
+      wxString fileContent;
+      fileContent += _T("Set shell = wscript.CreateObject(\"Shell.Application\")\n");
+      fileContent += _T("Shell.MinimizeAll\n");
 
-        wxFile file;
-        bool success = file.Create(showDesktopFilePath);
-        if (!success) {
-          elog(_T("Couldn't create ShowDesktop.scf"));
-          return;
-        }
-        file.Open(showDesktopFilePath, wxFile::write);
-        file.Write(fileContent);
-        file.Close();        
-      }
-      filePath = showDesktopFilePath;
+      wxGetApp().GetUtilities().CreateAndRunVBScript(
+        wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("ShowDesktop.vbs")),
+        fileContent);
 
+      return;
 
     } else if (filePath_ == _T("$(Explorer)")) {
 
@@ -648,24 +636,14 @@ void FolderItem::Launch() {
 
 
     } else if (filePath_ == _T("$(Search)")) {
-      
-      wxString findFilePath = wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("FindFile.vbs"));
-      if (!wxFileName::FileExists(findFilePath)) {
-        wxString fileContent;
-        fileContent += _T("CreateObject(\"Shell.Application\").FindFiles");
 
-        wxFile file;
-        bool success = file.Create(findFilePath);
-        if (!success) {
-          elog(_T("Couldn't create FindFile.vbs"));
-          return;
-        }
-        file.Open(findFilePath, wxFile::write);
-        file.Write(fileContent);
-        file.Close();
-      }
+      wxString fileContent = _T("CreateObject(\"Shell.Application\").FindFiles");
 
-      filePath = wxString::Format(_T("%s\\FindFile.vbs"), FilePaths::GetSettingsDirectory());
+      wxGetApp().GetUtilities().CreateAndRunVBScript(
+        wxString::Format(_T("%s/%s"), FilePaths::GetSettingsDirectory(), _T("FindFile.vbs")),
+        fileContent);
+
+      return;
 
     } else if (filePath_ == _T("$(MyDocuments)")) {
 

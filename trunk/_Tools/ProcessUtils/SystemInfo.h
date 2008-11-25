@@ -6,6 +6,11 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //
 // SystemInfo.h, v1.1
+//
+//               v1.2  Modified by Laurent Cozic for use with Appetizer http://app.etizer.org
+//                     See NtSystemInfoTest.cpp for the full list of changes
+//
+//////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef SYSTEMINFO_H_INCLUDED
 #define SYSTEMINFO_H_INCLUDED

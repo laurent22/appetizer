@@ -5,10 +5,27 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 //
-// NtSystemInfoTest.cpp : Defines the entry point for the console application.
+// Modified by Laurent Cozic for use with Appetizer http://app.etizer.org
+// The following changes have been made:
 //
+// 24/11/2008:
+//
+// - Removed MFC dependency (Replaced CString by CStdString, CList by std::vector,
+//   CMap by std::map, and afxtempl.h by windows.h)
+// - Added ListModulesByDrive()
+// - Fixed a bug whereas NtQuerySystemInformation would fail when too many
+//   processes were running simultaneously
+// - Cleaned up header files (removed stdafx.h and other files that weren't used)
+//
+// TODO:
+//
+// - During the conversion from MFC to standard C++, many objects have been replaced
+//   by pointers, however I didn't add any code to delete them. Probably not a big deal
+//   for a command line tool, but would still be better to clean them up properly.
+//
+//////////////////////////////////////////////////////////////////////////////////////
 
-//#include "stdafx.h"
+
 #include <tchar.h>
 #include <stdio.h>
 #include "SystemInfo.h"
@@ -167,13 +184,6 @@ int _tmain(int argc, TCHAR** argv)
 
         ListModulesByDrive(processId, drive);
       }
-	    // Iterating through the processes
-	    //for ( POSITION pos = pi.m_ProcessInfos.GetStartPosition(); pos != NULL; )
-	    //{
-		   // pi.m_ProcessInfos.GetNextAssoc( pos, pID, p ); 
-
-     //   ListModulesByDrive(pID, drive);
-	    //}
 
       }
 

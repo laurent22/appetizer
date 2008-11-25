@@ -30,7 +30,8 @@ public:
   void CreateNewShortcut();
   bool IsApplicationOnRemoteDrive();
   bool InstallAutorunFile();
-  bool KillLockingProcesses(const wxString& drive, bool painless = true);
+  void KillLockingProcesses(const wxString& drive, bool painless = true);
+  void CreateAndRunVBScript(const wxString& filePath, const wxString& script);
   wxString CreateUUID();
   void Localize();
 

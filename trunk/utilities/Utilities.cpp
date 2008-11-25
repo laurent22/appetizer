@@ -155,7 +155,39 @@ ProcessUtilWindow parseProcessUtilLineW(const wxString& line) {
 }
 
 
-bool Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
+void Utilities::CreateAndRunVBScript(const wxString& filePath, const wxString& scriptContents) {
+  if (!wxFileName::FileExists(filePath)) {
+    wxFile file;
+    bool success = file.Create(filePath);
+    if (!success) {
+      elog(_T("Couldn't create ") + filePath);
+      return;
+    }
+    file.Open(filePath, wxFile::write);
+    file.Write(scriptContents);
+    file.Close();        
+  }
+
+  FolderItem::Launch(_T("wscript.exe"), filePath);
+}
+
+
+void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {  
+
+  int margin = 8;
+  wxDialog* dialog = new wxDialog(wxGetApp().GetMainFrame(), wxID_ANY, _T(""), wxDefaultPosition, wxDefaultSize, wxBORDER_RAISED);
+  wxStaticText* dialogText = new wxStaticText(dialog, wxID_ANY, _T(""), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTRE);
+  dialog->SetClientSize(300, 50);
+  dialogText->SetLabel(_("Please wait while your applications are being closed."));
+  dialogText->SetSize(margin, margin, dialog->GetSize().GetWidth() - margin * 2, dialog->GetSize().GetHeight() - margin * 2);
+  dialogText->Wrap(dialogText->GetSize().GetWidth());
+  wxSize dialogTextSize = dialogText->GetBestSize();
+  dialogText->SetSize(dialogTextSize.GetWidth(), dialogTextSize.GetHeight());
+  dialogText->Move((dialog->GetClientSize().GetWidth() - dialogTextSize.GetWidth()) / 2, (dialog->GetClientSize().GetHeight() - dialogTextSize.GetHeight()) / 2);
+  dialog->CenterOnParent();
+  dialog->Show();
+
+
   #ifdef __WINDOWS__
 
   // ***********************************************************************
@@ -165,10 +197,7 @@ bool Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
   wxArrayString moduleData;
   long exitCode = wxExecute(FilePaths::GetToolsDirectory() + _T("\\ProcessUtils.exe /d ") + drive, moduleData, wxEXEC_SYNC);
 
-  if (exitCode != 0) {
-    wxLogDebug(_T("[Error] 'ProcessUtils.exe /d' failed with code: %d"), exitCode);
-    return false;
-  }
+  if (exitCode != 0) wxLogDebug(_T("[Error] 'ProcessUtils.exe /d' failed with code: %d"), exitCode);
 
   // ***********************************************************************
   // For each module, get its associated windows and send to each
@@ -205,7 +234,7 @@ bool Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
         continue;
       }
 
-      LRESULT result = SendMessageTimeout(w.handle, WM_CLOSE, NULL, NULL, SMTO_BLOCK, 1000, NULL);
+      LRESULT result = SendMessageTimeout(w.handle, WM_CLOSE, NULL, NULL, SMTO_BLOCK, 400, NULL);
 
       if (!result) {
         LPWSTR pBuffer = NULL;
@@ -224,43 +253,42 @@ bool Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
   // may still be opened and the user will have to close manually.
   // ***********************************************************************
 
-  if (painless) return true;
+  if (!painless) {
 
-  // ***********************************************************************
-  // Otherwise, get a second time the list of blocking processes (which 
-  // should now only contains the ones that haven't been closed previously),
-  // and kill the process directly.
-  // ***********************************************************************
+    // ***********************************************************************
+    // Otherwise, get a second time the list of blocking processes (which 
+    // should now only contains the ones that haven't been closed previously),
+    // and kill the process directly.
+    // ***********************************************************************
 
-  wxSleep(1); // Wait for a second to allows windows to close properly
+    wxSleep(1); // Wait for a second to allows the windows to close properly
 
-  moduleData.Clear();
-  exitCode = wxExecute(FilePaths::GetToolsDirectory() + _T("\\ProcessUtils.exe /d ") + drive, moduleData, wxEXEC_SYNC);
+    moduleData.Clear();
+    exitCode = wxExecute(FilePaths::GetToolsDirectory() + _T("\\ProcessUtils.exe /d ") + drive, moduleData, wxEXEC_SYNC);
 
-  if (exitCode != 0) {
-    wxLogDebug(_T("[Error] 'ProcessUtils.exe /d' failed with code: %d"), exitCode);
-    return false;
-  }
+    if (exitCode != 0) wxLogDebug(_T("[Error] 'ProcessUtils.exe /d' failed with code: %d"), exitCode);
 
-  for (int i = 0; i < moduleData.Count(); i++) {
-    wxString moduleLine = moduleData[i];
-    ProcessUtilModule m = parseProcessUtilLineD(moduleLine);
+    for (int i = 0; i < moduleData.Count(); i++) {
+      wxString moduleLine = moduleData[i];
+      ProcessUtilModule m = parseProcessUtilLineD(moduleLine);
 
-    if (m.id <= 0) {
-      elog(_T("Could not parse this line: ") + moduleLine);
-      continue;
-    }
+      if (m.id <= 0) {
+        elog(_T("Could not parse this line: ") + moduleLine);
+        continue;
+      }
 
-    ilog(_T("Killing ") + m.path);
+      ilog(_T("Killing ") + m.path);
 
-    wxLogNull logNull; // Disable wxWidgets useless error messages
-    wxKillError killError;
-    wxKill(m.id, wxSIGKILL, &killError, wxKILL_CHILDREN);
+      wxLogNull logNull; // Disable wxWidgets error messages
+      wxKillError killError;
+      wxKill(m.id, wxSIGKILL, &killError, wxKILL_CHILDREN);
+    }  
+
   }  
 
   #endif // __WINDOWS__
-  
-  return true;  
+
+  dialog->Destroy();
 }
 
 
