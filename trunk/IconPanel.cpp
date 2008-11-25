@@ -126,17 +126,20 @@ wxMenu* IconPanel::GetContextMenu() {
   menu->Append(ID_MENU_NewGroup, _("New group..."));
 
   wxMenu* specialMenu = new wxMenu();
-  specialMenu->Append(ID_MENU_SpecialItem_ControlPanel, _("Control Panel"));
-  specialMenu->Append(ID_MENU_SpecialItem_MyComputer, _("My Computer"));
-  specialMenu->Append(ID_MENU_SpecialItem_MyNetwork, _("My Network Places"));
-  specialMenu->Append(ID_MENU_SpecialItem_RecycleBin, _("Recycle Bin"));
-  specialMenu->Append(ID_MENU_SpecialItem_Desktop, _("Show Desktop"));
-  specialMenu->Append(ID_MENU_SpecialItem_Explorer, _("Windows Explorer"));
-  specialMenu->Append(ID_MENU_SpecialItem_Search, _("Search"));
-  //specialMenu->Append(ID_MENU_SpecialItem_MyDocuments, _("My Documents"));
-  //specialMenu->Append(ID_MENU_SpecialItem_MyPictures, _("My Pictures"));
-  //specialMenu->Append(ID_MENU_SpecialItem_MyMusic, _("My Music"));
-  //specialMenu->Append(ID_MENU_SpecialItem_MyVideos, _("My Videos"));
+  wxMenuItem* menuItem = NULL;
+
+  #define ADD_SPECIAL_ITEM_TO_MENU(id, name, iconPath) \
+  menuItem = new wxMenuItem(specialMenu, id, name); \
+  menuItem->SetBitmap(*FolderItem::GetDefaultSpecialItemIcon(iconPath, 16)); \
+  specialMenu->Append(menuItem);
+
+  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_ControlPanel, _("Control Panel"), _T("$(ControlPanel)"))
+  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_MyComputer, _("My Computer"), _T("$(MyComputer)"))
+  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_MyNetwork, _("My Network Places"), _T("$(MyNetwork)"))
+  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_RecycleBin, _("Recycle Bin"), _T("$(RecycleBin)"))
+  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_Desktop, _("Show Desktop"), _T("$(ShowDesktop)"))
+  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_Explorer, _("Windows Explorer"), _T("$(Explorer)"))
+  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_Search, _("Search"), _T("$(Search)"))
 
   menu->AppendSubMenu(specialMenu, _("Add special item"));
   

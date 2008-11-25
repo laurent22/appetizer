@@ -100,7 +100,7 @@ MainFrame::MainFrame()
   #ifdef __WXDEBUG__
   bool showEjectSideButton = true;
   #else
-  bool showEjectSideButton = wxGetApp().GetUtilities().IsApplicationOnRemoteDrive();
+  bool showEjectSideButton = wxGetApp().GetUtilities().IsApplicationOnPortableDrive();
   #endif // __WXDEBUG__
 
   if (showEjectSideButton) {

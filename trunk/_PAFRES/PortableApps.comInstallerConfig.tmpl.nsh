@@ -1,5 +1,6 @@
 ;Copyright 2007-2008 John T. Haller of PortableApps.com
-;Website: http://PortableApps.com/
+;Modified by Laurent Cozic (2008)
+;Website: http://app.etizer.org
 
 ;This software is OSI Certified Open Source Software.
 ;OSI Certified is a certification mark of the Open Source Initiative.

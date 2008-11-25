@@ -13,6 +13,14 @@
 #include "ConfigDialogBase.h"
 
 
+enum {
+  CONFIG_DIALOG_INDEX_GENERAL,
+  CONFIG_DIALOG_INDEX_APPEARANCE,
+  CONFIG_DIALOG_INDEX_OPERATIONS,
+  CONFIG_DIALOG_INDEX_IMPORT
+};
+
+
 class ConfigDialog: public ConfigDialogBase {
 
 public:

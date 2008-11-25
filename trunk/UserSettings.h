@@ -34,6 +34,7 @@ public:
   bool ShowDeleteIconMessage;
   bool ShowEjectDriveMessage;
   bool RunMultiLaunchOnStartUp;
+  bool CloseAppsOnEject;
   bool HotKeyControl;
   bool HotKeyAlt;
   bool HotKeyShift;

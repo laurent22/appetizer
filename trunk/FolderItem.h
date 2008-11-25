@@ -27,11 +27,15 @@ WX_DECLARE_HASH_MAP(int, wxIconSP, wxIntegerHash, wxIntegerEqual, IconHashMap);
 WX_DECLARE_HASH_MAP(int, FolderItemSP, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
 
 
+#ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
+
 struct LaunchedFolderItem {
   long ProcessId;
   FolderItemProcess* Process;
   wxString ExecutablePath;
 };
+
+#endif // __MLB_TRACK_LAUNCHED_PROCESSES__
 
 
 
@@ -67,7 +71,7 @@ public:
 
   void AppendAsMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
   wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE);
-  wxMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
+  wxMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE, int menuIdOffset = 0);
 
   static void KillStartedProcesses();
 
@@ -92,7 +96,7 @@ public:
   void RemoveFromMultiLaunchGroup();
   bool BelongsToMultiLaunchGroup();  
 
-  static wxString ResolvePath(const wxString& filePath);
+  static wxString ResolvePath(const wxString& filePath, bool normalizeToo = true);
   static wxString ConvertToRelativePath(const wxString& filePath);
   static wxString GetDisplayName(const wxString& unresolvedFilePath);
 
@@ -103,6 +107,9 @@ public:
   // ***************************************************************
   // Methods to work with children
   // ***************************************************************
+  bool ContainsGroups();
+  FolderItemVector GetAllGroups(bool recursively = true);
+
   bool IsGroup();
   FolderItemVector GetChildren();  
   FolderItem* GetParent();
@@ -149,7 +156,10 @@ private:
   bool isDisposed_;
   
   static FolderItemIdHashMap folderItemIdHashMap_;
+
+  #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
   static std::vector<LaunchedFolderItem*> launchedFolderItems_;
+  #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
 
 };
 

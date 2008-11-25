@@ -20,6 +20,7 @@
 
 
 int FolderItemRenderer::uniqueID_ = 0;
+int FolderItemRenderer::addToGroupMenuItemOffset_ = 10000;
 
 
 BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
@@ -29,6 +30,7 @@ BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
   EVT_LEFT_DOWN(FolderItemRenderer::OnLeftDown)
   EVT_LEFT_UP(FolderItemRenderer::OnLeftUp)
   EVT_RIGHT_DOWN(FolderItemRenderer::OnRightDown)
+  EVT_MENU(wxID_ANY, FolderItemRenderer::OnMenuItemClick)
   EVT_MENU(ID_MENU_Delete, FolderItemRenderer::OnMenuDelete)
   EVT_MENU(ID_MENU_Properties, FolderItemRenderer::OnMenuProperties)
   EVT_MENU(ID_MENU_AddToMultiLaunch, FolderItemRenderer::OnMenuAddToMultiLaunch)
@@ -68,6 +70,26 @@ void FolderItemRenderer::ApplySkin() {
 
 FolderItemSP FolderItemRenderer::GetFolderItem() {
   return FolderItem::GetFolderItemById(folderItemId_);
+}
+
+
+void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
+  switch (evt.GetId()) {
+
+    default:
+
+      FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetFolderItemById(evt.GetId() - addToGroupMenuItemOffset_);
+      
+      if (!folderItem.get()) {
+        evt.Skip();
+        return;
+      }
+
+      folderItem->AddChild(GetFolderItem());
+      wxGetApp().FolderItems_CollectionChange();
+      break;
+
+  }
 }
 
 
@@ -117,6 +139,26 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
 
   menu->AppendSeparator();
   menu->Append(ID_MENU_Delete, _("Remove..."));
+
+  //if (wxGetApp().GetUser()->GetRootFolderItem()->ContainsGroups()) {
+  //  wxMenu* addToGroupMenu = new wxMenu();
+  //  FolderItemVector groups = wxGetApp().GetUser()->GetRootFolderItem()->GetAllGroups();
+  //  bool isMenuEmpty = true;
+
+  //  for (int i = 0; i < groups.size(); i++) {
+  //    FolderItemSP group = groups.at(i);
+  //    if (group->GetId() == folderItem->GetId()) continue;
+  //    wxMenuItem* groupMenuItem = group->ToMenuItem(addToGroupMenu, 16, addToGroupMenuItemOffset_);
+  //    addToGroupMenu->Append(groupMenuItem);
+  //    isMenuEmpty = false;
+  //  }
+
+  //  if (isMenuEmpty) {
+  //    wxDELETE(addToGroupMenu);
+  //  } else {
+  //    menu->AppendSubMenu(addToGroupMenu, _("Add to group"));
+  //  }
+  //}
 
   if (!folderItem->IsGroup()) {
     wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_AddToMultiLaunch, _("Add to Multi Launch group"), wxEmptyString, wxITEM_CHECK);

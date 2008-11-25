@@ -27,6 +27,7 @@ UserSettings::UserSettings() {
   UniqueApplicationInstance = true;
   AutoHideApplication = false;
   RunMultiLaunchOnStartUp = false;
+  CloseAppsOnEject = false;
   HotKeyControl = false;
   HotKeyAlt = false;
   HotKeyShift = false;
@@ -65,6 +66,7 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "HotKeyAlt", HotKeyAlt);
   AppendSettingToXml(xml, "HotKeyShift", HotKeyShift);
   AppendSettingToXml(xml, "HotKeyKey", HotKeyKey);
+  AppendSettingToXml(xml, "CloseAppsOnEject", CloseAppsOnEject);
 
   return xml;
 }
@@ -125,7 +127,10 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("HotKeyAlt")) HotKeyAlt = ParseBoolean(v);
     if (n == _T("HotKeyShift")) HotKeyShift = ParseBoolean(v);
     if (n == _T("HotKeyKey")) AssignSettingValue(HotKeyKey, v);
+    if (n == _T("CloseAppsOnEject")) CloseAppsOnEject = ParseBoolean(v);
+
   }
+
 }
 
 

@@ -74,4 +74,6 @@ Section "Main"
 		Goto TheEnd
 
 	TheEnd:
+	
+	newadvsplash::STOP /WAIT
 SectionEnd

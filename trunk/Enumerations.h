@@ -30,6 +30,7 @@ enum {
   ID_MENU_HideShow,
   ID_MENU_Config,
   ID_MENU_Eject,
+  ID_MENU_AddToGroup,
   ID_MENU_AddToMultiLaunch,
   ID_MENU_EditShortcutGroup,
   ID_MENU_OptionPanel_Help,

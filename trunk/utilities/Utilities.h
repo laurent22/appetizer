@@ -28,7 +28,7 @@ public:
   void ShowAboutDialog();
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void CreateNewShortcut();
-  bool IsApplicationOnRemoteDrive();
+  bool IsApplicationOnPortableDrive();
   bool InstallAutorunFile();
   void KillLockingProcesses(const wxString& drive, bool painless = true);
   void CreateAndRunVBScript(const wxString& filePath, const wxString& script);

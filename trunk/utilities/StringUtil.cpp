@@ -69,3 +69,23 @@ void StringUtil::Split(const wxString& toSplit, wxArrayString& resultArray, cons
   }
 
 } 
+
+
+bool StringUtil::FileMatchesPattern(const wxString& pattern, const wxString& filePath) {
+  wxString p(pattern);
+  wxString f(filePath);
+
+  p = p.Lower();
+  f = f.Lower();
+
+  p.Replace(_T("\\"), _T("\\\\"), true);
+  p.Replace(_T("/"), _T("\\"), true);
+  p.Replace(_T("."), _T("\\."), true);
+  p.Replace(_T("*"), _T(".*"), true);  
+  p.Replace(_T("?"), _T("."), true);  
+
+  f.Replace(_T("/"), _T("\\"));
+
+  wxRegEx regex(p, wxRE_ADVANCED);
+  return regex.Matches(f);
+}

@@ -263,7 +263,7 @@
 				IgnoreStandardIncludePath="false"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="stdafx.h"
+				PrecompiledHeaderThrough="../../stdafx.h"
 				DebugInformationFormat="0"
 			/>
 			<Tool
@@ -351,6 +351,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\FolderItem.cpp"
@@ -363,10 +372,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\FolderItemProcess.cpp"
-				>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\FolderItemRenderer.cpp"
@@ -377,6 +391,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -391,6 +414,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Localization.cpp"
@@ -401,6 +433,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -415,6 +456,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\main.cpp"
@@ -425,6 +475,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -439,6 +498,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\MessageBoxes.cpp"
@@ -449,6 +517,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -463,6 +540,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\OptionPanel.cpp"
@@ -473,6 +559,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -493,6 +588,7 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -507,6 +603,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\User.cpp"
@@ -519,6 +624,15 @@
 						UsePrecompiledHeader="2"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\UserSettings.cpp"
@@ -529,6 +643,15 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
 			</File>
@@ -551,7 +674,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -572,7 +694,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -593,7 +714,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -614,7 +734,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -639,7 +758,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -660,7 +778,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -705,7 +822,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -726,7 +842,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -747,7 +862,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -788,7 +902,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -801,6 +914,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -830,7 +944,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -851,7 +964,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -867,6 +979,7 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="../../stdafx.h"
 							/>
 						</FileConfiguration>
@@ -875,6 +988,7 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="2"
 								PrecompiledHeaderThrough="../../stdafx.h"
 							/>
 						</FileConfiguration>
@@ -887,7 +1001,8 @@
 							>
 							<Tool
 								Name="VCCLCompilerTool"
-								UsePrecompiledHeader="0"
+								UsePrecompiledHeader="2"
+								PrecompiledHeaderThrough="../../stdafx.h"
 							/>
 						</FileConfiguration>
 						<FileConfiguration
@@ -896,7 +1011,6 @@
 							<Tool
 								Name="VCCLCompilerTool"
 								UsePrecompiledHeader="2"
-								PrecompiledHeaderThrough="../../stdafx.h"
 							/>
 						</FileConfiguration>
 					</File>
@@ -1093,7 +1207,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1134,7 +1247,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1155,7 +1267,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1196,7 +1307,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1217,7 +1327,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1238,7 +1347,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1279,7 +1387,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1320,7 +1427,6 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
@@ -1370,10 +1476,6 @@
 			</File>
 			<File
 				RelativePath=".\FolderItem.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FolderItemProcess.h"
 				>
 			</File>
 			<File

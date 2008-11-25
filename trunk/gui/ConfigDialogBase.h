@@ -59,6 +59,7 @@ protected:
     wxPanel* notebook_pane_2;
     wxCheckBox* autohideCheckBox;
     wxCheckBox* multiLaunchAutoRunCheckBox;
+    wxCheckBox* closeAppOnEjectCheckBox;
     wxCheckBox* hotKeyCtrlCheckBox;
     wxCheckBox* hotKeyAltCheckBox;
     wxCheckBox* hotKeyShiftCheckBox;

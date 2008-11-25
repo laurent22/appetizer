@@ -22,7 +22,10 @@
 int FolderItem::uniqueID_ = 1000;
 
 FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
+
+#ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
 std::vector<LaunchedFolderItem*> FolderItem::launchedFolderItems_;
+#endif // __MLB_TRACK_LAUNCHED_PROCESSES__
 
 
 FolderItem::FolderItem(bool isGroup) {
@@ -92,11 +95,13 @@ FolderItem::~FolderItem() {
 
 
 void FolderItem::DestroyStaticData() {
+  #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
   for (int i = 0; i < launchedFolderItems_.size(); i++) {
     LaunchedFolderItem* p = launchedFolderItems_.at(i);
     wxDELETE(p);
   }
   launchedFolderItems_.clear();
+  #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
 
   folderItemIdHashMap_.clear();
 }
@@ -255,7 +260,39 @@ FolderItemVector FolderItem::GetChildren() {
 }
 
 
+bool FolderItem::ContainsGroups() {
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP child = children_.at(i);
+    if (child->IsGroup()) return true;
+  }  
+  return false;
+}
+
+
+FolderItemVector FolderItem::GetAllGroups(bool recursively) {
+  FolderItemVector output;
+
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItemSP child = children_.at(i);
+    if (child->IsGroup()) {
+      output.push_back(child);    
+      if (!recursively) continue;
+
+      FolderItemVector temp = child->GetAllGroups(recursively);
+      for (int j = 0; j < temp.size(); j++) output.push_back(temp.at(j));
+    }
+  }  
+
+  return output;
+}
+
+
 void FolderItem::AddChild(FolderItemSP folderItem) {
+  wxASSERT_MSG(folderItem->GetId() != GetId(), _T("Can't add a folder item to itself!"));
+
+  FolderItem* p = folderItem->GetParent();
+  if (p) p->RemoveChild(folderItem);
+
   folderItem->SetParent(this);
   children_.push_back(folderItem);
 }
@@ -398,6 +435,8 @@ wxMenu* FolderItem::ToMenu(int iconSize) {
 
   menu->Append(GetId(), _("Organize shortcuts"));  
 
+  // @todo: Events should probably not be handled here
+
   menu->Connect(
     wxID_ANY,
     wxEVT_COMMAND_MENU_SELECTED,
@@ -409,13 +448,8 @@ wxMenu* FolderItem::ToMenu(int iconSize) {
 }
 
 
-wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize) {
-  if (IsGroup()) {
-    elog(_T("A group cannot be converted to a menu item. Call ToMenu() instead"));
-    return NULL;
-  }
-
-  wxMenuItem* menuItem = new wxMenuItem(parentMenu, GetId(), GetName(true));
+wxMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, int menuIdOffset) {
+  wxMenuItem* menuItem = new wxMenuItem(parentMenu, menuIdOffset + GetId(), GetName(true));
 
   wxIconSP icon = GetIcon(iconSize);
   if (!icon->IsOk()) {
@@ -457,6 +491,8 @@ FolderItemSP FolderItem::SearchChildByFilename(const wxString& filename, int mat
 }
 
 
+#ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
+
 void FolderItem::KillStartedProcesses() {
 
   SystemUtilProcessVector processVector = SystemUtil::GetProcessList();
@@ -493,6 +529,8 @@ void FolderItem::KillStartedProcesses() {
   }
 }
 
+#endif // __MLB_TRACK_LAUNCHED_PROCESSES__
+
 
 void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
@@ -513,6 +551,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
         // Without arguments
         // ---------------------------
 
+        #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
         FolderItemProcess* process = new FolderItemProcess(NULL);
         
         LaunchedFolderItem* d = new LaunchedFolderItem();
@@ -522,7 +561,10 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
         launchedFolderItems_.push_back(d);
         
         d->ProcessId = wxExecute(filePath, wxEXEC_ASYNC, process);
-        
+        #else // __MLB_TRACK_LAUNCHED_PROCESSES__
+        wxExecute(filePath, wxEXEC_ASYNC);
+        #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
+
       } else {
 
         // ---------------------------
@@ -1066,7 +1108,7 @@ wxString FolderItem::GetResolvedPath() {
 }
 
 
-wxString FolderItem::ResolvePath(const wxString& filePath) {
+wxString FolderItem::ResolvePath(const wxString& filePath, bool normalizeToo) {
   wxString result(filePath);
 
   if (result.Index(_T("$(")) != wxNOT_FOUND) {
@@ -1076,6 +1118,8 @@ wxString FolderItem::ResolvePath(const wxString& filePath) {
     result.Replace(_T("$(ControlPanel)"), FilePaths::GetSystem32Directory() + _T("\\control.exe"));
     result.Replace(_T("$(MyComputer)"), FilePaths::GetWindowsDirectory() + _T("\\explorer.exe"));
   }
+
+  if (!normalizeToo) return result;
 
   wxFileName f(result);
   

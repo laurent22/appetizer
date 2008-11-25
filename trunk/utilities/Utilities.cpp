@@ -100,7 +100,7 @@ Utilities::~Utilities() {
 }
 
 
-bool Utilities::IsApplicationOnRemoteDrive() {
+bool Utilities::IsApplicationOnPortableDrive() {
   #ifdef __WINDOWS__
   UINT result = GetDriveType(FilePaths::GetApplicationDrive());
   // Don't show the eject button if we are not on a removable drive.
@@ -222,6 +222,8 @@ void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
 
     if (m->id <= 0) continue;
 
+    ilog(m->path);
+
     ilog(_T("Killing ") + m->path);
 
     wxLogNull logNull; // Disable wxWidgets error messages
@@ -248,8 +250,8 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
 
   #ifdef __WINDOWS__
 
-  KillLockingProcesses(_T("f:"), false);
-  return;
+  if (wxGetApp().GetUser()->GetSettings()->CloseAppsOnEject)
+    KillLockingProcesses(FilePaths::GetApplicationDrive(), false);
 
   // In order to eject the drive we need to:
   //
@@ -257,18 +259,8 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   //    Otherwise, RunDll32 is going to lock the drive and so we can't eject it
   // 2. Call RunDll32.exe
 
-  // Get the Windows folder path
-  LPTSTR buffer = new TCHAR[MAX_PATH];
-  int success = GetWindowsDirectory(buffer, MAX_PATH);
-  wxString windowsPath;
-  if (!success) {
-    windowsPath = _T("c:\\windows");
-  } else {
-    windowsPath = wxString(buffer, wxConvUTF8);
-  }
-
   // Set the current directory and call the eject dialog
-  wxSetWorkingDirectory(windowsPath);
+  wxSetWorkingDirectory(FilePaths::GetWindowsDirectory());
 
   // Note: this call creates a memory leak when the main frame is closed just after it.
   int result = wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));

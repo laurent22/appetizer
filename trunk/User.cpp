@@ -179,9 +179,14 @@ void User::AddAutoAddExclusion(const wxString& filePath) {
 
 
 bool User::IsAutoAddExclusion(const wxString& filePath) {
+  wxString resolvedPath = FolderItem::ResolvePath(filePath);
+
   for (int i = 0; i < autoAddExclusions_.size(); i++) {
-    if (autoAddExclusions_[i] == filePath) return true;
+    wxString exResolvedPath = FolderItem::ResolvePath(autoAddExclusions_[i], false);    
+    if (exResolvedPath == resolvedPath) return true;
+    if (StringUtil::FileMatchesPattern(exResolvedPath, resolvedPath)) return true;
   }
+
   return false;
 }
 
@@ -238,7 +243,9 @@ void User::GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* res
   wxDir::GetAllFiles(folderPath, &shortcutPaths, _T("*.lnk"), wxDIR_FILES);
 
   for (int i = 0; i < shortcutPaths.GetCount(); i++) {
-    wxFileName shortcutFN(shortcutPaths[i]);
+    wxString shortcutPath = shortcutPaths[i];
+
+    wxFileName shortcutFN(shortcutPath);
     shortcutFN.Normalize();
     if (!shortcutFN.FileExists() && !wxFileName::DirExists(shortcutFN.GetFullPath())) continue;
     if (shortcutFN.GetExt().Lower() != _T("exe")) continue;

@@ -31,7 +31,7 @@ wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
   #endif
   menu->Append(menuItem);
   menu->AppendSeparator();
-  if (wxGetApp().GetUtilities().IsApplicationOnRemoteDrive()) menu->Append(ID_MENU_Eject, _("Eject drive"));
+  if (wxGetApp().GetUtilities().IsApplicationOnPortableDrive()) menu->Append(ID_MENU_Eject, _("Eject drive"));
   menu->Append(ID_MENU_Config, _("Configuration"));
   menu->AppendSeparator();
   menu->Append(ID_MENU_Exit, _("Close"));

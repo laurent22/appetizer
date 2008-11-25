@@ -133,6 +133,15 @@ bool MiniLaunchBar::OnInit() {
     mainFrame_->InvalidateMask();
     mainFrame_->Update();
     mainFrame_->OpenOptionPanel();
+
+    user_->AddAutoAddExclusion(_T("*setup.exe"));
+    user_->AddAutoAddExclusion(_T("*unins*.exe"));
+    user_->AddAutoAddExclusion(_T("*installer.exe"));
+    user_->AddAutoAddExclusion(_T("*unstall.exe"));
+    user_->AddAutoAddExclusion(_T("*updater.exe"));
+    user_->AddAutoAddExclusion(_T("*unwise.exe"));
+    user_->AddAutoAddExclusion(_T("*uninst.exe"));
+    user_->AddAutoAddExclusion(_T("*setup*.exe"));
   } 
 
   // ***********************************************************************************

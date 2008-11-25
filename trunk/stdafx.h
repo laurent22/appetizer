@@ -11,7 +11,6 @@
 
 #ifdef __WINDOWS__
 #pragma comment(lib, "Rpcrt4.lib")
-//#pragma comment(lib, "atlthunk.lib") // WINDDK must be installed (required by ProcessUtil functions)
 #include <windows.h>
 #include <winver.h>
 #include <Rpc.h>

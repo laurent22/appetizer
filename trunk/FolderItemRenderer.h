@@ -32,6 +32,8 @@ public:
 
 private:
 
+  static int addToGroupMenuItemOffset_;
+
   static int uniqueID_;
 
   bool mouseInside_;
@@ -55,6 +57,7 @@ private:
   void OnMenuProperties(wxCommandEvent& evt);
   void OnMenuAddToMultiLaunch(wxCommandEvent& evt);
   void OnMenuEditShortcutGroup(wxCommandEvent& evt);
+  void OnMenuItemClick(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

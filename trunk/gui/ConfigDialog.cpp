@@ -44,10 +44,10 @@ void ConfigDialog::OnShow(wxShowEvent& evt) {
 
 void ConfigDialog::Localize() {
   SetTitle(_("Configuration"));  
-  notebook->SetPageText(0, _("General"));
-  notebook->SetPageText(1, _("Appearance"));
-  notebook->SetPageText(2, _("Operations"));
-  notebook->SetPageText(3, _("Import"));
+  notebook->SetPageText(CONFIG_DIALOG_INDEX_GENERAL, _("General"));
+  notebook->SetPageText(CONFIG_DIALOG_INDEX_APPEARANCE, _("Appearance"));
+  notebook->SetPageText(CONFIG_DIALOG_INDEX_OPERATIONS, _("Operations"));
+  notebook->SetPageText(CONFIG_DIALOG_INDEX_IMPORT, _("Import"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));  
 }
@@ -84,7 +84,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
     //
     // *********************************************************************************************
 
-    case 0: {
+    case CONFIG_DIALOG_INDEX_GENERAL: {
 
       languageLabel->SetLabel(_("Language:"));
       alwaysOnTopCheckBox->SetLabel(_("Always on top"));
@@ -131,7 +131,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       oneInstanceCheckBox->SetValue(userSettings->UniqueApplicationInstance);
 
       #ifndef __WXDEBUG__
-      installAutorunButton->Enable(wxGetApp().GetUtilities().IsApplicationOnRemoteDrive());
+      installAutorunButton->Enable(wxGetApp().GetUtilities().IsApplicationOnPortableDrive());
       #endif
 
       languageLabel->GetParent()->Layout();
@@ -154,7 +154,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
     //
     // *********************************************************************************************
 
-    case 1: {
+    case CONFIG_DIALOG_INDEX_APPEARANCE: {
 
       iconSizeLabel->SetLabel(_("Icon size:"));
       skinLabel->SetLabel(_("Skin:"));
@@ -244,7 +244,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
     //
     // *********************************************************************************************
 
-    case 2: {
+    case CONFIG_DIALOG_INDEX_OPERATIONS: {
 
       autohideCheckBox->SetLabel(_("Auto-hide after launching an application"));      
       multiLaunchAutoRunCheckBox->SetLabel(_("Run multi-launch group on startup"));
@@ -252,8 +252,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       hotKeyCtrlCheckBox->SetLabel(_("Control +"));
       hotKeyAltCheckBox->SetLabel(_("Alt +"));
       hotKeyShiftCheckBox->SetLabel(_("Shift +"));
-
-      multiLaunchAutoRunCheckBox->SetValue(userSettings->RunMultiLaunchOnStartUp);
+      closeAppOnEjectCheckBox->SetLabel(_("When ejecting the drive, close the apps that are locking it"));      
 
       //---------------------------------------------------------------------------
       // Populate "Hot key" dropdown list
@@ -347,12 +346,16 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       hotKeyCtrlCheckBox->SetValue(userSettings->HotKeyControl);
       hotKeyAltCheckBox->SetValue(userSettings->HotKeyAlt);
       hotKeyShiftCheckBox->SetValue(userSettings->HotKeyShift);
-      
-      //---------------------------------------------------------------------------
-      // "Auto-hide" and "Always on top"
-      //---------------------------------------------------------------------------
-      autohideCheckBox->SetValue(userSettings->AutoHideApplication);
 
+      //---------------------------------------------------------------------------
+      // Miscelaneous flags
+      //---------------------------------------------------------------------------
+      
+      autohideCheckBox->SetValue(userSettings->AutoHideApplication);
+      closeAppOnEjectCheckBox->SetValue(userSettings->CloseAppsOnEject);
+      multiLaunchAutoRunCheckBox->SetValue(userSettings->RunMultiLaunchOnStartUp);
+
+      // Force a relayout
       hotKeyCtrlCheckBox->GetParent()->Layout();
       
       } break;
@@ -373,7 +376,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
     //
     // *********************************************************************************************
 
-    case 3: {
+    case CONFIG_DIALOG_INDEX_IMPORT: {
 
       importExclusionSizer_staticbox->SetLabel(_("Exclude these items from import operations"));
 
@@ -467,7 +470,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   //
   // *********************************************************************************************
 
-  if (updatedPages_[0]) {
+  if (updatedPages_[CONFIG_DIALOG_INDEX_GENERAL]) {
   
     //---------------------------------------------------------------------------
     // Apply changes to locale code
@@ -511,7 +514,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   //
   // *********************************************************************************************
 
-  if (updatedPages_[1]) {
+  if (updatedPages_[CONFIG_DIALOG_INDEX_APPEARANCE]) {
 
     //---------------------------------------------------------------------------
     // Apply changes to icon size
@@ -565,10 +568,11 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   //
   // *********************************************************************************************
 
-  if (updatedPages_[2]) {
+  if (updatedPages_[CONFIG_DIALOG_INDEX_OPERATIONS]) {
 
     userSettings->AutoHideApplication = autohideCheckBox->GetValue();
     userSettings->RunMultiLaunchOnStartUp = multiLaunchAutoRunCheckBox->GetValue();
+    userSettings->CloseAppsOnEject = closeAppOnEjectCheckBox->GetValue();
     
     clientData = (wxStringClientData*)(hotKeyComboBox->GetClientObject(hotKeyComboBox->GetSelection()));
     wxString hotKeyCodeS = clientData->GetData();
@@ -596,13 +600,17 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
 
 
+
+
+
+
   // *********************************************************************************************
   //
   // IMPORT TAB
   //
   // *********************************************************************************************
 
-  if (updatedPages_[3]) {
+  if (updatedPages_[CONFIG_DIALOG_INDEX_IMPORT]) {
     wxString str = importExclusionTextBox->GetValue();
     str.Replace(_T("\r"), _T("\n"));
     wxArrayString splitted;
@@ -619,6 +627,11 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
     user->SetAutoAddExclusions(finalStrings);
   }
+
+
+
+
+
   
 
   user->Save(true);

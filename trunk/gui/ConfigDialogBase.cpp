@@ -40,7 +40,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     const wxString *skinComboBox_choices = NULL;
     skinComboBox = new wxComboBox(notebook_pane_2, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, skinComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
     autohideCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Hide after launching an application"));
-    multiLaunchAutoRunCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Run multi-launch group on startup*"));
+    multiLaunchAutoRunCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("#Run multi-launch group on startup#"));
+    closeAppOnEjectCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("#When ejecting the drive, close the apps that are locking it#"));
     hotKeyCtrlCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Ctrl +"));
     hotKeyAltCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Alt +"));
     hotKeyShiftCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Shift +"));
@@ -60,7 +61,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(374, 283));
+    SetSize(wxSize(409, 283));
     // end wxGlade
 }
 
@@ -104,6 +105,7 @@ void ConfigDialogBase::do_layout()
     notebook_pane_2->SetSizer(sizer_4);
     grid_sizer_2->Add(autohideCheckBox, 0, wxEXPAND, 0);
     grid_sizer_2->Add(multiLaunchAutoRunCheckBox, 0, wxEXPAND, 0);
+    grid_sizer_2->Add(closeAppOnEjectCheckBox, 0, 0, 0);
     grid_sizer_3->Add(hotKeyCtrlCheckBox, 0, 0, 0);
     grid_sizer_3->Add(hotKeyAltCheckBox, 0, 0, 0);
     grid_sizer_3->Add(hotKeyShiftCheckBox, 0, 0, 0);
