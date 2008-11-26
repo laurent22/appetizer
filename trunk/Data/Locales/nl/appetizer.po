@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-19 19:04+0000\n"
-"PO-Revision-Date: 2008-11-08 13:59-0000\n"
-"Last-Translator: Laurent Cozic\n"
+"POT-Creation-Date: 2008-11-19 20:06+0000\n"
+"PO-Revision-Date: 2008-11-25 19:20+0100\n"
+"Last-Translator: \n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,67 +25,81 @@ msgstr "Verbergen"
 msgid "Show"
 msgstr "Toon"
 
-#: ApplicationTrayIcon.cpp:34 MainFrame.cpp:323
+#: ApplicationTrayIcon.cpp:34
+#: MainFrame.cpp:334
 msgid "Eject drive"
 msgstr "Eject"
 
-#: ApplicationTrayIcon.cpp:35 OptionPanel.cpp:109 gui\ConfigDialog.cpp:46
+#: ApplicationTrayIcon.cpp:35
+#: OptionPanel.cpp:109
+#: gui\ConfigDialog.cpp:46
 msgid "Configuration"
 msgstr "Configuratie"
 
-#: ApplicationTrayIcon.cpp:37 gui\TreeViewDialog.cpp:67
+#: ApplicationTrayIcon.cpp:37
+#: gui\TreeViewDialog.cpp:67
 msgid "Close"
 msgstr "Sluiten"
 
-#: FolderItem.cpp:385 gui\TreeViewDialog.cpp:66
-#, fuzzy
+#: FolderItem.cpp:385
+#: gui\TreeViewDialog.cpp:66
 msgid "Organize shortcuts"
-msgstr "Nieuwe snelkoppeling..."
+msgstr "Organiseer snelkoppelingen"
 
-#: FolderItem.cpp:482 FolderItem.cpp:489 FolderItem.cpp:512
+#: FolderItem.cpp:482
+#: FolderItem.cpp:489
+#: FolderItem.cpp:512
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
-msgstr ""
+msgstr "Dit bestand bestaat niet of werd verwijderd (Fout %s)"
 
 #: FolderItem.cpp:744
 msgid "Group"
-msgstr ""
+msgstr "Groep"
 
-#: FolderItem.cpp:926 IconPanel.cpp:129
+#: FolderItem.cpp:926
+#: IconPanel.cpp:129
 msgid "Control Panel"
-msgstr ""
+msgstr "Controle Paneel"
 
-#: FolderItem.cpp:928 IconPanel.cpp:130
+#: FolderItem.cpp:928
+#: IconPanel.cpp:130
 msgid "My Computer"
-msgstr ""
+msgstr "Deze Computer"
 
-#: FolderItem.cpp:930 IconPanel.cpp:131
+#: FolderItem.cpp:930
+#: IconPanel.cpp:131
 msgid "My Network Places"
-msgstr ""
+msgstr "Mijn Netwerklokaties"
 
-#: FolderItem.cpp:932 IconPanel.cpp:132
+#: FolderItem.cpp:932
+#: IconPanel.cpp:132
 msgid "Recycle Bin"
-msgstr ""
+msgstr "Prullenbak"
 
-#: FolderItem.cpp:934 IconPanel.cpp:133
+#: FolderItem.cpp:934
+#: IconPanel.cpp:133
 msgid "Show Desktop"
-msgstr ""
+msgstr "Toon Bureaublad"
 
-#: FolderItem.cpp:936 IconPanel.cpp:134
+#: FolderItem.cpp:936
+#: IconPanel.cpp:134
 msgid "Windows Explorer"
-msgstr ""
+msgstr "Windows Verkenner"
 
-#: FolderItem.cpp:938 IconPanel.cpp:135
+#: FolderItem.cpp:938
+#: IconPanel.cpp:135
 msgid "Search"
-msgstr ""
+msgstr "Zoek"
 
 #: FolderItemRenderer.cpp:95
 msgid "Do you wish to remove this icon?"
 msgstr "Wil u dit item verwijderen?"
 
-#: FolderItemRenderer.cpp:95 utilities\Utilities.cpp:116
+#: FolderItemRenderer.cpp:95
+#: utilities\Utilities.cpp:116
 msgid "Don't show this message again"
-msgstr ""
+msgstr "Toon deze boodschap niet meer"
 
 #: FolderItemRenderer.cpp:119
 msgid "Remove..."
@@ -97,35 +111,36 @@ msgstr "Toevoegen aan Multi Launch groep"
 
 #: FolderItemRenderer.cpp:130
 msgid "Organize group shortcuts"
-msgstr ""
+msgstr "Organiseer groep snelkoppelingen"
 
 #: FolderItemRenderer.cpp:134
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: IconPanel.cpp:125 OptionPanel.cpp:108
+#: IconPanel.cpp:125
+#: OptionPanel.cpp:108
 msgid "New shortcut..."
 msgstr "Nieuwe snelkoppeling..."
 
 #: IconPanel.cpp:126
 msgid "New group..."
-msgstr ""
+msgstr "Nieuwe groep..."
 
 #: IconPanel.cpp:141
 msgid "Add special item"
-msgstr ""
+msgstr "Voeg een speciaal item toe"
 
 #: main.cpp:59
 msgid "Use user data directory to save settings."
-msgstr ""
+msgstr "Gebruik de gebruikersmap om voorkeuren te bewaren"
 
 #: main.cpp:60
 msgid "Set user data path (-u will be ignored)"
-msgstr ""
+msgstr "Zet gebruikersdata pad (-u wordt genegeerd)"
 
 #: main.cpp:97
 msgid "Could not initialize locale."
-msgstr ""
+msgstr "Kon locale niet initialiseren."
 
 #: main.cpp:168
 msgid "Large"
@@ -133,11 +148,11 @@ msgstr "Groot"
 
 #: main.cpp:169
 msgid "Extra Large (XP and above)"
-msgstr ""
+msgstr "Extra groot (XP en hoger)"
 
 #: main.cpp:170
 msgid "Jumbo (Vista and above)"
-msgstr ""
+msgstr "Jumbo (Vista en hoger)"
 
 #: main.cpp:174
 msgid "Small"
@@ -162,18 +177,23 @@ msgid ""
 "\n"
 "Do you wish to download it now?"
 msgstr ""
+"Een nieuwe versie is beschikbaar!\n"
+"\n"
+"Uw versie: %s\n"
+"Nieuwe versie: %s\n"
+"Release notes: %s\n"
+"\n"
+"Wilt u deze nu downloaden?"
 
 #: main.cpp:294
 msgid "Error launching web browser"
 msgstr "Fout bij het opstarten van de webbrowser"
 
-#: MainFrame.cpp:184
-msgid ""
-"There was an error registering the hot key. Another application may already "
-"have registered it."
-msgstr ""
+#: MainFrame.cpp:186
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Er trad een fout op bij het registreren van de hot key. Een ander programma kan deze al geregistreerd hebben."
 
-#: MainFrame.cpp:322
+#: MainFrame.cpp:333
 msgid "Minimize to tray"
 msgstr "Sluiten"
 
@@ -196,16 +216,16 @@ msgstr "Bevestiging"
 
 #: OptionPanel.cpp:107
 msgid "Help"
-msgstr ""
+msgstr "Hulp"
 
 #: OptionPanel.cpp:110
 msgid "Multi-launch"
-msgstr ""
+msgstr "Multi-launch"
 
-#: OptionPanel.cpp:111 gui\ImportWizardDialog.cpp:24
-#, fuzzy
+#: OptionPanel.cpp:111
+#: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
-msgstr "Nieuwe snelkoppeling..."
+msgstr "Importeer snelkoppelingen"
 
 #: OptionPanel.cpp:244
 msgid "Help Topics"
@@ -213,28 +233,26 @@ msgstr "Hulp Topics"
 
 #: OptionPanel.cpp:245
 msgid "Get Support"
-msgstr ""
+msgstr "Krijg Hulp"
 
-#: OptionPanel.cpp:247 gui\AboutDialog.cpp:61
-#, fuzzy, c-format
+#: OptionPanel.cpp:247
+#: gui\AboutDialog.cpp:61
+#, c-format
 msgid "About %s..."
 msgstr "Over %s..."
 
 #: OptionPanel.cpp:257
-msgid ""
-"The multilaunch group is currently empty. Do you wish to show the help topic "
-"about this feature?"
-msgstr ""
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "De multilaunch groep is momenteel leeg. Wilt u de hulpsectie hierover zien?"
 
 #: Styles.cpp:69
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
-msgstr ""
+msgstr "Deze skin is niet compatibel met de huidige versie van %s."
 
 #: utilities\Utilities.cpp:116
-#, fuzzy
 msgid "Do you wish to eject the drive?"
-msgstr "Wil u dit item verwijderen?"
+msgstr "Wil u de schijf verwijderen?"
 
 #: gui\AboutDialog.cpp:62
 msgid "About"
@@ -244,14 +262,16 @@ msgstr "Over %s..."
 msgid "License"
 msgstr "Licentie"
 
-#: gui\AboutDialog.cpp:64 gui\BetterMessageDialog.cpp:111
-#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:99
+#: gui\AboutDialog.cpp:64
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:99
 msgid "OK"
 msgstr "OK"
 
 #: gui\AboutDialog.cpp:65
 msgid "Credits"
-msgstr ""
+msgstr "Credits"
 
 #: gui\AboutDialog.cpp:67
 #, c-format
@@ -266,51 +286,62 @@ msgid ""
 "\n"
 "Dialog boxes are built using wxGlade by Alberto Griggio."
 msgstr ""
+"Vertalers: %s\n"
+"\n"
+"Deze software gebruikt een aantal open source bibliotheken oa:\n"
+"\n"
+"- Simpleini door Brodie Thiesfield\n"
+"- TinyXml door Yves Berquin\n"
+"- De Boost C++ Bibliotheken en wxWidgets door hun respectievelijke auteurs\n"
+"\n"
+"Dialoogvensters werden gemaakt gebruikmakend van wxGlade door Alberto Griggio."
 
 #: gui\AboutDialog.cpp:69
 #, c-format
 msgid "Copyright © %s"
-msgstr ""
+msgstr "Copyright © %s"
 
 #: gui\AboutDialog.cpp:70
 msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 
 #: gui\AboutDialog.cpp:71
 msgid "Web:"
-msgstr ""
+msgstr "Web:"
 
 #: gui\AboutDialog.cpp:72
 msgid "Contact:"
-msgstr ""
+msgstr "Contact:"
 
 #: gui\AboutDialog.cpp:80
 #, c-format
 msgid "%s, Version %s.%s.%s (Build #%s)"
-msgstr ""
+msgstr "%s, Versie %s.%s.%s (Build #%s)"
 
 #: gui\BetterMessageDialog.cpp:112
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: gui\BetterMessageDialog.cpp:113
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:52
-#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:100
-#: gui\ImportWizardDialog.cpp:76 gui\ShortcutEditorDialog.cpp:41
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:52
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:100
+#: gui\ImportWizardDialog.cpp:76
+#: gui\ShortcutEditorDialog.cpp:41
 msgid "Cancel"
 msgstr "Annuleren"
 
@@ -320,18 +351,18 @@ msgstr "Algemeen"
 
 #: gui\ConfigDialog.cpp:48
 msgid "Appearance"
-msgstr ""
+msgstr "Voorkomen"
 
 #: gui\ConfigDialog.cpp:49
-#, fuzzy
 msgid "Operations"
-msgstr "Orientatie"
+msgstr "Operaties"
 
 #: gui\ConfigDialog.cpp:50
 msgid "Import"
-msgstr ""
+msgstr "Importeer"
 
-#: gui\ConfigDialog.cpp:51 gui\ShortcutEditorDialog.cpp:40
+#: gui\ConfigDialog.cpp:51
+#: gui\ShortcutEditorDialog.cpp:40
 msgid "Save"
 msgstr "Opslaan"
 
@@ -341,24 +372,25 @@ msgstr "Taal:"
 
 #: gui\ConfigDialog.cpp:90
 msgid "Always on top"
-msgstr ""
+msgstr "Altijd bovenaan"
 
 #: gui\ConfigDialog.cpp:91
 #, c-format
 msgid "Allow only one instance of %s at a time"
-msgstr ""
+msgstr "Laat maar één instantie per keer toe van %s"
 
-#: gui\ConfigDialog.cpp:92 gui\ConfigDialog.cpp:438
+#: gui\ConfigDialog.cpp:92
+#: gui\ConfigDialog.cpp:438
 msgid "Check for update"
 msgstr "Controleer op updates"
 
 #: gui\ConfigDialog.cpp:93
 msgid "Install autorun file"
-msgstr ""
+msgstr "Installeer autorun bestand"
 
 #: gui\ConfigDialog.cpp:159
 msgid "Icon size:"
-msgstr "Icon grootte:"
+msgstr "Icoon grootte:"
 
 #: gui\ConfigDialog.cpp:160
 msgid "Skin:"
@@ -378,204 +410,198 @@ msgstr "Verticaal"
 
 #: gui\ConfigDialog.cpp:213
 msgid "Default"
-msgstr ""
+msgstr "Default"
 
 #: gui\ConfigDialog.cpp:249
 msgid "Auto-hide after launching an application"
-msgstr ""
+msgstr "Verberg automatisch na het starten van een programma"
 
 #: gui\ConfigDialog.cpp:250
 msgid "Run multi-launch group on startup"
-msgstr ""
+msgstr "Start multi-launch groep bij het opstarten"
 
 #: gui\ConfigDialog.cpp:251
 msgid "Hot key to hide / show the bar"
-msgstr ""
+msgstr "Hot key om de bar te tonen / verbergen"
 
 #: gui\ConfigDialog.cpp:252
 msgid "Control +"
-msgstr ""
+msgstr "Control +"
 
 #: gui\ConfigDialog.cpp:253
 msgid "Alt +"
-msgstr ""
+msgstr "Alt +"
 
 #: gui\ConfigDialog.cpp:254
 msgid "Shift +"
-msgstr ""
+msgstr "Shift +"
 
 #: gui\ConfigDialog.cpp:267
 msgid "<None>"
-msgstr ""
+msgstr "<Geen>"
 
 #: gui\ConfigDialog.cpp:309
 msgid "Numpad 0"
-msgstr ""
+msgstr "Numpad 0"
 
 #: gui\ConfigDialog.cpp:310
 msgid "Numpad 1"
-msgstr ""
+msgstr "Numpad 1"
 
 #: gui\ConfigDialog.cpp:311
 msgid "Numpad 2"
-msgstr ""
+msgstr "Numpad 2"
 
 #: gui\ConfigDialog.cpp:312
 msgid "Numpad 3"
-msgstr ""
+msgstr "Numpad 3"
 
 #: gui\ConfigDialog.cpp:313
 msgid "Numpad 4"
-msgstr ""
+msgstr "Numpad 4"
 
 #: gui\ConfigDialog.cpp:314
 msgid "Numpad 5"
-msgstr ""
+msgstr "Numpad 5"
 
 #: gui\ConfigDialog.cpp:315
 msgid "Numpad 6"
-msgstr ""
+msgstr "Numpad 6"
 
 #: gui\ConfigDialog.cpp:316
 msgid "Numpad 7"
-msgstr ""
+msgstr "Numpad 7"
 
 #: gui\ConfigDialog.cpp:317
 msgid "Numpad 8"
-msgstr ""
+msgstr "Numpad 8"
 
 #: gui\ConfigDialog.cpp:318
 msgid "Numpad 9"
-msgstr ""
+msgstr "Numpad 9"
 
 #: gui\ConfigDialog.cpp:320
 msgid "Backspace"
-msgstr ""
+msgstr "Backspace"
 
 #: gui\ConfigDialog.cpp:321
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: gui\ConfigDialog.cpp:322
 msgid "Return"
-msgstr ""
+msgstr "Return"
 
 #: gui\ConfigDialog.cpp:323
 msgid "Escape"
-msgstr ""
+msgstr "Escape"
 
 #: gui\ConfigDialog.cpp:324
-#, fuzzy
 msgid "Space"
-msgstr "Opslaan"
+msgstr "Space"
 
 #: gui\ConfigDialog.cpp:325
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: gui\ConfigDialog.cpp:327
 msgid "End"
-msgstr ""
+msgstr "End"
 
 #: gui\ConfigDialog.cpp:328
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: gui\ConfigDialog.cpp:329
 msgid "Left"
-msgstr ""
+msgstr "Left"
 
 #: gui\ConfigDialog.cpp:330
 msgid "Up"
-msgstr ""
+msgstr "Up"
 
 #: gui\ConfigDialog.cpp:331
 msgid "Right"
-msgstr ""
+msgstr "Right"
 
 #: gui\ConfigDialog.cpp:332
 msgid "Down"
-msgstr ""
+msgstr "Down"
 
 #: gui\ConfigDialog.cpp:378
 msgid "Exclude these items from import operations"
-msgstr ""
+msgstr "Excludeer deze items van import operaties"
 
 #: gui\ConfigDialog.cpp:403
 #, c-format
 msgid ""
-"By installing the autorun file on your removable drive, %s will start "
-"automatically when you insert your drive.\n"
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
+"Door het installeren van het autorun bestand op uw verwijderbare schijf zal %s automatisch opgestart worden wanneer u uw schijf inplugt.\n"
+"\n"
+"Wil u doorgaan?"
 
 #: gui\ConfigDialog.cpp:406
 msgid "Could not install autorun file. Please try again."
-msgstr ""
+msgstr "Kon autorun bestand niet installeren. Probeer aub opnieuw."
 
 #: gui\ConfigDialog.cpp:408
 msgid "The autorun file has been installed successfully"
-msgstr ""
+msgstr "Het autorun bestand werd met sucess geïnstalleerd"
 
 #: gui\ConfigDialog.cpp:433
 msgid "Please wait..."
-msgstr ""
+msgstr "Wacht aub..."
 
 #: gui\ConfigDialog.cpp:627
-msgid ""
-"Some of these changes will only be applied until after you restart the "
-"application."
-msgstr ""
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Sommige van deze wijzigingen zullen enkel toegepast worden nadat het programma werd herstart."
 
 #: gui\FileOrFolderDialog.cpp:76
 msgid "Loading tree..."
-msgstr ""
+msgstr "Loading tree..."
 
 #: gui\FileOrFolderDialog.cpp:110
-#, fuzzy
 msgid "Select a file or a folder"
-msgstr "Selecteer map"
+msgstr "Selecteer een bestand of een map"
 
 #: gui\IconDialog.cpp:97
-#, fuzzy
 msgid "Select an icon"
-msgstr "Selecteer map"
+msgstr "Selecteer een icoon"
 
 #: gui\IconDialog.cpp:98
 msgid "Icon file or library:"
-msgstr ""
+msgstr "Icoon bestand of bibliotheek:"
 
 #: gui\IconDialog.cpp:151
 msgid "All supported files"
-msgstr ""
+msgstr "Alle ondersteunde bestanden"
 
 #: gui\IconDialog.cpp:152
-#, fuzzy
 msgid "Icons"
-msgstr "Icon grootte:"
+msgstr "Iconen"
 
 #: gui\IconDialog.cpp:153
 msgid "Executables"
-msgstr ""
+msgstr "Executables"
 
 #: gui\IconDialog.cpp:154
 msgid "Dynamic libraries"
-msgstr ""
+msgstr "Dynamische bibliotheken"
 
 #: gui\IconDialog.cpp:155
 msgid "Icon libraries"
-msgstr ""
+msgstr "Icoon bibliotheken"
 
 #: gui\IconDialog.cpp:156
-#, fuzzy
 msgid "All files"
-msgstr "Selecteer bestand"
+msgstr "Alle bestanden"
 
 #: gui\IconDialog.cpp:158
-#, fuzzy
 msgid "Select an icon file or library"
-msgstr "Selecteer bestand"
+msgstr "Selecteer een icoon bestand of bibliotheek"
 
 #: gui\ImportWizardDialog.cpp:31
 #, c-format
@@ -584,36 +610,37 @@ msgid ""
 "\n"
 "Please select below where you would like to import your shortcuts from:"
 msgstr ""
+"Deze tool zal u helpen uw snelkoppelingen te importeren in %s.\n"
+"\n"
+"Selecteer aub hieronder vanwaar u uw snelkoppelingen wil importeren:"
 
 #: gui\ImportWizardDialog.cpp:42
 msgid "PortableApps applications"
-msgstr ""
+msgstr "PortableApps programma's"
 
 #: gui\ImportWizardDialog.cpp:43
 msgid "Windows Quick Launch toolbar"
-msgstr ""
+msgstr "Windows Snel Start toolbar"
 
 #: gui\ImportWizardDialog.cpp:44
 msgid "Windows Start Menu programs"
-msgstr ""
+msgstr "Windows Start Menu programma's"
 
 #: gui\ImportWizardDialog.cpp:72
 msgid "Start >>"
-msgstr ""
+msgstr "Start >>"
 
 #: gui\ImportWizardDialog.cpp:112
-#, fuzzy
 msgid "Importing shortcuts... Please wait."
-msgstr "Nieuwe snelkoppeling..."
+msgstr "Snelkoppelingen aan het importeren... Wacht aub."
 
 #: gui\ShortcutEditorDialog.cpp:36
-#, fuzzy
 msgid "Group Properties"
-msgstr "Eigenschappen"
+msgstr "Groep Eigenschappen"
 
 #: gui\ShortcutEditorDialog.cpp:36
 msgid "Shorcut Properties"
-msgstr ""
+msgstr "Snelkoppeling Eigenschappen"
 
 #: gui\ShortcutEditorDialog.cpp:37
 msgid "Name:"
@@ -625,20 +652,19 @@ msgstr "Lokatie:"
 
 #: gui\ShortcutEditorDialog.cpp:39
 msgid "Parameters:"
-msgstr ""
+msgstr "Parameters:"
 
 #: gui\ShortcutEditorDialog.cpp:42
-#, fuzzy
 msgid "Icon:"
-msgstr "Icon grootte:"
+msgstr "Icoon:"
 
 #: gui\ShortcutEditorDialog.cpp:43
 msgid "Change icon..."
-msgstr ""
+msgstr "Verander icoon..."
 
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Use default"
-msgstr ""
+msgstr "Gebruik default"
 
 #: gui\ShortcutEditorDialog.cpp:143
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
@@ -646,6 +672,6 @@ msgstr "De snelkoppeling lokatie bestaat niet. Wilt u verdergaan?"
 
 #~ msgid "Select folder"
 #~ msgstr "Selecteer map"
-
 #~ msgid "Check for updateWait"
 #~ msgstr "Wacht aub..."
+

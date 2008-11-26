@@ -1050,7 +1050,7 @@ cleanup:
 //////////////////////////////////////////////////////////////////////////////////////
 
 
-//#ifdef __SYSTEM_INFO_USE_SYSTEM_WINDOW_INFO__
+#ifdef __SYSTEM_INFO_USE_SYSTEM_WINDOW_INFO__
 
 SystemWindowInformation::SystemWindowInformation( DWORD pID, BOOL bRefresh )
 {
@@ -1106,4 +1106,4 @@ BOOL CALLBACK SystemWindowInformation::EnumerateWindows( HWND hwnd, LPARAM lPara
 	return TRUE;
 };
 
-//#endif // __SYSTEM_INFO_USE_SYSTEM_WINDOW_INFO__
+#endif // __SYSTEM_INFO_USE_SYSTEM_WINDOW_INFO__
