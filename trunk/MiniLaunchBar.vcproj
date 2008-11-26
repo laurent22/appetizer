@@ -203,7 +203,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib wxbase28ud_net.lib wxregexud.lib psapi.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib wxbase28ud_net.lib wxregexud.lib psapi.lib c:\lua\lua5.1.lib c:\lua\lua51.lib"
 				OutputFile=".\Appetizer-debug.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				GenerateDebugInformation="true"
@@ -278,7 +278,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib psapi.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib psapi.lib c:\lua\lua5.1.lib c:\lua\lua51.lib"
 				OutputFile=".\Appetizer.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -467,6 +467,18 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\LuaWrapper.cpp"
+				>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 				<FileConfiguration
@@ -567,6 +579,30 @@
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\Plugin.cpp"
+				>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						PrecompiledHeaderThrough="stdafx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\PluginManager.cpp"
+				>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
 						PrecompiledHeaderThrough="stdafx.h"
 					/>
 				</FileConfiguration>
@@ -808,6 +844,26 @@
 				</File>
 				<File
 					RelativePath=".\utilities\IconGetter.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\utilities\LuaUtil.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
@@ -1495,6 +1551,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LuaWrapper.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrame.h"
 				>
 			</File>
@@ -1512,6 +1572,14 @@
 			</File>
 			<File
 				RelativePath=".\OptionPanel.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Plugin.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PluginManager.h"
 				>
 			</File>
 			<File
@@ -1575,6 +1643,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\IconGetter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\LuaUtil.h"
 					>
 				</File>
 				<File
@@ -1658,6 +1730,30 @@
 					>
 					<File
 						RelativePath=".\third_party\coopfish\blowfish.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="lua"
+					>
+					<File
+						RelativePath=".\third_party\lua\lauxlib.h"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\lua\lua.h"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\lua\lua.hpp"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\lua\luaconf.h"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\lua\lualib.h"
 						>
 					</File>
 				</Filter>

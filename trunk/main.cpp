@@ -25,11 +25,16 @@
 IMPLEMENT_APP(MiniLaunchBar) 
 
 
+
+#include "PluginManager.h"
+
+
+
 /**
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(4709);
+  _CrtSetBreakAlloc(960);
 
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -164,6 +169,11 @@ bool MiniLaunchBar::OnInit() {
 
   return true;
 } 
+
+
+PluginManager MiniLaunchBar::GetPluginManager() {
+  return pluginManager_;
+}
 
 
 IntVector MiniLaunchBar::GetAllowedIconSizes() {

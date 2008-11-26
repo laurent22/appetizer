@@ -86,9 +86,18 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 
-#include "third_party/tinyxml/tinyxml.h"
-#include "third_party/simpleini/SimpleIni.h"
-#include "third_party/wxMD5/wxMD5.h"
-#include "third_party/StdString.h"
+#include <tinyxml/tinyxml.h>
+#include <simpleini/SimpleIni.h>
+#include <wxMD5/wxMD5.h>
+#include <StdString.h>
+
+extern "C" {
+  #include <lua/lua.h>
+  #include <lua/lua.hpp>
+  #include <lua/luaconf.h>
+  #include <lua/lualib.h>
+  #include <lua/lauxlib.h>
+}
+
 
 #endif // __MiniLaunchBarPrecompiled_H

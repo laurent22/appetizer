@@ -13,6 +13,7 @@
 #include "MainFrame.h"
 #include "FolderItem.h"
 #include "Enumerations.h"
+#include "PluginManager.h"
 #include "utilities/Utilities.h"
 
 
@@ -40,6 +41,7 @@ public:
   IntVector GetAllowedIconSizes();
   wxString GetIconSizeName(int iconSize);
   wxString GetContactEmail();
+  PluginManager GetPluginManager();
 
   void FolderItems_CollectionChange();
   void FolderItems_FolderItemChange(FolderItemSP folderItem);
@@ -60,7 +62,8 @@ private:
   User* user_;
   wxLocale* locale_;
   LongVector launchedProcessIds_;
-  IntVector allowedIconSizes_;  
+  IntVector allowedIconSizes_;
+  PluginManager pluginManager_;
 
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;

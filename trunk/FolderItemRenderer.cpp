@@ -13,6 +13,7 @@
 #include "imaging/Imaging.h"
 #include "FilePaths.h"
 #include "Styles.h"
+#include "LuaWrapper.h"
 #include "MiniLaunchBar.h"
 #include "Enumerations.h"
 #include "MessageBoxes.h"
@@ -174,6 +175,8 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   }
 
   menu->Append(ID_MENU_Properties, _("Properties"));
+
+  wxGetApp().GetPluginManager().DispatchEvent(AZ_OBJECT_ANY_ICON, AZ_EVENT_POPUP_MENU_OPENING, LuaHostTable());
 
   PopupMenu(menu, wxDefaultPosition);
 
