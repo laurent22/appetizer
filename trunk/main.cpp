@@ -170,6 +170,8 @@ bool MiniLaunchBar::OnInit() {
     d->Destroy();
   }
 
+  pluginManager_.Initialize();
+
   return true;
 } 
 

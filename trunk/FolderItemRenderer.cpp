@@ -21,8 +21,6 @@
 #include "gui/TreeViewDialog.h"
 
 
-extern wxObject* azAnyShortcut;
-
 
 int FolderItemRenderer::uniqueID_ = 0;
 int FolderItemRenderer::addToGroupMenuItemOffset_ = 10000;
@@ -86,17 +84,12 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
 
   wxMenu* menu = dynamic_cast<wxMenu*>(evt.GetEventObject());
 
-  //LuaHostTable evt;
-  //evt["menuItem"] = menuItem;
-
   bool handled = wxGetApp().GetPluginManager().HandleMenuItemClick(menuItem);
   
   if (handled) {
     evt.Skip();
     return;
   }
-  
-  //wxGetApp().GetPluginManager().DispatchEvent(menu, azEvent_ItemClick, LuaHostTable());
 
   wxString name = menuItem->GetMetadata(_("name"));
 

@@ -74,7 +74,7 @@ void User::Save(bool force) {
   settings_->Save();
 
   TiXmlDocument doc;
-  doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
+  doc.LinkEndChild(new TiXmlDeclaration("1.0", "UTF-8", ""));
 
   TiXmlElement* xmlRoot = new TiXmlElement("FolderItems");
   xmlRoot->SetAttribute("version", "1.0");
@@ -91,7 +91,8 @@ void User::Save(bool force) {
   }
 
   FilePaths::CreateSettingsDirectory();
-  doc.SaveFile(FilePaths::GetFolderItemsFile().mb_str());
+  bool saved = doc.SaveFile(FilePaths::GetFolderItemsFile().mb_str());
+  if (!saved) elog("Could not save file");
 }
 
 
@@ -101,7 +102,7 @@ void User::Load() {
   autoAddExclusions_.Clear();
 
   TiXmlDocument doc(FilePaths::GetFolderItemsFile().mb_str());
-  doc.LoadFile();
+  doc.LoadFile(TIXML_ENCODING_UTF8);
 
   TiXmlElement* root = doc.FirstChildElement("FolderItems");
   if (!root) {

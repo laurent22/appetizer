@@ -288,8 +288,11 @@ FolderItemVector FolderItem::GetAllGroups(bool recursively) {
 
 
 void FolderItem::AddChild(FolderItemSP folderItem) {
-  wxASSERT_MSG(folderItem->GetId() != GetId(), _T("Can't add a folder item to itself!"));
   if (folderItem->GetId() == GetId()) return;
+  if (folderItem->IsGroup()) {
+    FolderItemSP f = folderItem->GetChildById(GetId());
+    if (f.get()) return;
+  }
 
   FolderItem* p = folderItem->GetParent();
   if (p) p->RemoveChild(folderItem);
@@ -445,7 +448,7 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
     return NULL;
   }
 
-  wxMenu* menu = new wxMenu();
+  wxMenu* menu = new wxMenu(GetName());
   ExtendedMenuItem* menuItem = NULL;
 
   for (int i = 0; i < children_.size(); i++) {
@@ -787,8 +790,8 @@ void FolderItem::LaunchWithArguments(const wxString& arguments) {
 TiXmlElement* FolderItem::ToXml() {
   TiXmlElement* xml = new TiXmlElement("FolderItem");
 
-  XmlUtil::AppendTextElement(xml, "FilePath", GetFilePath().mb_str());
-  XmlUtil::AppendTextElement(xml, "Name", GetName().mb_str());
+  XmlUtil::AppendTextElement(xml, "FilePath", GetFilePath());
+  XmlUtil::AppendTextElement(xml, "Name", GetName());
   XmlUtil::AppendTextElement(xml, "AutomaticallyAdded", GetAutomaticallyAdded());
   XmlUtil::AppendTextElement(xml, "MultiLaunchGroup", BelongsToMultiLaunchGroup());
   XmlUtil::AppendTextElement(xml, "IsGroup", IsGroup());

@@ -19,6 +19,7 @@ const wxString SKIN_FOLDER_NAME = _T("Skin");
 const wxString LOCALES_FOLDER_NAME = _T("Locales");
 const wxString ICONS_FOLDER_NAME = _T("Icons");
 const wxString HELP_FOLDER_NAME = _T("Help");
+const wxString PLUGINS_FOLDER_NAME = _T("Plugins");
 const wxString TOOLS_FOLDER_NAME = _T("Tools");
 const wxString WINDOW_FILE_NAME = _T("Window.xml");
 const wxString HELP_FILE_NAME = _T("Appetizer.chm");

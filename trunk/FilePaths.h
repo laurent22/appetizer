@@ -24,6 +24,7 @@ public:
   static wxString GetLocalesDirectory();
   static wxString GetHelpDirectory();
   static wxString GetToolsDirectory();
+  static wxString GetPluginsDirectory();
   static wxString GetIconCacheDirectory();
 
   static wxString GetApplicationPath();
@@ -60,6 +61,7 @@ private:
   static wxString ApplicationPath_;
   static wxString IconCacheDirectory_;
   static wxString ToolsDirectory_;
+  static wxString PluginsDirectory_;
 
 };
 

@@ -31,13 +31,19 @@ void XmlUtil::AppendTextElement(TiXmlElement* targetElement, const char* element
 
 
 void XmlUtil::AppendTextElement(TiXmlElement* targetElement, const char* elementName, wxString elementText) {
-  XmlUtil::AppendTextElement(targetElement, elementName, elementText.mb_str());
+  XmlUtil::AppendTextElement(targetElement, elementName, elementText.ToUTF8());
 }
 
 
 wxString XmlUtil::ReadElementText(TiXmlHandle handle, const char* elementName, const wxString& defaultValue) {
   TiXmlElement* element = handle.Child(elementName, 0).ToElement();
-  if (element) return wxString(element->GetText(), wxConvUTF8);
+  if (element) {
+    const char* cString = element->GetText();
+    if (!cString) return defaultValue;
+    wxString output = wxString::FromUTF8(cString);
+   
+    return output;
+  }
   return defaultValue;
 }
 

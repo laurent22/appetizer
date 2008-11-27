@@ -18,7 +18,8 @@ class PluginManager {
 public:
 
   PluginManager();
-  
+
+  void Initialize();  
   PluginSP GetPluginByLuaState(lua_State* L);
   void DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable arguments, void* sender = NULL);
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);

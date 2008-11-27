@@ -11,8 +11,7 @@
 
 
 enum {
-  azEvent_OnIconPopupMenu,
-  azEvent_ItemClick
+  azEvent_OnIconPopupMenu
 };
 
 
@@ -20,6 +19,7 @@ void luaWrapper_destroy();
 
 
 int azPrint(lua_State *L);
+int azT(lua_State *L);
 int azAddEventListener(lua_State *L);
 int azGetShortcutsRoot(lua_State *L);
 int azGetShortcutById(lua_State *L);

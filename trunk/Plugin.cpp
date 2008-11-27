@@ -11,8 +11,6 @@
 #include "MiniLaunchBar.h"
 
 
-extern wxObject* azAnyShortcut;
-
 
 Plugin::Plugin() {
   L = lua_open();
@@ -38,6 +36,7 @@ void Plugin::LoadFile(const wxString& luaFilePath) {
   luaopen_math(L);
 
   lua_register(L, "azPrint", azPrint);
+  lua_register(L, "azT", azT);
   lua_register(L, "azAddEventListener", azAddEventListener);
   lua_register(L, "azGetShortcutsRoot", azGetShortcutsRoot);
   lua_register(L, "azNewMenu", azNewMenu);
@@ -55,7 +54,6 @@ void Plugin::LoadFile(const wxString& luaFilePath) {
   lua_register(L, "azMenu_AppendSubMenu", azMenu_AppendSubMenu);
   lua_register(L, "azMenu_AppendSeparator", azMenu_AppendSeparator);
 
-  lua_pushinteger(L, azEvent_ItemClick); lua_setglobal(L, "azEvent_ItemClick");
   lua_pushinteger(L, azEvent_OnIconPopupMenu); lua_setglobal(L, "azEvent_OnIconPopupMenu");
   lua_pushlightuserdata(L, &(wxGetApp())); lua_setglobal(L, "azApp");
 

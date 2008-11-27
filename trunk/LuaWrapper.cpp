@@ -16,11 +16,14 @@
 #include "MiniLaunchBar.h"
 
 
-wxObject* azAnyShortcut = new wxObject();
-
 
 void luaWrapper_destroy() {
-  wxDELETE(azAnyShortcut);
+
+}
+
+
+void luaw_logError(const wxString& s, const char* functionName) {
+  wxLogDebug(_T("%s %s (%s)"), _T("[Lua Host]"), s, functionName);
 }
 
 
@@ -44,9 +47,18 @@ int azPrint(lua_State *L) {
     output += s;
   }
 
-  wxLogDebug(_T("%s %s"), _T("[Lua]"), output);
+  wxLogDebug(_T("%s %s"), _T("[Lua Script]"), output);
 
   return 0;
+}
+
+
+int azT(lua_State *L) {
+  const char* cString = luaL_checkstring(L, 1);
+  wxString* s = new wxString(wxString::FromUTF8(cString));
+  lua_pushlightuserdata(L, s);
+
+  return 1;
 }
 
 
@@ -58,7 +70,7 @@ int azAddEventListener(lua_State *L) {
   PluginSP p = wxGetApp().GetPluginManager().GetPluginByLuaState(L);
   
   if (!p.get()) {
-    elog("Could not find matching plugin for Lua state");
+    luaw_logError(_T("Could not find matching plugin for Lua state"), __FUNCTION__);
     return 0;
   }
 
@@ -145,7 +157,10 @@ int azShortcut_AddChild(lua_State *L) {
 
 int azShortcut_GetName(lua_State *L) {
   FolderItem* folderItem = (FolderItem*)lua_touserdata(L, 1);
-  lua_pushstring(L, folderItem->GetName(true).mb_str());
+  lua_pushstring(L, folderItem->GetName(true).ToUTF8());
+  
+  //wxString* s = new wxString(folderItem->GetName(true));
+  //lua_pushlightuserdata(L, s);
   
   return 1;
 }
@@ -161,6 +176,8 @@ int azShortcut_GetId(lua_State *L) {
 
 int azNewMenu(lua_State *L) {
   wxString menuText = LuaUtil::ToString(L, 1);
+  if (menuText == wxEmptyString) return 0;
+
   wxMenu* menu = new wxMenu(menuText);
   lua_pushlightuserdata(L, menu);
 
@@ -170,8 +187,17 @@ int azNewMenu(lua_State *L) {
 
 int azMenu_Append(lua_State *L) {
   wxMenu* menu = (wxMenu*)lua_touserdata(L, 1);
+  if (!menu) return 0;
 
   wxString menuItemText = LuaUtil::GetStringFromTable(L, 2, _T("text"));
+  //lua_pushstring(L, ("text"));
+  //lua_gettable(L, 2);
+  //wxString* menuItemTextP = (wxString*)lua_touserdata(L, -1);
+  //wxString menuItemText = wxString(*menuItemTextP);
+  //wxDELETE(menuItemTextP);
+  //lua_pop(L, 1);
+  
+  
   wxString menuItemOnClick = LuaUtil::GetStringFromTable(L, 2, _T("onClick"));
   wxString menuItemId = LuaUtil::GetStringFromTable(L, 2, _T("id"));
   wxString menuItemTag = LuaUtil::GetStringFromTable(L, 2, _T("tag"));

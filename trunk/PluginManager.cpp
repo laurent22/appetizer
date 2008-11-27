@@ -8,14 +8,35 @@
 
 #include "PluginManager.h"
 #include "LuaWrapper.h"
+#include "FilePaths.h"
 #include "utilities/LuaUtil.h"
 
 
 PluginManager::PluginManager() {
-  PluginSP p(new Plugin());
-  plugins_.push_back(p);
 
-  p->LoadFile(_T("Data\\Plugins\\AddToGroupOnRightClick.lua"));
+}
+
+
+void PluginManager::Initialize() {
+  wxString pluginPath = FilePaths::GetPluginsDirectory();
+  wxDir pluginFolder;
+
+  if (wxFileName::DirExists(pluginPath) && pluginFolder.Open(pluginPath)) {
+    wxString folderName;
+    bool success = pluginFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
+    
+    while (success) {
+
+      wxLogDebug(folderName);
+
+      PluginSP p(new Plugin());
+      plugins_.push_back(p);
+
+      p->LoadFile(pluginPath + wxFileName::GetPathSeparator() + folderName + wxFileName::GetPathSeparator() + _T("main.lua"));
+
+      success = pluginFolder.GetNext(&folderName);
+    }
+  }
 }
 
 
