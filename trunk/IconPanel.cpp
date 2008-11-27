@@ -105,15 +105,8 @@ void IconPanel::OnBrowseButtonClick(wxCommandEvent& evt) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
     FolderItemSP folderItem = renderer->GetFolderItem();
 
-    folderItem->AppendAsMenuItem(&menu);
+    folderItem->AppendAsMenuItem(&menu, SMALL_ICON_SIZE, _T("browseButtonFolderItem"));
   }
-
-  menu.Connect(
-    wxID_ANY,
-    wxEVT_COMMAND_MENU_SELECTED,
-    wxCommandEventHandler(IconPanel::OnBrowseButtonMenu),
-    NULL,
-    this);
 
   PopupMenu(&menu, wxDefaultPosition);
 }
@@ -121,25 +114,32 @@ void IconPanel::OnBrowseButtonClick(wxCommandEvent& evt) {
 
 wxMenu* IconPanel::GetContextMenu() {
   wxMenu* menu = new wxMenu();
+  ExtendedMenuItem* menuItem = NULL;
+
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("New shortcut..."));
+  menuItem->SetMetadata(_T("name"), _("newShortcut"));
+  menu->Append(menuItem);
   
-  menu->Append(ID_MENU_NewShortcut, _("New shortcut..."));
-  menu->Append(ID_MENU_NewGroup, _("New group..."));
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("New group..."));
+  menuItem->SetMetadata(_T("name"), _("newGroup"));
+  menu->Append(menuItem);
 
   wxMenu* specialMenu = new wxMenu();
-  wxMenuItem* menuItem = NULL;
 
-  #define ADD_SPECIAL_ITEM_TO_MENU(id, name, iconPath) \
-  menuItem = new wxMenuItem(specialMenu, id, name); \
-  menuItem->SetBitmap(*FolderItem::GetDefaultSpecialItemIcon(iconPath, 16)); \
+  #define ADD_SPECIAL_ITEM_TO_MENU(text, specialItemMacro) \
+  menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), text); \
+  menuItem->SetMetadata(_T("name"), _("addSpecialItem")); \
+  menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
+  menuItem->SetBitmap(*FolderItem::GetDefaultSpecialItemIcon(specialItemMacro, 16)); \
   specialMenu->Append(menuItem);
 
-  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_ControlPanel, _("Control Panel"), _T("$(ControlPanel)"))
-  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_MyComputer, _("My Computer"), _T("$(MyComputer)"))
-  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_MyNetwork, _("My Network Places"), _T("$(MyNetwork)"))
-  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_RecycleBin, _("Recycle Bin"), _T("$(RecycleBin)"))
-  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_Desktop, _("Show Desktop"), _T("$(ShowDesktop)"))
-  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_Explorer, _("Windows Explorer"), _T("$(Explorer)"))
-  ADD_SPECIAL_ITEM_TO_MENU(ID_MENU_SpecialItem_Search, _("Search"), _T("$(Search)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("Control Panel"), _T("$(ControlPanel)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("My Computer"), _T("$(MyComputer)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("My Network Places"), _T("$(MyNetwork)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("Recycle Bin"), _T("$(RecycleBin)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("Show Desktop"), _T("$(ShowDesktop)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("Windows Explorer"), _T("$(Explorer)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("Search"), _T("$(Search)"))
 
   menu->AppendSubMenu(specialMenu, _("Add special item"));
   
@@ -148,46 +148,46 @@ wxMenu* IconPanel::GetContextMenu() {
 
 
 void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
-  wxMenuItem* w = static_cast<wxMenuItem*>(evt.GetEventObject());
+  ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
+  wxString name = menuItem->GetMetadata(_("name"));
 
   User* user = wxGetApp().GetUser();
   FolderItemSP rootFolderItem = user->GetRootFolderItem();
 
-  switch (evt.GetId()) {
+  if (name == _T("addSpecialItem")) {
 
-    case ID_MENU_NewShortcut: {
+    user->AddNewFolderItemFromPath(rootFolderItem, menuItem->GetMetadata(_("specialItemMacro")));
 
-      FileOrFolderDialog* d = new FileOrFolderDialog(this);
-      int result = d->ShowModal();
-      if (result == wxID_OK) {
-        wxGetApp().GetUser()->AddNewFolderItemFromPath(wxGetApp().GetUser()->GetRootFolderItem(), d->GetPath());
-      }  
+  } else if (name == _T("newShortcut")) {
 
-      d->Destroy();
-      } break;
+    FileOrFolderDialog* d = new FileOrFolderDialog(this);
+    int result = d->ShowModal();
+    if (result == wxID_OK) {
+      wxGetApp().GetUser()->AddNewFolderItemFromPath(wxGetApp().GetUser()->GetRootFolderItem(), d->GetPath());
+    }  
 
-    case ID_MENU_NewGroup: {
+    d->Destroy();
 
-      wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem(), true);
-      
-      } break;
+  } else if (name == _T("newGroup")) {
 
-    case ID_MENU_SpecialItem_ControlPanel: user->AddNewFolderItemFromPath(rootFolderItem, _T("$(ControlPanel)")); break;
-    case ID_MENU_SpecialItem_MyComputer:   user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyComputer)")); break;
-    case ID_MENU_SpecialItem_MyNetwork:    user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyNetwork)")); break;
-    case ID_MENU_SpecialItem_RecycleBin:   user->AddNewFolderItemFromPath(rootFolderItem, _T("$(RecycleBin)")); break;
-    case ID_MENU_SpecialItem_Desktop:      user->AddNewFolderItemFromPath(rootFolderItem, _T("$(ShowDesktop)")); break;
-    case ID_MENU_SpecialItem_Explorer:     user->AddNewFolderItemFromPath(rootFolderItem, _T("$(Explorer)")); break;
-    case ID_MENU_SpecialItem_Search:       user->AddNewFolderItemFromPath(rootFolderItem, _T("$(Search)")); break;
-    case ID_MENU_SpecialItem_MyDocuments:  user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyDocuments)")); break;
-    case ID_MENU_SpecialItem_MyPictures:   user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyPictures)")); break;
-    case ID_MENU_SpecialItem_MyMusic:      user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyMusic)")); break;
-    case ID_MENU_SpecialItem_MyVideos:     user->AddNewFolderItemFromPath(rootFolderItem, _T("$(MyVideo)")); break;
+    wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem(), true);
 
-    default:
+  } else if (name == _T("browseButtonFolderItem")) {
 
+    FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(menuItem->GetMetadataInt(_("folderItemId")));
+    if (!folderItem.get()) {
       evt.Skip();
-      break;
+    } else {
+      if (folderItem->IsGroup()) {
+        wxGetApp().GetUtilities().ShowTreeViewDialog(evt.GetId());
+      } else {
+        folderItem->Launch();
+      }
+    }
+
+  } else {
+
+    evt.Skip();
 
   }
 }

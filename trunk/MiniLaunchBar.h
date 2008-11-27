@@ -42,6 +42,7 @@ public:
   wxString GetIconSizeName(int iconSize);
   wxString GetContactEmail();
   PluginManager GetPluginManager();
+  int GetUniqueInt();
 
   void FolderItems_CollectionChange();
   void FolderItems_FolderItemChange(FolderItemSP folderItem);
@@ -49,6 +50,8 @@ public:
   void User_IconSizeChange();
 
 private:
+
+  static int uniqueInt_;
   
   virtual bool OnInit();
   virtual int OnExit();

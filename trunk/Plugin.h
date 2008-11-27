@@ -11,6 +11,7 @@
 
 
 #include "TypeDefinitions.h"
+#include "ExtendedMenuItem.h"
 #include "utilities/LuaUtil.h"
 
 
@@ -22,14 +23,16 @@ public:
   ~Plugin();
 
   void LoadFile(const wxString& luaFilePath);
-  void AddEventListener(int objectId, int eventId, const wxString& functionName);
-  void DispatchEvent(int objectId, int eventId, LuaHostTable arguments);
+  void AddEventListener(void* object, int eventId, const wxString& functionName);
+  void DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable arguments, void* sender = NULL);
   lua_State* GetLuaState();
+  bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
 
 private:
 
   lua_State* L;
-  std::map<std::pair<int, int>, wxArrayString*> eventRegister_;
+  //std::map<std::pair<int, int>, wxArrayString*> eventRegister_;
+  std::map<std::pair<void*, int>, wxArrayString*> eventRegister_;
 
 };
 

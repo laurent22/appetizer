@@ -20,7 +20,8 @@ public:
   PluginManager();
   
   PluginSP GetPluginByLuaState(lua_State* L);
-  void DispatchEvent(int objectId, int eventId, LuaHostTable arguments);
+  void DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable arguments, void* sender = NULL);
+  bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
 
 private:
 

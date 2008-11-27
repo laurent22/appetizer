@@ -276,8 +276,7 @@ void User::StartMenuSynchronization() {
       wxString folderName;
       bool success = startMenuFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS | wxDIR_HIDDEN);
       
-      while (success) {     
-        wxLogDebug(folderName);
+      while (success) {
         GetShortcutsFromFolder(startMenuFolder.GetName() + _T("/") + folderName, &foundFilePaths);
 
         success = startMenuFolder.GetNext(&folderName);

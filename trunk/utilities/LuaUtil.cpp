@@ -32,3 +32,13 @@ wxString LuaUtil::ToString(lua_State *L, int n) {
   wxString output(lua_tostring(L, n), wxConvUTF8);
   return output;
 }
+
+
+wxString LuaUtil::GetStringFromTable(lua_State *L, int tableIndex, const wxString& key) {
+  lua_pushstring(L, key.mb_str());
+  lua_gettable(L, tableIndex);
+  wxString output = LuaUtil::ToString(L, -1);
+  lua_pop(L, 1);
+
+  return output;
+}

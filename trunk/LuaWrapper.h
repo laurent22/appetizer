@@ -11,19 +11,32 @@
 
 
 enum {
-  AZ_OBJECT_APPLICATION,
-  AZ_OBJECT_MAIN_FRAME,
-  AZ_OBJECT_ANY_ICON
+  azEvent_OnIconPopupMenu,
+  azEvent_ItemClick
 };
 
 
-enum {
-  AZ_EVENT_POPUP_MENU_OPENING
-};
+void luaWrapper_destroy();
 
 
-int az_print(lua_State *L);
-int az_addEventListener(lua_State *L);
+int azPrint(lua_State *L);
+int azAddEventListener(lua_State *L);
+int azGetShortcutsRoot(lua_State *L);
+int azGetShortcutById(lua_State *L);
+int azNewMenu(lua_State *L);
+
+int azShortcut_GetAllGroups(lua_State *L);
+int azShortcut_GetName(lua_State *L);
+int azShortcut_GetId(lua_State *L);
+int azShortcut_AddChild(lua_State *L);
+
+int azIcon_GetPopupMenu(lua_State *L);
+int azIcon_GetShortcut(lua_State *L);
+
+int azMenu_Append(lua_State *L);
+int azMenu_AppendSubMenu(lua_State *L);
+int azMenu_AppendSeparator(lua_State *L);
+
 
 
 #endif // __LuaWrapper_H

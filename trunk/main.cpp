@@ -14,6 +14,7 @@
 #include "Localization.h"
 #include "Styles.h"
 #include "Log.h"
+#include "LuaWrapper.h"
 #include "gui/BetterMessageDialog.h"
 #include "gui/ImportWizardDialog.h"
 #include "utilities/IconGetter.h"
@@ -25,9 +26,7 @@
 IMPLEMENT_APP(MiniLaunchBar) 
 
 
-
-#include "PluginManager.h"
-
+int MiniLaunchBar::uniqueInt_ = 0;
 
 
 /**
@@ -42,7 +41,7 @@ bool MiniLaunchBar::OnInit() {
   if (!gotInfo) {
     osInfo_.dwMajorVersion = 5; // Assume Windows 2000
     osInfo_.dwMinorVersion = 0;
-  }
+  }  
   #endif // __WINDOWS__
 
   singleInstanceChecker_ = NULL;
@@ -81,6 +80,10 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
 
   FilePaths::InitializePaths();
+
+  #ifdef __WINDOWS__
+  SetDllDirectory(FilePaths::GetToolsDirectory());
+  #endif 
 
   // If the setting file doesn't exist, assume it's the first time the app is launched
   isFirstLaunch_ = !wxFileName::FileExists(FilePaths::GetSettingsFile());
@@ -169,6 +172,12 @@ bool MiniLaunchBar::OnInit() {
 
   return true;
 } 
+
+
+int MiniLaunchBar::GetUniqueInt() {
+  uniqueInt_++;
+  return uniqueInt_;
+}
 
 
 PluginManager MiniLaunchBar::GetPluginManager() {
@@ -439,6 +448,7 @@ void MiniLaunchBar::CloseApplication() {
   utilities_.~Utilities();
   IconGetter::Destroy();
   FolderItem::DestroyStaticData();
+  luaWrapper_destroy();
 }
 
 

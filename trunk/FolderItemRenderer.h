@@ -29,6 +29,7 @@ public:
   void FitToContent();
   FolderItemSP GetFolderItem();
   void ApplySkin();  
+  wxMenu* GetPopupMenu();  
 
 private:
 
@@ -44,6 +45,7 @@ private:
   NineSlicesPainterSP iconOverlayPainterDown_;
   wxPoint pressPosition_;
   wxBitmapSP multiLaunchIcon_;
+  wxMenu* popupMenu_;
 
   void OnEnterWindow(wxMouseEvent& evt);
   void OnLeaveWindow(wxMouseEvent& evt);
@@ -53,10 +55,6 @@ private:
   void OnRightDown(wxMouseEvent& evt);
   void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
 
-  void OnMenuDelete(wxCommandEvent& evt);
-  void OnMenuProperties(wxCommandEvent& evt);
-  void OnMenuAddToMultiLaunch(wxCommandEvent& evt);
-  void OnMenuEditShortcutGroup(wxCommandEvent& evt);
   void OnMenuItemClick(wxCommandEvent& evt);
 
   DECLARE_EVENT_TABLE()

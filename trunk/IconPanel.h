@@ -13,6 +13,7 @@
 #include "bitmap_controls/NineSlicesPanel.h"
 #include "bitmap_controls/ImageButton.h"
 #include "FolderItemRenderer.h"
+#include "ExtendedMenuItem.h"
 
 
 enum {

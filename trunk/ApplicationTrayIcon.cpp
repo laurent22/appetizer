@@ -8,6 +8,7 @@
 
 #include "ApplicationTrayIcon.h"
 #include "MiniLaunchBar.h"
+#include "ExtendedMenuItem.h"
 #include "utilities/Utilities.h"
 
 
@@ -22,48 +23,62 @@ ApplicationTrayIcon::ApplicationTrayIcon() {}
 
 wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
   wxMenu* menu = new wxMenu();
+  ExtendedMenuItem* menuItem = NULL;
 
-  wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_HideShow, wxGetApp().GetMainFrame()->IsVisible() ? _("Hide") : _("Show"));
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), wxGetApp().GetMainFrame()->IsVisible() ? _("Hide") : _("Show"));
   #ifdef __WINDOWS__
   wxFont font(menuItem->GetFont());
   font.SetWeight(wxFONTWEIGHT_BOLD);
   menuItem->SetFont(font);
   #endif
+  menuItem->SetMetadata(_T("name"), _T("hideShow"));
   menu->Append(menuItem);
+  
   menu->AppendSeparator();
-  if (wxGetApp().GetUtilities().IsApplicationOnPortableDrive()) menu->Append(ID_MENU_Eject, _("Eject drive"));
-  menu->Append(ID_MENU_Config, _("Configuration"));
+  
+  if (wxGetApp().GetUtilities().IsApplicationOnPortableDrive()) {
+    menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Eject drive"));
+    menuItem->SetMetadata(_T("name"), _T("ejectDrive"));
+    menu->Append(menuItem);
+  }
+
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Configuration"));
+  menuItem->SetMetadata(_T("name"), _T("configuration"));
+  menu->Append(menuItem);
+
   menu->AppendSeparator();
-  menu->Append(ID_MENU_Exit, _("Close"));
+
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Close"));
+  menuItem->SetMetadata(_T("name"), _T("close"));
+  menu->Append(menuItem);
 
   return menu;
 }
 
 
 void ApplicationTrayIcon::OnMenuItemClick(wxCommandEvent& evt) {
-  int itemId = evt.GetId();
+  ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
+  wxString name = menuItem->GetMetadata(_T("name"));
 
-  switch (itemId) {
+  if (name == _T("hideShow")) {
 
-    case ID_MENU_Eject:
+    wxGetApp().GetMainFrame()->Show(!wxGetApp().GetMainFrame()->IsVisible());
 
-      wxGetApp().GetUtilities().EjectDriveAndExit();
-      break;
+  } else if (name == _T("ejectDrive")) {
 
-    case ID_MENU_HideShow:
+    wxGetApp().GetUtilities().EjectDriveAndExit();
 
-      wxGetApp().GetMainFrame()->Show(!wxGetApp().GetMainFrame()->IsVisible());
-      break;
+  } else if (name == _T("configuration")) {
 
-    case ID_MENU_Config:
+    wxGetApp().GetUtilities().ShowConfigDialog();
 
-      wxGetApp().GetUtilities().ShowConfigDialog();
-      break;
+  } else if (name == _T("close")) {
 
-    case ID_MENU_Exit:
+    wxGetApp().GetMainFrame()->Close();
 
-      wxGetApp().GetMainFrame()->Close();
-      break;
+  } else {
+    
+    evt.Skip();
 
   }
 }

@@ -17,7 +17,11 @@
 #include "MiniLaunchBar.h"
 #include "Enumerations.h"
 #include "MessageBoxes.h"
+#include "ExtendedMenuItem.h"
 #include "gui/TreeViewDialog.h"
+
+
+extern wxObject* azAnyShortcut;
 
 
 int FolderItemRenderer::uniqueID_ = 0;
@@ -32,10 +36,6 @@ BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
   EVT_LEFT_UP(FolderItemRenderer::OnLeftUp)
   EVT_RIGHT_DOWN(FolderItemRenderer::OnRightDown)
   EVT_MENU(wxID_ANY, FolderItemRenderer::OnMenuItemClick)
-  EVT_MENU(ID_MENU_Delete, FolderItemRenderer::OnMenuDelete)
-  EVT_MENU(ID_MENU_Properties, FolderItemRenderer::OnMenuProperties)
-  EVT_MENU(ID_MENU_AddToMultiLaunch, FolderItemRenderer::OnMenuAddToMultiLaunch)
-  EVT_MENU(ID_MENU_EditShortcutGroup, FolderItemRenderer::OnMenuEditShortcutGroup)
   EVT_MOUSE_CAPTURE_LOST(FolderItemRenderer::OnMouseCaptureLost)
 END_EVENT_TABLE()
 
@@ -47,6 +47,7 @@ BitmapControl(owner, id, point, size) {
   FolderItemRenderer::uniqueID_++;
   SetId(FolderItemRenderer::uniqueID_);
 
+  popupMenu_ = NULL;
   folderItemId_ = -1;
   mouseInside_ = false;
   mousePressed_ = false;
@@ -56,6 +57,11 @@ BitmapControl(owner, id, point, size) {
 
 FolderItemRenderer::~FolderItemRenderer() {
 
+}
+
+
+wxMenu* FolderItemRenderer::GetPopupMenu() {
+  return popupMenu_;
 }
 
 
@@ -75,61 +81,66 @@ FolderItemSP FolderItemRenderer::GetFolderItem() {
 
 
 void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
-  switch (evt.GetId()) {
+  ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
+  if (!menuItem) return;
 
-    default:
+  wxMenu* menu = dynamic_cast<wxMenu*>(evt.GetEventObject());
 
-      FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetFolderItemById(evt.GetId() - addToGroupMenuItemOffset_);
-      
-      if (!folderItem.get()) {
-        evt.Skip();
-        return;
-      }
+  //LuaHostTable evt;
+  //evt["menuItem"] = menuItem;
 
-      folderItem->AddChild(GetFolderItem());
-      wxGetApp().FolderItems_CollectionChange();
-      break;
-
-  }
-}
-
-
-void FolderItemRenderer::OnMenuEditShortcutGroup(wxCommandEvent& evt) {
-  wxGetApp().GetUtilities().ShowTreeViewDialog(GetFolderItem()->GetId());
-}
-
-
-void FolderItemRenderer::OnMenuAddToMultiLaunch(wxCommandEvent& evt) {
-  FolderItemSP folderItem = GetFolderItem();
-  if (!folderItem.get()) return;
+  bool handled = wxGetApp().GetPluginManager().HandleMenuItemClick(menuItem);
   
-  if (folderItem->BelongsToMultiLaunchGroup()) {
-    GetFolderItem()->RemoveFromMultiLaunchGroup();
+  if (handled) {
+    evt.Skip();
+    return;
+  }
+  
+  //wxGetApp().GetPluginManager().DispatchEvent(menu, azEvent_ItemClick, LuaHostTable());
+
+  wxString name = menuItem->GetMetadata(_("name"));
+
+  if (name == _T("remove")) {
+
+    if (wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage) {
+      int result = MessageBoxes::ShowConfirmation(_("Do you wish to remove this icon?"), wxYES | wxNO, _("Don't show this message again"), false);
+      if (!result) return;
+
+      wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage = !MessageBoxes::GetCheckBoxState();
+      wxGetApp().GetUser()->ScheduleSave();
+      if (result != wxID_YES) return;
+    }
+
+    FolderItemSP folderItem = GetFolderItem();
+    folderItem->Dispose();
+
+  } else if (name == _T("properties")) {
+
+    wxGetApp().GetUser()->EditFolderItem(GetFolderItem());
+
+  } else if (name == _T("multiLaunch")) {
+
+    FolderItemSP folderItem = GetFolderItem();
+    if (!folderItem.get()) return;
+    
+    if (folderItem->BelongsToMultiLaunchGroup()) {
+      GetFolderItem()->RemoveFromMultiLaunchGroup();
+    } else {
+      GetFolderItem()->AddToMultiLaunchGroup();
+    }
+
+    wxGetApp().FolderItems_FolderItemChange(folderItem);
+
+  } else if (name == _T("organizeGroup")) {
+
+    wxGetApp().GetUtilities().ShowTreeViewDialog(GetFolderItem()->GetId());
+
   } else {
-    GetFolderItem()->AddToMultiLaunchGroup();
+
+    evt.Skip();
+
   }
 
-  wxGetApp().FolderItems_FolderItemChange(folderItem);
-}
-
-
-void FolderItemRenderer::OnMenuDelete(wxCommandEvent& evt) {
-  if (wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage) {
-    int result = MessageBoxes::ShowConfirmation(_("Do you wish to remove this icon?"), wxYES | wxNO, _("Don't show this message again"), false);
-    if (!result) return;
-
-    wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage = !MessageBoxes::GetCheckBoxState();
-    wxGetApp().GetUser()->ScheduleSave();
-    if (result != wxID_YES) return;
-  }
-
-  FolderItemSP folderItem = GetFolderItem();
-  folderItem->Dispose();
-}
-
-
-void FolderItemRenderer::OnMenuProperties(wxCommandEvent& evt) {
-  wxGetApp().GetUser()->EditFolderItem(GetFolderItem());
 }
 
 
@@ -137,32 +148,19 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   FolderItemSP folderItem = GetFolderItem();
 
   wxMenu* menu = wxGetApp().GetMainFrame()->GetIconPanel()->GetContextMenu();
+  popupMenu_ = menu;
 
   menu->AppendSeparator();
-  menu->Append(ID_MENU_Delete, _("Remove..."));
 
-  //if (wxGetApp().GetUser()->GetRootFolderItem()->ContainsGroups()) {
-  //  wxMenu* addToGroupMenu = new wxMenu();
-  //  FolderItemVector groups = wxGetApp().GetUser()->GetRootFolderItem()->GetAllGroups();
-  //  bool isMenuEmpty = true;
-
-  //  for (int i = 0; i < groups.size(); i++) {
-  //    FolderItemSP group = groups.at(i);
-  //    if (group->GetId() == folderItem->GetId()) continue;
-  //    wxMenuItem* groupMenuItem = group->ToMenuItem(addToGroupMenu, 16, addToGroupMenuItemOffset_);
-  //    addToGroupMenu->Append(groupMenuItem);
-  //    isMenuEmpty = false;
-  //  }
-
-  //  if (isMenuEmpty) {
-  //    wxDELETE(addToGroupMenu);
-  //  } else {
-  //    menu->AppendSubMenu(addToGroupMenu, _("Add to group"));
-  //  }
-  //}
+  ExtendedMenuItem* menuItem;
+  
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Remove..."));
+  menuItem->SetMetadata(_T("name"), _T("remove"));
+  menu->Append(menuItem);
 
   if (!folderItem->IsGroup()) {
-    wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_AddToMultiLaunch, _("Add to Multi Launch group"), wxEmptyString, wxITEM_CHECK);
+    menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Add to Multi Launch group"), wxEmptyString, wxITEM_CHECK);
+    menuItem->SetMetadata(_T("name"), _T("multiLaunch"));
     menu->Append(menuItem);
     menuItem->Check(GetFolderItem()->BelongsToMultiLaunchGroup());
   }
@@ -170,17 +168,21 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   menu->AppendSeparator();
 
   if (folderItem->IsGroup()) {
-    wxMenuItem* menuItem = new wxMenuItem(menu, ID_MENU_EditShortcutGroup, _("Organize group shortcuts"));
+    menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Organize group shortcuts"));
+    menuItem->SetMetadata(_T("name"), _T("organizeGroup"));
     menu->Append(menuItem);
   }
 
-  menu->Append(ID_MENU_Properties, _("Properties"));
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Properties"));
+  menuItem->SetMetadata(_T("name"), _T("properties"));
+  menu->Append(menuItem);
 
-  wxGetApp().GetPluginManager().DispatchEvent(AZ_OBJECT_ANY_ICON, AZ_EVENT_POPUP_MENU_OPENING, LuaHostTable());
+  wxGetApp().GetPluginManager().DispatchEvent(&(wxGetApp()), azEvent_OnIconPopupMenu, LuaHostTable(), this);
 
   PopupMenu(menu, wxDefaultPosition);
 
   wxDELETE(menu);
+  popupMenu_ = NULL;
 }
 
 

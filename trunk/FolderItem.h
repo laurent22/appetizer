@@ -12,6 +12,7 @@
 
 #include "Constants.h"
 #include "TypeDefinitions.h"
+#include "ExtendedMenuItem.h"
 #include "utilities/XmlUtil.h"
 
 
@@ -69,9 +70,9 @@ public:
   static void CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSize);
   static wxIconSP GetIconFromDiskCache(const wxString& hash, int iconSize);
 
-  void AppendAsMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE);
-  wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE);
-  wxMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE, int menuIdOffset = 0);
+  void AppendAsMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
+  wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
+  ExtendedMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
 
   static void KillStartedProcesses();
 

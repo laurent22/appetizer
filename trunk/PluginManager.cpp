@@ -16,11 +16,6 @@ PluginManager::PluginManager() {
   plugins_.push_back(p);
 
   p->LoadFile(_T("Data\\Plugins\\AddToGroupOnRightClick.lua"));
-
-  //LuaHostTable m;
-  //m[_T("un")] = _T("deux");
-  //m[_T("11111")] = _T("quatre");
-  //p->DispatchEvent(AZ_MAIN_FRAME_ID, 123, m);
 }
 
 
@@ -34,8 +29,19 @@ PluginSP PluginManager::GetPluginByLuaState(lua_State* L) {
 }
 
 
-void PluginManager::DispatchEvent(int objectId, int eventId, LuaHostTable arguments) {
+void PluginManager::DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable arguments, void* sender) {
   for (int i = 0; i < plugins_.size(); i++) {
-    plugins_.at(i)->DispatchEvent(objectId, eventId, arguments);
+    plugins_.at(i)->DispatchEvent(senderOrGlobalHook, eventId, arguments, sender);
   }
+}
+
+
+bool PluginManager::HandleMenuItemClick(ExtendedMenuItem* menuItem) {
+  lua_State* luaState = (lua_State*)menuItem->GetMetadataPointer(_T("plugin_luaState"));
+  if (!luaState) return false;
+
+  PluginSP p = GetPluginByLuaState(luaState);
+  if (!p.get()) return false;
+
+  return p->HandleMenuItemClick(menuItem);
 }
