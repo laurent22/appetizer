@@ -498,10 +498,23 @@ void IconPanel::RefreshIcons() {
 
   for (int i = folderItemRenderers_.size() - 1; i >= 0; i--) {
     FolderItemRendererSP renderer = folderItemRenderers_.at(i);
-    if (!renderer->GetFolderItem().get() ||
-         renderer->GetFolderItem()->GetParent()->GetId() != rootFolderItem->GetId()) {
-      folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
+
+    bool removeIt = false;
+    FolderItemSP folderItem = renderer->GetFolderItem();
+
+    if (!folderItem.get()) {
+      removeIt = true;
+    } else {
+      if (folderItem->GetParent() == NULL) {
+        removeIt = true;
+      } else {
+        if (folderItem->GetParent()->GetId() != rootFolderItem->GetId()) {
+          removeIt = true;
+        }
+      }
     }
+
+    if (removeIt) folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
   }
 
   /****************************************************************************

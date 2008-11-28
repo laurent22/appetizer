@@ -24,6 +24,10 @@ public:
   static const char className[];
   static Lunar<azMenu>::RegType methods[];
 
+  wxMenu* Get() const { return menu_; }
+
+private:
+
   wxMenu* menu_;  
 
 };

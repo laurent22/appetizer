@@ -10,7 +10,7 @@
 #define __azGlobal_H
 
 
-void luaHost_logError(const wxString& s, const wxString& functionName);
+int luaHost_logError(const wxString& s, const wxString& functionName);
 
 int azPrint(lua_State *L);
 

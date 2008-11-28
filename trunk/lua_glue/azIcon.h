@@ -26,6 +26,8 @@ public:
   static const char className[];
   static Lunar<azIcon>::RegType methods[];
 
+  FolderItemRenderer* Get() const { return renderer_; }
+
 private:
 
   FolderItemRenderer* renderer_;

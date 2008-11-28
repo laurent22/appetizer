@@ -34,13 +34,23 @@ void PluginManager::Initialize() {
     bool success = pluginFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
     
     while (success) {
-
       wxLogDebug(_T("Loading plugin: ") + folderName);
 
       PluginSP p(new Plugin());
       plugins_.push_back(p);
 
       p->LoadFile(pluginPath + wxFileName::GetPathSeparator() + folderName + wxFileName::GetPathSeparator() + _T("main.lua"));
+
+      #ifdef __WXDEBUG__
+      if (folderName == _T("TestUnit")) {
+        lua_getfield(p->GetLuaState(), LUA_GLOBALSINDEX, "groupTest");        
+        int errorCode = lua_pcall(p->GetLuaState(), 0, 0, 0);
+        if (errorCode) {
+          const char* errorString = lua_tostring(p->GetLuaState(), -1);
+          wxLogDebug(_T("ERROR: ") + wxString(errorString, wxConvUTF8));
+        }
+      }
+      #endif // __WXDEBUG__
 
       success = pluginFolder.GetNext(&folderName);
     }

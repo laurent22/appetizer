@@ -170,11 +170,14 @@ bool MiniLaunchBar::OnInit() {
     d->Destroy();
   }
 
-  pluginManager_ = new PluginManager();
-  pluginManager_->Initialize();
-
   return true;
 } 
+
+
+void MiniLaunchBar::InitializePluginManager() {
+  pluginManager_ = new PluginManager();
+  pluginManager_->Initialize();
+}
 
 
 int MiniLaunchBar::GetUniqueInt() {

@@ -44,6 +44,7 @@ public:
   wxString GetContactEmail();
   PluginManager* GetPluginManager();
   int GetUniqueInt();
+  void InitializePluginManager();
 
   void FolderItems_CollectionChange();
   void FolderItems_FolderItemChange(FolderItemSP folderItem);

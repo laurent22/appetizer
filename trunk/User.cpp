@@ -24,6 +24,7 @@ User::User() {
   scheduledSaveTimer_ = NULL;
   shortcutEditorDialog_ = NULL;
   rootFolderItem_ = FolderItem::CreateFolderItemSP(true);
+  rootFolderItem_->SetName(_T("<root>"));
   settings_.reset(new UserSettings());
 }
 

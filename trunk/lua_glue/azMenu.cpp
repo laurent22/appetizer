@@ -63,8 +63,9 @@ int azMenu::append(lua_State *L) {
 int azMenu::appendSubMenu(lua_State *L) {
   const azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
   if (!subMenu) return 0;
+	if (subMenu->Get()->GetTitle() == wxEmptyString) return 0;
 
-  menu_->AppendSubMenu(subMenu->menu_, subMenu->menu_->GetTitle());
+  menu_->AppendSubMenu(subMenu->Get(), subMenu->Get()->GetTitle());
 
   return 0;
 }

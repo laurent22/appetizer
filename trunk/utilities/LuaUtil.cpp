@@ -28,9 +28,20 @@ void LuaUtil::LogError(int luaError) {
 }
 
 
+void LuaUtil::PushString(lua_State *L, const wxString& s) {
+  lua_pushstring(L, s.ToUTF8());
+}
+
+
 wxString LuaUtil::ToString(lua_State *L, int n) {
   wxString output(luaL_checkstring(L, n), wxConvUTF8);
   return output;
+}
+
+
+bool LuaUtil::ToBoolean(lua_State *L, int n) {
+  if (!lua_isboolean(L, n)) return false;
+  return lua_toboolean(L, n);
 }
 
 

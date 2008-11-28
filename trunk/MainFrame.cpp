@@ -233,6 +233,8 @@ void MainFrame::DoAutoHide() {
 
 void MainFrame::OnIdle(wxIdleEvent& evt) {
   if (!firstIdleEventSent_) {
+    wxGetApp().InitializePluginManager();
+
     #ifdef __WINDOWS__
     firstIdleEventSent_ = true;
 
