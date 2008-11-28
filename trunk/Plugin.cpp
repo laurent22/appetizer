@@ -7,8 +7,13 @@
 #include "stdafx.h"
 
 #include "Plugin.h"
-#include "LuaWrapper.h"
 #include "MiniLaunchBar.h"
+#include "lua_glue/azGlobal.h"
+#include "lua_glue/azApplication.h"
+#include "lua_glue/azIcon.h"
+#include "lua_glue/azMenu.h"
+#include "lua_glue/azShortcut.h"
+#include "FolderItemRenderer.h"
 
 
 
@@ -18,6 +23,7 @@ Plugin::Plugin() {
 
 
 Plugin::~Plugin() {
+  //lua_setgcthreshold(L, 0);
   lua_close(L);
 
   std::map<std::pair<void*, int>, wxArrayString*>::iterator it = eventRegister_.begin();
@@ -36,26 +42,6 @@ void Plugin::LoadFile(const wxString& luaFilePath) {
   luaopen_math(L);
 
   lua_register(L, "azPrint", azPrint);
-  lua_register(L, "azT", azT);
-  lua_register(L, "azAddEventListener", azAddEventListener);
-  lua_register(L, "azGetShortcutsRoot", azGetShortcutsRoot);
-  lua_register(L, "azNewMenu", azNewMenu);
-  lua_register(L, "azGetShortcutById", azGetShortcutById);  
-
-  lua_register(L, "azShortcut_GetAllGroups", azShortcut_GetAllGroups);
-  lua_register(L, "azShortcut_GetName", azShortcut_GetName);
-  lua_register(L, "azShortcut_GetId", azShortcut_GetId);
-  lua_register(L, "azShortcut_AddChild", azShortcut_AddChild);
-
-  lua_register(L, "azIcon_GetPopupMenu", azIcon_GetPopupMenu);
-  lua_register(L, "azIcon_GetShortcut", azIcon_GetShortcut);
-
-  lua_register(L, "azMenu_Append", azMenu_Append);
-  lua_register(L, "azMenu_AppendSubMenu", azMenu_AppendSubMenu);
-  lua_register(L, "azMenu_AppendSeparator", azMenu_AppendSeparator);
-
-  lua_pushinteger(L, azEvent_OnIconPopupMenu); lua_setglobal(L, "azEvent_OnIconPopupMenu");
-  lua_pushlightuserdata(L, &(wxGetApp())); lua_setglobal(L, "azApp");
 
   int error = luaL_loadfile(L, luaFilePath.mb_str());
 
@@ -64,9 +50,21 @@ void Plugin::LoadFile(const wxString& luaFilePath) {
     return;
   }
 
-  error = lua_pcall(L, 0, LUA_MULTRET, 0);
+  Lunar<azApplication>::Register(L);
+  Lunar<azIcon>::Register(L);
+  Lunar<azMenu>::Register(L);
+  Lunar<azShortcut>::Register(L);
+  
+  lua_pushliteral(L, "appetizer");
+  Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication);
+  lua_settable(L, LUA_GLOBALSINDEX);
 
-  if (error) LuaUtil::LogError(error);
+  error = lua_pcall(L, 0, 0, 0);
+
+  if (error) {
+    const char* errorString = lua_tostring(L, -1);
+    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::LoadFile"));
+  }
 }
 
 
@@ -84,7 +82,19 @@ void Plugin::AddEventListener(void* object, int eventId, const wxString& functio
 }
 
 
-void Plugin::DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable arguments, void* sender) {
+void Plugin::AddEventListener(void* object, const wxString& eventName, const wxString& functionName) {
+  int eventId = wxGetApp().GetPluginManager()->GetEventIdByName(eventName);
+  AddEventListener(object, eventId, functionName);
+}
+
+
+void Plugin::DispatchEvent(wxObject* senderOrGlobalHook, const wxString& eventName, LuaHostTable arguments, wxObject* sender) {
+  int eventId = wxGetApp().GetPluginManager()->GetEventIdByName(eventName);
+  DispatchEvent(senderOrGlobalHook, eventId, arguments, sender);
+}
+
+
+void Plugin::DispatchEvent(wxObject* senderOrGlobalHook, int eventId, LuaHostTable arguments, wxObject* sender) {
   std::pair<void*, int> pair(senderOrGlobalHook, eventId);
 
   wxArrayString* functionNames = eventRegister_[pair];
@@ -109,12 +119,23 @@ void Plugin::DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable a
     }
 
     lua_pushstring(L, "sender");
-    void* theSender = sender ? sender : senderOrGlobalHook;
-    lua_pushlightuserdata(L, theSender);
+    wxObject* theSender = sender ? sender : senderOrGlobalHook;
+    
+    FolderItemRenderer* senderAsRenderer = dynamic_cast<FolderItemRenderer*>(theSender);
 
-    lua_settable(L, tableIndex);
+    if (senderAsRenderer) {
+      Lunar<azIcon>::push(L, new azIcon(senderAsRenderer), true);
+    }
 
-    lua_call(L, 1, 0);
+    lua_settable(L, tableIndex);    
+
+    int errorCode = lua_pcall(L, 1, 0, 0);
+
+    if (errorCode) {
+      const char* errorString = lua_tostring(L, -1);
+      luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::DispatchEvent"));
+    }
+
   }
 
 }
@@ -137,7 +158,12 @@ bool Plugin::HandleMenuItemClick(ExtendedMenuItem* menuItem) {
   lua_pushstring(L, menuItem->GetMetadata(_T("plugin_menuItemTag")).mb_str());
   lua_settable(L, tableIndex);  
   
-  lua_call(L, 1, 0);
+  int errorCode = lua_pcall(L, 1, 0, 0);
+
+  if (errorCode) {
+    const char* errorString = lua_tostring(L, -1);
+    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::DispatchEvent"));
+  }
 
   return true;
 }

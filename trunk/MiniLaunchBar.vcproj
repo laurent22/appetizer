@@ -480,18 +480,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\LuaWrapper.cpp"
-				>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						PrecompiledHeaderThrough="stdafx.h"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
 				>
 				<FileConfiguration
@@ -1213,50 +1201,6 @@
 						</FileConfiguration>
 					</File>
 				</Filter>
-				<Filter
-					Name="coopfish"
-					>
-					<File
-						RelativePath=".\third_party\coopfish\blowfish.cpp"
-						>
-						<FileConfiguration
-							Name="Unicode Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="../../stdafx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Unicode Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="../../stdafx.h"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath=".\third_party\coopfish\coopfish.cpp"
-						>
-						<FileConfiguration
-							Name="Unicode Debug|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="../../stdafx.h"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Unicode Release|Win32"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-								PrecompiledHeaderThrough="../../stdafx.h"
-							/>
-						</FileConfiguration>
-					</File>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="gui"
@@ -1522,6 +1466,110 @@
 					</FileConfiguration>
 				</File>
 			</Filter>
+			<Filter
+				Name="lua_glue"
+				>
+				<File
+					RelativePath=".\lua_glue\azApplication.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azGlobal.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azIcon.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azMenu.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azShortcut.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -1566,10 +1614,6 @@
 			</File>
 			<File
 				RelativePath=".\Log.h"
-				>
-			</File>
-			<File
-				RelativePath=".\LuaWrapper.h"
 				>
 			</File>
 			<File
@@ -1744,14 +1788,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="coopfish"
-					>
-					<File
-						RelativePath=".\third_party\coopfish\blowfish.h"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="lua"
 					>
 					<File
@@ -1772,6 +1808,10 @@
 					</File>
 					<File
 						RelativePath=".\third_party\lua\lualib.h"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\lua\lunar.h"
 						>
 					</File>
 				</Filter>
@@ -1829,6 +1869,30 @@
 				</File>
 				<File
 					RelativePath=".\gui\TreeViewDialogBase.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="lua_glue"
+				>
+				<File
+					RelativePath=".\lua_glue\azApplication.h"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azGlobal.h"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azIcon.h"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azMenu.h"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azShortcut.h"
 					>
 				</File>
 			</Filter>

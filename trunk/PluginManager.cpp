@@ -7,17 +7,25 @@
 #include "stdafx.h"
 
 #include "PluginManager.h"
-#include "LuaWrapper.h"
 #include "FilePaths.h"
 #include "utilities/LuaUtil.h"
 
 
 PluginManager::PluginManager() {
+  luaApplication = NULL;
+}
 
+
+PluginManager::~PluginManager() {
+  wxDELETE(luaApplication);
 }
 
 
 void PluginManager::Initialize() {
+  eventNames_.Add(_T("iconMenuOpening"));
+
+  luaApplication = new azApplication();
+
   wxString pluginPath = FilePaths::GetPluginsDirectory();
   wxDir pluginFolder;
 
@@ -27,7 +35,7 @@ void PluginManager::Initialize() {
     
     while (success) {
 
-      wxLogDebug(folderName);
+      wxLogDebug(_T("Loading plugin: ") + folderName);
 
       PluginSP p(new Plugin());
       plugins_.push_back(p);
@@ -37,6 +45,11 @@ void PluginManager::Initialize() {
       success = pluginFolder.GetNext(&folderName);
     }
   }
+}
+
+
+int PluginManager::GetEventIdByName(const wxString& eventName) {
+  return eventNames_.Index(eventName);
 }
 
 
@@ -50,10 +63,16 @@ PluginSP PluginManager::GetPluginByLuaState(lua_State* L) {
 }
 
 
-void PluginManager::DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable arguments, void* sender) {
+void PluginManager::DispatchEvent(wxObject* senderOrGlobalHook, int eventId, LuaHostTable arguments, wxObject* sender) {
   for (int i = 0; i < plugins_.size(); i++) {
     plugins_.at(i)->DispatchEvent(senderOrGlobalHook, eventId, arguments, sender);
   }
+}
+
+
+void PluginManager::DispatchEvent(wxObject* senderOrGlobalHook, const wxString& eventName, LuaHostTable arguments, wxObject* sender) {
+  int eventId = GetEventIdByName(eventName);
+  DispatchEvent(senderOrGlobalHook, eventId, arguments, sender);
 }
 
 

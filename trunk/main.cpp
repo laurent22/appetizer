@@ -14,7 +14,6 @@
 #include "Localization.h"
 #include "Styles.h"
 #include "Log.h"
-#include "LuaWrapper.h"
 #include "gui/BetterMessageDialog.h"
 #include "gui/ImportWizardDialog.h"
 #include "utilities/IconGetter.h"
@@ -33,7 +32,7 @@ int MiniLaunchBar::uniqueInt_ = 0;
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  _CrtSetBreakAlloc(960);
+  //_CrtSetBreakAlloc(24005);
 
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -47,6 +46,7 @@ bool MiniLaunchBar::OnInit() {
   singleInstanceChecker_ = NULL;
   mainFrame_ = NULL;
   locale_ = NULL;
+  pluginManager_ = NULL;
   stopWatch_.Start();
   user_ = new User();
 
@@ -170,7 +170,8 @@ bool MiniLaunchBar::OnInit() {
     d->Destroy();
   }
 
-  pluginManager_.Initialize();
+  pluginManager_ = new PluginManager();
+  pluginManager_->Initialize();
 
   return true;
 } 
@@ -182,7 +183,7 @@ int MiniLaunchBar::GetUniqueInt() {
 }
 
 
-PluginManager MiniLaunchBar::GetPluginManager() {
+PluginManager* MiniLaunchBar::GetPluginManager() {
   return pluginManager_;
 }
 
@@ -444,13 +445,13 @@ void MiniLaunchBar::CloseApplication() {
   wxDELETE(user_);
   wxDELETE(singleInstanceChecker_);
   wxDELETE(locale_);
+  wxDELETE(pluginManager_);
 
   BetterMessageDialog::DestroyInstance();
   Localization::Destroy();
   utilities_.~Utilities();
   IconGetter::Destroy();
   FolderItem::DestroyStaticData();
-  luaWrapper_destroy();
 }
 
 

@@ -22,6 +22,7 @@ class Utilities;
 class MainFrame;
 
 
+
 class MiniLaunchBar: public wxApp {
 
 public:
@@ -41,7 +42,7 @@ public:
   IntVector GetAllowedIconSizes();
   wxString GetIconSizeName(int iconSize);
   wxString GetContactEmail();
-  PluginManager GetPluginManager();
+  PluginManager* GetPluginManager();
   int GetUniqueInt();
 
   void FolderItems_CollectionChange();
@@ -66,7 +67,7 @@ private:
   wxLocale* locale_;
   LongVector launchedProcessIds_;
   IntVector allowedIconSizes_;
-  PluginManager pluginManager_;
+  PluginManager* pluginManager_;
 
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;

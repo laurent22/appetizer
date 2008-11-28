@@ -6,53 +6,54 @@
 
 
 function addToGroupPopupMenu_click(event) 
-	group = azGetShortcutById(event.menuItemId)
-	shortcut = azGetShortcutById(event.menuItemTag)
+	-- Get the group
+	group = appetizer:getShortcutById(event.menuItemId)
+	-- Get the shortcut that must be added to the group
+	shortcut = appetizer:getShortcutById(event.menuItemTag)
 		
-	azShortcut_AddChild(group, shortcut)
+	-- Add the shortcut to the group
+	group:addChild(shortcut)
 end
 
 
 -- This function is called when an icon is right-clicked,
 -- before the popup menu is displayed
-function icon_popupMenu(event)
+function application_iconMenuOpening(event)
 	-- Get the icon
 	icon = event.sender
 	
-	-- Get the icon popup menu
-	menu = azIcon_GetPopupMenu(icon)
+	-- Get the icon popup menu and associated shortcut object
+	menu = icon:getPopupMenu()	
+	shortcut = icon:getShortcut()
 	
-	-- Get the shortcut object associated with the icon
-	iconShortcutObject = azIcon_GetShortcut(icon)
-	
-	-- Get all the application groups
-	root = azGetShortcutsRoot()
-	groups = azShortcut_GetAllGroups(root)
+	-- Get all the application groups, so that we
+	-- can build a submenu from it
+	root = appetizer:getShortcutRoot()	
+	groups = root:getAllGroups()
 	
 	-- If no group exists, exit now
 	if table.maxn(groups) == 0 then return 0; end
 	
 	-- Create the "Add to group" sub menu
-	subMenu = azNewMenu("Add to group")		
+	subMenu = azMenu:new("Add to group")
 	
-	-- For each group, create a menu item
 	for i, group in pairs(groups) do
 		menuItem = {}
-		menuItem.text = azShortcut_GetName(group);
-		menuItem.id = azShortcut_GetId(group); -- keep a reference to the group
-		menuItem.tag = azShortcut_GetId(iconShortcutObject); -- keep a reference to the shortcut
+		menuItem.text = group:getName(); -- the menu item label
+		menuItem.id = group:getId(); -- keep a reference to the group
+		menuItem.tag = shortcut:getId(); -- keep a reference to the shortcut
 		menuItem.onClick = "addToGroupPopupMenu_click" -- this function is going to be called when/if the menu item is selected
 				
 		-- Add the menu item to the sub menu
-		azMenu_Append(subMenu, menuItem)
-	end
+		subMenu:append(menuItem)
+	end	
 	
 	-- Add a separator and append the sub menu to the icon popup menu
-	azMenu_AppendSeparator(menu)
-	azMenu_AppendSubMenu(menu, subMenu)
+	menu:appendSeparator()
+	menu:appendSubMenu(subMenu)
 end
 
 
--- Register a global event handler. "icon_popupMenu()" is going
+-- Register a global event handler. "application_iconMenuOpening()" is going
 -- to be called whenever an icon popup menu is about to be displayed
-azAddEventListener(azApp, azEvent_OnIconPopupMenu, "icon_popupMenu")
+appetizer:addEventListener("iconMenuOpening", "application_iconMenuOpening")

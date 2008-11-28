@@ -99,5 +99,7 @@ extern "C" {
   #include <lua/lauxlib.h>
 }
 
+#include <lua/lunar.h>
+
 
 #endif // __MiniLaunchBarPrecompiled_H

@@ -29,7 +29,7 @@ void LuaUtil::LogError(int luaError) {
 
 
 wxString LuaUtil::ToString(lua_State *L, int n) {
-  wxString output(lua_tostring(L, n), wxConvUTF8);
+  wxString output(luaL_checkstring(L, n), wxConvUTF8);
   return output;
 }
 

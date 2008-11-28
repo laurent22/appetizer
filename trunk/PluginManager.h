@@ -11,6 +11,7 @@
 
 
 #include "Plugin.h"
+#include "lua_glue/azApplication.h"
 
 
 class PluginManager {
@@ -18,15 +19,21 @@ class PluginManager {
 public:
 
   PluginManager();
+  ~PluginManager();
 
   void Initialize();  
   PluginSP GetPluginByLuaState(lua_State* L);
-  void DispatchEvent(void* senderOrGlobalHook, int eventId, LuaHostTable arguments, void* sender = NULL);
+  void DispatchEvent(wxObject* senderOrGlobalHook, int eventId, LuaHostTable arguments, wxObject* sender = NULL);
+  void DispatchEvent(wxObject* senderOrGlobalHook, const wxString& eventName, LuaHostTable arguments, wxObject* sender = NULL);
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
+  int GetEventIdByName(const wxString& eventName);
+
+  azApplication* luaApplication;
 
 private:
 
   std::vector<PluginSP> plugins_;
+  wxSortedArrayString  eventNames_;
 
 };
 

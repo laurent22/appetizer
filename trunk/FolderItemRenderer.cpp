@@ -13,12 +13,12 @@
 #include "imaging/Imaging.h"
 #include "FilePaths.h"
 #include "Styles.h"
-#include "LuaWrapper.h"
 #include "MiniLaunchBar.h"
 #include "Enumerations.h"
 #include "MessageBoxes.h"
 #include "ExtendedMenuItem.h"
 #include "gui/TreeViewDialog.h"
+
 
 
 
@@ -84,7 +84,7 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
 
   wxMenu* menu = dynamic_cast<wxMenu*>(evt.GetEventObject());
 
-  bool handled = wxGetApp().GetPluginManager().HandleMenuItemClick(menuItem);
+  bool handled = wxGetApp().GetPluginManager()->HandleMenuItemClick(menuItem);
   
   if (handled) {
     evt.Skip();
@@ -170,7 +170,7 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   menuItem->SetMetadata(_T("name"), _T("properties"));
   menu->Append(menuItem);
 
-  wxGetApp().GetPluginManager().DispatchEvent(&(wxGetApp()), azEvent_OnIconPopupMenu, LuaHostTable(), this);
+  wxGetApp().GetPluginManager()->DispatchEvent(wxGetApp().GetPluginManager()->luaApplication, _T("iconMenuOpening"), LuaHostTable(), this);
 
   PopupMenu(menu, wxDefaultPosition);
 
