@@ -326,7 +326,7 @@ void FileExplorerControl::PopulateFolder(const wxTreeItemId& itemId) {
       wxFileName filename(filePath);
       filename.Normalize();
 
-      wxIcon* icon;
+      wxIcon* icon = NULL;
       
       if (isDirectory) {
         icon = IconGetter::GetDefaultFolderIcon(iconSize);

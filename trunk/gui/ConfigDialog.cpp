@@ -62,7 +62,7 @@ void ConfigDialog::OnNoteBookPageChanged(wxNotebookEvent& evt) {
 void ConfigDialog::UpdatePage(int pageIndex) {
   if (updatedPages_[pageIndex]) return;
 
-  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();  
+  UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();  
   User* user = wxGetApp().GetUser();
 
   wxArrayString foundFilePaths;
@@ -443,7 +443,7 @@ void ConfigDialog::OnCheckForUpdateButtonClick(wxCommandEvent& evt) {
 
 
 void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
-  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
+  UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();
   User* user = wxGetApp().GetUser();
   
   wxStringClientData* clientData;

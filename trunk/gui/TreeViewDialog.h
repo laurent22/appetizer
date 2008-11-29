@@ -18,12 +18,12 @@ class FolderItemTreeItemData: public wxTreeItemData {
 
 public:
 
-  FolderItemTreeItemData(FolderItemSP folderItem);
-  FolderItemSP GetFolderItem();
+  FolderItemTreeItemData(FolderItem* folderItem);
+  FolderItem* GetFolderItem();
 
 private:
 
-  FolderItemSP folderItem_;
+  FolderItem* folderItem_;
 
 };
 
@@ -35,8 +35,8 @@ public:
   TreeViewDialog();
   ~TreeViewDialog();
   void Localize();
-  void LoadFolderItem(FolderItemSP folderItem);
-  void SelectAndExpandFolderItem(FolderItemSP folderItem);
+  void LoadFolderItem(FolderItem* folderItem);
+  void SelectAndExpandFolderItem(FolderItem* folderItem);
 
   void OnTreeBeginDrag(wxTreeEvent& evt);
   void OnTreeEndDrag(wxTreeEvent& evt);
@@ -44,14 +44,15 @@ public:
 
 private:
 
-  wxTreeItemId PrependFolderItem(const wxTreeItemId& parent, FolderItemSP folderItem);
-  wxTreeItemId InsertFolderItemAfter(const wxTreeItemId& parent, FolderItemSP folderItem, const wxTreeItemId& previous);
-  wxTreeItemId AppendFolderItem(const wxTreeItemId& parent, FolderItemSP folderItem);
-  wxTreeItemId GetTreeItemFromFolderItem(wxTreeItemId startItemId, FolderItemSP folderItem);
-  void SetItemImage(const wxTreeItemId& item, FolderItemSP folderItem);
+  wxTreeItemId PrependFolderItem(const wxTreeItemId& parent, FolderItem* folderItem);
+  wxTreeItemId InsertFolderItemAfter(const wxTreeItemId& parent, FolderItem* folderItem, const wxTreeItemId& previous);
+  wxTreeItemId AppendFolderItem(const wxTreeItemId& parent, FolderItem* folderItem);
+  wxTreeItemId GetTreeItemFromFolderItem(wxTreeItemId startItemId, FolderItem* folderItem);
+  void SetItemImage(const wxTreeItemId& item, FolderItem* folderItem);
 
   wxTreeItemId draggedTreeItemId_;
   wxImageList* imageList_;
+  wxStopWatch lastDropEventStopWatch_;
 
   DECLARE_EVENT_TABLE()
 

@@ -61,6 +61,6 @@ private:
 
 };
 
-typedef boost::shared_ptr<UserSettings> UserSettingsSP;
+
 
 #endif // __UserSettings_H

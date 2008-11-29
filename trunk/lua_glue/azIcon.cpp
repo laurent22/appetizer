@@ -31,10 +31,10 @@ int azIcon::getPopupMenu(lua_State *L) {
 
 
 int azIcon::getShortcut(lua_State *L) {
-  FolderItemSP folderItem = renderer_->GetFolderItem();
-  if (!folderItem.get()) return 0;
+  FolderItem* folderItem = renderer_->GetFolderItem();
+  if (!folderItem) return 0;
 
-  FolderItemSP sp = FolderItem::GetFolderItemById(renderer_->GetFolderItem()->GetId());
+  FolderItem* sp = FolderItem::GetFolderItemById(renderer_->GetFolderItem()->GetId());
   Lunar<azShortcut>::push(L, new azShortcut(sp), true);
 
   return 1;

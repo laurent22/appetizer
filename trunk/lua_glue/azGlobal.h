@@ -17,7 +17,7 @@
 int theClass::addEventListener(lua_State *L) { \
   wxString eventName = LuaUtil::ToString(L, 1); \
   wxString functionName = LuaUtil::ToString(L, 2); \
-  PluginSP p = wxGetApp().GetPluginManager()->GetPluginByLuaState(L); \
+  Plugin* p = wxGetApp().GetPluginManager()->GetPluginByLuaState(L); \
   p->AddEventListener(this->Get(), eventName, functionName); \
   return 0; \
 }

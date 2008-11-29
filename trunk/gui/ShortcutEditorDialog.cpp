@@ -28,12 +28,14 @@ END_EVENT_TABLE()
 ShortcutEditorDialog::ShortcutEditorDialog()
 : ShortcutEditorDialogBase(NULL, wxID_ANY, wxEmptyString) {
 
+  folderItem_ = NULL;
+
   Localize();
 }
 
 
 void ShortcutEditorDialog::Localize() {
-  if (folderItem_.get()) SetTitle(folderItem_->IsGroup() ? _("Group Properties") : _("Shorcut Properties"));
+  if (folderItem_) SetTitle(folderItem_->IsGroup() ? _("Group Properties") : _("Shorcut Properties"));
   nameLabel->SetLabel(_("Name:"));
   locationLabel->SetLabel(_("Location:"));
   parametersLabel->SetLabel(_("Parameters:"));
@@ -46,7 +48,7 @@ void ShortcutEditorDialog::Localize() {
 
 
 void ShortcutEditorDialog::EnableDisableFields() {
-  if (!folderItem_.get()) return;
+  if (!folderItem_) return;
   bool isGroup = folderItem_->IsGroup();
 
   locationLabel->Enable(!isGroup);
@@ -57,7 +59,7 @@ void ShortcutEditorDialog::EnableDisableFields() {
 }
 
 
-void ShortcutEditorDialog::LoadFolderItem(FolderItemSP folderItem) {
+void ShortcutEditorDialog::LoadFolderItem(FolderItem* folderItem) {
   folderItem_ = folderItem;
   selectedIconPath_ = folderItem_->GetCustomIconPath();
   selectedIconIndex_ = folderItem_->GetCustomIconIndex();
@@ -86,12 +88,12 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
   } else {
 
     if (folderItem_->IsGroup()) {
-      wxIconSP icon = FolderItem::GetDefaultGroupIcon(LARGE_ICON_SIZE);
-      if (icon.get()) iconStaticBitmap->SetBitmap(*icon);
+      wxIcon* icon = FolderItem::GetDefaultGroupIcon(LARGE_ICON_SIZE);
+      if (icon) iconStaticBitmap->SetBitmap(*icon);
     } else {
 
-      wxIconSP icon = FolderItem::GetDefaultSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
-      if (icon.get()) {
+      wxIcon* icon = FolderItem::GetDefaultSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
+      if (icon) {
         iconStaticBitmap->SetBitmap(*icon);
       } else {
         wxIcon* icon = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);

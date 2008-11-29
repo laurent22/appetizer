@@ -43,7 +43,7 @@ Lunar<azShortcut>::RegType azShortcut::methods[] = {
 
 
 azShortcut::azShortcut(lua_State *L) {
-  folderItem_ = FolderItem::CreateFolderItemSP(LuaUtil::ToBoolean(L, 1));
+  folderItem_ = FolderItem::CreateFolderItem(LuaUtil::ToBoolean(L, 1));
 }
 
 
@@ -54,7 +54,7 @@ int azShortcut::getAllGroups(lua_State *L) {
   int tableIndex = lua_gettop(L);
 
   for (int i = 0; i < allGroups.size(); i++) {
-    FolderItemSP f = allGroups.at(i);
+    FolderItem* f = allGroups.at(i);
 
     lua_pushinteger(L, i + 1);
     Lunar<azShortcut>::push(L, new azShortcut(f), true);
@@ -128,7 +128,7 @@ int azShortcut::getParent(lua_State *L) {
   FolderItem* p = folderItem_->GetParent();
   if (!p) return 0;
 
-  FolderItemSP sp = FolderItem::GetFolderItemById(p->GetId());
+  FolderItem* sp = FolderItem::GetFolderItemById(p->GetId());
   Lunar<azShortcut>::push(L, new azShortcut(sp), true);
   return 1;
 }

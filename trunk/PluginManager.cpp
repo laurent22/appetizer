@@ -24,6 +24,8 @@ PluginManager::PluginManager() {
 
 
 PluginManager::~PluginManager() {
+  for (int i = 0; i < plugins_.size(); i++) wxDELETE(plugins_[i]);
+
   wxDELETE(luaApplication);
   wxDELETE(luaOptionPanel);
 }
@@ -46,7 +48,7 @@ void PluginManager::Initialize() {
     while (success) {
       wxLogDebug(_T("Loading plugin: ") + folderName);
 
-      PluginSP p(new Plugin());
+      Plugin* p  = new Plugin();
       plugins_.push_back(p);
 
       p->LoadFile(pluginPath + wxFileName::GetPathSeparator() + folderName + wxFileName::GetPathSeparator() + _T("main.lua"));
@@ -62,13 +64,12 @@ int PluginManager::GetEventIdByName(const wxString& eventName) {
 }
 
 
-PluginSP PluginManager::GetPluginByLuaState(lua_State* L) {
+Plugin* PluginManager::GetPluginByLuaState(lua_State* L) {
   for (int i = 0; i < plugins_.size(); i++) {
     if (plugins_.at(i)->GetLuaState() == L) return plugins_.at(i);
   }
 
-  PluginSP nullOutput;
-  return nullOutput;
+  return NULL;
 }
 
 
@@ -89,8 +90,8 @@ bool PluginManager::HandleMenuItemClick(ExtendedMenuItem* menuItem) {
   lua_State* luaState = (lua_State*)menuItem->GetMetadataPointer(_T("plugin_luaState"));
   if (!luaState) return false;
 
-  PluginSP p = GetPluginByLuaState(luaState);
-  if (!p.get()) return false;
+  Plugin* p = GetPluginByLuaState(luaState);
+  if (!p) return false;
 
   return p->HandleMenuItemClick(menuItem);
 }

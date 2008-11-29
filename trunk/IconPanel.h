@@ -53,7 +53,7 @@ public:
 
   void SetRotated(bool rotated);
 
-  FolderItemRendererSP GetRendererFromFolderItem(const FolderItem& folderItem);
+  FolderItemRenderer* GetRendererFromFolderItem(const FolderItem& folderItem);
 
   wxMenu* GetContextMenu();
   void ApplySkin();
@@ -82,7 +82,7 @@ private:
   int maxHeight_;
   bool iconsInvalidated_;
   bool layoutInvalidated_;
-  std::vector<FolderItemRendererSP> folderItemRenderers_;
+  std::vector<FolderItemRenderer*> folderItemRenderers_;
   ImageButton* browseButton_;
 
   DECLARE_EVENT_TABLE()

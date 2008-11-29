@@ -182,7 +182,7 @@ wxPanel* MainFrame::GetNullPanel() {
 bool MainFrame::RegisterHideShowHotKey() {
   UnregisterHideShowHotKey();
   
-  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
+  UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();
   
   if (userSettings->HotKeyKey <= 0) return false;
 
@@ -241,7 +241,7 @@ void MainFrame::DoAutoHide() {
 
 void MainFrame::OnIdle(wxIdleEvent& evt) {
   if (!firstIdleEventSent_) {
-    wxGetApp().InitializePluginManager();
+    //wxGetApp().InitializePluginManager();
 
     #ifdef __WINDOWS__
     firstIdleEventSent_ = true;

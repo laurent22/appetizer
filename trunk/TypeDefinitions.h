@@ -14,11 +14,6 @@
 #include "bitmap_controls/NineSlicesPanel.h"
 
 
-typedef boost::shared_ptr<wxIcon> wxIconSP;
-typedef boost::shared_ptr<wxBitmap> wxBitmapSP;
-typedef boost::shared_ptr<NineSlicesPainter> NineSlicesPainterSP;
-typedef boost::shared_ptr<NineSlicesPanel> NineSlicesPanelSP;
-typedef boost::shared_ptr<lua_State> lua_StateSP;
 typedef std::vector<long> LongVector;
 typedef std::vector<int> IntVector;
 

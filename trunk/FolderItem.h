@@ -20,12 +20,11 @@
 class FolderItem;
 class FolderItemProcess;
 
-typedef boost::shared_ptr<FolderItem> FolderItemSP;
-typedef std::vector<FolderItemSP> FolderItemVector;
+typedef std::vector<FolderItem*> FolderItemVector;
 
 
-WX_DECLARE_HASH_MAP(int, wxIconSP, wxIntegerHash, wxIntegerEqual, IconHashMap);
-WX_DECLARE_HASH_MAP(int, FolderItemSP, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
+WX_DECLARE_HASH_MAP(int, wxIcon*, wxIntegerHash, wxIntegerEqual, IconHashMap);
+WX_DECLARE_HASH_MAP(int, FolderItem*, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
 
 
 #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
@@ -46,8 +45,8 @@ public:
 
   FolderItem(bool isGroup = false);
   ~FolderItem();
-  static FolderItemSP CreateFolderItemSP(bool isGroup = false);
-  static FolderItemSP GetFolderItemById(int id);
+  static FolderItem* CreateFolderItem(bool isGroup = false);
+  static FolderItem* GetFolderItemById(int id);
   void Dispose();
   bool IsDisposed();
 
@@ -58,17 +57,17 @@ public:
   wxString GetResolvedPath();
   wxString GetFileName(bool includeExtension = true);
   wxString GetFilePath();
-  wxIconSP GetIcon(int iconSize);
+  wxIcon* GetIcon(int iconSize);
   void SetFilePath(const wxString& filePath);
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
 
-  static wxIconSP GetDefaultSpecialItemIcon(const wxString& path, int iconSize);
-  static wxIconSP GetDefaultGroupIcon(int iconSize);
+  static wxIcon* GetDefaultSpecialItemIcon(const wxString& path, int iconSize);
+  static wxIcon* GetDefaultGroupIcon(int iconSize);
 
   wxString GetIconDiskCacheHash();
-  static void CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSize);
-  static wxIconSP GetIconFromDiskCache(const wxString& hash, int iconSize);
+  static void CacheIconToDisk(const wxString& hash, wxIcon* icon, int iconSize);
+  static wxIcon* GetIconFromDiskCache(const wxString& hash, int iconSize);
 
   void AppendAsMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
   wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
@@ -115,21 +114,21 @@ public:
   FolderItemVector GetChildren();  
   FolderItem* GetParent();
   void SetParent(FolderItem* folderItem);
-  void RemoveChild(FolderItemSP folderItem);
-  void MoveChild(FolderItemSP folderItemToMove, int insertionIndex);
-  FolderItemSP SearchChildByFilename(const wxString& filename, int matchMode = 2);
+  void RemoveChild(FolderItem* folderItem);
+  void MoveChild(FolderItem* folderItemToMove, int insertionIndex);
+  FolderItem* SearchChildByFilename(const wxString& filename, int matchMode = 2);
 
   int ChildrenCount();
 
-  FolderItemSP GetChildAt(int index);
-  FolderItemSP GetChildById(int folderItemId, bool recurse = true);
-  FolderItemSP GetChildByUUID(const wxString& uuid, bool recurse = true);
-  FolderItemSP GetChildByResolvedPath(const wxString& filePath);
+  FolderItem* GetChildAt(int index);
+  FolderItem* GetChildById(int folderItemId, bool recurse = true);
+  FolderItem* GetChildByUUID(const wxString& uuid, bool recurse = true);
+  FolderItem* GetChildByResolvedPath(const wxString& filePath);
 
-  void InsertChildBefore(FolderItemSP toAdd, FolderItemSP previousFolderItem);
-  void InsertChildAfter(FolderItemSP toAdd, FolderItemSP previousFolderItem);
-  void PrependChild(FolderItemSP toAdd);
-  void AddChild(FolderItemSP folderItem);
+  void InsertChildBefore(FolderItem* toAdd, FolderItem* previousFolderItem);
+  void InsertChildAfter(FolderItem* toAdd, FolderItem* previousFolderItem);
+  void PrependChild(FolderItem* toAdd);
+  void AddChild(FolderItem* folderItem);
 
   void OnMenuItemClick(wxCommandEvent& evt);   
 

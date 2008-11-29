@@ -39,7 +39,4 @@ private:
 };
 
 
-typedef boost::shared_ptr<Plugin> PluginSP;
-
-
 #endif // __Plugin_H

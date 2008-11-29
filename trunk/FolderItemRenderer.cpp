@@ -46,6 +46,9 @@ BitmapControl(owner, id, point, size) {
   FolderItemRenderer::uniqueID_++;
   SetId(FolderItemRenderer::uniqueID_);
 
+  iconOverlayPainterDown_ = NULL;
+  iconOverlayPainterUp_ = NULL;
+  multiLaunchIcon_ = NULL;
   popupMenu_ = NULL;
   folderItemId_ = -1;
   mouseInside_ = false;
@@ -55,7 +58,14 @@ BitmapControl(owner, id, point, size) {
 
 
 FolderItemRenderer::~FolderItemRenderer() {
+  DeleteSkinObjects();
+}
 
+
+void FolderItemRenderer::DeleteSkinObjects() {
+  wxDELETE(multiLaunchIcon_);
+  wxDELETE(iconOverlayPainterUp_);
+  wxDELETE(iconOverlayPainterDown_);
 }
 
 
@@ -67,15 +77,16 @@ wxMenu* FolderItemRenderer::GetPopupMenu() {
 void FolderItemRenderer::ApplySkin() {
   // All the renderer's assets are lazily created on UpdateControlBitmap()
   // so just reset everything here, and invalidate the bitmap.
-  iconOverlayPainterDown_.reset();
-  iconOverlayPainterUp_.reset();
-  multiLaunchIcon_.reset();
+  DeleteSkinObjects();
   InvalidateControlBitmap();
 }
 
 
-FolderItemSP FolderItemRenderer::GetFolderItem() {
-  return FolderItem::GetFolderItemById(folderItemId_);
+FolderItem* FolderItemRenderer::GetFolderItem() {
+  FolderItem* output = FolderItem::GetFolderItemById(folderItemId_);
+  if (!output) return NULL;
+  if (!output->GetParent()) return NULL;
+  return output;
 }
 
 
@@ -105,7 +116,7 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
       if (result != wxID_YES) return;
     }
 
-    FolderItemSP folderItem = GetFolderItem();
+    FolderItem* folderItem = GetFolderItem();
     folderItem->Dispose();
 
   } else if (name == _T("properties")) {
@@ -114,8 +125,8 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
 
   } else if (name == _T("multiLaunch")) {
 
-    FolderItemSP folderItem = GetFolderItem();
-    if (!folderItem.get()) return;
+    FolderItem* folderItem = GetFolderItem();
+    if (!folderItem) return;
     
     if (folderItem->BelongsToMultiLaunchGroup()) {
       GetFolderItem()->RemoveFromMultiLaunchGroup();
@@ -139,14 +150,15 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
-  FolderItemSP folderItem = GetFolderItem();
+  FolderItem* folderItem = GetFolderItem();
+  if (!folderItem) return;
 
   wxMenu* menu = wxGetApp().GetMainFrame()->GetIconPanel()->GetContextMenu();
   popupMenu_ = menu;
 
   menu->AppendSeparator();
 
-  ExtendedMenuItem* menuItem;
+  ExtendedMenuItem* menuItem = NULL;
   
   menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Remove..."));
   menuItem->SetMetadata(_T("name"), _T("remove"));
@@ -219,9 +231,9 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
 
   if (mouseInside_ && mousePressed_) {    
-    FolderItemSP folderItem = GetFolderItem();
+    FolderItem* folderItem = GetFolderItem();
 
-    if (folderItem.get()) {
+    if (folderItem) {
 
       if (!folderItem->IsGroup()) {
         folderItem->Launch();
@@ -253,8 +265,8 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       if (HasCapture()) ReleaseMouse(); 
       draggingStarted_ = true;
 
-      FolderItemSP folderItem = GetFolderItem();
-      if (!folderItem.get()) return;
+      FolderItem* folderItem = GetFolderItem();
+      if (!folderItem) return;
 
       // Tell the main controller that we've started dragging
       // a folder item. Other objects can then do GetDraggedFolderItem()
@@ -292,14 +304,14 @@ void FolderItemRenderer::FitToContent() {
 void FolderItemRenderer::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();  
 
-  FolderItemSP folderItem = GetFolderItem();
+  FolderItem* folderItem = GetFolderItem();
 
-  if (!folderItem.get()) {
+  if (!folderItem) {
     elog("FolderItemRenderer::UpdateControlBitmap: Folder item is null");
     return;
   }
 
-  UserSettingsSP userSettings = wxGetApp().GetUser()->GetSettings();
+  UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();
   int userSettingsIconSize = userSettings->GetValidatedIconSize();
 
   wxMemoryDC destDC;
@@ -310,14 +322,14 @@ void FolderItemRenderer::UpdateControlBitmap() {
     // draw the icon overlay
 
     if (mousePressed_) { // DOWN state      
-      if (!iconOverlayPainterDown_.get()) {
-        iconOverlayPainterDown_.reset(new NineSlicesPainter());
+      if (!iconOverlayPainterDown_) {
+        iconOverlayPainterDown_ = new NineSlicesPainter();
         iconOverlayPainterDown_->LoadImage(FilePaths::GetSkinDirectory() + _T("/IconOverlayDown.png"));
       }
       iconOverlayPainterDown_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     } else { // UP state      
-      if (!iconOverlayPainterUp_.get()) {
-        iconOverlayPainterUp_.reset(new NineSlicesPainter());
+      if (!iconOverlayPainterUp_) {
+        iconOverlayPainterUp_ = new NineSlicesPainter();
         iconOverlayPainterUp_->LoadImage(FilePaths::GetSkinDirectory() + _T("/IconOverlayUp.png"));
       }
       iconOverlayPainterUp_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
@@ -326,10 +338,10 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   // Get the icon from the folder item
-  wxIconSP icon = folderItem->GetIcon(userSettingsIconSize);
-  wxASSERT_MSG(icon.get(), _T("Folder item icon cannot be NULL"));
+  wxIcon* icon = folderItem->GetIcon(userSettingsIconSize);
+  wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
-  if (icon.get() && icon->IsOk()) {  
+  if (icon && icon->IsOk()) {  
 
     // The commented code below converts the icon to a usable wxImage object
     //
@@ -351,8 +363,8 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   if (folderItem->BelongsToMultiLaunchGroup()) {
-    if (!multiLaunchIcon_.get()) {
-      multiLaunchIcon_.reset(new wxBitmap(FilePaths::GetSkinFile(_T("/MultiLaunchIcon.png")), wxBITMAP_TYPE_PNG));
+    if (!multiLaunchIcon_) {
+      multiLaunchIcon_ = new wxBitmap(FilePaths::GetSkinFile(_T("/MultiLaunchIcon.png")), wxBITMAP_TYPE_PNG);
     }
     if (multiLaunchIcon_->IsOk()) {
       destDC.DrawBitmap(

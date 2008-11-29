@@ -20,12 +20,12 @@ BEGIN_EVENT_TABLE(TreeViewDialog, wxDialog)
 END_EVENT_TABLE()
 
 
-FolderItemTreeItemData::FolderItemTreeItemData(FolderItemSP folderItem) {
+FolderItemTreeItemData::FolderItemTreeItemData(FolderItem* folderItem) {
   folderItem_ = folderItem;
 }
 
 
-FolderItemSP FolderItemTreeItemData::GetFolderItem() {
+FolderItem* FolderItemTreeItemData::GetFolderItem() {
   return folderItem_;
 }
 
@@ -68,7 +68,7 @@ void TreeViewDialog::Localize() {
 }
 
 
-void TreeViewDialog::SelectAndExpandFolderItem(FolderItemSP folderItem) {
+void TreeViewDialog::SelectAndExpandFolderItem(FolderItem* folderItem) {
   wxTreeItemId item = GetTreeItemFromFolderItem(treeControl->GetRootItem(), folderItem);
   if (!item.IsOk()) {
     elog(_T("SelectAndExpandFolderItem: item is not ok"));
@@ -80,19 +80,19 @@ void TreeViewDialog::SelectAndExpandFolderItem(FolderItemSP folderItem) {
 }
 
 
-wxTreeItemId TreeViewDialog::GetTreeItemFromFolderItem(wxTreeItemId startItemId, FolderItemSP folderItem) {
+wxTreeItemId TreeViewDialog::GetTreeItemFromFolderItem(wxTreeItemId startItemId, FolderItem* folderItem) {
   if (!startItemId.IsOk()) {
     elog(_T("GetTreeItemFromFolderItem: startItemId is not ok"));
     return wxTreeItemId();
   }
   
-  FolderItemSP startFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(startItemId))->GetFolderItem();
+  FolderItem* startFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(startItemId))->GetFolderItem();
   if (startFolderItem->GetId() == folderItem->GetId()) return startItemId;
 
   wxTreeItemIdValue cookie;
   wxTreeItemId child = treeControl->GetFirstChild(startItemId, cookie);
   while (child.IsOk()) {
-    FolderItemSP childFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(child))->GetFolderItem();
+    FolderItem* childFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(child))->GetFolderItem();
     if (childFolderItem->GetId() == folderItem->GetId()) return child;
     
     wxTreeItemId foundTreeItem = GetTreeItemFromFolderItem(child, folderItem);
@@ -106,7 +106,7 @@ wxTreeItemId TreeViewDialog::GetTreeItemFromFolderItem(wxTreeItemId startItemId,
 }
 
 
-void TreeViewDialog::LoadFolderItem(FolderItemSP folderItem) {
+void TreeViewDialog::LoadFolderItem(FolderItem* folderItem) {
   Localize();
 
   FolderItemVector folderItems = folderItem->GetChildren();
@@ -124,7 +124,7 @@ void TreeViewDialog::LoadFolderItem(FolderItemSP folderItem) {
   treeControl->SetItemData(rootId, new FolderItemTreeItemData(folderItem));
   
   for (int i = 0; i < folderItems.size(); i++) {
-    FolderItemSP folderItem = folderItems.at(i);
+    FolderItem* folderItem = folderItems.at(i);
     AppendFolderItem(rootId, folderItem);
   }
 
@@ -133,7 +133,9 @@ void TreeViewDialog::LoadFolderItem(FolderItemSP folderItem) {
 }
 
 
-wxTreeItemId TreeViewDialog::PrependFolderItem(const wxTreeItemId& parent, FolderItemSP folderItem) {
+wxTreeItemId TreeViewDialog::PrependFolderItem(const wxTreeItemId& parent, FolderItem* folderItem) {
+  if (!parent.IsOk()) return wxTreeItemId();
+
   wxTreeItemId firstId = treeControl->PrependItem(
     parent,
     folderItem->GetName(true),
@@ -146,7 +148,7 @@ wxTreeItemId TreeViewDialog::PrependFolderItem(const wxTreeItemId& parent, Folde
   if (!folderItem->IsGroup()) return firstId;
 
   for (int i = 0; i < folderItem->ChildrenCount(); i++) {
-    FolderItemSP child = folderItem->GetChildAt(i);
+    FolderItem* child = folderItem->GetChildAt(i);
     AppendFolderItem(firstId, child);
   }
 
@@ -154,7 +156,9 @@ wxTreeItemId TreeViewDialog::PrependFolderItem(const wxTreeItemId& parent, Folde
 }
 
 
-wxTreeItemId TreeViewDialog::InsertFolderItemAfter(const wxTreeItemId& parent, FolderItemSP folderItem, const wxTreeItemId& previous) {
+wxTreeItemId TreeViewDialog::InsertFolderItemAfter(const wxTreeItemId& parent, FolderItem* folderItem, const wxTreeItemId& previous) {
+  if (!parent.IsOk()) return wxTreeItemId();
+
   wxTreeItemId firstId = treeControl->InsertItem(
     parent,
     previous,
@@ -168,7 +172,7 @@ wxTreeItemId TreeViewDialog::InsertFolderItemAfter(const wxTreeItemId& parent, F
   if (!folderItem->IsGroup()) return firstId;
 
   for (int i = 0; i < folderItem->ChildrenCount(); i++) {
-    FolderItemSP child = folderItem->GetChildAt(i);
+    FolderItem* child = folderItem->GetChildAt(i);
     AppendFolderItem(firstId, child);
   }
 
@@ -176,7 +180,9 @@ wxTreeItemId TreeViewDialog::InsertFolderItemAfter(const wxTreeItemId& parent, F
 }
 
 
-wxTreeItemId TreeViewDialog::AppendFolderItem(const wxTreeItemId& parent, FolderItemSP folderItem) {
+wxTreeItemId TreeViewDialog::AppendFolderItem(const wxTreeItemId& parent, FolderItem* folderItem) {
+  if (!parent.IsOk()) return wxTreeItemId();
+
   wxTreeItemId firstId = treeControl->AppendItem(
     parent,
     folderItem->GetName(true),
@@ -189,7 +195,7 @@ wxTreeItemId TreeViewDialog::AppendFolderItem(const wxTreeItemId& parent, Folder
   if (!folderItem->IsGroup()) return firstId;
 
   for (int i = 0; i < folderItem->ChildrenCount(); i++) {
-    FolderItemSP child = folderItem->GetChildAt(i);
+    FolderItem* child = folderItem->GetChildAt(i);
     AppendFolderItem(firstId, child);
   }
 
@@ -197,15 +203,21 @@ wxTreeItemId TreeViewDialog::AppendFolderItem(const wxTreeItemId& parent, Folder
 }
 
 
-void TreeViewDialog::SetItemImage(const wxTreeItemId& item, FolderItemSP folderItem) {
-  wxIconSP icon = folderItem->GetIcon(SMALL_ICON_SIZE);
+void TreeViewDialog::SetItemImage(const wxTreeItemId& item, FolderItem* folderItem) {
+  if (!item.IsOk()) return;
+
+  wxIcon* icon = folderItem->GetIcon(SMALL_ICON_SIZE);
   int imageIndex = imageList_->Add(*icon);
   treeControl->SetItemImage(item, imageIndex);
 }
 
 
 void TreeViewDialog::OnTreeBeginDrag(wxTreeEvent& evt) {
+  if (lastDropEventStopWatch_.Time() < 300) return;
+
   draggedTreeItemId_ = evt.GetItem();
+  if (!draggedTreeItemId_.IsOk()) return;
+  
   evt.Allow();
 }
 
@@ -216,8 +228,8 @@ void TreeViewDialog::OnTreeEndDrag(wxTreeEvent& evt) {
   if (!draggedTreeItemId_.IsOk()) return;
   if (targetItemId == draggedTreeItemId_) return;
 
-  FolderItemSP sourceFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(draggedTreeItemId_))->GetFolderItem();
-  FolderItemSP targetFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(targetItemId))->GetFolderItem();
+  FolderItem* sourceFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(draggedTreeItemId_))->GetFolderItem();
+  FolderItem* targetFolderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(targetItemId))->GetFolderItem();
 
   if (treeControl->GetRootItem() == targetItemId) {
 
@@ -260,6 +272,8 @@ void TreeViewDialog::OnTreeEndDrag(wxTreeEvent& evt) {
     }
     
   }
+
+  lastDropEventStopWatch_.Start();
 
   wxGetApp().FolderItems_CollectionChange();
 }

@@ -32,7 +32,7 @@ int MiniLaunchBar::uniqueInt_ = 0;
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(24005);
+  //_CrtSetBreakAlloc(96332);
 
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -170,6 +170,8 @@ bool MiniLaunchBar::OnInit() {
     d->Destroy();
   }
 
+  InitializePluginManager();
+
   return true;
 } 
 
@@ -270,11 +272,9 @@ void MiniLaunchBar::SetDraggedFolderItem(int folderItemId) {
 /**
  * Gets the folder items that is currently being dragged
  */
-FolderItemSP MiniLaunchBar::GetDraggedFolderItem() {
-  if (draggedFolderItemId_ < 0 || !user_) {
-    FolderItemSP nullOutput;
-    return nullOutput;
-  }
+FolderItem* MiniLaunchBar::GetDraggedFolderItem() {
+  if (draggedFolderItemId_ < 0 || !user_) return NULL;
+
   return user_->GetRootFolderItem()->GetChildById(draggedFolderItemId_);
 }
 
@@ -400,9 +400,9 @@ void MiniLaunchBar::FolderItems_CollectionChange() {
  * "FolderItemChange" event handler. Everything that happens when the properties of a folder item 
  * are changed should be in this method.
  */
-void MiniLaunchBar::FolderItems_FolderItemChange(FolderItemSP folderItem) {
-  FolderItemRendererSP renderer = GetMainFrame()->GetIconPanel()->GetRendererFromFolderItem(*folderItem);
-  if (!renderer.get()) {
+void MiniLaunchBar::FolderItems_FolderItemChange(FolderItem* folderItem) {
+  FolderItemRenderer* renderer = GetMainFrame()->GetIconPanel()->GetRendererFromFolderItem(*folderItem);
+  if (!renderer) {
     // The folder item is not on the icon panel. It
     // may happen if it has just been created.
     return;

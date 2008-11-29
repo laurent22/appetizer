@@ -69,7 +69,7 @@ void IconPanel::ApplySkin() {
   browseButton_->FitToImage();
 
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
     renderer->ApplySkin();
   }
 
@@ -83,8 +83,8 @@ void IconPanel::AddFolderItem(int folderItemId) {
 
 
 void IconPanel::OnBrowseButtonMenu(wxCommandEvent& evt) {
-  FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
-  if (!folderItem.get()) {
+  FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
+  if (!folderItem) {
     evt.Skip();
   } else {
     if (folderItem->IsGroup()) {
@@ -102,8 +102,8 @@ void IconPanel::OnBrowseButtonClick(wxCommandEvent& evt) {
   wxMenu menu;
   
   for (int i = firstOffScreenIconIndex_; i < folderItemRenderers_.size(); i++) {
-    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
-    FolderItemSP folderItem = renderer->GetFolderItem();
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    FolderItem* folderItem = renderer->GetFolderItem();
 
     folderItem->AppendAsMenuItem(&menu, SMALL_ICON_SIZE, _T("browseButtonFolderItem"));
   }
@@ -125,12 +125,15 @@ wxMenu* IconPanel::GetContextMenu() {
   menu->Append(menuItem);
 
   wxMenu* specialMenu = new wxMenu();
+  wxIcon* specialIcon = NULL;
 
   #define ADD_SPECIAL_ITEM_TO_MENU(text, specialItemMacro) \
   menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), text); \
   menuItem->SetMetadata(_T("name"), _("addSpecialItem")); \
   menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
-  menuItem->SetBitmap(*FolderItem::GetDefaultSpecialItemIcon(specialItemMacro, 16)); \
+  specialIcon = FolderItem::GetDefaultSpecialItemIcon(specialItemMacro, 16); \
+  menuItem->SetBitmap(*specialIcon); \
+  wxDELETE(specialIcon); \
   specialMenu->Append(menuItem);
 
   ADD_SPECIAL_ITEM_TO_MENU(_("Control Panel"), _T("$(ControlPanel)"))
@@ -152,7 +155,7 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
   wxString name = menuItem->GetMetadata(_("name"));
 
   User* user = wxGetApp().GetUser();
-  FolderItemSP rootFolderItem = user->GetRootFolderItem();
+  FolderItem* rootFolderItem = user->GetRootFolderItem();
 
   if (name == _T("addSpecialItem")) {
 
@@ -174,8 +177,8 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
 
   } else if (name == _T("browseButtonFolderItem")) {
 
-    FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(menuItem->GetMetadataInt(_("folderItemId")));
-    if (!folderItem.get()) {
+    FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(menuItem->GetMetadataInt(_("folderItemId")));
+    if (!folderItem) {
       evt.Skip();
     } else {
       if (folderItem->IsGroup()) {
@@ -202,7 +205,7 @@ void IconPanel::OnRightDown(wxMouseEvent& evt) {
 
 int IconPanel::GetInsertionIndexAtPoint(const wxPoint& point) {  
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
 
     int rendererScreenX = renderer->GetRect().GetLeft();
     int rendererScreenY = renderer->GetRect().GetTop();
@@ -226,13 +229,13 @@ int IconPanel::GetInsertionIndexAtPoint(const wxPoint& point) {
 
   if (folderItemRenderers_.size() <= 0) return -1;
 
-  FolderItemRendererSP firstRenderer = folderItemRenderers_.at(0);
+  FolderItemRenderer* firstRenderer = folderItemRenderers_.at(0);
   int x = firstRenderer->GetRect().GetRight();
   int y = firstRenderer->GetRect().GetBottom();
   ClientToScreen(&x, &y);
   if (point.x <= x && point.y <= y) return 0;
 
-  FolderItemRendererSP lastRenderer = folderItemRenderers_.at(folderItemRenderers_.size() - 1);
+  FolderItemRenderer* lastRenderer = folderItemRenderers_.at(folderItemRenderers_.size() - 1);
   x = lastRenderer->GetRect().GetLeft();
   y = lastRenderer->GetRect().GetTop();
   ClientToScreen(&x, &y);
@@ -245,7 +248,7 @@ int IconPanel::GetInsertionIndexAtPoint(const wxPoint& point) {
 
 int IconPanel::GetRendererIndexAtPoint(const wxPoint& point) {  
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
 
     int rendererScreenX = renderer->GetRect().GetLeft();
     int rendererScreenY = renderer->GetRect().GetTop();
@@ -268,18 +271,18 @@ int IconPanel::GetRendererIndexAtPoint(const wxPoint& point) {
 }
 
 
-FolderItemRendererSP IconPanel::GetRendererFromFolderItem(const FolderItem& folderItem) {
+FolderItemRenderer* IconPanel::GetRendererFromFolderItem(const FolderItem& folderItem) {
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
     if (renderer->GetFolderItem()->GetId() == folderItem.GetId()) return renderer;
   }
-  FolderItemRendererSP nullOuput;
-  return nullOuput;
+
+  return NULL;
 }
 
 
 bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  FolderItemSP folderItem = wxGetApp().GetDraggedFolderItem();  
+  FolderItem* folderItem = wxGetApp().GetDraggedFolderItem();  
 
   int screenX = x;
   int screenY = y;
@@ -310,8 +313,8 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       // The files have been dropped on an icon    
       // Launch the icon and give the files as parameters
       
-      FolderItemSP folderItem = folderItemRenderers_.at(index)->GetFolderItem();
-      if (!folderItem.get()) return false;
+      FolderItem* folderItem = folderItemRenderers_.at(index)->GetFolderItem();
+      if (!folderItem) return false;
 
       if (folderItem->GetFilePath().Index(_T("$(")) != wxNOT_FOUND) {
         if (folderItem->GetFilePath() == _T("$(RecycleBin)")) {
@@ -457,6 +460,7 @@ void IconPanel::InvalidateLayout() {
 
 
 void IconPanel::ClearIcons() {
+  for (int i = 0; i < folderItemRenderers_.size(); i++) wxDELETE(folderItemRenderers_[i]);
   folderItemRenderers_.clear();
 }
 
@@ -470,7 +474,7 @@ void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
   FolderItemVector folderItems;
-  FolderItemSP rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
+  FolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
 
   if (folderItemSource_ == ICON_PANEL_SOURCE_USER) {      
 
@@ -479,8 +483,8 @@ void IconPanel::RefreshIcons() {
   } else {
     
     for (int i = 0; i < folderItemIds_.size(); i++) {
-      FolderItemSP folderItem = rootFolderItem->GetChildById(folderItemIds_.at(i));
-      if (!folderItem.get()) {
+      FolderItem* folderItem = rootFolderItem->GetChildById(folderItemIds_.at(i));
+      if (!folderItem) {
         folderItemIds_.erase(folderItemIds_.begin() + i);
         i--;
         continue;
@@ -497,12 +501,12 @@ void IconPanel::RefreshIcons() {
    ***************************************************************************/
 
   for (int i = folderItemRenderers_.size() - 1; i >= 0; i--) {
-    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
 
     bool removeIt = false;
-    FolderItemSP folderItem = renderer->GetFolderItem();
+    FolderItem* folderItem = renderer->GetFolderItem();
 
-    if (!folderItem.get()) {
+    if (!folderItem) {
       removeIt = true;
     } else {
       if (folderItem->GetParent() == NULL) {
@@ -514,7 +518,10 @@ void IconPanel::RefreshIcons() {
       }
     }
 
-    if (removeIt) folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
+    if (removeIt) {
+      renderer->Destroy();
+      folderItemRenderers_.erase(folderItemRenderers_.begin() + i);
+    }
   }
 
   /****************************************************************************
@@ -524,16 +531,16 @@ void IconPanel::RefreshIcons() {
   int folderItemCount = folderItems.size();
 
   for (int i = 0; i < folderItemCount; i++) {
-    FolderItemSP folderItem = folderItems.at(i);
+    FolderItem* folderItem = folderItems.at(i);
 
     // Check if the folder item is already loaded in a renderer
     bool found = false;
     int folderItemRendererCount = folderItemRenderers_.size();
 
     for (int j = 0; j < folderItemRendererCount; j++) {
-      FolderItemSP rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
+      FolderItem* rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
       
-      if (!rFolderItem.get()) {
+      if (!rFolderItem) {
         elog("Folder item shouldn't be null");
         continue;
       }
@@ -547,7 +554,7 @@ void IconPanel::RefreshIcons() {
     if (found) continue; // The folder item is already on the dock
 
     // Create a new renderer and add it to the panel
-    FolderItemRendererSP renderer(new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(0, 0)));
+    FolderItemRenderer* renderer = new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(0, 0));
     
     renderer->LoadData(folderItem->GetId());
     renderer->Hide();
@@ -560,13 +567,13 @@ void IconPanel::RefreshIcons() {
    * Sort the renderers
    ***************************************************************************/
 
-  std::vector<FolderItemRendererSP> newRenderers;
+  std::vector<FolderItemRenderer*> newRenderers;
 
   for (int i = 0; i < folderItems.size(); i++) {
-    FolderItemSP folderItem = folderItems.at(i);
+    FolderItem* folderItem = folderItems.at(i);
 
     for (int j = 0; j < folderItemRenderers_.size(); j++) {
-      FolderItemRendererSP renderer = folderItemRenderers_.at(j);
+      FolderItemRenderer* renderer = folderItemRenderers_.at(j);
 
       if (renderer->GetFolderItem()->GetId() == folderItem->GetId()) {
         newRenderers.push_back(renderer);
@@ -601,7 +608,7 @@ void IconPanel::UpdateLayout() {
   bool firstHiddenFound = false;
   
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
-    FolderItemRendererSP renderer = folderItemRenderers_.at(i);
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
 
     if (!firstHiddenFound) renderer->FitToContent();
 
@@ -645,7 +652,7 @@ void IconPanel::UpdateLayout() {
     if (firstOffScreenIconIndex_ > 0) {
       // If the browse button overlaps the last icon,
       // hide this icon and decrement firstOffScreenIconIndex_
-      FolderItemRendererSP r = folderItemRenderers_.at(firstOffScreenIconIndex_ - 1);
+      FolderItemRenderer* r = folderItemRenderers_.at(firstOffScreenIconIndex_ - 1);
       if (r->GetRect().GetRight() > browseButton_->GetRect().GetLeft() && r->GetRect().GetBottom() > browseButton_->GetRect().GetTop()) {
         r->Hide();
         firstOffScreenIconIndex_--;

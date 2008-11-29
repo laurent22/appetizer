@@ -25,6 +25,9 @@ Lunar<azMenu>::RegType azMenu::methods[] = {
 };
 
 
+void azMenu::SetOwnContent(bool v) { ownContent_ = v; }
+
+
 azMenu::azMenu(wxMenu* menu) { 
   menu_ = menu;
   ownContent_ = false; 
@@ -73,10 +76,11 @@ int azMenu::append(lua_State *L) {
 
 
 int azMenu::appendSubMenu(lua_State *L) {
-  const azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
+  azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
 	if (subMenu->Get()->GetTitle() == wxEmptyString) return 0;
 
   menu_->AppendSubMenu(subMenu->Get(), subMenu->Get()->GetTitle());
+  subMenu->SetOwnContent(false); // menu_ now owns the submenu
 
   return 0;
 }

@@ -303,8 +303,8 @@ void Utilities::ShowHelpFile(const wxString& anchor) {
 
   #ifdef __MLB_USE_PDF_HELP__
     // Keep support for PDF in case some languages don't work with CHM files
-    FolderItemSP pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
-    if (pdfReaderFolderItem.get()) {
+    FolderItem* pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
+    if (pdfReaderFolderItem) {
       pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
       return;
     }    
@@ -334,7 +334,7 @@ void Utilities::ShowTreeViewDialog(int selectedFolderItemId) {
     treeViewDialog_->SetSize(300,500);
   }
 
-  FolderItemSP selectedFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
+  FolderItem* selectedFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
   
   treeViewDialog_->LoadFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
   treeViewDialog_->SelectAndExpandFolderItem(selectedFolderItem);

@@ -29,6 +29,7 @@ public:
   static Lunar<azMenu>::RegType methods[];
 
   wxMenu* Get() const { return menu_; }
+  void SetOwnContent(bool v);
 
 private:
 

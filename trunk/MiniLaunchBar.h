@@ -34,7 +34,7 @@ public:
   long GetTimer();
   bool IsFirstLaunch();
   void SetDraggedFolderItem(int folderItemId);
-  FolderItemSP GetDraggedFolderItem();
+  FolderItem* GetDraggedFolderItem();
   User* GetUser();
   void CheckForNewVersion(bool silent = false);
   bool ChangeLocale(const wxString& localeCode);
@@ -48,7 +48,7 @@ public:
   void InitializePluginManager();
 
   void FolderItems_CollectionChange();
-  void FolderItems_FolderItemChange(FolderItemSP folderItem);
+  void FolderItems_FolderItemChange(FolderItem* folderItem);
   void User_LocaleChange();
   void User_IconSizeChange();
 

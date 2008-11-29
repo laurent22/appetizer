@@ -19,12 +19,12 @@ class ShortcutEditorDialog: public ShortcutEditorDialogBase {
 public:
 
   ShortcutEditorDialog();
-  void LoadFolderItem(FolderItemSP folderItem);
+  void LoadFolderItem(FolderItem* folderItem);
   void Localize();
 
 private:
 
-  FolderItemSP folderItem_;
+  FolderItem* folderItem_;
   wxString selectedIconPath_;
   int selectedIconIndex_;
 

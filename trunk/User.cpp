@@ -22,10 +22,11 @@ END_EVENT_TABLE()
 
 User::User() {
   scheduledSaveTimer_ = NULL;
+  settings_ = NULL;
   shortcutEditorDialog_ = NULL;
-  rootFolderItem_ = FolderItem::CreateFolderItemSP(true);
+  rootFolderItem_ = FolderItem::CreateFolderItem(true);
   rootFolderItem_->SetName(_T("<root>"));
-  settings_.reset(new UserSettings());
+  settings_ = new UserSettings();
 }
 
 
@@ -42,10 +43,11 @@ void User::SetAutoAddExclusions(wxArrayString& arrayString) {
 User::~User() {
   if (shortcutEditorDialog_) shortcutEditorDialog_->Destroy();
   wxDELETE(scheduledSaveTimer_);
+  wxDELETE(settings_);
 }
 
 
-FolderItemSP User::GetRootFolderItem() {
+FolderItem* User::GetRootFolderItem() {
   return rootFolderItem_;
 }
 
@@ -87,7 +89,7 @@ void User::Save(bool force) {
 
   FolderItemVector folderItems = rootFolderItem_->GetChildren();
   for (int i = 0; i < folderItems.size(); i++) {
-    FolderItemSP folderItem = folderItems.at(i);
+    FolderItem* folderItem = folderItems.at(i);
     xmlRoot->LinkEndChild(folderItem->ToXml());   
   }
 
@@ -111,13 +113,13 @@ void User::Load() {
     return;
   }
 
-  rootFolderItem_ = FolderItem::CreateFolderItemSP(true);
+  rootFolderItem_ = FolderItem::CreateFolderItem(true);
   
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
     if (elementName == _T("FolderItem")) {
-      FolderItemSP folderItem = FolderItem::CreateFolderItemSP();
+      FolderItem* folderItem = FolderItem::CreateFolderItem();
       folderItem->FromXml(element);
 
       rootFolderItem_->AddChild(folderItem);
@@ -133,8 +135,8 @@ void User::Load() {
 }
 
 
-FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath) {
-  FolderItemSP folderItem = FolderItem::CreateFolderItemSP();
+FolderItem* User::AddNewFolderItemFromPath(FolderItem* parent, wxString folderItemPath) {
+  FolderItem* folderItem = FolderItem::CreateFolderItem();
   folderItem->SetFilePath(FolderItem::ConvertToRelativePath(folderItemPath));
   folderItem->AutoSetName();
 
@@ -145,8 +147,8 @@ FolderItemSP User::AddNewFolderItemFromPath(FolderItemSP parent, wxString folder
 }
 
 
-FolderItemSP User::EditNewFolderItem(FolderItemSP parent, bool isGroup) {
-  FolderItemSP folderItem = FolderItem::CreateFolderItemSP(isGroup);
+FolderItem* User::EditNewFolderItem(FolderItem* parent, bool isGroup) {
+  FolderItem* folderItem = FolderItem::CreateFolderItem(isGroup);
 
   int result = EditFolderItem(folderItem);
 
@@ -156,12 +158,11 @@ FolderItemSP User::EditNewFolderItem(FolderItemSP parent, bool isGroup) {
     return folderItem;
   }
 
-  FolderItemSP nullFolderItem;
-  return nullFolderItem;
+  return NULL;
 }
 
 
-int User::EditFolderItem(FolderItemSP folderItem) {
+int User::EditFolderItem(FolderItem* folderItem) {
   int result;
 
   if (!shortcutEditorDialog_) shortcutEditorDialog_ = new ShortcutEditorDialog();
@@ -193,7 +194,7 @@ bool User::IsAutoAddExclusion(const wxString& filePath) {
 }
 
 
-UserSettingsSP User::GetSettings() {
+UserSettings* User::GetSettings() {
   return settings_;
 }
 
@@ -315,10 +316,10 @@ void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddEx
 
     // Check if there is already a folder item
     // for this file path. If so: skip it.
-    FolderItemSP foundFolderItem = rootFolderItem_->GetChildByResolvedPath(resolvedPath);
-    if (foundFolderItem.get()) continue;
+    FolderItem* foundFolderItem = rootFolderItem_->GetChildByResolvedPath(resolvedPath);
+    if (foundFolderItem) continue;
 
-    FolderItemSP folderItem = FolderItem::CreateFolderItemSP();//(new FolderItem());
+    FolderItem* folderItem = FolderItem::CreateFolderItem();
     folderItem->SetFilePath(relativePath);
     folderItem->AutoSetName();
     folderItem->SetAutomaticallyAdded(true);

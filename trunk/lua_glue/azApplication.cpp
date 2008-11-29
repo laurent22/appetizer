@@ -31,7 +31,7 @@ azIMPLEMENT_EVENT_LISTENER_FUNCTION(azApplication)
 
 
 int azApplication::getShortcutRoot(lua_State *L) {
-  FolderItemSP rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
+  FolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
   Lunar<azShortcut>::push(L, new azShortcut(rootFolderItem), true);
 
   return 1;
@@ -40,7 +40,7 @@ int azApplication::getShortcutRoot(lua_State *L) {
 
 int azApplication::getShortcutById(lua_State *L) {
   int folderItemId = luaL_checkinteger(L, 1);
-  FolderItemSP folderItem = FolderItem::GetFolderItemById(folderItemId);
+  FolderItem* folderItem = FolderItem::GetFolderItemById(folderItemId);
   Lunar<azShortcut>::push(L, new azShortcut(folderItem), true);
   
   return 1;

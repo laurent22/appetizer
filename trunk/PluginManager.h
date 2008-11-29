@@ -26,7 +26,7 @@ public:
   ~PluginManager();
 
   void Initialize();  
-  PluginSP GetPluginByLuaState(lua_State* L);
+  Plugin* GetPluginByLuaState(lua_State* L);
   void DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments);
   void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments);
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
@@ -37,7 +37,7 @@ public:
 
 private:
 
-  std::vector<PluginSP> plugins_;
+  std::vector<Plugin*> plugins_;
   wxSortedArrayString  eventNames_;
 
 };

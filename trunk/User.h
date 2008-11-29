@@ -21,7 +21,7 @@ public:
 
   User();  
   ~User();  
-  UserSettingsSP GetSettings();
+  UserSettings* GetSettings();
   void ScheduleSave();
   void Save(bool force = false);
   void Load();
@@ -32,9 +32,9 @@ public:
   void StartMenuSynchronization();
   void QuickLaunchSynchronization();
 
-  int EditFolderItem(FolderItemSP folderItem);
-  FolderItemSP EditNewFolderItem(FolderItemSP parent, bool isGroup = false);
-  FolderItemSP AddNewFolderItemFromPath(FolderItemSP parent, wxString folderItemPath);
+  int EditFolderItem(FolderItem* folderItem);
+  FolderItem* EditNewFolderItem(FolderItem* parent, bool isGroup = false);
+  FolderItem* AddNewFolderItemFromPath(FolderItem* parent, wxString folderItemPath);
 
   void AddAutoAddExclusion(const wxString& filePath);
   bool IsAutoAddExclusion(const wxString& filePath);
@@ -43,16 +43,16 @@ public:
 
   void BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions = false);
 
-  FolderItemSP GetRootFolderItem();
+  FolderItem* GetRootFolderItem();
 
   void OnTimer(wxTimerEvent& evt);
 
 private:
 
-  FolderItemSP rootFolderItem_;
+  FolderItem* rootFolderItem_;
   wxTimer* scheduledSaveTimer_;
   wxStringList folderItemExclusions_;
-  UserSettingsSP settings_;
+  UserSettings* settings_;
   ShortcutEditorDialog* shortcutEditorDialog_;
   wxArrayString autoAddExclusions_;
 

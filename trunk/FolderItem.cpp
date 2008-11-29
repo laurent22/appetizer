@@ -45,25 +45,26 @@ FolderItem::FolderItem(bool isGroup) {
 }
 
 
-FolderItemSP FolderItem::CreateFolderItemSP(bool isGroup) {
-  FolderItemSP f(new FolderItem(isGroup));
+FolderItem* FolderItem::CreateFolderItem(bool isGroup) {
+  FolderItem* f = new FolderItem(isGroup);
   folderItemIdHashMap_[f->GetId()] = f;
   return f;
 }
 
 
-FolderItemSP FolderItem::GetFolderItemById(int id) {
-  FolderItemSP sp = folderItemIdHashMap_[id];
+FolderItem* FolderItem::GetFolderItemById(int id) {
+  FolderItem* sp = folderItemIdHashMap_[id];
   
   // The folder item is not (or no longer) in the hash map
-  if (!sp.get()) return sp;
+  if (!sp) return NULL;
 
   if (sp->IsDisposed()) {
     // The folder item has been disposed, so remove it
     // from the hash map now and return NULL
+    wxDELETE(sp);
     folderItemIdHashMap_.erase(id);
-    FolderItemSP nullOutput;
-    return nullOutput;
+
+    return NULL;
   }
 
   // Otherwise return the pointer
@@ -75,10 +76,7 @@ void FolderItem::Dispose() {
   if (isDisposed_) return;
   
   FolderItem* parent = GetParent();
-  if (parent) {
-    FolderItemSP thisAsSP = FolderItem::GetFolderItemById(id_);
-    if (thisAsSP.get()) parent->RemoveChild(thisAsSP);
-  }
+  if (parent) parent->RemoveChild(this);
   
   isDisposed_ = true;
 }
@@ -90,7 +88,8 @@ bool FolderItem::IsDisposed() {
 
 
 FolderItem::~FolderItem() {
-
+  for (IconHashMap::iterator i = icons_.begin(); i != icons_.end(); ++i) wxDELETE(i->second);
+  icons_.clear();
 }
 
 
@@ -102,6 +101,13 @@ void FolderItem::DestroyStaticData() {
   }
   launchedFolderItems_.clear();
   #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
+
+  int s = folderItemIdHashMap_.size();
+
+  FolderItemIdHashMap::iterator i;
+  for(i = folderItemIdHashMap_.begin(); i != folderItemIdHashMap_.end(); ++i) {
+    wxDELETE(i->second);
+  }
 
   folderItemIdHashMap_.clear();
 }
@@ -144,9 +150,9 @@ wxString FolderItem::GetUUID() {
 }
 
 
-void FolderItem::InsertChildBefore(FolderItemSP toAdd, FolderItemSP previousFolderItem) {
+void FolderItem::InsertChildBefore(FolderItem* toAdd, FolderItem* previousFolderItem) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP child = children_.at(i);
+    FolderItem* child = children_.at(i);
     if (child->GetId() == previousFolderItem->GetId()) {
       MoveChild(toAdd, i);
       break;
@@ -155,9 +161,9 @@ void FolderItem::InsertChildBefore(FolderItemSP toAdd, FolderItemSP previousFold
 }
 
 
-void FolderItem::InsertChildAfter(FolderItemSP toAdd, FolderItemSP previousFolderItem) {  
+void FolderItem::InsertChildAfter(FolderItem* toAdd, FolderItem* previousFolderItem) {  
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP child = children_.at(i);
+    FolderItem* child = children_.at(i);
     if (child->GetId() == previousFolderItem->GetId()) {
       MoveChild(toAdd, i + 1);
       break;
@@ -166,7 +172,7 @@ void FolderItem::InsertChildAfter(FolderItemSP toAdd, FolderItemSP previousFolde
 }
 
 
-void FolderItem::PrependChild(FolderItemSP toAdd) {
+void FolderItem::PrependChild(FolderItem* toAdd) {
   MoveChild(toAdd, 0);
 }
 
@@ -176,20 +182,20 @@ bool FolderItem::IsGroup() {
 }
 
 
-FolderItemSP FolderItem::GetChildByResolvedPath(const wxString& filePath) {
+FolderItem* FolderItem::GetChildByResolvedPath(const wxString& filePath) {
   int childrenCount = children_.size();
 
   for (int i = 0; i < childrenCount; i++) {
-    FolderItemSP child = children_.at(i);
+    FolderItem* child = children_.at(i);
     if (child->GetResolvedPath() == filePath) {
       return child;
     } else {
-      FolderItemSP found = child->GetChildByResolvedPath(filePath);
-      if (found.get()) return found;
+      FolderItem* found = child->GetChildByResolvedPath(filePath);
+      if (found) return found;
     }
   }
-  FolderItemSP nullOutput;
-  return nullOutput;
+
+  return NULL;
 }
 
 
@@ -203,7 +209,7 @@ bool FolderItem::DoMultiLaunch() {
     }
   } else {
     for (int i = 0; i < children_.size(); i++) {
-      FolderItemSP folderItem = children_.at(i);
+      FolderItem* folderItem = children_.at(i);
       if (folderItem->DoMultiLaunch()) output = true;
     }
   }
@@ -212,7 +218,7 @@ bool FolderItem::DoMultiLaunch() {
 }
 
 
-void FolderItem::MoveChild(FolderItemSP folderItemToMove, int insertionIndex) {
+void FolderItem::MoveChild(FolderItem* folderItemToMove, int insertionIndex) {
   // Create the new vector of folder items that
   // is going to replace the old one
   FolderItemVector newFolderItems;
@@ -225,7 +231,7 @@ void FolderItem::MoveChild(FolderItemSP folderItemToMove, int insertionIndex) {
   }
 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP folderItem = children_.at(i);
+    FolderItem* folderItem = children_.at(i);
 
     // If the current folder item is the one
     // we want to move, skip it
@@ -262,7 +268,7 @@ FolderItemVector FolderItem::GetChildren() {
 
 bool FolderItem::ContainsGroups() {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP child = children_.at(i);
+    FolderItem* child = children_.at(i);
     if (child->IsGroup()) return true;
   }  
   return false;
@@ -273,7 +279,7 @@ FolderItemVector FolderItem::GetAllGroups(bool recursively) {
   FolderItemVector output;
 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP child = children_.at(i);
+    FolderItem* child = children_.at(i);
     if (child->IsGroup()) {
       output.push_back(child);    
       if (!recursively) continue;
@@ -287,11 +293,11 @@ FolderItemVector FolderItem::GetAllGroups(bool recursively) {
 }
 
 
-void FolderItem::AddChild(FolderItemSP folderItem) {
+void FolderItem::AddChild(FolderItem* folderItem) {
   if (folderItem->GetId() == GetId()) return;
   if (folderItem->IsGroup()) {
-    FolderItemSP f = folderItem->GetChildById(GetId());
-    if (f.get()) return;
+    FolderItem* f = folderItem->GetChildById(GetId());
+    if (f) return;
   }
 
   FolderItem* p = folderItem->GetParent();
@@ -302,15 +308,16 @@ void FolderItem::AddChild(FolderItemSP folderItem) {
 }
 
 
-void FolderItem::RemoveChild(FolderItemSP folderItem) {
+void FolderItem::RemoveChild(FolderItem* folderItem) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP child = children_.at(i);
+    FolderItem* child = children_.at(i);
+
     if (child->GetId() == folderItem->GetId()) {
 
       if (folderItem->GetAutomaticallyAdded()) {
         wxGetApp().GetUser()->AddAutoAddExclusion(folderItem->GetResolvedPath());
       }
-
+      
       child->SetParent(NULL);
       children_.erase(children_.begin() + i);
 
@@ -318,45 +325,44 @@ void FolderItem::RemoveChild(FolderItemSP folderItem) {
       return;
     }
   }
+
 }
 
 
-FolderItemSP FolderItem::GetChildAt(int index) {
+FolderItem* FolderItem::GetChildAt(int index) {
   return children_.at(index);
 }
 
 
-FolderItemSP FolderItem::GetChildByUUID(const wxString& uuid, bool recurse) {
+FolderItem* FolderItem::GetChildByUUID(const wxString& uuid, bool recurse) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP folderItem = children_.at(i);
+    FolderItem* folderItem = children_.at(i);
 
     if (folderItem->GetUUID() == uuid) return folderItem;
 
     if (recurse && folderItem->IsGroup()) {
-      FolderItemSP temp = folderItem->GetChildByUUID(uuid, recurse);
-      if (temp.get()) return temp;
+      FolderItem* temp = folderItem->GetChildByUUID(uuid, recurse);
+      if (temp) return temp;
     }
   }
 
-  FolderItemSP nullOutput;
-  return nullOutput;
+  return NULL;
 }
 
 
-FolderItemSP FolderItem::GetChildById(int folderItemId, bool recurse) {
+FolderItem* FolderItem::GetChildById(int folderItemId, bool recurse) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP folderItem = children_.at(i);
+    FolderItem* folderItem = children_.at(i);
 
     if (folderItem->GetId() == folderItemId) return folderItem;
 
     if (recurse && folderItem->IsGroup()) {
-      FolderItemSP temp = folderItem->GetChildById(folderItemId, recurse);
-      if (temp.get()) return temp;
+      FolderItem* temp = folderItem->GetChildById(folderItemId, recurse);
+      if (temp) return temp;
     }
   }
 
-  FolderItemSP nullOutput;
-  return nullOutput;
+  return NULL;
 }
 
 
@@ -407,8 +413,8 @@ void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
   } else if (name == _T("folderItem")) {
 
     int folderItemId = menuItem->GetMetadataInt(_T("folderItemId"));
-    FolderItemSP folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(folderItemId);
-    if (!folderItem.get()) {
+    FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(folderItemId);
+    if (!folderItem) {
       evt.Skip();
       return;
     }
@@ -452,8 +458,8 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
   ExtendedMenuItem* menuItem = NULL;
 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP child = children_.at(i);
-    if (!child.get()) continue;
+    FolderItem* child = children_.at(i);
+    if (!child) continue;
     child->AppendAsMenuItem(menu, iconSize, menuItemName);
   } 
 
@@ -481,7 +487,7 @@ ExtendedMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, const
   menuItem->SetMetadata(_("name"), menuItemName);
   menuItem->SetMetadata(_("folderItemId"), GetId());
 
-  wxIconSP icon = GetIcon(iconSize);
+  wxIcon* icon = GetIcon(iconSize);
   if (!icon->IsOk()) {
     elog(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
   } else {
@@ -502,22 +508,21 @@ ExtendedMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, const
  * @param filename The filename to search for.
  * @param matchMode The matching behavior
  */
-FolderItemSP FolderItem::SearchChildByFilename(const wxString& filename, int matchMode) { 
+FolderItem* FolderItem::SearchChildByFilename(const wxString& filename, int matchMode) { 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItemSP folderItem = children_.at(i);
-    if (!folderItem.get()) continue;
+    FolderItem* folderItem = children_.at(i);
+    if (!folderItem) continue;
     
     if (folderItem->IsGroup()) {
-      FolderItemSP foundFolderItem = folderItem->SearchChildByFilename(filename, matchMode);
-      if (foundFolderItem.get()) return foundFolderItem;
+      FolderItem* foundFolderItem = folderItem->SearchChildByFilename(filename, matchMode);
+      if (foundFolderItem) return foundFolderItem;
     } else {
       wxString folderItemFilename = folderItem->GetFileName().Lower();
       if (folderItemFilename.Find(filename.Lower()) != wxNOT_FOUND) return folderItem;
     }
   }    
 
-  FolderItemSP nullOutput;
-  return nullOutput;
+  return NULL;
 }
 
 
@@ -804,8 +809,8 @@ TiXmlElement* FolderItem::ToXml() {
     xml->LinkEndChild(childrenXml);
 
     for (int i = 0; i < children_.size(); i++) {
-      FolderItemSP folderItem = children_.at(i);
-      if (!folderItem.get()) continue;
+      FolderItem* folderItem = children_.at(i);
+      if (!folderItem) continue;
       childrenXml->LinkEndChild(folderItem->ToXml());
     }    
   }
@@ -834,14 +839,16 @@ void FolderItem::FromXml(TiXmlElement* xml) {
     if (customIconData[1].ToLong(&t)) customIconIndex_ = (int)t;
   }
 
+  for (int i = 0; i < children_.size(); i++) children_[i]->Dispose();
   children_.clear();
+  
   TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();
   if (childrenXml) {
     for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
       wxString elementName = wxString(element->Value(), wxConvUTF8);
       if (elementName != _T("FolderItem")) continue;
       
-      FolderItemSP folderItem = FolderItem::CreateFolderItemSP();
+      FolderItem* folderItem = FolderItem::CreateFolderItem();
       folderItem->FromXml(element);
       AddChild(folderItem);
     }
@@ -903,14 +910,15 @@ void FolderItem::SetName(const wxString& name) {
 
 
 void FolderItem::ClearCachedIcons() {
+  for (IconHashMap::iterator i = icons_.begin(); i != icons_.end(); ++i) wxDELETE(i->second);
   icons_.clear();
 }
 
 
 #ifdef __MLB_USE_ICON_DISK_CACHE__
 
-void FolderItem::CacheIconToDisk(const wxString& hash, wxIconSP icon, int iconSize) {
-  wxASSERT_MSG(icon.get(), _T("Couldn't cache icon: null pointer"));
+void FolderItem::CacheIconToDisk(const wxString& hash, wxIcon* icon, int iconSize) {
+  wxASSERT_MSG(icon, _T("Couldn't cache icon: null pointer"));
   wxASSERT_MSG(icon->IsOk(), _T("Couldn't cache icon: is not ok"));
   wxASSERT_MSG(hash != wxEmptyString, _T("Couldn't cache icon: empty hash"));
 
@@ -951,9 +959,9 @@ wxString FolderItem::GetIconDiskCacheHash() {
 }
 
 
-wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
+wxIcon* FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
   wxString cacheDirectory = FilePaths::GetIconCacheDirectory();
-  wxIconSP output;
+  wxIcon* output;
 
   if (!wxFileName::DirExists(cacheDirectory)) return output;
 
@@ -961,7 +969,7 @@ wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
     // Look for it in the cache first
     wxString filePath = wxString::Format(_T("%s/%s-%d.png"), cacheDirectory, hash, iconSize);
     if (wxFileName::FileExists(filePath)) {
-      output.reset(new wxIcon(filePath, wxBITMAP_TYPE_PNG));
+      output = new wxIcon(filePath, wxBITMAP_TYPE_PNG);
     }
   }
 
@@ -971,41 +979,40 @@ wxIconSP FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
 #endif // __MLB_USE_ICON_DISK_CACHE__
 
 
-wxIconSP FolderItem::GetDefaultGroupIcon(int iconSize) {
-  wxIconSP output;
-  output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
+wxIcon* FolderItem::GetDefaultGroupIcon(int iconSize) {
+  wxIcon* output = new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG);
   return output;
 }
 
 
-wxIconSP FolderItem::GetIcon(int iconSize) {
+wxIcon* FolderItem::GetIcon(int iconSize) {
 
   iconSize = wxGetApp().GetOSValidIconSize(iconSize);
 
   // If the icon has already been generated, return it
   if (icons_.find(iconSize) != icons_.end()) return icons_[iconSize];
 
-  wxIconSP output;  
+  wxIcon* output = NULL;  
 
   if (customIconPath_ != wxEmptyString) {
     if (customIconIndex_ > 0) {
-      output.reset(IconGetter::GetExecutableIcon(FolderItem::ResolvePath(customIconPath_), iconSize, customIconIndex_));
+      output = IconGetter::GetExecutableIcon(FolderItem::ResolvePath(customIconPath_), iconSize, customIconIndex_);
     } else {
-      output.reset(IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(customIconPath_), iconSize, true));
+      output = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(customIconPath_), iconSize, true);
     }
   }
 
   #ifdef __MLB_USE_ICON_DISK_CACHE__
   wxString cacheHash;
   cacheHash = GetIconDiskCacheHash();
-  wxIconSP cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
-  if (cachedIcon.get()) {
+  wxIcon* cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
+  if (cachedIcon) {
     icons_[iconSize] = cachedIcon;
     return cachedIcon;
   }
   #endif // __MLB_USE_ICON_DISK_CACHE__
 
-  if (!output.get()) {
+  if (!output) {
     if (IsGroup()) {
       output = FolderItem::GetDefaultGroupIcon(iconSize);
     } else {
@@ -1013,15 +1020,15 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
     }
   }
 
-  if (!output.get()) {
-    output.reset(IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize));
+  if (!output) {
+    output = IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize);
     #ifdef __MLB_USE_ICON_DISK_CACHE__
-    if (output.get()) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
+    if (output) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
     #endif // __MLB_USE_ICON_DISK_CACHE__
   }
 
-  if (!output.get()) {
-    output.reset(new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("DefaultIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG));
+  if (!output) {
+    output = new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("DefaultIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG);
   }
 
   // Cache the icon
@@ -1031,8 +1038,8 @@ wxIconSP FolderItem::GetIcon(int iconSize) {
 }
 
 
-wxIconSP FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSize) {
-  wxIconSP output;
+wxIcon* FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSize) {
+  wxIcon* output = NULL;
 
   if (path.Index(_T("$(")) == wxNOT_FOUND) return output;
 
@@ -1042,27 +1049,27 @@ wxIconSP FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSiz
   int inc = iconSize >= 48 ? 1 : 0;
 
   if (path == _T("$(ControlPanel)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_CONTROL_PANEL + inc);
   } else if (path == _T("$(MyComputer)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_COMPUTER + inc);
   } else if (path == _T("$(MyNetwork)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_NETWORK + inc);
   } else if (path == _T("$(RecycleBin)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_RECYCLE_BIN + inc);
   } else if (path == _T("$(ShowDesktop)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_DESKTOP + inc);
   } else if (path == _T("$(Explorer)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_EXPLORER + inc);
   } else if (path == _T("$(Search)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_SEARCH + inc);
   } else if (path == _T("$(MyDocuments)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_DOCUMENTS + inc);
   } else if (path == _T("$(MyPictures)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_PICTURES + inc);
   } else if (path == _T("$(MyMusic)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc);
   } else if (path == _T("$(MyVideo)")) {
-    output.reset(IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc));
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc);
   }
 
   return output;
