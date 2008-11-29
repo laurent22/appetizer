@@ -69,6 +69,7 @@ class MainFrame: public wxFrame {
     ImageButton* minimizeSideButton_;
     bool hotKeyRegistered_;
     bool activated_;
+    wxPanel* nullPanel_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -81,6 +82,7 @@ class MainFrame: public wxFrame {
 
     IconPanel* GetIconPanel();
     OptionPanel* GetOptionPanel();
+    wxPanel* GetNullPanel();
 
     void DoAutoHide();
 
@@ -96,6 +98,8 @@ class MainFrame: public wxFrame {
     int GetOptionPanelTotalWidth();
 
     void Localize();
+
+    bool IsOptionPanelOpen() const { return optionPanelOpen_; }
 
     void OpenOptionPanel(bool open = true);
     void CloseOptionPanel();

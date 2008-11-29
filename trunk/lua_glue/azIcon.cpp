@@ -9,6 +9,7 @@
 #include "azIcon.h"
 #include "azMenu.h"
 #include "azShortcut.h"
+#include "../MiniLaunchBar.h"
 
 
 const char azIcon::className[] = "azIcon";
@@ -33,7 +34,8 @@ int azIcon::getShortcut(lua_State *L) {
   FolderItemSP folderItem = renderer_->GetFolderItem();
   if (!folderItem.get()) return 0;
 
-  Lunar<azShortcut>::push(L, new azShortcut(renderer_->GetFolderItem()), true);
+  FolderItemSP sp = FolderItem::GetFolderItemById(renderer_->GetFolderItem()->GetId());
+  Lunar<azShortcut>::push(L, new azShortcut(sp), true);
 
   return 1;
 }

@@ -11,9 +11,10 @@
 
 
 #include "../FolderItemRenderer.h"
+#include "azWrapper.h"
 
 
-class azIcon {
+class azIcon : public azWrapper {
 
 public:
 

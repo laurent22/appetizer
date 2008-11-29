@@ -10,12 +10,16 @@
 #define __azMenu_H
 
 
-class azMenu : public wxObject {
+#include "azWrapper.h"
+
+
+class azMenu : public azWrapper {
 
 public:
 
-  azMenu(wxMenu* menu) { menu_ = menu; }
+  azMenu(wxMenu* menu);
   azMenu(lua_State *L);
+  ~azMenu();
 
   int appendSeparator(lua_State *L);
   int append(lua_State *L);
@@ -28,6 +32,7 @@ public:
 
 private:
 
+  bool ownContent_;
   wxMenu* menu_;  
 
 };

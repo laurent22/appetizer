@@ -13,6 +13,7 @@
 #include "MainFrame.h"
 #include "FolderItem.h"
 #include "Enumerations.h"
+class PluginManager;
 #include "PluginManager.h"
 #include "utilities/Utilities.h"
 

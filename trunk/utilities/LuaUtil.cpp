@@ -45,10 +45,20 @@ bool LuaUtil::ToBoolean(lua_State *L, int n) {
 }
 
 
-wxString LuaUtil::GetStringFromTable(lua_State *L, int tableIndex, const wxString& key) {
+wxString LuaUtil::GetStringFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional) {
   lua_pushstring(L, key.mb_str());
   lua_gettable(L, tableIndex);
-  wxString output = LuaUtil::ToString(L, -1);
+  
+  wxString output;
+
+  if (!lua_isstring(L, -1)) {
+    if (!isOptional) {
+      luaL_typerror(L, -1, lua_typename(L, LUA_TSTRING));
+    }
+  } else {
+    output = LuaUtil::ToString(L, -1);
+  }
+  
   lua_pop(L, 1);
 
   return output;

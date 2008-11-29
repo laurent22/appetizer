@@ -11,9 +11,10 @@
 
 
 #include "../FolderItem.h"
+#include "azWrapper.h"
 
 
-class azShortcut : public wxObject {
+class azShortcut : public azWrapper {
 
 public:
 
@@ -32,6 +33,7 @@ public:
   int launch(lua_State *L);
   int setParameters(lua_State *L);
   int getParameters(lua_State *L);
+
   int addToMultiLaunchGroup(lua_State *L);
   int belongsToMultiLaunchGroup(lua_State *L);
   int removeFromMultiLaunchGroup(lua_State *L);

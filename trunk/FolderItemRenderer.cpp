@@ -18,6 +18,7 @@
 #include "MessageBoxes.h"
 #include "ExtendedMenuItem.h"
 #include "gui/TreeViewDialog.h"
+#include "lua_glue/azIcon.h"
 
 
 
@@ -170,7 +171,10 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   menuItem->SetMetadata(_T("name"), _T("properties"));
   menu->Append(menuItem);
 
-  wxGetApp().GetPluginManager()->DispatchEvent(wxGetApp().GetPluginManager()->luaApplication, _T("iconMenuOpening"), LuaHostTable(), this);
+  LuaHostTable table;
+  table[_T("icon")] = new azIcon(this);
+  
+  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("iconMenuOpening"), table); //, this);
 
   PopupMenu(menu, wxDefaultPosition);
 

@@ -20,7 +20,7 @@ end
 -- before the popup menu is displayed
 function application_iconMenuOpening(event)
 	-- Get the icon
-	icon = event.sender
+	icon = event.icon
 	
 	-- Get the icon popup menu and associated shortcut object
 	menu = icon:getPopupMenu()	

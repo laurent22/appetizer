@@ -23,10 +23,10 @@ public:
   ~Plugin();
 
   void LoadFile(const wxString& luaFilePath);
-  void AddEventListener(void* object, int eventId, const wxString& functionName);
-  void AddEventListener(void* object, const wxString& eventName, const wxString& functionName);
-  void DispatchEvent(wxObject* senderOrGlobalHook, int eventId, LuaHostTable arguments, wxObject* sender = NULL);
-  void DispatchEvent(wxObject* senderOrGlobalHook, const wxString& eventName, LuaHostTable arguments, wxObject* sender = NULL);
+  void AddEventListener(wxObject* object, int eventId, const wxString& functionName);
+  void AddEventListener(wxObject* object, const wxString& eventName, const wxString& functionName);
+  void DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments);
+  void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments);
   lua_State* GetLuaState();
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
 
@@ -34,7 +34,7 @@ private:
 
   lua_State* L;
 
-  std::map<std::pair<void*, int>, wxArrayString*> eventRegister_;
+  std::map<std::pair<wxObject*, int>, wxArrayString*> eventRegister_;
 
 };
 

@@ -71,3 +71,42 @@ function groupTest()
 	root:addChild(group)	
 end
 
+
+
+function optionButton_click(event)
+	azPrint("Option button was clicked!")
+	
+	azPrint("Building menu to select test units...")
+	
+	menu = azMenu:new("Test units")
+	
+	menuItem = {}
+	menuItem.text = "Shortcut test";
+	menuItem.onClick = "shortcutTest";	
+	menu:append(menuItem)
+	
+	menuItem = {}
+	menuItem.text = "Group test";
+	menuItem.onClick = "groupTest";	
+	menu:append(menuItem)
+	
+	azPrint("Showing menu")
+	
+	event.sender:popupMenu(menu)
+end
+
+
+
+azPrint("Creating new button")	
+button = azOptionButton():new()
+
+azPrint("Setting tooltip");
+button:setToolTip("My plugin button");
+
+azPrint("Adding button to option panel")
+optionPanel:addButton(button)
+
+button:addEventListener("click", "optionButton_click")
+
+
+

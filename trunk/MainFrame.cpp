@@ -50,6 +50,7 @@ MainFrame::MainFrame()
   aboutDialog_ = NULL;
   arrowButtonOpenIcon_ = NULL;
   arrowButtonCloseIcon_ = NULL;
+  nullPanel_ = NULL;
   rotated_ = false;
   activated_ = false;
 
@@ -72,6 +73,8 @@ MainFrame::MainFrame()
   maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackgroundRegion.png"), false);
 
   windowDragData_.DraggingStarted = false;
+
+  nullPanel_ = new wxPanel(this, 0, 0, 0, 0); 
 
   arrowButton_ = new ImageButton(this, ID_BUTTON_Arrow, wxPoint(0, 0), wxSize(10, 10));
   arrowButton_->SetCursor(wxCursor(wxCURSOR_HAND));
@@ -169,6 +172,11 @@ MainFrame::MainFrame()
     SetSize(x, y, width, height);
   }
 } 
+
+
+wxPanel* MainFrame::GetNullPanel() {
+  return nullPanel_;
+}
 
 
 bool MainFrame::RegisterHideShowHotKey() {

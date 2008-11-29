@@ -40,21 +40,57 @@ NineSlicesPanel(owner, id, point, size) {
     wxString n = buttonNames[i];
 
     OptionButton* button = new OptionButton(this, wxID_ANY);
-
-    button->SetCursor(wxCursor(wxCURSOR_HAND));
     button->SetName(n);
-
-    buttons_.push_back(button);
-
-    button->Connect(
-      wxID_ANY, 
-      wxeEVT_CLICK,
-      wxCommandEventHandler(OptionPanel::OnImageButtonClick),
-      NULL,
-      this);
+    AddButton(button);
   }
 
   Localize();
+}
+
+
+int OptionPanel::ButtonCount() {
+  return buttons_.size();
+}
+
+
+void OptionPanel::AddButton(OptionButton* button) {
+  button->SetCursor(wxCursor(wxCURSOR_HAND));  
+  button->Reparent(this);
+
+  buttons_.push_back(button);
+
+  button->Connect(
+    wxID_ANY, 
+    wxeEVT_CLICK,
+    wxCommandEventHandler(OptionPanel::OnImageButtonClick),
+    NULL,
+    this);
+
+  InvalidateSkin();
+  InvalidateLayout();
+}
+
+
+OptionButton* OptionPanel::GetButtonAt(int index) {
+  return buttons_.at(index);
+}
+
+
+void OptionPanel::RemoveButton(OptionButton* button, bool andDestroyIt) {
+  for (int i = 0; i < buttons_.size(); i++) {    
+    OptionButton* b = buttons_[i];
+    if (b == button) {
+      buttons_.erase(buttons_.begin() + i);
+      if (andDestroyIt) {
+        button->Destroy();
+      } else {
+        button->Reparent(wxGetApp().GetMainFrame()->GetNullPanel());
+      }
+      break;
+    }
+  }
+
+  InvalidateLayout();
 }
 
 
@@ -74,15 +110,25 @@ void OptionPanel::OnMenuAbout(wxCommandEvent& evt) {
 
 
 void OptionPanel::ApplySkin() {
+  skinInvalidated_ = false;
+
   LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
   SetGrid(Styles::OptionPanel.ScaleGrid);
 
   for (int i = 0; i < buttons_.size(); i++) {    
     OptionButton* button = buttons_[i];
 
-    wxImage image(FilePaths::GetSkinFile(_T("ButtonIcon_") + button->GetName() + _T(".png")));
-    Imaging::ColorizeImage(image, Styles::OptionPanel.ButtonIconColor);
-    button->SetIcon(new wxBitmap(image));
+    wxString skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_") + button->GetName() + _T(".png"));
+
+    if (!wxFileName::FileExists(skinFilePath)) skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_Default.png"));
+    
+    wxImage image(skinFilePath);
+
+    if (image.IsOk()) {
+      Imaging::ColorizeImage(image, Styles::OptionPanel.ButtonIconColor);
+      button->SetIcon(new wxBitmap(image));
+    }
+
     button->ApplySkin();
   }
 
@@ -129,9 +175,16 @@ void OptionPanel::InvalidateLayout() {
 }
 
 
+void OptionPanel::InvalidateSkin() {
+  skinInvalidated_ = true;
+  Refresh();
+}
+
+
 void OptionPanel::OnPaint(wxPaintEvent& evt) {
   BitmapControl::OnPaint(evt);
   
+  if (skinInvalidated_) ApplySkin();
   if (layoutInvalidated_) UpdateLayout();
 }
 
@@ -167,6 +220,8 @@ void OptionPanel::UpdateLayout() {
     int newX = x;
     int newY = y;
 
+    int newRequiredWidth = 0;
+
     if (rotated_) {
 
       if (newX + b->GetSize().GetWidth() > GetSize().GetWidth() - Styles::OptionPanel.Padding.Top) {
@@ -174,7 +229,7 @@ void OptionPanel::UpdateLayout() {
         newY = newY + b->GetSize().GetHeight() + Styles::OptionPanel.ButtonVGap;
       }
 
-      requiredWidth_ = newY + b->GetSize().GetHeight() + Styles::OptionPanel.Padding.Right;
+      newRequiredWidth = newY + b->GetSize().GetHeight() + Styles::OptionPanel.Padding.Right;      
 
     } else {
 
@@ -183,8 +238,10 @@ void OptionPanel::UpdateLayout() {
         newX = newX + b->GetSize().GetWidth() + Styles::OptionPanel.ButtonHGap;
       }
 
-      requiredWidth_ = newX + b->GetSize().GetWidth() + Styles::OptionPanel.Padding.Right;
+      newRequiredWidth = newX + b->GetSize().GetWidth() + Styles::OptionPanel.Padding.Right;
     }
+
+    if (newRequiredWidth > requiredWidth_) requiredWidth_ = newRequiredWidth;
 
     b->Move(newX, newY);      
 
@@ -222,6 +279,8 @@ void OptionPanel::UpdateLayout() {
   }
 
   if (requiredWidth_ <= 0) requiredWidth_ = 20;
+
+  UpdateControlBitmap();
 }
 
 
@@ -283,6 +342,12 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     ImportWizardDialog* d = new ImportWizardDialog(this);
     d->ShowModal();
     d->Destroy();
+
+  } else {
+
+    OptionButton* b = dynamic_cast<OptionButton*>(evt.GetEventObject());
+    //wxGetApp().GetPluginManager()->DispatchEvent(wxGetApp().GetPluginManager()->GetWrapper(b), _T("click"), LuaHostTable());
+    wxGetApp().GetPluginManager()->DispatchEvent(b, _T("click"), LuaHostTable());
 
   }
 

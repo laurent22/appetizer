@@ -8,6 +8,7 @@
 
 #include "azApplication.h"
 #include "azShortcut.h"
+#include "azGlobal.h"
 #include "../MiniLaunchBar.h"
 
 
@@ -23,15 +24,10 @@ Lunar<azApplication>::RegType azApplication::methods[] = {
 };
 
 
-int azApplication::addEventListener(lua_State *L) {
-  wxString eventName = LuaUtil::ToString(L, 1);
-  wxString functionName = LuaUtil::ToString(L, 2);
+MiniLaunchBar* azApplication::Get() const { return &(wxGetApp()); }
 
-  PluginSP p = wxGetApp().GetPluginManager()->GetPluginByLuaState(L);
-  p->AddEventListener(this, eventName, functionName);
 
-  return 0;
-}
+azIMPLEMENT_EVENT_LISTENER_FUNCTION(azApplication)
 
 
 int azApplication::getShortcutRoot(lua_State *L) {

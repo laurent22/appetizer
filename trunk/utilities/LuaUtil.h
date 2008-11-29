@@ -10,7 +10,7 @@
 #define __LuaUtil_H
 
 
-typedef std::map<wxString, wxString> LuaHostTable;
+typedef std::map<wxString, boost::any> LuaHostTable;
 
 
 class LuaUtil {
@@ -21,7 +21,7 @@ public:
   static void LogError(int luaError);
   static void PushString(lua_State *L, const wxString& s);
   static wxString ToString(lua_State *L, int n);
-  static wxString GetStringFromTable(lua_State *L, int tableIndex, const wxString& key);
+  static wxString GetStringFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional = true);
   static bool ToBoolean(lua_State* L, int n);
 
 };

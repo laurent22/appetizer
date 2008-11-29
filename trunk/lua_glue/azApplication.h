@@ -10,19 +10,30 @@
 #define __azApplication_H
 
 
-class azApplication : public wxObject {
+#include "azGlobal.h"
+#include "azWrapper.h"
+
+
+class MiniLaunchBar;
+#include "../MiniLaunchBar.h"
+
+
+class azApplication : public azWrapper {
 
 public:
 
   azApplication() {}
   azApplication(lua_State *L) {}
 
-  int addEventListener(lua_State *L);
   int getShortcutRoot(lua_State *L);
   int getShortcutById(lua_State *L);
+
+  azDECLARE_EVENT_LISTENER_FUNCTION()
   
   static const char className[];
   static Lunar<azApplication>::RegType methods[];
+
+  MiniLaunchBar* Get() const;
 
 };
 

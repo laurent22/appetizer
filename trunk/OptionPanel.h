@@ -31,6 +31,13 @@ public:
 
   OptionPanel(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
   ~OptionPanel();
+
+  void AddButton(OptionButton* button);
+  void RemoveButton(OptionButton* button, bool andDestroyIt = false);
+  int ButtonCount();
+  OptionButton* GetButtonAt(int index);
+
+  void InvalidateSkin();
   void InvalidateLayout();
   void UpdateLayout();
   int GetRequiredWidth();
@@ -52,6 +59,7 @@ private:
   int requiredWidth_;
   OptionButtonVector buttons_;
   bool layoutInvalidated_;
+  bool skinInvalidated_;
   ConfigDialog* configDialog_;
 
   DECLARE_EVENT_TABLE()

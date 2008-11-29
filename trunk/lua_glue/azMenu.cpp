@@ -25,11 +25,23 @@ Lunar<azMenu>::RegType azMenu::methods[] = {
 };
 
 
+azMenu::azMenu(wxMenu* menu) { 
+  menu_ = menu;
+  ownContent_ = false; 
+}
+
+
 azMenu::azMenu(lua_State *L) {
   wxString text = LuaUtil::ToString(L, 1);
 
   menu_ = new wxMenu(text);
-}  
+  ownContent_ = true;
+}
+
+
+azMenu::~azMenu() {
+  if (ownContent_) wxDELETE(menu_);
+}
 
 
 int azMenu::appendSeparator(lua_State *L) {
@@ -62,7 +74,6 @@ int azMenu::append(lua_State *L) {
 
 int azMenu::appendSubMenu(lua_State *L) {
   const azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
-  if (!subMenu) return 0;
 	if (subMenu->Get()->GetTitle() == wxEmptyString) return 0;
 
   menu_->AppendSubMenu(subMenu->Get(), subMenu->Get()->GetTitle());

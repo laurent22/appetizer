@@ -85,6 +85,7 @@
 #include <math.h>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/any.hpp>
 
 #include <tinyxml/tinyxml.h>
 #include <simpleini/SimpleIni.h>

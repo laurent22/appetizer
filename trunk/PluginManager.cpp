@@ -8,7 +8,14 @@
 
 #include "PluginManager.h"
 #include "FilePaths.h"
+#include "FolderItem.h"
+#include "OptionButton.h"
+#include "FolderItemRenderer.h"
 #include "utilities/LuaUtil.h"
+#include "lua_glue/azOptionButton.h"
+#include "lua_glue/azIcon.h"
+#include "lua_glue/azMenu.h"
+#include "lua_glue/azShortcut.h"
 
 
 PluginManager::PluginManager() {
@@ -18,13 +25,16 @@ PluginManager::PluginManager() {
 
 PluginManager::~PluginManager() {
   wxDELETE(luaApplication);
+  wxDELETE(luaOptionPanel);
 }
 
 
 void PluginManager::Initialize() {
   eventNames_.Add(_T("iconMenuOpening"));
+  eventNames_.Add(_T("click"));
 
   luaApplication = new azApplication();
+  luaOptionPanel = new azOptionPanel();
 
   wxString pluginPath = FilePaths::GetPluginsDirectory();
   wxDir pluginFolder;
@@ -40,17 +50,6 @@ void PluginManager::Initialize() {
       plugins_.push_back(p);
 
       p->LoadFile(pluginPath + wxFileName::GetPathSeparator() + folderName + wxFileName::GetPathSeparator() + _T("main.lua"));
-
-      #ifdef __WXDEBUG__
-      if (folderName == _T("TestUnit")) {
-        lua_getfield(p->GetLuaState(), LUA_GLOBALSINDEX, "groupTest");        
-        int errorCode = lua_pcall(p->GetLuaState(), 0, 0, 0);
-        if (errorCode) {
-          const char* errorString = lua_tostring(p->GetLuaState(), -1);
-          wxLogDebug(_T("ERROR: ") + wxString(errorString, wxConvUTF8));
-        }
-      }
-      #endif // __WXDEBUG__
 
       success = pluginFolder.GetNext(&folderName);
     }
@@ -73,16 +72,16 @@ PluginSP PluginManager::GetPluginByLuaState(lua_State* L) {
 }
 
 
-void PluginManager::DispatchEvent(wxObject* senderOrGlobalHook, int eventId, LuaHostTable arguments, wxObject* sender) {
+void PluginManager::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments) {
   for (int i = 0; i < plugins_.size(); i++) {
-    plugins_.at(i)->DispatchEvent(senderOrGlobalHook, eventId, arguments, sender);
+    plugins_.at(i)->DispatchEvent(sender, eventId, arguments);
   }
 }
 
 
-void PluginManager::DispatchEvent(wxObject* senderOrGlobalHook, const wxString& eventName, LuaHostTable arguments, wxObject* sender) {
+void PluginManager::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments) {
   int eventId = GetEventIdByName(eventName);
-  DispatchEvent(senderOrGlobalHook, eventId, arguments, sender);
+  DispatchEvent(sender, eventId, arguments);
 }
 
 
