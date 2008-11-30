@@ -13,7 +13,6 @@
 #include "FilePaths.h"
 #include "Localization.h"
 #include "Styles.h"
-#include "Log.h"
 #include "gui/BetterMessageDialog.h"
 #include "gui/ImportWizardDialog.h"
 #include "utilities/IconGetter.h"
@@ -33,6 +32,8 @@ int MiniLaunchBar::uniqueInt_ = 0;
  */
 bool MiniLaunchBar::OnInit() {
   //_CrtSetBreakAlloc(96332);
+
+  delete wxLog::SetActiveTarget(new wxLogStderr());
 
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -116,7 +117,7 @@ bool MiniLaunchBar::OnInit() {
     singleInstanceChecker_ = new wxSingleInstanceChecker(name);
 
     if (singleInstanceChecker_->IsAnotherRunning()) {
-      ilog(_T("Another instance of the application is already running."));
+      ILOG(_T("Another instance of the application is already running."));
       wxDELETE(singleInstanceChecker_);
       return false;
     }
@@ -292,30 +293,30 @@ User* MiniLaunchBar::GetUser() {
  * @param silent If this is set to false, no error messages will be displayed to the user
  */
 void MiniLaunchBar::CheckForNewVersion(bool silent) {
-  ilog("Looking for an update...");
+  ILOG(_T("Looking for an update..."));
   UpdaterVersionInfo versionInfo;
   bool success = Updater::CheckVersion(CHECK_VERSION_URL, versionInfo);
   
   if (!success) {
-    elog("Could not get update information");
+    ELOG(_T("Could not get update information"));
     if (!silent) MessageBoxes::ShowError(_("Could not get update information"));
     return;
   }
 
   wxString thisVersion = VersionInfo::GetVersionString();
 
-  ilog(wxString::Format(_T("This version: %s"), thisVersion));
-  ilog(wxString::Format(_T("Current version: %s"), versionInfo.Version));
-  ilog(wxString::Format(_T("Page URL: %s"), versionInfo.PageURL));
-  ilog(wxString::Format(_T("Download URL: %s"), versionInfo.DownloadURL));
-  ilog(wxString::Format(_T("Release notes: %s"), versionInfo.ReleaseNotes));
+  ILOG(wxString::Format(_T("This version: %s"), thisVersion));
+  ILOG(wxString::Format(_T("Current version: %s"), versionInfo.Version));
+  ILOG(wxString::Format(_T("Page URL: %s"), versionInfo.PageURL));
+  ILOG(wxString::Format(_T("Download URL: %s"), versionInfo.DownloadURL));
+  ILOG(wxString::Format(_T("Release notes: %s"), versionInfo.ReleaseNotes));
 
   if (Updater::CompareVersions(thisVersion, versionInfo.Version) >= 0) {
-    ilog("=> No new version");
+    ILOG(_T("=> No new version"));
     if (!silent) MessageBoxes::ShowInformation(_("You have the latest version."));
     return;
   } else {
-    ilog("=> A new version is available");
+    ILOG(_T("=> A new version is available"));
   }
 
   wxString message;
@@ -371,7 +372,7 @@ int MiniLaunchBar::GetOSValidIconSize(int requiredIconSize) {
 bool MiniLaunchBar::ChangeLocale(const wxString& localeCode) {
   const wxLanguageInfo* info = wxLocale::FindLanguageInfo(localeCode);
   if (!info) {
-    elog(_T("Could not find language info for: ") + localeCode);
+    ELOG(_T("Could not find language info for: ") + localeCode);
     return false;
   }
 

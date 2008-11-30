@@ -3,6 +3,7 @@
 #include <wx/wx.h>
 #include <wx/image.h>
 // begin wxGlade: ::dependencies
+#include <wx/listctrl.h>
 #include <wx/notebook.h>
 // end wxGlade
 
@@ -17,7 +18,10 @@ ID_CDLG_MainNotebook,
 ID_CDLG_BUTTON_Save,
 ID_CDLG_BUTTON_Cancel,
 ID_CDLG_BUTTON_CheckForUpdate,
-ID_CDLG_BUTTON_InstallAutorunButton
+ID_CDLG_BUTTON_InstallAutorunButton,
+ID_CDLG_BUTTON_EnablePlugin,
+ID_CDLG_BUTTON_DisablePlugin,
+ID_CDLG_BUTTON_PluginListView
 };
 // end wxGlade
 
@@ -37,6 +41,7 @@ private:
 
 protected:
     // begin wxGlade: ConfigDialogBase::attributes
+    wxStaticBox* availablePluginsBox_staticbox;
     wxStaticBox* importExclusionSizer_staticbox;
     wxStaticBox* hotKeyGroupSizer_staticbox;
     wxStaticText* languageLabel;
@@ -67,6 +72,11 @@ protected:
     wxPanel* notebook_pane_3;
     wxTextCtrl* importExclusionTextBox;
     wxPanel* notebook_pane_4;
+    wxListCtrl* pluginListView;
+    wxButton* enablePluginButton;
+    wxButton* disablePluginButton;
+    wxStaticText* pluginChangeInfoLabel;
+    wxPanel* notebook_pane_5;
     wxNotebook* notebook;
     wxButton* saveButton;
     wxButton* cancelButton;

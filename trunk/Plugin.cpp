@@ -22,12 +22,15 @@
 
 
 Plugin::Plugin() {
-  L = lua_open();
+  enabled_ = true;
+  initiallyEnabled_ = enabled_;
+  
+  L = NULL;
 }
 
 
 Plugin::~Plugin() {
-  lua_close(L);
+  if (L) lua_close(L);
 
   std::map<std::pair<wxObject*, int>, wxArrayString*>::iterator it = eventRegister_.begin();
 
@@ -38,7 +41,69 @@ Plugin::~Plugin() {
 }
 
 
-void Plugin::LoadFile(const wxString& luaFilePath) {
+void Plugin::SetInitiallyEnabled(bool enabled) {
+  initiallyEnabled_ = enabled;
+}
+
+
+bool Plugin::WasInitiallyEnabled() { return initiallyEnabled_; }
+wxString Plugin::GetName() { return name_; }
+wxString Plugin::GetUUID() { return uuid_; }
+bool Plugin::IsEnabled() { return enabled_; }
+void Plugin::Disable() { Enable(false); }
+
+
+void Plugin::Enable(bool enable) {
+  if (enable == enabled_) return;
+
+  enabled_ = enable;
+}
+
+
+void Plugin::LoadPluginXml(const wxString& xmlFilePath) {
+  ILOG(_("Loading: ") + xmlFilePath);
+
+  if (!wxFileName::FileExists(xmlFilePath)) {
+    ILOG(_T("Plugin::LoadPluginXml: 'plugin.xml' is missing: ") + xmlFilePath + _(" Using default settings"));
+    return;
+  }
+
+  TiXmlDocument doc(xmlFilePath.mb_str());
+  doc.LoadFile(TIXML_ENCODING_UTF8);
+
+  TiXmlElement* root = doc.FirstChildElement("Plugin");
+  if (!root) {
+    ELOG(_T("Plugin::LoadPluginXml: Could not load XML. No 'Plugin' element found."));
+    return;
+  }
+
+  TiXmlHandle handle(root);
+
+  name_ = XmlUtil::ReadElementText(handle, "Name");
+  uuid_ = XmlUtil::ReadElementText(handle, "UUID");
+}
+
+
+void Plugin::LoadMetadata(const wxString& folderPath) {
+  wxString xmlFilePath = folderPath + wxFileName::GetPathSeparator() + _T("plugin.xml");
+  LoadPluginXml(xmlFilePath);
+
+  wxFileName folderPathFN(folderPath);
+  if (name_ == wxEmptyString) name_ = folderPathFN.GetName();
+  if (uuid_ == wxEmptyString) uuid_ = name_;
+}
+
+
+void Plugin::Load(const wxString& folderPath) {
+  wxString luaFilePath = folderPath + wxFileName::GetPathSeparator() + _T("main.lua");
+
+  if (!wxFileName::FileExists(luaFilePath)) {
+    ELOG(_T("Plugin::Load: 'main.lua' is missing for plugin: ") + folderPath);
+    return;
+  }
+
+  L = lua_open();
+
   luaopen_base(L);
   luaopen_table(L);
   luaopen_string(L);
@@ -112,7 +177,6 @@ bool luaConvertAndPushAsWrapper(lua_State* L, wxObject* o) {
   }
   return false;
 }
-
 
 
 template <class T>
@@ -207,8 +271,6 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
     if (!done) wxLogDebug(_T("[ERROR] Cannot detect type of sender"));
 
     lua_settable(L, tableIndex);   
-
-
 
     int errorCode = lua_pcall(L, 1, 0, 0);
 

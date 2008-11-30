@@ -29,6 +29,7 @@ public:
 
   static wxString GetApplicationPath();
   static wxString GetSettingsFile();
+  static wxString GetPluginSettingsFile();
   static wxString GetFolderItemsFile();
   static wxString GetWindowFile();
 
@@ -62,6 +63,7 @@ private:
   static wxString IconCacheDirectory_;
   static wxString ToolsDirectory_;
   static wxString PluginsDirectory_;
+  static wxString PluginSettingsFile_;
 
 };
 

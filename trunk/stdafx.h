@@ -101,4 +101,15 @@ extern "C" {
 #include <lua/lunar.h>
 
 
+#ifdef __WXDEBUG__
+  #define ELOG wxLogError
+  #define ILOG wxLogDebug
+  #define WLOG wxLogWarning
+#else // __WXDEBUG__
+  #define ELOG
+  #define ILOG
+  #define WLOG
+#endif // __WXDEBUG__
+
+
 #endif // __MiniLaunchBarPrecompiled_H

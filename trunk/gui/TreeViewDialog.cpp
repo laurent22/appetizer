@@ -10,7 +10,6 @@
 #include "../Constants.h"
 #include "../TypeDefinitions.h"
 #include "../MiniLaunchBar.h"
-#include "../Log.h"
 
 
 BEGIN_EVENT_TABLE(TreeViewDialog, wxDialog)
@@ -71,7 +70,7 @@ void TreeViewDialog::Localize() {
 void TreeViewDialog::SelectAndExpandFolderItem(FolderItem* folderItem) {
   wxTreeItemId item = GetTreeItemFromFolderItem(treeControl->GetRootItem(), folderItem);
   if (!item.IsOk()) {
-    elog(_T("SelectAndExpandFolderItem: item is not ok"));
+    ELOG(_T("SelectAndExpandFolderItem: item is not ok"));
     return;
   }
 
@@ -82,7 +81,7 @@ void TreeViewDialog::SelectAndExpandFolderItem(FolderItem* folderItem) {
 
 wxTreeItemId TreeViewDialog::GetTreeItemFromFolderItem(wxTreeItemId startItemId, FolderItem* folderItem) {
   if (!startItemId.IsOk()) {
-    elog(_T("GetTreeItemFromFolderItem: startItemId is not ok"));
+    ELOG(_T("GetTreeItemFromFolderItem: startItemId is not ok"));
     return wxTreeItemId();
   }
   
@@ -248,7 +247,7 @@ void TreeViewDialog::OnTreeEndDrag(wxTreeEvent& evt) {
 
     FolderItem* sourceFolderItemParent = sourceFolderItem->GetParent();
     if (!sourceFolderItemParent) {
-      elog(_T("Parent can't be NULL!"));
+      ELOG(_T("Parent can't be NULL!"));
       return;
     }
     

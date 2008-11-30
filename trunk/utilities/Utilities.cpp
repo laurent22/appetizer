@@ -14,7 +14,6 @@
 #include "../FilePaths.h"
 #include "../Constants.h"
 #include "../FolderItem.h"
-#include "../Log.h"
 
 
 Utilities::Utilities() {
@@ -43,7 +42,7 @@ bool Utilities::InstallAutorunFile() {
   #endif
   
   bool deleted = wxRemoveFile(filePath);
-  if (!deleted) wlog("Couldn't delete autorun.inf");
+  if (!deleted) WLOG(_T("Couldn't delete autorun.inf"));
 
   wxFile f;
   wxLogNull logNull;
@@ -117,7 +116,7 @@ void Utilities::CreateAndRunVBScript(const wxString& filePath, const wxString& s
     wxFile file;
     bool success = file.Create(filePath);
     if (!success) {
-      elog(_T("Couldn't create ") + filePath);
+      ELOG(_T("Couldn't create ") + filePath);
       return;
     }
     file.Open(filePath, wxFile::write);
@@ -185,10 +184,10 @@ void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
         LPWSTR pBuffer = NULL;
         FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPWSTR)&pBuffer, 0, NULL);
         wxString s(pBuffer, wxConvUTF8); s.Trim(true).Trim(false);
-        wlog(_T("Could not close window: ") + s);
+        WLOG(_T("Could not close window: ") + s);
         LocalFree(pBuffer);
       } else {
-        ilog("Window closed successfully");  
+        ILOG(_T("Window closed successfully"));  
       }
     }
     
@@ -222,9 +221,9 @@ void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
 
     if (m->id <= 0) continue;
 
-    ilog(m->path);
+    ILOG(m->path);
 
-    ilog(_T("Killing ") + m->path);
+    ILOG(_T("Killing ") + m->path);
 
     wxLogNull logNull; // Disable wxWidgets error messages
     wxKillError killError;
@@ -266,7 +265,7 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   int result = wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
 
   #else
-  elog("TO BE IMPLEMENTED");
+  ELOG("TO BE IMPLEMENTED");
   #endif
 
   wxGetApp().GetMainFrame()->Close();

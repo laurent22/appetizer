@@ -8,7 +8,6 @@
 
 #include "FolderItemRenderer.h"
 #include "FolderItem.h"
-#include "Log.h"
 #include "utilities/IconGetter.h"
 #include "imaging/Imaging.h"
 #include "FilePaths.h"
@@ -307,7 +306,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   FolderItem* folderItem = GetFolderItem();
 
   if (!folderItem) {
-    elog("FolderItemRenderer::UpdateControlBitmap: Folder item is null");
+    ELOG(_T("FolderItemRenderer::UpdateControlBitmap: Folder item is null"));
     return;
   }
 

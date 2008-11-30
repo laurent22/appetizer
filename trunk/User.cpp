@@ -9,7 +9,6 @@
 #include "User.h"
 #include "MiniLaunchBar.h"
 #include "Constants.h"
-#include "Log.h"
 #include "FolderItem.h"
 #include "utilities/StringUtil.h"
 #include "FilePaths.h"
@@ -53,7 +52,7 @@ FolderItem* User::GetRootFolderItem() {
 
 
 void User::OnTimer(wxTimerEvent& evt) {
-  ilog("Doing scheduled save");
+  ILOG(_T("Doing scheduled save"));
   Save(true);
 }
 
@@ -75,6 +74,7 @@ void User::Save(bool force) {
   }
 
   settings_->Save();
+  wxGetApp().GetPluginManager()->Save();
 
   TiXmlDocument doc;
   doc.LinkEndChild(new TiXmlDeclaration("1.0", "UTF-8", ""));
@@ -95,7 +95,7 @@ void User::Save(bool force) {
 
   FilePaths::CreateSettingsDirectory();
   bool saved = doc.SaveFile(FilePaths::GetFolderItemsFile().mb_str());
-  if (!saved) elog("Could not save file");
+  if (!saved) ELOG(_T("Could not save file"));
 }
 
 
@@ -109,7 +109,7 @@ void User::Load() {
 
   TiXmlElement* root = doc.FirstChildElement("FolderItems");
   if (!root) {
-    wlog("User::Load: Could not load XML. No FolderItems element found.");
+    WLOG(_T("User::Load: Could not load XML. No FolderItems element found."));
     return;
   }
 
@@ -124,12 +124,14 @@ void User::Load() {
 
       rootFolderItem_->AddChild(folderItem);
     } else if (elementName == _T("ExcludedPath")) {
-      wxString path = wxString(element->GetText(), wxConvUTF8);
+      const char* cString = element->GetText();
+      if (!cString) continue;
+      wxString path = wxString::FromUTF8(cString);
       path.Trim(true).Trim(false);
       if (path == wxEmptyString) continue;
       AddAutoAddExclusion(FolderItem::ConvertToRelativePath(path));
     } else {
-      wlog(wxString::Format(_T("User::Load: Unknown element: %s"), elementName));
+      WLOG(wxString::Format(_T("User::Load: Unknown element: %s"), elementName));
     }
   }
 }

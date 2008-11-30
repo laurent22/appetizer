@@ -11,7 +11,6 @@
 #include "FolderItem.h"
 #include "FolderItemRenderer.h"
 #include "FilePaths.h"
-#include "Log.h"
 #include "Styles.h"
 #include "User.h"
 #include "Enumerations.h"
@@ -292,11 +291,11 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
     // If a folder item is being dragged, and the panel receives a drop
     // event, it means that a folder item has been dragged from the app to the app.
     // In that case, we just change the position of the folder item.
-    ilog(_T("A FolderItem has been dropped: ") + folderItem->GetResolvedPath());
+    ILOG(_T("A FolderItem has been dropped: ") + folderItem->GetResolvedPath());
 
     int index = GetInsertionIndexAtPoint(wxPoint(screenX, screenY));
 
-    ilog(wxString::Format(_T("Drop index: %d"), index));
+    ILOG(wxString::Format(_T("Drop index: %d"), index));
 
     if (index >= 0) {
       wxGetApp().GetUser()->GetRootFolderItem()->MoveChild(folderItem, index);
@@ -541,7 +540,7 @@ void IconPanel::RefreshIcons() {
       FolderItem* rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
       
       if (!rFolderItem) {
-        elog("Folder item shouldn't be null");
+        ELOG(_T("Folder item shouldn't be null"));
         continue;
       }
 

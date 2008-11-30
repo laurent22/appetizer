@@ -10,13 +10,9 @@
 #define __Log_H
 
 
-void log__(wxString type, wxString s);
-void ilog(wxString s);
-void ilog(const char* s);
-void elog(wxString s);
-void elog(const char* s);
-void wlog(wxString s);
-void wlog(const char* s);
+#define ELOG wxLogError
+#define ILOG wxLogDebug
+#define WLOG wxLogWarning
 
 
 #endif // __Log_H

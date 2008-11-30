@@ -14,8 +14,9 @@
 #include "../Constants.h"
 #include "../MessageBoxes.h"
 #include "../utilities/StringUtil.h"
-#include "../Log.h"
 #include "../Styles.h"
+#include "../PluginManager.h"
+
 
 
 BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
@@ -24,11 +25,15 @@ BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
   EVT_BUTTON(wxID_ANY, ConfigDialog::OnButtonClick)  
   EVT_SHOW(ConfigDialog::OnShow)
   EVT_NOTEBOOK_PAGE_CHANGED(ID_CDLG_MainNotebook, ConfigDialog::OnNoteBookPageChanged)
+  EVT_LIST_ITEM_SELECTED(ID_CDLG_BUTTON_PluginListView, ConfigDialog::OnListViewPluginSelectionChanged)
+  EVT_LIST_ITEM_DESELECTED(ID_CDLG_BUTTON_PluginListView, ConfigDialog::OnListViewPluginSelectionChanged)
 END_EVENT_TABLE()
+
 
 
 ConfigDialog::ConfigDialog()
 : ConfigDialogBase(NULL, wxID_ANY, wxEmptyString) {
+
   languageComboBox->SetMinSize(wxSize(0, languageComboBox->GetMinSize().GetHeight()));
   iconSizeComboBox->SetMinSize(wxSize(0, iconSizeComboBox->GetMinSize().GetHeight()));
   
@@ -36,10 +41,13 @@ ConfigDialog::ConfigDialog()
 }
 
 
-void ConfigDialog::OnShow(wxShowEvent& evt) {
-
-  
+ConfigDialog::~ConfigDialog() {
+  for (int i = 0; i < configDialogPluginData_.size(); i++) wxDELETE(configDialogPluginData_.at(i));
+  configDialogPluginData_.clear();
 }
+
+
+void ConfigDialog::OnShow(wxShowEvent& evt) { }
 
 
 void ConfigDialog::Localize() {
@@ -48,8 +56,60 @@ void ConfigDialog::Localize() {
   notebook->SetPageText(CONFIG_DIALOG_INDEX_APPEARANCE, _("Appearance"));
   notebook->SetPageText(CONFIG_DIALOG_INDEX_OPERATIONS, _("Operations"));
   notebook->SetPageText(CONFIG_DIALOG_INDEX_IMPORT, _("Import"));
+  notebook->SetPageText(CONFIG_DIALOG_INDEX_PLUGINS, _("Plugins"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));  
+}
+
+
+void ConfigDialog::OnListViewPluginSelectionChanged(wxListEvent& evt) {
+  UpdatePluginControlsFromSelection();
+}
+
+
+long ConfigDialog::GetPluginListSelectedIndex() {
+  long itemIndex = -1;
+
+  for (;;) {
+    itemIndex = pluginListView->GetNextItem(itemIndex,
+                                 wxLIST_NEXT_ALL,
+                                 wxLIST_STATE_SELECTED);
+    if (itemIndex == -1) break;
+
+    return itemIndex;
+  }
+
+  return -1;
+}
+
+
+void ConfigDialog::UpdatePluginListRow(long index) {
+  long dataIndex = pluginListView->GetItemData(index);
+  ConfigDialogPluginData* d = configDialogPluginData_.at(dataIndex);
+
+  Plugin* plugin = wxGetApp().GetPluginManager()->GetPlugins().at(d->pluginIndex);
+
+  wxString name = plugin->GetName();
+
+  pluginListView->SetItem(index, 0, name);
+  pluginListView->SetItem(index, 1, d->enabled ? _("Enabled") : _("Disabled"));
+}
+
+
+void ConfigDialog::UpdatePluginControlsFromSelection() {
+  enablePluginButton->Enable(false);
+  disablePluginButton->Enable(false);
+
+  long itemIndex = GetPluginListSelectedIndex();
+  if (itemIndex < 0) return;
+
+  long dataIndex = pluginListView->GetItemData(itemIndex);
+  ConfigDialogPluginData* d = configDialogPluginData_.at(dataIndex);
+
+  Plugin* plugin = wxGetApp().GetPluginManager()->GetPlugins().at(d->pluginIndex);
+
+  enablePluginButton->Enable(!d->enabled);
+  disablePluginButton->Enable(!enablePluginButton->IsEnabled());
 }
 
 
@@ -71,6 +131,18 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
 
   switch (pageIndex) {
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,6 +209,18 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       languageLabel->GetParent()->Layout();
 
       } break;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -225,6 +309,13 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       skinLabel->GetParent()->Layout();
       
       } break;
+
+
+
+
+
+
+
 
 
 
@@ -370,6 +461,13 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
 
 
+
+
+
+
+
+
+
     // *********************************************************************************************
     //
     // IMPORT TAB
@@ -386,6 +484,81 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       importExclusionTextBox->SetValue(exclusionString);
 
       } break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // *********************************************************************************************
+    //
+    // PLUGINS TAB
+    //
+    // *********************************************************************************************
+
+    case CONFIG_DIALOG_INDEX_PLUGINS: {
+
+      availablePluginsBox_staticbox->SetLabel(_("Available plugins"));
+      enablePluginButton->SetLabel(_("Enable"));
+      disablePluginButton->SetLabel(_("Disable"));
+      pluginChangeInfoLabel->SetLabel(wxString::Format(_("Changes made to plugins will only be active the next time %s is started."), APPLICATION_NAME));
+
+      //---------------------------------------------------------------------------
+      // Populate list view dialog
+      //---------------------------------------------------------------------------
+
+      for (int i = 0; i < configDialogPluginData_.size(); i++) wxDELETE(configDialogPluginData_.at(i));
+      configDialogPluginData_.clear();
+      pluginListView->ClearAll();
+
+      PluginVector plugins = wxGetApp().GetPluginManager()->GetPlugins();
+
+      pluginListView->InsertColumn(0, _("Plugin"));
+      pluginListView->InsertColumn(1, _("Status"));
+      pluginListView->SetColumnWidth(0, pluginListView->GetRect().GetWidth() * 0.65);
+      pluginListView->SetColumnWidth(1, pluginListView->GetRect().GetWidth() * 0.25);      
+
+      for (int i = 0; i < plugins.size(); i++) {
+        Plugin* plugin = plugins.at(i);
+
+        ConfigDialogPluginData* d = new ConfigDialogPluginData();
+        d->pluginIndex = i;
+        d->enabled = plugin->IsEnabled();
+
+        configDialogPluginData_.push_back(d);
+
+        long index = pluginListView->InsertItem(0, _T(""));
+        pluginListView->SetItem(index, 1, _T(""));
+        pluginListView->SetItemData(index, configDialogPluginData_.size() - 1);
+
+        UpdatePluginListRow(index);
+      }
+
+      UpdatePluginControlsFromSelection();
+
+      enablePluginButton->GetParent()->Layout();
+
+      } break;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -414,6 +587,22 @@ void ConfigDialog::OnButtonClick(wxCommandEvent& evt) {
 
       } break;
 
+    case ID_CDLG_BUTTON_EnablePlugin:
+    case ID_CDLG_BUTTON_DisablePlugin: {
+
+      long itemIndex = GetPluginListSelectedIndex();
+      if (itemIndex < 0) return;
+
+      long dataIndex = pluginListView->GetItemData(itemIndex);
+      ConfigDialogPluginData* d = configDialogPluginData_.at(dataIndex);
+
+      d->enabled = evt.GetId() == ID_CDLG_BUTTON_EnablePlugin;
+
+      UpdatePluginListRow(itemIndex);
+      UpdatePluginControlsFromSelection();
+      
+      } break;
+    
     default:
 
       evt.Skip();
@@ -627,6 +816,55 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
     user->SetAutoAddExclusions(finalStrings);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // *********************************************************************************************
+  //
+  // PLUGINS TAB
+  //
+  // *********************************************************************************************
+
+  if (updatedPages_[CONFIG_DIALOG_INDEX_PLUGINS]) {
+
+    PluginVector plugins = wxGetApp().GetPluginManager()->GetPlugins();
+    
+    for (int i = 0; i < configDialogPluginData_.size(); i++) {
+      ConfigDialogPluginData* d = configDialogPluginData_.at(i);
+
+      Plugin* plugin = plugins.at(d->pluginIndex);  
+      plugin->Enable(d->enabled);
+
+      wxDELETE(d);
+    }
+
+    configDialogPluginData_.clear();
+
+  }
+
+
+
+
+
+
+
+
 
 
 

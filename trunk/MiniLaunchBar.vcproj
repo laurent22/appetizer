@@ -459,27 +459,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Log.cpp"
-				>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-						PrecompiledHeaderThrough="stdafx.h"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath=".\main.cpp"
 				>
 				<FileConfiguration
@@ -1830,10 +1809,6 @@
 			</File>
 			<File
 				RelativePath=".\Localization.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Log.h"
 				>
 			</File>
 			<File

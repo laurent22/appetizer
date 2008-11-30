@@ -13,11 +13,13 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
 {
     // begin wxGlade: ConfigDialogBase::ConfigDialogBase
     notebook = new wxNotebook(this, ID_CDLG_MainNotebook, wxDefaultPosition, wxDefaultSize, 0);
+    notebook_pane_5 = new wxPanel(notebook, wxID_ANY);
     notebook_pane_4 = new wxPanel(notebook, wxID_ANY);
     notebook_pane_3 = new wxPanel(notebook, wxID_ANY);
     notebook_pane_2 = new wxPanel(notebook, wxID_ANY);
     hotKeyGroupSizer_staticbox = new wxStaticBox(notebook_pane_3, -1, wxT("Hot key"));
     importExclusionSizer_staticbox = new wxStaticBox(notebook_pane_4, -1, wxT("#Exclude these files and folders from import operations:#"));
+    availablePluginsBox_staticbox = new wxStaticBox(notebook_pane_5, -1, wxT("#Available plugins#"));
     notebook_1_pane_1 = new wxPanel(notebook, wxID_ANY);
     languageLabel = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxT("Language:"));
     const wxString *languageComboBox_choices = NULL;
@@ -48,6 +50,10 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     const wxString *hotKeyComboBox_choices = NULL;
     hotKeyComboBox = new wxComboBox(notebook_pane_3, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, hotKeyComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
     importExclusionTextBox = new wxTextCtrl(notebook_pane_4, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP);
+    pluginListView = new wxListCtrl(notebook_pane_5, ID_CDLG_BUTTON_PluginListView, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL|wxSTATIC_BORDER);
+    enablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_EnablePlugin, wxT("#Enable#"));
+    disablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_DisablePlugin, wxT("#Disable#"));
+    pluginChangeInfoLabel = new wxStaticText(notebook_pane_5, wxID_ANY, wxT("#Changes made to plugins will only be active the next time %s is started#"));
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
     cancelButton = new wxButton(this, wxID_CANCEL, wxT("Cancel"));
 
@@ -61,7 +67,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(409, 283));
+    SetSize(wxSize(459, 314));
     // end wxGlade
 }
 
@@ -71,6 +77,10 @@ void ConfigDialogBase::do_layout()
     // begin wxGlade: ConfigDialogBase::do_layout
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* sizer_7 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* sizer_8 = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* sizer_10 = new wxBoxSizer(wxHORIZONTAL);
+    wxStaticBoxSizer* availablePluginsBox = new wxStaticBoxSizer(availablePluginsBox_staticbox, wxHORIZONTAL);
     wxBoxSizer* sizer_6 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticBoxSizer* importExclusionSizer = new wxStaticBoxSizer(importExclusionSizer_staticbox, wxVERTICAL);
     wxBoxSizer* sizer_5 = new wxBoxSizer(wxHORIZONTAL);
@@ -118,10 +128,19 @@ void ConfigDialogBase::do_layout()
     importExclusionSizer->Add(importExclusionTextBox, 1, wxALL|wxEXPAND, 8);
     sizer_6->Add(importExclusionSizer, 1, wxALL|wxEXPAND, 8);
     notebook_pane_4->SetSizer(sizer_6);
+    availablePluginsBox->Add(pluginListView, 1, wxALL|wxEXPAND, 8);
+    sizer_8->Add(availablePluginsBox, 1, wxEXPAND, 0);
+    sizer_10->Add(enablePluginButton, 0, 0, 0);
+    sizer_10->Add(disablePluginButton, 0, wxLEFT, 8);
+    sizer_8->Add(sizer_10, 0, wxTOP|wxEXPAND, 8);
+    sizer_8->Add(pluginChangeInfoLabel, 0, wxTOP, 8);
+    sizer_7->Add(sizer_8, 1, wxALL|wxEXPAND, 8);
+    notebook_pane_5->SetSizer(sizer_7);
     notebook->AddPage(notebook_1_pane_1, wxT("General"));
     notebook->AddPage(notebook_pane_2, wxT("Appearance"));
     notebook->AddPage(notebook_pane_3, wxT("Operations"));
     notebook->AddPage(notebook_pane_4, wxT("#Import#"));
+    notebook->AddPage(notebook_pane_5, wxT("#Plugins#"));
     sizer_1->Add(notebook, 1, wxLEFT|wxRIGHT|wxTOP|wxEXPAND, 4);
     sizer_2->Add(saveButton, 0, wxRIGHT|wxALIGN_BOTTOM, 8);
     sizer_2->Add(cancelButton, 0, wxALIGN_BOTTOM, 0);

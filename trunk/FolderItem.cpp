@@ -15,7 +15,6 @@
 #include "Enumerations.h"
 #include "FilePaths.h"
 #include "Styles.h"
-#include "Log.h"
 #include "MiniLaunchBar.h"
 
 
@@ -450,7 +449,7 @@ void FolderItem::AppendAsMenuItem(wxMenu* parentMenu, int iconSize, const wxStri
 
 wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
   if (!IsGroup()) {
-    elog(_T("A non-group folder item cannot be converted to a menu. Call ToMenuItem() instead"));
+    ELOG(_T("A non-group folder item cannot be converted to a menu. Call ToMenuItem() instead"));
     return NULL;
   }
 
@@ -489,7 +488,7 @@ ExtendedMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, const
 
   wxIcon* icon = GetIcon(iconSize);
   if (!icon->IsOk()) {
-    elog(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
+    ELOG(wxString::Format(_T("Icon is not ok for: %s"), GetName()));
   } else {
     wxBitmap iconBitmap(*icon);
     menuItem->SetBitmap(iconBitmap);
@@ -657,7 +656,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
     wxString command = _T("explorer ") + filename.GetFullPath();
     wxExecute(command);
     #else
-    elog("TO BE IMPLEMENTED");
+    ELOG("TO BE IMPLEMENTED");
     #endif
   } else {
     MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("DoesNotExist")));
@@ -730,7 +729,7 @@ void FolderItem::Launch() {
       if (regKey.Exists()) {
         regKey.QueryValue(_T("Personal"), filePath);
       } else {
-        elog(_T("Couldn't get My Documents path"));
+        ELOG(_T("Couldn't get My Documents path"));
       }
 
     } else if (filePath_ == _T("$(MyPictures)")) {
@@ -741,7 +740,7 @@ void FolderItem::Launch() {
       if (regKey.Exists()) {
         regKey.QueryValue(_T("My Pictures"), filePath);
       } else {
-        elog(_T("Couldn't get My Pictures path"));
+        ELOG(_T("Couldn't get My Pictures path"));
       }
 
 
@@ -752,7 +751,7 @@ void FolderItem::Launch() {
       if (regKey.Exists()) {
         regKey.QueryValue(_T("My Music"), filePath);
       } else {
-        elog(_T("Couldn't get My Music path"));
+        ELOG(_T("Couldn't get My Music path"));
       }
 
 
@@ -764,7 +763,7 @@ void FolderItem::Launch() {
       if (regKey.Exists()) {
         regKey.QueryValue(_T("My Video"), filePath);
       } else {
-        elog(_T("Couldn't get My Video path"));
+        ELOG(_T("Couldn't get My Video path"));
       }
 
 

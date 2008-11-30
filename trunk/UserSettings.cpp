@@ -8,7 +8,6 @@
 
 #include "UserSettings.h"
 #include "Constants.h"
-#include "Log.h"
 #include "FilePaths.h"
 #include "MiniLaunchBar.h"
 
@@ -82,13 +81,13 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
     if (elementName != _T("Setting")) {
-      wlog(wxString::Format(_T("UserSettings::FromXml: Unknown element: %s"), elementName));
+      WLOG(wxString::Format(_T("UserSettings::FromXml: Unknown element: %s"), elementName));
       continue;
     }
 
     const char* cSettingName = element->Attribute("name");
     if (!cSettingName) {
-      wlog("UserSettings::FromXml: setting doesn't have a name");
+      WLOG(_T("UserSettings::FromXml: setting doesn't have a name"));
       continue;
     }
 
@@ -189,7 +188,7 @@ void UserSettings::Load() {
 
   TiXmlElement* root = doc.FirstChildElement("Settings");
   if (!root) {
-    wlog("UserSettings::Load: Could not load XML. No Settings element found.");
+    WLOG(_T("UserSettings::Load: Could not load XML. No Settings element found."));
     return;
   }
 

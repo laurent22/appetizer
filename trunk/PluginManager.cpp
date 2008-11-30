@@ -38,6 +38,13 @@ void PluginManager::Initialize() {
   luaApplication = new azApplication();
   luaOptionPanel = new azOptionPanel();
 
+
+  TiXmlDocument doc(FilePaths::GetPluginSettingsFile().mb_str());
+  doc.LoadFile(TIXML_ENCODING_UTF8);
+  TiXmlElement* pluginSettingsXml = doc.FirstChildElement("Plugins");
+  if (!pluginSettingsXml) WLOG(_T("PluginManager::Initialize: Could not load XML. No Plugins element found."));
+
+
   wxString pluginPath = FilePaths::GetPluginsDirectory();
   wxDir pluginFolder;
 
@@ -46,16 +53,80 @@ void PluginManager::Initialize() {
     bool success = pluginFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
     
     while (success) {
-      wxLogDebug(_T("Loading plugin: ") + folderName);
-
       Plugin* p  = new Plugin();
       plugins_.push_back(p);
 
-      p->LoadFile(pluginPath + wxFileName::GetPathSeparator() + folderName + wxFileName::GetPathSeparator() + _T("main.lua"));
+      wxString folderPath = pluginPath + wxFileName::GetPathSeparator() + folderName;
+
+      p->LoadMetadata(folderPath);
+
+
+
+
+      bool pluginIsEnabled = true;
+
+      if (pluginSettingsXml) {        
+        for (TiXmlElement* element = pluginSettingsXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
+          wxString elementName = wxString::FromUTF8(element->Value());
+          TiXmlHandle handle(element);
+
+          if (elementName == _T("Plugin")) {
+            wxString uuid = XmlUtil::ReadElementText(handle, "UUID");
+            if (uuid == p->GetUUID()) {
+              pluginIsEnabled = XmlUtil::ReadElementTextAsBool(handle, "Enabled", true);
+              break;          
+            }
+          } else {
+            WLOG(wxString::Format(_T("PluginManager::Initialize: Unknown element: %s"), elementName));
+          }
+        } // for
+      } // if
+
+
+
+
+      p->Enable(pluginIsEnabled);
+      p->SetInitiallyEnabled(pluginIsEnabled);
+
+      if (pluginIsEnabled) {
+        ILOG(_T("Loading plugin: ") + folderName);
+        p->Load(folderPath);
+      } else {
+        ILOG(_T("Skipping disabled plugin: ") + folderName);
+      }
 
       success = pluginFolder.GetNext(&folderName);
     }
   }
+}
+
+
+void PluginManager::Save() {
+  TiXmlDocument doc;
+  doc.LinkEndChild(new TiXmlDeclaration("1.0", "UTF-8", ""));
+
+  TiXmlElement* xmlRoot = new TiXmlElement("Plugins");
+  xmlRoot->SetAttribute("version", "1.0");
+  doc.LinkEndChild(xmlRoot);
+
+  for (int i = 0; i < plugins_.size(); i++) {
+    Plugin* plugin = plugins_.at(i);
+
+    TiXmlElement* xmlPlugin = new TiXmlElement("Plugin");
+    xmlRoot->LinkEndChild(xmlPlugin);
+
+    XmlUtil::AppendTextElement(xmlPlugin, "UUID", plugin->GetUUID());
+    XmlUtil::AppendTextElement(xmlPlugin, "Enabled", plugin->IsEnabled());
+  }
+
+  FilePaths::CreateSettingsDirectory();
+  bool saved = doc.SaveFile(FilePaths::GetPluginSettingsFile().mb_str());
+  if (!saved) ELOG(_T("Could not save plugin.xml file"));
+}
+
+
+PluginVector PluginManager::GetPlugins() {
+  return plugins_;
 }
 
 

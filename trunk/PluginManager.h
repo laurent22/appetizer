@@ -31,13 +31,15 @@ public:
   void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments);
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
   int GetEventIdByName(const wxString& eventName);
+  PluginVector GetPlugins();
+  void Save();
 
   azApplication* luaApplication;
   azOptionPanel* luaOptionPanel;
 
 private:
 
-  std::vector<Plugin*> plugins_;
+  PluginVector plugins_;
   wxSortedArrayString  eventNames_;
 
 };

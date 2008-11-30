@@ -7,7 +7,6 @@
 #include "stdafx.h"
 
 #include "Styles.h"
-#include "Log.h"
 #include "Constants.h"
 #include "MessageBoxes.h"
 #include "utilities/XmlUtil.h"
@@ -37,7 +36,7 @@ void Styles::GetSkinMetadata(const wxString& filePath, SkinMetadata& skinMetadat
 
   TiXmlElement* root = doc.FirstChildElement("Skin");
   if (!root) {
-    wlog("Styles::LoadSkinFile: Could not load XML. No Skin element found.");
+    WLOG(_T("Styles::LoadSkinFile: Could not load XML. No Skin element found."));
     return;
   }
 
@@ -58,7 +57,7 @@ void Styles::LoadSkinFile(const wxString& filePath) {
 
   TiXmlElement* root = doc.FirstChildElement("Skin");
   if (!root) {
-    wlog("Styles::LoadSkinFile: Could not load XML. No Skin element found.");
+    WLOG(_T("Styles::LoadSkinFile: Could not load XML. No Skin element found."));
     return;
   }
 

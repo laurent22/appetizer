@@ -7,7 +7,6 @@
 #include "stdafx.h"
 
 #include "MainFrame.h"
-#include "Log.h"
 #include "Constants.h"
 #include "MiniLaunchBar.h"
 #include "MessageBoxes.h"
@@ -134,7 +133,7 @@ MainFrame::MainFrame()
 
   TiXmlElement* root = doc.FirstChildElement("Window");
   if (!root) {
-    wlog("MainFrame: Could not load XML. No Window element found.");
+    WLOG(_T("MainFrame: Could not load XML. No Window element found."));
 
     SetSize(0, 0, MAIN_FRAME_DEFAULT_WIDTH, MAIN_FRAME_DEFAULT_HEIGHT);
     CentreOnScreen();
@@ -197,7 +196,7 @@ bool MainFrame::RegisterHideShowHotKey() {
   hotKeyRegistered_ = success;
   
   if (hotKeyRegistered_) {
-    ilog("Hot key registered successfully");
+    ILOG(_T("Hot key registered successfully"));
   } else {
     MessageBoxes::ShowError(_("There was an error registering the hot key. Another application may already have registered it."));
   }
@@ -210,7 +209,7 @@ void MainFrame::UnregisterHideShowHotKey() {
   if (!hotKeyRegistered_) return;
 
   UnregisterHotKey(HOT_KEY_ID);
-  ilog("Hot key unregistered");
+  ILOG(_T("Hot key unregistered"));
   hotKeyRegistered_ = false;
 }
 
@@ -246,13 +245,13 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     #ifdef __WINDOWS__
     firstIdleEventSent_ = true;
 
-    ilog("Update check...");
+    ILOG(_T("Update check..."));
 
     wxDateTime now = wxDateTime::Now();
     // The line below doesn't work on Ubuntu
     wxDateTime nextUpdateTime = wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime;
-    ilog(wxString::Format(_T("Now is %s"), now.Format()));
-    ilog(wxString::Format(_T("Next update check on %s"), nextUpdateTime.Format()));
+    //ILOG(_T("Now is", now.Format());
+    //ILOG("Next update check on", nextUpdateTime.Format());
 
     if (nextUpdateTime.IsLaterThan(now)) return;
 

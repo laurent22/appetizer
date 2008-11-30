@@ -9,7 +9,6 @@
 #include "OptionPanel.h"
 #include "Constants.h"
 #include "FilePaths.h"
-#include "Log.h"
 #include "Styles.h"
 #include "MiniLaunchBar.h"
 #include "MessageBoxes.h"
