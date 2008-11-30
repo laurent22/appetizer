@@ -184,9 +184,9 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   menu->Append(menuItem);
 
   LuaHostTable table;
-  table[_T("icon")] = new azIcon(this);
+  table[_T("icon")] = new LuaHostTableItem(new azIcon(this), LHT_wxObject);
   
-  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("iconMenuOpening"), table); //, this);
+  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("iconMenuOpening"), table);  
 
   PopupMenu(menu, wxDefaultPosition);
 

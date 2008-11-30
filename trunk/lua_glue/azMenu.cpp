@@ -10,7 +10,7 @@
 
 #include "../MiniLaunchBar.h"
 #include "../ExtendedMenuItem.h"
-#include "../utilities/LuaUtil.h"
+#include "LuaUtil.h"
 
 
 const char azMenu::className[] = "azMenu";

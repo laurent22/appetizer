@@ -12,7 +12,7 @@
 
 #include "TypeDefinitions.h"
 #include "ExtendedMenuItem.h"
-#include "utilities/LuaUtil.h"
+#include "lua_glue/LuaUtil.h"
 
 
 class Plugin {

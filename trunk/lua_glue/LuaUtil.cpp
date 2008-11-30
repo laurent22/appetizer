@@ -8,6 +8,30 @@
 
 #include "LuaUtil.h"
 
+#include "azWrapper.h"
+
+
+
+
+LuaHostTableItem::LuaHostTableItem(wxObject* value, LuaHostTableItemType valueType) {
+  this->value = value;
+  this->valueType = valueType;
+}
+
+
+void LuaUtil::DestroyLuaHostTable(LuaHostTable* t) {
+  for (LuaHostTable::iterator i = t->begin(); i != t->end(); ++i) {
+    LuaHostTableItem* item = i->second;
+
+    // All the azWrapper objects are managed by Lunar, so don't delete them
+    azWrapper* test = dynamic_cast<azWrapper*>(item->value);
+    if (!test) wxDELETE(item->value);
+    
+    wxDELETE(item);
+  }
+}
+
+
 
 wxString LuaUtil::GetErrorString(int luaError) {
   switch (luaError) {

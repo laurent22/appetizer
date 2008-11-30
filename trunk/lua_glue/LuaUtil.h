@@ -10,7 +10,26 @@
 #define __LuaUtil_H
 
 
-typedef std::map<wxString, boost::any> LuaHostTable;
+enum LuaHostTableItemType {
+  LHT_boolean,
+  LHT_integer,
+  LHT_string,
+  LHT_wxObject
+};
+
+
+class LuaHostTableItem {
+  
+public:
+
+  LuaHostTableItem(wxObject* value, LuaHostTableItemType valueType);  
+  wxObject* value;
+  LuaHostTableItemType valueType;
+
+};
+
+
+typedef std::map<wxString, LuaHostTableItem*> LuaHostTable;
 
 
 class LuaUtil {
@@ -23,6 +42,7 @@ public:
   static wxString ToString(lua_State *L, int n);
   static wxString GetStringFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional = true);
   static bool ToBoolean(lua_State* L, int n);
+  static void DestroyLuaHostTable(LuaHostTable* t);
 
 };
 

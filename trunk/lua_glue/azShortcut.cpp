@@ -10,7 +10,7 @@
 #include "azShortcut.h"
 
 #include "../MiniLaunchBar.h"
-#include "../utilities/LuaUtil.h"
+#include "LuaUtil.h"
 
 
 const char azShortcut::className[] = "azShortcut";

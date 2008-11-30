@@ -89,7 +89,10 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
 
     if (folderItem_->IsGroup()) {
       wxIcon* icon = FolderItem::GetDefaultGroupIcon(LARGE_ICON_SIZE);
-      if (icon) iconStaticBitmap->SetBitmap(*icon);
+      if (icon) {
+        iconStaticBitmap->SetBitmap(*icon);
+        wxDELETE(icon);
+      }
     } else {
 
       wxIcon* icon = FolderItem::GetDefaultSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);

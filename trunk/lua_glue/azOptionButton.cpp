@@ -11,7 +11,7 @@
 
 #include "../ExtendedMenuItem.h"
 #include "../MiniLaunchBar.h"
-#include "../utilities/LuaUtil.h"
+#include "LuaUtil.h"
 
 
 const char azOptionButton::className[] = "azOptionButton";

@@ -103,22 +103,23 @@ void Plugin::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostT
 }
 
 
-template <class T>
-bool luaPushAsWrapper(lua_State* L, boost::any o) {
-  T* asType = boost::any_cast<T*>(o);
+template <class hostObjectT, class lunarObjectT>
+bool luaConvertAndPushAsWrapper(lua_State* L, wxObject* o) {
+  hostObjectT* asType = dynamic_cast<hostObjectT*>(o);
   if (asType) {
-    Lunar<T>::push(L, asType, true);
+    Lunar<lunarObjectT>::push(L, new lunarObjectT(asType), true);
     return true;
   }
   return false;
 }
 
 
-template <class hostObjectT, class lunarObjectT>
-bool luaConvertAndPushAsWrapper(lua_State* L, wxObject* o) {
-  hostObjectT* asType = dynamic_cast<hostObjectT*>(o);
+
+template <class T>
+bool luaPushAsWrapper(lua_State* L, wxObject* o) {
+  T* asType = dynamic_cast<T*>(o);
   if (asType) {
-    Lunar<lunarObjectT>::push(L, new lunarObjectT(asType), true);
+    Lunar<T>::push(L, asType, true);
     return true;
   }
   return false;
@@ -141,30 +142,44 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
     LuaHostTable::iterator it = arguments.begin();
     for(; it != arguments.end(); ++it) {
       wxString k = it->first;
-      boost::any v = it->second;
+      LuaHostTableItem* hostTableItem = it->second;
+
+      wxObject* value = hostTableItem->value;
+      LuaHostTableItemType valueType = hostTableItem->valueType;
 
       lua_pushstring(L, k.mb_str());
 
-      bool done = false;
+      bool done = true;
 
-      done = luaPushAsWrapper<azIcon>(L, v);
-      if (!done) done = luaPushAsWrapper<azMenu>(L, v);
-      if (!done) done = luaPushAsWrapper<azOptionButton>(L, v);
-      if (!done) done = luaPushAsWrapper<azOptionPanel>(L, v);
-      if (!done) done = luaPushAsWrapper<azShortcut>(L, v);
-      if (!done) done = luaPushAsWrapper<azApplication>(L, v);
+      if (valueType == LHT_boolean) {
 
-      if (!done && boost::any_cast<wxString>(&v)) {
-        lua_pushstring(L, boost::any_cast<wxString>(&v)->mb_str());
-        done = true;
+        lua_pushboolean(L, *((wxString*)value) != _T("0"));
+
+      } else if (valueType == LHT_integer) {
+
+        wxString* s = (wxString*)value;
+        long l; if (!s->ToLong(&l)) l = 0;
+        lua_pushinteger(L, (int)l);
+
+      } else if (valueType == LHT_string) {
+
+        wxString* s = (wxString*)value;
+        lua_pushstring(L, s->ToUTF8());
+
+      } else if (valueType == LHT_wxObject) {
+
+        done = luaPushAsWrapper<azIcon>(L, value);
+        if (!done) done = luaPushAsWrapper<azMenu>(L, value);
+        if (!done) done = luaPushAsWrapper<azOptionButton>(L, value);
+        if (!done) done = luaPushAsWrapper<azOptionPanel>(L, value);
+        if (!done) done = luaPushAsWrapper<azShortcut>(L, value);
+        if (!done) done = luaPushAsWrapper<azApplication>(L, value);
+
+      } else {
+
+        done = false;
+
       }
-
-      try {
-        if (!done && boost::any_cast<int>(v)) {
-          lua_pushinteger(L, boost::any_cast<int>(v));
-          done = true;
-        }
-      } catch(boost::bad_any_cast &e) {}
 
       if (!done) wxLogDebug(_T("[ERROR] Cannot detect type of ") + k);
 
@@ -178,7 +193,6 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
     done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, sender);
     if (!done) done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, sender);
     if (!done) done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, sender);
-    //if (!done) done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, sender);
 
     if (!done && dynamic_cast<MiniLaunchBar*>(sender)) {
       Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication, true);

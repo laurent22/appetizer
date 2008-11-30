@@ -11,7 +11,7 @@
 #include "FolderItem.h"
 #include "OptionButton.h"
 #include "FolderItemRenderer.h"
-#include "utilities/LuaUtil.h"
+#include "lua_glue/LuaUtil.h"
 #include "lua_glue/azOptionButton.h"
 #include "lua_glue/azIcon.h"
 #include "lua_glue/azMenu.h"
@@ -77,6 +77,8 @@ void PluginManager::DispatchEvent(wxObject* sender, int eventId, LuaHostTable ar
   for (int i = 0; i < plugins_.size(); i++) {
     plugins_.at(i)->DispatchEvent(sender, eventId, arguments);
   }
+
+  LuaUtil::DestroyLuaHostTable(&arguments);
 }
 
 

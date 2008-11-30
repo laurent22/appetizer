@@ -185,7 +185,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;&quot;$(BOOST_ROOT)&quot;;./third_party"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;./third_party"
 				PreprocessorDefinitions="wxUSE_GUI=1;__WXDEBUG__;WINNT"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
@@ -259,7 +259,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="1"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;&quot;$(BOOST_ROOT)&quot;;./third_party"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;./third_party"
 				PreprocessorDefinitions="wxUSE_GUI=1;WINNT"
 				IgnoreStandardIncludePath="false"
 				RuntimeLibrary="0"
@@ -845,26 +845,6 @@
 				</File>
 				<File
 					RelativePath=".\utilities\IconGetter.cpp"
-					>
-					<FileConfiguration
-						Name="Unicode Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Unicode Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\utilities\LuaUtil.cpp"
 					>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
@@ -1789,6 +1769,26 @@
 						/>
 					</FileConfiguration>
 				</File>
+				<File
+					RelativePath=".\lua_glue\LuaUtil.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -1925,10 +1925,6 @@
 				</File>
 				<File
 					RelativePath=".\utilities\IconGetter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\utilities\LuaUtil.h"
 					>
 				</File>
 				<File
@@ -2125,6 +2121,10 @@
 				</File>
 				<File
 					RelativePath=".\lua_glue\azWrapper.h"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_glue\LuaUtil.h"
 					>
 				</File>
 			</Filter>
