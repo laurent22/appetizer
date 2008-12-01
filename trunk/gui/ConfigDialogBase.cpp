@@ -55,6 +55,7 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     enablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_EnablePlugin, wxT("#Enable#"));
     disablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_DisablePlugin, wxT("#Disable#"));
     pluginChangeInfoLabel = new wxStaticText(notebook_pane_5, wxID_ANY, wxT("#Changes made to plugins will only be active the next time %s is started#"));
+    helpButton = new wxButton(this, ID_CDLG_BUTTON_Help, wxT("#Help#"));
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
     cancelButton = new wxButton(this, wxID_CANCEL, wxT("Cancel"));
 
@@ -78,6 +79,7 @@ void ConfigDialogBase::do_layout()
     // begin wxGlade: ConfigDialogBase::do_layout
     wxBoxSizer* sizer_1 = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* sizer_9 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_7 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_8 = new wxBoxSizer(wxVERTICAL);
     wxStaticBoxSizer* availablePluginsBox = new wxStaticBoxSizer(availablePluginsBox_staticbox, wxVERTICAL);
@@ -144,9 +146,11 @@ void ConfigDialogBase::do_layout()
     notebook->AddPage(notebook_pane_4, wxT("#Import#"));
     notebook->AddPage(notebook_pane_5, wxT("#Plugins#"));
     sizer_1->Add(notebook, 1, wxLEFT|wxRIGHT|wxTOP|wxEXPAND, 4);
+    sizer_9->Add(helpButton, 0, 0, 0);
+    sizer_2->Add(sizer_9, 1, wxEXPAND, 0);
     sizer_2->Add(saveButton, 0, wxRIGHT|wxALIGN_BOTTOM, 8);
     sizer_2->Add(cancelButton, 0, wxALIGN_BOTTOM, 0);
-    sizer_1->Add(sizer_2, 0, wxALL|wxALIGN_RIGHT, 10);
+    sizer_1->Add(sizer_2, 0, wxALL|wxEXPAND|wxALIGN_RIGHT, 10);
     SetSizer(sizer_1);
     Layout();
     // end wxGlade

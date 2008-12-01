@@ -33,8 +33,6 @@ int MiniLaunchBar::uniqueInt_ = 0;
 bool MiniLaunchBar::OnInit() {
   //_CrtSetBreakAlloc(96332);
 
-  delete wxLog::SetActiveTarget(new wxLogStderr());
-
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
   BOOL gotInfo = GetVersionEx(&osInfo_);
@@ -61,14 +59,18 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
 
   wxCmdLineEntryDesc cmdLineDesc[] = {
-    { wxCMD_LINE_SWITCH, _T("u"), _T("useuserdatadir"), _("Use user data directory to save settings.") },
-    { wxCMD_LINE_OPTION, _T("d"), _T("datapath"),  _("Set user data path (-u will be ignored)") },
+    { wxCMD_LINE_SWITCH, _T("u"), _T("useuserdatadir"), _("Uses user data directory to save settings.") },
+    { wxCMD_LINE_OPTION, _T("d"), _T("datapath"),  _("Sets user data path (-u will be ignored)") },
+    { wxCMD_LINE_SWITCH, _T("l"), _T("logwindow"), _("Displays the log window (useful for debugging)") },
+    { wxCMD_LINE_SWITCH, _T("?"), _T("help"), _("Displays this help message") },
     { wxCMD_LINE_NONE }
   };
 
   commandLine_.SetDesc(cmdLineDesc);
   commandLine_.SetCmdLine(argc, argv);
   commandLine_.Parse(); 
+
+  if (commandLine_.Found(_T("?"))) commandLine_.Usage();
 
   // Required to enabled PNG support
   wxInitAllImageHandlers();

@@ -101,14 +101,14 @@ extern "C" {
 #include <lua/lunar.h>
 
 
-#ifdef __WXDEBUG__
-  #define ELOG wxLogError
+#ifdef __WXDEBUG__  
   #define ILOG wxLogDebug
   #define WLOG wxLogWarning
+  #define ELOG wxLogError
 #else // __WXDEBUG__
-  #define ELOG
-  #define ILOG
-  #define WLOG
+  #define ILOG wxLogMessage
+  #define WLOG wxLogWarning
+  #define ELOG wxLogError
 #endif // __WXDEBUG__
 
 

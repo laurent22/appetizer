@@ -66,6 +66,24 @@ void Utilities::Localize() {
 }
 
 
+bool Utilities::RemoveFolderItemWithConfirmation(FolderItem* folderItem) {
+  if (!folderItem) return false;
+
+  if (wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage) {
+    int result = MessageBoxes::ShowConfirmation(_("Do you wish to remove this icon?"), wxYES | wxNO, _("Don't show this message again"), false);
+    if (!result) return false;
+
+    wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage = !MessageBoxes::GetCheckBoxState();
+    wxGetApp().GetUser()->ScheduleSave();
+    if (result != wxID_YES) return false;
+  }
+
+  folderItem->Dispose();
+
+  return true;
+}
+
+
 wxString Utilities::CreateUUID() {
   // http://nogeekhere.blogspot.com/2008/07/how-to-generate-uuid-guid-in-c.html
 

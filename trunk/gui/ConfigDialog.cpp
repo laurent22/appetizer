@@ -27,6 +27,7 @@ BEGIN_EVENT_TABLE(ConfigDialog, wxDialog)
   EVT_NOTEBOOK_PAGE_CHANGED(ID_CDLG_MainNotebook, ConfigDialog::OnNoteBookPageChanged)
   EVT_LIST_ITEM_SELECTED(ID_CDLG_BUTTON_PluginListView, ConfigDialog::OnListViewPluginSelectionChanged)
   EVT_LIST_ITEM_DESELECTED(ID_CDLG_BUTTON_PluginListView, ConfigDialog::OnListViewPluginSelectionChanged)
+  EVT_HELP(wxID_ANY, ConfigDialog::OnHelp)
 END_EVENT_TABLE()
 
 
@@ -59,6 +60,7 @@ void ConfigDialog::Localize() {
   notebook->SetPageText(CONFIG_DIALOG_INDEX_PLUGINS, _("Plugins"));
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));  
+  helpButton->SetLabel(_("Help"));
 }
 
 
@@ -575,6 +577,26 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 }
 
 
+void ConfigDialog::OnHelp(wxHelpEvent& evt) {
+  int pageIndex = notebook->GetSelection();
+  wxString anchorName = _T("");
+
+  if (pageIndex == CONFIG_DIALOG_INDEX_GENERAL) {
+    anchorName = _T("ConfiguringGeneral");        
+  } if (pageIndex == CONFIG_DIALOG_INDEX_APPEARANCE) {
+    anchorName = _T("ConfiguringAppearance");
+  } if (pageIndex == CONFIG_DIALOG_INDEX_OPERATIONS) {
+    anchorName = _T("ConfiguringOperations");
+  } if (pageIndex == CONFIG_DIALOG_INDEX_IMPORT) {
+    anchorName = _T("ConfiguringImport");
+  } if (pageIndex == CONFIG_DIALOG_INDEX_PLUGINS) {
+    anchorName = _T("ConfiguringPlugins");
+  }
+
+  wxGetApp().GetUtilities().ShowHelpFile(anchorName);
+}
+
+
 void ConfigDialog::OnButtonClick(wxCommandEvent& evt) {
   switch (evt.GetId()) {
 
@@ -605,6 +627,12 @@ void ConfigDialog::OnButtonClick(wxCommandEvent& evt) {
       UpdatePluginListRow(itemIndex);
       UpdatePluginControlsFromSelection();
       
+      } break;
+
+    case ID_CDLG_BUTTON_Help: {
+
+      OnHelp(wxHelpEvent());
+
       } break;
     
     default:

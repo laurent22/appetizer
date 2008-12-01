@@ -32,6 +32,7 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_MOUSE_CAPTURE_LOST(MainFrame::OnMouseCaptureLost)
   EVT_HOTKEY(HOT_KEY_ID, MainFrame::OnHotKey)
   EVT_ACTIVATE(MainFrame::OnActivate)
+  EVT_HELP(wxID_ANY, MainFrame::OnHelp)
 END_EVENT_TABLE()
 
 
@@ -53,10 +54,17 @@ MainFrame::MainFrame()
   rotated_ = false;
   activated_ = false;
 
+  delete wxLog::SetActiveTarget(new wxLogStderr());
+
+  bool showLogWindow = false;
   #ifdef __WXDEBUG__
-  logWindow_ = new wxLogWindow(this, wxEmptyString, true);
-  wxLog::SetActiveTarget(logWindow_);
+  showLogWindow = true;
   #endif // __WXDEBUG__
+
+  if (wxGetApp().GetCommandLine().Found(_T("l")) || showLogWindow) {
+    logWindow_ = new wxLogWindow(this, wxEmptyString, true);
+    wxLog::SetActiveTarget(logWindow_);
+  }
 
   hotKeyRegistered_ = false;
   firstIdleEventSent_ = false;
@@ -171,6 +179,11 @@ MainFrame::MainFrame()
     SetSize(x, y, width, height);
   }
 } 
+
+
+void MainFrame::OnHelp(wxHelpEvent& evt) {
+  wxGetApp().GetUtilities().ShowHelpFile();
+}
 
 
 wxPanel* MainFrame::GetNullPanel() {

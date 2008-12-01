@@ -11,7 +11,7 @@
 
 
 int luaHost_logError(const wxString& s, const wxString& functionName) {
-  wxLogDebug(_T("%s %s (%s)"), _T("[Lua Host] [Error]"), s, functionName);
+  ELOG(_T("%s %s (%s)"), _T("[Lua Host] [Error]"), s, functionName);
   return 0;
 }
 
@@ -36,7 +36,7 @@ int azPrint(lua_State *L) {
     output += wxString::FromUTF8(c);
   }
 
-  wxLogDebug(_T("%s %s"), _T("[Lua Script]"), output);
+  ILOG(_T("%s %s"), _T("[Lua Script]"), output);
 
   return 0;
 }

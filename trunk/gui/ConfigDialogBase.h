@@ -21,7 +21,8 @@ ID_CDLG_BUTTON_CheckForUpdate,
 ID_CDLG_BUTTON_InstallAutorunButton,
 ID_CDLG_BUTTON_EnablePlugin,
 ID_CDLG_BUTTON_DisablePlugin,
-ID_CDLG_BUTTON_PluginListView
+ID_CDLG_BUTTON_PluginListView,
+ID_CDLG_BUTTON_Help
 };
 // end wxGlade
 
@@ -79,6 +80,7 @@ protected:
     wxStaticText* pluginChangeInfoLabel;
     wxPanel* notebook_pane_5;
     wxNotebook* notebook;
+    wxButton* helpButton;
     wxButton* saveButton;
     wxButton* cancelButton;
     // end wxGlade

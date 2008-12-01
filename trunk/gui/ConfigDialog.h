@@ -40,6 +40,7 @@ private:
   void OnNoteBookPageChanged(wxNotebookEvent& evt);
   void OnButtonClick(wxCommandEvent& evt);
   void OnListViewPluginSelectionChanged(wxListEvent& evt);
+  void OnHelp(wxHelpEvent& evt);
 
   long GetPluginListSelectedIndex();
   void UpdatePluginControlsFromSelection();

@@ -135,6 +135,7 @@ class MainFrame: public wxFrame {
     void OnMouseCaptureLost(wxMouseCaptureLostEvent& evt);
     void OnHotKey(wxKeyEvent& evt);
     void OnActivate(wxActivateEvent& evt);
+    void OnHelp(wxHelpEvent& evt);
 
   DECLARE_EVENT_TABLE()
 

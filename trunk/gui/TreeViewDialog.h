@@ -41,6 +41,8 @@ public:
   void OnTreeBeginDrag(wxTreeEvent& evt);
   void OnTreeEndDrag(wxTreeEvent& evt);
   void OnButton(wxCommandEvent& evt);
+  void OnItemRightClick(wxTreeEvent& evt);
+  void OnMenuItemClick(wxCommandEvent& evt);
 
 private:
 

@@ -13,6 +13,7 @@
 #include "../gui/ConfigDialog.h"
 #include "../gui/AboutDialog.h"
 #include "../gui/TreeViewDialog.h"
+#include "../FolderItem.h"
 
 
 class Utilities {
@@ -28,6 +29,7 @@ public:
   void ShowAboutDialog();
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void CreateNewShortcut();
+  bool RemoveFolderItemWithConfirmation(FolderItem* folderItem);
   bool IsApplicationOnPortableDrive();
   bool InstallAutorunFile();
   void KillLockingProcesses(const wxString& drive, bool painless = true);

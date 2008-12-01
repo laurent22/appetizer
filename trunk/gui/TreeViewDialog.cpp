@@ -16,6 +16,8 @@ BEGIN_EVENT_TABLE(TreeViewDialog, wxDialog)
   EVT_TREE_BEGIN_DRAG(ID_TREEVIEW_DLG_treeControl, TreeViewDialog::OnTreeBeginDrag)
   EVT_TREE_END_DRAG(ID_TREEVIEW_DLG_treeControl, TreeViewDialog::OnTreeEndDrag)
   EVT_BUTTON(wxID_ANY, TreeViewDialog::OnButton)
+  EVT_TREE_ITEM_RIGHT_CLICK(wxID_ANY, TreeViewDialog::OnItemRightClick)
+  EVT_MENU(wxID_ANY, TreeViewDialog::OnMenuItemClick)
 END_EVENT_TABLE()
 
 
@@ -52,6 +54,68 @@ void TreeViewDialog::OnButton(wxCommandEvent& evt) {
       break;
 
   }
+}
+
+
+void TreeViewDialog::OnMenuItemClick(wxCommandEvent& evt) {
+  ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
+  if (!menuItem) return;
+  
+  int folderItemId = menuItem->GetMetadataInt(_("folderItemId"));
+  FolderItem* folderItem = FolderItem::GetFolderItemById(folderItemId);
+  if (!folderItem) return;
+
+  wxTreeItemId treeItemId = GetTreeItemFromFolderItem(treeControl->GetRootItem(), folderItem);
+  if (!treeItemId.IsOk()) return;
+
+  wxString name = menuItem->GetMetadata(_("name"));
+
+  if (name == _T("remove")) {
+
+    bool done = wxGetApp().GetUtilities().RemoveFolderItemWithConfirmation(folderItem);
+    if (done) {
+      treeControl->Delete(treeItemId);
+      wxGetApp().FolderItems_CollectionChange();
+    }
+
+  } else if (name == _T("properties")) {
+
+    wxGetApp().GetUser()->EditFolderItem(folderItem);
+    treeControl->SetItemText(treeItemId, folderItem->GetName());
+    wxGetApp().FolderItems_FolderItemChange(folderItem);
+
+  } else {
+
+    evt.Skip();
+
+  }
+}
+
+
+void TreeViewDialog::OnItemRightClick(wxTreeEvent& evt) {
+  wxTreeItemId item = evt.GetItem();
+  if (!item.IsOk()) return;
+
+  FolderItem* folderItem = ((FolderItemTreeItemData*)treeControl->GetItemData(item))->GetFolderItem();
+  if (!folderItem) return;
+
+  wxMenu* menu = new wxMenu();
+
+  ExtendedMenuItem* menuItem = NULL;
+  
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Remove..."));
+  menuItem->SetMetadata(_T("name"), _T("remove"));
+  menuItem->SetMetadata(_T("folderItemId"), folderItem->GetId());
+  menu->Append(menuItem);
+
+  menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Properties"));
+  menuItem->SetMetadata(_T("name"), _T("properties"));
+  menuItem->SetMetadata(_T("folderItemId"), folderItem->GetId());
+  menu->Append(menuItem); 
+
+  PopupMenu(menu, wxDefaultPosition);
+
+  wxDELETE(menu);
 }
 
 

@@ -280,6 +280,17 @@ wxString GenerateHTMLString() {
   StartList();
   LI(_("[b]Exclude these items from the import operations:[/b] Normally, when importing shortcuts using the [#Import import tool], all the executables are added to the dock. If you wish to exclude certain files, add them to this list. Note that this list is also automatically populated whenever you remove a shortcut from the dock."));
   EndList();
+	
+  // -------------------------
+  // Plugins
+  // -------------------------
+  AddAnchor(_T("ConfiguringPlugins"));
+  H3(_("Plugins"));
+  // StartList();
+  // LI(_("[b]Exclude these items from the import operations:[/b] Normally, when importing shortcuts using the [#Import import tool], all the executables are added to the dock. If you wish to exclude certain files, add them to this list. Note that this list is also automatically populated whenever you remove a shortcut from the dock."));
+  // EndList();
+	
+	
 
   // *******************************************************************************
   // OTHER TIPS
