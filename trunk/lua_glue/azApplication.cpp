@@ -12,7 +12,7 @@
 #include "../MiniLaunchBar.h"
 
 
-const char azApplication::className[] = "azApplication";
+const char azApplication::className[] = "Application";
 
 #define method(class, name) {#name, &class::name}
 

@@ -109,7 +109,7 @@ void Plugin::Load(const wxString& folderPath) {
   luaopen_string(L);
   luaopen_math(L);
 
-  lua_register(L, "azPrint", azPrint);
+  lua_register(L, "trace", azPrint);
 
   int error = luaL_loadfile(L, luaFilePath.mb_str());
 

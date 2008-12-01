@@ -13,7 +13,7 @@
 #include "LuaUtil.h"
 
 
-const char azMenu::className[] = "azMenu";
+const char azMenu::className[] = "Menu";
 
 #define method(class, name) {#name, &class::name}
 

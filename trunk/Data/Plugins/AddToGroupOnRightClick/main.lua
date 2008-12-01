@@ -35,7 +35,7 @@ function application_iconMenuOpening(event)
 	if table.maxn(groups) == 0 then return 0; end
 	
 	-- Create the "Add to group" sub menu
-	subMenu = azMenu:new("Add to group")
+	subMenu = Menu:new("Add to group")
 	
 	for i, group in pairs(groups) do
 		menuItem = {}

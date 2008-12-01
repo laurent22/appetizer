@@ -11,7 +11,7 @@
 #include "../MiniLaunchBar.h"
 
 
-const char azOptionPanel::className[] = "azOptionPanel";
+const char azOptionPanel::className[] = "OptionPanel";
 
 #define method(class, name) {#name, &class::name}
 

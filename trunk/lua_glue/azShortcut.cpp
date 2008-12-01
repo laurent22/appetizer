@@ -13,7 +13,7 @@
 #include "LuaUtil.h"
 
 
-const char azShortcut::className[] = "azShortcut";
+const char azShortcut::className[] = "Shortcut";
 
 #define method(class, name) {#name, &class::name}
 

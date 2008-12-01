@@ -12,7 +12,7 @@
 #include "../MiniLaunchBar.h"
 
 
-const char azIcon::className[] = "azIcon";
+const char azIcon::className[] = "Icon";
 
 #define method(class, name) {#name, &class::name}
 

@@ -14,7 +14,7 @@
 #include "LuaUtil.h"
 
 
-const char azOptionButton::className[] = "azOptionButton";
+const char azOptionButton::className[] = "OptionButton";
 
 #define method(class, name) {#name, &class::name}
 
