@@ -814,7 +814,21 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
 
     case ID_BUTTON_MainFrame_CloseButton: {
 
-      Hide();
+      UserSettings* settings = wxGetApp().GetUser()->GetSettings();
+      
+      if (settings->ShowMinimizeMessage && settings->MinimizeOnClose) {
+        int answer = MessageBoxes::ShowInformation(wxString::Format(_("%s is now going to be minimized to the System Tray.\n\nNote that you may change this behavior in the '%s' windows ('%s' tab)"), APPLICATION_NAME, _("Configuration"), _("Operations")), wxOK, _("Don't show this message again"), false);
+        if (answer != wxID_OK) return;
+
+        wxGetApp().GetUser()->GetSettings()->ShowMinimizeMessage = !MessageBoxes::GetCheckBoxState();
+        wxGetApp().GetUser()->ScheduleSave();
+      }      
+
+      if (settings->MinimizeOnClose) {
+        Hide();
+      } else {
+        Close();
+      }
     } break;
 
     case ID_BUTTON_MainFrame_EjectButton: {

@@ -23,6 +23,7 @@ UserSettings::UserSettings() {
   Skin = _T("Default");
   Rotated = false;
   AlwaysOnTop = false;
+  MinimizeOnClose = true;
   UniqueApplicationInstance = true;
   AutoHideApplication = false;
   RunMultiLaunchOnStartUp = false;
@@ -34,6 +35,7 @@ UserSettings::UserSettings() {
 
   ShowDeleteIconMessage = true;
   ShowEjectDriveMessage = true;
+  ShowMinimizeMessage = true;
 
   NextUpdateCheckTime = wxDateTime::Now();
   // This is just to force an update check the first time the 
@@ -60,6 +62,8 @@ TiXmlElement* UserSettings::ToXml() {
   AppendSettingToXml(xml, "UniqueApplicationInstance", UniqueApplicationInstance);
   AppendSettingToXml(xml, "ShowDeleteIconMessage", ShowDeleteIconMessage);
   AppendSettingToXml(xml, "ShowEjectDriveMessage", ShowEjectDriveMessage);
+  AppendSettingToXml(xml, "ShowMinimizeMessage", ShowMinimizeMessage);
+  AppendSettingToXml(xml, "MinimizeOnClose", MinimizeOnClose);
   AppendSettingToXml(xml, "RunMultiLaunchOnStartUp", RunMultiLaunchOnStartUp);
   AppendSettingToXml(xml, "HotKeyControl", HotKeyControl);
   AppendSettingToXml(xml, "HotKeyAlt", HotKeyAlt);
@@ -127,6 +131,8 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     if (n == _T("HotKeyShift")) HotKeyShift = ParseBoolean(v);
     if (n == _T("HotKeyKey")) AssignSettingValue(HotKeyKey, v);
     if (n == _T("CloseAppsOnEject")) CloseAppsOnEject = ParseBoolean(v);
+    if (n == _T("MinimizeOnClose")) MinimizeOnClose = ParseBoolean(v);
+    if (n == _T("ShowMinimizeMessage")) ShowMinimizeMessage = ParseBoolean(v);
 
   }
 

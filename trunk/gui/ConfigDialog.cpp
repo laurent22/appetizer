@@ -344,6 +344,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       hotKeyAltCheckBox->SetLabel(_("Alt +"));
       hotKeyShiftCheckBox->SetLabel(_("Shift +"));
       closeAppOnEjectCheckBox->SetLabel(_("When ejecting the drive, close the apps that are locking it"));      
+      minimizeOnCloseCheckBox->SetLabel(_("Close button minimizes to System Tray"));
 
       //---------------------------------------------------------------------------
       // Populate "Hot key" dropdown list
@@ -445,6 +446,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       autohideCheckBox->SetValue(userSettings->AutoHideApplication);
       closeAppOnEjectCheckBox->SetValue(userSettings->CloseAppsOnEject);
       multiLaunchAutoRunCheckBox->SetValue(userSettings->RunMultiLaunchOnStartUp);
+      minimizeOnCloseCheckBox->SetValue(userSettings->MinimizeOnClose);
 
       // Force a relayout
       hotKeyCtrlCheckBox->GetParent()->Layout();
@@ -511,7 +513,9 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       availablePluginsBox_staticbox->SetLabel(_("Available plugins"));
       enablePluginButton->SetLabel(_("Enable"));
       disablePluginButton->SetLabel(_("Disable"));
-      pluginChangeInfoLabel->SetLabel(wxString::Format(_("Changes made to plugins will only be active the next time %s is started."), APPLICATION_NAME));
+      pluginChangeInfoLabel->SetLabel(wxString::Format(_("The changes made to the plugins will only be active the next time %s is started."), APPLICATION_NAME));
+      pluginChangeInfoLabel->Wrap(pluginChangeInfoLabel->GetParent()->GetRect().GetWidth() - 16);
+      pluginChangeInfoLabel->SetSize(pluginChangeInfoLabel->GetBestSize());
 
       //---------------------------------------------------------------------------
       // Populate list view dialog
@@ -762,6 +766,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     userSettings->AutoHideApplication = autohideCheckBox->GetValue();
     userSettings->RunMultiLaunchOnStartUp = multiLaunchAutoRunCheckBox->GetValue();
     userSettings->CloseAppsOnEject = closeAppOnEjectCheckBox->GetValue();
+    userSettings->MinimizeOnClose = minimizeOnCloseCheckBox->GetValue();
     
     clientData = (wxStringClientData*)(hotKeyComboBox->GetClientObject(hotKeyComboBox->GetSelection()));
     wxString hotKeyCodeS = clientData->GetData();

@@ -26,6 +26,7 @@ public:
   wxString PicturesPath;
   wxString VideosPath;
   wxString Skin;
+  bool MinimizeOnClose;
   bool Rotated;
   wxDateTime NextUpdateCheckTime;
   bool AlwaysOnTop;
@@ -33,6 +34,7 @@ public:
   bool UniqueApplicationInstance;
   bool ShowDeleteIconMessage;
   bool ShowEjectDriveMessage;
+  bool ShowMinimizeMessage;
   bool RunMultiLaunchOnStartUp;
   bool CloseAppsOnEject;
   bool HotKeyControl;

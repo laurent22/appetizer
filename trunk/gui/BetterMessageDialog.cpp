@@ -34,7 +34,7 @@ BetterMessageDialog::BetterMessageDialog(
     const wxString& name):
 wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE, name) {
 
-  int maxWindowWidth = 400;
+  int maxWindowWidth = 500;
   int gap = 10;
 
   wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL);
@@ -90,7 +90,7 @@ wxDialog(parent, id, title, pos, size, wxDEFAULT_DIALOG_STYLE, name) {
   if (showCheckBox) {
     checkbox_ = new wxCheckBox(this, wxID_ANY, checkBoxLabel);
     checkbox_->SetValue(checkBoxState);
-    topSizer->Add(checkbox_, 0, wxLEFT | wxTOP | wxRIGHT | wxALIGN_CENTER_HORIZONTAL, gap);
+    topSizer->Add(checkbox_, 0, wxLEFT | wxTOP | wxRIGHT | wxALIGN_CENTER_HORIZONTAL, gap); //
   }
   
   wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);

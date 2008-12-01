@@ -44,6 +44,7 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     autohideCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Hide after launching an application"));
     multiLaunchAutoRunCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("#Run multi-launch group on startup#"));
     closeAppOnEjectCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("#When ejecting the drive, close the apps that are locking it#"));
+    minimizeOnCloseCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("#Close button minimizes to System Tray#"));
     hotKeyCtrlCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Ctrl +"));
     hotKeyAltCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Alt +"));
     hotKeyShiftCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Shift +"));
@@ -67,7 +68,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(459, 314));
+    SetSize(wxSize(400, 320));
     // end wxGlade
 }
 
@@ -79,8 +80,8 @@ void ConfigDialogBase::do_layout()
     wxBoxSizer* sizer_2 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_7 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_8 = new wxBoxSizer(wxVERTICAL);
+    wxStaticBoxSizer* availablePluginsBox = new wxStaticBoxSizer(availablePluginsBox_staticbox, wxVERTICAL);
     wxBoxSizer* sizer_10 = new wxBoxSizer(wxHORIZONTAL);
-    wxStaticBoxSizer* availablePluginsBox = new wxStaticBoxSizer(availablePluginsBox_staticbox, wxHORIZONTAL);
     wxBoxSizer* sizer_6 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticBoxSizer* importExclusionSizer = new wxStaticBoxSizer(importExclusionSizer_staticbox, wxVERTICAL);
     wxBoxSizer* sizer_5 = new wxBoxSizer(wxHORIZONTAL);
@@ -116,6 +117,7 @@ void ConfigDialogBase::do_layout()
     grid_sizer_2->Add(autohideCheckBox, 0, wxEXPAND, 0);
     grid_sizer_2->Add(multiLaunchAutoRunCheckBox, 0, wxEXPAND, 0);
     grid_sizer_2->Add(closeAppOnEjectCheckBox, 0, 0, 0);
+    grid_sizer_2->Add(minimizeOnCloseCheckBox, 0, 0, 0);
     grid_sizer_3->Add(hotKeyCtrlCheckBox, 0, 0, 0);
     grid_sizer_3->Add(hotKeyAltCheckBox, 0, 0, 0);
     grid_sizer_3->Add(hotKeyShiftCheckBox, 0, 0, 0);
@@ -128,11 +130,11 @@ void ConfigDialogBase::do_layout()
     importExclusionSizer->Add(importExclusionTextBox, 1, wxALL|wxEXPAND, 8);
     sizer_6->Add(importExclusionSizer, 1, wxALL|wxEXPAND, 8);
     notebook_pane_4->SetSizer(sizer_6);
-    availablePluginsBox->Add(pluginListView, 1, wxALL|wxEXPAND, 8);
-    sizer_8->Add(availablePluginsBox, 1, wxEXPAND, 0);
-    sizer_10->Add(enablePluginButton, 0, 0, 0);
+    availablePluginsBox->Add(pluginListView, 1, wxLEFT|wxRIGHT|wxTOP|wxEXPAND, 8);
+    sizer_10->Add(enablePluginButton, 0, wxBOTTOM, 4);
     sizer_10->Add(disablePluginButton, 0, wxLEFT, 8);
-    sizer_8->Add(sizer_10, 0, wxTOP|wxEXPAND, 8);
+    availablePluginsBox->Add(sizer_10, 0, wxLEFT|wxTOP|wxEXPAND, 8);
+    sizer_8->Add(availablePluginsBox, 1, wxEXPAND, 0);
     sizer_8->Add(pluginChangeInfoLabel, 0, wxTOP, 8);
     sizer_7->Add(sizer_8, 1, wxALL|wxEXPAND, 8);
     notebook_pane_5->SetSizer(sizer_7);

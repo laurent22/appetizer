@@ -65,6 +65,7 @@ protected:
     wxCheckBox* autohideCheckBox;
     wxCheckBox* multiLaunchAutoRunCheckBox;
     wxCheckBox* closeAppOnEjectCheckBox;
+    wxCheckBox* minimizeOnCloseCheckBox;
     wxCheckBox* hotKeyCtrlCheckBox;
     wxCheckBox* hotKeyAltCheckBox;
     wxCheckBox* hotKeyShiftCheckBox;
