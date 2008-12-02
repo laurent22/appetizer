@@ -54,6 +54,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     pluginListView = new wxListCtrl(notebook_pane_5, ID_CDLG_BUTTON_PluginListView, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL|wxSTATIC_BORDER);
     enablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_EnablePlugin, wxT("#Enable#"));
     disablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_DisablePlugin, wxT("#Disable#"));
+    label_4 = new wxStaticText(notebook_pane_5, wxID_ANY, wxEmptyString);
+    installPluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_InstallPlugin, wxT("Install..."));
     pluginChangeInfoLabel = new wxStaticText(notebook_pane_5, wxID_ANY, wxT("#Changes made to plugins will only be active the next time %s is started#"));
     helpButton = new wxButton(this, ID_CDLG_BUTTON_Help, wxT("#Help#"));
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
@@ -84,6 +86,7 @@ void ConfigDialogBase::do_layout()
     wxBoxSizer* sizer_8 = new wxBoxSizer(wxVERTICAL);
     wxStaticBoxSizer* availablePluginsBox = new wxStaticBoxSizer(availablePluginsBox_staticbox, wxVERTICAL);
     wxBoxSizer* sizer_10 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* sizer_11 = new wxBoxSizer(wxHORIZONTAL);
     wxBoxSizer* sizer_6 = new wxBoxSizer(wxHORIZONTAL);
     wxStaticBoxSizer* importExclusionSizer = new wxStaticBoxSizer(importExclusionSizer_staticbox, wxVERTICAL);
     wxBoxSizer* sizer_5 = new wxBoxSizer(wxHORIZONTAL);
@@ -135,6 +138,9 @@ void ConfigDialogBase::do_layout()
     availablePluginsBox->Add(pluginListView, 1, wxLEFT|wxRIGHT|wxTOP|wxEXPAND, 8);
     sizer_10->Add(enablePluginButton, 0, wxBOTTOM, 4);
     sizer_10->Add(disablePluginButton, 0, wxLEFT, 8);
+    sizer_11->Add(label_4, 1, 0, 0);
+    sizer_11->Add(installPluginButton, 0, wxRIGHT, 8);
+    sizer_10->Add(sizer_11, 1, wxEXPAND|wxALIGN_RIGHT, 0);
     availablePluginsBox->Add(sizer_10, 0, wxLEFT|wxTOP|wxEXPAND, 8);
     sizer_8->Add(availablePluginsBox, 1, wxEXPAND, 0);
     sizer_8->Add(pluginChangeInfoLabel, 0, wxTOP, 8);

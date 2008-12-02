@@ -131,8 +131,9 @@ wxString GenerateHTMLString() {
   H3(_("Features"));
 
   StartList();
-  LI(_("Resizable dock, which allows displaying the icons both horizontally or vertically."));
   LI(_("Support for multiple skins"));
+  LI(_("Support for plugins"));
+  LI(_("Resizable dock, which allows displaying the icons both horizontally or vertically."));
   LI(_("Three sizes of icons: Small, large and extra-large"));
   LI(_("Support for custom icons"));
   LI(_("'Wizard' to automatically imports shortcuts from various locations"));
@@ -198,7 +199,7 @@ wxString GenerateHTMLString() {
   // Minimizing / Maximizing the dock
   // -------------------------------------------------
   H3(_("Minimizing / Maximizing the dock"));
-  P(_("The dock can be minimized to the tray icon by clicking on the 'x' button. To bring it back to front, simply click on the tray icon."));
+  P(_("The dock can be minimized to the tray icon by clicking on the 'x' button. To bring it back to front, simply click on the tray icon. Note that this behavior can be changed in the 'Configuration' dialog"));
   P(_("Right-click on the tray icon for additional options."));
 
   // -------------------------------------------------
@@ -227,6 +228,19 @@ wxString GenerateHTMLString() {
   LI(_("You can add as many shortcuts as you wish"));
   LI(_("To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] and click on the 'Multi-launch' button: [images/Multilaunch.jpg]"));
   EndList();
+
+  // -------------------------------------------------
+  // Adding new plugins
+  // -------------------------------------------------
+  AddAnchor(_T("AddingPlugins"));
+  H3(_("Adding new plugins"));
+  P(_("Appetizer supports a plugin system that allows easily adding new functionalities to the dock and customizing it to your needs."));
+  //P(_("To add a plugin, "));
+  //StartList();
+  //LI(_("Right-click on any icon and select 'Multi-launch group' from the context menu"));
+  //LI(_("You can add as many shortcuts as you wish"));
+  //LI(_("To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] and click on the 'Multi-launch' button: [images/Multilaunch.jpg]"));
+  //EndList();
 
   // *******************************************************************************
   // CONFIGURING APPETIZER

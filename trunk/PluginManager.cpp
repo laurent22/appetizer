@@ -10,6 +10,7 @@
 #include "FilePaths.h"
 #include "FolderItem.h"
 #include "OptionButton.h"
+#include "MessageBoxes.h"
 #include "FolderItemRenderer.h"
 #include "lua_glue/LuaUtil.h"
 #include "lua_glue/azOptionButton.h"
@@ -28,6 +29,59 @@ PluginManager::~PluginManager() {
 
   wxDELETE(luaApplication);
   wxDELETE(luaOptionPanel);
+}
+
+
+bool PluginManager::InstallPluginPackage(const wxString& filePath) {
+  wxFileSystem fs;
+  std::auto_ptr<wxZipEntry> entry(new wxZipEntry());
+
+  wxFileInputStream in(filePath);
+  if (!in.IsOk()) {
+    MessageBoxes::ShowError(wxString::Format(_("Could not open %s"), filePath));
+    return false;
+  }
+
+  wxString targetDir = FilePaths::GetPluginsDirectory();
+
+  wxZipInputStream zip(in);
+  
+  while (entry.reset(zip.GetNextEntry()), entry.get() != NULL) {
+    wxString name = entry->GetName();
+    name = targetDir + wxFileName::GetPathSeparator() + name;
+
+    if (entry->IsDir()) {
+      int perm = entry->GetMode();
+      wxFileName::Mkdir(name, perm, wxPATH_MKDIR_FULL);
+    } else {
+      zip.OpenEntry(*entry.get());
+
+      if (!zip.CanRead()) {
+        MessageBoxes::ShowError(wxString::Format(_("Can not read zip entry '%s'"), name));
+        return false;
+      }
+
+      wxFileOutputStream file(name);
+
+      if (!file) {
+        MessageBoxes::ShowError(wxString::Format(_("Can not create file '%s'"), name));
+        return false;
+      }
+
+      zip.Read(file);
+    }
+
+  }
+
+  Plugin* p  = new Plugin();
+  plugins_.push_back(p);
+  p->LoadMetadata(targetDir);
+  p->Enable(true);
+  p->SetInitiallyEnabled(false);
+
+  MessageBoxes::ShowInformation(wxString::Format(_("The plugin has been installed successfully. It will be activated the next time %s is started"), APPLICATION_NAME));
+
+  return true;
 }
 
 

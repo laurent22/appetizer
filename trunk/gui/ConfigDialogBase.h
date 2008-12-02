@@ -22,7 +22,8 @@ ID_CDLG_BUTTON_InstallAutorunButton,
 ID_CDLG_BUTTON_EnablePlugin,
 ID_CDLG_BUTTON_DisablePlugin,
 ID_CDLG_BUTTON_PluginListView,
-ID_CDLG_BUTTON_Help
+ID_CDLG_BUTTON_Help,
+ID_CDLG_BUTTON_InstallPlugin
 };
 // end wxGlade
 
@@ -77,6 +78,8 @@ protected:
     wxListCtrl* pluginListView;
     wxButton* enablePluginButton;
     wxButton* disablePluginButton;
+    wxStaticText* label_4;
+    wxButton* installPluginButton;
     wxStaticText* pluginChangeInfoLabel;
     wxPanel* notebook_pane_5;
     wxNotebook* notebook;

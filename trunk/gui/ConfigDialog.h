@@ -43,6 +43,7 @@ private:
   void OnHelp(wxHelpEvent& evt);
 
   long GetPluginListSelectedIndex();
+  void ReloadPluginList();
   void UpdatePluginControlsFromSelection();
   void UpdatePluginListRow(long index);
 

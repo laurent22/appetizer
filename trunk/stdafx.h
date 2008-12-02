@@ -81,9 +81,13 @@
 #include <wx/sstream.h>
 #include <wx/protocol/http.h>
 #include <wx/stattext.h>
+#include <wx/filesys.h>
+#include <wx/zipstrm.h>
+#include <wx/wfstream.h>
 
 #include <math.h>
 #include <vector>
+#include <memory.h>
 
 #include <tinyxml/tinyxml.h>
 #include <simpleini/SimpleIni.h>

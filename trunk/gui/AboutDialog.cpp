@@ -58,13 +58,32 @@ void AboutDialog::OnShow(wxShowEvent& evt) {
 
 
 void AboutDialog::Localize() {
+  wxString creditText;
+  creditText += _("Translators: %s");
+  creditText += _T("\n\n");
+  creditText += _("This software uses a number of open source libraries including:");
+  creditText += _T("\n\n");
+  creditText += _("- Simpleini by Brodie Thiesfield");
+  creditText += _T("\n");
+  creditText += _("- TinyXml by Yves Berquin");
+  creditText += _T("\n");
+  creditText += _("- CStdString by Joe O'Leary");
+  creditText += _T("\n");
+  creditText += _("- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes");
+  creditText += _T("\n");
+  creditText += _("- zlib by Jean-Loup Gailly and Mark Adler");
+  creditText += _T("\n");  
+  creditText += _("- wxWidgets by their respective authors");
+  creditText += _T("\n\n");  
+  creditText += _("Dialog boxes are built using wxGlade by Alberto Griggio.");
+
   SetTitle(wxString::Format(_("About %s..."), APPLICATION_NAME));  
   notebook->SetPageText(0, _("About"));
   notebook->SetPageText(1, _("License"));
   okButton->SetLabel(_("OK"));
   creditLabel->SetLabel(_("Credits"));
   creditTextBox->SetValue(wxString::Format(
-    _("Translators: %s\n\nThis software uses a number of open source libraries including:\n\n- Simpleini by Brodie Thiesfield\n- TinyXml by Yves Berquin\n- CStdString by Joe O'Leary\n- The Boost C++ Libraries and wxWidgets by their respective authors\n\nDialog boxes are built using wxGlade by Alberto Griggio."),
+    creditText,
     _T("Simeon, wk, Pieter Kerstens, Michał Trzebiatowski, Manuel Gutierrez Borras (Piojo Lopez)")));
   copyrightLabel->SetLabel(wxString::Format(_("Copyright © %s"), _T("2008 Laurent Cozic")));
   licenseTextBox->SetValue(_("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."));

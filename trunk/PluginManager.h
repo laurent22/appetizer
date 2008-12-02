@@ -30,6 +30,7 @@ public:
   void DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments);
   void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments);
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
+  bool InstallPluginPackage(const wxString& filePath);
   int GetEventIdByName(const wxString& eventName);
   PluginVector GetPlugins();
   void Save();

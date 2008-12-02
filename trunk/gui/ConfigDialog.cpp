@@ -115,6 +115,38 @@ void ConfigDialog::UpdatePluginControlsFromSelection() {
 }
 
 
+void ConfigDialog::ReloadPluginList() {
+  for (int i = 0; i < configDialogPluginData_.size(); i++) wxDELETE(configDialogPluginData_.at(i));
+  configDialogPluginData_.clear();
+  pluginListView->ClearAll();
+
+  PluginVector plugins = wxGetApp().GetPluginManager()->GetPlugins();
+
+  pluginListView->InsertColumn(0, _("Plugin"));
+  pluginListView->InsertColumn(1, _("Status"));
+  pluginListView->SetColumnWidth(0, pluginListView->GetRect().GetWidth() * 0.65);
+  pluginListView->SetColumnWidth(1, pluginListView->GetRect().GetWidth() * 0.25);      
+
+  for (int i = 0; i < plugins.size(); i++) {
+    Plugin* plugin = plugins.at(i);
+
+    ConfigDialogPluginData* d = new ConfigDialogPluginData();
+    d->pluginIndex = i;
+    d->enabled = plugin->IsEnabled();
+
+    configDialogPluginData_.push_back(d);
+
+    long index = pluginListView->InsertItem(0, _T(""));
+    pluginListView->SetItem(index, 1, _T(""));
+    pluginListView->SetItemData(index, configDialogPluginData_.size() - 1);
+
+    UpdatePluginListRow(index);
+  }
+
+  UpdatePluginControlsFromSelection();
+}
+
+
 void ConfigDialog::OnNoteBookPageChanged(wxNotebookEvent& evt) {
   if (evt.GetSelection() < 0) return;
   UpdatePage(evt.GetSelection());
@@ -515,6 +547,8 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       availablePluginsBox_staticbox->SetLabel(_("Available plugins"));
       enablePluginButton->SetLabel(_("Enable"));
       disablePluginButton->SetLabel(_("Disable"));
+      installPluginButton->SetLabel(_("Install..."));
+      
       pluginChangeInfoLabel->SetLabel(wxString::Format(_("The changes made to the plugins will only be active the next time %s is started."), APPLICATION_NAME));
       pluginChangeInfoLabel->Wrap(pluginChangeInfoLabel->GetParent()->GetRect().GetWidth() - 16);
       pluginChangeInfoLabel->SetSize(pluginChangeInfoLabel->GetBestSize());
@@ -523,34 +557,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       // Populate list view dialog
       //---------------------------------------------------------------------------
 
-      for (int i = 0; i < configDialogPluginData_.size(); i++) wxDELETE(configDialogPluginData_.at(i));
-      configDialogPluginData_.clear();
-      pluginListView->ClearAll();
-
-      PluginVector plugins = wxGetApp().GetPluginManager()->GetPlugins();
-
-      pluginListView->InsertColumn(0, _("Plugin"));
-      pluginListView->InsertColumn(1, _("Status"));
-      pluginListView->SetColumnWidth(0, pluginListView->GetRect().GetWidth() * 0.65);
-      pluginListView->SetColumnWidth(1, pluginListView->GetRect().GetWidth() * 0.25);      
-
-      for (int i = 0; i < plugins.size(); i++) {
-        Plugin* plugin = plugins.at(i);
-
-        ConfigDialogPluginData* d = new ConfigDialogPluginData();
-        d->pluginIndex = i;
-        d->enabled = plugin->IsEnabled();
-
-        configDialogPluginData_.push_back(d);
-
-        long index = pluginListView->InsertItem(0, _T(""));
-        pluginListView->SetItem(index, 1, _T(""));
-        pluginListView->SetItemData(index, configDialogPluginData_.size() - 1);
-
-        UpdatePluginListRow(index);
-      }
-
-      UpdatePluginControlsFromSelection();
+      ReloadPluginList();
 
       enablePluginButton->GetParent()->Layout();
 
@@ -632,6 +639,22 @@ void ConfigDialog::OnButtonClick(wxCommandEvent& evt) {
     case ID_CDLG_BUTTON_Help: {
 
       OnHelp(wxHelpEvent());
+
+      } break;
+
+    case ID_CDLG_BUTTON_InstallPlugin: {
+
+      wxString wildCard;
+      wildCard += wxString::Format(_T("%s%s"), wxString::Format(_("%s Plugin Packages"), APPLICATION_NAME), _T(" (*.zpl)|*.zpl"));
+      wildCard += wxString::Format(_T("|%s%s"), _("All files"), _T(" (*.*)|*.*"));
+
+      wxFileDialog fileDialog(this, _("Select a plugin package"), wxEmptyString, wxEmptyString, wildCard);
+      int result = fileDialog.ShowModal();
+      if (result != wxID_OK) return;
+
+      bool installed = wxGetApp().GetPluginManager()->InstallPluginPackage(fileDialog.GetPath());
+
+      if (installed) ReloadPluginList();
 
       } break;
     
