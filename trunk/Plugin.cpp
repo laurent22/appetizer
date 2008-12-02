@@ -61,10 +61,10 @@ void Plugin::Enable(bool enable) {
 
 
 void Plugin::LoadPluginXml(const wxString& xmlFilePath) {
-  ILOG(_("Loading: ") + xmlFilePath);
+  ILOG(_T("Loading: ") + xmlFilePath);
 
   if (!wxFileName::FileExists(xmlFilePath)) {
-    ILOG(_T("Plugin::LoadPluginXml: 'plugin.xml' is missing: ") + xmlFilePath + _(" Using default settings"));
+    ILOG(_T("Plugin::LoadPluginXml: 'plugin.xml' is missing: ") + xmlFilePath + _T(" Using default settings"));
     return;
   }
 

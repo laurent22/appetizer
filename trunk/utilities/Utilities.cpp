@@ -171,7 +171,7 @@ void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
   CStdString result = ProcessUtil::EnableDebugPriv();
 
   if (result != _T("ok")) {
-    MessageBoxes::ShowError(wxString::Format(_T("%s%s%s"), _("You do not have sufficient privilege to do this operation."), _T("\n\n"), result));
+    MessageBoxes::ShowError(wxString::Format(_T("%s%s%s"), _("You do not have sufficient privileges for this operation."), _T("\n\n"), result));
     dialog->Destroy();
     return;
   }

@@ -102,7 +102,7 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
     return;
   }
 
-  wxString name = menuItem->GetMetadata(_("name"));
+  wxString name = menuItem->GetMetadata(_T("name"));
 
   if (name == _T("remove")) {
 

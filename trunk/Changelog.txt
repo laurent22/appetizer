@@ -1,4 +1,21 @@
-﻿Version 1.1.2.26 (2008-11-22):
+﻿Version 1.2.1.91 Alpha (2008-12-02):
+
+- New: Support for plugins
+- New: Option to close the applications that are locking the drive before ejection
+- New: Shortcut "Add to group" menu item (Plugin) 
+- New: "Close button minimizes to System Tray" option
+- New: Contextual help in config dialog and main window
+- New: Context menu when right-clicking on an item in TreeView dialog ("Remove" and "Properties" items)
+- New: New switch: "/l" to show a log window (useful to debug plugins)
+- Improved: items in "Add special item" menu now have icons
+- Improved: Added support for wildcards in import exclusion list
+- Improved: Added white frame around application icon in tray icon to make it more visible
+- Improved: Added some default patterns to exclusion list (uninstall.exe, setup.exe, etc.)
+- Changed: Removed "Portable" from application name in PAF version
+- Changed: Replaced %VARIABLE_NAME% by $(VariableName) so that it's not confused with environment variables
+- Fixed: "Show desktop" special item is now done using a vbs script to go around the issue when .scf file association is broken
+
+Version 1.1.2.26 (2008-11-22):
 
 - Fixed: Windows 2000 crash ("The ordinal 737 could not be located in the dynamic link library Shell32.dll")
 - Updated German translation (wk)

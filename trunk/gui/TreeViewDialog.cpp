@@ -61,14 +61,14 @@ void TreeViewDialog::OnMenuItemClick(wxCommandEvent& evt) {
   ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
   if (!menuItem) return;
   
-  int folderItemId = menuItem->GetMetadataInt(_("folderItemId"));
+  int folderItemId = menuItem->GetMetadataInt(_T("folderItemId"));
   FolderItem* folderItem = FolderItem::GetFolderItemById(folderItemId);
   if (!folderItem) return;
 
   wxTreeItemId treeItemId = GetTreeItemFromFolderItem(treeControl->GetRootItem(), folderItem);
   if (!treeItemId.IsOk()) return;
 
-  wxString name = menuItem->GetMetadata(_("name"));
+  wxString name = menuItem->GetMetadata(_T("name"));
 
   if (name == _T("remove")) {
 

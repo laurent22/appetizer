@@ -52,9 +52,7 @@ MainFrame::MainFrame()
   arrowButtonCloseIcon_ = NULL;
   nullPanel_ = NULL;
   rotated_ = false;
-  activated_ = false;
-
-  delete wxLog::SetActiveTarget(new wxLogStderr());
+  activated_ = false;  
 
   bool showLogWindow = false;
   #ifdef __WXDEBUG__

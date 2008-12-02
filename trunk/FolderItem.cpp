@@ -402,7 +402,7 @@ bool FolderItem::BelongsToMultiLaunchGroup() {
 
 void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
   ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
-  wxString name = menuItem->GetMetadata(_("name"));
+  wxString name = menuItem->GetMetadata(_T("name"));
 
   if (name == _T("organizeShortcuts")) {
 
@@ -465,8 +465,8 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
   if (menu->GetMenuItemCount() > 0) menu->AppendSeparator();
 
   menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Organize shortcuts"));
-  menuItem->SetMetadata(_("name"), _T("organizeShortcuts"));
-  menuItem->SetMetadata(_("folderItemId"), GetId());
+  menuItem->SetMetadata(_T("name"), _T("organizeShortcuts"));
+  menuItem->SetMetadata(_T("folderItemId"), GetId());
 
   menu->Append(menuItem);
 
@@ -483,8 +483,8 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
 
 ExtendedMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, const wxString& menuItemName) {
   ExtendedMenuItem* menuItem = new ExtendedMenuItem(parentMenu, wxGetApp().GetUniqueInt(), GetName(true));
-  menuItem->SetMetadata(_("name"), menuItemName);
-  menuItem->SetMetadata(_("folderItemId"), GetId());
+  menuItem->SetMetadata(_T("name"), menuItemName);
+  menuItem->SetMetadata(_T("folderItemId"), GetId());
 
   wxIcon* icon = GetIcon(iconSize);
   if (!icon->IsOk()) {

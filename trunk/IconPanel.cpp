@@ -116,11 +116,11 @@ wxMenu* IconPanel::GetContextMenu() {
   ExtendedMenuItem* menuItem = NULL;
 
   menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("New shortcut..."));
-  menuItem->SetMetadata(_T("name"), _("newShortcut"));
+  menuItem->SetMetadata(_T("name"), _T("newShortcut"));
   menu->Append(menuItem);
   
   menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("New group..."));
-  menuItem->SetMetadata(_T("name"), _("newGroup"));
+  menuItem->SetMetadata(_T("name"), _T("newGroup"));
   menu->Append(menuItem);
 
   wxMenu* specialMenu = new wxMenu();
@@ -128,7 +128,7 @@ wxMenu* IconPanel::GetContextMenu() {
 
   #define ADD_SPECIAL_ITEM_TO_MENU(text, specialItemMacro) \
   menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), text); \
-  menuItem->SetMetadata(_T("name"), _("addSpecialItem")); \
+  menuItem->SetMetadata(_T("name"), _T("addSpecialItem")); \
   menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
   specialIcon = FolderItem::GetDefaultSpecialItemIcon(specialItemMacro, 16); \
   menuItem->SetBitmap(*specialIcon); \
@@ -151,14 +151,14 @@ wxMenu* IconPanel::GetContextMenu() {
 
 void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
   ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
-  wxString name = menuItem->GetMetadata(_("name"));
+  wxString name = menuItem->GetMetadata(_T("name"));
 
   User* user = wxGetApp().GetUser();
   FolderItem* rootFolderItem = user->GetRootFolderItem();
 
   if (name == _T("addSpecialItem")) {
 
-    user->AddNewFolderItemFromPath(rootFolderItem, menuItem->GetMetadata(_("specialItemMacro")));
+    user->AddNewFolderItemFromPath(rootFolderItem, menuItem->GetMetadata(_T("specialItemMacro")));
 
   } else if (name == _T("newShortcut")) {
 
@@ -176,7 +176,7 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
 
   } else if (name == _T("browseButtonFolderItem")) {
 
-    FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(menuItem->GetMetadataInt(_("folderItemId")));
+    FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(menuItem->GetMetadataInt(_T("folderItemId")));
     if (!folderItem) {
       evt.Skip();
     } else {

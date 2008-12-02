@@ -229,18 +229,34 @@ wxString GenerateHTMLString() {
   LI(_("To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] and click on the 'Multi-launch' button: [images/Multilaunch.jpg]"));
   EndList();
 
+  // *******************************************************************************
+  // PLUGINS
+  // *******************************************************************************
+
+  AddAnchor(_T("Plugins"));
+  H2(_("Plugins"));
+  P(_("Appetizer supports a plugin system that allows easily adding new functionalities and customizing the application to your needs."));
+
   // -------------------------------------------------
   // Adding new plugins
   // -------------------------------------------------
+
   AddAnchor(_T("AddingPlugins"));
-  H3(_("Adding new plugins"));
-  P(_("Appetizer supports a plugin system that allows easily adding new functionalities to the dock and customizing it to your needs."));
-  //P(_("To add a plugin, "));
-  //StartList();
-  //LI(_("Right-click on any icon and select 'Multi-launch group' from the context menu"));
-  //LI(_("You can add as many shortcuts as you wish"));
-  //LI(_("To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] and click on the 'Multi-launch' button: [images/Multilaunch.jpg]"));
-  //EndList();
+  H3(_("Adding a plugin"));
+  P(_("To add a plugin, follow these steps:"));
+  StartList();
+  LI(_("Open the [#Configuring Configuration dialog]."));
+  LI(_("Open the 'Plugin' tab."));
+  LI(_("Click the 'Install...' button and open the plugin's .zpl package."));
+  LI(_("If everything went well, you should see a message saying that the plugin was successfully installed. However, note that it will only be active the next time Appetizer is started."));
+  EndList();
+
+  // -------------------------------------------------
+  // Creating a plugin
+  // -------------------------------------------------
+  AddAnchor(_T("CreatingPlugin"));
+  H3(_("Creating a plugin"));
+  P(_("Information on how to create a plugin is available on [http://app.etizer.org/wiki/creating-a-plugin Appetizer's website]"));
 
   // *******************************************************************************
   // CONFIGURING APPETIZER
@@ -282,7 +298,9 @@ wxString GenerateHTMLString() {
   H3(_("Operations"));
   StartList();
   LI(_("[b]Auto-hide after launching an application:[/b] Select this option to have Appetizer hides itself each time you launch an application."));
-  LI(_("[b]Run multi-launch group on startup:[/b] Tick this option to automatically run the [#Multilaunch multi-launch group] on startup."));
+  LI(_("[b]When ejecting the drive, close the apps that are locking it:[/b] If this option is selected, all the apps that are open on your removable drive will be closed when you click on the 'Eject' button."));
+  LI(_("[b]Run multi-launch group on startup:[/b] Tick off this option to automatically run the [#Multilaunch multi-launch group] on startup."));
+  LI(_("[b]'Close' button minimizes to System Tray:[/b] By default, the application is minimized to the System Tray when the 'Close' button is clicked. Tick off this option to make the 'Close' button actually close the app."));
   LI(_("[b]Hot key to hide / show the bar:[/b] Select the hot key to hide / show the bar. Select 'none' to disable it."));
   EndList();
 
@@ -292,7 +310,7 @@ wxString GenerateHTMLString() {
   AddAnchor(_T("ConfiguringImport"));
   H3(_("Import"));
   StartList();
-  LI(_("[b]Exclude these items from the import operations:[/b] Normally, when importing shortcuts using the [#Import import tool], all the executables are added to the dock. If you wish to exclude certain files, add them to this list. Note that this list is also automatically populated whenever you remove a shortcut from the dock."));
+  LI(_("[b]Exclude these items from the import operations:[/b] Normally, when importing shortcuts using the [#Import import tool], all the executables are added to the dock. If you wish to exclude certain files, add them to this list. The item names may be specified with [http://www.computerhope.com/jargon/w/wildcard.htm wildcards]. Note that this list is also automatically populated whenever you remove a shortcut from the dock."));
   EndList();
 	
   // -------------------------
@@ -300,11 +318,11 @@ wxString GenerateHTMLString() {
   // -------------------------
   AddAnchor(_T("ConfiguringPlugins"));
   H3(_("Plugins"));
-  // StartList();
-  // LI(_("[b]Exclude these items from the import operations:[/b] Normally, when importing shortcuts using the [#Import import tool], all the executables are added to the dock. If you wish to exclude certain files, add them to this list. Note that this list is also automatically populated whenever you remove a shortcut from the dock."));
-  // EndList();
-	
-	
+  P(_("This tab displays the plugins that are currently installed along with their status."));
+  StartList();
+  LI(_("[b]Enable / Disable buttons:[/b] Click these buttons to enable / disable the selected plugin."));
+  LI(_("[b]Install...:[/b] Click to [#AddingPlugins install a new plugin]."));
+  EndList();	
 
   // *******************************************************************************
   // OTHER TIPS
@@ -330,6 +348,7 @@ wxString GenerateHTMLString() {
   H2(_("Support and links"));
   P(wxString::Format(_("Official home page: %s"), _T("[http://app.etizer.org http://app.etizer.org]")));
   P(wxString::Format(_("Project home page: %s"), _T("[https://sourceforge.net/projects/appetizer https://sourceforge.net/projects/appetizer]")));
+  P(wxString::Format(_("Some information on how to create a plugin: %s"), _T("[http://app.etizer.org/wiki/creating-a-plugin http://app.etizer.org/wiki/creating-a-plugin]")));
   P(wxString::Format(_("Beta versions and preleases are usually on [%s PortableApps Beta Testing forum]"), _T("http://portableapps.com/forums/development/beta_testing")));
   P(wxString::Format(_("For bug reports, suggestions, comments or translations, please contact %s"), imayle));//wxString::Format(_T("<a href=\"mailto:%s\">%s</a> or post on the beta forum."), imayle, imayle)));
 

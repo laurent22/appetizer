@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-18 17:55+0000\n"
+"POT-Creation-Date: 2008-12-02 16:26+0000\n"
 "PO-Revision-Date: 2008-11-13 12:46-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -17,23 +17,22 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: generate_help\main.cpp:124
+#: generate_help\main.cpp:123
 msgid "Introduction"
 msgstr "Introdution"
 
-#: generate_help\main.cpp:125
+#: generate_help\main.cpp:124
 msgid "About Appetizer"
 msgstr "À propos d'Appetizer"
 
-#: generate_help\main.cpp:126
+#: generate_help\main.cpp:125
 msgid ""
 "Appetizer is a free application launcher, or dock, for Windows. It allows "
 "organizing and launching your applications and other shortcuts into a "
-"convenient dock. The app is skinable and entirely customizable. It is "
-"available in several different languages."
+"convenient dock. The app is skinable and entirely customizable."
 msgstr ""
 
-#: generate_help\main.cpp:127
+#: generate_help\main.cpp:126
 #, fuzzy
 msgid ""
 "Additionally, the application supports the [http://portableapps.com "
@@ -50,19 +49,24 @@ msgstr ""
 "barre tous vos logiciels ainsi que vos dossiers 'Documents', 'Videos', "
 "'Music' et 'Pictures'."
 
-#: generate_help\main.cpp:132
+#: generate_help\main.cpp:131
 msgid "Features"
 msgstr "Fonctionalités"
 
+#: generate_help\main.cpp:134
+msgid "Support for multiple skins"
+msgstr "Apparence personalisable"
+
 #: generate_help\main.cpp:135
+#, fuzzy
+msgid "Support for plugins"
+msgstr "Apparence personalisable"
+
+#: generate_help\main.cpp:136
 msgid ""
 "Resizable dock, which allows displaying the icons both horizontally or "
 "vertically."
 msgstr "Mode horizontal et vertical"
-
-#: generate_help\main.cpp:136
-msgid "Support for multiple skins"
-msgstr "Apparence personalisable"
 
 #: generate_help\main.cpp:137
 #, fuzzy
@@ -132,7 +136,8 @@ msgstr "Ajouter un raccourci"
 #: generate_help\main.cpp:164
 msgid ""
 "To add a shortcut, right-click anywhere on the icon panel and select 'New "
-"shortcut', then select a file or folder."
+"shortcut', then select a file or folder. Alternatively, you may also "
+"directly drag and drop a file onto the dock."
 msgstr ""
 
 #: generate_help\main.cpp:169
@@ -228,9 +233,11 @@ msgid "Minimizing / Maximizing the dock"
 msgstr "Minimiser / Maximiser Appetizer"
 
 #: generate_help\main.cpp:202
+#, fuzzy
 msgid ""
 "The dock can be minimized to the tray icon by clicking on the 'x' button. To "
-"bring it back to front, simply click on the tray icon."
+"bring it back to front, simply click on the tray icon. Note that this "
+"behavior can be changed in the 'Configuration' dialog"
 msgstr ""
 "Le logiciel peut être minimiser dans la barre de notifications en cliquant "
 "sur le bouton 'x'. Pour la rendre visible à nouveau, cliquez sur l'icône "
@@ -305,11 +312,59 @@ msgstr ""
 "panneau d'options] et cliquez sur le bouton 'Lancement multiple' : [images/"
 "Multilaunch.jpg]"
 
-#: generate_help\main.cpp:237
+#: generate_help\main.cpp:237 generate_help\main.cpp:320
+msgid "Plugins"
+msgstr ""
+
+#: generate_help\main.cpp:238
+msgid ""
+"Appetizer supports a plugin system that allows easily adding new "
+"functionalities and customizing the application to your needs."
+msgstr ""
+
+#: generate_help\main.cpp:245
+#, fuzzy
+msgid "Adding a plugin"
+msgstr "Ajouter un raccourci"
+
+#: generate_help\main.cpp:246
+msgid "To add a plugin, follow these steps:"
+msgstr ""
+
+#: generate_help\main.cpp:248
+msgid "Open the [#Configuring Configuration dialog]."
+msgstr ""
+
+#: generate_help\main.cpp:249
+msgid "Open the 'Plugin' tab."
+msgstr ""
+
+#: generate_help\main.cpp:250
+msgid "Click the 'Install...' button and open the plugin's .zpl package."
+msgstr ""
+
+#: generate_help\main.cpp:251
+msgid ""
+"If everything went well, you should see a message saying that the plugin was "
+"successfully installed. However, note that it will only be active the next "
+"time Appetizer is started."
+msgstr ""
+
+#: generate_help\main.cpp:258
+msgid "Creating a plugin"
+msgstr ""
+
+#: generate_help\main.cpp:259
+msgid ""
+"Information on how to create a plugin is available on [http://app.etizer.org/"
+"wiki/creating-a-plugin Appetizer's website]"
+msgstr ""
+
+#: generate_help\main.cpp:266
 msgid "Configuring Appetizer"
 msgstr "Configurer Appetizer"
 
-#: generate_help\main.cpp:238
+#: generate_help\main.cpp:267
 msgid ""
 "The configuration dialogue is accessible by clicking on the 'Configuration' "
 "button in the [#OptionPanel option panel]. The description of each setting "
@@ -319,11 +374,11 @@ msgstr ""
 "'Configuration' dans le [#OptionPanel panneau d'options]. La description de "
 "chaque option est donnée ci-dessous :"
 
-#: generate_help\main.cpp:245
+#: generate_help\main.cpp:274
 msgid "General"
 msgstr "Général"
 
-#: generate_help\main.cpp:247
+#: generate_help\main.cpp:276
 msgid ""
 "[b]Language:[/b] Select your language here. If you wish to contribute and "
 "translate Appetizer in your own language, please [#Translating follow this "
@@ -333,7 +388,7 @@ msgstr ""
 "et traduire Appetizer dans votre langue, veuillez [#Translating suivre ce "
 "lien]."
 
-#: generate_help\main.cpp:248
+#: generate_help\main.cpp:277
 msgid ""
 "[b]Always on top:[/b] If this is selected the bar will always remain on top "
 "of the other windows."
@@ -341,7 +396,7 @@ msgstr ""
 "[b]Toujour visible :[/b] Si cette option est sélectionnée, Appetizer restera "
 "tout le temps visible."
 
-#: generate_help\main.cpp:249
+#: generate_help\main.cpp:278
 msgid ""
 "[b]Allow only one instance of Appetizer at a time:[/b] If this is selected, "
 "only one instance of Appetizer can run at a time."
@@ -349,14 +404,16 @@ msgstr ""
 "[b]N'autoriser qu'une seule copie d'Appetizer à la fois :[/b] Si cela est "
 "sélectionné, seule une copie d'Appetizer ne pourra tourner à la fois."
 
-#: generate_help\main.cpp:250
+#: generate_help\main.cpp:279
 msgid ""
 "[b]Install autorun file:[/b] Clicking this button will install an autorun "
 "file on your removable drive. This will allow Appetizer to automatically "
-"start when you insert the drive."
+"start when you insert the drive. However, note that in some instances "
+"Windows may prevent the autorun from being executed, for example for "
+"security reason or because the computer is set that way."
 msgstr ""
 
-#: generate_help\main.cpp:251
+#: generate_help\main.cpp:280
 msgid ""
 "[b]Check for update:[/b] Click this button to check if a new update is "
 "available."
@@ -364,36 +421,36 @@ msgstr ""
 "[b]Rechercher des misesà jour :[/b] Cliquez ce bouton pour vérifier si une "
 "nouvelle version est disponible."
 
-#: generate_help\main.cpp:258
+#: generate_help\main.cpp:287
 msgid "Appearance"
 msgstr "Apparence"
 
-#: generate_help\main.cpp:260
+#: generate_help\main.cpp:289
 #, fuzzy
 msgid "[b]Icon size:[/b] Choose the size of the icons."
 msgstr ""
 "[b]Taille des icônes :[/b] Choisissez la taille des icônes, telles "
 "qu'affichées sur la barre."
 
-#: generate_help\main.cpp:261
+#: generate_help\main.cpp:290
 msgid ""
 "[b]Orientation:[/b] The bar can be vertically or horizontally orientated."
 msgstr ""
 "[b]Orientation :[/b] La barre peut être orientée verticalement ou "
 "horizontalement."
 
-#: generate_help\main.cpp:262
+#: generate_help\main.cpp:291
 msgid "[b]Skin:[/b] Choose one of the available skins."
 msgstr ""
 "[b]Apperance :[/b] Changez l'apparene globale d'Appetizer en utilisant ce "
 "menu."
 
-#: generate_help\main.cpp:269
+#: generate_help\main.cpp:298
 #, fuzzy
 msgid "Operations"
 msgstr "Autres astuces"
 
-#: generate_help\main.cpp:271
+#: generate_help\main.cpp:300
 msgid ""
 "[b]Auto-hide after launching an application:[/b] Select this option to have "
 "Appetizer hides itself each time you launch an application."
@@ -402,55 +459,86 @@ msgstr ""
 "option pour que Appetizer soit minimisé dans la barre de notification à "
 "chaque fois que vous lancez un programme."
 
-#: generate_help\main.cpp:272
+#: generate_help\main.cpp:301
 msgid ""
-"[b]Run multi-launch group on startup:[/b] Tick this option to automatically "
-"run the [#Multilaunch multi-launch group] on startup."
+"[b]When ejecting the drive, close the apps that are locking it:[/b] If this "
+"option is selected, all the apps that are open on your removable drive will "
+"be closed when you click on the 'Eject' button."
 msgstr ""
 
-#: generate_help\main.cpp:273
+#: generate_help\main.cpp:302
+msgid ""
+"[b]Run multi-launch group on startup:[/b] Tick off this option to "
+"automatically run the [#Multilaunch multi-launch group] on startup."
+msgstr ""
+
+#: generate_help\main.cpp:303
+msgid ""
+"[b]'Close' button minimizes to System Tray:[/b] By default, the application "
+"is minimized to the System Tray when the 'Close' button is clicked. Tick off "
+"this option to make the 'Close' button actually close the app."
+msgstr ""
+
+#: generate_help\main.cpp:304
 msgid ""
 "[b]Hot key to hide / show the bar:[/b] Select the hot key to hide / show the "
 "bar. Select 'none' to disable it."
 msgstr ""
 
-#: generate_help\main.cpp:280
+#: generate_help\main.cpp:311
 msgid "Import"
 msgstr ""
 
-#: generate_help\main.cpp:282
+#: generate_help\main.cpp:313
 msgid ""
 "[b]Exclude these items from the import operations:[/b] Normally, when "
 "importing shortcuts using the [#Import import tool], all the executables are "
 "added to the dock. If you wish to exclude certain files, add them to this "
-"list. Note that this list is also automatically populated whenever you "
-"remove a shortcut from the dock."
+"list. The item names may be specified with [http://www.computerhope.com/"
+"jargon/w/wildcard.htm wildcards]. Note that this list is also automatically "
+"populated whenever you remove a shortcut from the dock."
 msgstr ""
 
-#: generate_help\main.cpp:288
+#: generate_help\main.cpp:321
+msgid ""
+"This tab displays the plugins that are currently installed along with their "
+"status."
+msgstr ""
+
+#: generate_help\main.cpp:323
+msgid ""
+"[b]Enable / Disable buttons:[/b] Click these buttons to enable / disable the "
+"selected plugin."
+msgstr ""
+
+#: generate_help\main.cpp:324
+msgid "[b]Install...:[/b] Click to [#AddingPlugins install a new plugin]."
+msgstr ""
+
+#: generate_help\main.cpp:330
 msgid "Other tips"
 msgstr "Autres astuces"
 
-#: generate_help\main.cpp:290
+#: generate_help\main.cpp:332
 msgid ""
 "You can resize the dock by clicking and dragging its bottom right corner."
 msgstr ""
 "Vous pouvez redimensionner la barre en cliquant et déplacant son coin en bas "
 "à droite."
 
-#: generate_help\main.cpp:291
+#: generate_help\main.cpp:333
 msgid "You can move it by clicking anywhere on the icon panel and dragging."
 msgstr "Vous pouvez la déplacer en cliquant n'importe où et en déplacant."
 
-#: generate_help\main.cpp:292
+#: generate_help\main.cpp:334
 msgid "The bar will snap to the borders of the screens as you move it."
 msgstr "La barre se 'collera' au bord de l'écran lorsque vous la déplacez."
 
-#: generate_help\main.cpp:299
+#: generate_help\main.cpp:341
 msgid "Translating Appetizer"
 msgstr "Traduire Appetizer"
 
-#: generate_help\main.cpp:300
+#: generate_help\main.cpp:342
 #, c-format
 msgid ""
 "If Appetizer is not available in your own language, you can easily create "
@@ -460,29 +548,34 @@ msgstr ""
 "créer votre propre translation. Veuillez [%s suivre ce lien] pour plus "
 "d'information."
 
-#: generate_help\main.cpp:306
+#: generate_help\main.cpp:348
 #, fuzzy
 msgid "Support and links"
 msgstr "Apparence personalisable"
 
-#: generate_help\main.cpp:307
+#: generate_help\main.cpp:349
 #, c-format
 msgid "Official home page: %s"
 msgstr ""
 
-#: generate_help\main.cpp:308
+#: generate_help\main.cpp:350
 #, c-format
 msgid "Project home page: %s"
 msgstr ""
 
-#: generate_help\main.cpp:309
+#: generate_help\main.cpp:351
+#, c-format
+msgid "Some information on how to create a plugin: %s"
+msgstr ""
+
+#: generate_help\main.cpp:352
 #, c-format
 msgid ""
 "Beta versions and preleases are usually on [%s PortableApps Beta Testing "
 "forum]"
 msgstr ""
 
-#: generate_help\main.cpp:310
+#: generate_help\main.cpp:353
 #, c-format
 msgid ""
 "For bug reports, suggestions, comments or translations, please contact %s"

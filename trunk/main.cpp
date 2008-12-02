@@ -33,6 +33,9 @@ int MiniLaunchBar::uniqueInt_ = 0;
 bool MiniLaunchBar::OnInit() {
   //_CrtSetBreakAlloc(96332);
 
+  // Remove GUI log errors
+  delete wxLog::SetActiveTarget(new wxLogStderr());
+
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
   BOOL gotInfo = GetVersionEx(&osInfo_);
