@@ -1,3 +1,7 @@
+-- Copyright (C) 2008 Laurent Cozic. All right reserved.
+-- Use of this source code is governed by a GNU/GPL license that can be
+-- found in the LICENSE file.
+
 function shortcutTest()
 	trace("Creating new shortcut...")
 	s = Shortcut:new(false)
@@ -81,13 +85,13 @@ function optionButton_click(event)
 	menu = Menu:new("Test units")
 	
 	menuItem = {}
-	menuItem.text = "Shortcut test";
-	menuItem.onClick = "shortcutTest";	
+	menuItem.text = "Shortcut test"
+	menuItem.onClick = "shortcutTest"
 	menu:append(menuItem)
 	
 	menuItem = {}
-	menuItem.text = "Group test";
-	menuItem.onClick = "groupTest";	
+	menuItem.text = "Group test"
+	menuItem.onClick = "groupTest"
 	menu:append(menuItem)
 	
 	trace("Get the object that has sent the event, in this case the option button")
@@ -103,7 +107,7 @@ trace("Creating new button")
 button = OptionButton():new()
 
 trace("Setting tooltip");
-button:setToolTip("My plugin button");
+button:setToolTip("My plugin button")
 
 trace("Adding button to option panel")
 optionPanel:addButton(button)

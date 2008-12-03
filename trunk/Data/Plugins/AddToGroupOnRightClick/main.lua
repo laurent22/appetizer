@@ -1,3 +1,7 @@
+-- Copyright (C) 2008 Laurent Cozic. All right reserved.
+-- Use of this source code is governed by a GNU/GPL license that can be
+-- found in the LICENSE file.
+
 -- This script allows adding a shortcut to a group
 -- by right-clicking on it.
 --
@@ -39,9 +43,9 @@ function application_iconMenuOpening(event)
 	
 	for i, group in pairs(groups) do
 		menuItem = {}
-		menuItem.text = group:getName(); -- the menu item label
-		menuItem.id = group:getId(); -- keep a reference to the group
-		menuItem.tag = shortcut:getId(); -- keep a reference to the shortcut
+		menuItem.text = group:getName() -- the menu item label
+		menuItem.id = group:getId() -- keep a reference to the group
+		menuItem.tag = shortcut:getId() -- keep a reference to the shortcut
 		menuItem.onClick = "addToGroupPopupMenu_click" -- this function is going to be called when/if the menu item is selected
 				
 		-- Add the menu item to the sub menu

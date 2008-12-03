@@ -4,6 +4,39 @@
   found in the LICENSE file.
 */
 
+/**
+ * This class can be used to display a context menus via the popupMenu() function of some objects.
+ * Menus are built by appending menu items to them.
+ *
+ * @example The following code creates a new menu and append a menu item to it:
+ * <listing version="3.0">
+ * -- Create a new menu
+ * menu = Menu:new("My menu")
+ * 
+ * -- Create a new menu item
+ * menuItem = {}
+ * 
+ * -- (Required) The menu item label
+ * menuItem.text = "my menu item"
+ * 
+ * -- (Optional) Give the item an id that can be used later on to track a menu item
+ * menuItem.id = "some id"
+ * 
+ * -- (Optional) The "tag" property can be used to attach additional data to the menu item
+ * menuItem.tag = "some extra info"
+ * 
+ * -- (Optional) Name of the function that is going to be called when/if the menu item is selected
+ * menuItem.onClick = "menuItem_click"
+ * 		
+ * -- Add the menu item to the menu
+ * subMenu:append(menuItem) 
+ * 
+ * function menuItem_click(event)
+ *     trace("Menu item with id ", event.menuItemId, " and tag ", event.menuItemTag, " was clicked")
+ * end
+ * </listing>
+ */	
+
 #include "../stdafx.h"
 
 #include "azMenu.h"
@@ -34,6 +67,11 @@ azMenu::azMenu(wxMenu* menu) {
 }
 
 
+/**
+ * Constructor.
+ * @param String menuLabel Menu label
+ * 
+ */	
 azMenu::azMenu(lua_State *L) {
   wxString text = LuaUtil::ToString(L, 1);
 
@@ -47,12 +85,21 @@ azMenu::~azMenu() {
 }
 
 
+/**
+ * Appends a separator item to the menu
+ * 
+ */	
 int azMenu::appendSeparator(lua_State *L) {
   menu_->AppendSeparator();
   return 0;
 }
 
 
+/**
+ * Appends a menu item to the menu
+ * @param MenuItem menuItem Menu item to append to the menu
+ * 
+ */	
 int azMenu::append(lua_State *L) {
   wxString menuItemText = LuaUtil::GetStringFromTable(L, 1, _T("text"));  
   wxString menuItemOnClick = LuaUtil::GetStringFromTable(L, 1, _T("onClick"));
@@ -75,6 +122,25 @@ int azMenu::append(lua_State *L) {
 }
 
 
+/**
+ * Appends a submenu to the menu
+ * @param Menu menu Submenu to append to the menu
+ *
+ * @example The following code creates a new menu and append a menu item to it:
+ * <listing version="3.0">
+ * -- Create the submenu
+ * submenu = Menu:new("My menu")
+ * 
+ * -- Append an item to it
+ * menuItem = {}
+ * menuItem.text = "submenu item"
+ * submenu:append(menuItem)
+ * 
+ * -- Append the submenu to an existing menu
+ * someMenu:appendSubMenu(submenu)
+ * </listing>
+ * 
+ */	
 int azMenu::appendSubMenu(lua_State *L) {
   azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
 	if (subMenu->Get()->GetTitle() == wxEmptyString) return 0;

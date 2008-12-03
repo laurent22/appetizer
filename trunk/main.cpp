@@ -87,10 +87,6 @@ bool MiniLaunchBar::OnInit() {
 
   FilePaths::InitializePaths();
 
-  #ifdef __WINDOWS__
-  SetDllDirectory(FilePaths::GetToolsDirectory());
-  #endif 
-
   // If the setting file doesn't exist, assume it's the first time the app is launched
   isFirstLaunch_ = !wxFileName::FileExists(FilePaths::GetSettingsFile());
 
