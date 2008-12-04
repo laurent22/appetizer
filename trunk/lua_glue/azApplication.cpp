@@ -12,6 +12,13 @@
 #include "../MiniLaunchBar.h"
 
 
+
+//*****************************************************************
+//
+// LUNAR DATA
+//
+//*****************************************************************
+
 const char azApplication::className[] = "Application";
 
 #define method(class, name) {#name, &class::name}
@@ -24,7 +31,21 @@ Lunar<azApplication>::RegType azApplication::methods[] = {
 };
 
 
+//*****************************************************************
+//
+// NON-EXPORTED MEMBERS
+//
+//*****************************************************************
+
+
 MiniLaunchBar* azApplication::Get() const { return &(wxGetApp()); }
+
+
+//*****************************************************************
+//
+// EXPORTED MEMBERS
+//
+//*****************************************************************
 
 
 azIMPLEMENT_EVENT_LISTENER_FUNCTION(azApplication)

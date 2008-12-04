@@ -91,6 +91,8 @@ class MainFrame: public wxFrame {
     int GetMaxHeight();
     int GetMaxWidth();
 
+    wxWindow* GetNullPanelObjectById(int id);
+
     void ConvertToWindowValidCoordinates(const wxDisplay* display, int& x, int& y, int& width, int& height);
 
     wxMenu* GetContextMenu();

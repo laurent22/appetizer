@@ -31,6 +31,7 @@ public:
   lua_State* GetLuaState();
   wxString GetName();
   wxString GetUUID();
+  void OnLuaScopeClose();
   bool WasInitiallyEnabled();
   void SetInitiallyEnabled(bool enabled);
   void Enable(bool enable);

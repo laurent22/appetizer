@@ -19,6 +19,11 @@ public:
 
   virtual wxObject* Get() { return NULL; }
 
+  int CheckWrappedObject(lua_State *L, wxObject* wrappedObject);
+
+  int LuaNullError(lua_State *L);
+  int LuaPrivateConstructorError(lua_State *L);
+
 };
 
 

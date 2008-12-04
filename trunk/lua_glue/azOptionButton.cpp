@@ -14,6 +14,12 @@
 #include "LuaUtil.h"
 
 
+//*****************************************************************
+//
+// LUNAR DATA
+//
+//*****************************************************************
+
 const char azOptionButton::className[] = "OptionButton";
 
 #define method(class, name) {#name, &class::name}
@@ -26,18 +32,23 @@ Lunar<azOptionButton>::RegType azOptionButton::methods[] = {
 };
 
 
-azIMPLEMENT_EVENT_LISTENER_FUNCTION(azOptionButton)
+//*****************************************************************
+//
+// NON-EXPORTED MEMBERS
+//
+//*****************************************************************
 
 
-azOptionButton::azOptionButton(lua_State *L) {
-  button_ = new OptionButton(wxGetApp().GetMainFrame()->GetNullPanel(), wxGetApp().GetUniqueInt());
-}
+OptionButton* azOptionButton::Get() const {
+  OptionButton* b = wxGetApp().GetMainFrame()->GetOptionPanel()->GetButtonById(buttonId_);
+  if (b) return b;
+  
+  // The button may be on the null panel if it has been created but hasn't been
+  // added to the option panel yet.
+  b = (OptionButton*)(wxGetApp().GetMainFrame()->GetNullPanelObjectById(buttonId_));
+  if (b) return b;
 
-
-int azOptionButton::setToolTip(lua_State *L) {
-  wxString toolTip = LuaUtil::ToString(L, 1);
-  Get()->SetToolTip(toolTip);
-  return 0;
+  return NULL;
 }
 
 
@@ -51,13 +62,42 @@ void azOptionButton::OnMenuClick(wxCommandEvent& evt) {
 }
 
 
+//*****************************************************************
+//
+// EXPORTED MEMBERS
+//
+//*****************************************************************
+
+
+azIMPLEMENT_EVENT_LISTENER_FUNCTION(azOptionButton)
+
+
+azOptionButton::azOptionButton(lua_State *L) {
+  OptionButton* b = new OptionButton(wxGetApp().GetMainFrame()->GetNullPanel(), wxGetApp().GetUniqueInt());
+  buttonId_ = b->GetId();
+}
+
+
+int azOptionButton::setToolTip(lua_State *L) {
+  CheckWrappedObject(L, Get());
+
+  wxString toolTip = LuaUtil::ToString(L, 1);
+  Get()->SetToolTip(toolTip);
+  return 0;
+}
+
+
 int azOptionButton::popupMenu(lua_State *L) {
+  CheckWrappedObject(L, Get());
+
   const azMenu* menu = Lunar<azMenu>::check(L, 1);
 
-  int screenX = Get()->GetRect().GetX();
-  int screenY = Get()->GetRect().GetY();
+  OptionButton* button = Get();
 
-  if (!Get()->GetParent()) return 0; // shouldn't happen
+  int screenX = button->GetRect().GetX();
+  int screenY = button->GetRect().GetY();
+
+  if (!button->GetParent()) return 0; // shouldn't happen
 
   menu->Get()->Connect(
     wxID_ANY,
@@ -66,7 +106,10 @@ int azOptionButton::popupMenu(lua_State *L) {
     NULL,
     this);
 
-  Get()->GetParent()->PopupMenu(menu->Get(), screenX, screenY + Get()->GetRect().GetHeight());
+  wxWindow* parent = button->GetParent();
+  if (!parent) return 0;
+
+  parent->PopupMenu(menu->Get(), screenX, screenY + button->GetRect().GetHeight());
 
   return 0;
 }

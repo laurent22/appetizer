@@ -469,6 +469,16 @@ void IconPanel::SetFolderItemSource(int source) {
 }
 
 
+FolderItemRenderer* IconPanel::GetFolderItemRendererById(int id) {
+  for (int i = 0; i < folderItemRenderers_.size(); i++) {
+    FolderItemRenderer* r = folderItemRenderers_[i];
+    if (!r) continue;
+    if (r->GetId() == id) return r;
+  }
+  return NULL;
+}
+
+
 void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
@@ -553,7 +563,7 @@ void IconPanel::RefreshIcons() {
     if (found) continue; // The folder item is already on the dock
 
     // Create a new renderer and add it to the panel
-    FolderItemRenderer* renderer = new FolderItemRenderer(this, wxID_ANY, wxPoint(0,0), wxSize(0, 0));
+    FolderItemRenderer* renderer = new FolderItemRenderer(this, wxGetApp().GetUniqueInt(), wxPoint(0,0), wxSize(0, 0));
     
     renderer->LoadData(folderItem->GetId());
     renderer->Hide();

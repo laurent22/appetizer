@@ -18,8 +18,8 @@ class azIcon : public azWrapper {
 
 public:
 
-  azIcon(FolderItemRenderer* r) { renderer_ = r; }
-  azIcon(lua_State *L) {}
+  azIcon(FolderItemRenderer* r);
+  azIcon(lua_State *L);
   
   int getPopupMenu(lua_State *L);
   int getShortcut(lua_State *L);
@@ -27,12 +27,12 @@ public:
   static const char className[];
   static Lunar<azIcon>::RegType methods[];
 
-  FolderItemRenderer* Get() const { return renderer_; }
+  FolderItemRenderer* Get() const;
 
 private:
 
-  FolderItemRenderer* renderer_;
-
+  int rendererId_;
+  
 };
 
 

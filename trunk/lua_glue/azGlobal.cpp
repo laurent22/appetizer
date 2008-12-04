@@ -10,10 +10,24 @@
 #include "azGlobal.h"
 
 
+//*****************************************************************
+//
+// NON-EXPORTED MEMBERS
+//
+//*****************************************************************
+
+
 int luaHost_logError(const wxString& s, const wxString& functionName) {
   ELOG(_T("%s %s (%s)"), _T("[Lua Host] [Error]"), s, functionName);
   return 0;
 }
+
+
+//*****************************************************************
+//
+// EXPORTED MEMBERS
+//
+//*****************************************************************
 
 
 int azPrint(lua_State *L) {

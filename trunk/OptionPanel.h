@@ -45,6 +45,7 @@ public:
   void Localize();
   void SetRotated(bool rotated);
   void ApplySkin();
+  OptionButton* GetButtonById(int id);
 
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);

@@ -11,6 +11,13 @@
 #include "../MiniLaunchBar.h"
 
 
+//*****************************************************************
+//
+// LUNAR DATA
+//
+//*****************************************************************
+
+
 const char azOptionPanel::className[] = "OptionPanel";
 
 #define method(class, name) {#name, &class::name}
@@ -24,9 +31,23 @@ Lunar<azOptionPanel>::RegType azOptionPanel::methods[] = {
 };
 
 
+//*****************************************************************
+//
+// NON-EXPORTED MEMBERS
+//
+//*****************************************************************
+
+
 OptionPanel* azOptionPanel::Get() {
   return wxGetApp().GetMainFrame()->GetOptionPanel();
 }
+
+
+//*****************************************************************
+//
+// EXPORTED MEMBERS
+//
+//*****************************************************************
 
 
 int azOptionPanel::addButton(lua_State *L) {

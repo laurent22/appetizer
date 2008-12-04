@@ -179,6 +179,16 @@ MainFrame::MainFrame()
 } 
 
 
+wxWindow* MainFrame::GetNullPanelObjectById(int id) {
+  const wxWindowList& children = nullPanel_->GetChildren();
+  for (int i = 0; i < children.size(); i++) {
+    wxWindow* w = children[i];
+    if (w->GetId() == id) return w;
+  }
+  return NULL;
+}
+
+
 void MainFrame::OnHelp(wxHelpEvent& evt) {
   wxGetApp().GetUtilities().ShowHelpFile();
 }

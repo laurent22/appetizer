@@ -20,7 +20,7 @@ class azOptionButton : public azWrapper {
 
 public:
 
-  azOptionButton(OptionButton* button) { button_ = button; }
+  azOptionButton(OptionButton* button) { buttonId_ = button->GetId(); }
   azOptionButton(lua_State *L);
 
   int setToolTip(lua_State *L);
@@ -32,11 +32,11 @@ public:
   static Lunar<azOptionButton>::RegType methods[];
 
   void OnMenuClick(wxCommandEvent& evt);
-  OptionButton* Get() const { return button_; }
+  OptionButton* Get() const;
 
 private:
 
-  OptionButton* button_;
+  int buttonId_;
 
 };
 

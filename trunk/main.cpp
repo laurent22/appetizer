@@ -172,6 +172,8 @@ bool MiniLaunchBar::OnInit() {
     d->Destroy();
   }
 
+  // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
+
   InitializePluginManager();
 
   return true;

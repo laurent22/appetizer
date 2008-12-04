@@ -47,6 +47,15 @@ NineSlicesPanel(owner, id, point, size) {
 }
 
 
+OptionButton* OptionPanel::GetButtonById(int id) {
+  for (int i = 0; i < buttons_.size(); i++) {    
+    OptionButton* b = buttons_[i];
+    if (b->GetId() == id) return b;
+  }
+  return NULL;
+}
+
+
 int OptionPanel::ButtonCount() {
   return buttons_.size();
 }

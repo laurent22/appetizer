@@ -60,6 +60,11 @@ void Plugin::Enable(bool enable) {
 }
 
 
+void Plugin::OnLuaScopeClose() {
+  azMenu::OnLuaScopeClose();
+}
+
+
 void Plugin::LoadPluginXml(const wxString& xmlFilePath) {
   ILOG(_T("Loading: ") + xmlFilePath);
 
@@ -139,6 +144,8 @@ void Plugin::Load(const wxString& folderPath) {
     const char* errorString = lua_tostring(L, -1);
     luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::LoadFile"));
   }
+
+  OnLuaScopeClose();
 }
 
 
@@ -190,6 +197,41 @@ bool luaPushAsWrapper(lua_State* L, wxObject* o) {
 }
 
 
+bool DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value) {
+  // wxObject* must be any supported wxWidgets object EXCEPT for azWrappers
+  // The function checks the type of "value" and try to find an associated wrapper.
+  // If it does, the object is converted to an azWrapper and push onto the Lua stack.
+  // If it doesn't, the function returns false.
+
+  bool done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, value);
+  if (done) return true;
+
+  done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
+  if (done) return true;
+
+  done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
+  if (done) return true;
+
+  done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, value);
+  if (done) return true;
+
+  done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
+  if (done) return true;
+
+  if (dynamic_cast<MiniLaunchBar*>(value)) {
+    Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication, true);
+    return true;
+  }
+
+  if (dynamic_cast<OptionPanel*>(value)) {
+    Lunar<azOptionPanel>::push(L, wxGetApp().GetPluginManager()->luaOptionPanel, true);
+    return true;
+  }
+
+  return false;
+}
+
+
 void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments) {
   std::pair<wxObject*, int> pair(sender, eventId);
 
@@ -232,20 +274,7 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
 
       } else if (valueType == LHT_wxObject) {
 
-        done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, value);
-        if (!done) done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
-        if (!done) done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, value);
-        if (!done) done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
-
-        if (!done && dynamic_cast<MiniLaunchBar*>(value)) {
-          Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication, true);
-          done = true;
-        }
-
-        if (!done && dynamic_cast<OptionPanel*>(value)) {
-          Lunar<azOptionPanel>::push(L, wxGetApp().GetPluginManager()->luaOptionPanel, true);
-          done = true;
-        }
+        done = DetectTypeAndPushAsWrapper(L, value);
 
       } else {
 
@@ -260,21 +289,7 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
 
     lua_pushstring(L, "sender");
 
-    bool done = false;
-
-    done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, sender);
-    if (!done) done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, sender);
-    if (!done) done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, sender);
-
-    if (!done && dynamic_cast<MiniLaunchBar*>(sender)) {
-      Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication, true);
-      done = true;
-    }
-
-    if (!done && dynamic_cast<OptionPanel*>(sender)) {
-      Lunar<azOptionPanel>::push(L, wxGetApp().GetPluginManager()->luaOptionPanel, true);
-      done = true;
-    }
+    bool done = DetectTypeAndPushAsWrapper(L, sender);
 
     if (!done) wxLogDebug(_T("[ERROR] Cannot detect type of sender"));
 
@@ -286,9 +301,10 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
       const char* errorString = lua_tostring(L, -1);
       luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::DispatchEvent"));
     }
-
+    
   }
 
+  OnLuaScopeClose();
 }
 
 

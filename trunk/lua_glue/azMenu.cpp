@@ -46,6 +46,14 @@
 #include "LuaUtil.h"
 
 
+
+//*****************************************************************
+//
+// LUNAR DATA
+//
+//*****************************************************************
+
+
 const char azMenu::className[] = "Menu";
 
 #define method(class, name) {#name, &class::name}
@@ -58,13 +66,55 @@ Lunar<azMenu>::RegType azMenu::methods[] = {
 };
 
 
-void azMenu::SetOwnContent(bool v) { ownContent_ = v; }
+//*****************************************************************
+//
+// NON-EXPORTED MEMBERS
+//
+//*****************************************************************
+
+
+std::vector<azMenu*> azMenu::createdObjects_;
+
+
+void azMenu::ReleaseContent() { ownContent_ = false; }
+
+
+void azMenu::OnLuaScopeClose() {
+  for (int i = createdObjects_.size() - 1; i >= 0; i--) {
+    azMenu* m = createdObjects_.at(i);
+    if (m->IsOwningContent()) continue;
+
+    // Set it to NULL so that any further calls to any of the menu methods will
+    // fail properly (i.e. without crashing Appetizer). We don't want to
+    // to keep a reference to the wxMenu because it will most likely be
+    // deleted once it has been displayed. The only exception is if 
+    // the plugin has created the menu (and hasn't give ownership to any
+    // other objects)
+    m->Set(NULL);
+
+    // The object can now be garbage collected
+    createdObjects_.erase(createdObjects_.begin() + i);
+  }
+}
 
 
 azMenu::azMenu(wxMenu* menu) { 
   menu_ = menu;
   ownContent_ = false; 
+  createdObjects_.push_back(this);
 }
+
+
+azMenu::~azMenu() {
+  if (ownContent_) wxDELETE(menu_);
+}
+
+
+//*****************************************************************
+//
+// EXPORTED MEMBERS
+//
+//*****************************************************************
 
 
 /**
@@ -77,11 +127,8 @@ azMenu::azMenu(lua_State *L) {
 
   menu_ = new wxMenu(text);
   ownContent_ = true;
-}
 
-
-azMenu::~azMenu() {
-  if (ownContent_) wxDELETE(menu_);
+  createdObjects_.push_back(this);
 }
 
 
@@ -90,7 +137,9 @@ azMenu::~azMenu() {
  * 
  */	
 int azMenu::appendSeparator(lua_State *L) {
-  menu_->AppendSeparator();
+  CheckWrappedObject(L, Get());
+
+  Get()->AppendSeparator();
   return 0;
 }
 
@@ -101,6 +150,8 @@ int azMenu::appendSeparator(lua_State *L) {
  * 
  */	
 int azMenu::append(lua_State *L) {
+  CheckWrappedObject(L, Get());
+
   wxString menuItemText = LuaUtil::GetStringFromTable(L, 1, _T("text"));  
   wxString menuItemOnClick = LuaUtil::GetStringFromTable(L, 1, _T("onClick"));
   wxString menuItemId = LuaUtil::GetStringFromTable(L, 1, _T("id"));
@@ -110,13 +161,13 @@ int azMenu::append(lua_State *L) {
 
   if (menuItemText == wxEmptyString) return 0;
 
-  ExtendedMenuItem* menuItem = new ExtendedMenuItem(menu_, wxGetApp().GetUniqueInt(), menuItemText);
+  ExtendedMenuItem* menuItem = new ExtendedMenuItem(Get(), wxGetApp().GetUniqueInt(), menuItemText);
   menuItem->SetMetadata(_T("plugin_menuItemId"), menuItemId);
   menuItem->SetMetadata(_T("plugin_onClick"), menuItemOnClick);
   menuItem->SetMetadataPointer(_T("plugin_luaState"), (void*)L);
   menuItem->SetMetadata(_T("plugin_menuItemTag"), menuItemTag);
 
-  menu_->Append(menuItem);
+  Get()->Append(menuItem);
 
   return 0;
 }
@@ -145,8 +196,8 @@ int azMenu::appendSubMenu(lua_State *L) {
   azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
 	if (subMenu->Get()->GetTitle() == wxEmptyString) return 0;
 
-  menu_->AppendSubMenu(subMenu->Get(), subMenu->Get()->GetTitle());
-  subMenu->SetOwnContent(false); // menu_ now owns the submenu
+  Get()->AppendSubMenu(subMenu->Get(), subMenu->Get()->GetTitle());
+  subMenu->ReleaseContent(); // this menu now owns the submenu
 
   return 0;
 }

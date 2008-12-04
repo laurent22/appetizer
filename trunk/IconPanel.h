@@ -61,6 +61,8 @@ public:
   void AddFolderItem(int folderItemId);
   void SetFolderItemSource(int source);
 
+  FolderItemRenderer* GetFolderItemRendererById(int id);
+
   void OnRightDown(wxMouseEvent& evt);
   void OnMenuNewShortcut(wxCommandEvent& evt);
   void OnMenuNewGroup(wxCommandEvent& evt);

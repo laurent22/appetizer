@@ -18,7 +18,7 @@ class azShortcut : public azWrapper {
 
 public:
 
-  azShortcut(FolderItem* folderItem) { folderItem_ = folderItem; }
+  azShortcut(FolderItem* folderItem);
   azShortcut(lua_State *L);
 
   int getAllGroups(lua_State *L);
@@ -47,11 +47,12 @@ public:
   static const char className[];
   static Lunar<azShortcut>::RegType methods[];
 
-  FolderItem* Get() const { return folderItem_; }
+  FolderItem* Get() const;
 
 private:
 
-  FolderItem* folderItem_;  
+  int folderItemId_;
+  //FolderItem* folderItem_;  
 
 };
 

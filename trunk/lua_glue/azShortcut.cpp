@@ -13,6 +13,12 @@
 #include "LuaUtil.h"
 
 
+//*****************************************************************
+//
+// LUNAR DATA
+//
+//*****************************************************************
+
 const char azShortcut::className[] = "Shortcut";
 
 #define method(class, name) {#name, &class::name}
@@ -42,13 +48,41 @@ Lunar<azShortcut>::RegType azShortcut::methods[] = {
 };
 
 
+//*****************************************************************
+//
+// NON-EXPORTED MEMBERS
+//
+//*****************************************************************
+
+
+azShortcut::azShortcut(FolderItem* folderItem) {
+  folderItemId_ = folderItem->GetId();
+}
+
+
+FolderItem* azShortcut::Get() const {
+  // This is very fast (50 milliseconds for 1000000 iterations) so no need to optimize
+  return FolderItem::GetFolderItemById(folderItemId_);
+}
+
+
+//*****************************************************************
+//
+// EXPORTED MEMBERS
+//
+//*****************************************************************
+
+
 azShortcut::azShortcut(lua_State *L) {
-  folderItem_ = FolderItem::CreateFolderItem(LuaUtil::ToBoolean(L, 1));
+  FolderItem* folderItem = FolderItem::CreateFolderItem(LuaUtil::ToBoolean(L, 1));
+  folderItemId_ = folderItem->GetId();
 }
 
 
 int azShortcut::getAllGroups(lua_State *L) {
-  FolderItemVector allGroups = folderItem_->GetAllGroups();
+  CheckWrappedObject(L, Get()); 
+
+  FolderItemVector allGroups = Get()->GetAllGroups();
 
   lua_createtable(L, allGroups.size(), 0);
   int tableIndex = lua_gettop(L);
@@ -66,26 +100,32 @@ int azShortcut::getAllGroups(lua_State *L) {
 
 
 int azShortcut::getName(lua_State *L) {
-  lua_pushstring(L, folderItem_->GetName(true).ToUTF8());
+  CheckWrappedObject(L, Get()); 
+
+  lua_pushstring(L, Get()->GetName(true).ToUTF8());
   
   return 1;
 }
 
 
 int azShortcut::getId(lua_State *L) {
-  lua_pushinteger(L, folderItem_->GetId());
+  CheckWrappedObject(L, Get()); 
+
+  lua_pushinteger(L, Get()->GetId());
   
   return 1;
 }
 
 
 int azShortcut::addChild(lua_State *L) {
-  if (!folderItem_->IsGroup()) return 0;
+  CheckWrappedObject(L, Get()); 
+
+  if (!Get()->IsGroup()) return 0;
 
   const azShortcut* shortcut = Lunar<azShortcut>::check(L, -1); 
   if (!shortcut) return 0;
 
-  folderItem_->AddChild(shortcut->Get());
+  Get()->AddChild(shortcut->Get());
 
   wxGetApp().FolderItems_CollectionChange();
 
@@ -93,39 +133,46 @@ int azShortcut::addChild(lua_State *L) {
 }
 
 
-int azShortcut::setName(lua_State *L) { wxString n = LuaUtil::ToString(L, 1); folderItem_->SetName(n); return 0; }
-int azShortcut::autoSetName(lua_State *L) { folderItem_->AutoSetName(); return 0; }
-int azShortcut::setPath(lua_State *L) { wxString n = LuaUtil::ToString(L, 1); folderItem_->SetFilePath(n); return 0; }
-int azShortcut::getPath(lua_State *L) { LuaUtil::PushString(L, folderItem_->GetFilePath()); return 1; }
-int azShortcut::getResolvedPath(lua_State *L) { LuaUtil::PushString(L, folderItem_->GetResolvedPath()); return 1; }
-int azShortcut::setParameters(lua_State *L) { wxString n = LuaUtil::ToString(L, 1); folderItem_->SetParameters(n); return 0; }
-int azShortcut::getParameters(lua_State *L) { LuaUtil::PushString(L, folderItem_->GetParameters()); return 1; }
-int azShortcut::addToMultiLaunchGroup(lua_State *L) { folderItem_->AddToMultiLaunchGroup(); return 0; }
-int azShortcut::belongsToMultiLaunchGroup(lua_State *L) { lua_pushboolean(L, folderItem_->BelongsToMultiLaunchGroup()); return 1; }
-int azShortcut::removeFromMultiLaunchGroup(lua_State *L) { folderItem_->RemoveFromMultiLaunchGroup(); return 0; }
-int azShortcut::childrenCount(lua_State *L) { lua_pushinteger(L, folderItem_->ChildrenCount()); return 1; }
+int azShortcut::setName(lua_State *L) { CheckWrappedObject(L, Get()); wxString n = LuaUtil::ToString(L, 1); Get()->SetName(n); return 0; }
+int azShortcut::autoSetName(lua_State *L) { CheckWrappedObject(L, Get()); Get()->AutoSetName(); return 0; }
+int azShortcut::setPath(lua_State *L) { CheckWrappedObject(L, Get()); wxString n = LuaUtil::ToString(L, 1); Get()->SetFilePath(n); return 0; }
+int azShortcut::getPath(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::PushString(L, Get()->GetFilePath()); return 1; }
+int azShortcut::getResolvedPath(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::PushString(L, Get()->GetResolvedPath()); return 1; }
+int azShortcut::setParameters(lua_State *L) { CheckWrappedObject(L, Get()); wxString n = LuaUtil::ToString(L, 1); Get()->SetParameters(n); return 0; }
+int azShortcut::getParameters(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::PushString(L, Get()->GetParameters()); return 1; }
+int azShortcut::addToMultiLaunchGroup(lua_State *L) { CheckWrappedObject(L, Get()); Get()->AddToMultiLaunchGroup(); return 0; }
+int azShortcut::belongsToMultiLaunchGroup(lua_State *L) { CheckWrappedObject(L, Get()); lua_pushboolean(L, Get()->BelongsToMultiLaunchGroup()); return 1; }
+int azShortcut::removeFromMultiLaunchGroup(lua_State *L) { CheckWrappedObject(L, Get()); Get()->RemoveFromMultiLaunchGroup(); return 0; }
+int azShortcut::childrenCount(lua_State *L) { CheckWrappedObject(L, Get()); lua_pushinteger(L, Get()->ChildrenCount()); return 1; }
+
 
 int azShortcut::launch(lua_State *L) {
+  CheckWrappedObject(L, Get()); 
+
   int argc = lua_gettop(L);
   if (argc == 0) {
-    folderItem_->Launch();
+    Get()->Launch();
   } else {
-    folderItem_->LaunchWithArguments(LuaUtil::ToString(L, 1));
+    Get()->LaunchWithArguments(LuaUtil::ToString(L, 1));
   }
   return 0;
 }
 
 int azShortcut::getChildAt(lua_State *L) {
-  if (!folderItem_->IsGroup()) return 0;
-  int index = luaL_checkinteger(L, 1);
-  if (index >= folderItem_->ChildrenCount()) return 0;
+  CheckWrappedObject(L, Get()); 
 
-  Lunar<azShortcut>::push(L, new azShortcut(folderItem_->GetChildAt(index)), true);
+  if (!Get()->IsGroup()) return 0;
+  int index = luaL_checkinteger(L, 1);
+  if (index >= Get()->ChildrenCount()) return 0;
+
+  Lunar<azShortcut>::push(L, new azShortcut(Get()->GetChildAt(index)), true);
   return 1;
 }
 
 int azShortcut::getParent(lua_State *L) {
-  FolderItem* p = folderItem_->GetParent();
+  CheckWrappedObject(L, Get()); 
+
+  FolderItem* p = Get()->GetParent();
   if (!p) return 0;
 
   FolderItem* sp = FolderItem::GetFolderItemById(p->GetId());
@@ -134,17 +181,21 @@ int azShortcut::getParent(lua_State *L) {
 }
 
 int azShortcut::removeFromParent(lua_State *L) {
-  FolderItem* p = folderItem_->GetParent();
+  CheckWrappedObject(L, Get()); 
+
+  FolderItem* p = Get()->GetParent();
   if (!p) return 0;
   
-  p->RemoveChild(folderItem_);
+  p->RemoveChild(Get());
   return 0;
 }
 
 int azShortcut::insertChildAt(lua_State *L) { 
-  if (!folderItem_->IsGroup()) return 0;
+  CheckWrappedObject(L, Get()); 
+
+  if (!Get()->IsGroup()) return 0;
   const azShortcut* shortcut = Lunar<azShortcut>::check(L, 1);
   int index = luaL_checkinteger(L, 2);  
-  folderItem_->MoveChild(shortcut->Get(), index);
+  Get()->MoveChild(shortcut->Get(), index);
   return 0;
 }

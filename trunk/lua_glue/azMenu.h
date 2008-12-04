@@ -29,12 +29,19 @@ public:
   static Lunar<azMenu>::RegType methods[];
 
   wxMenu* Get() const { return menu_; }
-  void SetOwnContent(bool v);
+
+  void Set(wxMenu* menu) { menu_ = menu; }
+  void ReleaseContent();
+  bool IsOwningContent() { return ownContent_; }
+
+  static void OnLuaScopeClose();
 
 private:
 
   bool ownContent_;
-  wxMenu* menu_;  
+  wxMenu* menu_; 
+  
+  static std::vector<azMenu*> createdObjects_;
 
 };
 
