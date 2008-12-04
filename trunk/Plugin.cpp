@@ -232,12 +232,20 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
 
       } else if (valueType == LHT_wxObject) {
 
-        done = luaPushAsWrapper<azIcon>(L, value);
-        if (!done) done = luaPushAsWrapper<azMenu>(L, value);
-        if (!done) done = luaPushAsWrapper<azOptionButton>(L, value);
-        if (!done) done = luaPushAsWrapper<azOptionPanel>(L, value);
-        if (!done) done = luaPushAsWrapper<azShortcut>(L, value);
-        if (!done) done = luaPushAsWrapper<azApplication>(L, value);
+        done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, value);
+        if (!done) done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
+        if (!done) done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, value);
+        if (!done) done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
+
+        if (!done && dynamic_cast<MiniLaunchBar*>(value)) {
+          Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication, true);
+          done = true;
+        }
+
+        if (!done && dynamic_cast<OptionPanel*>(value)) {
+          Lunar<azOptionPanel>::push(L, wxGetApp().GetPluginManager()->luaOptionPanel, true);
+          done = true;
+        }
 
       } else {
 

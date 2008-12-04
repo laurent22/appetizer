@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-02 16:33+0000\n"
+"POT-Creation-Date: 2008-12-04 12:15+0000\n"
 "PO-Revision-Date: 2008-11-08 13:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -25,11 +25,11 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: ApplicationTrayIcon.cpp:40 MainFrame.cpp:365
+#: ApplicationTrayIcon.cpp:40 MainFrame.cpp:363
 msgid "Eject drive"
 msgstr ""
 
-#: ApplicationTrayIcon.cpp:45 MainFrame.cpp:833 OptionPanel.cpp:154
+#: ApplicationTrayIcon.cpp:45 MainFrame.cpp:831 OptionPanel.cpp:154
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr ""
@@ -115,51 +115,51 @@ msgstr ""
 msgid "Add special item"
 msgstr ""
 
-#: main.cpp:62
+#: main.cpp:65
 msgid "Uses user data directory to save settings."
 msgstr ""
 
-#: main.cpp:63
+#: main.cpp:66
 msgid "Sets user data path (-u will be ignored)"
 msgstr ""
 
-#: main.cpp:64
+#: main.cpp:67
 msgid "Displays the log window (useful for debugging)"
 msgstr ""
 
-#: main.cpp:65
+#: main.cpp:68
 msgid "Displays this help message"
 msgstr ""
 
-#: main.cpp:108
+#: main.cpp:107
 msgid "Could not initialize locale."
 msgstr ""
 
-#: main.cpp:207
+#: main.cpp:206
 msgid "Large"
 msgstr ""
 
-#: main.cpp:208
+#: main.cpp:207
 msgid "Extra Large (XP and above)"
 msgstr ""
 
-#: main.cpp:209
+#: main.cpp:208
 msgid "Jumbo (Vista and above)"
 msgstr ""
 
-#: main.cpp:213
+#: main.cpp:212
 msgid "Small"
 msgstr ""
 
-#: main.cpp:304
+#: main.cpp:303
 msgid "Could not get update information"
 msgstr ""
 
-#: main.cpp:318
+#: main.cpp:317
 msgid "You have the latest version."
 msgstr ""
 
-#: main.cpp:325
+#: main.cpp:324
 #, c-format
 msgid ""
 "A new version is available!\n"
@@ -171,21 +171,21 @@ msgid ""
 "Do you wish to download it now?"
 msgstr ""
 
-#: main.cpp:331
+#: main.cpp:330
 msgid "Error launching web browser"
 msgstr ""
 
-#: MainFrame.cpp:214
+#: MainFrame.cpp:212
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
 msgstr ""
 
-#: MainFrame.cpp:364
+#: MainFrame.cpp:362
 msgid "Minimize to tray"
 msgstr ""
 
-#: MainFrame.cpp:833
+#: MainFrame.cpp:831
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -193,11 +193,11 @@ msgid ""
 "Note that you may change this behavior in the '%s' windows ('%s' tab)"
 msgstr ""
 
-#: MainFrame.cpp:833 gui\ConfigDialog.cpp:58
+#: MainFrame.cpp:831 gui\ConfigDialog.cpp:58
 msgid "Operations"
 msgstr ""
 
-#: MainFrame.cpp:833 utilities\Utilities.cpp:73 utilities\Utilities.cpp:261
+#: MainFrame.cpp:831 utilities\Utilities.cpp:73 utilities\Utilities.cpp:261
 msgid "Don't show this message again"
 msgstr ""
 

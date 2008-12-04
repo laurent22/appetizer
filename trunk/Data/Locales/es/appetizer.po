@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-02 16:33+0000\n"
+"POT-Creation-Date: 2008-12-04 12:15+0000\n"
 "PO-Revision-Date: 2008-11-21 12:17+0100\n"
 "Last-Translator: MMX <plopez7@gmail.com>\n"
 "Language-Team: Appetizer Project\n"
@@ -25,11 +25,11 @@ msgstr "Ocultar"
 msgid "Show"
 msgstr "Mostrar"
 
-#: ApplicationTrayIcon.cpp:40 MainFrame.cpp:365
+#: ApplicationTrayIcon.cpp:40 MainFrame.cpp:363
 msgid "Eject drive"
 msgstr "Expulsar la unidad"
 
-#: ApplicationTrayIcon.cpp:45 MainFrame.cpp:833 OptionPanel.cpp:154
+#: ApplicationTrayIcon.cpp:45 MainFrame.cpp:831 OptionPanel.cpp:154
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Configuracion"
@@ -115,53 +115,53 @@ msgstr "Nuevo grupo..."
 msgid "Add special item"
 msgstr "Agregar item especial"
 
-#: main.cpp:62
+#: main.cpp:65
 #, fuzzy
 msgid "Uses user data directory to save settings."
 msgstr "Use el directorio de datos de usuario para guardar ajustes."
 
-#: main.cpp:63
+#: main.cpp:66
 #, fuzzy
 msgid "Sets user data path (-u will be ignored)"
 msgstr "Estarblezca la ruta de datos de usuario (con \"-u\" sera ignorado)"
 
-#: main.cpp:64
+#: main.cpp:67
 msgid "Displays the log window (useful for debugging)"
 msgstr ""
 
-#: main.cpp:65
+#: main.cpp:68
 msgid "Displays this help message"
 msgstr ""
 
-#: main.cpp:108
+#: main.cpp:107
 msgid "Could not initialize locale."
 msgstr "No puedo inicializar idioma."
 
-#: main.cpp:207
+#: main.cpp:206
 msgid "Large"
 msgstr "Grande"
 
-#: main.cpp:208
+#: main.cpp:207
 msgid "Extra Large (XP and above)"
 msgstr "Extra Grande (XP y superior)"
 
-#: main.cpp:209
+#: main.cpp:208
 msgid "Jumbo (Vista and above)"
 msgstr "Jumbo (Vista y superior)"
 
-#: main.cpp:213
+#: main.cpp:212
 msgid "Small"
 msgstr "Pequeño"
 
-#: main.cpp:304
+#: main.cpp:303
 msgid "Could not get update information"
 msgstr "No puedo obtener información de actualización"
 
-#: main.cpp:318
+#: main.cpp:317
 msgid "You have the latest version."
 msgstr "Tiene la última versión"
 
-#: main.cpp:325
+#: main.cpp:324
 #, c-format
 msgid ""
 "A new version is available!\n"
@@ -180,11 +180,11 @@ msgstr ""
 "\n"
 "Desea descargarla ahora?"
 
-#: main.cpp:331
+#: main.cpp:330
 msgid "Error launching web browser"
 msgstr "Error ejecutando el navegador web"
 
-#: MainFrame.cpp:214
+#: MainFrame.cpp:212
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
@@ -192,11 +192,11 @@ msgstr ""
 "Hubo un error registrando el atajo de teclado. Otra aplicación puede haberla "
 "registrado ya."
 
-#: MainFrame.cpp:364
+#: MainFrame.cpp:362
 msgid "Minimize to tray"
 msgstr "Minimizar a la barra de tareas"
 
-#: MainFrame.cpp:833
+#: MainFrame.cpp:831
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -204,11 +204,11 @@ msgid ""
 "Note that you may change this behavior in the '%s' windows ('%s' tab)"
 msgstr ""
 
-#: MainFrame.cpp:833 gui\ConfigDialog.cpp:58
+#: MainFrame.cpp:831 gui\ConfigDialog.cpp:58
 msgid "Operations"
 msgstr "Operaciones"
 
-#: MainFrame.cpp:833 utilities\Utilities.cpp:73 utilities\Utilities.cpp:261
+#: MainFrame.cpp:831 utilities\Utilities.cpp:73 utilities\Utilities.cpp:261
 msgid "Don't show this message again"
 msgstr "No mostrar este mensaje de nuevo"
 

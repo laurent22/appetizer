@@ -91,7 +91,6 @@
 
 #include <tinyxml/tinyxml.h>
 #include <simpleini/SimpleIni.h>
-#include <wxMD5/wxMD5.h>
 #include <StdString.h>
 
 extern "C" {

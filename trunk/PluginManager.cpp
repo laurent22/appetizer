@@ -200,6 +200,9 @@ Plugin* PluginManager::GetPluginByLuaState(lua_State* L) {
 
 void PluginManager::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments) {
   for (int i = 0; i < plugins_.size(); i++) {
+    Plugin* plugin = plugins_.at(i);
+    if (!plugin->WasInitiallyEnabled()) continue;
+
     plugins_.at(i)->DispatchEvent(sender, eventId, arguments);
   }
 

@@ -24,8 +24,8 @@ void LuaUtil::DestroyLuaHostTable(LuaHostTable* t) {
     LuaHostTableItem* item = i->second;
 
     // All the azWrapper objects are managed by Lunar, so don't delete them
-    azWrapper* test = dynamic_cast<azWrapper*>(item->value);
-    if (!test) wxDELETE(item->value);
+    //azWrapper* test = dynamic_cast<azWrapper*>(item->value);
+    //if (!test) wxDELETE(item->value);
     
     wxDELETE(item);
   }

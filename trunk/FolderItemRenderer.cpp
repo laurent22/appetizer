@@ -173,7 +173,7 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   menu->Append(menuItem);
 
   LuaHostTable table;
-  table[_T("icon")] = new LuaHostTableItem(new azIcon(this), LHT_wxObject);
+  table[_T("icon")] = new LuaHostTableItem(this, LHT_wxObject);
   
   wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("iconMenuOpening"), table);  
 
