@@ -97,7 +97,8 @@ int azOptionButton::popupMenu(lua_State *L) {
   int screenX = button->GetRect().GetX();
   int screenY = button->GetRect().GetY();
 
-  if (!button->GetParent()) return 0; // shouldn't happen
+  wxWindow* parent = button->GetParent();
+  if (!parent) luaL_error(L, "Cannot popup a menu on a button that does not have a parent");
 
   menu->Get()->Connect(
     wxID_ANY,
@@ -105,9 +106,6 @@ int azOptionButton::popupMenu(lua_State *L) {
     wxCommandEventHandler(azOptionButton::OnMenuClick),
     NULL,
     this);
-
-  wxWindow* parent = button->GetParent();
-  if (!parent) return 0;
 
   parent->PopupMenu(menu->Get(), screenX, screenY + button->GetRect().GetHeight());
 

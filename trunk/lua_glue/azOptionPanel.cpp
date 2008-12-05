@@ -67,7 +67,7 @@ int azOptionPanel::buttonCount(lua_State *L) {
 
 int azOptionPanel::getButtonAt(lua_State *L) {
   int index = lua_tointeger(L, 1);
-  if (index >= Get()->ButtonCount()) return 0;
+  if (index >= Get()->ButtonCount()) luaL_error(L, "Index out of bounds");
 
   OptionButton* button = Get()->GetButtonAt(index);
   

@@ -97,12 +97,12 @@ void UserSettings::FromXml(TiXmlElement* xml) {
 
     const char* cSettingValue = element->GetText();
     
-    wxString n = wxString(cSettingName, wxConvUTF8);
+    wxString n = wxString::FromUTF8(cSettingName);
     wxString v;
     if (!cSettingValue) {
       v = wxEmptyString;
     } else {
-      v = wxString(cSettingValue, wxConvUTF8);
+      v = wxString::FromUTF8(cSettingValue);
     }
 
     v.Trim(true).Trim(false);
@@ -179,7 +179,7 @@ void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, i
 
 
 void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, wxString value) {
-  AppendSettingToXml(element, name, value.mb_str());
+  AppendSettingToXml(element, name, value.ToUTF8());
 }
 
 
@@ -190,7 +190,7 @@ void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, b
 
 void UserSettings::Load() {
   TiXmlDocument doc(FilePaths::GetSettingsFile().mb_str());
-  doc.LoadFile();
+  doc.LoadFile(TIXML_ENCODING_UTF8);
 
   TiXmlElement* root = doc.FirstChildElement("Settings");
   if (!root) {
@@ -204,7 +204,7 @@ void UserSettings::Load() {
 
 void UserSettings::Save() {
   TiXmlDocument doc;
-  doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
+  doc.LinkEndChild(new TiXmlDeclaration("1.0", "UTF-8", ""));
   TiXmlElement* xmlRoot = ToXml();
   xmlRoot->SetAttribute("version", "1.0");
   doc.LinkEndChild(xmlRoot);

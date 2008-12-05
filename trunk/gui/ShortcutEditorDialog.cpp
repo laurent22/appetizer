@@ -68,6 +68,9 @@ void ShortcutEditorDialog::LoadFolderItem(FolderItem* folderItem) {
 
   Localize();
   UpdateFromFolderItem();
+
+  nameTextBox->SetFocus();
+  nameTextBox->SetSelection(-1, -1);
 }
 
 
@@ -88,21 +91,22 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
   } else {
 
     if (folderItem_->IsGroup()) {
-      wxIcon* icon = FolderItem::GetDefaultGroupIcon(LARGE_ICON_SIZE);
+      wxIcon* icon = FolderItem::CreateDefaultGroupIcon(LARGE_ICON_SIZE);
       if (icon) {
         iconStaticBitmap->SetBitmap(*icon);
         wxDELETE(icon);
       }
     } else {
 
-      wxIcon* icon = FolderItem::GetDefaultSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
+      wxIcon* icon = FolderItem::CreateSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
       if (icon) {
         iconStaticBitmap->SetBitmap(*icon);
       } else {
-        wxIcon* icon = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);
+        icon = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);
         if (icon) iconStaticBitmap->SetBitmap(*icon);
-        wxDELETE(icon);
       }
+
+      wxDELETE(icon);
       
     }
 

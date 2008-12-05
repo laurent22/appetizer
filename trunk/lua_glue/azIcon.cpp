@@ -72,7 +72,7 @@ int azIcon::getShortcut(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
   FolderItem* folderItem = Get()->GetFolderItem();
-  if (!folderItem) return 0;
+  if (!folderItem) luaL_error(L, "Cannot get associated shortcut");
 
   Lunar<azShortcut>::push(L, new azShortcut(folderItem), true);
 

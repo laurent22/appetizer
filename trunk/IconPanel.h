@@ -73,7 +73,7 @@ public:
   bool OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames); 
   void OnBrowseButtonClick(wxCommandEvent& evt);
   void OnMenuItemClick(wxCommandEvent& evt);
-
+  
 private:
 
   bool rotated_;
@@ -84,7 +84,7 @@ private:
   int maxHeight_;
   bool iconsInvalidated_;
   bool layoutInvalidated_;
-  std::vector<FolderItemRenderer*> folderItemRenderers_;
+  std::vector<FolderItemRenderer*> folderItemRenderers_;  
   ImageButton* browseButton_;
 
   DECLARE_EVENT_TABLE()

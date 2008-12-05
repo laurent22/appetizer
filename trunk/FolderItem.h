@@ -62,8 +62,8 @@ public:
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
 
-  static wxIcon* GetDefaultSpecialItemIcon(const wxString& path, int iconSize);
-  static wxIcon* GetDefaultGroupIcon(int iconSize);
+  static wxIcon* CreateSpecialItemIcon(const wxString& path, int iconSize);
+  static wxIcon* CreateDefaultGroupIcon(int iconSize);
 
   wxString GetIconDiskCacheHash();
   static void CacheIconToDisk(const wxString& hash, wxIcon* icon, int iconSize);
@@ -154,6 +154,7 @@ private:
   int customIconIndex_;
   wxString resolvedPath_;
   bool isDisposed_;
+  static std::map<std::pair<wxString, int>, wxIcon*> defaultIcons_;
   
   static FolderItemIdHashMap folderItemIdHashMap_;
 

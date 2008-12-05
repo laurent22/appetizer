@@ -22,6 +22,9 @@ int FolderItem::uniqueID_ = 1000;
 
 FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
 
+std::map<std::pair<wxString, int>, wxIcon*> FolderItem::defaultIcons_;
+
+
 #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
 std::vector<LaunchedFolderItem*> FolderItem::launchedFolderItems_;
 #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
@@ -107,8 +110,11 @@ void FolderItem::DestroyStaticData() {
   for(i = folderItemIdHashMap_.begin(); i != folderItemIdHashMap_.end(); ++i) {
     wxDELETE(i->second);
   }
-
   folderItemIdHashMap_.clear();
+
+  std::map<std::pair<wxString, int>, wxIcon*>::iterator i2;
+  for (i2 = defaultIcons_.begin(); i2 != defaultIcons_.end(); ++i2) wxDELETE(i2->second);
+  defaultIcons_.clear();
 }
 
 
@@ -978,8 +984,17 @@ wxIcon* FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
 #endif // __MLB_USE_ICON_DISK_CACHE__
 
 
-wxIcon* FolderItem::GetDefaultGroupIcon(int iconSize) {
+wxIcon* FolderItem::CreateDefaultGroupIcon(int iconSize) {
+  std::pair<wxString, int> p(_T("group"), iconSize);
+
+  if (defaultIcons_.find(p) != defaultIcons_.end()) {
+    wxIcon* output = new wxIcon(*defaultIcons_[p]);
+    return output;
+  }
+
   wxIcon* output = new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG);
+  defaultIcons_[p] = new wxIcon(*output);
+
   return output;
 }
 
@@ -1013,9 +1028,9 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
 
   if (!output) {
     if (IsGroup()) {
-      output = FolderItem::GetDefaultGroupIcon(iconSize);
+      output = FolderItem::CreateDefaultGroupIcon(iconSize);
     } else {
-      output = FolderItem::GetDefaultSpecialItemIcon(GetFilePath(), iconSize);
+      output = FolderItem::CreateSpecialItemIcon(GetFilePath(), iconSize);
     }
   }
 
@@ -1037,10 +1052,18 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
 }
 
 
-wxIcon* FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSize) {
+wxIcon* FolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize) {
   wxIcon* output = NULL;
 
   if (path.Index(_T("$(")) == wxNOT_FOUND) return output;
+  if (path.Index(_T("$(Drive)")) != wxNOT_FOUND) return output;
+
+  std::pair<wxString, int> nameSizePair(path, iconSize);
+
+  if (defaultIcons_.find(nameSizePair) != defaultIcons_.end()) {
+    wxIcon* output = new wxIcon(*defaultIcons_[nameSizePair]);
+    return output;
+  }
 
   wxString dllPath = FilePaths::GetSystem32Directory() + _T("\\shell32.dll");
 
@@ -1069,6 +1092,12 @@ wxIcon* FolderItem::GetDefaultSpecialItemIcon(const wxString& path, int iconSize
     output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc);
   } else if (path == _T("$(MyVideo)")) {
     output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc);
+  }
+
+  if (output) {
+    defaultIcons_[nameSizePair] = new wxIcon(*output);
+  } else {
+    defaultIcons_[nameSizePair] = NULL;
   }
 
   return output;

@@ -42,7 +42,8 @@ protected:
   wxImageList* listViewImageList;
 
   wxString iconSourcePath_;
-  bool firstIdleEvent_;
+  //bool firstIdleEvent_;
+  int idleEventCount_;
 
   void RefreshListView();
 

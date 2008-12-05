@@ -142,7 +142,7 @@ void Plugin::Load(const wxString& folderPath) {
 
   if (error) {
     const char* errorString = lua_tostring(L, -1);
-    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::LoadFile"));
+    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::Load"));
   }
 
   OnLuaScopeClose();

@@ -159,7 +159,7 @@ int azMenu::append(lua_State *L) {
 
   menuItemText.Trim(true).Trim(false);
 
-  if (menuItemText == wxEmptyString) return 0;
+  if (menuItemText == wxEmptyString) luaL_error(L, "Menu item must have a label");
 
   ExtendedMenuItem* menuItem = new ExtendedMenuItem(Get(), wxGetApp().GetUniqueInt(), menuItemText);
   menuItem->SetMetadata(_T("plugin_menuItemId"), menuItemId);
@@ -194,7 +194,7 @@ int azMenu::append(lua_State *L) {
  */	
 int azMenu::appendSubMenu(lua_State *L) {
   azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
-	if (subMenu->Get()->GetTitle() == wxEmptyString) return 0;
+	if (subMenu->Get()->GetTitle() == wxEmptyString) luaL_error(L, "Submenu must have a title");
 
   Get()->AppendSubMenu(subMenu->Get(), subMenu->Get()->GetTitle());
   subMenu->ReleaseContent(); // this menu now owns the submenu

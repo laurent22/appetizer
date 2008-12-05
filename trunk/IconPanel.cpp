@@ -127,13 +127,13 @@ wxMenu* IconPanel::GetContextMenu() {
   wxIcon* specialIcon = NULL;
 
   #define ADD_SPECIAL_ITEM_TO_MENU(text, specialItemMacro) \
-  menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), text); \
-  menuItem->SetMetadata(_T("name"), _T("addSpecialItem")); \
-  menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
-  specialIcon = FolderItem::GetDefaultSpecialItemIcon(specialItemMacro, 16); \
-  menuItem->SetBitmap(*specialIcon); \
-  wxDELETE(specialIcon); \
-  specialMenu->Append(menuItem);
+    menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), text); \
+    menuItem->SetMetadata(_T("name"), _T("addSpecialItem")); \
+    menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
+    specialIcon = FolderItem::CreateSpecialItemIcon(specialItemMacro, 16); \
+    menuItem->SetBitmap(*specialIcon); \
+    wxDELETE(specialIcon); \
+    specialMenu->Append(menuItem);
 
   ADD_SPECIAL_ITEM_TO_MENU(_("Control Panel"), _T("$(ControlPanel)"))
   ADD_SPECIAL_ITEM_TO_MENU(_("My Computer"), _T("$(MyComputer)"))
@@ -142,6 +142,8 @@ wxMenu* IconPanel::GetContextMenu() {
   ADD_SPECIAL_ITEM_TO_MENU(_("Show Desktop"), _T("$(ShowDesktop)"))
   ADD_SPECIAL_ITEM_TO_MENU(_("Windows Explorer"), _T("$(Explorer)"))
   ADD_SPECIAL_ITEM_TO_MENU(_("Search"), _T("$(Search)"))
+
+  #undef ADD_SPECIAL_ITEM_TO_MENU
 
   menu->AppendSubMenu(specialMenu, _("Add special item"));
   

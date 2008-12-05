@@ -11,6 +11,35 @@
 #define Slice(str, start, end) (str.Mid(start, end))
 
 
+wxString StringUtil::ReadUTF8File(const wxString& filePath) {
+  wxFile f;
+  if (!f.Open(filePath)) return _T("");
+
+  int size = f.Length();
+  char* buffer = new char[size + 1];
+  int sizeRead = f.Read(buffer, size);
+
+  if (sizeRead >= 3) {    
+    if ((buffer[0] == 'ï') && (buffer[1] == '»') && (buffer[2] == '¿')) { // ï»¿ == EF BB BG == BOM
+      char* newBuffer = new char[size];
+      int i;
+      for (i = 3; i < strlen(buffer); i++) newBuffer[i - 3] = buffer[i];
+      //delete[] buffer;
+      buffer = newBuffer;
+      size -= 3;
+    }
+  }
+
+  if (strlen(buffer) >= size) buffer[size] = '\0';
+
+  wxString conv(buffer, wxConvUTF8);
+
+  //delete[] buffer;
+
+  return conv;
+}
+
+
 wxString StringUtil::ZeroPadding(int number, int digits) {
   wxString output;
   output << number;

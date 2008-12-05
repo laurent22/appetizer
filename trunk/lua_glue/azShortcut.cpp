@@ -120,10 +120,9 @@ int azShortcut::getId(lua_State *L) {
 int azShortcut::addChild(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
-  if (!Get()->IsGroup()) return 0;
+  if (!Get()->IsGroup()) luaL_error(L, "No child can be added to a non-group object");
 
-  const azShortcut* shortcut = Lunar<azShortcut>::check(L, -1); 
-  if (!shortcut) return 0;
+  const azShortcut* shortcut = Lunar<azShortcut>::check(L, 1); 
 
   Get()->AddChild(shortcut->Get());
 
@@ -161,9 +160,9 @@ int azShortcut::launch(lua_State *L) {
 int azShortcut::getChildAt(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
-  if (!Get()->IsGroup()) return 0;
+  if (!Get()->IsGroup()) luaL_error(L, "This shortcut is not a group and therefore does not have any children");
   int index = luaL_checkinteger(L, 1);
-  if (index >= Get()->ChildrenCount()) return 0;
+  if (index >= Get()->ChildrenCount()) luaL_error(L, "Index out of bounds");
 
   Lunar<azShortcut>::push(L, new azShortcut(Get()->GetChildAt(index)), true);
   return 1;
@@ -173,7 +172,7 @@ int azShortcut::getParent(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
   FolderItem* p = Get()->GetParent();
-  if (!p) return 0;
+  if (!p) return 0; // No error - just return nil
 
   FolderItem* sp = FolderItem::GetFolderItemById(p->GetId());
   Lunar<azShortcut>::push(L, new azShortcut(sp), true);
@@ -184,7 +183,7 @@ int azShortcut::removeFromParent(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
   FolderItem* p = Get()->GetParent();
-  if (!p) return 0;
+  if (!p) return 0; // No error - just exit
   
   p->RemoveChild(Get());
   return 0;
@@ -193,7 +192,7 @@ int azShortcut::removeFromParent(lua_State *L) {
 int azShortcut::insertChildAt(lua_State *L) { 
   CheckWrappedObject(L, Get()); 
 
-  if (!Get()->IsGroup()) return 0;
+  if (!Get()->IsGroup()) luaL_error(L, "No child can be added to a non-group object");
   const azShortcut* shortcut = Lunar<azShortcut>::check(L, 1);
   int index = luaL_checkinteger(L, 2);  
   Get()->MoveChild(shortcut->Get(), index);

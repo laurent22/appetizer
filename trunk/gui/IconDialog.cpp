@@ -75,13 +75,18 @@ wxDialog(parent, id, title, pos, size, style | wxRESIZE_BORDER, name) {
 
   Localize();
 
+  idleEventCount_ = 0;
+
   RefreshListView();
 }
 
 
 void IconDialog::OnIdle(wxIdleEvent& evt) {
-  if (firstIdleEvent_) {
-    firstIdleEvent_ = false;
+  idleEventCount_++;
+
+  if (idleEventCount_ == 2) {
+    // Need to wait for at least two idle events before showing the window
+    // otherwise it sometime fails in Release builds. I don't know why.
     OnBrowseButtonClick(wxCommandEvent());
     if (iconSourceTextBox->GetValue() == wxEmptyString) EndModal(wxID_CANCEL);
   }
