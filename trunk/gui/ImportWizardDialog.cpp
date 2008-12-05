@@ -23,13 +23,14 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
 
   SetTitle(_("Import shortcuts"));
 
+  int border = 12;
   int gap = 8;
-  int windowWidth = 250;
-  int y = gap;
-  int x = gap;
+  int windowWidth = 320;
+  int y = border;
+  int x = border;
 
   wxStaticText* infoLabel = new wxStaticText(this, wxID_ANY, wxString::Format(_("This tool will help you import your shortcuts into %s.\n\nPlease select below where you would like to import your shortcuts from:"), APPLICATION_NAME), wxPoint(x, y));
-  infoLabel->Wrap(windowWidth - gap * 2);
+  infoLabel->Wrap(windowWidth - border * 2);
   wxSize infoSize = infoLabel->GetBestSize();
   infoLabel->SetSize(infoSize);
 
@@ -48,7 +49,7 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
     wxString l = sourceLabels[i];
 
     wxCheckBox* b = new wxCheckBox(this, wxID_ANY, l);
-    b->SetSize(x, y, windowWidth - gap * 2, -1);
+    b->SetSize(x, y, windowWidth - gap * border, -1);
     b->SetName(n);
 
     choiceCheckBoxes.push_back(b);
@@ -66,7 +67,7 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
 
   y += gap;
 
-  statusLabel = new wxStaticText(this, wxID_ANY, _T(" "), wxPoint(gap, y), wxSize(windowWidth - gap * 2, -1));
+  statusLabel = new wxStaticText(this, wxID_ANY, _T(" "), wxPoint(border, y), wxSize(windowWidth - gap * 2, -1));
   wxFont font(statusLabel->GetFont());
   font.SetWeight(wxBOLD);
   statusLabel->SetFont(font);
@@ -79,12 +80,12 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
   cancelButton = new wxButton(this, wxID_CANCEL, _("Cancel"));
   cancelButton->SetSize(cancelButton->GetBestSize());
 
-  startButton->SetPosition(wxPoint(windowWidth - gap - startButton->GetSize().GetWidth(), y));
+  startButton->SetPosition(wxPoint(windowWidth - border - startButton->GetSize().GetWidth(), y));
   cancelButton->SetPosition(wxPoint(startButton->GetPosition().x - gap - cancelButton->GetSize().GetWidth(), y));
 
   y += startButton->GetSize().GetHeight();
 
-  y += gap;
+  y += border;
   SetClientSize(windowWidth, y);
 
   OnCheckBoxClicked(wxCommandEvent());

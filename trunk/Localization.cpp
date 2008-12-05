@@ -184,6 +184,12 @@ wxString Localization::GetLanguageName(const wxString& languageCode, bool defaul
 }
 
 
+wxString Localization::GetLanguageCodeOnly(const wxString& canonicalName) {
+  if (canonicalName.Len() < 2) return canonicalName;
+  return canonicalName.Mid(0, 2);
+}
+
+
 Localization* Localization::Instance() {
   if (!Localization::instance_) Localization::instance_ = new Localization();
   return Localization::instance_;

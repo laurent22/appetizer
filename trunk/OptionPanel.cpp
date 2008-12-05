@@ -347,9 +347,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     //***************************************************************************
     // IMPORT SHORTCUTS
     //***************************************************************************
-    ImportWizardDialog* d = new ImportWizardDialog(this);
-    d->ShowModal();
-    d->Destroy();
+    wxGetApp().GetUtilities().ShowImportDialog();
 
   } else {
 

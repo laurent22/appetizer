@@ -17,7 +17,7 @@
 #include "utilities/Updater.h"
 #include "utilities/VersionInfo.h"
 #include "gui/AboutDialog.h"
-#include "gui/BetterMessageDialog.h"
+#include "gui/ImportWizardDialog.h"
 #include "bitmap_controls/ImageButton.h"
 
 
@@ -53,6 +53,7 @@ MainFrame::MainFrame()
   nullPanel_ = NULL;
   rotated_ = false;
   activated_ = false;  
+  closeOperationScheduled_ = false;
 
   bool showLogWindow = false;
   #ifdef __WXDEBUG__
@@ -261,18 +262,44 @@ void MainFrame::DoAutoHide() {
 
 void MainFrame::OnIdle(wxIdleEvent& evt) {
   if (!firstIdleEventSent_) {
-    //wxGetApp().InitializePluginManager();
 
-    #ifdef __WINDOWS__
+    // Wait until the main loop is running
+    if (!wxApp::IsMainLoopRunning()) return;
+
     firstIdleEventSent_ = true;
 
+    // ***********************************************************************************
+    // Load the plugins
+    // ***********************************************************************************
+
+    wxGetApp().InitializePluginManager();
+
+    // ***********************************************************************************
+    // Do auto-multilaunch
+    // ***********************************************************************************
+
+    if (wxGetApp().GetUser()->GetSettings()->RunMultiLaunchOnStartUp) wxGetApp().GetUtilities().DoMultiLaunch();
+
+    // ***********************************************************************************
+    // If it's the first launch, show the import dialog
+    // ***********************************************************************************
+
+    if (wxGetApp().IsFirstLaunch()) {
+      wxGetApp().GetUtilities().ShowImportDialog();
+    }
+
+    // ***********************************************************************************
+    // Check if a new version is available
+    // ***********************************************************************************
+
+    #ifdef __WINDOWS__
     ILOG(_T("Update check..."));
 
     wxDateTime now = wxDateTime::Now();
     // The line below doesn't work on Ubuntu
     wxDateTime nextUpdateTime = wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime;
-    //ILOG(_T("Now is", now.Format());
-    //ILOG("Next update check on", nextUpdateTime.Format());
+    ILOG(_T("Now is %s"), now.Format());
+    ILOG(_T("Next update check on %s"), nextUpdateTime.Format());
 
     if (nextUpdateTime.IsLaterThan(now)) return;
 
@@ -282,6 +309,11 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
     wxGetApp().GetUser()->ScheduleSave();
     #endif //__WINDOWS__
+  }
+
+  if (closeOperationScheduled_) {
+    closeOperationScheduled_ = false;
+    Close();
   }
 }
 

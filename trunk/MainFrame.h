@@ -70,6 +70,7 @@ class MainFrame: public wxFrame {
     bool hotKeyRegistered_;
     bool activated_;
     wxPanel* nullPanel_;
+    bool closeOperationScheduled_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -85,6 +86,8 @@ class MainFrame: public wxFrame {
     wxPanel* GetNullPanel();
 
     void DoAutoHide();
+
+    void ScheduleCloseOperation() { closeOperationScheduled_ = true; }
 
     int GetMinHeight();
     int GetMinWidth();
@@ -113,6 +116,7 @@ class MainFrame: public wxFrame {
     void UnregisterHideShowHotKey();
     bool RegisterHideShowHotKey();
 
+    bool GetRotated() const { return rotated_; }
     void SetRotated(bool rotated, bool swapWidthAndHeight = false);
 
     int GetDisplayIndex();

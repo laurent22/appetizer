@@ -12,9 +12,8 @@
 #include "Constants.h"
 #include "FilePaths.h"
 #include "Localization.h"
-#include "Styles.h"
 #include "gui/BetterMessageDialog.h"
-#include "gui/ImportWizardDialog.h"
+#include "Styles.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
 #include "utilities/Updater.h"
@@ -100,10 +99,29 @@ bool MiniLaunchBar::OnInit() {
   // Initialize locale
   // ***********************************************************************************
 
-  bool success = ChangeLocale(GetUser()->GetSettings()->Locale);
-  if (!success) {
-    success = ChangeLocale(_T("en"));
-    if (!success) {
+  bool localeSet = false;
+
+  if (IsFirstLaunch()) {
+    // If it is the first launch, try to detect the language
+
+    int systemLanguage = wxLocale::GetSystemLanguage();
+    systemLanguage = wxLANGUAGE_JAPANESE;
+    if (systemLanguage != wxLANGUAGE_UNKNOWN) {
+      const wxLanguageInfo* info = wxLocale::GetLanguageInfo(systemLanguage);
+      if (info) {
+        localeSet = ChangeLocale(info->CanonicalName);
+        if (localeSet) {
+          GetUser()->GetSettings()->Locale = Localization::Instance()->GetLanguageCodeOnly(info->CanonicalName);
+        }
+      }
+    }
+  } else {
+    localeSet = ChangeLocale(GetUser()->GetSettings()->Locale);
+  }
+    
+  if (!localeSet) {
+    localeSet = ChangeLocale(_T("en"));
+    if (!localeSet) {
       MessageBoxes::ShowError(_("Could not initialize locale."));
       ::wxExit();
     }
@@ -158,23 +176,9 @@ bool MiniLaunchBar::OnInit() {
   // Localize the main frame (this is going to recursively call
   // all the Localize() handlers)
   // ***********************************************************************************
-  mainFrame_->Localize();
-
-  // ***********************************************************************************
-  // Check if there are any new applications in the app folder
-  // ***********************************************************************************
-
-  if (GetUser()->GetSettings()->RunMultiLaunchOnStartUp) utilities_.DoMultiLaunch();
-
-  if (IsFirstLaunch()) {
-    ImportWizardDialog* d = new ImportWizardDialog(mainFrame_);
-    d->ShowModal();
-    d->Destroy();
-  }
+  mainFrame_->Localize();  
 
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
-
-  InitializePluginManager();
 
   return true;
 } 

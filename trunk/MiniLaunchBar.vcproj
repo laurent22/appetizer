@@ -1425,6 +1425,18 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\lua_glue\azDialogs.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\lua_glue\azGlobal.cpp"
 					>
 					<FileConfiguration
@@ -2008,6 +2020,10 @@
 				>
 				<File
 					RelativePath=".\lua_glue\azApplication.h"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azDialogs.h"
 					>
 				</File>
 				<File

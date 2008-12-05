@@ -39,7 +39,7 @@ public:
   static wxString GetErrorString(int luaError);
   static void LogError(int luaError);
   static void PushString(lua_State *L, const wxString& s);
-  static wxString ToString(lua_State *L, int n);
+  static wxString ToString(lua_State *L, int n, bool isOptional = false);
   static wxString GetStringFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional = true);
   static bool ToBoolean(lua_State* L, int n);
   static void DestroyLuaHostTable(LuaHostTable* t);

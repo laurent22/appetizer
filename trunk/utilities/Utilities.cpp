@@ -9,6 +9,7 @@
 #include "Utilities.h"
 #include "StringUtil.h"
 #include "process_util/ProcessUtil.h"
+#include "../gui/ImportWizardDialog.h"
 #include "../MessageBoxes.h"
 #include "../MiniLaunchBar.h"
 #include "../FilePaths.h"
@@ -256,6 +257,22 @@ void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
 }
 
 
+void Utilities::ShowEjectDriveDialog() {
+  #ifdef __WINDOWS__
+
+  // Set the current directory and call the eject dialog
+  wxString previousCWD = wxGetCwd();  
+  wxSetWorkingDirectory(FilePaths::GetWindowsDirectory());
+
+  // Note: this call creates a memory leak when the main frame is closed just after it.
+  int result = wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
+
+  wxSetWorkingDirectory(previousCWD);
+
+  #endif // __WINDOWS__
+}
+
+
 void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   if (wxGetApp().GetUser()->GetSettings()->ShowEjectDriveMessage) {
     int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"), wxYES | wxNO, _("Don't show this message again"), false);
@@ -270,21 +287,9 @@ void Utilities::EjectDriveAndExit(bool askForConfirmation) {
   if (wxGetApp().GetUser()->GetSettings()->CloseAppsOnEject)
     KillLockingProcesses(FilePaths::GetApplicationDrive(), false);
 
-  // In order to eject the drive we need to:
-  //
-  // 1. set the current directory to something other than the removable drive
-  //    Otherwise, RunDll32 is going to lock the drive and so we can't eject it
-  // 2. Call RunDll32.exe
-
-  // Set the current directory and call the eject dialog
-  wxSetWorkingDirectory(FilePaths::GetWindowsDirectory());
-
-  // Note: this call creates a memory leak when the main frame is closed just after it.
-  int result = wxExecute(_T("RunDll32.exe shell32.dll,Control_RunDLL hotplug.dll"));
-
-  #else
-  ELOG("TO BE IMPLEMENTED");
   #endif
+
+  ShowEjectDriveDialog();
 
   wxGetApp().GetMainFrame()->Close();
 }
@@ -299,6 +304,13 @@ void Utilities::ShowConfigDialog() {
   if (!configDialog_) configDialog_ = new ConfigDialog();
   configDialog_->LoadSettings();
   configDialog_->ShowModal();
+}
+
+
+void Utilities::ShowImportDialog() {
+  ImportWizardDialog* d = new ImportWizardDialog(wxGetApp().GetMainFrame());
+  d->ShowModal();
+  d->Destroy();
 }
 
 

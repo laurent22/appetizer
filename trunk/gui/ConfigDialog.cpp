@@ -209,6 +209,9 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
       foundFilePaths.Clear();
       wxDir localeFolder;
+
+      int englishIndex = 0;
+      selectedIndex = -1;
       
       if (wxFileName::DirExists(localeFolderPath) && localeFolder.Open(localeFolderPath)) {
         wxString folderName;
@@ -225,11 +228,14 @@ void ConfigDialog::UpdatePage(int pageIndex) {
           languageComboBox->Append(languageName, clientData);
 
           if (folderName == currentLocaleCode) selectedIndex = i;
+          if (folderName == _T("en")) englishIndex = i;
 
           success = localeFolder.GetNext(&folderName);      
           i++;
         }
       } 
+
+      if (selectedIndex < 0) selectedIndex = englishIndex;
 
       languageComboBox->Select(selectedIndex);
 

@@ -347,9 +347,9 @@ wxString GenerateHTMLString() {
   AddAnchor(_T("Links"));
   H2(_("Support and links"));
   P(wxString::Format(_("Official home page: %s"), _T("[http://app.etizer.org http://app.etizer.org]")));
-  P(wxString::Format(_("Project home page: %s"), _T("[https://sourceforge.net/projects/appetizer https://sourceforge.net/projects/appetizer]")));
+  //P(wxString::Format(_("Project home page: %s"), _T("[https://sourceforge.net/projects/appetizer https://sourceforge.net/projects/appetizer]")));
   P(wxString::Format(_("Some information on how to create a plugin: %s"), _T("[http://app.etizer.org/wiki/creating-a-plugin http://app.etizer.org/wiki/creating-a-plugin]")));
-  P(wxString::Format(_("Beta versions and preleases are usually on [%s PortableApps Beta Testing forum]"), _T("http://portableapps.com/forums/development/beta_testing")));
+  //P(wxString::Format(_("Beta versions and preleases are usually on [%s PortableApps Beta Testing forum]"), _T("http://portableapps.com/forums/development/beta_testing")));
   P(wxString::Format(_("For bug reports, suggestions, comments or translations, please contact %s"), imayle));//wxString::Format(_T("<a href=\"mailto:%s\">%s</a> or post on the beta forum."), imayle, imayle)));
 
   AddStringLn(_T("</body>"));

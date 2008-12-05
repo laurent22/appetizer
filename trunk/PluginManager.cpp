@@ -29,6 +29,7 @@ PluginManager::~PluginManager() {
 
   wxDELETE(luaApplication);
   wxDELETE(luaOptionPanel);
+  wxDELETE(luaDialogs);
 }
 
 
@@ -89,8 +90,10 @@ void PluginManager::Initialize() {
   eventNames_.Add(_T("iconMenuOpening"));
   eventNames_.Add(_T("click"));
 
+
   luaApplication = new azApplication();
   luaOptionPanel = new azOptionPanel();
+  luaDialogs = new azDialogs();
 
 
   TiXmlDocument doc(FilePaths::GetPluginSettingsFile().mb_str());

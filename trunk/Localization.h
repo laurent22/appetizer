@@ -24,6 +24,7 @@ public:
   static Localization* Instance();
   wxString GetLanguageName(const wxString& languageCode, bool defaultToEnglish = true);
   wxString GetLanguageNameInEnglish(const wxString& languageCode);
+  wxString GetLanguageCodeOnly(const wxString& canonicalName);
 
 private:
 

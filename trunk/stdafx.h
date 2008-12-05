@@ -88,6 +88,7 @@
 #include <math.h>
 #include <vector>
 #include <memory.h>
+#include <fstream>
 
 #include <tinyxml/tinyxml.h>
 #include <simpleini/SimpleIni.h>

@@ -22,12 +22,14 @@ public:
 
   Utilities();
   ~Utilities();
+  void ShowEjectDriveDialog();
   void EjectDriveAndExit(bool askForConfirmation = true);
   bool DoMultiLaunch();
   void ShowConfigDialog();
   void ShowHelpFile(const wxString& anchor = wxEmptyString);
   void ShowAboutDialog();
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
+  void ShowImportDialog();
   void CreateNewShortcut();
   bool RemoveFolderItemWithConfirmation(FolderItem* folderItem);
   bool IsApplicationOnPortableDrive();

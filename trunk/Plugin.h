@@ -23,7 +23,7 @@ public:
   ~Plugin();
 
   void LoadMetadata(const wxString& folderPath);
-  void Load(const wxString& folderPath);
+  bool Load(const wxString& folderPath);
   void AddEventListener(wxObject* object, int eventId, const wxString& functionName);
   void AddEventListener(wxObject* object, const wxString& eventName, const wxString& functionName);
   void DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments);

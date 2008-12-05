@@ -27,6 +27,19 @@ public:
 
   int getShortcutRoot(lua_State *L);
   int getShortcutById(lua_State *L);
+  int hide(lua_State *L);
+  int show(lua_State *L);
+  int close(lua_State *L);
+  int isVisible(lua_State *L);
+  int openOptionPanel(lua_State *L);
+  int closeOptionPanel(lua_State *L);
+  int isOptionPanelOpen(lua_State *L);
+  int setOrientation(lua_State *L);
+  int getOrientation(lua_State *L);
+  int doMultiLaunch(lua_State *L);
+  int installAutoRunFile(lua_State *L);
+  int getDrive(lua_State *L);
+  int showHelpFile(lua_State *L);
 
   azDECLARE_EVENT_LISTENER_FUNCTION()
   

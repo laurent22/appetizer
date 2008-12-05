@@ -17,6 +17,9 @@ class azApplication;
 #include "lua_glue/azApplication.h"
 #include "lua_glue/azOptionPanel.h"
 
+class azDialogs;
+#include "lua_glue/azDialogs.h"
+
 
 class PluginManager {
 
@@ -37,6 +40,7 @@ public:
 
   azApplication* luaApplication;
   azOptionPanel* luaOptionPanel;
+  azDialogs* luaDialogs;
 
 private:
 

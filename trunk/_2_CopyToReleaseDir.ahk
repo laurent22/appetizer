@@ -35,6 +35,16 @@ Loop %releaseDirectory%\Data\*.po~, 0, 1
   FileDelete %A_LoopFileFullPath%
 }
 
+Loop %releaseDirectory%\Data\*.po, 0, 1
+{
+  FileDelete %A_LoopFileFullPath%
+}
+
+Loop %releaseDirectory%\Data\Help\*.mo, 0, 1
+{
+  FileDelete %A_LoopFileFullPath%
+}
+
 Loop %releaseDirectory%\Data\*.pot, 0, 1
 {
   FileDelete %A_LoopFileFullPath%

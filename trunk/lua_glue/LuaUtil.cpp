@@ -57,7 +57,11 @@ void LuaUtil::PushString(lua_State *L, const wxString& s) {
 }
 
 
-wxString LuaUtil::ToString(lua_State *L, int n) {
+wxString LuaUtil::ToString(lua_State *L, int n, bool isOptional) {
+  if (isOptional) {
+    if (!lua_isstring(L, n)) return wxEmptyString;
+  }
+  
   wxString output(luaL_checkstring(L, n), wxConvUTF8);
   return output;
 }

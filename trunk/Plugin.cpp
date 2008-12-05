@@ -10,6 +10,7 @@
 #include "MiniLaunchBar.h"
 #include "FolderItemRenderer.h"
 #include "OptionButton.h"
+#include "MessageBoxes.h"
 
 #include "lua_glue/azGlobal.h"
 #include "lua_glue/azApplication.h"
@@ -99,12 +100,12 @@ void Plugin::LoadMetadata(const wxString& folderPath) {
 }
 
 
-void Plugin::Load(const wxString& folderPath) {
+bool Plugin::Load(const wxString& folderPath) {
   wxString luaFilePath = folderPath + wxFileName::GetPathSeparator() + _T("main.lua");
 
   if (!wxFileName::FileExists(luaFilePath)) {
     ELOG(_T("Plugin::Load: 'main.lua' is missing for plugin: ") + folderPath);
-    return;
+    return false;
   }
 
   L = lua_open();
@@ -116,11 +117,28 @@ void Plugin::Load(const wxString& folderPath) {
 
   lua_register(L, "trace", azPrint);
 
+  const char* utf8bom = "\xef\xbb\xbf";
+  char firstThree[4];
+  std::ifstream f(luaFilePath.mb_str());
+  f.get(firstThree, 4, NULL);
+
+  int sizeRead = f.gcount();
+
+  if (sizeRead >= 3 && strcmp(firstThree, utf8bom) == 0) {
+    MessageBoxes::ShowError(wxString::Format(_T("%s\n\n%s"), _("Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"), luaFilePath));
+    f.close();
+    return false;
+  }
+
+  f.close();
+  
   int error = luaL_loadfile(L, luaFilePath.mb_str());
 
   if (error) {
-    LuaUtil::LogError(error);
-    return;
+    const char* errorString = lua_tostring(L, -1);
+    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::Load"));
+    OnLuaScopeClose();
+    return false;
   }
 
   Lunar<azApplication>::Register(L);
@@ -129,13 +147,20 @@ void Plugin::Load(const wxString& folderPath) {
   Lunar<azShortcut>::Register(L);
   Lunar<azOptionButton>::Register(L);
   Lunar<azOptionPanel>::Register(L);
+  Lunar<azDialogs>::Register(L);
+
+  PluginManager* pluginManager = wxGetApp().GetPluginManager();
   
   lua_pushliteral(L, "appetizer");
-  Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication);
+  Lunar<azApplication>::push(L, pluginManager->luaApplication);
   lua_settable(L, LUA_GLOBALSINDEX);
 
   lua_pushliteral(L, "optionPanel");
-  Lunar<azOptionPanel>::push(L, wxGetApp().GetPluginManager()->luaOptionPanel);
+  Lunar<azOptionPanel>::push(L, pluginManager->luaOptionPanel);
+  lua_settable(L, LUA_GLOBALSINDEX);
+
+  lua_pushliteral(L, "dialogs");
+  Lunar<azDialogs>::push(L, pluginManager->luaDialogs);
   lua_settable(L, LUA_GLOBALSINDEX);
 
   error = lua_pcall(L, 0, 0, 0);
@@ -143,9 +168,13 @@ void Plugin::Load(const wxString& folderPath) {
   if (error) {
     const char* errorString = lua_tostring(L, -1);
     luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::Load"));
+    OnLuaScopeClose();
+    return false;
   }
 
   OnLuaScopeClose();
+
+  return true;
 }
 
 
