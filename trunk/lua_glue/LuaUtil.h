@@ -29,7 +29,14 @@ public:
 };
 
 
-typedef std::map<wxString, LuaHostTableItem*> LuaHostTable;
+class LuaHostTable : public std::map<wxString, LuaHostTableItem*> {
+
+public:
+
+  LuaHostTable() {}
+  ~LuaHostTable();
+
+};
 
 
 class LuaUtil {
@@ -39,10 +46,12 @@ public:
   static wxString GetErrorString(int luaError);
   static void LogError(int luaError);
   static void PushString(lua_State *L, const wxString& s);
-  static wxString ToString(lua_State *L, int n, bool isOptional = false);
+  static wxString ToString(lua_State *L, int n, bool isOptional = false, const wxString& defaultValue = wxEmptyString);
   static wxString GetStringFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional = true);
-  static bool ToBoolean(lua_State* L, int n);
-  static void DestroyLuaHostTable(LuaHostTable* t);
+  static bool ToBoolean(lua_State* L, int n, bool isOptional = false, bool defaultValue = false);
+
+  static bool DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value);
+  static int ConvertAndPushLuaHostTable(lua_State *L, LuaHostTable& table);
 
 };
 

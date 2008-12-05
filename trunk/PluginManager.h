@@ -16,9 +16,10 @@
 class azApplication;
 #include "lua_glue/azApplication.h"
 #include "lua_glue/azOptionPanel.h"
-
 class azDialogs;
 #include "lua_glue/azDialogs.h"
+class azSystem;
+#include "lua_glue/azSystem.h"
 
 
 class PluginManager {
@@ -30,8 +31,8 @@ public:
 
   void Initialize();  
   Plugin* GetPluginByLuaState(lua_State* L);
-  void DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments);
-  void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments);
+  void DispatchEvent(wxObject* sender, int eventId, LuaHostTable& arguments);
+  void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable& arguments);
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
   bool InstallPluginPackage(const wxString& filePath);
   int GetEventIdByName(const wxString& eventName);
@@ -41,6 +42,7 @@ public:
   azApplication* luaApplication;
   azOptionPanel* luaOptionPanel;
   azDialogs* luaDialogs;
+  azSystem* luaSystem;
 
 private:
 

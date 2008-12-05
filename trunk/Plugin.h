@@ -26,8 +26,8 @@ public:
   bool Load(const wxString& folderPath);
   void AddEventListener(wxObject* object, int eventId, const wxString& functionName);
   void AddEventListener(wxObject* object, const wxString& eventName, const wxString& functionName);
-  void DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments);
-  void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments);
+  void DispatchEvent(wxObject* sender, int eventId, LuaHostTable& arguments);
+  void DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable& arguments);
   lua_State* GetLuaState();
   wxString GetName();
   wxString GetUUID();

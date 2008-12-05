@@ -17,8 +17,14 @@
 //*****************************************************************
 
 
-int luaHost_logError(const wxString& s, const wxString& functionName) {
-  ELOG(_T("%s %s (%s)"), _T("[Lua Host] [Error]"), s, functionName);
+int luaHost_logError(const wxString& s) {
+  ELOG(_T("%s %s"), _T("[Lua Host] [Error]"), s);
+  return 0;
+}
+
+
+int luaHost_logInfo(const wxString& s) {
+  ILOG(_T("%s %s"), _T("[Lua Host] [Info]"), s);
   return 0;
 }
 

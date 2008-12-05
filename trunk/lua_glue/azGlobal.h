@@ -22,7 +22,8 @@ int theClass::addEventListener(lua_State *L) { \
   return 0; \
 }
 
-int luaHost_logError(const wxString& s, const wxString& functionName);
+int luaHost_logError(const wxString& s);
+int luaHost_logInfo(const wxString& s);
 
 int azPrint(lua_State *L);
 

@@ -149,6 +149,20 @@ end
 
 
 
+function systemTest()
+	dialogs:showMessage('Running cmd /c "dir c: /On"')
+	result = system:runCommand('cmd /c "dir c: /On"')
+	dialogs:showMessage(result)	
+	
+	result = dialogs:showMessage("Do you wish to close all the apps on "..appetizer:getDrive().."?", "yesNo", "confirmation")
+	
+	if result == "yes" then
+		system:killLockingProcesses(appetizer:getDrive(), true)
+	end
+end
+
+
+
 function optionButton_click(event)
 	trace("Option button was clicked!")
 	
@@ -176,11 +190,30 @@ function optionButton_click(event)
 	menuItem.onClick = "applicationTest"
 	menu:append(menuItem)
 	
+	menuItem = {}
+	menuItem.text = "System test"
+	menuItem.onClick = "systemTest"
+	menu:append(menuItem)
+	
 	trace("Get the object that has sent the event, in this case the option button")
 	optionButton = event.sender
 	
 	trace("Showing menu")	
 	optionButton:popupMenu(menu)
+end
+
+
+
+function appetizer_trayIconMenuOpening(event)
+	menu = event.menu
+	
+	menu:appendSeparator()
+
+	menuItem = {}
+	menuItem.text = "Do dialog test (Test Unit Plugin)"
+	menuItem.onClick = "dialogTest"
+	
+	menu:append(menuItem)
 end
 
 
@@ -196,5 +229,4 @@ optionPanel:addButton(button)
 
 button:addEventListener("click", "optionButton_click")
 
-
-
+appetizer:addEventListener("trayIconMenuOpening", "appetizer_trayIconMenuOpening")

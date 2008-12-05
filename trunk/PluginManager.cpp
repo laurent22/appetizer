@@ -21,6 +21,9 @@
 
 PluginManager::PluginManager() {
   luaApplication = NULL;
+  luaOptionPanel = NULL;
+  luaDialogs = NULL;
+  luaSystem = NULL;
 }
 
 
@@ -30,6 +33,7 @@ PluginManager::~PluginManager() {
   wxDELETE(luaApplication);
   wxDELETE(luaOptionPanel);
   wxDELETE(luaDialogs);
+  wxDELETE(luaSystem);
 }
 
 
@@ -94,6 +98,7 @@ void PluginManager::Initialize() {
   luaApplication = new azApplication();
   luaOptionPanel = new azOptionPanel();
   luaDialogs = new azDialogs();
+  luaSystem = new azSystem();
 
 
   TiXmlDocument doc(FilePaths::GetPluginSettingsFile().mb_str());
@@ -201,19 +206,17 @@ Plugin* PluginManager::GetPluginByLuaState(lua_State* L) {
 }
 
 
-void PluginManager::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments) {
+void PluginManager::DispatchEvent(wxObject* sender, int eventId, LuaHostTable& arguments) {
   for (int i = 0; i < plugins_.size(); i++) {
     Plugin* plugin = plugins_.at(i);
     if (!plugin->WasInitiallyEnabled()) continue;
 
     plugins_.at(i)->DispatchEvent(sender, eventId, arguments);
   }
-
-  LuaUtil::DestroyLuaHostTable(&arguments);
 }
 
 
-void PluginManager::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments) {
+void PluginManager::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable& arguments) {
   int eventId = GetEventIdByName(eventName);
   DispatchEvent(sender, eventId, arguments);
 }

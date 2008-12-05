@@ -10,6 +10,7 @@
 #include "MiniLaunchBar.h"
 #include "ExtendedMenuItem.h"
 #include "utilities/Utilities.h"
+#include "lua_glue/LuaUtil.h"
 
 
 BEGIN_EVENT_TABLE(ApplicationTrayIcon, wxTaskBarIcon)
@@ -46,6 +47,14 @@ wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
   menuItem->SetMetadata(_T("name"), _T("configuration"));
   menu->Append(menuItem);
 
+  // Hook that allows a plugin to add menu items to the menu
+  
+  LuaHostTable table;
+  table[_T("menu")] = new LuaHostTableItem(menu, LHT_wxObject);
+  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("trayIconMenuOpening"), table);  
+  
+  // The "Close" item is always last
+
   menu->AppendSeparator();
 
   menuItem = new ExtendedMenuItem(menu, wxGetApp().GetUniqueInt(), _("Close"));
@@ -57,7 +66,16 @@ wxMenu* ApplicationTrayIcon::CreatePopupMenu() {
 
 
 void ApplicationTrayIcon::OnMenuItemClick(wxCommandEvent& evt) {
+  wxMenu* menu = dynamic_cast<wxMenu*>(evt.GetEventObject());
   ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
+
+  bool handled = wxGetApp().GetPluginManager()->HandleMenuItemClick(menuItem);
+  
+  if (handled) {
+    evt.Skip();
+    return;
+  }
+  
   wxString name = menuItem->GetMetadata(_T("name"));
 
   if (name == _T("hideShow")) {

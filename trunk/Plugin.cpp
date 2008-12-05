@@ -8,8 +8,6 @@
 
 #include "Plugin.h"
 #include "MiniLaunchBar.h"
-#include "FolderItemRenderer.h"
-#include "OptionButton.h"
 #include "MessageBoxes.h"
 
 #include "lua_glue/azGlobal.h"
@@ -136,7 +134,7 @@ bool Plugin::Load(const wxString& folderPath) {
 
   if (error) {
     const char* errorString = lua_tostring(L, -1);
-    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::Load"));
+    luaHost_logError(wxString(errorString, wxConvUTF8));
     OnLuaScopeClose();
     return false;
   }
@@ -148,6 +146,7 @@ bool Plugin::Load(const wxString& folderPath) {
   Lunar<azOptionButton>::Register(L);
   Lunar<azOptionPanel>::Register(L);
   Lunar<azDialogs>::Register(L);
+  Lunar<azSystem>::Register(L);
 
   PluginManager* pluginManager = wxGetApp().GetPluginManager();
   
@@ -163,11 +162,15 @@ bool Plugin::Load(const wxString& folderPath) {
   Lunar<azDialogs>::push(L, pluginManager->luaDialogs);
   lua_settable(L, LUA_GLOBALSINDEX);
 
+  lua_pushliteral(L, "system");
+  Lunar<azSystem>::push(L, pluginManager->luaSystem);
+  lua_settable(L, LUA_GLOBALSINDEX);
+
   error = lua_pcall(L, 0, 0, 0);
 
   if (error) {
     const char* errorString = lua_tostring(L, -1);
-    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::Load"));
+    luaHost_logError(wxString(errorString, wxConvUTF8));
     OnLuaScopeClose();
     return false;
   }
@@ -198,70 +201,13 @@ void Plugin::AddEventListener(wxObject* object, const wxString& eventName, const
 }
 
 
-void Plugin::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable arguments) {
+void Plugin::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable& arguments) {
   int eventId = wxGetApp().GetPluginManager()->GetEventIdByName(eventName);
   DispatchEvent(sender, eventId, arguments);
 }
 
 
-template <class hostObjectT, class lunarObjectT>
-bool luaConvertAndPushAsWrapper(lua_State* L, wxObject* o) {
-  hostObjectT* asType = dynamic_cast<hostObjectT*>(o);
-  if (asType) {
-    Lunar<lunarObjectT>::push(L, new lunarObjectT(asType), true);
-    return true;
-  }
-  return false;
-}
-
-
-template <class T>
-bool luaPushAsWrapper(lua_State* L, wxObject* o) {
-  T* asType = dynamic_cast<T*>(o);
-  if (asType) {
-    Lunar<T>::push(L, asType, true);
-    return true;
-  }
-  return false;
-}
-
-
-bool DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value) {
-  // wxObject* must be any supported wxWidgets object EXCEPT for azWrappers
-  // The function checks the type of "value" and try to find an associated wrapper.
-  // If it does, the object is converted to an azWrapper and push onto the Lua stack.
-  // If it doesn't, the function returns false.
-
-  bool done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, value);
-  if (done) return true;
-
-  done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
-  if (done) return true;
-
-  done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
-  if (done) return true;
-
-  done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, value);
-  if (done) return true;
-
-  done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
-  if (done) return true;
-
-  if (dynamic_cast<MiniLaunchBar*>(value)) {
-    Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication, true);
-    return true;
-  }
-
-  if (dynamic_cast<OptionPanel*>(value)) {
-    Lunar<azOptionPanel>::push(L, wxGetApp().GetPluginManager()->luaOptionPanel, true);
-    return true;
-  }
-
-  return false;
-}
-
-
-void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments) {
+void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable& arguments) {
   std::pair<wxObject*, int> pair(sender, eventId);
 
   wxArrayString* functionNames = eventRegister_[pair];
@@ -270,65 +216,36 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable arguments
   for (int i = 0; i < functionNames->Count(); i++) {
     wxString n = (*functionNames)[i];
 
+    // ************************************************
+    // Push the function to call onto the stack
+    // ************************************************
+
     lua_getfield(L, LUA_GLOBALSINDEX, n.mb_str());
-    lua_createtable(L, arguments.size(), 0);
-    int tableIndex = lua_gettop(L);
-    
-    LuaHostTable::iterator it = arguments.begin();
-    for(; it != arguments.end(); ++it) {
-      wxString k = it->first;
-      LuaHostTableItem* hostTableItem = it->second;
 
-      wxObject* value = hostTableItem->value;
-      LuaHostTableItemType valueType = hostTableItem->valueType;
+    // ************************************************
+    // Push the "event" parameter onto the stack.
+    // ************************************************
 
-      lua_pushstring(L, k.mb_str());
+    int tableIndex = LuaUtil::ConvertAndPushLuaHostTable(L, arguments);
 
-      bool done = true;
-
-      if (valueType == LHT_boolean) {
-
-        lua_pushboolean(L, *((wxString*)value) != _T("0"));
-
-      } else if (valueType == LHT_integer) {
-
-        wxString* s = (wxString*)value;
-        long l; if (!s->ToLong(&l)) l = 0;
-        lua_pushinteger(L, (int)l);
-
-      } else if (valueType == LHT_string) {
-
-        wxString* s = (wxString*)value;
-        lua_pushstring(L, s->ToUTF8());
-
-      } else if (valueType == LHT_wxObject) {
-
-        done = DetectTypeAndPushAsWrapper(L, value);
-
-      } else {
-
-        done = false;
-
-      }
-
-      if (!done) wxLogDebug(_T("[ERROR] Cannot detect type of ") + k);
-
-      lua_settable(L, tableIndex);      
-    }
+    // *********************************************************
+    // Also add the sender as a property of the "event" object 
+    // *********************************************************
 
     lua_pushstring(L, "sender");
-
-    bool done = DetectTypeAndPushAsWrapper(L, sender);
-
+    bool done = LuaUtil::DetectTypeAndPushAsWrapper(L, sender);
     if (!done) wxLogDebug(_T("[ERROR] Cannot detect type of sender"));
-
     lua_settable(L, tableIndex);   
+
+    // *********************************************************
+    // Call the function
+    // *********************************************************
 
     int errorCode = lua_pcall(L, 1, 0, 0);
 
     if (errorCode) {
       const char* errorString = lua_tostring(L, -1);
-      luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::DispatchEvent"));
+      luaHost_logError(wxString(errorString, wxConvUTF8));
     }
     
   }
@@ -347,18 +264,18 @@ bool Plugin::HandleMenuItemClick(ExtendedMenuItem* menuItem) {
   int tableIndex = lua_gettop(L);
 
   lua_pushstring(L, "menuItemId");
-  lua_pushstring(L, menuItem->GetMetadata(_T("plugin_menuItemId")).mb_str());
+  lua_pushstring(L, menuItem->GetMetadata(_T("plugin_menuItemId")).ToUTF8());
   lua_settable(L, tableIndex);
 
   lua_pushstring(L, "menuItemTag");
-  lua_pushstring(L, menuItem->GetMetadata(_T("plugin_menuItemTag")).mb_str());
+  lua_pushstring(L, menuItem->GetMetadata(_T("plugin_menuItemTag")).ToUTF8());
   lua_settable(L, tableIndex);  
   
   int errorCode = lua_pcall(L, 1, 0, 0);
 
   if (errorCode) {
     const char* errorString = lua_tostring(L, -1);
-    luaHost_logError(wxString(errorString, wxConvUTF8), _T("Plugin::DispatchEvent"));
+    luaHost_logError(wxString(errorString, wxConvUTF8));
   }
 
   return true;
