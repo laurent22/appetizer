@@ -16,6 +16,7 @@
 #include "lua_glue/azOptionPanel.h"
 #include "lua_glue/azOptionButton.h"
 #include "lua_glue/azMenu.h"
+#include "lua_glue/azMenuItem.h"
 #include "lua_glue/azShortcut.h"
 
 
@@ -147,6 +148,7 @@ bool Plugin::Load(const wxString& folderPath) {
   Lunar<azOptionPanel>::Register(L);
   Lunar<azDialogs>::Register(L);
   Lunar<azSystem>::Register(L);
+  Lunar<azMenuItem>::Register(L);
 
   PluginManager* pluginManager = wxGetApp().GetPluginManager();
   
@@ -255,27 +257,30 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable& argument
 
 
 bool Plugin::HandleMenuItemClick(ExtendedMenuItem* menuItem) {
-  wxString onClickHandler = menuItem->GetMetadata(_T("plugin_onClick"));
-  if (onClickHandler == wxEmptyString) return false;
+  azMenuItem* luaMenuItem = (azMenuItem*)menuItem->GetMetadataPointer(_T("plugin_luaMenuItem"));
+  if (!luaMenuItem) return false;
+  
+  wxString onSelectedHandler = luaMenuItem->Get()->onSelected;
+  if (onSelectedHandler == wxEmptyString) return false;
 
-  lua_getfield(L, LUA_GLOBALSINDEX, onClickHandler.mb_str());
+  // Get the functions to be called
+  lua_getfield(L, LUA_GLOBALSINDEX, onSelectedHandler.ToUTF8());
 
+  // Push the arguments
   lua_createtable(L, 1, 0);
   int tableIndex = lua_gettop(L);
 
-  lua_pushstring(L, "menuItemId");
-  lua_pushstring(L, menuItem->GetMetadata(_T("plugin_menuItemId")).ToUTF8());
-  lua_settable(L, tableIndex);
-
-  lua_pushstring(L, "menuItemTag");
-  lua_pushstring(L, menuItem->GetMetadata(_T("plugin_menuItemTag")).ToUTF8());
+  lua_pushstring(L, "menuItem");
+  Lunar<azMenuItem>::push(L, luaMenuItem);
   lua_settable(L, tableIndex);  
-  
+
   int errorCode = lua_pcall(L, 1, 0, 0);
 
   if (errorCode) {
     const char* errorString = lua_tostring(L, -1);
     luaHost_logError(wxString(errorString, wxConvUTF8));
+    // Don't return false here because even if there is an
+    // error in the script, it still has processed the event
   }
 
   return true;

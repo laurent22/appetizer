@@ -271,3 +271,10 @@ function setStyle(selectorText, styleName, newValue)
 		document.styleSheets[0].addRule(selectorText, styleName + ":" + newValue);
 	}
 }
+
+
+function doShowAll() {
+	setInheritedVisible(true,'Property');
+}
+
+setTimeout("doShowAll()", 500);

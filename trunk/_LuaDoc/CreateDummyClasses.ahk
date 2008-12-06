@@ -134,6 +134,33 @@ CreateAsFile(sourceFile, targetDir)
 				}
 				
 			}
+			
+			; * <table class=innertable>
+			; * <tr><th>Name</th><th>Description</th></tr>
+			; * <tr><td><a href="events/IconMenuOpening.html">trayIconMenuOpening</a></td><td>Description</td></tr>
+			; * </table> 	
+			
+			if (lineToWrite = " * @beginEventTable")
+			{
+				lineToWrite = <p>This class dispatches the following events:</p>
+				lineToWrite = %lineToWrite% * <table class=innertable>
+				lineToWrite = %lineToWrite% * <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+			}
+	
+			if (lineToWrite = " * @endEventTable")
+				lineToWrite := " * </table>"
+					
+			regex := "i)[\s]*\* @event ([^\s]+) ([^\s]+) (.*)$"
+			found := RegExMatch(lineToWrite, regex, output)
+				
+			if (found > 0)
+			{				
+				eventType = %output1%
+				eventName = %output2%
+				eventDesc = %output3%
+				
+				lineToWrite = %A_Space%* <tr><td>"%eventName%"</td><td><a href="events/%eventType%.html">%eventType%</a></td><td>%eventDesc%</td></tr>
+			}
 		
 			currentCommentBlock = %currentCommentBlock%%A_Space%%A_Space%`n%lineToWrite%
 		
@@ -151,7 +178,6 @@ CreateAsFile(sourceFile, targetDir)
 }
 
 
-
 FileCreateDir %dummyClassesDir%
 
 Loop, %A_ScriptDir%\..\lua_glue\az*.cpp
@@ -164,11 +190,37 @@ Loop, %A_ScriptDir%\..\lua_glue\az*.cpp
 
 
 
-Loop, %A_ScriptDir%\ExtraClasses\*.as
-{		
+CopyFilesAndFolders(SourcePattern, DestinationFolder, DoOverwrite = false)
+; Copies all files and folders matching SourcePattern into the folder named DestinationFolder and
+; returns the number of files/folders that could not be copied.
+{
+    ; First copy all the files (but not the folders):
+    FileCopy, %SourcePattern%, %DestinationFolder%, %DoOverwrite%
+    ErrorCount := ErrorLevel
+    ; Now copy all the folders:
+    Loop, %SourcePattern%, 2  ; 2 means "retrieve folders only".
+    {
+        FileCopyDir, %A_LoopFileFullPath%, %DestinationFolder%\%A_LoopFileName%, %DoOverwrite%
+        ErrorCount += ErrorLevel
+        if ErrorLevel  ; Report each problem folder by name.
+            MsgBox Could not copy %A_LoopFileFullPath% into %DestinationFolder%.
+    }
+    return ErrorCount
+}
+
+
+sourceFolder = %A_ScriptDir%\ExtraClasses\*
+CopyFilesAndFolders(sourceFolder, dummyClassesDir, true)
+
+
+Loop, %dummyClassesDir%\*, 1, 1
+{			
 	SplitPath, A_LoopFileFullPath, name, dir, ext, name_no_ext, drive
-	FileDelete %dummyClassesDir%\%name%
-	FileCopy %A_LoopFileFullPath%, %dummyClassesDir%
+	
+	if (name = ".svn")
+	{
+		FileRemoveDir %A_LoopFileFullPath%, 1
+	}
 }
 
 

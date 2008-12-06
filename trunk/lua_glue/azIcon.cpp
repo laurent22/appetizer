@@ -4,6 +4,18 @@
   found in the LICENSE file.
 */
 
+
+/**
+ * This class represents and icon, as displayed on the dock. It cannot be directly
+ * created in Lua, however it is possible to indirectly create a new icon by creating a Shortcut
+ * and adding it to the <code>optionPanel</code> global object. Some events also return a reference
+ * to an Icon object.
+ *
+ * @see Shortcut
+ *
+ */	
+
+
 #include "../stdafx.h"
 
 #include "azIcon.h"
@@ -42,6 +54,11 @@ azIcon::azIcon(FolderItemRenderer* r) {
 }
 
 
+FolderItemRenderer* azIcon::Get() const {
+  return wxGetApp().GetMainFrame()->GetIconPanel()->GetFolderItemRendererById(rendererId_);
+}
+
+
 //*****************************************************************
 //
 // EXPORTED MEMBERS
@@ -54,11 +71,11 @@ azIcon::azIcon(lua_State *L) {
 }
 
 
-FolderItemRenderer* azIcon::Get() const {
-  return wxGetApp().GetMainFrame()->GetIconPanel()->GetFolderItemRendererById(rendererId_);
-}
-
-
+/**
+ * Returns the popup menu associated with this icon.
+ * @return Menu The icon popup menu
+ * 
+ */	
 int azIcon::getPopupMenu(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
@@ -68,6 +85,16 @@ int azIcon::getPopupMenu(lua_State *L) {
 }
 
 
+/**
+ * Returns the shortcut object associated with this icon.
+ * @return Shortcut The icon's shortcut
+ * @example The following code displays the shortcut path associated with the icon:
+ * <listing version="3.0">
+ * shortcut = icon:getShortcut()
+ * trace("This icon links to ", shortcut:getPath())
+ * </listing>
+ * 
+ */	
 int azIcon::getShortcut(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 

@@ -14,25 +14,22 @@
  * menu = Menu:new("My menu")
  * 
  * -- Create a new menu item
- * menuItem = {}
- * 
- * -- (Required) The menu item label
- * menuItem.text = "my menu item"
+ * menuItem = MenuItem:new("my menu item")
  * 
  * -- (Optional) Give the item an id that can be used later on to track a menu item
- * menuItem.id = "some id"
+ * menuItem:setId("some id")
  * 
  * -- (Optional) The "tag" property can be used to attach additional data to the menu item
- * menuItem.tag = "some extra info"
+ * menuItem:setTag("some extra info")
  * 
  * -- (Optional) Name of the function that is going to be called when/if the menu item is selected
- * menuItem.onClick = "menuItem_click"
+ * menuItem:setOnSelected("menuItem_selected")
  * 		
  * -- Add the menu item to the menu
  * subMenu:append(menuItem) 
  * 
  * function menuItem_click(event)
- *     trace("Menu item with id ", event.menuItemId, " and tag ", event.menuItemTag, " was clicked")
+ *     trace("Menu item with id ", event.menuItem:getId(), " and tag ", event.menuItem:getTag(), " was clicked")
  * end
  * </listing>
  */	
@@ -40,6 +37,7 @@
 #include "../stdafx.h"
 
 #include "azMenu.h"
+#include "azMenuItem.h"
 
 #include "../MiniLaunchBar.h"
 #include "../ExtendedMenuItem.h"
@@ -88,7 +86,7 @@ void azMenu::OnLuaScopeClose() {
     // fail properly (i.e. without crashing Appetizer). We don't want to
     // to keep a reference to the wxMenu because it will most likely be
     // deleted once it has been displayed. The only exception is if 
-    // the plugin has created the menu (and hasn't give ownership to any
+    // the plugin has created the menu (and hasn't given ownership to any
     // other objects)
     m->Set(NULL);
 
@@ -152,20 +150,13 @@ int azMenu::appendSeparator(lua_State *L) {
 int azMenu::append(lua_State *L) {
   CheckWrappedObject(L, Get());
 
-  wxString menuItemText = LuaUtil::GetStringFromTable(L, 1, _T("text"));  
-  wxString menuItemOnClick = LuaUtil::GetStringFromTable(L, 1, _T("onClick"));
-  wxString menuItemId = LuaUtil::GetStringFromTable(L, 1, _T("id"));
-  wxString menuItemTag = LuaUtil::GetStringFromTable(L, 1, _T("tag"));
+  azMenuItem* luaMenuItem = Lunar<azMenuItem>::check(L, 1); 
 
-  menuItemText.Trim(true).Trim(false);
+  if (luaMenuItem->Get()->text == wxEmptyString) luaL_error(L, "Menu item must have a label");
 
-  if (menuItemText == wxEmptyString) luaL_error(L, "Menu item must have a label");
-
-  ExtendedMenuItem* menuItem = new ExtendedMenuItem(Get(), wxGetApp().GetUniqueInt(), menuItemText);
-  menuItem->SetMetadata(_T("plugin_menuItemId"), menuItemId);
-  menuItem->SetMetadata(_T("plugin_onClick"), menuItemOnClick);
+  ExtendedMenuItem* menuItem = new ExtendedMenuItem(Get(), wxGetApp().GetUniqueInt(), luaMenuItem->Get()->text);
   menuItem->SetMetadataPointer(_T("plugin_luaState"), (void*)L);
-  menuItem->SetMetadata(_T("plugin_menuItemTag"), menuItemTag);
+  menuItem->SetMetadataPointer(_T("plugin_luaMenuItem"), (void*)luaMenuItem);
 
   Get()->Append(menuItem);
 
@@ -183,8 +174,7 @@ int azMenu::append(lua_State *L) {
  * submenu = Menu:new("My menu")
  * 
  * -- Append an item to it
- * menuItem = {}
- * menuItem.text = "submenu item"
+ * menuItem = MenuItem:new("submenu item")
  * submenu:append(menuItem)
  * 
  * -- Append the submenu to an existing menu

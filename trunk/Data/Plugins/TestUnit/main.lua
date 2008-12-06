@@ -170,29 +170,24 @@ function optionButton_click(event)
 	
 	menu = Menu:new("Test units")
 	
-	menuItem = {}
-	menuItem.text = "Shortcut test"
-	menuItem.onClick = "shortcutTest"
+	menuItem = MenuItem:new("Shortcut test")
+	menuItem:setOnSelected("shortcutTest")
 	menu:append(menuItem)
 	
-	menuItem = {}
-	menuItem.text = "Group test"
-	menuItem.onClick = "groupTest"
+	menuItem = MenuItem:new("Group test")
+	menuItem:setOnSelected("groupTest")
 	menu:append(menuItem)
 	
-	menuItem = {}
-	menuItem.text = "Dialog test"
-	menuItem.onClick = "dialogTest"
+	menuItem = MenuItem:new("Dialog test")
+	menuItem:setOnSelected("dialogTest")
 	menu:append(menuItem)
 	
-	menuItem = {}
-	menuItem.text = "Application test"
-	menuItem.onClick = "applicationTest"
+	menuItem = MenuItem:new("Application test")
+	menuItem:setOnSelected("applicationTest")
 	menu:append(menuItem)
 	
-	menuItem = {}
-	menuItem.text = "System test"
-	menuItem.onClick = "systemTest"
+	menuItem = MenuItem:new("System test")
+	menuItem:setOnSelected("systemTest")
 	menu:append(menuItem)
 	
 	trace("Get the object that has sent the event, in this case the option button")
@@ -206,12 +201,11 @@ end
 
 function appetizer_trayIconMenuOpening(event)
 	menu = event.menu
-	
-	menu:appendSeparator()
 
-	menuItem = {}
-	menuItem.text = "Do dialog test (Test Unit Plugin)"
-	menuItem.onClick = "dialogTest"
+	menu:appendSeparator()
+	
+	menuItem = MenuItem:new("Do dialog test (Test Unit Plugin)")
+	menuItem:setOnSelected("dialogTest")
 	
 	menu:append(menuItem)
 end

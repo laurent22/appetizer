@@ -69,7 +69,18 @@ void azOptionButton::OnMenuClick(wxCommandEvent& evt) {
 //*****************************************************************
 
 
-azIMPLEMENT_EVENT_LISTENER_FUNCTION(azOptionButton)
+/**
+ * @copy Application#addEventListener()
+ * @see Application#addEventListener()
+ * 
+ */	
+int azOptionButton::addEventListener(lua_State *L) {
+  wxString eventName = LuaUtil::ToString(L, 1);
+  wxString functionName = LuaUtil::ToString(L, 2);
+  Plugin* p = wxGetApp().GetPluginManager()->GetPluginByLuaState(L);
+  p->AddEventListener(this->Get(), eventName, functionName);
+  return 0;
+}
 
 
 azOptionButton::azOptionButton(lua_State *L) {

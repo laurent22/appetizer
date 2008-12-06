@@ -9,19 +9,6 @@
 #ifndef __azGlobal_H
 #define __azGlobal_H
 
-
-#define azDECLARE_EVENT_LISTENER_FUNCTION() \
-  int addEventListener(lua_State *L);
-
-#define azIMPLEMENT_EVENT_LISTENER_FUNCTION(theClass) \
-int theClass::addEventListener(lua_State *L) { \
-  wxString eventName = LuaUtil::ToString(L, 1); \
-  wxString functionName = LuaUtil::ToString(L, 2); \
-  Plugin* p = wxGetApp().GetPluginManager()->GetPluginByLuaState(L); \
-  p->AddEventListener(this->Get(), eventName, functionName); \
-  return 0; \
-}
-
 int luaHost_logError(const wxString& s);
 int luaHost_logInfo(const wxString& s);
 

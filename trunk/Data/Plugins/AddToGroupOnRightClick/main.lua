@@ -10,10 +10,13 @@
 
 
 function addToGroupPopupMenu_click(event) 
+	-- Get the clicked menu item
+	menuItem = event.menuItem
+
 	-- Get the group
-	group = appetizer:getShortcutById(event.menuItemId)
+	group = appetizer:getShortcutById(menuItem:getId())
 	-- Get the shortcut that must be added to the group
-	shortcut = appetizer:getShortcutById(event.menuItemTag)
+	shortcut = appetizer:getShortcutById(menuItem:getTag())
 		
 	-- Add the shortcut to the group
 	group:addChild(shortcut)
@@ -42,11 +45,11 @@ function application_iconMenuOpening(event)
 	subMenu = Menu:new("Add to group")
 	
 	for i, group in pairs(groups) do
-		menuItem = {}
-		menuItem.text = group:getName() -- the menu item label
-		menuItem.id = group:getId() -- keep a reference to the group
-		menuItem.tag = shortcut:getId() -- keep a reference to the shortcut
-		menuItem.onClick = "addToGroupPopupMenu_click" -- this function is going to be called when/if the menu item is selected
+		-- Create a menu item with the group name as a label
+		menuItem = MenuItem:new(group:getName())
+		menuItem:setId(group:getId()) -- keep a reference to the group
+		menuItem:setTag(shortcut:getId()) -- keep a reference to the shortcut
+		menuItem:setOnSelected("addToGroupPopupMenu_click") -- this function is going to be called when/if the menu item is selected
 				
 		-- Add the menu item to the sub menu
 		subMenu:append(menuItem)

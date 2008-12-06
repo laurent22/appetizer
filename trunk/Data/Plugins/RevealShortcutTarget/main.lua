@@ -8,7 +8,7 @@
 
 
 function openContainingFolder_click(event) 
-	shortcut = appetizer:getShortcutById(event.menuItemTag)
+	shortcut = appetizer:getShortcutById(event.menuItem:getTag())
 	
 	system:runCommand("explorer.exe /select,"..shortcut:getResolvedPath(), true)
 end
@@ -24,10 +24,9 @@ function appetizer_iconMenuOpening(event)
 	menu = icon:getPopupMenu()	
 	shortcut = icon:getShortcut()
 	
-	menuItem = {}
-	menuItem.text = "Open containing folder"
-	menuItem.onClick = "openContainingFolder_click"
-	menuItem.tag = shortcut:getId() -- keep a reference to the shortcut
+	menuItem = MenuItem:new("Open containing folder")
+	menuItem:setOnSelected("openContainingFolder_click")
+	menuItem:setTag(shortcut:getId()) -- keep a reference to the shortcut
 	
 	-- Add a separator and append the sub menu to the icon popup menu
 	menu:appendSeparator()

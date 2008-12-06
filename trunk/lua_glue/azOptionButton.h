@@ -23,10 +23,9 @@ public:
   azOptionButton(OptionButton* button) { buttonId_ = button->GetId(); }
   azOptionButton(lua_State *L);
 
+  int addEventListener(lua_State *L);
   int setToolTip(lua_State *L);
   int popupMenu(lua_State *L);
-
-  azDECLARE_EVENT_LISTENER_FUNCTION()
   
   static const char className[];
   static Lunar<azOptionButton>::RegType methods[];

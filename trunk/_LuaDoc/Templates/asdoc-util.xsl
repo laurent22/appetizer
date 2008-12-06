@@ -540,7 +540,7 @@
 							</xsl:call-template>
 						</td>
 						<td class="titleTableLogo" align="right" rowspan="3">
-							<img src="{$baseRef}images/logo.jpg" class="logoImage" title="Adobe Logo" alt="Adobe Logo" />
+							<a href="http://app.etizer.org"><img src="{$baseRef}images/logo.jpg" class="logoImage" title="Appetizer Logo" alt="Appetizer Logo" /></a>
 						</td>
 					</tr>
 					<tr class="titleTableRow2">

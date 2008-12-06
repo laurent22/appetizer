@@ -26,7 +26,7 @@
   <!-- <includeExamplesDirectory></includeExamplesDirectory> -->
   <title>API Documentation</title> 
   <windowTitle>API Documentation</windowTitle>
-  <footer> </footer>
+  <footer></footer>
   <!-- <footer><![CDATA[ &copy; 2004-2006 Adobe Systems Incorporated. All rights reserved. ]]></footer> -->
   <languageElements show="false" functions="false" operators="false" statements="false" />
   <namespaces hideAll="true">
