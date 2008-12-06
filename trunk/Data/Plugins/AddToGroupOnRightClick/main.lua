@@ -30,7 +30,7 @@ function application_iconMenuOpening(event)
 	icon = event.icon
 	
 	-- Get the icon popup menu and associated shortcut object
-	menu = icon:getPopupMenu()	
+	menu = event.menu
 	shortcut = icon:getShortcut()
 	
 	-- Get all the application groups, so that we

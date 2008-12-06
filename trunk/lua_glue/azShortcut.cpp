@@ -44,6 +44,7 @@ Lunar<azShortcut>::RegType azShortcut::methods[] = {
   method(azShortcut, getParent),
   method(azShortcut, removeFromParent),
   method(azShortcut, insertChildAt),
+  method(azShortcut, isGroup),
   {0,0}
 };
 
@@ -132,6 +133,7 @@ int azShortcut::addChild(lua_State *L) {
 }
 
 
+int azShortcut::isGroup(lua_State *L) { CheckWrappedObject(L, Get()); lua_pushboolean(L, Get()->IsGroup()); return 1; }
 int azShortcut::setName(lua_State *L) { CheckWrappedObject(L, Get()); wxString n = LuaUtil::ToString(L, 1); Get()->SetName(n); return 0; }
 int azShortcut::autoSetName(lua_State *L) { CheckWrappedObject(L, Get()); Get()->AutoSetName(); return 0; }
 int azShortcut::setPath(lua_State *L) { CheckWrappedObject(L, Get()); wxString n = LuaUtil::ToString(L, 1); Get()->SetFilePath(n); return 0; }

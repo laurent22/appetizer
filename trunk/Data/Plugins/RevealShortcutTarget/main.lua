@@ -17,12 +17,15 @@ end
 -- This function is called when an icon is right-clicked,
 -- before the popup menu is displayed
 function appetizer_iconMenuOpening(event)
-	-- Get the icon
+	-- Get the icon and the popup menu
 	icon = event.icon
+	menu = event.menu
 	
-	-- Get the icon popup menu and associated shortcut object
-	menu = icon:getPopupMenu()	
+	-- Get the icon's associated shortcut object
 	shortcut = icon:getShortcut()
+	
+	-- Don't display the option for groups
+	if shortcut:isGroup() then return 0 end
 	
 	menuItem = MenuItem:new("Open containing folder")
 	menuItem:setOnSelected("openContainingFolder_click")

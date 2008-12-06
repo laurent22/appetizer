@@ -100,7 +100,6 @@ CreateAsFile(sourceFile, targetDir)
 				parsingComment := 0
 				
 			} else {
-				;regex := "iU) \* @param (.*) (.*) "
 				regex := "iU) \* @param ([^\s]+) ([^\s]+) (.*)$"
 				found := RegExMatch(A_LoopReadLine, regex, output)
 				
@@ -117,7 +116,18 @@ CreateAsFile(sourceFile, targetDir)
 						currentParameters = %currentParameters%,%A_Space%
 					}
 					
-					currentParameters = %currentParameters%%paramName%:%paramType%
+					currentParameters = %currentParameters%%paramName%:%paramType%			
+						
+					regex := "iU)(.*)\s\(default\s(.*)\)$"
+					found := RegExMatch(paramDesc, regex, output)	
+						
+					if (found > 0)
+					{
+						; There is a default parameter
+						currentParameters = %currentParameters% = %output2%
+						paramDesc = %output1%
+					}
+					
 					lineToWrite = %A_Space%* @param %paramName% %paramDesc%
 										
 				}
@@ -176,6 +186,7 @@ CreateAsFile(sourceFile, targetDir)
 	FileDelete %filePath%
 	FileAppend %fileContent%, %filePath%
 }
+	
 
 
 FileCreateDir %dummyClassesDir%
@@ -183,6 +194,8 @@ FileCreateDir %dummyClassesDir%
 Loop, %A_ScriptDir%\..\lua_glue\az*.cpp
 {
 	if (A_LoopFileName = "azWrapper.cpp")
+		continue
+	if (A_LoopFileName = "azGlobal.cpp")
 		continue
 		
 	CreateAsFile(A_LoopFileFullPath, dummyClassesDir)

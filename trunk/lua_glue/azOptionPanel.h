@@ -25,6 +25,9 @@ public:
   int buttonCount(lua_State *L);
   int getButtonAt(lua_State *L);
   int removeButton(lua_State *L);
+  int open(lua_State *L);
+  int close(lua_State *L);
+  int isOpen(lua_State *L);
   
   static const char className[];
   static Lunar<azOptionPanel>::RegType methods[];

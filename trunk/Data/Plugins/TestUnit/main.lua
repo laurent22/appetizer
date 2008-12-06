@@ -112,12 +112,12 @@ function applicationTest()
 	trace("Application visible = ", appetizer:isVisible())
 
 	dialogs:showMessage("Closing option panel")
-	appetizer:closeOptionPanel()		
-	trace("Option panel is open = ", appetizer:isOptionPanelOpen())
+	optionPanel:close()		
+	trace("Option panel is open = ", optionPanel:isOpen())
 	
 	dialogs:showMessage("Opening option panel")
-	appetizer:openOptionPanel()	
-	trace("Option panel is open = ", appetizer:isOptionPanelOpen())
+	optionPanel:open()	
+	trace("Option panel is open = ", optionPanel:isOpen())
 	
 	currentOrientation = appetizer:getOrientation()
 	dialogs:showMessage("Current orientation is: "..currentOrientation..". Rotating it...")
@@ -222,5 +222,14 @@ trace("Adding button to option panel")
 optionPanel:addButton(button)
 
 button:addEventListener("click", "optionButton_click")
-
 appetizer:addEventListener("trayIconMenuOpening", "appetizer_trayIconMenuOpening")
+
+trace("Enumerating option buttons...")
+
+buttonCount = optionPanel:buttonCount()
+
+for i = 0, (buttonCount - 1) do
+	button = optionPanel:getButtonAt(i)
+	trace("Button name = ", button:getName())
+	trace("Button tooltip = ", button:getToolTip())
+end

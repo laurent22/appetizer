@@ -24,7 +24,10 @@ public:
   azOptionButton(lua_State *L);
 
   int addEventListener(lua_State *L);
+  int getToolTip(lua_State *L);
   int setToolTip(lua_State *L);
+  int getName(lua_State *L);
+  int setName(lua_State *L);
   int popupMenu(lua_State *L);
   
   static const char className[];

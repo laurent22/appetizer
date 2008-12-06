@@ -32,9 +32,6 @@ public:
   int show(lua_State *L);
   int close(lua_State *L);
   int isVisible(lua_State *L);
-  int openOptionPanel(lua_State *L);
-  int closeOptionPanel(lua_State *L);
-  int isOptionPanelOpen(lua_State *L);
   int setOrientation(lua_State *L);
   int getOrientation(lua_State *L);
   int doMultiLaunch(lua_State *L);

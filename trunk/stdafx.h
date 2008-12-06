@@ -30,12 +30,12 @@
 #include <wx/filefn.h>
 #include <wx/regex.h>
 #include <wx/msgdlg.h>
+#include <wx/tooltip.h>
 #include <wx/object.h>
 #include <wx/generic/dirctrlg.h>
 #include <wx/progdlg.h>
 #include <wx/treectrl.h>
 #include <wx/checkbox.h>
-#include <wx/filesys.h>
 #include <wx/combobox.h>
 #include <wx/imaglist.h>
 #include <wx/stdpaths.h>

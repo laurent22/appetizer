@@ -36,7 +36,6 @@ const char azIcon::className[] = "Icon";
 #define method(class, name) {#name, &class::name}
 
 Lunar<azIcon>::RegType azIcon::methods[] = {
-  method(azIcon, getPopupMenu),
   method(azIcon, getShortcut),
   {0,0}
 };
@@ -68,20 +67,6 @@ FolderItemRenderer* azIcon::Get() const {
 
 azIcon::azIcon(lua_State *L) {
   luaL_error(L, "This object cannot be directly created. Create an instance of Shortcut instead, and add it to the option panel (optionPanel)");
-}
-
-
-/**
- * Returns the popup menu associated with this icon.
- * @return Menu The icon popup menu
- * 
- */	
-int azIcon::getPopupMenu(lua_State *L) {
-  CheckWrappedObject(L, Get()); 
-
-  Lunar<azMenu>::push(L, new azMenu(Get()->GetPopupMenu()), true);
-
-  return 1;
 }
 
 

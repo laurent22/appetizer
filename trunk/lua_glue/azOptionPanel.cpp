@@ -27,6 +27,9 @@ Lunar<azOptionPanel>::RegType azOptionPanel::methods[] = {
   method(azOptionPanel, buttonCount),
   method(azOptionPanel, getButtonAt),
   method(azOptionPanel, removeButton),
+  method(azOptionPanel, open),
+  method(azOptionPanel, close),
+  method(azOptionPanel, isOpen),
   {0,0}
 };
 
@@ -83,3 +86,19 @@ int azOptionPanel::removeButton(lua_State *L) {
 
   return 0;
 }
+
+
+int azOptionPanel::open(lua_State *L) {
+  wxGetApp().GetMainFrame()->OpenOptionPanel(); return 0;
+}
+
+
+int azOptionPanel::close(lua_State *L) {
+  wxGetApp().GetMainFrame()->CloseOptionPanel(); return 0;
+}
+
+
+int azOptionPanel::isOpen(lua_State *L) {
+  lua_pushboolean(L, wxGetApp().GetMainFrame()->IsOptionPanelOpen()); return 1;
+}
+

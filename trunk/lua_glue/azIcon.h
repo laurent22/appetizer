@@ -21,7 +21,6 @@ public:
   azIcon(FolderItemRenderer* r);
   azIcon(lua_State *L);
   
-  int getPopupMenu(lua_State *L);
   int getShortcut(lua_State *L);
   
   static const char className[];

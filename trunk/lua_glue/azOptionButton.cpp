@@ -28,6 +28,9 @@ Lunar<azOptionButton>::RegType azOptionButton::methods[] = {
   method(azOptionButton, setToolTip),
   method(azOptionButton, addEventListener),
   method(azOptionButton, popupMenu),
+  method(azOptionButton, getToolTip),
+  method(azOptionButton, getName),
+  method(azOptionButton, setName),
   {0,0}
 };
 
@@ -122,3 +125,21 @@ int azOptionButton::popupMenu(lua_State *L) {
 
   return 0;
 }
+
+
+int azOptionButton::getToolTip(lua_State *L) {
+  CheckWrappedObject(L, Get());
+
+  wxToolTip* tooltip = Get()->GetToolTip();
+
+  if (!tooltip) {
+    LuaUtil::PushString(L, wxEmptyString);
+  } else {
+    LuaUtil::PushString(L, tooltip->GetTip());
+  }
+    
+  return 1;
+}
+
+int azOptionButton::getName(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::PushString(L, Get()->GetName()); return 1; }
+int azOptionButton::setName(lua_State *L) { CheckWrappedObject(L, Get());Get()->SetName(LuaUtil::ToString(L, 1)); return 0; }

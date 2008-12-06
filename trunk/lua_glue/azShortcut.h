@@ -33,6 +33,7 @@ public:
   int launch(lua_State *L);
   int setParameters(lua_State *L);
   int getParameters(lua_State *L);
+  int isGroup(lua_State *L);
 
   int addToMultiLaunchGroup(lua_State *L);
   int belongsToMultiLaunchGroup(lua_State *L);
