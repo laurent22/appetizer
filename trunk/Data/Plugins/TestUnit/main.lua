@@ -3,8 +3,8 @@
 -- found in the LICENSE file.
 
 function shortcutTest()
-	trace("Creating new shortcut...")
-	s = Shortcut:new(false)
+	trace("Creating new dockItem...")
+	s = DockItem:new(false)
 
 	s:setPath("C:\\WINDOWS\\system32\\calc.exe")
 	trace("Path = ", s:getPath())
@@ -24,11 +24,11 @@ function shortcutTest()
 	s:removeFromMultiLaunchGroup()
 	trace("Belongs to MLG = ", s:belongsToMultiLaunchGroup())
 
-	trace("Adding shortcut to root...")
-	root = appetizer:getShortcutRoot()
+	trace("Adding dockItem to root...")
+	root = appetizer:getDockItemsRoot()
 	root:addChild(s)
 
-	trace("Launching shortcut...")
+	trace("Launching dockItem...")
 	s:launch()
 
 	trace("Number of children on root: ", root:childrenCount())
@@ -40,7 +40,7 @@ function shortcutTest()
 	parent = firstChild:getParent()
 	trace("Parent name is (should be root): ", parent:getName())
 
-	trace("Inserting calc.exe shortcut at index 0")
+	trace("Inserting calc.exe dockItem at index 0")
 	root:insertChildAt(s, 0)
 
 	trace("Removing the child that was previously the first one: ", firstChild:getName())
@@ -51,24 +51,24 @@ end
 	
 function groupTest()
 	trace("Creating new group...")
-	group = Shortcut:new(true)	
+	group = DockItem:new(true)	
 	group:setName("test group")
 	
 	trace("Duplicating all the shortcuts on the dock, and adding them to the group")
 	
-	root = appetizer:getShortcutRoot()	
+	root = appetizer:getDockItemsRoot()	
 	childrenCount = root:childrenCount()
 	
 	for i = 0, (childrenCount - 1) do
 		child = root:getChildAt(i)
 		
-		trace("Duplicating shortcut: ", child:getName())
+		trace("Duplicating dockItem: ", child:getName())
 	
-		shortcut = Shortcut:new()
-		shortcut:setPath(child:getPath())
-		shortcut:autoSetName()
+		dockItem = DockItem:new()
+		dockItem:setPath(child:getPath())
+		dockItem:autoSetName()
 		
-		group:addChild(shortcut)
+		group:addChild(dockItem)
 	end	
 	
 	trace("Adding group to root")	
@@ -90,8 +90,8 @@ function dialogTest()
 	dialogs:showMessage("Showing eject dialog...")	
 	dialogs:showEjectDriveDialog()
 	
-	dialogs:showMessage("Showing 'new shortcut' dialog...")	
-	dialogs:showNewShortcutDialog()	
+	dialogs:showMessage("Showing 'new dockItem' dialog...")	
+	dialogs:showNewDockItemDialog()	
 	
 	dialogs:showMessage("Showing 'config' dialog...")	
 	dialogs:showConfigDialog()	
@@ -170,7 +170,7 @@ function optionButton_click(event)
 	
 	menu = Menu:new("Test units")
 	
-	menuItem = MenuItem:new("Shortcut test")
+	menuItem = MenuItem:new("DockItem test")
 	menuItem:setOnSelected("shortcutTest")
 	menu:append(menuItem)
 	
@@ -233,3 +233,4 @@ for i = 0, (buttonCount - 1) do
 	trace("Button name = ", button:getName())
 	trace("Button tooltip = ", button:getToolTip())
 end
+

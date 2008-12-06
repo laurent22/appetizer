@@ -14,9 +14,9 @@ function addToGroupPopupMenu_click(event)
 	menuItem = event.menuItem
 
 	-- Get the group
-	group = appetizer:getShortcutById(menuItem:getId())
+	group = appetizer:getDockItemById(menuItem:getId())
 	-- Get the shortcut that must be added to the group
-	shortcut = appetizer:getShortcutById(menuItem:getTag())
+	shortcut = appetizer:getDockItemById(menuItem:getTag())
 		
 	-- Add the shortcut to the group
 	group:addChild(shortcut)
@@ -31,11 +31,11 @@ function application_iconMenuOpening(event)
 	
 	-- Get the icon popup menu and associated shortcut object
 	menu = event.menu
-	shortcut = icon:getShortcut()
+	shortcut = icon:getDockItem()
 	
 	-- Get all the application groups, so that we
 	-- can build a submenu from it
-	root = appetizer:getShortcutRoot()	
+	root = appetizer:getDockItemsRoot()	
 	groups = root:getAllGroups()
 	
 	-- If no group exists, exit now

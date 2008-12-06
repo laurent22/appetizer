@@ -62,7 +62,12 @@ CreateAsFile(sourceFile, targetDir)
 						{
 							fileContent = %fileContent% return;
 						} else {
-							fileContent = %fileContent% return null;
+							if (currentReturnType = "Number")
+							{
+								fileContent = %fileContent% return 0;
+							} else {
+								fileContent = %fileContent% return null;
+							}
 						}
 												
 						fileContent = %fileContent% }`n
@@ -154,7 +159,7 @@ CreateAsFile(sourceFile, targetDir)
 			{
 				lineToWrite = <p>This class dispatches the following events:</p>
 				lineToWrite = %lineToWrite% * <table class=innertable>
-				lineToWrite = %lineToWrite% * <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+				lineToWrite = %lineToWrite% * <tr><th>Name</th><th>Type</th><th>Dispatched...</th></tr>
 			}
 	
 			if (lineToWrite = " * @endEventTable")
@@ -169,7 +174,7 @@ CreateAsFile(sourceFile, targetDir)
 				eventName = %output2%
 				eventDesc = %output3%
 				
-				lineToWrite = %A_Space%* <tr><td>"%eventName%"</td><td><a href="events/%eventType%.html">%eventType%</a></td><td>%eventDesc%</td></tr>
+				lineToWrite = %A_Space%* <tr><td><code>%eventName%</code></td><td><a href="events/%eventType%.html">%eventType%</a></td><td>%eventDesc%</td></tr>
 			}
 		
 			currentCommentBlock = %currentCommentBlock%%A_Space%%A_Space%`n%lineToWrite%

@@ -12,8 +12,8 @@
  * application methods.
  *     
  * @beginEventTable
- * @event MenuOpening trayIconMenuOpening When the tray icon menu is about to be displayed
- * @event IconMenuOpening iconMenuOpening When a dock icon menu is about to be displayed
+ * @event MenuOpening trayIconMenuOpening when the tray icon menu is about to be displayed
+ * @event IconMenuOpening iconMenuOpening when a dock icon menu is about to be displayed
  * @endEventTable
  *
  */	
@@ -23,7 +23,7 @@
 #include "../stdafx.h"
 
 #include "azApplication.h"
-#include "azShortcut.h"
+#include "azDockItem.h"
 #include "azGlobal.h"
 #include "LuaUtil.h"
 #include "../FilePaths.h"
@@ -43,8 +43,8 @@ const char azApplication::className[] = "Application";
 
 Lunar<azApplication>::RegType azApplication::methods[] = {
   method(azApplication, addEventListener),
-  method(azApplication, getShortcutRoot),
-  method(azApplication, getShortcutById),
+  method(azApplication, getDockItemsRoot),
+  method(azApplication, getDockItemById),
   method(azApplication, hide),
   method(azApplication, show),
   method(azApplication, close),
@@ -123,41 +123,41 @@ int azApplication::addEventListener(lua_State *L) {
 
 
 /**
- * Returns the root of all the shortcut objects. Shortcut objects are organized in a tree-like structure
- * with groups being the branches and everything else the leafs. This function allows getting the
+ * Returns the root of all the dock items. Dock items are organized in a tree-like structure
+ * with groups being the branches and the shortcut being the leafs. This function allows getting the
  * root of this structure. You can then call <code>childrenCount</code>, <code>getChildAt</code>, etc. to
  * access the children.
- * @return Shortcut The root of all the shortcuts
- * @example The following code gets the shortcut root and prints the name of all its children
+ * @return DockItem The root of all the dock items
+ * @example The following code gets the dock items' root and prints the name of all its children
  * <listing version="3.0">
- * root = appetizer:getShortcutRoot()
+ * root = appetizer:getDockItemsRoot()
  * childrenCount = root:childrenCount()
  * 
  * for i = 0, (childrenCount - 1) do
- *     subShortcut = root:getChildAt(i)
- *     trace(subShortcut:getName())
+ *     subDockItem = root:getChildAt(i)
+ *     trace(subDockItem:getName())
  * end
  * </listing>
  * 
  */	
-int azApplication::getShortcutRoot(lua_State *L) {
+int azApplication::getDockItemsRoot(lua_State *L) {
   FolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
-  Lunar<azShortcut>::push(L, new azShortcut(rootFolderItem), true);
+  Lunar<azDockItem>::push(L, new azDockItem(rootFolderItem), true);
 
   return 1;
 }
 
 
 /**
- * Gets the shortcut with the given id or <code>nil</code> if it does not exist or has been deleted. Note
- * that this function will also look for the shortcut in all the groups and subgroups.
- * @return Shortcut The shortcut or <code>nil</code> if does not exists.
+ * Gets the dock item with the given id or <code>nil</code> if it does not exist or has been deleted. Note
+ * that this function will also look for the dock item in all the groups and subgroups.
+ * @return DockItem The dock item or <code>nil</code> if does not exists.
  * 
  */	
-int azApplication::getShortcutById(lua_State *L) {
+int azApplication::getDockItemById(lua_State *L) {
   int folderItemId = luaL_checkinteger(L, 1);
   FolderItem* folderItem = FolderItem::GetFolderItemById(folderItemId);
-  Lunar<azShortcut>::push(L, new azShortcut(folderItem), true);
+  Lunar<azDockItem>::push(L, new azDockItem(folderItem), true);
   
   return 1;
 }

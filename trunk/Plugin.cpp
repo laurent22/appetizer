@@ -17,7 +17,7 @@
 #include "lua_glue/azOptionButton.h"
 #include "lua_glue/azMenu.h"
 #include "lua_glue/azMenuItem.h"
-#include "lua_glue/azShortcut.h"
+#include "lua_glue/azDockItem.h"
 
 
 
@@ -143,7 +143,7 @@ bool Plugin::Load(const wxString& folderPath) {
   Lunar<azApplication>::Register(L);
   Lunar<azIcon>::Register(L);
   Lunar<azMenu>::Register(L);
-  Lunar<azShortcut>::Register(L);
+  Lunar<azDockItem>::Register(L);
   Lunar<azOptionButton>::Register(L);
   Lunar<azOptionPanel>::Register(L);
   Lunar<azDialogs>::Register(L);

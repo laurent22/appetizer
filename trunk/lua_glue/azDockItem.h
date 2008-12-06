@@ -6,20 +6,20 @@
 
 #include "../stdafx.h"
 
-#ifndef __azShortcut_H
-#define __azShortcut_H
+#ifndef __azDockItem_H
+#define __azDockItem_H
 
 
 #include "../FolderItem.h"
 #include "azWrapper.h"
 
 
-class azShortcut : public azWrapper {
+class azDockItem : public azWrapper {
 
 public:
 
-  azShortcut(FolderItem* folderItem);
-  azShortcut(lua_State *L);
+  azDockItem(FolderItem* folderItem);
+  azDockItem(lua_State *L);
 
   int getAllGroups(lua_State *L);
   int getName(lua_State *L);
@@ -46,7 +46,7 @@ public:
   int insertChildAt(lua_State *L);
   
   static const char className[];
-  static Lunar<azShortcut>::RegType methods[];
+  static Lunar<azDockItem>::RegType methods[];
 
   FolderItem* Get() const;
 
@@ -58,4 +58,4 @@ private:
 };
 
 
-#endif // __azShortcut_H
+#endif // __azDockItem_H

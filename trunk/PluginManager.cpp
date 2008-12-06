@@ -16,7 +16,7 @@
 #include "lua_glue/azOptionButton.h"
 #include "lua_glue/azIcon.h"
 #include "lua_glue/azMenu.h"
-#include "lua_glue/azShortcut.h"
+#include "lua_glue/azDockItem.h"
 
 
 PluginManager::PluginManager() {

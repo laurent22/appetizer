@@ -26,8 +26,8 @@ public:
   azApplication(lua_State *L);
 
   int addEventListener(lua_State *L);
-  int getShortcutRoot(lua_State *L);
-  int getShortcutById(lua_State *L);
+  int getDockItemsRoot(lua_State *L);
+  int getDockItemById(lua_State *L);
   int hide(lua_State *L);
   int show(lua_State *L);
   int close(lua_State *L);

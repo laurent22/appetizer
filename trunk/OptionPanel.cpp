@@ -352,7 +352,7 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
   } else {
 
     OptionButton* b = dynamic_cast<OptionButton*>(evt.GetEventObject());
-    //wxGetApp().GetPluginManager()->DispatchEvent(wxGetApp().GetPluginManager()->GetWrapper(b), _T("click"), LuaHostTable());
+
     wxGetApp().GetPluginManager()->DispatchEvent(b, _T("click"), LuaHostTable());
 
   }

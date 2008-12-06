@@ -7,11 +7,11 @@
 
 /**
  * This class represents and icon, as displayed on the dock. It cannot be directly
- * created in Lua, however it is possible to indirectly create a new icon by creating a Shortcut
+ * created in Lua, however it is possible to indirectly create a new icon by creating a DockItem
  * and adding it to the <code>optionPanel</code> global object. Some events also return a reference
  * to an Icon object.
  *
- * @see Shortcut
+ * @see DockItem
  *
  */	
 
@@ -20,7 +20,7 @@
 
 #include "azIcon.h"
 #include "azMenu.h"
-#include "azShortcut.h"
+#include "azDockItem.h"
 #include "../MiniLaunchBar.h"
 
 
@@ -36,7 +36,7 @@ const char azIcon::className[] = "Icon";
 #define method(class, name) {#name, &class::name}
 
 Lunar<azIcon>::RegType azIcon::methods[] = {
-  method(azIcon, getShortcut),
+  method(azIcon, getDockItem),
   {0,0}
 };
 
@@ -66,27 +66,27 @@ FolderItemRenderer* azIcon::Get() const {
 
 
 azIcon::azIcon(lua_State *L) {
-  luaL_error(L, "This object cannot be directly created. Create an instance of Shortcut instead, and add it to the option panel (optionPanel)");
+  luaL_error(L, "This object cannot be directly created. Create an instance of DockItem instead, and add it to the option panel (optionPanel)");
 }
 
 
 /**
- * Returns the shortcut object associated with this icon.
- * @return Shortcut The icon's shortcut
- * @example The following code displays the shortcut path associated with the icon:
+ * Returns the dock item associated with this icon.
+ * @return DockItem The icon's dock item
+ * @example The following code displays the dock item's path associated with the icon:
  * <listing version="3.0">
- * shortcut = icon:getShortcut()
- * trace("This icon links to ", shortcut:getPath())
+ * dockItem = icon:getDockItem()
+ * trace("This icon links to ", dockItem:getPath())
  * </listing>
  * 
  */	
-int azIcon::getShortcut(lua_State *L) {
+int azIcon::getDockItem(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
   FolderItem* folderItem = Get()->GetFolderItem();
-  if (!folderItem) luaL_error(L, "Cannot get associated shortcut");
+  if (!folderItem) luaL_error(L, "Cannot get associated dock item");
 
-  Lunar<azShortcut>::push(L, new azShortcut(folderItem), true);
+  Lunar<azDockItem>::push(L, new azDockItem(folderItem), true);
 
   return 1;
 }

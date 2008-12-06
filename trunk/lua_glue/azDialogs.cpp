@@ -4,6 +4,16 @@
   found in the LICENSE file.
 */
 
+
+/**
+ * This class contains a number of utility functions to display various dialog boxes.
+ * You do not need to construct an instance of this class - instead use the global
+ * <code>dialogs</code> object.
+ * @see Global#dialogs
+ *
+ */	
+
+
 #include "../stdafx.h"
 
 #include "azDialogs.h"
@@ -55,6 +65,31 @@ azDialogs::azDialogs(lua_State *L) {
 }
 
 
+/**
+ * Shows a message box to the user. There are four kinds of message boxes: <code>information</code>,
+ * <code>warning</code>, <code>error</code> and <code>confirmation</code>. Currently, the only difference
+ * between them is that they display a different icon. Additionally, each message box can have different
+ * combinations of buttons among <code>yes</code>, <code>no</code>, <code>ok</code> and <code>cancel</code>.
+ * When you call this function the script is stopped until the user clicks on the button. You can then
+ * check the return value of the function to know which button has been clicked. To display a simple alert
+ * box with just an "OK" button, simply use <code>dialogs.showMessage("my message")</code>
+ * @param String message The message to display
+ * @param String buttons The buttons to display. Possible values are "ok", "yesNo" and "yesNoCancel" (default "ok")
+ * @param String type The type of message box. Possible values are "information", "warning", "error" and "confirmation" (default "information")
+ * @return String The button that was clicked. Possible values are "ok", "yes", "no" or "cancel"
+ * @example This script shows different kinds of message boxes and their results:
+ * <listing version="3.0">
+ * result = dialogs:showMessage("This is an error message with an 'ok' button", "ok", "error")
+ * dialogs:showMessage("'"..result.."' was clicked")
+ * 
+ * result = dialogs:showMessage("This is a warning message with yes / no buttons", "yesNo", "warning")
+ * dialogs:showMessage("'"..result.."' was clicked")	
+ * 
+ * result = dialogs:showMessage("This is a confirmation message with yes / no / cancel buttons", "yesNoCancel", "confirmation")
+ * dialogs:showMessage("'"..result.."' was clicked")	
+ * </listing>
+ * 
+ */	
 int azDialogs::showMessage(lua_State *L) {
   wxString message = LuaUtil::ToString(L, 1);
   wxString buttons = LuaUtil::ToString(L, 2, true);
@@ -103,7 +138,28 @@ int azDialogs::showMessage(lua_State *L) {
   return 1;
 }
 
+
+/**
+ * Shows the application configuration dialog
+ * 
+ */	
 int azDialogs::showConfigDialog(lua_State *L) { wxGetApp().GetUtilities().ShowConfigDialog(); return 0; }
+
+/**
+ * Shows the application "New shortcut" dialog. If the user clicks "Save" on it, a new shortcut will
+ * be created.
+ * 
+ */	
 int azDialogs::showNewShortcutDialog(lua_State *L) { wxGetApp().GetUtilities().CreateNewShortcut(); return 0; }
+
+/**
+ * Shows the application "Import" dialog, which allows importing shortcuts.
+ * 
+ */	
 int azDialogs::showImportDialog(lua_State *L) { wxGetApp().GetUtilities().ShowImportDialog(); return 0; }
+
+/**
+ * Shows the system "Eject drive" dialog
+ * 
+ */	
 int azDialogs::showEjectDriveDialog(lua_State *L) { wxGetApp().GetUtilities().ShowEjectDriveDialog(); return 0; }

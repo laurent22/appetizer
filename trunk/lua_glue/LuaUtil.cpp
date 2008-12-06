@@ -15,7 +15,7 @@
 #include "azOptionPanel.h"
 #include "azOptionButton.h"
 #include "azMenu.h"
-#include "azShortcut.h"
+#include "azDockItem.h"
 #include "../FolderItemRenderer.h"
 #include "../OptionButton.h"
 
@@ -58,13 +58,13 @@ bool LuaUtil::DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value) {
   done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
   if (done) return true;
 
-  done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
+  done = luaConvertAndPushAsWrapper<FolderItem, azDockItem>(L, value);
   if (done) return true;
 
   done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, value);
   if (done) return true;
 
-  done = luaConvertAndPushAsWrapper<FolderItem, azShortcut>(L, value);
+  done = luaConvertAndPushAsWrapper<FolderItem, azDockItem>(L, value);
   if (done) return true;
 
   if (dynamic_cast<MiniLaunchBar*>(value)) {

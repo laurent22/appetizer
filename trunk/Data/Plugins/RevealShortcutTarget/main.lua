@@ -8,7 +8,7 @@
 
 
 function openContainingFolder_click(event) 
-	shortcut = appetizer:getShortcutById(event.menuItem:getTag())
+	shortcut = appetizer:getDockItemById(event.menuItem:getTag())
 	
 	system:runCommand("explorer.exe /select,"..shortcut:getResolvedPath(), true)
 end
@@ -22,7 +22,7 @@ function appetizer_iconMenuOpening(event)
 	menu = event.menu
 	
 	-- Get the icon's associated shortcut object
-	shortcut = icon:getShortcut()
+	shortcut = icon:getDockItem()
 	
 	-- Don't display the option for groups
 	if shortcut:isGroup() then return 0 end

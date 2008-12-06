@@ -1435,6 +1435,34 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azDockItem.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\lua_glue\azGlobal.cpp"
@@ -1567,6 +1595,14 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\lua_glue\azOptionButton.cpp"
@@ -1649,50 +1685,18 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\lua_glue\azShortcut.cpp"
+					RelativePath=".\lua_glue\azSystem.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\lua_glue\azSystem.cpp"
-					>
-					<FileConfiguration
-						Name="Unicode Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -2051,6 +2055,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\lua_glue\azDockItem.h"
+					>
+				</File>
+				<File
 					RelativePath=".\lua_glue\azGlobal.h"
 					>
 				</File>
@@ -2072,10 +2080,6 @@
 				</File>
 				<File
 					RelativePath=".\lua_glue\azOptionPanel.h"
-					>
-				</File>
-				<File
-					RelativePath=".\lua_glue\azShortcut.h"
 					>
 				</File>
 				<File

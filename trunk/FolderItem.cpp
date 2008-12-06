@@ -779,7 +779,7 @@ void FolderItem::Launch() {
 
   if (filePath == wxEmptyString) {
     parameters = parameters_;
-    filePath = GetResolvedPath();
+    filePath = FolderItem::ResolvePath(filePath_, false);
   }
 
     
@@ -792,8 +792,7 @@ void FolderItem::Launch() {
 
 
 void FolderItem::LaunchWithArguments(const wxString& arguments) {
-  wxString resolvedFilePath = GetResolvedPath();
-  FolderItem::Launch(resolvedFilePath, arguments);
+  FolderItem::Launch(FolderItem::ResolvePath(filePath_, false), arguments);
 }
 
 

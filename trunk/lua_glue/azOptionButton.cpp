@@ -4,6 +4,19 @@
   found in the LICENSE file.
 */
 
+
+
+/**
+ * Option buttons are displayed on the option panel.
+ *
+ * @beginEventTable
+ * @event Click click when the button is clicked
+ * @endEventTable
+ * @see OptionPanel
+ *
+ */	
+
+
 #include "../stdafx.h"
 
 #include "azOptionButton.h"
@@ -86,12 +99,22 @@ int azOptionButton::addEventListener(lua_State *L) {
 }
 
 
+/**
+ * Constructor.
+ * 
+ */	
 azOptionButton::azOptionButton(lua_State *L) {
   OptionButton* b = new OptionButton(wxGetApp().GetMainFrame()->GetNullPanel(), wxGetApp().GetUniqueInt());
   buttonId_ = b->GetId();
 }
 
 
+/**
+ * 
+ * Sets the tooltip that shows up when the user moves the mouse over the control.
+ * @param String tooltip The tooltip
+ * 
+ */	
 int azOptionButton::setToolTip(lua_State *L) {
   CheckWrappedObject(L, Get());
 
@@ -101,6 +124,14 @@ int azOptionButton::setToolTip(lua_State *L) {
 }
 
 
+/**
+ * 
+ * Pops up a menu below the button. This can be used to allow the user to choose
+ * between multiple options when the button is clicked.
+ * @param Menu menu The menu to display
+ * @see Menu
+ * 
+ */	
 int azOptionButton::popupMenu(lua_State *L) {
   CheckWrappedObject(L, Get());
 
@@ -127,6 +158,12 @@ int azOptionButton::popupMenu(lua_State *L) {
 }
 
 
+/**
+ * 
+ * Gets the tooltip associated with this control.
+ * @return String The tooltip
+ * 
+ */	
 int azOptionButton::getToolTip(lua_State *L) {
   CheckWrappedObject(L, Get());
 
@@ -141,5 +178,19 @@ int azOptionButton::getToolTip(lua_State *L) {
   return 1;
 }
 
+
+/**
+ * 
+ * Gets the control name
+ * @return String The control name
+ * 
+ */	
 int azOptionButton::getName(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::PushString(L, Get()->GetName()); return 1; }
+
+/**
+ * 
+ * Sets the control name
+ * @param String name The control name
+ * 
+ */	
 int azOptionButton::setName(lua_State *L) { CheckWrappedObject(L, Get());Get()->SetName(LuaUtil::ToString(L, 1)); return 0; }

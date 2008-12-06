@@ -28,7 +28,7 @@
  * -- Add the menu item to the menu
  * subMenu:append(menuItem) 
  * 
- * function menuItem_click(event)
+ * function menuItem_selected(event)
  *     trace("Menu item with id ", event.menuItem:getId(), " and tag ", event.menuItem:getTag(), " was clicked")
  * end
  * </listing>

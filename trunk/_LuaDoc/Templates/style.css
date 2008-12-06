@@ -563,3 +563,8 @@ html>body .listing pre
 {
 	height:10px;
 }
+
+.groupsOnly
+{
+	color: #ff0000;
+}

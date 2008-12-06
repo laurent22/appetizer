@@ -1,7 +1,7 @@
 package {
 	
 	/**
-	 * The functions and objects in the Global space are accessible from anywhere in Lua. They
+	 * The functions and objects of this special class are accessible from anywhere in Lua. They
 	 * are usually an access point to the application objects or to certain utility functions.
 	 */
 	public class Global {
