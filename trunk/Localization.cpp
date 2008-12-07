@@ -162,7 +162,7 @@ Localization::Localization() {
   languageCodeHashMapS_[_T("it")] = _T("Italiano");
   languageCodeHashMapS_[_T("lt")] = _T("Lietuvių kalba");
   languageCodeHashMapS_[_T("nl")] = _T("Nederlands");
-  languageCodeHashMapS_[_T("pl")] = _T("Język polski");
+  languageCodeHashMapS_[_T("pl")] = _T("Polski");
   languageCodeHashMapS_[_T("pt")] = _T("Português");
   languageCodeHashMapS_[_T("ru")] = _T("Русский");
   languageCodeHashMapS_[_T("sk")] = _T("Slovenčina");

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-07 14:53+0000\n"
-"PO-Revision-Date: 2008-11-08 14:03-0000\n"
-"Last-Translator: Laurent Cozic\n"
+"POT-Creation-Date: 2008-12-07 16:34+0000\n"
+"PO-Revision-Date: 2008-12-07 03:47+0100\n"
+"Last-Translator: Michał Trzebiatowski <hippie_1968@hotmail.com>\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr "Pokaż"
 
 #: ApplicationTrayIcon.cpp:41 MainFrame.cpp:405
 msgid "Eject drive"
-msgstr "Wysuń"
+msgstr "Wysuń nośnik"
 
 #: ApplicationTrayIcon.cpp:46 MainFrame.cpp:873 OptionPanel.cpp:151
 #: gui\ConfigDialog.cpp:55
@@ -39,54 +39,53 @@ msgid "Close"
 msgstr "Zamknij"
 
 #: FolderItem.cpp:473 gui\TreeViewDialog.cpp:129
-#, fuzzy
 msgid "Organize shortcuts"
-msgstr "Nowy skrót..."
+msgstr "Organizuj skróty"
 
 #: FolderItem.cpp:638 FolderItem.cpp:645 FolderItem.cpp:668
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
-msgstr ""
+msgstr "Ten plik nie istnieje lub został usunięty (Błąd %s)"
 
 #: FolderItem.cpp:902
 msgid "Group"
-msgstr ""
+msgstr "Grupa"
 
 #: FolderItem.cpp:903
 msgid "Unnamed"
-msgstr ""
+msgstr "Bez nazwy"
 
 #: FolderItem.cpp:1111 IconPanel.cpp:138
 msgid "Control Panel"
-msgstr ""
+msgstr "Panel sterowania"
 
 #: FolderItem.cpp:1113 IconPanel.cpp:139
 msgid "My Computer"
-msgstr ""
+msgstr "Mój komputer"
 
 #: FolderItem.cpp:1115 IconPanel.cpp:140
 msgid "My Network Places"
-msgstr ""
+msgstr "Moje miejsca sieciowe"
 
 #: FolderItem.cpp:1117 IconPanel.cpp:141
 msgid "Recycle Bin"
-msgstr ""
+msgstr "Kosz"
 
 #: FolderItem.cpp:1119 IconPanel.cpp:142
 msgid "Show Desktop"
-msgstr ""
+msgstr "Pokaż Pulpit"
 
 #: FolderItem.cpp:1121 IconPanel.cpp:143
 msgid "Windows Explorer"
-msgstr ""
+msgstr "Eksplorator Windows"
 
 #: FolderItem.cpp:1123 IconPanel.cpp:144
 msgid "Search"
-msgstr ""
+msgstr "Szukaj"
 
 #: FolderItem.cpp:1125
 msgid "Current Drive"
-msgstr ""
+msgstr "Bieżący napęd"
 
 #: FolderItemRenderer.cpp:152 gui\TreeViewDialog.cpp:106
 msgid "Remove..."
@@ -98,7 +97,7 @@ msgstr "Dodaj do grupy wielokrotnego uruchamiania"
 
 #: FolderItemRenderer.cpp:166
 msgid "Organize group shortcuts"
-msgstr ""
+msgstr "Organizuj skróty grupy"
 
 #: FolderItemRenderer.cpp:171 gui\TreeViewDialog.cpp:111
 msgid "Properties"
@@ -110,31 +109,31 @@ msgstr "Nowy skrót..."
 
 #: IconPanel.cpp:122
 msgid "New group..."
-msgstr ""
+msgstr "Nowa grupa..."
 
 #: IconPanel.cpp:148
 msgid "Add special item"
-msgstr ""
+msgstr "Dodaj specjalną pozycję"
 
 #: main.cpp:64
 msgid "Uses user data directory to save settings."
-msgstr ""
+msgstr "Użyj katalogu danych użytkownika, aby zapisać ustawienia."
 
 #: main.cpp:65
 msgid "Sets user data path (-u will be ignored)"
-msgstr ""
+msgstr "Ustaw ścieżkę danych użytkownika (-u będzie ignorowane)"
 
 #: main.cpp:66
 msgid "Displays the log window (useful for debugging)"
-msgstr ""
+msgstr "Wyświetla okno dziennika (przydatne do debugowania)"
 
 #: main.cpp:67
 msgid "Displays this help message"
-msgstr ""
+msgstr "Wyświetla ten komunikat pomocy"
 
 #: main.cpp:125
 msgid "Could not initialize locale."
-msgstr ""
+msgstr "Nie można uruchomić języka."
 
 #: main.cpp:212
 msgid "Large"
@@ -142,11 +141,11 @@ msgstr "Duże"
 
 #: main.cpp:213
 msgid "Extra Large (XP and above)"
-msgstr ""
+msgstr "Bardzo duże (XP i wyżej)"
 
 #: main.cpp:214
 msgid "Jumbo (Vista and above)"
-msgstr ""
+msgstr "Jumbo (Vista i wyżej)"
 
 #: main.cpp:218
 msgid "Small"
@@ -154,11 +153,11 @@ msgstr "Małe"
 
 #: main.cpp:309
 msgid "Could not get update information"
-msgstr ""
+msgstr "Nie można pobrać informacji o aktualizacji"
 
 #: main.cpp:323
 msgid "You have the latest version."
-msgstr ""
+msgstr "Masz najnowszą wersję."
 
 #: main.cpp:330
 #, c-format
@@ -171,16 +170,25 @@ msgid ""
 "\n"
 "Do you wish to download it now?"
 msgstr ""
+"Dostępna jest nowa wersja!\n"
+"\n"
+"Twoja wersja: %s\n"
+"Nowa wersja: %s\n"
+"Informacje o wydaniu: %s\n"
+"\n"
+"Czy chcesz ją teraz pobrać?"
 
 #: main.cpp:336
 msgid "Error launching web browser"
-msgstr ""
+msgstr "Błąd uruchomienia przeglądarki internetowej"
 
 #: MainFrame.cpp:223
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
 msgstr ""
+"Wystąpił błąd rejestracji skrótu klawisza. Może już zarejestrowała go inna "
+"aplikacja."
 
 #: MainFrame.cpp:404
 msgid "Minimize to tray"
@@ -193,15 +201,17 @@ msgid ""
 "\n"
 "Note that you may change this behavior in the '%s' windows ('%s' tab)"
 msgstr ""
+"%s będzie teraz zminimalizowany do paska zadań.\n"
+"\n"
+"Pamiętaj, że możesz zmienić to zachowanie w oknie '%s' (tab '%s')"
 
 #: MainFrame.cpp:873 gui\ConfigDialog.cpp:58
-#, fuzzy
 msgid "Operations"
-msgstr "Właściwości"
+msgstr "Operacje"
 
 #: MainFrame.cpp:873 utilities\Utilities.cpp:74 utilities\Utilities.cpp:278
 msgid "Don't show this message again"
-msgstr ""
+msgstr "Nie pokazuj więcej tego okna"
 
 #: MessageBoxes.cpp:15
 msgid "Error"
@@ -209,28 +219,27 @@ msgstr "Błąd"
 
 #: MessageBoxes.cpp:20
 msgid "Information"
-msgstr ""
+msgstr "Informacja"
 
 #: MessageBoxes.cpp:25
 msgid "Warning"
-msgstr ""
+msgstr "Ostrzeżenie"
 
 #: MessageBoxes.cpp:30
 msgid "Confirmation"
-msgstr ""
+msgstr "Potwierdzenie"
 
 #: OptionPanel.cpp:149 gui\ConfigDialog.cpp:63
 msgid "Help"
-msgstr ""
+msgstr "Pomoc"
 
 #: OptionPanel.cpp:152
 msgid "Multi-launch"
-msgstr ""
+msgstr "Multi-start"
 
 #: OptionPanel.cpp:153 gui\ImportWizardDialog.cpp:24
-#, fuzzy
 msgid "Import shortcuts"
-msgstr "Nowy skrót..."
+msgstr "Importuj skróty"
 
 #: OptionPanel.cpp:314
 msgid "Help Topics"
@@ -238,18 +247,20 @@ msgstr "Pomoc"
 
 #: OptionPanel.cpp:315
 msgid "Get Support"
-msgstr ""
+msgstr "Pomoc techniczna"
 
 #: OptionPanel.cpp:317 gui\AboutDialog.cpp:80
 #, c-format
 msgid "About %s..."
-msgstr ""
+msgstr "O %s..."
 
 #: OptionPanel.cpp:327
 msgid ""
 "The multilaunch group is currently empty. Do you wish to show the help topic "
 "about this feature?"
 msgstr ""
+"Grupa multi-start jest obecnie pusta. Czy chcesz pokazać pomoc na temat tej "
+"funkcji?"
 
 #: Plugin.cpp:127
 msgid ""
@@ -260,17 +271,17 @@ msgstr ""
 #: PluginManager.cpp:46
 #, c-format
 msgid "Could not open %s"
-msgstr ""
+msgstr "Nie można otworzyć %s"
 
 #: PluginManager.cpp:65
 #, c-format
 msgid "Can not read zip entry '%s'"
-msgstr ""
+msgstr "Nie można odczytać wpisu zip '%s'"
 
 #: PluginManager.cpp:72
 #, c-format
 msgid "Can not create file '%s'"
-msgstr ""
+msgstr "Nie można utworzyć pliku '%s'"
 
 #: PluginManager.cpp:87
 #, c-format
@@ -278,11 +289,13 @@ msgid ""
 "The plugin has been installed successfully. It will be activated the next "
 "time %s is started"
 msgstr ""
+"Wtyczka została pomyślnie zainstalowana. Będzie ona uaktywniona przy "
+"następnym starcie %s"
 
 #: Styles.cpp:68
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
-msgstr ""
+msgstr "Ta skórka nie jest zgodna z bieżącą wersją %s."
 
 #: utilities\Utilities.cpp:74
 msgid "Do you wish to remove this icon?"
@@ -290,63 +303,67 @@ msgstr "Czy chcesz to usunąć?"
 
 #: utilities\Utilities.cpp:156
 msgid "Please wait while your applications are being closed."
-msgstr ""
+msgstr "Poczekaj aż aplikacje twoje zostaną zamknięte."
 
 #: utilities\Utilities.cpp:175
 msgid "You do not have sufficient privileges for this operation."
-msgstr ""
+msgstr "Nie masz wystarczająco uprawnień do wykonania tej operacji."
 
 #: utilities\Utilities.cpp:278
-#, fuzzy
 msgid "Do you wish to eject the drive?"
-msgstr "Czy chcesz to usunąć?"
+msgstr "Czy chcesz wysunąć dysk?"
 
 #: gui\AboutDialog.cpp:62
 #, c-format
 msgid "Translators: %s"
-msgstr ""
+msgstr "Tłumacze: %s"
 
 #: gui\AboutDialog.cpp:64
 msgid "This software uses a number of open source libraries including:"
 msgstr ""
+"To oprogramowanie korzysta z wielu bibliotek wolnego oprogramowania, w tym:"
 
 #: gui\AboutDialog.cpp:66
 msgid "- Simpleini by Brodie Thiesfield"
-msgstr ""
+msgstr "- Simpleini autorstwa Brodie Thiesfield"
 
 #: gui\AboutDialog.cpp:68
 msgid "- TinyXml by Yves Berquin"
-msgstr ""
+msgstr "- TinyXml autorstwa Yves Berquin"
 
 #: gui\AboutDialog.cpp:70
 msgid "- CStdString by Joe O'Leary"
-msgstr ""
+msgstr "- CStdString autorstwa Joe O'Leary"
 
 #: gui\AboutDialog.cpp:72
 msgid ""
 "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
 "Celes"
 msgstr ""
+"- Lua autorstwa Roberto Ierusalimschy, Luiz Henrique de Figueiredo, i "
+"Waldemar Celes"
 
 #: gui\AboutDialog.cpp:74
 msgid "- zlib by Jean-Loup Gailly and Mark Adler"
-msgstr ""
+msgstr "- zlib autorstwa Jean-Loup Gailly i Mark Adler"
 
 #: gui\AboutDialog.cpp:76
 msgid "- wxWidgets by their respective authors"
-msgstr ""
+msgstr "- wxWidgets autorstwa ich autorów"
 
 #: gui\AboutDialog.cpp:78
 msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
 msgstr ""
+"Okna dialogowe zbudowane są z wykorzystaniem wxGlade autorstwa Alberto "
+"Griggio."
 
 #: gui\AboutDialog.cpp:81
 msgid "About"
-msgstr ""
+msgstr "O"
 
 #: gui\AboutDialog.cpp:82
 msgid "License"
-msgstr ""
+msgstr "Licencja"
 
 #: gui\AboutDialog.cpp:83 gui\BetterMessageDialog.cpp:111
 #: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
@@ -355,12 +372,12 @@ msgstr "OK"
 
 #: gui\AboutDialog.cpp:84
 msgid "Credits"
-msgstr ""
+msgstr "Podziękowania"
 
 #: gui\AboutDialog.cpp:88
 #, c-format
 msgid "Copyright © %s"
-msgstr ""
+msgstr "Prawa autorskie © %s"
 
 #: gui\AboutDialog.cpp:89
 msgid ""
@@ -376,27 +393,40 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
+"Niniejszy program jest wolnym oprogramowaniem: możesz go rozprowadzać dalej "
+"i/lub modyfikować na warunkach Powszechnej Licencji Publicznej GNU, wydanej "
+"przez Fundację Wolnego Oprogramowania, według wersji 3 tej Licencji lub "
+"którejś z późniejszych wersji.\n"
+"\n"
+"Niniejszy program rozpowszechniany jest z nadzieją, iż będzie on użyteczny, "
+"jednak BEZ JAKIEJKOLWIEK GWARANCJI, nawet domyślnej gwarancji PRZYDATNOŚCI "
+"HANDLOWEJ albo PRZYDATNOŚCI DO OKREŚLONYCH ZASTOSOWAŃ. W celu uzyskania "
+"bliższych informacji sięgnij do Powszechnej Licencji Publicznej GNU.\n"
+"\n"
+"Z pewnością wraz z niniejszym programem otrzymałeś też egzemplarz "
+"Powszechnej Licencji Publicznej GNU (GNU General Public License). Jeśli nie, "
+"zobacz <http://www.gnu.org/licenses/>."
 
 #: gui\AboutDialog.cpp:90
 msgid "Web:"
-msgstr ""
+msgstr "Internet:"
 
 #: gui\AboutDialog.cpp:91
 msgid "Contact:"
-msgstr ""
+msgstr "Kontakt:"
 
 #: gui\AboutDialog.cpp:99
 #, c-format
 msgid "%s, Version %s.%s.%s (Build #%s)"
-msgstr ""
+msgstr "%s, wersja %s.%s.%s (Build #%s)"
 
 #: gui\BetterMessageDialog.cpp:112
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: gui\BetterMessageDialog.cpp:113
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:62
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
@@ -410,15 +440,15 @@ msgstr "Ogólne"
 
 #: gui\ConfigDialog.cpp:57
 msgid "Appearance"
-msgstr ""
+msgstr "Wygląd"
 
 #: gui\ConfigDialog.cpp:59
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: gui\ConfigDialog.cpp:60
 msgid "Plugins"
-msgstr ""
+msgstr "Wtyczki"
 
 #: gui\ConfigDialog.cpp:61 gui\ShortcutEditorDialog.cpp:42
 msgid "Save"
@@ -426,19 +456,19 @@ msgstr "Zapisz"
 
 #: gui\ConfigDialog.cpp:97
 msgid "Enabled"
-msgstr ""
+msgstr "Włączone"
 
 #: gui\ConfigDialog.cpp:97
 msgid "Disabled"
-msgstr ""
+msgstr "Wyłączone"
 
 #: gui\ConfigDialog.cpp:125
 msgid "Plugin"
-msgstr ""
+msgstr "Wtyczka"
 
 #: gui\ConfigDialog.cpp:126
 msgid "Status"
-msgstr ""
+msgstr "Stan"
 
 #: gui\ConfigDialog.cpp:195
 msgid "Language:"
@@ -446,20 +476,20 @@ msgstr "Język:"
 
 #: gui\ConfigDialog.cpp:196
 msgid "Always on top"
-msgstr ""
+msgstr "Zawsze na wierzchu"
 
 #: gui\ConfigDialog.cpp:197
 #, c-format
 msgid "Allow only one instance of %s at a time"
-msgstr ""
+msgstr "Pozwól na tylko jedną instancję %s"
 
 #: gui\ConfigDialog.cpp:198 gui\ConfigDialog.cpp:691
 msgid "Check for update"
-msgstr ""
+msgstr "Sprawdź dostęp aktualizacji"
 
 #: gui\ConfigDialog.cpp:199
 msgid "Install autorun file"
-msgstr ""
+msgstr "Zainstaluj plik autorun"
 
 #: gui\ConfigDialog.cpp:283
 msgid "Icon size:"
@@ -467,168 +497,167 @@ msgstr "Rozmiar ikon:"
 
 #: gui\ConfigDialog.cpp:284
 msgid "Skin:"
-msgstr ""
+msgstr "Skóra:"
 
 #: gui\ConfigDialog.cpp:285
 msgid "Orientation:"
-msgstr ""
+msgstr "Orientacja:"
 
 #: gui\ConfigDialog.cpp:312
 msgid "Horizontal"
-msgstr ""
+msgstr "Poziomo"
 
 #: gui\ConfigDialog.cpp:313
 msgid "Vertical"
-msgstr ""
+msgstr "Pionowo"
 
 #: gui\ConfigDialog.cpp:337
 msgid "Default"
-msgstr ""
+msgstr "Domyślnie"
 
 #: gui\ConfigDialog.cpp:380
 msgid "Auto-hide after launching an application"
-msgstr ""
+msgstr "Automatycznie ukryj okno po uruchomieniu aplikacji"
 
 #: gui\ConfigDialog.cpp:381
 msgid "Run multi-launch group on startup"
-msgstr ""
+msgstr "Uruchom grupę multi-startu przy starcie"
 
 #: gui\ConfigDialog.cpp:382
 msgid "Hot key to hide / show the bar"
-msgstr ""
+msgstr "Skrót klawisza polecenia ukryj/pokaż pasek"
 
 #: gui\ConfigDialog.cpp:383
 msgid "Control +"
-msgstr ""
+msgstr "Control +"
 
 #: gui\ConfigDialog.cpp:384
 msgid "Alt +"
-msgstr ""
+msgstr "Alt +"
 
 #: gui\ConfigDialog.cpp:385
 msgid "Shift +"
-msgstr ""
+msgstr "Shift +"
 
 #: gui\ConfigDialog.cpp:386
 msgid "When ejecting the drive, close the apps that are locking it"
-msgstr ""
+msgstr "Przy wyjmowaniu dysku, zamknij aplikację, która go blokuje"
 
 #: gui\ConfigDialog.cpp:387
 msgid "Close button minimizes to System Tray"
-msgstr ""
+msgstr "Przycisk Zamknij minimalizuje do paska zadań"
 
 #: gui\ConfigDialog.cpp:398
 msgid "<None>"
-msgstr ""
+msgstr "<Brak>"
 
 #: gui\ConfigDialog.cpp:440
 msgid "Numpad 0"
-msgstr ""
+msgstr "Numpad 0"
 
 #: gui\ConfigDialog.cpp:441
 msgid "Numpad 1"
-msgstr ""
+msgstr "Numpad 1"
 
 #: gui\ConfigDialog.cpp:442
 msgid "Numpad 2"
-msgstr ""
+msgstr "Numpad 2"
 
 #: gui\ConfigDialog.cpp:443
 msgid "Numpad 3"
-msgstr ""
+msgstr "Numpad 3"
 
 #: gui\ConfigDialog.cpp:444
 msgid "Numpad 4"
-msgstr ""
+msgstr "Numpad 4"
 
 #: gui\ConfigDialog.cpp:445
 msgid "Numpad 5"
-msgstr ""
+msgstr "Numpad 5"
 
 #: gui\ConfigDialog.cpp:446
 msgid "Numpad 6"
-msgstr ""
+msgstr "Numpad 6"
 
 #: gui\ConfigDialog.cpp:447
 msgid "Numpad 7"
-msgstr ""
+msgstr "Numpad 7"
 
 #: gui\ConfigDialog.cpp:448
 msgid "Numpad 8"
-msgstr ""
+msgstr "Numpad 8"
 
 #: gui\ConfigDialog.cpp:449
 msgid "Numpad 9"
-msgstr ""
+msgstr "Numpad 9"
 
 #: gui\ConfigDialog.cpp:451
 msgid "Backspace"
-msgstr ""
+msgstr "Backspace"
 
 #: gui\ConfigDialog.cpp:452
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: gui\ConfigDialog.cpp:453
 msgid "Return"
-msgstr ""
+msgstr "Return"
 
 #: gui\ConfigDialog.cpp:454
 msgid "Escape"
-msgstr ""
+msgstr "Escape"
 
 #: gui\ConfigDialog.cpp:455
-#, fuzzy
 msgid "Space"
-msgstr "Zapisz"
+msgstr "Spacja"
 
 #: gui\ConfigDialog.cpp:456
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: gui\ConfigDialog.cpp:458
 msgid "End"
-msgstr ""
+msgstr "End"
 
 #: gui\ConfigDialog.cpp:459
 msgid "Home"
-msgstr ""
+msgstr "Home"
 
 #: gui\ConfigDialog.cpp:460
 msgid "Left"
-msgstr ""
+msgstr "Lewo"
 
 #: gui\ConfigDialog.cpp:461
 msgid "Up"
-msgstr ""
+msgstr "W górę"
 
 #: gui\ConfigDialog.cpp:462
 msgid "Right"
-msgstr ""
+msgstr "Prawo"
 
 #: gui\ConfigDialog.cpp:463
 msgid "Down"
-msgstr ""
+msgstr "W dół"
 
 #: gui\ConfigDialog.cpp:521
 msgid "Exclude these items from import operations"
-msgstr ""
+msgstr "Wyklucz te elementy z operacji importu"
 
 #: gui\ConfigDialog.cpp:553
 msgid "Available plugins"
-msgstr ""
+msgstr "Dostępne wtyczki"
 
 #: gui\ConfigDialog.cpp:554
 msgid "Enable"
-msgstr ""
+msgstr "Włącz"
 
 #: gui\ConfigDialog.cpp:555
 msgid "Disable"
-msgstr ""
+msgstr "Wyłącz"
 
 #: gui\ConfigDialog.cpp:556
 msgid "Install..."
-msgstr ""
+msgstr "Zainstaluj..."
 
 #: gui\ConfigDialog.cpp:558
 #, c-format
@@ -636,6 +665,7 @@ msgid ""
 "The changes made to the plugins will only be active the next time %s is "
 "started."
 msgstr ""
+"Zmiany wprowadzone do wtyczek będą aktywne po następnym uruchomieniu %s."
 
 #: gui\ConfigDialog.cpp:618
 #, c-format
@@ -645,82 +675,83 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
+"Po zainstalowaniu pliku autorun na Twoim dysku przenośnym, %s startuje "
+"automatycznie po włożeniu dysku.\n"
+"\n"
+"Czy chcesz kontynuować?"
 
 #: gui\ConfigDialog.cpp:621
 msgid "Could not install autorun file. Please try again."
-msgstr ""
+msgstr "Nie można zainstalować pliku autorun. Proszę spróbować ponownie."
 
 #: gui\ConfigDialog.cpp:623
 msgid "The autorun file has been installed successfully"
-msgstr ""
+msgstr "Plik autorun został zainstalowany pomyślnie"
 
 #: gui\ConfigDialog.cpp:654
 #, c-format
 msgid "%s Plugin Packages"
-msgstr ""
+msgstr "%s pakiet wtyczek"
 
 #: gui\ConfigDialog.cpp:655 gui\IconDialog.cpp:161
-#, fuzzy
 msgid "All files"
-msgstr "Wybierz folder"
+msgstr "Wszystkie pliki"
 
 #: gui\ConfigDialog.cpp:657
 msgid "Select a plugin package"
-msgstr ""
+msgstr "Wybierz pakiet wtyczek"
 
 #: gui\ConfigDialog.cpp:686
 msgid "Please wait..."
-msgstr ""
+msgstr "Proszę czekać..."
 
 #: gui\ConfigDialog.cpp:940
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."
 msgstr ""
+"Niektóre z tych zmian zastosowane będą dopiero po ponownym uruchomieniu "
+"aplikacji."
 
 #: gui\FileOrFolderDialog.cpp:76
 msgid "Loading tree..."
-msgstr ""
+msgstr "Ładowanie drzewa..."
 
 #: gui\FileOrFolderDialog.cpp:110
-#, fuzzy
 msgid "Select a file or a folder"
-msgstr "Wybierz plik"
+msgstr "Wybierz plik lub folder"
 
 #: gui\IconDialog.cpp:102
-#, fuzzy
 msgid "Select an icon"
-msgstr "Wybierz plik"
+msgstr "Wybierz ikonę"
 
 #: gui\IconDialog.cpp:103
 msgid "Icon file or library:"
-msgstr ""
+msgstr "Plik ikony lub biblioteka:"
 
 #: gui\IconDialog.cpp:156
 msgid "All supported files"
-msgstr ""
+msgstr "Wszystkie obsługiwane pliki"
 
 #: gui\IconDialog.cpp:157
-#, fuzzy
 msgid "Icons"
-msgstr "Rozmiar ikon:"
+msgstr "Ikony"
 
 #: gui\IconDialog.cpp:158
 msgid "Executables"
-msgstr ""
+msgstr "Wykonywalne"
 
 #: gui\IconDialog.cpp:159
 msgid "Dynamic libraries"
-msgstr ""
+msgstr "Dynamiczne biblioteki"
 
 #: gui\IconDialog.cpp:160
 msgid "Icon libraries"
-msgstr ""
+msgstr "Biblioteki ikon"
 
 #: gui\IconDialog.cpp:163
-#, fuzzy
 msgid "Select an icon file or library"
-msgstr "Wybierz folder"
+msgstr "Wybierz plik ikony lub bibliotekę:"
 
 #: gui\ImportWizardDialog.cpp:32
 #, c-format
@@ -729,32 +760,33 @@ msgid ""
 "\n"
 "Please select below where you would like to import your shortcuts from:"
 msgstr ""
+"To narzędzie importuje skróty do programu %s.\n"
+"\n"
+"Proszę wybierz, skąd chcesz importować skróty:"
 
 #: gui\ImportWizardDialog.cpp:43
 msgid "PortableApps applications"
-msgstr ""
+msgstr "Aplikacje PortableApps"
 
 #: gui\ImportWizardDialog.cpp:44
 msgid "Windows Quick Launch toolbar"
-msgstr ""
+msgstr "Pasek narzędzi szybkiego uruchamiania"
 
 #: gui\ImportWizardDialog.cpp:45
 msgid "Windows Start Menu programs"
-msgstr ""
+msgstr "Programy Start Menu systemu Windows"
 
 #: gui\ImportWizardDialog.cpp:77
 msgid "Start >>"
-msgstr ""
+msgstr "Start >>"
 
 #: gui\ImportWizardDialog.cpp:118
-#, fuzzy
 msgid "Importing shortcuts... Please wait."
-msgstr "Nowy skrót..."
+msgstr "Importuję skróty... Proszę czekać."
 
 #: gui\ShortcutEditorDialog.cpp:38
-#, fuzzy
 msgid "Group Properties"
-msgstr "Właściwości"
+msgstr "Właściwości grupy"
 
 #: gui\ShortcutEditorDialog.cpp:38
 msgid "Shorcut Properties"
@@ -770,36 +802,46 @@ msgstr "Ścieżka:"
 
 #: gui\ShortcutEditorDialog.cpp:41
 msgid "Parameters:"
-msgstr ""
+msgstr "Parametry:"
 
 #: gui\ShortcutEditorDialog.cpp:44
-#, fuzzy
 msgid "Icon:"
-msgstr "Rozmiar ikon:"
+msgstr "Ikona:"
 
 #: gui\ShortcutEditorDialog.cpp:45
 msgid "Change icon..."
-msgstr ""
+msgstr "Zmień ikonę..."
 
 #: gui\ShortcutEditorDialog.cpp:46
 msgid "Use default"
-msgstr ""
+msgstr "Użyj domyślnej"
 
 #: gui\ShortcutEditorDialog.cpp:152
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr "Cel skrótu nie istnieje. Czy chcesz kontynuować?"
 
-#, fuzzy
-#~ msgid "Loading: "
-#~ msgstr "Ścieżka:"
-
-#, fuzzy
-#~ msgid "newShortcut"
-#~ msgstr "Nowy skrót..."
-
-#, fuzzy
-#~ msgid "name"
-#~ msgstr "Nazwa:"
+#~ msgid ""
+#~ "Translators: %s\n"
+#~ "\n"
+#~ "This software uses a number of open source libraries including:\n"
+#~ "\n"
+#~ "- Simpleini by Brodie Thiesfield\n"
+#~ "- TinyXml by Yves Berquin\n"
+#~ "- The Boost C++ Libraries and wxWidgets by their respective authors\n"
+#~ "\n"
+#~ "Dialog boxes are built using wxGlade by Alberto Griggio."
+#~ msgstr ""
+#~ "Tłumacze: %s\n"
+#~ "\n"
+#~ "To oprogramowanie korzysta z wielu bibliotek wolnego oprogramowania, w "
+#~ "tym:\n"
+#~ "\n"
+#~ "- Simpleini autorstwa Brodie Thiesfield\n"
+#~ "- TinyXml autorstwa Yves Berquin\n"
+#~ "- Biblioteki Boost C++ i wxWidgets autorstwa ich autorów\n"
+#~ "\n"
+#~ "Okna dialogowe zbudowane są z wykorzystaniem wxGlade autorstwa Alberto "
+#~ "Griggio."
 
 #~ msgid "Select folder"
 #~ msgstr "Wybierz plik"

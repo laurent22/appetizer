@@ -1,4 +1,23 @@
-﻿Version 1.2.1.91 Alpha (2008-12-02):
+﻿Version 1.2.2.606 Beta (2008-12-07):
+
+- New: "Reveal target" plugin
+- Fixed Windows 2000 crash (missing "SetDllDirectory" function)
+- Updated German translation and help file (wk)
+- Updated Polish translation (Michal Trzebiatowski)
+- Updated French translation and help file
+- Added Danish translation (Henrik Agersted)
+- Fixed: plugin manager was dispatching events to disabled plugins
+- Fixed: Appetizer could crash if two plugins were using the same global object
+- Fixed: Appetizer can crash if a plugin tries to use an object that has been deleted
+- Fixed: Shortcut Editor Dialog gives focus to "name" field on creation
+- Fixed: update detection code didn't run the first time the app was launched
+- Fixed: The option panel layout wasn't done correctly if a button was added to it while it was closed.
+- Improved: Optimzation for special item icons and folder icons
+- Improved: App now tries to detect the system locale the first time the app is launched
+- Lua: Better error messages if a script fails to load or if there is an syntax error
+- Lua: Exported many new functions
+
+Version 1.2.1.91 Alpha (2008-12-02):
 
 - New: Support for plugins
 - New: Option to close the applications that are locking the drive before ejection
