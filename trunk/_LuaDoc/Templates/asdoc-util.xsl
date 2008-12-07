@@ -803,8 +803,10 @@
 			<a href="{$baseRef}conventions.html">Conventions</a>
 			<xsl:text>&#xA0;|&#xA0;</xsl:text>
 		</xsl:if>
-
-		<a id="framesLink{$copyNum}" href="{$baseRef}index.html?{$href}{$fileName}.html&amp;amp;{$fileName2}">Frames</a>
+<a id="framesLink{$copyNum}" href="/api-reference">Frames</a>
+		<!-- 
+			<a id="framesLink{$copyNum}" href="{$baseRef}index.html?{$href}{$fileName}.html&amp;amp;{$fileName2}">Frames</a>
+		-->
 		<a id="noFramesLink{$copyNum}" style="display:none" href="" onclick="parent.location=document.location">No&#xA0;Frames</a>
 	</xsl:template>
 

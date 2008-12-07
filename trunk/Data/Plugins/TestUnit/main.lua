@@ -91,7 +91,7 @@ function dialogTest()
 	dialogs:showEjectDriveDialog()
 	
 	dialogs:showMessage("Showing 'new dockItem' dialog...")	
-	dialogs:showNewDockItemDialog()	
+	dialogs:showNewShortcutDialog()	
 	
 	dialogs:showMessage("Showing 'config' dialog...")	
 	dialogs:showConfigDialog()	

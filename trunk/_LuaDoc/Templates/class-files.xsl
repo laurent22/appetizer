@@ -308,6 +308,9 @@ exclude-result-prefixes="redirect str exslt">
 						<center class="copyright">
 							<xsl:copy-of select="$copyright"/>
 						</center>
+								
+					<script type="text/javascript">var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">var pageTracker = _gat._getTracker("UA-2877046-12");pageTracker._trackPageview();</script>
+					
 						<xsl:call-template name="addKeywords">
 							<xsl:with-param name="keyword" select="@name" />
 						</xsl:call-template>
