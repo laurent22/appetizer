@@ -1,0 +1,181 @@
+﻿Version 1.2.2.606 Beta (2008-12-07):
+
+- New: "Reveal target" plugin
+- Fixed Windows 2000 crash (missing "SetDllDirectory" function)
+- Updated German translation and help file (wk)
+- Updated Polish translation (Michal Trzebiatowski)
+- Updated French translation and help file
+- Added Danish translation (Henrik Agersted)
+- Fixed: plugin manager was dispatching events to disabled plugins
+- Fixed: Appetizer could crash if two plugins were using the same global object
+- Fixed: Appetizer can crash if a plugin tries to use an object that has been deleted
+- Fixed: Shortcut Editor Dialog gives focus to "name" field on creation
+- Fixed: update detection code didn't run the first time the app was launched
+- Fixed: The option panel layout wasn't done correctly if a button was added to it while it was closed.
+- Improved: Optimzation for special item icons and folder icons
+- Improved: App now tries to detect the system locale the first time the app is launched
+- Lua: Better error messages if a script fails to load or if there is an syntax error
+- Lua: Exported many new functions
+
+Version 1.2.1.91 Alpha (2008-12-02):
+
+- New: Support for plugins
+- New: Option to close the applications that are locking the drive before ejection
+- New: Shortcut "Add to group" menu item (Plugin) 
+- New: "Close button minimizes to System Tray" option
+- New: Contextual help in config dialog and main window
+- New: Context menu when right-clicking on an item in TreeView dialog ("Remove" and "Properties" items)
+- New: New switch: "/l" to show a log window (useful to debug plugins)
+- Improved: items in "Add special item" menu now have icons
+- Improved: Added support for wildcards in import exclusion list
+- Improved: Added white frame around application icon in tray icon to make it more visible
+- Improved: Added some default patterns to exclusion list (uninstall.exe, setup.exe, etc.)
+- Changed: Removed "Portable" from application name in PAF version
+- Changed: Replaced %VARIABLE_NAME% by $(VariableName) so that it's not confused with environment variables
+- Fixed: "Show desktop" special item is now done using a vbs script to go around the issue when .scf file association is broken
+
+Version 1.1.2.26 (2008-11-22):
+
+- Fixed: Windows 2000 crash ("The ordinal 737 could not be located in the dynamic link library Shell32.dll")
+- Updated German translation (wk)
+- Added Spanish translation (Manuel Gutierrez Borras)
+
+Version 1.1.1.23 (2008-11-20):
+
+- Fixed: Made ImportWizardDialog localizable
+- Fixed: Added a few strings that were missing from .po files
+- Changed: Changed logic of hot key (show and bring to front if not visible, hide otherwise)
+- Changed: 32x32 icon size is now the default
+- Updated German help file and locale
+- Updated English help file
+
+Version 1.1.0.7 (Beta) (2008-11-18):
+
+- New: "run multi-Launch group on startup" option
+- New: hot key support to hide / show the dock
+- New: Added support for extra-large (48x48) icons
+- New: Added "Don't show this message again" option in some dialog boxes
+- New: Special items (My Computer, Explorer, Show Desktop, etc.). All of them are 100% portable and should work on any computer.
+- New: Support for custom icons for shortcuts and groups 
+- New: "Wizard" to import icons from PortableApps drive, Windows "Start menu" and/or Windows "Quick Launch" bar.
+- New: "Install autorun.inf" functionality in config dialog
+- New: Import exclusion list in config dialog. All the files in this list will be ignored from import operations.
+- Improved: better default icons for common types (.bat, .txt, .ini, etc.)
+- Improved: better icon detection for documents.
+- Improved: There's now only one dialog to add both a file or a folder
+- Improved: Optimized executable file size
+- Improved: Document icons are now cached, which should make icon extraction much faster in some instances
+- Improved: Optimized dock startup operations, especially when many icons are on the dock
+- Fixed: some strings weren't localizable
+- Fixed: error retrieving icon of a drive
+- Many other small fixes and improvements
+
+Version 1.0.2.43 (2008-11-12):
+
+- Fix for version 1.0.0.35 - the shortcuts weren't launching when clicked
+
+Version 1.0.0.35 (2008-11-12):
+
+- Some minor fixes regarding translations (some strings weren't localizable)
+- A few minor changes to make the app compatible with PAF
+
+Version 1.0.0.8 (Beta) (2008-11-10):
+
+- Added support for groups of shorcuts (see help file)
+- New skin: Blue Glass
+- Support for parameters in shortcut editor dialog
+- Auto-hide feature
+- "Always on top" feature
+- Implemented snapping
+- Confirmation dialog when ejecting drive
+- Added "Get support" link in help popup menu
+- Added "One application instance only" option
+- When launching an app, the current directory is now set to the app directory
+- Icon panel is now rotated too in vertical mode
+- Added "Configuration" and "Eject" items in tray icon menu
+- Some skin files are now optional. They will default to the "Default" skin if missing, which should make it simpler to make new skins.
+- It's now possible to set the color of the button icons in Skin.xml
+- The help file will now be launched by SumatraPDF if it's present among the dock icons
+- Switched localization to .po files.
+- Help files are now .chm files and are built using .po files too
+- Added metadata to Skin.xml ("compatibleVersion", "name" and "author")
+- Fixed: memory leaks when launching a document
+- Fixed: the main window was setting itself to (0, 0) when option panel was empty
+- Fixed: memory leak in ImageButton. Icons weren't deleted properly
+- Fixed memory leak: user object wasn't being deleted on close
+- Fixed: dock will now get and display document icons in a more reliable way
+
+Version 0.9.4.958 (First public release) (2008-11-04):
+
+- Option panel is now automatically opened the first time the dock is launched
+- Removed help button from side of dock and replaced by eject button
+- Moved help button back to option panel
+- By default, the app now saves its settings in the "Data/Settings" folder.
+- Added -d parameters to set data folder path, and -u to automatically use the user data folder (c:\documents and settings...)
+- Fixed: the eject functionality wasn't working since the eject dialog was locking the drive.
+
+Version 0.9.4.804 (Pre-release 1) (2008-11-04):
+
+- Eject button is now only visible if the dock is on a removable drive
+- Skin folder is now a user setting, and all skin settings have moved to Skin.xml, to allow for new skins
+- The dock orientation can now be set to vertical or horizontal
+- Check for new version on startup
+- Fixed: applications were not launched asynchronously (or sometime not launched at all)
+- Added thunder icon over icons that are part of the multilaunch group
+- It's now possible to add a shortcut by drag & dropping a file on the bar
+- It's also possible to drop a file on an icon
+- Moved close and help buttons to the side of the dock
+
+Version 0.9.2.179 Beta (2008-10-31):
+
+- Implemented file exclusions (which prevent a file from being automatically added after it has been deleted)
+- Documents, Music, Videos and Pictures folders now show up
+- Fixed 16-bit icons "missing pixel" bug
+- Fixed opening of folders and documents
+- Fixed window disappearance when resizing
+- Removed error message when PortableApps folder is missing
+- Fixed white border problem on 32-bits icons
+- Done help file
+- Fixed errors when opening folders or documents from the dock
+- Done about box
+- Added "Add shortcut" button
+- Updated polish localization
+- Optimized PNG files to make them smaller
+
+Version 0.9.0.3 Alpha (2008-10-30):
+
+- Fixed browse icon
+- Fixed rendering issue for icons without an alpha channel
+- Fixed localization memory leak
+- Use hand cursor on interactive controls
+- Exit label on tray icon menu is now visible
+- Fixed dependencies to C++ dlls
+
+Version 0.8.5.278 Alpha (2008-10-29):
+
+- Complete rewrite using wxWidgets
+- Fixed localization issues where some texts weren't being translated, or controls were overlapping each others
+- Added tooltips to buttons
+
+Beta 1 (2008-09-06):
+
+- Support for 16x16 and 32x32 icons
+- Config dialog box to change the locale or icon sizes
+- Finished French localization
+- Improved rendering speed of the interface.
+- It's now possible to select a file OR a folder when adding or modifying a shortcut
+- Added Multi Launch button (the one with a thunder icon)
+- Added "New shortcut" icon
+- Added "Minimize" icon
+
+Preview 2 (2008-08-31):
+
+- NEW: The bar can now be resized
+- NEW: The application location and dimensions are now saved on close
+- NEW: Tooltips on icons
+- UPDATE: Disabled animation of drawer for now as it's currently too slow
+- UPDATE: Disabled dividers in icon panel as they don't work properly with multiple rows of icons.
+	
+Preview 1 (2008-08-30):
+
+- First preview release
