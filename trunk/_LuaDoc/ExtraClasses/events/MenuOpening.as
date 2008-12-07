@@ -1,5 +1,9 @@
 package events {	
 
+/**
+ * Dispatched when a menu is about to be displayed
+ */
+
 public class MenuOpening extends Event {
 	
 	/**

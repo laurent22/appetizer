@@ -7,7 +7,9 @@
 
 /**
  * The class represents the small panel that shows up when the user clicks on the arrow button. There
- * can be any number of buttons on it, and it is possible to add or remove buttons from it.
+ * can be any number of buttons on it, and it is possible to add or remove buttons from it. Do not create
+ * an instance of this class - instead use the global <code>optionPanel</code> object.
+ * @see Global#optionPanel
  *
  */	
 
@@ -64,7 +66,7 @@ OptionPanel* azOptionPanel::Get() {
 
 /**
  * Adds the given button to the panel.
- * @param OptionButton button The button to add to the panel
+ * @param OptionButton button The button to add to the panel.
  * @example The following code creates a new button and add it to the panel.
  * <listing version="3.0">
  * -- Create the button
@@ -93,7 +95,7 @@ int azOptionPanel::addButton(lua_State *L) {
 
 /**
  * Returns the number of buttons on the option panel.
- * @return Number Number of buttons
+ * @return Number Number of buttons.
  * @example This script loops through all the option buttons and returns the one with the given name.
  * <listing version="3.0">
  * function getButtonByName(buttonName)
@@ -120,7 +122,7 @@ int azOptionPanel::buttonCount(lua_State *L) {
 
 /**
  * Gets the button at the specified index.
- * @param Number index Button index
+ * @param Number index Button index.
  * @see #buttonCount
  * 
  */	
@@ -137,9 +139,9 @@ int azOptionPanel::getButtonAt(lua_State *L) {
 
 
 /**
- * Removes the specified button
- * @param OptionButton button The button to remove from the panel
- * @example This script removes the last button from the panel
+ * Removes the specified button.
+ * @param OptionButton button The button to remove from the panel.
+ * @example This script removes the last button from the panel.
  * <listing version="3.0">
  * lastButton = optionPanel:getButtonAt(optionPanel:buttonCount() - 1)
  * optionPanel:removeButton(lastButton)
@@ -155,7 +157,7 @@ int azOptionPanel::removeButton(lua_State *L) {
 
 
 /**
- * Opens the option panel
+ * Opens the option panel.
  * 
  */	
 int azOptionPanel::open(lua_State *L) {
@@ -164,7 +166,7 @@ int azOptionPanel::open(lua_State *L) {
 
 
 /**
- * Closes the option panel
+ * Closes the option panel.
  * 
  */	
 int azOptionPanel::close(lua_State *L) {

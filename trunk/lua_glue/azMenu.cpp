@@ -117,7 +117,7 @@ azMenu::~azMenu() {
 
 /**
  * Constructor.
- * @param String menuLabel Menu label
+ * @param String menuLabel Menu label.
  * 
  */	
 azMenu::azMenu(lua_State *L) {
@@ -131,7 +131,7 @@ azMenu::azMenu(lua_State *L) {
 
 
 /**
- * Appends a separator item to the menu
+ * Appends a separator item to the menu.
  * 
  */	
 int azMenu::appendSeparator(lua_State *L) {
@@ -143,8 +143,8 @@ int azMenu::appendSeparator(lua_State *L) {
 
 
 /**
- * Appends a menu item to the menu
- * @param MenuItem menuItem Menu item to append to the menu
+ * Appends a menu item to the menu.
+ * @param MenuItem menuItem Menu item to append to the menu.
  * 
  */	
 int azMenu::append(lua_State *L) {
@@ -165,10 +165,10 @@ int azMenu::append(lua_State *L) {
 
 
 /**
- * Appends a submenu to the menu
- * @param Menu menu Submenu to append to the menu
+ * Appends a submenu to the menu.
+ * @param Menu menu Submenu to append to the menu.
  *
- * @example The following code creates a new menu and append a menu item to it:
+ * @example The following code creates a new menu and append a submenu to it:
  * <listing version="3.0">
  * -- Create the submenu
  * submenu = Menu:new("My menu")

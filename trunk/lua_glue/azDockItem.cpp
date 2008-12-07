@@ -9,7 +9,7 @@
  * The dock item is the main Appetizer object. It can represent a shortcut or a group. If
  * it is a shortcut, it is normally linked to a file, which can be launched when the user
  * click on the associated icon. If it is a group, it can contain other groups or shortcuts
- * and it is possible to add or remove dock items to/from it. Use the <code>isGroup()</code>
+ * and it is possible to add or remove dock items to/from it. Use the <code>isGroup()</code> function
  * to differentiate between a shortcut and a group.
  * @see Icon
  *
@@ -89,7 +89,7 @@ FolderItem* azDockItem::Get() const {
 /**
  * Constructor. When creating a new dock item, you must specify whether it is a group or 
  * a shortcut by passing a boolean to the constructor.
- * @param Boolean isGroup Set this to <code>true</code> if the new dock item is a group; <code>false</code> if it is a shortcut (default false)
+ * @param Boolean isGroup Set this to <code>true</code> if the new dock item is a group; <code>false</code> if it is a shortcut. (default false)
  * 
  */	
 azDockItem::azDockItem(lua_State *L) {
@@ -99,8 +99,8 @@ azDockItem::azDockItem(lua_State *L) {
 
 
 /**
- * <span class="groupsOnly">Only applies to groups.</span> Recursively gets all the groups within this group.
- * @param Boolean isGroup Set this to <code>true</code> if the new dock item is a group; <code>false</code> if it is a shortcut (default false)
+ * <span class="groupsOnly">Only applies to groups.</span> Gets all the groups within this group.
+ * @param Boolean recursively Sets this to <code>true</code> to also look for the groups in the sub-groups. (default false)
  * @return Array The groups contained within this group.
  *
  */	
@@ -129,7 +129,7 @@ int azDockItem::getAllGroups(lua_State *L) {
 
 
 /**
- * Gets the name of the dock item
+ * Gets the name of the dock item.
  * @return String Name of the dock item.
  *
  */	
@@ -144,8 +144,8 @@ int azDockItem::getName(lua_State *L) {
 
 /**
  * Gets the unique id of the dock item. You cannot set the id of a dock item as it is automatically assigned
- * on creation. However you can use this id to refer or look for a particular dock item.
- * @return Number ID of the dock item
+ * on creation. However you can use this id to refer to or look for a particular dock item.
+ * @return Number ID of the dock item.
  *
  */	
 int azDockItem::getId(lua_State *L) {
@@ -159,8 +159,8 @@ int azDockItem::getId(lua_State *L) {
 
 /**
  * <span class="groupsOnly">Only applies to groups.</span> Adds a child dock item to this group.
- * @param DockItem The dock item to add to the group
- * @example This script create a new shortcut and add it to a group
+ * @param DockItem The dock item to add to the group.
+ * @example This script create a new shortcut and add it to a group.
  * <listing version="3.0">
  * -- Create the shortcut
  * shortcut = DockItem:new()
@@ -187,15 +187,15 @@ int azDockItem::addChild(lua_State *L) {
 }
 
 /**
- * Tells whether the dock item is a group or not
- * @return Boolean <code>true</code> if it is a group; <code>false</code> if it is a shortcut
+ * Tells whether the dock item is a group or not.
+ * @return Boolean <code>true</code> if it is a group; <code>false</code> if it is a shortcut.
  *
  */
 int azDockItem::isGroup(lua_State *L) { CheckWrappedObject(L, Get()); lua_pushboolean(L, Get()->IsGroup()); return 1; }
 
 /**
- * Sets the dock item name
- * @param String name The name
+ * Sets the dock item name.
+ * @param String name The name.
  * @see #autoSetName()
  *
  */
@@ -205,8 +205,8 @@ int azDockItem::setName(lua_State *L) { CheckWrappedObject(L, Get()); wxString n
  * Auto-sets the name of the shortcut, based on the shortcut target or any other information that Appetizer
  * can retrieves about the target (such as the file description). This is usually the best way to assign
  * a name to a shortcut.
- * @param String name The name
- * @example This script create a new shortcut and auto-assign a name to it
+ * @param String name The name.
+ * @example This script create a new shortcut and auto-assign a name to it.
  * <listing version="3.0">
  * -- Create the shortcut
  * shortcut = DockItem:new()
@@ -223,15 +223,15 @@ int azDockItem::autoSetName(lua_State *L) { CheckWrappedObject(L, Get()); Get()-
  * Sets the shortcut path. You may use the special variable <code>$(Drive)</code> to refer to the drive the
  * application is on. For example, <code>$(Drive)\Total Commander\Total Commander Portable.exe</code> would
  * be internally translated to <code>f:\Total Commander\Total Commander Portable.exe</code> if the application
- * is on the <code>f:</code> drive
- * @param String path The file path
+ * is on the <code>f:</code> drive.
+ * @param String path The file path.
  *
  */
 int azDockItem::setPath(lua_State *L) { CheckWrappedObject(L, Get()); wxString n = LuaUtil::ToString(L, 1); Get()->SetFilePath(n); return 0; }
 
 /**
  * Gets the shortcut file path, which may include special variables.
- * @return String The file path
+ * @return String The file path.
  * @see #getResolvedPath()
  *
  */
@@ -241,47 +241,47 @@ int azDockItem::getPath(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::P
  * Gets the resolved / normalized shortcut file path. It means that every variables is translated and every relative paths
  * are converted to absolute paths. This is useful if you need to pass the shortcut path to an external tool for example. If the 
  * file path is not a relative path and does not contain any variables, it will be equal to the resolved path.
- * @return String The resolved file path
+ * @return String The resolved file path.
  *
  */
 int azDockItem::getResolvedPath(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::PushString(L, Get()->GetResolvedPath()); return 1; }
 
 /**
- * Sets the shortcut parameters (i.e. command line arguments)
- * @param String parameters The parameters
+ * Sets the shortcut parameters (i.e. command line arguments).
+ * @param String parameters The parameters.
  *
  */
 int azDockItem::setParameters(lua_State *L) { CheckWrappedObject(L, Get()); wxString n = LuaUtil::ToString(L, 1); Get()->SetParameters(n); return 0; }
 
 /**
- * Gets the shortcut parameters (i.e. command line arguments)
- * @return String The parameters
+ * Gets the shortcut parameters (i.e. command line arguments).
+ * @return String The parameters.
  *
  */
 int azDockItem::getParameters(lua_State *L) { CheckWrappedObject(L, Get()); LuaUtil::PushString(L, Get()->GetParameters()); return 1; }
 
 /**
- * Adds the shortcut to the multi-launch group
+ * Adds the shortcut to the multi-launch group.
  *
  */
 int azDockItem::addToMultiLaunchGroup(lua_State *L) { CheckWrappedObject(L, Get()); Get()->AddToMultiLaunchGroup(); return 0; }
 
 /**
- * Tells whether the shortcut belongs to the multi-launch group or not
- * @return Boolean <code>true</code> if the shortcut belongs to the multi-launch group
+ * Tells whether the shortcut belongs to the multi-launch group or not.
+ * @return Boolean <code>true</code> if the shortcut belongs to the multi-launch group.
  *
  */
 int azDockItem::belongsToMultiLaunchGroup(lua_State *L) { CheckWrappedObject(L, Get()); lua_pushboolean(L, Get()->BelongsToMultiLaunchGroup()); return 1; }
 
 /**
- * Removes the shortcut from the multi-launch group
+ * Removes the shortcut from the multi-launch group.
  *
  */
 int azDockItem::removeFromMultiLaunchGroup(lua_State *L) { CheckWrappedObject(L, Get()); Get()->RemoveFromMultiLaunchGroup(); return 0; }
 
 /**
- * <span class="groupsOnly">Only applies to groups.</span> Gets the number of children within this group
- * @return Number The number of children
+ * <span class="groupsOnly">Only applies to groups.</span> Gets the number of children within this group.
+ * @return Number The number of children.
  *
  */	
 int azDockItem::childrenCount(lua_State *L) { CheckWrappedObject(L, Get()); lua_pushinteger(L, Get()->ChildrenCount()); return 1; }
@@ -289,8 +289,8 @@ int azDockItem::childrenCount(lua_State *L) { CheckWrappedObject(L, Get()); lua_
 
 /**
  * Launches the shortcut. You may also specify additional command line arguments.
- * @param String arguments Additional arguments (default "")
- * @example This script create a new shortcut and launches it with parameters
+ * @param String arguments Additional arguments. (default "")
+ * @example This script create a new shortcut and launches it with parameters.
  * <listing version="3.0">
  * shortcut = DockItem:new()
  * shortcut:setPath("explorer.exe")
@@ -313,7 +313,7 @@ int azDockItem::launch(lua_State *L) {
 
 /**
  * <span class="groupsOnly">Only applies to groups.</span> Gets the sub-dock item at the given index.
- * @param Number index Index of the child to retrieve
+ * @param Number index Index of the child to retrieve.
  *
  */	
 int azDockItem::getChildAt(lua_State *L) {
@@ -330,7 +330,7 @@ int azDockItem::getChildAt(lua_State *L) {
 
 /**
  * Gets the dock item's parent or <code>nil</code> if it does not have one.
- * @return DockItem The parent
+ * @return DockItem The parent.
  *
  */	
 int azDockItem::getParent(lua_State *L) {
@@ -363,8 +363,8 @@ int azDockItem::removeFromParent(lua_State *L) {
 /**
  * <span class="groupsOnly">Only applies to groups.</span> Inserts the given dock item at the given index. If necessary, the dock item is removed from its
  * current parent before being inserted.
- * @param DockItem dockItem The dock item to insert
- * @param Number index The insertion index
+ * @param DockItem dockItem The dock item to insert.
+ * @param Number index The insertion index.
  *
  */
 int azDockItem::insertChildAt(lua_State *L) { 

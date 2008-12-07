@@ -4,6 +4,18 @@
   found in the LICENSE file.
 */
 
+
+
+/**
+ * This class provides some system utility functions. Do not create
+ * an instance of this class - instead use the global <code>system</code> object.
+ * 
+ * @see Global#system
+ *
+ */	
+
+
+
 #include "../stdafx.h"
 
 #include "azSystem.h"
@@ -113,9 +125,46 @@ azSystem::azSystem(lua_State *L) {
 }
 
 
+/**
+ * Allows running the given command line. It may be a full DOS command with arguments, or 
+ * simply the path to an executable. The command can be run synchronously or asynchronously.
+ * If it runs synchronously, the function only returns when the command has been executed. 
+ * In this case, it also returns the command line standard output.
+ * On the other hand, if the command is run asynchronously, the function returns immediately.
+ * You may then provide a callback function that will be called when the command has finished.
+ * The output can then be retrieved from the <code>event.output</code> property of the function parameter.
+ * @param String commandLine The command line to execute.
+ * @param Boolean asynchronous Sets this to <code>true</code> for asynchronous execution. (default false)
+ * @param String functionName Name of the callback function in asynchronous mode. (default "")
+ * @example This script calls a DOS command in synchronous mode.
+ * <listing version="3.0">
+ * -- Running command in synchronous mode
+ * result = system:runCommand('cmd /c "dir c: /On"')
+ * 
+ * -- The function returns the result when the command is complete. 
+ * dialogs:showMessage(result)
+ * </listing>
+ *
+ * @example This script calls a DOS command in asynchronous mode with callback.
+ * <listing version="3.0">
+ * -- Define a function to retrieve the output
+ * -- of the asynchronous command
+ * 
+ * function command_callback(event)
+ *     -- The output is in event.output
+ *     dialogs:showMessage(event.output)
+ * end
+ * 
+ * -- Running command in asynchronous mode
+ * system:runCommand('cmd /c "dir c: /On"', true, "command_callback")
+ *
+ * -- Note that the function does not return anything in that case
+ * </listing>
+ * 
+ */	
 int azSystem::runCommand(lua_State *L) {
   wxString command = LuaUtil::ToString(L, 1);
-  bool async = LuaUtil::ToBoolean(L, 2, true, true);
+  bool async = LuaUtil::ToBoolean(L, 2, true, false);
   wxString callback = LuaUtil::ToString(L, 3, true);
 
   long exitCode;
@@ -154,12 +203,24 @@ int azSystem::runCommand(lua_State *L) {
 }
 
 
+/**
+ * Kills the applications that are locking (have an open handle on) the given drive. If no drive is specified,
+ * the drive Appetizer is on will be used instead. The function has two modes:
+ * "safe" and "forced". In safe mode, the function tries to close the application windows properly, giving
+ * them a chance to save any settings or to display a message if changes need to be saved. The drawback
+ * is that some applications will not be closed. On the other hand, the "forced" mode is nearly guaranteed to close
+ * all the applications. In that case, the function will do two passes: one in "safe" mode where it tries to close the applications
+ * properly, and a second one where it kills the processes of the remaining applications (if any).
+ * @param String drive Drive that needs to be unlocked. (default null)
+ * @param Boolean safe Sets this to <code>true</code> for the "safe" mode or <code>false</code> for the "forced" mode. (default true)
+ * 
+ */	
 int azSystem::killLockingProcesses(lua_State *L) {
   wxString drive = LuaUtil::ToString(L, 1, true);
   if (drive == wxEmptyString) drive = FilePaths::GetApplicationDrive();
-  bool painless = LuaUtil::ToBoolean(L, 2);
+  bool safe = LuaUtil::ToBoolean(L, 2, true, true);
 
-  wxGetApp().GetUtilities().KillLockingProcesses(drive, painless);
+  wxGetApp().GetUtilities().KillLockingProcesses(drive, safe);
 
   return 0;
 }

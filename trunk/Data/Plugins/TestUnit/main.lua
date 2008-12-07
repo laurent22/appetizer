@@ -149,6 +149,12 @@ end
 
 
 
+function command_callback(event)
+	dialogs:showMessage("Callback has been called with this output: "..event.output)	
+end
+
+
+
 function systemTest()
 	dialogs:showMessage('Running cmd /c "dir c: /On"')
 	result = system:runCommand('cmd /c "dir c: /On"')
@@ -159,6 +165,9 @@ function systemTest()
 	if result == "yes" then
 		system:killLockingProcesses(appetizer:getDrive(), true)
 	end
+	
+	dialogs:showMessage('Running cmd /c "dir c: /On" in asynchronous mode')
+	result = system:runCommand('cmd /c "dir c: /On"', true, "command_callback")
 end
 
 

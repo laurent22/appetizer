@@ -246,7 +246,7 @@ wxString GenerateHTMLString() {
   P(_("To add a plugin, follow these steps:"));
   StartList();
   LI(_("Open the [#Configuring Configuration dialog]."));
-  LI(_("Open the 'Plugin' tab."));
+  LI(_("Open the 'Plugins' tab."));
   LI(_("Click the 'Install...' button and open the plugin's .zpl package."));
   LI(_("If everything went well, you should see a message saying that the plugin was successfully installed. However, note that it will only be active the next time Appetizer is started."));
   EndList();

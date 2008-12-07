@@ -15,6 +15,7 @@
  * @event MenuOpening trayIconMenuOpening when the tray icon menu is about to be displayed
  * @event IconMenuOpening iconMenuOpening when a dock icon menu is about to be displayed
  * @endEventTable
+ * @see Global#appetizer
  *
  */	
 
@@ -87,8 +88,8 @@ azApplication::azApplication(lua_State *L) {
  * event has, among other, a <code>sender</code> property which is a reference to the object that has
  * dispatched the event. This object may also have additional properties which depend on the
  * the event.
- * @param String eventName The event you wish to listen to
- * @param String callback The Lua function to call when the event is triggered
+ * @param String eventName The event you wish to listen to.
+ * @param String callback The Lua function to call when the event is triggered.
  * @example The following code registers a listener for the "trayIconMenuOpening" event,
  * which is triggered when the user right-click on the tray icon. A menu item is then added
  * to the menu.
@@ -125,10 +126,10 @@ int azApplication::addEventListener(lua_State *L) {
 /**
  * Returns the root of all the dock items. Dock items are organized in a tree-like structure
  * with groups being the branches and the shortcut being the leafs. This function allows getting the
- * root of this structure. You can then call <code>childrenCount</code>, <code>getChildAt</code>, etc. to
+ * root of this structure. You can then call <code>childrenCount()</code>, <code>getChildAt()</code>, etc. to
  * access the children.
- * @return DockItem The root of all the dock items
- * @example The following code gets the dock items' root and prints the name of all its children
+ * @return DockItem The root of all the dock items.
+ * @example The following code gets the dock items' root and prints the name of all its children.
  * <listing version="3.0">
  * root = appetizer:getDockItemsRoot()
  * childrenCount = root:childrenCount()
@@ -150,7 +151,7 @@ int azApplication::getDockItemsRoot(lua_State *L) {
 
 /**
  * Gets the dock item with the given id or <code>nil</code> if it does not exist or has been deleted. Note
- * that this function will also look for the dock item in all the groups and subgroups.
+ * that this function will also look for the dock item in all the groups and subgroups starting from the root.
  * @return DockItem The dock item or <code>nil</code> if does not exists.
  * 
  */	
@@ -164,19 +165,19 @@ int azApplication::getDockItemById(lua_State *L) {
 
 
 /**
- * Hides the application
+ * Hides the application.
  * 
  */	
 int azApplication::hide(lua_State *L) { wxGetApp().GetMainFrame()->Hide(); return 0; }
 
 /**
- * Shows the application
+ * Shows the application.
  * 
  */	
 int azApplication::show(lua_State *L) { wxGetApp().GetMainFrame()->Show(); return 0; };
 
 /**
- * Closes the application
+ * Closes the application.
  * 
  */	
 int azApplication::close(lua_State *L) {
@@ -188,9 +189,9 @@ int azApplication::close(lua_State *L) {
 };
 
 /**
- * Tells whether the application is visible or not
- * @return Boolean <code>true</code> if the application is visible
- * @example The following code toggles the application visibility
+ * Tells whether the application is visible or not.
+ * @return Boolean <code>true</code> if the application is visible.
+ * @example The following code toggles the application visibility.
  * <listing version="3.0">
  * function hideShowToggle()
  *     if appetizer:isVisible() then
@@ -209,8 +210,8 @@ int azApplication::isVisible(lua_State *L) { lua_pushboolean(L, wxGetApp().GetMa
 
 /**
  * Sets the application orientation.
- * @param String orientation Can be "horizontal" or "vertical"
- * @example The following code rotates the application
+ * @param String orientation Can be "horizontal" or "vertical".
+ * @example The following code rotates the application.
  * <listing version="3.0">
  * function rotateApplication()
  *     if appetizer:getOrientation() == "horizontal" then
@@ -241,7 +242,7 @@ int azApplication::setOrientation(lua_State *L) {
 
 /**
  * Gets the application orientation.
- * @return String Can be "horizontal" or "vertical"
+ * @return String Can be "horizontal" or "vertical".
  * @see #setOrientation()
  * 
  */	
@@ -262,15 +263,15 @@ int azApplication::installAutoRunFile(lua_State *L) { wxGetApp().GetUtilities().
 
 
 /**
- * Returns the drive on which the application is running
+ * Returns the drive on which the application is running.
  * 
  */	
 int azApplication::getDrive(lua_State *L) { LuaUtil::PushString(L, FilePaths::GetApplicationDrive()); return 1; }
 
 
 /**
- * Opens the help file
- * @param String sectionName The section to open the help file at (default "")
+ * Opens the help file.
+ * @param String sectionName The section to open the help file at. (default "")
  * 
  */	
 int azApplication::showHelpFile(lua_State *L) {

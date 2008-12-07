@@ -70,13 +70,13 @@ azDialogs::azDialogs(lua_State *L) {
  * <code>warning</code>, <code>error</code> and <code>confirmation</code>. Currently, the only difference
  * between them is that they display a different icon. Additionally, each message box can have different
  * combinations of buttons among <code>yes</code>, <code>no</code>, <code>ok</code> and <code>cancel</code>.
- * When you call this function the script is stopped until the user clicks on the button. You can then
+ * When you call this function the script is stopped until the user clicks on a button. You can then
  * check the return value of the function to know which button has been clicked. To display a simple alert
- * box with just an "OK" button, simply use <code>dialogs.showMessage("my message")</code>
- * @param String message The message to display
- * @param String buttons The buttons to display. Possible values are "ok", "yesNo" and "yesNoCancel" (default "ok")
- * @param String type The type of message box. Possible values are "information", "warning", "error" and "confirmation" (default "information")
- * @return String The button that was clicked. Possible values are "ok", "yes", "no" or "cancel"
+ * box with just an "OK" button, simply use <code>dialogs.showMessage("my message")</code>.
+ * @param String message The message to display.
+ * @param String buttons The buttons to display. Possible values are "ok", "yesNo" and "yesNoCancel". (default "ok")
+ * @param String type The type of message box. Possible values are "information", "warning", "error" and "confirmation". (default "information")
+ * @return String The button that was clicked. Possible values are "ok", "yes", "no" or "cancel".
  * @example This script shows different kinds of message boxes and their results:
  * <listing version="3.0">
  * result = dialogs:showMessage("This is an error message with an 'ok' button", "ok", "error")
@@ -140,7 +140,7 @@ int azDialogs::showMessage(lua_State *L) {
 
 
 /**
- * Shows the application configuration dialog
+ * Shows the application configuration dialog.
  * 
  */	
 int azDialogs::showConfigDialog(lua_State *L) { wxGetApp().GetUtilities().ShowConfigDialog(); return 0; }
@@ -159,7 +159,7 @@ int azDialogs::showNewShortcutDialog(lua_State *L) { wxGetApp().GetUtilities().C
 int azDialogs::showImportDialog(lua_State *L) { wxGetApp().GetUtilities().ShowImportDialog(); return 0; }
 
 /**
- * Shows the system "Eject drive" dialog
+ * Shows the system "Eject drive" dialog.
  * 
  */	
 int azDialogs::showEjectDriveDialog(lua_State *L) { wxGetApp().GetUtilities().ShowEjectDriveDialog(); return 0; }

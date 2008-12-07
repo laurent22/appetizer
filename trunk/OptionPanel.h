@@ -46,6 +46,7 @@ public:
   void SetRotated(bool rotated);
   void ApplySkin();
   OptionButton* GetButtonById(int id);
+  bool IsOpen();
 
   void OnSize(wxSizeEvent& evt);
   void OnPaint(wxPaintEvent& evt);

@@ -15,10 +15,18 @@
 
 class OptionButton: public ImageButton {
 
-  public:
+public:
 
-    OptionButton(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
-    void ApplySkin();
+  OptionButton(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
+
+  void InvalidateSkin();
+  void ApplySkin();
+
+  void OnPaint(wxPaintEvent& evt);
+
+private:
+
+  bool skinInvalidated_;
 
 };
 

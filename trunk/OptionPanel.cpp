@@ -64,6 +64,7 @@ int OptionPanel::ButtonCount() {
 void OptionPanel::AddButton(OptionButton* button) {
   button->SetCursor(wxCursor(wxCURSOR_HAND));  
   button->Reparent(this);
+  button->ApplySkin();
 
   buttons_.push_back(button);
 
@@ -74,7 +75,6 @@ void OptionPanel::AddButton(OptionButton* button) {
     NULL,
     this);
 
-  InvalidateSkin();
   InvalidateLayout();
 }
 
@@ -125,18 +125,6 @@ void OptionPanel::ApplySkin() {
 
   for (int i = 0; i < buttons_.size(); i++) {    
     OptionButton* button = buttons_[i];
-
-    wxString skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_") + button->GetName() + _T(".png"));
-
-    if (!wxFileName::FileExists(skinFilePath)) skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_Default.png"));
-    
-    wxImage image(skinFilePath);
-
-    if (image.IsOk()) {
-      Imaging::ColorizeImage(image, Styles::OptionPanel.ButtonIconColor);
-      button->SetIcon(new wxBitmap(image));
-    }
-
     button->ApplySkin();
   }
 
@@ -204,6 +192,11 @@ void OptionPanel::OnSize(wxSizeEvent& evt) {
 }
 
 
+bool OptionPanel::IsOpen() {
+  return wxGetApp().GetMainFrame()->IsOptionPanelOpen();
+}
+
+
 void OptionPanel::UpdateLayout() {
   layoutInvalidated_ = false;
 
@@ -221,6 +214,11 @@ void OptionPanel::UpdateLayout() {
   int buttonsTop;
   int buttonsBottom = 0;
   requiredWidth_ = 0;
+
+  // *****************************************************************************
+  // Loops through the buttons and position each of them, also calculates
+  // the panel required width
+  // *****************************************************************************
 
   for (int i = 0; i < buttons_.size(); i++) {
     OptionButton* b = buttons_[i];
@@ -241,6 +239,7 @@ void OptionPanel::UpdateLayout() {
 
     } else {
 
+      // If new X and Y positions are off-bound, then start a new column of buttons
       if (newY + b->GetSize().GetHeight() > GetSize().GetHeight() - Styles::OptionPanel.Padding.Bottom) {
         newY = Styles::OptionPanel.Padding.Top;
         newX = newX + b->GetSize().GetWidth() + Styles::OptionPanel.ButtonHGap;
@@ -267,6 +266,10 @@ void OptionPanel::UpdateLayout() {
       if (newY + b->GetSize().GetHeight() > buttonsBottom) buttonsBottom = newY + b->GetSize().GetHeight();
     }
   }
+
+  // *****************************************************************************
+  // Center the buttons vertically (or horizontally if the panel is rotated)
+  // *****************************************************************************
 
   if (rotated_) {
     int leftGap = GetSize().GetWidth() - buttonsBottom;

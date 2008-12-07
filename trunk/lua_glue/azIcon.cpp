@@ -72,7 +72,7 @@ azIcon::azIcon(lua_State *L) {
 
 /**
  * Returns the dock item associated with this icon.
- * @return DockItem The icon's dock item
+ * @return DockItem The icon's dock item.
  * @example The following code displays the dock item's path associated with the icon:
  * <listing version="3.0">
  * dockItem = icon:getDockItem()

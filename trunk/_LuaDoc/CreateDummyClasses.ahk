@@ -193,7 +193,7 @@ CreateAsFile(sourceFile, targetDir)
 }
 	
 
-
+FileRemoveDir %dummyClassesDir%, 1
 FileCreateDir %dummyClassesDir%
 
 Loop, %A_ScriptDir%\..\lua_glue\az*.cpp

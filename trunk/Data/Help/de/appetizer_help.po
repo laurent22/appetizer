@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-02 16:26+0000\n"
-"PO-Revision-Date: 2008-12-02 23:17+0100\n"
-"Last-Translator: Werner Künkel <w.kuenkel@t-online.de>\n"
+"POT-Creation-Date: 2008-12-07 14:53+0000\n"
+"PO-Revision-Date: 2008-12-07 14:53-0000\n"
+"Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -227,7 +227,7 @@ msgid "Open the [#Configuring Configuration dialog]."
 msgstr "Öffnen Sie das  [#Configuring Einstellungsmenü]."
 
 #: generate_help\main.cpp:249
-msgid "Open the 'Plugin' tab."
+msgid "Open the 'Plugins' tab."
 msgstr "Öffnen Sie im Menü \"Plugins\""
 
 #: generate_help\main.cpp:250
@@ -328,7 +328,7 @@ msgstr "[b]Diese Dateien vom Import ausschließen:[/b] Als Standard werden alle 
 
 #: generate_help\main.cpp:321
 msgid "This tab displays the plugins that are currently installed along with their status."
-msgstr "Dieser Menüpunkt zeigt die derzeit installierten Plugins.  und ihren Aktivierungszustand."
+msgstr "Dieser Menüpunkt zeigt die derzeit installierten Plugins  und ihren Aktivierungszustand."
 
 #: generate_help\main.cpp:323
 msgid "[b]Enable / Disable buttons:[/b] Click these buttons to enable / disable the selected plugin."
@@ -336,7 +336,7 @@ msgstr "[b]Aktivieren / Deaktivieren:[/b] Drücken Sie diese Knöpfe, um ein Plu
 
 #: generate_help\main.cpp:324
 msgid "[b]Install...:[/b] Click to [#AddingPlugins install a new plugin]."
-msgstr "[b]Installierenl...:[/b] Wählen Sie diese Option um ein [#AddingPlugins neues Plugin zu installieren]."
+msgstr "[b]Installieren...:[/b] Wählen Sie diese Option, um ein [#AddingPlugins neues Plugin zu installieren]."
 
 #: generate_help\main.cpp:330
 msgid "Other tips"
@@ -372,26 +372,24 @@ msgstr "Support und Links"
 msgid "Official home page: %s"
 msgstr "Offizielle Homepage: %s"
 
-#: generate_help\main.cpp:350
-#, c-format
-msgid "Project home page: %s"
-msgstr "Homepage des Projekts: %s"
-
 #: generate_help\main.cpp:351
 #, c-format
 msgid "Some information on how to create a plugin: %s"
 msgstr "Informationen zur Erstellung eigener Plugins: %s"
-
-#: generate_help\main.cpp:352
-#, c-format
-msgid "Beta versions and preleases are usually on [%s PortableApps Beta Testing forum]"
-msgstr "Betaversionen und Vorabveröffentlichungen finden sich auf [%s PortableApps.com Beta Testing forum]"
 
 #: generate_help\main.cpp:353
 #, c-format
 msgid "For bug reports, suggestions, comments or translations, please contact %s"
 msgstr "Für Fehlermeldungen, Anregungen, Kommentare oder Übersetzungen wenden Sie sich bitte an %s"
 
+#~ msgid "Project home page: %s"
+#~ msgstr "Homepage des Projekts: %s"
+#~ msgid ""
+#~ "Beta versions and preleases are usually on [%s PortableApps Beta Testing "
+#~ "forum]"
+#~ msgstr ""
+#~ "Betaversionen und Vorabveröffentlichungen finden sich auf [%s "
+#~ "PortableApps.com Beta Testing forum]"
 #~ msgid ""
 #~ "To add a shortcut, right-click anywhere on the icon panel and select 'New "
 #~ "shortcut', then click on [images/SelectFile.jpg] to select a file or "
