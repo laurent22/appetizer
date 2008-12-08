@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Appetizer Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-07 14:53+0000\n"
-"PO-Revision-Date: 2008-12-07 14:57-0000\n"
+"PO-Revision-Date: 2008-12-07 19:50-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: generate_help\main.cpp:123
 msgid "Introduction"
-msgstr "Introdution"
+msgstr "Introduction"
 
 #: generate_help\main.cpp:124
 msgid "About Appetizer"
