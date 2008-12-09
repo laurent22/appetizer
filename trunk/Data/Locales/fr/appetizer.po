@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-07 14:53+0000\n"
+"POT-Creation-Date: 2008-12-09 16:43+0000\n"
 "PO-Revision-Date: 2008-12-07 14:36-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -39,52 +39,52 @@ msgstr "Configuration"
 msgid "Close"
 msgstr "Fermer"
 
-#: FolderItem.cpp:473 gui\TreeViewDialog.cpp:129
+#: FolderItem.cpp:459 gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
 msgstr "Organiser les raccourcis"
 
-#: FolderItem.cpp:638 FolderItem.cpp:645 FolderItem.cpp:668
+#: FolderItem.cpp:570 FolderItem.cpp:577 FolderItem.cpp:600
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Le fichier n'existe pas ou a été effacé (Erreur %s)"
 
-#: FolderItem.cpp:902
+#: FolderItem.cpp:834
 msgid "Group"
 msgstr "Groupe"
 
-#: FolderItem.cpp:903
+#: FolderItem.cpp:835
 msgid "Unnamed"
 msgstr "Sans nom"
 
-#: FolderItem.cpp:1111 IconPanel.cpp:138
+#: FolderItem.cpp:1043 IconPanel.cpp:138
 msgid "Control Panel"
 msgstr "Panneau de contrôle"
 
-#: FolderItem.cpp:1113 IconPanel.cpp:139
+#: FolderItem.cpp:1045 IconPanel.cpp:139
 msgid "My Computer"
 msgstr "Mon Ordinateur"
 
-#: FolderItem.cpp:1115 IconPanel.cpp:140
+#: FolderItem.cpp:1047 IconPanel.cpp:140
 msgid "My Network Places"
 msgstr "Mon Réseau"
 
-#: FolderItem.cpp:1117 IconPanel.cpp:141
+#: FolderItem.cpp:1049 IconPanel.cpp:141
 msgid "Recycle Bin"
 msgstr "Corbeille"
 
-#: FolderItem.cpp:1119 IconPanel.cpp:142
+#: FolderItem.cpp:1051 IconPanel.cpp:142
 msgid "Show Desktop"
 msgstr "Montrer Bureau"
 
-#: FolderItem.cpp:1121 IconPanel.cpp:143
+#: FolderItem.cpp:1053 IconPanel.cpp:143
 msgid "Windows Explorer"
 msgstr "Explorateur Windows"
 
-#: FolderItem.cpp:1123 IconPanel.cpp:144
+#: FolderItem.cpp:1055 IconPanel.cpp:144
 msgid "Search"
 msgstr "Rechercher"
 
-#: FolderItem.cpp:1125
+#: FolderItem.cpp:1057
 msgid "Current Drive"
 msgstr "Disque courant"
 

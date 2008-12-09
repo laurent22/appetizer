@@ -18,25 +18,12 @@
 
 // Forward declaration so that we can create the typedef below
 class FolderItem;
-class FolderItemProcess;
 
 typedef std::vector<FolderItem*> FolderItemVector;
 
 
 WX_DECLARE_HASH_MAP(int, wxIcon*, wxIntegerHash, wxIntegerEqual, IconHashMap);
 WX_DECLARE_HASH_MAP(int, FolderItem*, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
-
-
-#ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
-
-struct LaunchedFolderItem {
-  long ProcessId;
-  FolderItemProcess* Process;
-  wxString ExecutablePath;
-};
-
-#endif // __MLB_TRACK_LAUNCHED_PROCESSES__
-
 
 
 class FolderItem : public wxEvtHandler {
@@ -72,8 +59,6 @@ public:
   void AppendAsMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
   wxMenu* ToMenu(int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
   ExtendedMenuItem* ToMenuItem(wxMenu* parentMenu, int iconSize = SMALL_ICON_SIZE, const wxString& menuItemName = _T("folderItem"));
-
-  static void KillStartedProcesses();
 
   void Launch();
   void LaunchWithArguments(const wxString& arguments);
@@ -157,10 +142,6 @@ private:
   static std::map<std::pair<wxString, int>, wxIcon*> defaultIcons_;
   
   static FolderItemIdHashMap folderItemIdHashMap_;
-
-  #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
-  static std::vector<LaunchedFolderItem*> launchedFolderItems_;
-  #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
 
 };
 

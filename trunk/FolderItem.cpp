@@ -7,7 +7,6 @@
 #include "stdafx.h"
 
 #include "FolderItem.h"
-#include "FolderItemProcess.h"
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
 #include "utilities/SystemUtil.h"
@@ -23,11 +22,6 @@ int FolderItem::uniqueID_ = 1000;
 FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
 
 std::map<std::pair<wxString, int>, wxIcon*> FolderItem::defaultIcons_;
-
-
-#ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
-std::vector<LaunchedFolderItem*> FolderItem::launchedFolderItems_;
-#endif // __MLB_TRACK_LAUNCHED_PROCESSES__
 
 
 FolderItem::FolderItem(bool isGroup) {
@@ -96,14 +90,6 @@ FolderItem::~FolderItem() {
 
 
 void FolderItem::DestroyStaticData() {
-  #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
-  for (int i = 0; i < launchedFolderItems_.size(); i++) {
-    LaunchedFolderItem* p = launchedFolderItems_.at(i);
-    wxDELETE(p);
-  }
-  launchedFolderItems_.clear();
-  #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
-
   int s = folderItemIdHashMap_.size();
 
   FolderItemIdHashMap::iterator i;
@@ -531,47 +517,6 @@ FolderItem* FolderItem::SearchChildByFilename(const wxString& filename, int matc
 }
 
 
-#ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
-
-void FolderItem::KillStartedProcesses() {
-
-  SystemUtilProcessVector processVector = SystemUtil::GetProcessList();
-
-  for (int i = 0; i < launchedFolderItems_.size(); i++) {
-    LaunchedFolderItem* d = launchedFolderItems_.at(i);
-
-    wxKillError error = wxProcess::Kill(d->ProcessId, wxSIGTERM, wxKILL_CHILDREN);
-
-    switch (error) {
-
-      case wxKILL_BAD_SIGNAL: // Try to kill it using the file name
-      case wxKILL_NO_PROCESS:
-      case wxKILL_ERROR:
-        {
-
-        wxFileName f(d->ExecutablePath);
-        wxString filename = f.GetName().Lower();
-
-        for (int i = 0; i < processVector.size(); i++) {
-          if (processVector.at(i)->name.Lower() != filename) continue;
-          wxProcess::Kill(processVector.at(i)->id, wxSIGTERM, wxKILL_CHILDREN);
-        }
-        
-        }
-        break;
-
-      case wxKILL_ACCESS_DENIED: // Force the kill
-
-        wxProcess::Kill(d->Process->GetPid(), wxSIGKILL, wxKILL_CHILDREN);
-        break;
-
-    }
-  }
-}
-
-#endif // __MLB_TRACK_LAUNCHED_PROCESSES__
-
-
 void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
 
@@ -590,20 +535,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
         // ---------------------------
         // Without arguments
         // ---------------------------
-
-        #ifdef __MLB_TRACK_LAUNCHED_PROCESSES__
-        FolderItemProcess* process = new FolderItemProcess(NULL);
-        
-        LaunchedFolderItem* d = new LaunchedFolderItem();
-        d->Process = process;
-        d->ExecutablePath = filePath;
-
-        launchedFolderItems_.push_back(d);
-        
-        d->ProcessId = wxExecute(filePath, wxEXEC_ASYNC, process);
-        #else // __MLB_TRACK_LAUNCHED_PROCESSES__
         wxExecute(filePath, wxEXEC_ASYNC);
-        #endif // __MLB_TRACK_LAUNCHED_PROCESSES__
 
       } else {
 
