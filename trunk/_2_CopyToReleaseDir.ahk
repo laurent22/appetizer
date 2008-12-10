@@ -16,6 +16,7 @@ Loop %releaseDirectory%\.svn, 2, 1
   FileRemoveDir %A_LoopFileFullPath%, 1
 }
 
+FileRemoveDir %releaseDirectory%\Data\Plugins\TestUnit, 1
 FileRemoveDir %releaseDirectory%\Data\Settings, 1
 FileRemoveDir %releaseDirectory%\Data\IconCache, 1
 
@@ -28,7 +29,6 @@ Loop %releaseDirectory%\Data\Help\*.whc, 0, 1
 {
   FileDelete %A_LoopFileFullPath%
 }
-
 
 Loop %releaseDirectory%\Data\*.po~, 0, 1
 {

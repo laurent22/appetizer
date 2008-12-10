@@ -1,4 +1,12 @@
-﻿Version 1.2.2.606 Beta (2008-12-07):
+﻿Version 1.2.3.610 (2008-12-10):
+
+- Updated Danish translation (Henrik Agersted)
+- Updated German translation and help file (wk)
+- Updated Polish translation (Michal Trzebiatowski)
+- Updated Dutch translation (Pieter Kerstens)
+- Updated French and English translations and help files.
+
+Version 1.2.2.606 Beta (2008-12-07):
 
 - New: "Reveal target" plugin
 - Fixed Windows 2000 crash (missing "SetDllDirectory" function)
