@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="MiniLaunchBar" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Unicode Debug Win32">
+				<Option output="$(SolutionDir)_Unicode Debug Win32/Appetizer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="_Unicode Debug Win32" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add option="`wx-config --cxxflags`" />
+					<Add option="`wx-config --libs`" />
+					<Add option="`wx-config --debug=yes`" />
+					<Add option="`wx-config --unicode=yes`" />
+					<Add option="-DwxUSE_GUI=1" />
+					<Add option="-D__WXDEBUG__" />
+					<Add directory="/home/laurent/Public/boost_1_37_0" />
+					<Add directory="/usr/lib" />
+					<Add directory="/usr/lib/wx/include" />
+					<Add directory="/usr/lib/wx" />
+				</Compiler>
+				<Linker>
+					<Add library="/usr/lib/libwx_baseud-2.8.so" />
+					<Add library="/usr/lib/libwx_baseud_net-2.8.so" />
+					<Add library="/usr/lib/libwx_baseud_xml-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_adv-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_aui-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_core-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_fl-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_gizmos-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_gizmos_xrc-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_gl-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_html-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_media-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_ogl-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_plot-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_qa-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_richtext-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_stc-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_svg-2.8.so" />
+					<Add library="/usr/lib/libwx_gtk2ud_xrc-2.8.so" />
+					<Add directory="/usr/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="ApplicationTrayIcon.cpp" />
+		<Unit filename="ApplicationTrayIcon.h" />
+		<Unit filename="Constants.h" />
+		<Unit filename="Controller.cpp" />
+		<Unit filename="Controller.h" />
+		<Unit filename="Enumerations.h" />
+		<Unit filename="FilePaths.cpp" />
+		<Unit filename="FilePaths.h" />
+		<Unit filename="FolderItem.cpp" />
+		<Unit filename="FolderItem.h" />
+		<Unit filename="FolderItemRenderer.cpp" />
+		<Unit filename="FolderItemRenderer.h" />
+		<Unit filename="IconPanel.cpp" />
+		<Unit filename="IconPanel.h" />
+		<Unit filename="IconPanelFrame.cpp" />
+		<Unit filename="IconPanelFrame.h" />
+		<Unit filename="Localization.cpp" />
+		<Unit filename="Localization.h" />
+		<Unit filename="Log.cpp" />
+		<Unit filename="Log.h" />
+		<Unit filename="MainFrame.cpp" />
+		<Unit filename="MainFrame.h" />
+		<Unit filename="MessageBoxes.cpp" />
+		<Unit filename="MessageBoxes.h" />
+		<Unit filename="OptionButton.cpp" />
+		<Unit filename="OptionButton.h" />
+		<Unit filename="OptionPanel.cpp" />
+		<Unit filename="OptionPanel.h" />
+		<Unit filename="Styles.cpp" />
+		<Unit filename="Styles.h" />
+		<Unit filename="TypeDefinitions.h" />
+		<Unit filename="User.cpp" />
+		<Unit filename="User.h" />
+		<Unit filename="UserSettings.cpp" />
+		<Unit filename="UserSettings.h" />
+		<Unit filename="bitmap_controls/BitmapControl.cpp" />
+		<Unit filename="bitmap_controls/BitmapControl.h" />
+		<Unit filename="bitmap_controls/ImageButton.cpp" />
+		<Unit filename="bitmap_controls/ImageButton.h" />
+		<Unit filename="bitmap_controls/ImagePanel.cpp" />
+		<Unit filename="bitmap_controls/ImagePanel.h" />
+		<Unit filename="bitmap_controls/NineSlicesPanel.cpp" />
+		<Unit filename="bitmap_controls/NineSlicesPanel.h" />
+		<Unit filename="gui/AboutDialog.cpp" />
+		<Unit filename="gui/AboutDialog.h" />
+		<Unit filename="gui/AboutDialogBase.cpp" />
+		<Unit filename="gui/AboutDialogBase.h" />
+		<Unit filename="gui/ConfigDialog.cpp" />
+		<Unit filename="gui/ConfigDialog.h" />
+		<Unit filename="gui/ConfigDialogBase.cpp" />
+		<Unit filename="gui/ConfigDialogBase.h" />
+		<Unit filename="gui/ShortcutEditorDialog.cpp" />
+		<Unit filename="gui/ShortcutEditorDialog.h" />
+		<Unit filename="gui/ShortcutEditorDialogBase.cpp" />
+		<Unit filename="gui/ShortcutEditorDialogBase.h" />
+		<Unit filename="gui/TreeViewDialog.cpp" />
+		<Unit filename="gui/TreeViewDialog.h" />
+		<Unit filename="gui/TreeViewDialogBase.cpp" />
+		<Unit filename="gui/TreeViewDialogBase.h" />
+		<Unit filename="imaging/Imaging.cpp" />
+		<Unit filename="imaging/Imaging.h" />
+		<Unit filename="imaging/NineSlicesPainter.cpp" />
+		<Unit filename="imaging/NineSlicesPainter.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="resources/resources.rc" />
+		<Unit filename="third_party/simpleini/SimpleIni.h" />
+		<Unit filename="third_party/tinyxml/tinystr.cpp" />
+		<Unit filename="third_party/tinyxml/tinystr.h" />
+		<Unit filename="third_party/tinyxml/tinyxml.cpp" />
+		<Unit filename="third_party/tinyxml/tinyxml.h" />
+		<Unit filename="third_party/tinyxml/tinyxmlerror.cpp" />
+		<Unit filename="third_party/tinyxml/tinyxmlparser.cpp" />
+		<Unit filename="utilities/IconGetter.cpp" />
+		<Unit filename="utilities/IconGetter.h" />
+		<Unit filename="utilities/MathUtil.cpp" />
+		<Unit filename="utilities/MathUtil.h" />
+		<Unit filename="utilities/StringUtil.cpp" />
+		<Unit filename="utilities/StringUtil.h" />
+		<Unit filename="utilities/Updater.cpp" />
+		<Unit filename="utilities/Updater.h" />
+		<Unit filename="utilities/Utilities.cpp" />
+		<Unit filename="utilities/Utilities.h" />
+		<Unit filename="utilities/VersionInfo.cpp" />
+		<Unit filename="utilities/VersionInfo.h" />
+		<Unit filename="utilities/XmlUtil.cpp" />
+		<Unit filename="utilities/XmlUtil.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
