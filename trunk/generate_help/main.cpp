@@ -123,7 +123,7 @@ wxString GenerateHTMLString() {
   H2(_("Introduction"));
   H3(_("About Appetizer"));
   P(_("Appetizer is a free application launcher, or dock, for Windows. It allows organizing and launching your applications and other shortcuts into a convenient dock. The app is skinable and entirely customizable."));
-  P(_("Additionally, the application supports the [http://portableapps.com PortableApps] format. So if you use Appetizer on a removable drive in the PortableApps format, the application will detect it and automatically import all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."));
+  P(_("Additionally, the application supports the [http://portableapps.com PortableApps.com] format. So if you use Appetizer on a removable drive in the PortableApps.com format, the application will detect it and automatically import all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."));
   
   // -------------------------------------------------
   // Features
@@ -256,7 +256,7 @@ wxString GenerateHTMLString() {
   // -------------------------------------------------
   AddAnchor(_T("CreatingPlugin"));
   H3(_("Creating a plugin"));
-  P(_("Information on how to create a plugin is available on [http://app.etizer.org/wiki/creating-a-plugin Appetizer's website]"));
+  P(_("Information on how to create a plugin is available on [http://app.etizer.org/wiki/plugin-tutorial Appetizer's website]"));
 
   // *******************************************************************************
   // CONFIGURING APPETIZER
@@ -348,7 +348,7 @@ wxString GenerateHTMLString() {
   H2(_("Support and links"));
   P(wxString::Format(_("Official home page: %s"), _T("[http://app.etizer.org http://app.etizer.org]")));
   //P(wxString::Format(_("Project home page: %s"), _T("[https://sourceforge.net/projects/appetizer https://sourceforge.net/projects/appetizer]")));
-  P(wxString::Format(_("Some information on how to create a plugin: %s"), _T("[http://app.etizer.org/wiki/creating-a-plugin http://app.etizer.org/wiki/creating-a-plugin]")));
+  P(wxString::Format(_("Some information on how to create a plugin: %s"), _T("[http://app.etizer.org/wiki/plugin-tutorial http://app.etizer.org/wiki/plugin-tutorial]")));
   //P(wxString::Format(_("Beta versions and preleases are usually on [%s PortableApps Beta Testing forum]"), _T("http://portableapps.com/forums/development/beta_testing")));
   P(wxString::Format(_("For bug reports, suggestions, comments or translations, please contact %s"), imayle));//wxString::Format(_T("<a href=\"mailto:%s\">%s</a> or post on the beta forum."), imayle, imayle)));
 

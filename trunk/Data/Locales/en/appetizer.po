@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-09 16:43+0000\n"
+"POT-Creation-Date: 2008-12-10 15:29+0000\n"
 "PO-Revision-Date: 2008-11-08 13:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -721,7 +721,7 @@ msgid ""
 msgstr ""
 
 #: gui\ImportWizardDialog.cpp:43
-msgid "PortableApps applications"
+msgid "PortableApps.com applications"
 msgstr ""
 
 #: gui\ImportWizardDialog.cpp:44

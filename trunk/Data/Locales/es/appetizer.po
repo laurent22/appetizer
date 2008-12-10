@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-09 16:43+0000\n"
+"POT-Creation-Date: 2008-12-10 15:29+0000\n"
 "PO-Revision-Date: 2008-11-21 12:17+0100\n"
 "Last-Translator: MMX <plopez7@gmail.com>\n"
 "Language-Team: Appetizer Project\n"
@@ -757,7 +757,8 @@ msgstr ""
 "Seleccione justo abajo de donde desea importarlos:"
 
 #: gui\ImportWizardDialog.cpp:43
-msgid "PortableApps applications"
+#, fuzzy
+msgid "PortableApps.com applications"
 msgstr "Programas de PortableApps.com"
 
 #: gui\ImportWizardDialog.cpp:44

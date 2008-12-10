@@ -40,7 +40,7 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
 
   wxArrayString sourceNames;
   wxArrayString sourceLabels;
-  sourceNames.Add(_T("portableApps")); sourceLabels.Add(_("PortableApps applications"));
+  sourceNames.Add(_T("portableApps")); sourceLabels.Add(_("PortableApps.com applications"));
   sourceNames.Add(_T("quickLaunch")); sourceLabels.Add(_("Windows Quick Launch toolbar"));
   sourceNames.Add(_T("startupMenu")); sourceLabels.Add(_("Windows Start Menu programs"));
 

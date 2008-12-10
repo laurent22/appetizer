@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-09 16:43+0000\n"
-"PO-Revision-Date: 2008-12-09 16:43-0000\n"
+"POT-Creation-Date: 2008-12-10 15:29+0000\n"
+"PO-Revision-Date: 2008-12-10 15:29-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -25,24 +25,31 @@ msgstr "Minimer"
 msgid "Show"
 msgstr "Maksimer"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:405
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:405
 msgid "Eject drive"
 msgstr "Afbryd/skub ud"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:873 OptionPanel.cpp:151
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:873
+#: OptionPanel.cpp:151
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Indstillinger"
 
-#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
 msgid "Close"
 msgstr "Afslut"
 
-#: FolderItem.cpp:459 gui\TreeViewDialog.cpp:129
+#: FolderItem.cpp:459
+#: gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
 msgstr "Organiser genveje"
 
-#: FolderItem.cpp:570 FolderItem.cpp:577 FolderItem.cpp:600
+#: FolderItem.cpp:570
+#: FolderItem.cpp:577
+#: FolderItem.cpp:600
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Filen eksisterer ikke eller er blevet slettet (Fejl %s)"
@@ -55,31 +62,38 @@ msgstr "Gruppe"
 msgid "Unnamed"
 msgstr "Unavngivet"
 
-#: FolderItem.cpp:1043 IconPanel.cpp:138
+#: FolderItem.cpp:1043
+#: IconPanel.cpp:138
 msgid "Control Panel"
 msgstr "KontrolPanel"
 
-#: FolderItem.cpp:1045 IconPanel.cpp:139
+#: FolderItem.cpp:1045
+#: IconPanel.cpp:139
 msgid "My Computer"
 msgstr "Denne computer"
 
-#: FolderItem.cpp:1047 IconPanel.cpp:140
+#: FolderItem.cpp:1047
+#: IconPanel.cpp:140
 msgid "My Network Places"
 msgstr "Netværkssteder"
 
-#: FolderItem.cpp:1049 IconPanel.cpp:141
+#: FolderItem.cpp:1049
+#: IconPanel.cpp:141
 msgid "Recycle Bin"
 msgstr "Papirkurv"
 
-#: FolderItem.cpp:1051 IconPanel.cpp:142
+#: FolderItem.cpp:1051
+#: IconPanel.cpp:142
 msgid "Show Desktop"
 msgstr "Vis Skrivebord"
 
-#: FolderItem.cpp:1053 IconPanel.cpp:143
+#: FolderItem.cpp:1053
+#: IconPanel.cpp:143
 msgid "Windows Explorer"
 msgstr "Windows Stifinder"
 
-#: FolderItem.cpp:1055 IconPanel.cpp:144
+#: FolderItem.cpp:1055
+#: IconPanel.cpp:144
 msgid "Search"
 msgstr "Søg"
 
@@ -87,7 +101,8 @@ msgstr "Søg"
 msgid "Current Drive"
 msgstr "Aktuelt drev"
 
-#: FolderItemRenderer.cpp:152 gui\TreeViewDialog.cpp:106
+#: FolderItemRenderer.cpp:152
+#: gui\TreeViewDialog.cpp:106
 msgid "Remove..."
 msgstr "Fjern..."
 
@@ -99,11 +114,13 @@ msgstr "Multistart"
 msgid "Organize group shortcuts"
 msgstr "Organiser grupper"
 
-#: FolderItemRenderer.cpp:171 gui\TreeViewDialog.cpp:111
+#: FolderItemRenderer.cpp:171
+#: gui\TreeViewDialog.cpp:111
 msgid "Properties"
 msgstr "Egenskaber"
 
-#: IconPanel.cpp:118 OptionPanel.cpp:150
+#: IconPanel.cpp:118
+#: OptionPanel.cpp:150
 msgid "New shortcut..."
 msgstr "Ny genvej"
 
@@ -183,9 +200,7 @@ msgid "Error launching web browser"
 msgstr "Fejl under opstart af internet browser"
 
 #: MainFrame.cpp:223
-msgid ""
-"There was an error registering the hot key. Another application may already "
-"have registered it."
+msgid "There was an error registering the hot key. Another application may already have registered it."
 msgstr "Fejl! Kan ikke definere genvejstast. Måske er den allerede i brug."
 
 #: MainFrame.cpp:404
@@ -203,11 +218,14 @@ msgstr ""
 "\n"
 "Bemærk: handlingen kan ændres i '%s/%s'"
 
-#: MainFrame.cpp:873 gui\ConfigDialog.cpp:58
+#: MainFrame.cpp:873
+#: gui\ConfigDialog.cpp:58
 msgid "Operations"
 msgstr "Handlinger"
 
-#: MainFrame.cpp:873 utilities\Utilities.cpp:74 utilities\Utilities.cpp:278
+#: MainFrame.cpp:873
+#: utilities\Utilities.cpp:74
+#: utilities\Utilities.cpp:278
 msgid "Don't show this message again"
 msgstr "Vis ikke denne besked igen"
 
@@ -227,7 +245,8 @@ msgstr "Advarsel"
 msgid "Confirmation"
 msgstr "Bekræft handling"
 
-#: OptionPanel.cpp:149 gui\ConfigDialog.cpp:63
+#: OptionPanel.cpp:149
+#: gui\ConfigDialog.cpp:63
 msgid "Help"
 msgstr "Hjælp"
 
@@ -235,7 +254,8 @@ msgstr "Hjælp"
 msgid "Multi-launch"
 msgstr "Multistart"
 
-#: OptionPanel.cpp:153 gui\ImportWizardDialog.cpp:24
+#: OptionPanel.cpp:153
+#: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
 msgstr "AutoOpret genveje"
 
@@ -247,26 +267,21 @@ msgstr "Indhold..."
 msgid "Get Support"
 msgstr "Support"
 
-#: OptionPanel.cpp:317 gui\AboutDialog.cpp:80
+#: OptionPanel.cpp:317
+#: gui\AboutDialog.cpp:80
 #, c-format
 msgid "About %s..."
 msgstr "Om %s..."
 
 #: OptionPanel.cpp:327
-msgid ""
-"The multilaunch group is currently empty. Do you wish to show the help topic "
-"about this feature?"
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
 msgstr ""
 "Ingen programmer er valgt til Multistart.\n"
 "Se hjælp til denne funktion?"
 
 #: Plugin.cpp:127
-msgid ""
-"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
-"or ASCII. Applies to:"
-msgstr ""
-"Forkert tegnkodning i plugin script. Tegnkodningen skal være UTF-8, NO BOM "
-"eller ASCII. Tilføj til:"
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "Forkert tegnkodning i plugin script. Tegnkodningen skal være UTF-8, NO BOM eller ASCII. Tilføj til:"
 
 #: PluginManager.cpp:46
 #, c-format
@@ -285,9 +300,7 @@ msgstr "Kan ikke oprette '%s'"
 
 #: PluginManager.cpp:87
 #, c-format
-msgid ""
-"The plugin has been installed successfully. It will be activated the next "
-"time %s is started"
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
 msgstr "Installation af plugin er udført. Genstart %s for aktiverer ændringen."
 
 #: Styles.cpp:68
@@ -333,12 +346,8 @@ msgid "- CStdString by Joe O'Leary"
 msgstr "- CStdString af Joe O'Leary"
 
 #: gui\AboutDialog.cpp:72
-msgid ""
-"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
-"Celes"
-msgstr ""
-"- Lua af Roberto Ierusalimschy, Luiz Henrique de Figueiredo, og Waldemar "
-"Celes"
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua af Roberto Ierusalimschy, Luiz Henrique de Figueiredo, og Waldemar Celes"
 
 #: gui\AboutDialog.cpp:74
 msgid "- zlib by Jean-Loup Gailly and Mark Adler"
@@ -360,8 +369,10 @@ msgstr "Om"
 msgid "License"
 msgstr "Licens-oplysninger"
 
-#: gui\AboutDialog.cpp:83 gui\BetterMessageDialog.cpp:111
-#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+#: gui\AboutDialog.cpp:83
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
 msgid "OK"
 msgstr "Ok"
 
@@ -376,29 +387,17 @@ msgstr "Copyright © %s"
 
 #: gui\AboutDialog.cpp:89
 msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Dette program er fri software og må distribures og/eller ændres i hendhold "
-"til betingelserne i GNU, General Public License, version 3 eller senere, der "
-"udgives af Free Software Foundation.\n"
+"Dette program er fri software og må distribures og/eller ændres i hendhold til betingelserne i GNU, General Public License, version 3 eller senere, der udgives af Free Software Foundation.\n"
 "\n"
-"Dette program distribueres i håb om at det kan bruges, men UDEN NOGEN FORM "
-"FOR GARANTI; heller de underforståede garantier vedrørende SALGBARHED eller "
-"SPECIFIK BRUGSEGNETHED. Se iøvrigt GNU General Public License.\n"
+"Dette program distribueres i håb om at det kan bruges, men UDEN NOGEN FORM FOR GARANTI; heller de underforståede garantier vedrørende SALGBARHED eller SPECIFIK BRUGSEGNETHED. Se iøvrigt GNU General Public License.\n"
 "\n"
-"Med denne programpakke følger et eksemplar af GNU General Public License, "
-"version 3 (data/License.txt). Seneste version af General Public License kan "
-"findes her: <http://www.gnu.org/licenses/>."
+"Med denne programpakke følger et eksemplar af GNU General Public License, version 3 (data/License.txt). Seneste version af General Public License kan findes her: <http://www.gnu.org/licenses/>."
 
 #: gui\AboutDialog.cpp:90
 msgid "Web:"
@@ -421,9 +420,12 @@ msgstr "Ja"
 msgid "No"
 msgstr "Nej"
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:62
-#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80 gui\ShortcutEditorDialog.cpp:43
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:62
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:80
+#: gui\ShortcutEditorDialog.cpp:43
 msgid "Cancel"
 msgstr "Anuller"
 
@@ -443,7 +445,8 @@ msgstr "Genveje"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: gui\ConfigDialog.cpp:61 gui\ShortcutEditorDialog.cpp:42
+#: gui\ConfigDialog.cpp:61
+#: gui\ShortcutEditorDialog.cpp:42
 msgid "Save"
 msgstr "Gem"
 
@@ -476,7 +479,8 @@ msgstr "Altid øverst"
 msgid "Allow only one instance of %s at a time"
 msgstr "Tillad kun én aktivt udgave af %s ad gangen"
 
-#: gui\ConfigDialog.cpp:198 gui\ConfigDialog.cpp:691
+#: gui\ConfigDialog.cpp:198
+#: gui\ConfigDialog.cpp:691
 msgid "Check for update"
 msgstr "Kontroller version"
 
@@ -654,21 +658,17 @@ msgstr "Installer..."
 
 #: gui\ConfigDialog.cpp:558
 #, c-format
-msgid ""
-"The changes made to the plugins will only be active the next time %s is "
-"started."
+msgid "The changes made to the plugins will only be active the next time %s is started."
 msgstr "Genstart %s for aktiverer ændringerne."
 
 #: gui\ConfigDialog.cpp:618
 #, c-format
 msgid ""
-"By installing the autorun file on your removable drive, %s will start "
-"automatically when you insert your drive.\n"
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"Ved at oprette en fil,  autorun.inf, på drev %s, vil drevet starte "
-"automatisk når det indsættes.\n"
+"Ved at oprette en fil,  autorun.inf, på drev %s, vil drevet starte automatisk når det indsættes.\n"
 "\n"
 "Fortsæt?"
 
@@ -685,7 +685,8 @@ msgstr "autorun.inf er oprettet"
 msgid "%s Plugin Packages"
 msgstr "%s Plugin Pakker"
 
-#: gui\ConfigDialog.cpp:655 gui\IconDialog.cpp:161
+#: gui\ConfigDialog.cpp:655
+#: gui\IconDialog.cpp:161
 msgid "All files"
 msgstr "Alle filer"
 
@@ -698,9 +699,7 @@ msgid "Please wait..."
 msgstr "Vent venligst..."
 
 #: gui\ConfigDialog.cpp:940
-msgid ""
-"Some of these changes will only be applied until after you restart the "
-"application."
+msgid "Some of these changes will only be applied until after you restart the application."
 msgstr "Nogle af disse ændringer kræver at du genstarter programmet."
 
 #: gui\FileOrFolderDialog.cpp:76
@@ -755,8 +754,8 @@ msgstr ""
 "Vælg hvor du vil søge:"
 
 #: gui\ImportWizardDialog.cpp:43
-msgid "PortableApps applications"
-msgstr "PortableApps programmer"
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com programmer"
 
 #: gui\ImportWizardDialog.cpp:44
 msgid "Windows Quick Launch toolbar"
@@ -830,6 +829,6 @@ msgstr "Genvejens placering findes ikke. Fortsæt?"
 #~ "- The Boost C++ Libraries og wxWidgets af deres respektive forfattere\n"
 #~ "\n"
 #~ "Meddelelsesboksene er lavet i wxGlade af Alberto Griggio."
-
 #~ msgid "Select folder"
 #~ msgstr "Vælg mappe"
+

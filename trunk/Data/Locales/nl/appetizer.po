@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-09 16:43+0000\n"
-"PO-Revision-Date: 2008-12-09 16:43-0000\n"
+"POT-Creation-Date: 2008-12-10 15:29+0000\n"
+"PO-Revision-Date: 2008-12-10 15:29-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -752,8 +752,8 @@ msgstr ""
 "Selecteer aub hieronder vanwaar u uw snelkoppelingen wil importeren:"
 
 #: gui\ImportWizardDialog.cpp:43
-msgid "PortableApps applications"
-msgstr "PortableApps programma's"
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com programma's"
 
 #: gui\ImportWizardDialog.cpp:44
 msgid "Windows Quick Launch toolbar"

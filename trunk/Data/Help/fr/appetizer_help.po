@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-07 14:53+0000\n"
-"PO-Revision-Date: 2008-12-07 19:50-0000\n"
+"POT-Creation-Date: 2008-12-10 14:59+0000\n"
+"PO-Revision-Date: 2008-12-10 15:00-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -30,8 +30,8 @@ msgid "Appetizer is a free application launcher, or dock, for Windows. It allows
 msgstr "Appetizer est un utilitaire gratuit qui permet de gérer ses programmes et raccourcis sous Windows. Le logiciel peut-être facilement personnalisé à l'aide de thèmes et plugins."
 
 #: generate_help\main.cpp:126
-msgid "Additionally, the application supports the [http://portableapps.com PortableApps] format. So if you use Appetizer on a removable drive in the PortableApps format, the application will detect it and automatically import all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."
-msgstr "En outre, si vous utilisez Appetizer depuis une clef USB au format [http://portableapps.com PortableApps], le logiciel le détecte et importe automatiquement sur la barre tous vos logiciels ainsi que vos dossiers 'Documents', 'Videos', 'Music' et 'Pictures'."
+msgid "Additionally, the application supports the [http://portableapps.com PortableApps.com] format. So if you use Appetizer on a removable drive in the PortableApps.com format, the application will detect it and automatically import all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."
+msgstr "En outre, si vous utilisez Appetizer depuis une clef USB au format [http://portableapps.com PortableApps.com], le logiciel le détecte et importe automatiquement sur la barre tous vos logiciels ainsi que vos dossiers 'Documents', 'Videos', 'Music' et 'Pictures'."
 
 #: generate_help\main.cpp:131
 msgid "Features"
@@ -243,8 +243,8 @@ msgid "Creating a plugin"
 msgstr "Créer un plugin"
 
 #: generate_help\main.cpp:259
-msgid "Information on how to create a plugin is available on [http://app.etizer.org/wiki/creating-a-plugin Appetizer's website]"
-msgstr "Des renseignements sur la création de plugin sont disponibles sur [http://app.etizer.org/wiki/creating-a-plugin le site d'Appetizer]"
+msgid "Information on how to create a plugin is available on [http://app.etizer.org/wiki/plugin-tutorial Appetizer's website]"
+msgstr "Des renseignements sur la création de plugin sont disponibles sur [http://app.etizer.org/wiki/plugin-tutorial le site d'Appetizer]"
 
 #: generate_help\main.cpp:266
 msgid "Configuring Appetizer"
