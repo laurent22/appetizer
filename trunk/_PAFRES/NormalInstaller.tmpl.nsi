@@ -65,6 +65,21 @@ Section "Appetizer" AppetizerSection
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+  
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
+	                 "DisplayName" "${APP_NAME}"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
+	                 "UninstallString" "$INSTDIR\Uninstall.exe"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
+                   "URLUpdateInfo" "http://app.etizer.org/download"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
+                   "URLInfoAbout" "http://app.etizer.org"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
+                   "DisplayVersion" "___FULL_VERSION___"
+	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
+                     "NoModify" 1
+	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}" \
+                     "NoRepair" 1
 
 SectionEnd
 
@@ -110,5 +125,6 @@ Section "Uninstall"
   Delete "$DESKTOP\${APP_NAME}.lnk"
 
   DeleteRegKey /ifempty HKCU "Software\${APP_NAME}"
+  DeleteRegKey /ifempty HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 
 SectionEnd

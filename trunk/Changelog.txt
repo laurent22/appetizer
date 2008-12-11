@@ -165,7 +165,7 @@ Version 0.8.5.278 Alpha (2008-10-29):
 - Fixed localization issues where some texts weren't being translated, or controls were overlapping each others
 - Added tooltips to buttons
 
-Beta 1 (2008-09-06):
+Version Beta 1 (2008-09-06):
 
 - Support for 16x16 and 32x32 icons
 - Config dialog box to change the locale or icon sizes
@@ -176,7 +176,7 @@ Beta 1 (2008-09-06):
 - Added "New shortcut" icon
 - Added "Minimize" icon
 
-Preview 2 (2008-08-31):
+Version Preview 2 (2008-08-31):
 
 - NEW: The bar can now be resized
 - NEW: The application location and dimensions are now saved on close
@@ -184,6 +184,6 @@ Preview 2 (2008-08-31):
 - UPDATE: Disabled animation of drawer for now as it's currently too slow
 - UPDATE: Disabled dividers in icon panel as they don't work properly with multiple rows of icons.
 	
-Preview 1 (2008-08-30):
+Version Preview 1 (2008-08-30):
 
 - First preview release

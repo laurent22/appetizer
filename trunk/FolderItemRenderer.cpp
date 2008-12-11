@@ -331,25 +331,22 @@ void FolderItemRenderer::UpdateControlBitmap() {
   wxIcon* icon = folderItem->GetIcon(userSettingsIconSize);
   wxASSERT_MSG(icon, _T("Folder item icon cannot be NULL"));
 
+  int drawnSize = userSettingsIconSize;
+  if (mouseInside_) drawnSize = userSettingsIconSize;
+
   if (icon && icon->IsOk()) {  
 
-    // The commented code below converts the icon to a usable wxImage object
-    //
-    //wxImage image;
-    //
-    //if (wxBitmap(*icon).GetMask()) {
-    //  wxBitmap* tempBitmap = Imaging::IconToBitmapWithAlpha(*icon);      
-    //  image = tempBitmap->ConvertToImage();
-    //  wxDELETE(tempBitmap);
-    //} else {
-    //  image = wxBitmap(*icon).ConvertToImage();
-    //}
-    //destDC.DrawBitmap(wxBitmap(image), Styles::Icon.Padding.Left, Styles::Icon.Padding.Top);   
+    int x = (GetSize().GetWidth() - drawnSize) / 2;
+    int y = (GetSize().GetHeight() - drawnSize) / 2;
 
-    int x = (GetSize().GetWidth() - icon->GetWidth()) / 2;
-    int y = (GetSize().GetHeight() - icon->GetHeight()) / 2;
+    if (Imaging::IsBadIcon(*icon)) {
+      wxBitmap* bitmap = Imaging::IconToBitmapWithAlpha(*icon);
+      Imaging::StretchDrawBitmap(&destDC, *bitmap, x, y, drawnSize, drawnSize);
+      wxDELETE(bitmap);
+    } else {
+      Imaging::StretchDrawIcon(&destDC, *icon, x, y, drawnSize, drawnSize);
+    }
 
-    Imaging::DrawIconWithTransparency(&destDC, *icon, x, y);
   }
 
   if (folderItem->BelongsToMultiLaunchGroup()) {
