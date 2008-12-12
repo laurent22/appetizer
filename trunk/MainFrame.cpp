@@ -51,6 +51,7 @@ MainFrame::MainFrame()
   arrowButtonOpenIcon_ = NULL;
   arrowButtonCloseIcon_ = NULL;
   nullPanel_ = NULL;
+  mainBackgroundBitmap_ = NULL;
   rotated_ = false;
   activated_ = false;  
   closeOperationScheduled_ = false;
@@ -76,7 +77,7 @@ MainFrame::MainFrame()
   openCloseAnimationDuration_ = 50;
 
   // Load the mask and background images
-  maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackgroundRegion.png"), false);
+  maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/MainBackground.png"), false);
 
   windowDragData_.DraggingStarted = false;
 
@@ -86,6 +87,7 @@ MainFrame::MainFrame()
   arrowButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
+  backgroundPanel_->SetName(_T("BackgroundPanel"));
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(MainFrame::OnMouseDown), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_LEFT_UP, wxMouseEventHandler(MainFrame::OnMouseUp), NULL, this);
   backgroundPanel_->Connect(wxID_ANY, wxEVT_MOTION, wxMouseEventHandler(MainFrame::OnMouseMove), NULL, this);
@@ -329,9 +331,30 @@ void MainFrame::ApplySkin(const wxString& skinName) {
 
   Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
 
-  maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackgroundRegion.png"), false);
+  wxDELETE(mainBackgroundBitmap_);
 
-  arrowButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/ArrowButton"));
+  mainBackgroundBitmap_ = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/MainBackground.png"), wxBITMAP_TYPE_PNG);
+  wxMemoryDC mainBackgroundDC;
+  wxMemoryDC targetDC;
+  mainBackgroundDC.SelectObject(*mainBackgroundBitmap_);  
+
+
+  maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/MainBackground.png"), false);
+
+
+
+
+
+
+
+
+
+  wxBitmap* arrowBitmapUp = new wxBitmap(16, 64);  
+  targetDC.SelectObject(*arrowBitmapUp);
+  targetDC.Blit(0, 0, arrowBitmapUp->GetWidth(), arrowBitmapUp->GetHeight(), &mainBackgroundDC, 0, 0);  
+  targetDC.SelectObject(wxNullBitmap);
+
+  arrowButton_->LoadImages(arrowBitmapUp);
   arrowButton_->SetGrid(Styles::OptionPanel.ArrowButtonScaleGrid);
   wxDELETE(arrowButtonOpenIcon_);
   wxDELETE(arrowButtonCloseIcon_);
@@ -339,12 +362,31 @@ void MainFrame::ApplySkin(const wxString& skinName) {
   arrowButtonCloseIcon_ = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/ArrowButtonIconLeft.png"), wxBITMAP_TYPE_PNG);
   arrowButton_->SetIcon(optionPanelOpen_ ? arrowButtonOpenIcon_ : arrowButtonCloseIcon_, false);
 
-  resizerPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/Resizer.png"));
-  resizerPanel_->FitToContent();
 
-  backgroundPanel_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BarBackground.png"));
+  resizerPanel_->SetSize(16,16);
+
+
+
+
+
+
+
+  wxBitmap* barBackgroundBitmap = new wxBitmap(71, 64);  
+  targetDC.SelectObject(*barBackgroundBitmap);
+  targetDC.Blit(0, 0, barBackgroundBitmap->GetWidth(), barBackgroundBitmap->GetHeight(), &mainBackgroundDC, 58, 0);  
+  targetDC.SelectObject(wxNullBitmap);
+  backgroundPanel_->LoadImage(barBackgroundBitmap);
   backgroundPanel_->SetGrid(Styles::MainPanel.ScaleGrid);
   
+
+
+
+  mainBackgroundDC.SelectObject(wxNullBitmap);
+
+
+
+
+
   closeSideButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/CloseButton"));
   closeSideButton_->FitToImage();   
 
@@ -353,11 +395,16 @@ void MainFrame::ApplySkin(const wxString& skinName) {
     ejectSideButton_->FitToImage();      
   }
 
-  iconPanel_->ApplySkin();
-  optionPanel_->ApplySkin();
+  iconPanel_->ApplySkin(mainBackgroundBitmap_);
+  optionPanel_->ApplySkin(mainBackgroundBitmap_);
 
   InvalidateMask();
   InvalidateLayout();
+}
+
+
+wxBitmap* MainFrame::GetMainBackgroundBitmap() {
+  return mainBackgroundBitmap_;
 }
 
 
@@ -847,7 +894,8 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
 
   arrowButton_->SetIcon(NULL);
   wxDELETE(arrowButtonCloseIcon_);
-  wxDELETE(arrowButtonOpenIcon_);    
+  wxDELETE(arrowButtonOpenIcon_);
+  wxDELETE(mainBackgroundBitmap_);
 
   wxGetApp().CloseApplication();
 
@@ -973,5 +1021,5 @@ void MainFrame::ToggleOptionPanel() {
 
 
 MainFrame::~MainFrame() {
-
+  // Use MainFrame::OnClose() to free resources
 }

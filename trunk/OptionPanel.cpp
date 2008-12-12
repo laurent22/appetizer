@@ -25,6 +25,9 @@ END_EVENT_TABLE()
 
 OptionPanel::OptionPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
+
+  SetName(_T("OptionPanel"));
+
   rotated_ = false;
   configDialog_ = NULL;
 
@@ -117,10 +120,23 @@ void OptionPanel::OnMenuAbout(wxCommandEvent& evt) {
 }
 
 
-void OptionPanel::ApplySkin() {
+void OptionPanel::ApplySkin(wxBitmap* mainBackgroundBitmap) {
+  if (!mainBackgroundBitmap) mainBackgroundBitmap = wxGetApp().GetMainFrame()->GetMainBackgroundBitmap();
+
+
+  wxMemoryDC mainBackgroundDC;
+  wxMemoryDC targetDC;
+  mainBackgroundDC.SelectObject(*mainBackgroundBitmap);  
+
+  wxBitmap* optionPanelBitmap = new wxBitmap(42, 64);  
+  targetDC.SelectObject(*optionPanelBitmap);
+  targetDC.Blit(0, 0, optionPanelBitmap->GetWidth(), optionPanelBitmap->GetHeight(), &mainBackgroundDC, 16, 0);  
+  targetDC.SelectObject(wxNullBitmap);
+
   skinInvalidated_ = false;
 
-  LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
+  LoadImage(optionPanelBitmap);
+  //LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
   SetGrid(Styles::OptionPanel.ScaleGrid);
 
   for (int i = 0; i < buttons_.size(); i++) {    

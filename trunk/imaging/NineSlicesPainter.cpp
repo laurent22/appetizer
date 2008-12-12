@@ -40,13 +40,21 @@ void NineSlicesPainter::SetGrid(int left, int top, int width, int height) {
 
 void NineSlicesPainter::LoadImage(const wxString& filePath, bool forceAlpha) {  
   filePath_ = filePath;
+
+  LoadImage(new wxBitmap(filePath_, wxBITMAP_TYPE_PNG), forceAlpha);
+}
+
+
+void NineSlicesPainter::LoadImage(wxBitmap* bitmap, bool forceAlpha) {
   wxDELETE(sourceBitmap_);
-  sourceBitmap_ = new wxBitmap(filePath_, wxBITMAP_TYPE_PNG);  
+
+  sourceBitmap_ = bitmap;  
 
   if (!sourceBitmap_->HasAlpha() && forceAlpha) {
     // @hack: the bitmap MUST have an alpha channel
     // See ImageButton::LoadImage
-    wxImage tempImage(filePath_, wxBITMAP_TYPE_PNG);
+    wxImage tempImage = sourceBitmap_->ConvertToImage();
+
     if (tempImage.GetWidth() > 0 && tempImage.GetHeight() > 0) {
       tempImage.InitAlpha();
 

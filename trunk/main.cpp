@@ -30,7 +30,7 @@ int MiniLaunchBar::uniqueInt_ = 0;
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(96332);
+  //_CrtSetBreakAlloc(86178);
 
   // Remove GUI log errors
   delete wxLog::SetActiveTarget(new wxLogStderr());
@@ -185,8 +185,7 @@ bool MiniLaunchBar::OnInit() {
 
 
 void MiniLaunchBar::InitializePluginManager() {
-  pluginManager_ = new PluginManager();
-  pluginManager_->Initialize();
+  GetPluginManager()->Initialize();
 }
 
 
@@ -197,6 +196,7 @@ int MiniLaunchBar::GetUniqueInt() {
 
 
 PluginManager* MiniLaunchBar::GetPluginManager() {
+  if (!pluginManager_) pluginManager_ = new PluginManager();
   return pluginManager_;
 }
 

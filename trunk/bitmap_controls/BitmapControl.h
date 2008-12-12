@@ -20,7 +20,7 @@ class BitmapControl: public wxPanel {
 
     BitmapControl(wxWindow *owner, int id, wxPoint point, wxSize size);
     ~BitmapControl();
-    wxBitmap* GetControlBitmap();
+    virtual wxBitmap* GetControlBitmap();
 
     int GetBitmapRotation();
     void SetBitmapRotation(int rotation);

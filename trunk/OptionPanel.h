@@ -44,7 +44,7 @@ public:
   ConfigDialog* GetConfigDialog();
   void Localize();
   void SetRotated(bool rotated);
-  void ApplySkin();
+  void ApplySkin(wxBitmap* mainBackgroundBitmap = NULL);
   OptionButton* GetButtonById(int id);
   bool IsOpen();
 

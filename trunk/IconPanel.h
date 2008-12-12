@@ -33,6 +33,8 @@ public:
   void InvalidateIcons();
   void InvalidateLayout();
 
+  wxBitmap* GetControlBitmap();
+
   void SetWidthInIcons(int numberOfIcons);
   void SetHeightInIcons(int numberOfIcons);
 
@@ -56,7 +58,7 @@ public:
   FolderItemRenderer* GetRendererFromFolderItem(const FolderItem& folderItem);
 
   wxMenu* GetContextMenu();
-  void ApplySkin();
+  void ApplySkin(wxBitmap* mainBackgroundBitmap);
 
   void AddFolderItem(int folderItemId);
   void SetFolderItemSource(int source);
@@ -76,6 +78,7 @@ public:
   
 private:
 
+  wxRect lastRect_;
   bool rotated_;
   int folderItemSource_;
   std::vector<int> folderItemIds_;

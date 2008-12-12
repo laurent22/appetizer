@@ -31,7 +31,10 @@ void OptionButton::ApplySkin() {
     SetIcon(new wxBitmap(image));
   }
 
-  LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionButton"));
+  wxBitmap* buttonBitmap = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/OptionButton.png"), wxBITMAP_TYPE_PNG);
+  LoadImages(buttonBitmap);
+  SetStateColors(wxNullColour, wxColour(0,128,255,50), wxColour(50,200,255,50));
+
   FitToImage();
   SetDownIconOffset(Styles::OptionPanel.ButtonDownIconOffset);
 }

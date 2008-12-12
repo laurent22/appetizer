@@ -71,6 +71,7 @@ class MainFrame: public wxFrame {
     bool activated_;
     wxPanel* nullPanel_;
     bool closeOperationScheduled_;
+    wxBitmap* mainBackgroundBitmap_;
 
     void UpdateMask();
     void UpdateLayout();
@@ -94,6 +95,7 @@ class MainFrame: public wxFrame {
     int GetMaxHeight();
     int GetMaxWidth();
 
+    wxBitmap* GetMainBackgroundBitmap();
     wxWindow* GetNullPanelObjectById(int id);
 
     void ConvertToWindowValidCoordinates(const wxDisplay* display, int& x, int& y, int& width, int& height);

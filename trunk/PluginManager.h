@@ -48,6 +48,7 @@ private:
 
   PluginVector plugins_;
   wxSortedArrayString  eventNames_;
+  bool initialized_;
 
 };
 

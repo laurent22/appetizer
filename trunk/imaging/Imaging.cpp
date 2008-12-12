@@ -355,3 +355,29 @@ void Imaging::ColorizeImage(wxImage& image, unsigned char red, unsigned char gre
 void Imaging::ColorizeImage(wxImage& image, const wxColour& color) {
   Imaging::ColorizeImage(image, color.Red(), color.Green(), color.Blue());
 }
+
+
+void Imaging::DrawColorOverlay(wxBitmap& bitmap, const wxColour& color) {
+  wxBitmap bmp(bitmap.GetWidth(), bitmap.GetHeight());
+  wxMemoryDC dc;
+  dc.SelectObject(bmp);
+  dc.SetPen(wxPen(wxColour(0,0,0), 0, wxTRANSPARENT));
+  dc.SetBrush(wxColour(color.Red(), color.Green(), color.Blue(), 255));
+  dc.DrawRectangle(0, 0, bitmap.GetWidth(), bitmap.GetHeight());
+  dc.SelectObject(wxNullBitmap);
+
+  wxImage image = bmp.ConvertToImage();
+  if (!image.HasAlpha()) image.InitAlpha();
+  
+  for (int i = 0; i < image.GetWidth(); i++) {
+    for (int j = 0; j < image.GetHeight(); j++) {
+      image.SetAlpha(i, j, color.Alpha());
+    }
+  }
+
+  bmp = wxBitmap(image);
+
+  dc.SelectObject(bitmap);
+  dc.DrawBitmap(bmp, 0, 0);
+  dc.SelectObject(wxNullBitmap);
+}

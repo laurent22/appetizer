@@ -31,10 +31,21 @@ BitmapControl(owner, id, point, size) {
   iconBitmap_ = NULL;
   pressed_ = false;  
   gridIsExplicitelySet_ = false;
+  
   nineSlicesPainterUp_ = NULL;
   nineSlicesPainterOver_ = NULL;
   nineSlicesPainterDown_ = NULL;
   nineSlicesPainterDisabled_ = NULL;
+
+  bitmapUp_ = NULL;
+  bitmapOver_ = NULL;
+  bitmapDown_ = NULL;
+  bitmapDisabled_ = NULL;
+
+  overlayColorUp_ = wxNullColour;
+  overlayColorOver_ = wxNullColour;
+  overlayColorDown_ = wxNullColour;
+  overlayColorDisabled_ = wxNullColour;
 }
 
 
@@ -65,9 +76,15 @@ bool ImageButton::Enable(bool enable) {
 
 
 void ImageButton::FitToImage() {
-  wxBitmap tempBitmap(filePathPrefix_ + _T("Up.png"), wxBITMAP_TYPE_PNG);
-  wxASSERT_MSG(tempBitmap.IsOk(), _T("Could not load bitmap"));
-  SetSize(tempBitmap.GetWidth(), tempBitmap.GetHeight());
+  if (filePathPrefix_ != wxEmptyString) {
+    wxBitmap tempBitmap(filePathPrefix_ + _T("Up.png"), wxBITMAP_TYPE_PNG);
+    if (!tempBitmap.IsOk()) return;
+    SetSize(tempBitmap.GetWidth(), tempBitmap.GetHeight());
+  } else {
+    if (bitmapUp_ && bitmapUp_->IsOk()) {
+      SetSize(bitmapUp_->GetWidth(), bitmapUp_->GetHeight());
+    }
+  }
 }
 
 
@@ -101,6 +118,10 @@ void ImageButton::LoadImage(const wxString& filePathPrefix) {
 
   filePathPrefix_ = filePathPrefix;
 
+  wxDELETE(bitmapUp_);
+  wxDELETE(bitmapOver_);
+  wxDELETE(bitmapDown_);
+  wxDELETE(bitmapDisabled_);
   wxDELETE(nineSlicesPainterUp_);
   wxDELETE(nineSlicesPainterOver_);
   wxDELETE(nineSlicesPainterDown_);
@@ -114,42 +135,119 @@ void ImageButton::LoadImage(const wxString& filePathPrefix) {
 }
 
 
+void ImageButton::LoadImages(wxBitmap* bitmapUp, wxBitmap* bitmapOver, wxBitmap* bitmapDown, wxBitmap* bitmapDisabled) {
+  filePathPrefix_ = wxEmptyString;
+
+  wxDELETE(bitmapUp_);
+  wxDELETE(bitmapOver_);
+  wxDELETE(bitmapDown_);
+  wxDELETE(bitmapDisabled_);
+  wxDELETE(nineSlicesPainterUp_);
+  wxDELETE(nineSlicesPainterOver_);
+  wxDELETE(nineSlicesPainterDown_);
+  wxDELETE(nineSlicesPainterDisabled_);
+
+  bitmapUp_ = bitmapUp;
+  bitmapOver_ = bitmapOver;
+  bitmapDown_ = bitmapDown;
+  bitmapDisabled_ = bitmapDisabled;
+
+  InvalidateControlBitmap();
+}
+
+
+void ImageButton::SetStateColors(wxColour colorUp, wxColour colorOver, wxColour colorDown, wxColour colorDisabled) {
+  overlayColorUp_ = colorUp;
+  overlayColorOver_ = colorOver;
+  overlayColorDown_ = colorDown;
+  overlayColorDisabled_ = colorDisabled;
+}
+
+
 void ImageButton::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
   if (!controlBitmap_) return;
 
-  if (filePathPrefix_ == wxEmptyString) return;
+  NineSlicesPainter* painter = NULL;
 
-  NineSlicesPainter* painter;
-  wxString filePath = filePathPrefix_ + state_ + _T(".png");
-
-  if (!wxFileName::FileExists(filePath)) filePath = filePathPrefix_ + _T("Up.png");
+  if (filePathPrefix_ != wxEmptyString) {
   
-  // Lazily create the painters
-  if (state_ == _T("Disabled")) {
-    if (!nineSlicesPainterDisabled_) {
-      nineSlicesPainterDisabled_ = new NineSlicesPainter();
-      nineSlicesPainterDisabled_->LoadImage(filePath);
+    wxString filePath = filePathPrefix_ + state_ + _T(".png");
+
+    if (!wxFileName::FileExists(filePath)) filePath = filePathPrefix_ + _T("Up.png");
+    
+    // Lazily create the painters
+    if (state_ == _T("Disabled")) {
+      if (!nineSlicesPainterDisabled_) {
+        nineSlicesPainterDisabled_ = new NineSlicesPainter();
+        nineSlicesPainterDisabled_->LoadImage(filePath);
+      }
+      painter = nineSlicesPainterDisabled_;
+    } else if (state_ == _T("Down")) {
+      if (!nineSlicesPainterDown_) {
+        nineSlicesPainterDown_ = new NineSlicesPainter();
+        nineSlicesPainterDown_->LoadImage(filePath);
+      }
+      painter = nineSlicesPainterDown_;
+    } else if (state_ == _T("Over")) {
+      if (!nineSlicesPainterOver_) {
+        nineSlicesPainterOver_ = new NineSlicesPainter();
+        nineSlicesPainterOver_->LoadImage(filePath);
+      }
+      painter = nineSlicesPainterOver_;
+    } else { // default to "Up" state
+      if (!nineSlicesPainterUp_) {
+        nineSlicesPainterUp_ = new NineSlicesPainter();
+        nineSlicesPainterUp_->LoadImage(filePath);
+      }
+      painter = nineSlicesPainterUp_;
     }
-    painter = nineSlicesPainterDisabled_;
-  } else if (state_ == _T("Down")) {
-    if (!nineSlicesPainterDown_) {
-      nineSlicesPainterDown_ = new NineSlicesPainter();
-      nineSlicesPainterDown_->LoadImage(filePath);
+
+  } else if (bitmapUp_ != NULL) {
+
+    // Lazily create the painters
+
+    if (state_ == _T("Disabled")) {
+      if (!bitmapDisabled_) bitmapDisabled_ = new wxBitmap(*bitmapUp_);
+      if (overlayColorDisabled_ != wxNullColour) Imaging::DrawColorOverlay(*bitmapDisabled_, overlayColorDisabled_);
+
+      if (!nineSlicesPainterDisabled_) {
+        nineSlicesPainterDisabled_ = new NineSlicesPainter();
+        nineSlicesPainterDisabled_->LoadImage(new wxBitmap(*bitmapDisabled_));
+      }
+      painter = nineSlicesPainterDisabled_;
     }
-    painter = nineSlicesPainterDown_;
-  } else if (state_ == _T("Over")) {
-    if (!nineSlicesPainterOver_) {
-      nineSlicesPainterOver_ = new NineSlicesPainter();
-      nineSlicesPainterOver_->LoadImage(filePath);
+    
+    if (state_ == _T("Down")) {
+      if (!bitmapDown_) bitmapDown_ = new wxBitmap(*bitmapUp_);
+      if (overlayColorDown_ != wxNullColour) Imaging::DrawColorOverlay(*bitmapDown_, overlayColorDown_);
+
+      if (!nineSlicesPainterDown_) {
+        nineSlicesPainterDown_ = new NineSlicesPainter();
+        nineSlicesPainterDown_->LoadImage(new wxBitmap(*bitmapDown_));
+      }
+      painter = nineSlicesPainterDown_;
     }
-    painter = nineSlicesPainterOver_;
-  } else { // default to "Up" state
-    if (!nineSlicesPainterUp_) {
-      nineSlicesPainterUp_ = new NineSlicesPainter();
-      nineSlicesPainterUp_->LoadImage(filePath);
+    
+    if (state_ == _T("Over")) {
+      if (!bitmapOver_) bitmapOver_ = new wxBitmap(*bitmapUp_);
+      if (overlayColorOver_ != wxNullColour) Imaging::DrawColorOverlay(*bitmapOver_, overlayColorOver_);
+
+      if (!nineSlicesPainterOver_) {
+        nineSlicesPainterOver_ = new NineSlicesPainter();
+        nineSlicesPainterOver_->LoadImage(new wxBitmap(*bitmapOver_));
+      }
+      painter = nineSlicesPainterOver_;
+    } 
+
+    if (!painter) { // Default to "up" state
+      if (!nineSlicesPainterUp_) {
+        nineSlicesPainterUp_ = new NineSlicesPainter();
+        nineSlicesPainterUp_->LoadImage(new wxBitmap(*bitmapUp_));
+      }
+      painter = nineSlicesPainterUp_;
     }
-    painter = nineSlicesPainterUp_;
+
   }
 
   if (!painter) return;
@@ -197,6 +295,10 @@ ImageButton::~ImageButton() {
   if (ownIcon_) wxDELETE(iconBitmap_);
 
   wxDELETE(rotatedIconBitmap_);
+  wxDELETE(bitmapUp_);
+  wxDELETE(bitmapOver_);
+  wxDELETE(bitmapDown_);
+  wxDELETE(bitmapDisabled_);
   wxDELETE(nineSlicesPainterUp_);
   wxDELETE(nineSlicesPainterOver_);
   wxDELETE(nineSlicesPainterDown_);

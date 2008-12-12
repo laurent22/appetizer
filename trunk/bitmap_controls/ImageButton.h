@@ -24,6 +24,8 @@ class ImageButton: public BitmapControl {
     ImageButton(wxWindow *owner, int id = wxID_ANY, wxPoint point = wxDefaultPosition, wxSize size = wxDefaultSize);
     ~ImageButton();
     void LoadImage(const wxString& filePathPrefix);
+    void LoadImages(wxBitmap* bitmapUp, wxBitmap* bitmapOver = NULL, wxBitmap* bitmapDown = NULL, wxBitmap* bitmapDisabled = NULL);
+    void SetStateColors(wxColour colorUp = wxNullColour, wxColour colorOver = wxNullColour, wxColour colorDown = wxNullColour, wxColour colorDisabled = wxNullColour); 
     void UpdateControlBitmap();
     void SetGrid(int left, int top, int width, int height);
     void SetGrid(const wxRect& rect);
@@ -55,6 +57,14 @@ class ImageButton: public BitmapControl {
     NineSlicesPainter* nineSlicesPainterOver_;
     NineSlicesPainter* nineSlicesPainterDown_;
     NineSlicesPainter* nineSlicesPainterDisabled_;
+    wxBitmap* bitmapUp_;
+    wxBitmap* bitmapOver_;
+    wxBitmap* bitmapDown_;
+    wxBitmap* bitmapDisabled_;
+    wxColour overlayColorUp_;
+    wxColour overlayColorOver_;
+    wxColour overlayColorDown_;
+    wxColour overlayColorDisabled_;
     void SetState(const wxString& state);
     wxString GetState();
 

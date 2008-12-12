@@ -24,6 +24,8 @@ PluginManager::PluginManager() {
   luaOptionPanel = NULL;
   luaDialogs = NULL;
   luaSystem = NULL;
+
+  initialized_ = false;
 }
 
 
@@ -38,6 +40,8 @@ PluginManager::~PluginManager() {
 
 
 bool PluginManager::InstallPluginPackage(const wxString& filePath) {
+  if (!initialized_) return false;
+
   wxFileSystem fs;
   std::auto_ptr<wxZipEntry> entry(new wxZipEntry());
 
@@ -91,6 +95,8 @@ bool PluginManager::InstallPluginPackage(const wxString& filePath) {
 
 
 void PluginManager::Initialize() {
+  if (initialized_) return;
+
   eventNames_.Add(_T("iconMenuOpening"));
   eventNames_.Add(_T("click"));
 
@@ -164,6 +170,8 @@ void PluginManager::Initialize() {
 
 
 void PluginManager::Save() {
+  if (!initialized_) return;
+
   TiXmlDocument doc;
   doc.LinkEndChild(new TiXmlDeclaration("1.0", "UTF-8", ""));
 
@@ -207,6 +215,8 @@ Plugin* PluginManager::GetPluginByLuaState(lua_State* L) {
 
 
 void PluginManager::DispatchEvent(wxObject* sender, int eventId, LuaHostTable& arguments) {
+  if (!initialized_) return;
+
   for (int i = 0; i < plugins_.size(); i++) {
     Plugin* plugin = plugins_.at(i);
     if (!plugin->WasInitiallyEnabled()) continue;
@@ -217,12 +227,16 @@ void PluginManager::DispatchEvent(wxObject* sender, int eventId, LuaHostTable& a
 
 
 void PluginManager::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable& arguments) {
+  if (!initialized_) return;
+
   int eventId = GetEventIdByName(eventName);
   DispatchEvent(sender, eventId, arguments);
 }
 
 
 bool PluginManager::HandleMenuItemClick(ExtendedMenuItem* menuItem) {
+  if (!initialized_) return false;
+
   lua_State* luaState = (lua_State*)menuItem->GetMetadataPointer(_T("plugin_luaState"));
   if (!luaState) return false;
 

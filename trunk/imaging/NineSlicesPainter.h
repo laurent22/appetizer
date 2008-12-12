@@ -29,6 +29,7 @@ class NineSlicesPainter {
     NineSlicesPainter();
     ~NineSlicesPainter();
     void LoadImage(const wxString& filePath, bool forceAlpha = true);
+    void LoadImage(wxBitmap* bitmap, bool forceAlpha = true);
     void SetGrid(int left, int top, int width, int height);
     void Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, wxCoord height);
     int GetRotation();

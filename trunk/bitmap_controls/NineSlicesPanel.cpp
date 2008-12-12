@@ -12,12 +12,14 @@
 NineSlicesPanel::NineSlicesPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 BitmapControl(owner, id, point, size) {
   nineSlicesPainter_ = NULL;
+  loadedBitmap_ = NULL;
   gridIsExplicitelySet_ = false;
 }
 
 
 NineSlicesPanel::~NineSlicesPanel() {
   wxDELETE(nineSlicesPainter_);
+  wxDELETE(loadedBitmap_);
 }
 
 
@@ -41,6 +43,7 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
 
   filePath_ = filePath;
 
+  wxDELETE(loadedBitmap_);
   wxDELETE(nineSlicesPainter_);
 
   // FIXME: Currently the loaded image MUST have an alpha channel otherwise the
@@ -52,13 +55,31 @@ void NineSlicesPanel::LoadImage(const wxString& filePath) {
 }
 
 
+void NineSlicesPanel::LoadImage(wxBitmap* bitmap) {
+  wxDELETE(loadedBitmap_);
+  wxDELETE(nineSlicesPainter_);
+  filePath_ = wxEmptyString;
+  
+  loadedBitmap_ = bitmap;
+  
+  InvalidateControlBitmap();
+  Refresh();
+}
+
+
 void NineSlicesPanel::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();
   if (!controlBitmap_) return;
 
-  if ((nineSlicesPainter_ == NULL) && (filePath_ != wxEmptyString)) {
-    nineSlicesPainter_ = new NineSlicesPainter();    
-    nineSlicesPainter_->LoadImage(filePath_);
+  if (nineSlicesPainter_ == NULL) {
+    if (filePath_ != wxEmptyString) {
+      nineSlicesPainter_ = new NineSlicesPainter();    
+      nineSlicesPainter_->LoadImage(filePath_);
+    } else if (loadedBitmap_ != NULL) {
+      nineSlicesPainter_ = new NineSlicesPainter();    
+      nineSlicesPainter_->LoadImage(loadedBitmap_);
+      loadedBitmap_ = NULL; // the painter takes ownership so don't hold to a reference
+    }
   }
 
   if (nineSlicesPainter_ != NULL) {

@@ -23,6 +23,8 @@ public:
   static void DrawIconWithTransparency(wxDC* destination, const wxIcon& icon, int destX, int destY);
   static wxBitmap* IconToBitmapWithAlpha(const wxIcon& icon);
   static wxImage* IconToImageWithAlpha(const wxIcon& icon);
+
+  static void DrawColorOverlay(wxBitmap& bitmap, const wxColour& color);
   static void ColorizeImage(wxImage& image, const wxColour& color);
   static void ColorizeImage(wxImage& image, unsigned char red, unsigned char green, unsigned char blue);
 

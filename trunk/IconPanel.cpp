@@ -27,7 +27,10 @@ END_EVENT_TABLE()
 IconPanel::IconPanel(wxWindow *owner, int id, wxPoint point, wxSize size):
 NineSlicesPanel(owner, id, point, size) {
 
+  SetName(_T("IconPanel"));
+
   rotated_ = false;
+  lastRect_ = wxRect(0,0,0,0);
 
   IconPanelDropTarget* dropTarget = new IconPanelDropTarget();
   dropTarget->SetAssociatedIconPanel(this);
@@ -60,10 +63,35 @@ void IconPanel::SetRotated(bool rotated) {
 }
 
 
-void IconPanel::ApplySkin() {
-  LoadImage(FilePaths::GetSkinDirectory() + _T("/BarInnerPanel.png"));
-  SetGrid(Styles::InnerPanel.ScaleGrid);
+wxBitmap* IconPanel::GetControlBitmap() {
+  BitmapControl* parent = dynamic_cast<BitmapControl*>(GetParent());
+  if (!parent) return NineSlicesPanel::GetControlBitmap();
 
+  wxBitmap* parentBitmap = parent->GetControlBitmap(); 
+
+  wxRect rect = this->GetRect();
+  if (rect.GetLeft() < 0) rect.SetLeft(0);
+  if (rect.GetTop() < 0) rect.SetTop(0);
+  if (rect.GetRight() >= parentBitmap->GetWidth()) rect.SetRight(parentBitmap->GetWidth() - 1);
+  if (rect.GetBottom() >= parentBitmap->GetHeight()) rect.SetBottom(parentBitmap->GetHeight() - 1);
+
+  // Don't rebuild the bitmap if the rectangle hasn't changed
+  if (rect.GetX() == lastRect_.GetX() && rect.GetY() == lastRect_.GetY() && rect.GetWidth() == lastRect_.GetWidth() && rect.GetHeight() == lastRect_.GetHeight())
+    return controlBitmap_;
+
+  wxDELETE(controlBitmap_);
+
+  if (rect.GetWidth() > 0 && rect.GetHeight() > 0) {
+    // Copy the parent sub bitmap as a background of this control
+    controlBitmap_ = new wxBitmap(parentBitmap->GetSubBitmap(rect));
+    lastRect_ = wxRect(rect.GetX(), rect.GetY(), rect.GetWidth(), rect.GetHeight());
+  }
+
+  return controlBitmap_;
+}
+
+
+void IconPanel::ApplySkin(wxBitmap* mainBackgroundBitmap) {
   browseButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BrowseArrowButton"));
   browseButton_->FitToImage();
 
