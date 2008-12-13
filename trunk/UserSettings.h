@@ -12,35 +12,39 @@
 #include "utilities/XmlUtil.h"
 
 
+
+typedef std::map<wxString, wxString> UserSettingsMap;
+
+
 class UserSettings {
 
 public:
 
   UserSettings();
 
-  int IconSize;
-  wxString Locale;
-  wxString PortableAppsPath;
-  wxString DocumentsPath;
-  wxString MusicPath;
-  wxString PicturesPath;
-  wxString VideosPath;
-  wxString Skin;
-  bool MinimizeOnClose;
-  bool Rotated;
-  wxDateTime NextUpdateCheckTime;
-  bool AlwaysOnTop;
-  bool AutoHideApplication;
-  bool UniqueApplicationInstance;
-  bool ShowDeleteIconMessage;
-  bool ShowEjectDriveMessage;
-  bool ShowMinimizeMessage;
-  bool RunMultiLaunchOnStartUp;
-  bool CloseAppsOnEject;
-  bool HotKeyControl;
-  bool HotKeyAlt;
-  bool HotKeyShift;
-  int HotKeyKey;
+  //int IconSize;
+  //wxString Locale;
+  //wxString PortableAppsPath;
+  //wxString DocumentsPath;
+  //wxString MusicPath;
+  //wxString PicturesPath;
+  //wxString VideosPath;
+  //wxString Skin;
+  //bool MinimizeOnClose;
+  //bool Rotated;
+  //wxDateTime NextUpdateCheckTime;
+  //bool AlwaysOnTop;
+  //bool AutoHideApplication;
+  //bool UniqueApplicationInstance;
+  //bool ShowDeleteIconMessage;
+  //bool ShowEjectDriveMessage;
+  //bool ShowMinimizeMessage;
+  //bool RunMultiLaunchOnStartUp;
+  //bool CloseAppsOnEject;
+  //bool HotKeyControl;
+  //bool HotKeyAlt;
+  //bool HotKeyShift;
+  //int HotKeyKey;
 
   void Save();
   void Load();
@@ -49,6 +53,16 @@ public:
   void FromXml(TiXmlElement* xml);
 
   int GetValidatedIconSize();
+
+  wxString GetString(const wxString& name);
+  int GetInt(const wxString& name);
+  bool GetBool(const wxString& name);
+  wxDateTime GetDateTime(const wxString& name);
+
+  void SetString(const wxString& name, const wxString& value);
+  void SetInt(const wxString& name, int value);
+  void SetBool(const wxString& name, bool value);
+  void SetDateTime(const wxString& name, const wxDateTime& dateTime);
 
 private:
 
@@ -60,6 +74,8 @@ private:
   void AssignSettingValue(int& setting, wxString value);
 
   bool ParseBoolean(const wxString& toParse);
+
+  UserSettingsMap values_;
 
 };
 

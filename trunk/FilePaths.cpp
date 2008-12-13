@@ -37,7 +37,7 @@ wxString FilePaths::GetApplicationDirectory() { return FilePaths::ApplicationDir
 wxString FilePaths::GetDataDirectory() { return FilePaths::DataDirectory_; }
 wxString FilePaths::GetSettingsDirectory() { return FilePaths::SettingsDirectory_; }
 wxString FilePaths::GetBaseSkinDirectory() { return FilePaths::BaseSkinDirectory_; }
-wxString FilePaths::GetSkinDirectory() { return FilePaths::BaseSkinDirectory_ + _T("/") + wxGetApp().GetUser()->GetSettings()->Skin;; }
+wxString FilePaths::GetSkinDirectory() { return FilePaths::BaseSkinDirectory_ + _T("/") + wxGetApp().GetUser()->GetSettings()->GetString(_T("Skin")); }
 wxString FilePaths::GetDefaultSkinDirectory() { return FilePaths::DefaultSkinDirectory_; }
 wxString FilePaths::GetLocalesDirectory() { return FilePaths::LocalesDirectory_; }
 wxString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }

@@ -43,7 +43,7 @@ MainFrame::MainFrame()
   wxEmptyString,
   wxDefaultPosition,
   wxDefaultSize,
-  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR | (wxGetApp().GetUser()->GetSettings()->AlwaysOnTop ? wxSTAY_ON_TOP : 0)
+  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR | (wxGetApp().GetUser()->GetSettings()->GetBool(_T("AlwaysOnTop")) ? wxSTAY_ON_TOP : 0)
   )
 {  
   logWindow_ = NULL;
@@ -208,16 +208,16 @@ bool MainFrame::RegisterHideShowHotKey() {
   
   UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();
   
-  if (userSettings->HotKeyKey <= 0) return false;
+  if (userSettings->GetInt(_T("HotKeyKey")) <= 0) return false;
 
   int modifiers = 0;
-  if (userSettings->HotKeyControl) modifiers |= wxMOD_CONTROL;
-  if (userSettings->HotKeyAlt) modifiers |= wxMOD_ALT;
-  if (userSettings->HotKeyShift) modifiers |= wxMOD_SHIFT;
+  if (userSettings->GetBool(_T("HotKeyControl"))) modifiers |= wxMOD_CONTROL;
+  if (userSettings->GetBool(_T("HotKeyAlt"))) modifiers |= wxMOD_ALT;
+  if (userSettings->GetBool(_T("HotKeyShift"))) modifiers |= wxMOD_SHIFT;
 
   if (modifiers == 0) return false;
 
-  int success = RegisterHotKey(HOT_KEY_ID, modifiers, userSettings->HotKeyKey);
+  int success = RegisterHotKey(HOT_KEY_ID, modifiers, userSettings->GetInt(_T("HotKeyKey")));
   hotKeyRegistered_ = success;
   
   if (hotKeyRegistered_) {
@@ -259,7 +259,7 @@ void MainFrame::OnHotKey(wxKeyEvent& evt) {
 
 
 void MainFrame::DoAutoHide() {
-  if (wxGetApp().GetUser()->GetSettings()->AutoHideApplication) Hide();
+  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("AutoHideApplication"))) Hide();
 }
 
 
@@ -281,7 +281,7 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     // Do auto-multilaunch
     // ***********************************************************************************
 
-    if (wxGetApp().GetUser()->GetSettings()->RunMultiLaunchOnStartUp) wxGetApp().GetUtilities().DoMultiLaunch();
+    if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("RunMultiLaunchOnStartUp"))) wxGetApp().GetUtilities().DoMultiLaunch();
 
     // ***********************************************************************************
     // If it's the first launch, show the import dialog
@@ -300,7 +300,7 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 
     wxDateTime now = wxDateTime::Now();
     // The line below doesn't work on Ubuntu
-    wxDateTime nextUpdateTime = wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime;
+    wxDateTime nextUpdateTime = wxGetApp().GetUser()->GetSettings()->GetDateTime(_T("NextUpdateCheckTime"));
     ILOG(_T("Now is %s"), now.Format());
     ILOG(_T("Next update check on %s"), nextUpdateTime.Format());
 
@@ -308,8 +308,9 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
 
     wxGetApp().CheckForNewVersion(true);
 
-    wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime = now;
-    wxGetApp().GetUser()->GetSettings()->NextUpdateCheckTime.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
+    now.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
+
+    wxGetApp().GetUser()->GetSettings()->SetDateTime(_T("NextUpdateCheckTime"), now);
     wxGetApp().GetUser()->ScheduleSave();
     #endif //__WINDOWS__
   }
@@ -325,7 +326,7 @@ void MainFrame::ApplySkin(const wxString& skinName) {
   wxString tSkinName;
 
   if (skinName == wxEmptyString) {
-    tSkinName = wxGetApp().GetUser()->GetSettings()->Skin;
+    tSkinName = wxGetApp().GetUser()->GetSettings()->GetString(_T("Skin"));
   } else {
     tSkinName = skinName;
   }
@@ -962,15 +963,15 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
 
       UserSettings* settings = wxGetApp().GetUser()->GetSettings();
       
-      if (settings->ShowMinimizeMessage && settings->MinimizeOnClose) {
+      if (settings->GetBool(_T("ShowMinimizeMessage")) && settings->GetBool(_T("MinimizeOnClose"))) {
         int answer = MessageBoxes::ShowInformation(wxString::Format(_("%s is now going to be minimized to the System Tray.\n\nNote that you may change this behavior in the '%s' windows ('%s' tab)"), APPLICATION_NAME, _("Configuration"), _("Operations")), wxOK, _("Don't show this message again"), false);
         if (answer != wxID_OK) return;
 
-        wxGetApp().GetUser()->GetSettings()->ShowMinimizeMessage = !MessageBoxes::GetCheckBoxState();
+        wxGetApp().GetUser()->GetSettings()->SetBool(_T("ShowMinimizeMessage"), !MessageBoxes::GetCheckBoxState());
         wxGetApp().GetUser()->ScheduleSave();
       }      
 
-      if (settings->MinimizeOnClose) {
+      if (settings->GetBool(_T("MinimizeOnClose"))) {
         Hide();
       } else {
         Close();

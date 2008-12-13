@@ -205,7 +205,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       wxString localeFolderPath = FilePaths::GetLocalesDirectory();
 
       languageComboBox->Clear();
-      wxString currentLocaleCode = userSettings->Locale;
+      wxString currentLocaleCode = userSettings->GetString(_T("Locale"));
 
       foundFilePaths.Clear();
       wxDir localeFolder;
@@ -239,8 +239,8 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
       languageComboBox->Select(selectedIndex);
 
-      alwaysOnTopCheckBox->SetValue(userSettings->AlwaysOnTop);
-      oneInstanceCheckBox->SetValue(userSettings->UniqueApplicationInstance);
+      alwaysOnTopCheckBox->SetValue(userSettings->GetBool(_T("AlwaysOnTop")));
+      oneInstanceCheckBox->SetValue(userSettings->GetBool(_T("UniqueApplicationInstance")));
 
       #ifndef __WXDEBUG__
       installAutorunButton->Enable(wxGetApp().GetUtilities().IsApplicationOnPortableDrive());
@@ -292,6 +292,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
 
       IntVector allowedIconSizes = wxGetApp().GetAllowedIconSizes();
       selectedIndex = 0;
+      int currentIconSize = userSettings->GetInt(_T("IconSize"));
 
       for (int i = 0; i < allowedIconSizes.size(); i++) {
         int iconSize = allowedIconSizes.at(i);
@@ -299,7 +300,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
         wxString iconSizeString = wxString::Format(_T("%d"), iconSize);
         iconSizeComboBox->Append(iconName, new wxStringClientData(iconSizeString));
 
-        if (iconSize == userSettings->IconSize) selectedIndex = i;
+        if (iconSize == currentIconSize) selectedIndex = i;
       }
 
       iconSizeComboBox->Select(selectedIndex);
@@ -311,7 +312,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       orientationComboBox->Clear();
       orientationComboBox->Append(_("Horizontal"), new wxStringClientData(_T("h")));
       orientationComboBox->Append(_("Vertical"), new wxStringClientData(_T("v")));
-      orientationComboBox->Select(userSettings->Rotated ? 1 : 0);
+      orientationComboBox->Select(userSettings->GetBool(_T("Rotated")) ? 1 : 0);
 
       //---------------------------------------------------------------------------
       // Populate "Skin" dropdown list
@@ -339,7 +340,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
             if (folderName == _T("Default")) skinName += wxString::Format(_T("%s%s%s"), _T(" ("), _("Default"), _T(")"));
 
             skinComboBox->Append(skinName, new wxStringClientData(folderName));
-            if (folderName == userSettings->Skin) selectedIndex = i;
+            if (folderName == userSettings->GetString(_T("Skin"))) selectedIndex = i;
 
             i++;
           }
@@ -467,7 +468,7 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       keyStrings.Add(_("Down")); keyCodes.push_back(VK_DOWN);
 
       hotKeyComboBox->Clear();
-      int selectedHotKey = userSettings->HotKeyKey;
+      int selectedHotKey = userSettings->GetInt(_T("HotKeyKey"));
       int selectedIndex = 0;
 
       for (int i = 0; i < keyStrings.Count(); i++) {
@@ -479,18 +480,18 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       }
 
       hotKeyComboBox->Select(selectedIndex);
-      hotKeyCtrlCheckBox->SetValue(userSettings->HotKeyControl);
-      hotKeyAltCheckBox->SetValue(userSettings->HotKeyAlt);
-      hotKeyShiftCheckBox->SetValue(userSettings->HotKeyShift);
+      hotKeyCtrlCheckBox->SetValue(userSettings->GetBool(_T("HotKeyControl")));
+      hotKeyAltCheckBox->SetValue(userSettings->GetBool(_T("HotKeyAlt")));
+      hotKeyShiftCheckBox->SetValue(userSettings->GetBool(_T("HotKeyShift")));
 
       //---------------------------------------------------------------------------
       // Miscelaneous flags
       //---------------------------------------------------------------------------
       
-      autohideCheckBox->SetValue(userSettings->AutoHideApplication);
-      closeAppOnEjectCheckBox->SetValue(userSettings->CloseAppsOnEject);
-      multiLaunchAutoRunCheckBox->SetValue(userSettings->RunMultiLaunchOnStartUp);
-      minimizeOnCloseCheckBox->SetValue(userSettings->MinimizeOnClose);
+      autohideCheckBox->SetValue(userSettings->GetBool(_T("AutoHideApplication")));
+      closeAppOnEjectCheckBox->SetValue(userSettings->GetBool(_T("CloseAppsOnEject")));
+      multiLaunchAutoRunCheckBox->SetValue(userSettings->GetBool(_T("RunMultiLaunchOnStartUp")));
+      minimizeOnCloseCheckBox->SetValue(userSettings->GetBool(_T("MinimizeOnClose")));
 
       // Force a relayout
       hotKeyCtrlCheckBox->GetParent()->Layout();
@@ -733,19 +734,19 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     clientData = (wxStringClientData*)(languageComboBox->GetClientObject(languageComboBox->GetSelection()));
     wxString localeCode = clientData->GetData();
     
-    if (localeCode != userSettings->Locale) {
+    if (localeCode != userSettings->GetString(_T("Locale"))) {
       if (wxGetApp().ChangeLocale(localeCode)) {
-        userSettings->Locale = localeCode;
+        userSettings->SetString(_T("Locale"), localeCode);
         wxGetApp().User_LocaleChange();
       }
     }
 
-    if (userSettings->AlwaysOnTop != alwaysOnTopCheckBox->GetValue()) {
-      userSettings->AlwaysOnTop = alwaysOnTopCheckBox->GetValue();
+    if (userSettings->GetBool(_T("AlwaysOnTop")) != alwaysOnTopCheckBox->GetValue()) {
+      userSettings->SetBool(_T("AlwaysOnTop"), alwaysOnTopCheckBox->GetValue());
       mustRestart = true;
     }
 
-    userSettings->UniqueApplicationInstance = oneInstanceCheckBox->GetValue();
+    userSettings->SetBool(_T("UniqueApplicationInstance"), oneInstanceCheckBox->GetValue());
 
   }
 
@@ -779,8 +780,8 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     long newIconSize; 
     newIconSizeS.ToLong(&newIconSize);
 
-    if (newIconSize != userSettings->IconSize) {
-      userSettings->IconSize = newIconSize;
+    if (newIconSize != userSettings->GetInt(_T("IconSize"))) {
+      userSettings->SetInt(_T("IconSize"), newIconSize);
       wxGetApp().User_IconSizeChange();
     }
 
@@ -790,8 +791,8 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     clientData = (wxStringClientData*)(orientationComboBox->GetClientObject(orientationComboBox->GetSelection()));
     bool rotated = clientData->GetData() == _T("v");
 
-    if (rotated != userSettings->Rotated) {
-      userSettings->Rotated = rotated;
+    if (rotated != userSettings->GetBool(_T("Rotated"))) {
+      userSettings->SetBool(_T("Rotated"), rotated);
       wxGetApp().GetMainFrame()->SetRotated(rotated, true);
     }
 
@@ -801,7 +802,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     clientData = (wxStringClientData*)(skinComboBox->GetClientObject(skinComboBox->GetSelection()));
     wxString skinName = clientData->GetData();
 
-    if (skinName != userSettings->Skin) {
+    if (skinName != userSettings->GetString(_T("Skin"))) {
       wxString skinXmlPath = FilePaths::GetBaseSkinDirectory() + _T("/") + skinName + _T("/") + SKIN_FILE_NAME;
       SkinMetadata metadata;
 
@@ -810,7 +811,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
       if (!Styles::IsSkinVersionCompatible(metadata.CompatibleVersion)) {
         MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
       } else {
-        userSettings->Skin = skinName;
+        userSettings->SetString(_T("Skin"), skinName);
         wxGetApp().GetMainFrame()->ApplySkin();
       }
 
@@ -834,10 +835,10 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (updatedPages_[CONFIG_DIALOG_INDEX_OPERATIONS]) {
 
-    userSettings->AutoHideApplication = autohideCheckBox->GetValue();
-    userSettings->RunMultiLaunchOnStartUp = multiLaunchAutoRunCheckBox->GetValue();
-    userSettings->CloseAppsOnEject = closeAppOnEjectCheckBox->GetValue();
-    userSettings->MinimizeOnClose = minimizeOnCloseCheckBox->GetValue();
+    userSettings->SetBool(_T("AutoHideApplication"), autohideCheckBox->GetValue());
+    userSettings->SetBool(_T("RunMultiLaunchOnStartUp"), multiLaunchAutoRunCheckBox->GetValue());
+    userSettings->SetBool(_T("CloseAppsOnEject"), closeAppOnEjectCheckBox->GetValue());
+    userSettings->SetBool(_T("MinimizeOnClose"), minimizeOnCloseCheckBox->GetValue());
     
     clientData = (wxStringClientData*)(hotKeyComboBox->GetClientObject(hotKeyComboBox->GetSelection()));
     wxString hotKeyCodeS = clientData->GetData();
@@ -845,15 +846,15 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     long hotKeyCode;
     hotKeyCodeS.ToLong(&hotKeyCode);
 
-    if (userSettings->HotKeyAlt != hotKeyAltCheckBox->GetValue() ||
-        userSettings->HotKeyShift != hotKeyShiftCheckBox->GetValue() ||
-        userSettings->HotKeyControl != hotKeyCtrlCheckBox->GetValue() ||
-        userSettings->HotKeyKey != (int)hotKeyCode) {
+    if (userSettings->GetBool(_T("HotKeyAlt")) != hotKeyAltCheckBox->GetValue() ||
+        userSettings->GetBool(_T("HotKeyShift")) != hotKeyShiftCheckBox->GetValue() ||
+        userSettings->GetBool(_T("HotKeyControl")) != hotKeyCtrlCheckBox->GetValue() ||
+        userSettings->GetBool(_T("HotKeyKey")) != (int)hotKeyCode) {
 
-        userSettings->HotKeyAlt = hotKeyAltCheckBox->GetValue();
-        userSettings->HotKeyShift = hotKeyShiftCheckBox->GetValue();
-        userSettings->HotKeyControl = hotKeyCtrlCheckBox->GetValue();
-        userSettings->HotKeyKey = (int)hotKeyCode;
+        userSettings->SetBool(_T("HotKeyAlt"), hotKeyAltCheckBox->GetValue());
+        userSettings->SetBool(_T("HotKeyShift"), hotKeyShiftCheckBox->GetValue());
+        userSettings->SetBool(_T("HotKeyControl"), hotKeyCtrlCheckBox->GetValue());
+        userSettings->SetInt(_T("HotKeyKey"), (int)hotKeyCode);
 
         wxGetApp().GetMainFrame()->RegisterHideShowHotKey();
     }

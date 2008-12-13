@@ -13,70 +13,111 @@
 
 
 UserSettings::UserSettings() {
-  IconSize = wxGetApp().GetOSValidIconSize(LARGE_ICON_SIZE);
-  Locale = _T("en");
-  PortableAppsPath = _T("$(Drive)/PortableApps");
-  DocumentsPath = _T("$(Drive)/Documents");
-  MusicPath = _T("$(Drive)/Documents/Music");
-  PicturesPath = _T("$(Drive)/Documents/Pictures");
-  VideosPath = _T("$(Drive)/Documents/Videos");
-  Skin = _T("Default");
-  Rotated = false;
-  AlwaysOnTop = false;
-  MinimizeOnClose = true;
-  UniqueApplicationInstance = true;
-  AutoHideApplication = false;
-  RunMultiLaunchOnStartUp = false;
-  CloseAppsOnEject = false;
-  HotKeyControl = false;
-  HotKeyAlt = false;
-  HotKeyShift = false;
-  HotKeyKey = 0;
+  SetInt(_T("IconSize"), wxGetApp().GetOSValidIconSize(LARGE_ICON_SIZE));
+  SetString(_T("Locale"), _T("en"));
+  SetString(_T("PortableAppsPath"), _T("$(Drive)/PortableApps"));
+  SetString(_T("DocumentsPath"), _T("$(Drive)/Documents"));
+  SetString(_T("MusicPath"), _T("$(Drive)/Documents/Music"));
+  SetString(_T("PicturesPath"), _T("$(Drive)/Documents/Pictures"));
+  SetString(_T("VideosPath"), _T("$(Drive)/Documents/Videos"));
+  SetString(_T("Skin"), _T("Default"));
+  SetBool(_T("Rotated"), false);
+  SetBool(_T("AlwaysOnTop"), false);
+  SetBool(_T("MinimizeOnClose"), true);
+  SetBool(_T("UniqueApplicationInstance"), true);
+  SetBool(_T("AutoHideApplication"), false);
+  SetBool(_T("RunMultiLaunchOnStartUp"), false);
+  SetBool(_T("CloseAppsOnEject"), false);
+  SetBool(_T("HotKeyControl"), false);
+  SetBool(_T("HotKeyAlt"), false);
+  SetBool(_T("HotKeyShift"), false);
+  SetInt(_T("HotKeyKey"), 0);
 
-  ShowDeleteIconMessage = true;
-  ShowEjectDriveMessage = true;
-  ShowMinimizeMessage = true;
+  SetBool(_T("ShowDeleteIconMessage"), true);
+  SetBool(_T("ShowEjectDriveMessage"), true);
+  SetBool(_T("ShowMinimizeMessage"), true);
 
-  NextUpdateCheckTime = wxDateTime::Now();
-  // This is just to force an update check the first time the 
-  // app is launched.
-  NextUpdateCheckTime.Subtract(wxTimeSpan(24));
+  wxDateTime now = wxDateTime::Now();
+  // This is just to force an update check the first time the app is launched.
+  now.Subtract(wxTimeSpan(24));
+  SetDateTime(_T("NextUpdateCheckTime"), now);
+}
+
+
+wxString UserSettings::GetString(const wxString& name) {
+  return values_[name];
+}
+
+
+int UserSettings::GetInt(const wxString& name) {
+  wxString s = GetString(name);
+
+  long l;
+  if (!s.ToLong(&l)) {
+    ELOG(_T("Cannot convert value '%s' of property '%s' to int."), s, name);
+    l = 0;
+  }
+
+  return (int)l;
+}
+
+
+bool UserSettings::GetBool(const wxString& name) {
+  wxString s = GetString(name);
+
+  if (s == _T("0")) return false;
+  if (s == _T("1")) return true;
+
+  s = s.Lower();
+
+  return s == _T("true");
+}
+
+
+wxDateTime UserSettings::GetDateTime(const wxString& name) {
+  wxDateTime output;
+
+  const wxChar* c = output.ParseFormat(GetString(name), ISO_DATE_FORMAT);
+  if (!c) output = wxDateTime::Now();
+
+  return output;
+}
+
+
+void UserSettings::SetString(const wxString& name, const wxString& value) {
+  values_[name] = wxString(value);
+}
+
+
+void UserSettings::SetInt(const wxString& name, int value) {
+  SetString(name, wxString::Format(_T("%i"), value));
+}
+
+
+void UserSettings::SetBool(const wxString& name, bool value) {
+  SetString(name, value ? _T("1") : _T("0"));
+}
+
+
+void UserSettings::SetDateTime(const wxString& name, const wxDateTime& dateTime) {
+  SetString(name, dateTime.Format(ISO_DATE_FORMAT));
 }
 
 
 TiXmlElement* UserSettings::ToXml() {
   TiXmlElement* xml = new TiXmlElement("Settings");
 
-  AppendSettingToXml(xml, "IconSize", IconSize);
-  AppendSettingToXml(xml, "Locale", Locale);
-  AppendSettingToXml(xml, "PortableAppsPath", PortableAppsPath);
-  AppendSettingToXml(xml, "DocumentsPath", DocumentsPath);
-  AppendSettingToXml(xml, "MusicPath", MusicPath);
-  AppendSettingToXml(xml, "PicturesPath", PicturesPath);
-  AppendSettingToXml(xml, "VideosPath", VideosPath);
-  AppendSettingToXml(xml, "Skin", Skin);
-  AppendSettingToXml(xml, "Rotated", Rotated);
-  AppendSettingToXml(xml, "NextUpdateCheckTime", NextUpdateCheckTime.Format(ISO_DATE_FORMAT));
-  AppendSettingToXml(xml, "AlwaysOnTop", AlwaysOnTop);
-  AppendSettingToXml(xml, "AutoHideApplication", AutoHideApplication);
-  AppendSettingToXml(xml, "UniqueApplicationInstance", UniqueApplicationInstance);
-  AppendSettingToXml(xml, "ShowDeleteIconMessage", ShowDeleteIconMessage);
-  AppendSettingToXml(xml, "ShowEjectDriveMessage", ShowEjectDriveMessage);
-  AppendSettingToXml(xml, "ShowMinimizeMessage", ShowMinimizeMessage);
-  AppendSettingToXml(xml, "MinimizeOnClose", MinimizeOnClose);
-  AppendSettingToXml(xml, "RunMultiLaunchOnStartUp", RunMultiLaunchOnStartUp);
-  AppendSettingToXml(xml, "HotKeyControl", HotKeyControl);
-  AppendSettingToXml(xml, "HotKeyAlt", HotKeyAlt);
-  AppendSettingToXml(xml, "HotKeyShift", HotKeyShift);
-  AppendSettingToXml(xml, "HotKeyKey", HotKeyKey);
-  AppendSettingToXml(xml, "CloseAppsOnEject", CloseAppsOnEject);
+  UserSettingsMap::iterator i;
+  for (i = values_.begin(); i != values_.end(); ++i) {
+    AppendSettingToXml(xml, i->first.ToUTF8(), i->second);
+  }
 
   return xml;
 }
 
 
 int UserSettings::GetValidatedIconSize() {
-  return wxGetApp().GetOSValidIconSize(IconSize);
+  return wxGetApp().GetOSValidIconSize(GetInt(_T("IconSize")));
 }
 
 
@@ -107,32 +148,7 @@ void UserSettings::FromXml(TiXmlElement* xml) {
 
     v.Trim(true).Trim(false);
 
-    if (n == _T("IconSize")) AssignSettingValue(IconSize, v);
-    if (n == _T("Locale")) Locale = v;
-    if (n == _T("PortableAppsPath")) PortableAppsPath = v;
-    if (n == _T("DocumentsPath")) DocumentsPath = v;
-    if (n == _T("MusicPath")) MusicPath = v;
-    if (n == _T("PicturesPath")) PicturesPath = v;
-    if (n == _T("VideosPath")) VideosPath = v;
-    if (n == _T("Skin")) Skin = v;
-    if (n == _T("Rotated")) Rotated = ParseBoolean(v);
-    if (n == _T("NextUpdateCheckTime")) {
-      const wxChar* c = NextUpdateCheckTime.ParseFormat(v, ISO_DATE_FORMAT);
-      if (!c) NextUpdateCheckTime = wxDateTime::Now();
-    }
-    if (n == _T("AlwaysOnTop")) AlwaysOnTop = ParseBoolean(v);
-    if (n == _T("AutoHideApplication")) AutoHideApplication = ParseBoolean(v);
-    if (n == _T("UniqueApplicationInstance")) UniqueApplicationInstance = ParseBoolean(v);
-    if (n == _T("ShowDeleteIconMessage")) ShowDeleteIconMessage = ParseBoolean(v);
-    if (n == _T("ShowEjectDriveMessage")) ShowEjectDriveMessage = ParseBoolean(v);
-    if (n == _T("RunMultiLaunchOnStartUp")) RunMultiLaunchOnStartUp = ParseBoolean(v);
-    if (n == _T("HotKeyControl")) HotKeyControl = ParseBoolean(v);
-    if (n == _T("HotKeyAlt")) HotKeyAlt = ParseBoolean(v);
-    if (n == _T("HotKeyShift")) HotKeyShift = ParseBoolean(v);
-    if (n == _T("HotKeyKey")) AssignSettingValue(HotKeyKey, v);
-    if (n == _T("CloseAppsOnEject")) CloseAppsOnEject = ParseBoolean(v);
-    if (n == _T("MinimizeOnClose")) MinimizeOnClose = ParseBoolean(v);
-    if (n == _T("ShowMinimizeMessage")) ShowMinimizeMessage = ParseBoolean(v);
+    SetString(n, v);
 
   }
 

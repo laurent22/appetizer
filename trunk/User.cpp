@@ -202,7 +202,7 @@ UserSettings* User::GetSettings() {
 
 
 void User::PortableAppsFormatSynchronization() {
-  wxString portableAppsFolderPath = FolderItem::ResolvePath(GetSettings()->PortableAppsPath);
+  wxString portableAppsFolderPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("PortableAppsPath")));
 
   wxArrayString foundFilePaths;
   wxDir portableAppsFolder;  
@@ -229,10 +229,10 @@ void User::PortableAppsFormatSynchronization() {
   //***************************************************************************
   // Add special folders to the list of files to process
   //***************************************************************************
-  wxString documentsPath = FolderItem::ResolvePath(GetSettings()->DocumentsPath);
-  wxString musicPath = FolderItem::ResolvePath(GetSettings()->MusicPath);
-  wxString picturesPath = FolderItem::ResolvePath(GetSettings()->PicturesPath);
-  wxString videosPath = FolderItem::ResolvePath(GetSettings()->VideosPath);
+  wxString documentsPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("DocumentsPath")));
+  wxString musicPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("MusicPath")));
+  wxString picturesPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("PicturesPath")));
+  wxString videosPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("VideosPath")));
 
   if (wxFileName::DirExists(documentsPath)) foundFilePaths.Add(documentsPath);
   if (wxFileName::DirExists(musicPath)) foundFilePaths.Add(musicPath);

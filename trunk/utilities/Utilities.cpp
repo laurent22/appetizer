@@ -70,11 +70,11 @@ void Utilities::Localize() {
 bool Utilities::RemoveFolderItemWithConfirmation(FolderItem* folderItem) {
   if (!folderItem) return false;
 
-  if (wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage) {
+  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("ShowDeleteIconMessage"))) {
     int result = MessageBoxes::ShowConfirmation(_("Do you wish to remove this icon?"), wxYES | wxNO, _("Don't show this message again"), false);
     if (!result) return false;
 
-    wxGetApp().GetUser()->GetSettings()->ShowDeleteIconMessage = !MessageBoxes::GetCheckBoxState();
+    wxGetApp().GetUser()->GetSettings()->SetBool(_T("ShowDeleteIconMessage"), !MessageBoxes::GetCheckBoxState());
     wxGetApp().GetUser()->ScheduleSave();
     if (result != wxID_YES) return false;
   }
@@ -274,17 +274,17 @@ void Utilities::ShowEjectDriveDialog() {
 
 
 void Utilities::EjectDriveAndExit(bool askForConfirmation) {
-  if (wxGetApp().GetUser()->GetSettings()->ShowEjectDriveMessage) {
+  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("ShowEjectDriveMessage"))) {
     int answer = MessageBoxes::ShowConfirmation(_("Do you wish to eject the drive?"), wxYES | wxNO, _("Don't show this message again"), false);
     if (!answer) return;
-    wxGetApp().GetUser()->GetSettings()->ShowEjectDriveMessage = !MessageBoxes::GetCheckBoxState();
+    wxGetApp().GetUser()->GetSettings()->SetBool(_T("ShowEjectDriveMessage"), !MessageBoxes::GetCheckBoxState());
     wxGetApp().GetUser()->ScheduleSave();
     if (answer != wxID_YES) return;
   }
 
   #ifdef __WINDOWS__
 
-  if (wxGetApp().GetUser()->GetSettings()->CloseAppsOnEject)
+  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("CloseAppsOnEject")))
     KillLockingProcesses(FilePaths::GetApplicationDrive(), false);
 
   #endif
@@ -320,7 +320,7 @@ void Utilities::CreateNewShortcut() {
 
 
 void Utilities::ShowHelpFile(const wxString& anchor) {
-  wxString helpFile = FilePaths::GetHelpDirectory() + _T("/") + wxGetApp().GetUser()->GetSettings()->Locale + _T("/") + HELP_FILE_NAME;
+  wxString helpFile = FilePaths::GetHelpDirectory() + _T("/") + wxGetApp().GetUser()->GetSettings()->GetString(_T("Locale")) + _T("/") + HELP_FILE_NAME;
   if (!wxFileName::FileExists(helpFile)) {
     // Default to english
     helpFile = FilePaths::GetHelpDirectory() + _T("/en/") + HELP_FILE_NAME;

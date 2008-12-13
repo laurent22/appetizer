@@ -111,12 +111,12 @@ bool MiniLaunchBar::OnInit() {
       if (info) {
         localeSet = ChangeLocale(info->CanonicalName);
         if (localeSet) {
-          GetUser()->GetSettings()->Locale = Localization::Instance()->GetLanguageCodeOnly(info->CanonicalName);
+          GetUser()->GetSettings()->SetString(_T("Locale"), Localization::Instance()->GetLanguageCodeOnly(info->CanonicalName));
         }
       }
     }
   } else {
-    localeSet = ChangeLocale(GetUser()->GetSettings()->Locale);
+    localeSet = ChangeLocale(GetUser()->GetSettings()->GetString(_T("Locale")));
   }
     
   if (!localeSet) {
@@ -131,7 +131,7 @@ bool MiniLaunchBar::OnInit() {
   // At this point, user settings are loaded
   // ***********************************************************************************
 
-  if (GetUser()->GetSettings()->UniqueApplicationInstance) {
+  if (GetUser()->GetSettings()->GetBool(_T("UniqueApplicationInstance"))) {
     const wxString name = wxString::Format(_T("%s-%s"), APPLICATION_NAME, wxGetUserId());
     singleInstanceChecker_ = new wxSingleInstanceChecker(name);
 
@@ -152,7 +152,7 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
   mainFrame_ = new MainFrame();
   mainFrame_->Show();
-  mainFrame_->SetRotated(GetUser()->GetSettings()->Rotated);  
+  mainFrame_->SetRotated(GetUser()->GetSettings()->GetBool(_T("Rotated")));  
 
   SetTopWindow(mainFrame_);
 
