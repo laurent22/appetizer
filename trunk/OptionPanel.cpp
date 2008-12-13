@@ -137,8 +137,6 @@ void OptionPanel::ApplySkin(wxBitmap* mainBackgroundBitmap) {
 
   LoadImage(optionPanelBitmap);
 
-  //SetGrid(Styles::OptionPanel.ScaleGrid);
-
   for (int i = 0; i < buttons_.size(); i++) {    
     OptionButton* button = buttons_[i];
     button->ApplySkin();

@@ -105,7 +105,7 @@ bool MiniLaunchBar::OnInit() {
     // If it is the first launch, try to detect the language
 
     int systemLanguage = wxLocale::GetSystemLanguage();
-    systemLanguage = wxLANGUAGE_JAPANESE;
+    
     if (systemLanguage != wxLANGUAGE_UNKNOWN) {
       const wxLanguageInfo* info = wxLocale::GetLanguageInfo(systemLanguage);
       if (info) {

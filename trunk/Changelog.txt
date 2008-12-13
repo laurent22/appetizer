@@ -1,4 +1,10 @@
-﻿Version 1.2.3.610 (2008-12-10):
+﻿Version 1.2.3.615 (2008-12-13):
+
+- Added Japanese translation (Tilt)
+- Fixed: a bug in language detection code
+- Fixed: Windows installer was not creating uninstaller entry in "Add / Remove Program" window
+
+Version 1.2.3.610 (2008-12-10):
 
 - Updated Danish translation (Henrik Agersted)
 - Updated German translation and help file (wk)

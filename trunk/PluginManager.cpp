@@ -166,6 +166,8 @@ void PluginManager::Initialize() {
       success = pluginFolder.GetNext(&folderName);
     }
   }
+
+  initialized_ = true;
 }
 
 
