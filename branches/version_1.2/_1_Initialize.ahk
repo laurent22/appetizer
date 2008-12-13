@@ -16,6 +16,10 @@ FormatTime timeString, %A_Now%, yyyy-MM-dd_HH-mm-ss
 releaseDirectory = _Release\%timeString%
 
 
+FileCreateDir, %releaseDir%
+FileCreateDir, %normalInstallerDir%
+
+
 ; ****************************************************************
 ; Get the app version and short version (w.x.y.z) and (x.y)
 ; ****************************************************************

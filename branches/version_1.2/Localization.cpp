@@ -169,6 +169,7 @@ Localization::Localization() {
   languageCodeHashMapS_[_T("sq")] = _T("Shqip");
   languageCodeHashMapS_[_T("sr")] = _T("српски језик");
   languageCodeHashMapS_[_T("tr")] = _T("Türkçe");
+  languageCodeHashMapS_[_T("ja")] = _T("日本語");  
 }
 
 

@@ -1,0 +1,579 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ap\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-10 15:29+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Tilt <tiltstr@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+msgid "%s Plugin Packages"
+msgstr "プラグインパッケージ %s "
+
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s をシステムトレイに最小化します\n"
+"\n"
+"'%s' ウィンドウ('%s' タブ)から、この動作を変更することが出来ます。"
+
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, バージョン %s.%s.%s (ビルド #%s)"
+
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString by Joe O'Leary"
+
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini by Brodie Thiesfield"
+
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml by Yves Berquin"
+
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets by their respective authors"
+
+msgid "- zlib by Jean-Loup Gailly and Mark Adler"
+msgstr "- zlib by Jean-Loup Gailly and Mark Adler"
+
+msgid "<None>"
+msgstr "<なし>"
+
+msgid ""
+"A new version is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"\n"
+"Do you wish to download it now?"
+msgstr ""
+"新しいバージョンが利用可能です!\n"
+"\n"
+"あなたのバージョン: %s\n"
+"新しいバージョン: %s\n"
+"更新履歴: %s\n"
+"\n"
+"今すぐダウンロードしますか?"
+
+msgid "About"
+msgstr "バージョン情報"
+
+msgid "About %s..."
+msgstr " %s について..."
+
+msgid "Add special item"
+msgstr "特殊アイテムに追加"
+
+msgid "Add to Multi Launch group"
+msgstr "複数起動グループに追加"
+
+msgid "All files"
+msgstr "すべてのファイル"
+
+msgid "All supported files"
+msgstr "すべての対応するファイル"
+
+msgid "Allow only one instance of %s at a time"
+msgstr "%s のインスタンスをひとつだけ許可"
+
+msgid "Alt +"
+msgstr "Alt +"
+
+msgid "Always on top"
+msgstr "常に手前表示"
+
+msgid "Appearance"
+msgstr "外観"
+
+msgid "Auto-hide after launching an application"
+msgstr "アプリケーション起動後に自動的に隠れる"
+
+msgid "Available plugins"
+msgstr "利用可能なプラグイン"
+
+msgid "Backspace"
+msgstr "Backspace"
+
+msgid ""
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"オートランファイルをリムーバブルドライブにインストールすると、%s を起動した時に自動的に開始されます。 \n"
+"\n"
+"本当に続行しますか? "
+
+msgid "Can not create file '%s'"
+msgstr "ファイル '%s' を作成できません"
+
+msgid "Can not read zip entry '%s'"
+msgstr "ZIPエントリ '%s' を読みこまめません"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Change icon..."
+msgstr "アイコンを変更"
+
+msgid "Check for update"
+msgstr "アップデートを確認"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Close button minimizes to System Tray"
+msgstr "閉じるボタンでシステムトレイに最小化"
+
+msgid "Configuration"
+msgstr "設定"
+
+msgid "Confirmation"
+msgstr "確認"
+
+msgid "Contact:"
+msgstr "連絡先:"
+
+msgid "Control +"
+msgstr "Control +"
+
+msgid "Control Panel"
+msgstr "コントロールパネル"
+
+msgid "Copyright © %s"
+msgstr "著作権© %s"
+
+msgid "Could not get update information"
+msgstr "更新情報を取得できませんでした.."
+
+msgid "Could not initialize locale."
+msgstr "ロケールの初期化に失敗"
+
+msgid "Could not install autorun file. Please try again."
+msgstr "オートランファイルをインストールできません、再試行してください。"
+
+msgid "Could not open %s"
+msgstr "%s を開くことが出来ません"
+
+msgid "Credits"
+msgstr "クレジット"
+
+msgid "Current Drive"
+msgstr "現在のドライブ"
+
+msgid "Default"
+msgstr "デフォルト"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Dialog boxes are built using wxGlade by Alberto Griggio."
+
+msgid "Disable"
+msgstr "無効"
+
+msgid "Disabled"
+msgstr "無効"
+
+msgid "Displays the log window (useful for debugging)"
+msgstr "ログウィンドウを表示"
+
+msgid "Displays this help message"
+msgstr "ヘルプメッセージを表示"
+
+msgid "Do you wish to eject the drive?"
+msgstr "本当にドライブをイジェクトしますか?"
+
+msgid "Do you wish to remove this icon?"
+msgstr "本当にこのアイコンを除去しますか?"
+
+msgid "Don't show this message again"
+msgstr "次回から表示しない"
+
+msgid "Down"
+msgstr "Down"
+
+msgid "Dynamic libraries"
+msgstr "DLL"
+
+msgid "Eject drive"
+msgstr "ドライブをイジェクト"
+
+msgid "Enable"
+msgstr "有効"
+
+msgid "Enabled"
+msgstr "有効"
+
+msgid "End"
+msgstr "End"
+
+msgid "Error"
+msgstr "エラー"
+
+msgid "Error launching web browser"
+msgstr "ウェブブラウザの起動に失敗"
+
+msgid "Escape"
+msgstr "Escape"
+
+msgid "Exclude these items from import operations"
+msgstr "これらの操作をインポートから除外する"
+
+msgid "Executables"
+msgstr "実行形式"
+
+msgid "Extra Large (XP and above)"
+msgstr "最大( XP 以上)"
+
+msgid "General"
+msgstr "一般"
+
+msgid "Get Support"
+msgstr "サポート"
+
+msgid "Group"
+msgstr "グループ"
+
+msgid "Group Properties"
+msgstr "グループのプロパティ"
+
+msgid "Help"
+msgstr "ヘルプ"
+
+msgid "Help Topics"
+msgstr "ヘルプ - トピック"
+
+msgid "Hide"
+msgstr "隠す"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Horizontal"
+msgstr "左右"
+
+msgid "Hot key to hide / show the bar"
+msgstr "ホットキーでバーを表示/隠す"
+
+msgid "Icon file or library:"
+msgstr "アイコンまたはライブラリ:"
+
+msgid "Icon libraries"
+msgstr "アイコンライブラリ"
+
+msgid "Icon size:"
+msgstr "アイコンサイズ:"
+
+msgid "Icon:"
+msgstr "アイコン:"
+
+msgid "Icons"
+msgstr "アイコン"
+
+msgid "Import"
+msgstr "インポート"
+
+msgid "Import shortcuts"
+msgstr "ショートカットのインポート"
+
+msgid "Importing shortcuts... Please wait."
+msgstr "ショートカットのインポート中... お待ちください"
+
+msgid "Information"
+msgstr "インフォメーション"
+
+msgid "Install autorun file"
+msgstr "オートランファイルをインストール"
+
+msgid "Install..."
+msgstr "インストール..."
+
+msgid "Jumbo (Vista and above)"
+msgstr "特大 ( Vista 以上)"
+
+msgid "Language:"
+msgstr "言語:"
+
+msgid "Large"
+msgstr "大"
+
+msgid "Left"
+msgstr "Left"
+
+msgid "License"
+msgstr "ライセンス"
+
+msgid "Loading tree..."
+msgstr "ツリーを読み込み中..."
+
+msgid "Location:"
+msgstr "場所:"
+
+msgid "Minimize to tray"
+msgstr "最小化でトレイに移動"
+
+msgid "Multi-launch"
+msgstr "複数起動"
+
+msgid "My Computer"
+msgstr "マイコンピュータ"
+
+msgid "My Network Places"
+msgstr "マイネットワーク"
+
+msgid "Name:"
+msgstr "名前:"
+
+msgid "New group..."
+msgstr "新規グループ..."
+
+msgid "New shortcut..."
+msgstr "新規ショートカット"
+
+msgid "No"
+msgstr "いいえ"
+
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Operations"
+msgstr "操作"
+
+msgid "Organize group shortcuts"
+msgstr "ショートカットグループの分類"
+
+msgid "Organize shortcuts"
+msgstr "ショートカットの分類"
+
+msgid "Orientation:"
+msgstr "方向:"
+
+msgid "Parameters:"
+msgstr "パラメータ:"
+
+msgid "Please wait while your applications are being closed."
+msgstr "アプリケーションを終了しています... お待ちください"
+
+msgid "Please wait..."
+msgstr "お待ちください..."
+
+msgid "Plugin"
+msgstr "プラグイン"
+
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "プラグインスクリプトの書式に誤りがあります。エンコードが UTF-8(BOMなし) または ASCII であるか確認してください。"
+
+msgid "Plugins"
+msgstr "プラグイン"
+
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com - アプリケーション"
+
+msgid "Properties"
+msgstr "プロパティ"
+
+msgid "Recycle Bin"
+msgstr "ゴミ箱"
+
+msgid "Remove..."
+msgstr "除去..."
+
+msgid "Return"
+msgstr "Return"
+
+msgid "Right"
+msgstr "Right"
+
+msgid "Run multi-launch group on startup"
+msgstr "スタートアップ時に複数起動グループを実行"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Select a file or a folder"
+msgstr "ファイルまたはフォルダを選択"
+
+msgid "Select a plugin package"
+msgstr "プラグインパッケージを選択"
+
+msgid "Select an icon"
+msgstr "アイコンを選択"
+
+msgid "Select an icon file or library"
+msgstr "アイコンファイルまたはライブラリを選択"
+
+msgid "Sets user data path (-u will be ignored)"
+msgstr "ユーザデータパスの設定( -u で無視)"
+
+msgid "Shift +"
+msgstr "Shift +"
+
+msgid "Shorcut Properties"
+msgstr "ショートカットのプロパティ"
+
+msgid "Show"
+msgstr "表示"
+
+msgid "Show Desktop"
+msgstr "デスクトップの表示"
+
+msgid "Skin:"
+msgstr "スキン:"
+
+msgid "Small"
+msgstr "小"
+
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "いくつかの変更は、アプリケーションの再起動後に有効になります。"
+
+msgid "Space"
+msgstr "Space"
+
+msgid "Start >>"
+msgstr "開始>>"
+
+msgid "Status"
+msgstr "ステータス"
+
+msgid "Tab"
+msgstr "Tab"
+
+msgid "The autorun file has been installed successfully"
+msgstr "オートランファイルは正常にインストールされました。"
+
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "プラグインの変更は、%s を次回起動した時から有効になります。"
+
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "現在、複数起動グループにはアイテムがありません。この機能に関するヘルプを表示しますか?"
+
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "プラグインのインストールに成功しました。　%s を次回起動した時から有効になります。"
+
+msgid "The shorcut location doesn't exist. Do you wish to continue?"
+msgstr "ショートカット先にアイテムが存在しません。続行しますか?"
+
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "ホットキーの登録に失敗しました。別のアプリケーションによって使用されている可能性があります。"
+
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "このファイルは存在しないか、または削除されています(エラー%s)"
+
+msgid ""
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"このプログラムはフリーソフトウェアです: あなたは、GNU 一般公有使用許諾(バージョン 3 または以降のバージョン) によって定められた各条項に基づいて本プログラムを再頒布または変更することができます。\n"
+"\n"
+"本プログラムは有用とは思いますが、市場性及び特定目的適合性についての暗黙の保証を含め、いかなる保証も行ないません。詳細については、GNU一般共有使用許諾書の該当項目をご覧ください\n"
+"\n"
+"あなたは、本プログラムと一緒にGNU 一般公有使用許諾のコピーを受け取っているはずです。もし見つからない場合はこちらを参照してください<http://www.gnu.org/licenses/>."
+
+msgid "This skin is not compatible with the current version of %s."
+msgstr "現在のバージョン %s に対応していないスキンです。"
+
+msgid "This software uses a number of open source libraries including:"
+msgstr "このソフトウェアには、以下のオープンソースライブラリが使用されています:"
+
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"%s に既存のショートカットをインポートします。\n"
+"\n"
+"インポートしたいショートカットの場所を選択してください:"
+
+msgid "Translators: %s"
+msgstr "翻訳者: %s"
+
+msgid "Unnamed"
+msgstr "無題"
+
+msgid "Up"
+msgstr "Up"
+
+msgid "Use default"
+msgstr "デフォルトで使用"
+
+msgid "Uses user data directory to save settings."
+msgstr "ユーザデータディレクトリに設定を保存する"
+
+msgid "Vertical"
+msgstr "上下"
+
+msgid "Warning"
+msgstr "警告"
+
+msgid "Web:"
+msgstr "ウェブ:"
+
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "ドライブをイジェクトするときは、ロックしているアプリケーションを終了する"
+
+msgid "Windows Explorer"
+msgstr "エクスプローラ"
+
+msgid "Windows Quick Launch toolbar"
+msgstr "Windows - クイック起動バー"
+
+msgid "Windows Start Menu programs"
+msgstr "Windows - スタートメニュープログラム"
+
+msgid "Yes"
+msgstr "はい"
+
+msgid "You do not have sufficient privileges for this operation."
+msgstr "あなたはこの操作を行う権限が与えられていません。"
+
+msgid "You have the latest version."
+msgstr "あなたは最新バージョンを使用しています。"
+
