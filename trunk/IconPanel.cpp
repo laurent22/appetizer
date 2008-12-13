@@ -92,7 +92,11 @@ wxBitmap* IconPanel::GetControlBitmap() {
 
 
 void IconPanel::ApplySkin(wxBitmap* mainBackgroundBitmap) {
-  browseButton_->LoadImage(FilePaths::GetSkinDirectory() + _T("/BrowseArrowButton"));
+
+  wxBitmap* browseButtonBitmapUp = new wxBitmap(FilePaths::GetSkinFile(_T("BrowseArrowButton.png")), wxBITMAP_TYPE_PNG);  
+
+  browseButton_->LoadImages(browseButtonBitmapUp);
+  browseButton_->SetStateColors(wxNullColour, Styles::BrowseButton.ColorOver, Styles::BrowseButton.ColorDown);
   browseButton_->FitToImage();
 
   for (int i = 0; i < folderItemRenderers_.size(); i++) {

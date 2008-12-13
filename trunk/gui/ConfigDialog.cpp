@@ -329,18 +329,22 @@ void ConfigDialog::UpdatePage(int pageIndex) {
         int i = 0;
 
         while (success) {
-          SkinMetadata skinMetadata;
-          wxString skinFile = skinFolderPath + _T("/") + folderName + _T("/") + SKIN_FILE_NAME;
-          Styles::GetSkinMetadata(skinFile, skinMetadata);
+          if (folderName != _T("Base")) {
+            SkinMetadata skinMetadata;
+            wxString skinFile = skinFolderPath + _T("/") + folderName + _T("/") + SKIN_FILE_NAME;
+            Styles::GetSkinMetadata(skinFile, skinMetadata);
 
-          wxString skinName = skinMetadata.Name;
-          if (folderName == _T("Default")) skinName += wxString::Format(_T("%s%s%s"), _T(" ("), _("Default"), _T(")"));
+            wxString skinName = skinMetadata.Name;
+          
+            if (folderName == _T("Default")) skinName += wxString::Format(_T("%s%s%s"), _T(" ("), _("Default"), _T(")"));
 
-          skinComboBox->Append(skinName, new wxStringClientData(folderName));
-          if (folderName == userSettings->Skin) selectedIndex = i;
+            skinComboBox->Append(skinName, new wxStringClientData(folderName));
+            if (folderName == userSettings->Skin) selectedIndex = i;
+
+            i++;
+          }
 
           success = skinFolder.GetNext(&folderName);      
-          i++;
         }
       } 
 
@@ -798,8 +802,18 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     wxString skinName = clientData->GetData();
 
     if (skinName != userSettings->Skin) {
-      userSettings->Skin = skinName;
-      wxGetApp().GetMainFrame()->ApplySkin();
+      wxString skinXmlPath = FilePaths::GetBaseSkinDirectory() + _T("/") + skinName + _T("/") + SKIN_FILE_NAME;
+      SkinMetadata metadata;
+
+      Styles::GetSkinMetadata(skinXmlPath, metadata);
+
+      if (!Styles::IsSkinVersionCompatible(metadata.CompatibleVersion)) {
+        MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
+      } else {
+        userSettings->Skin = skinName;
+        wxGetApp().GetMainFrame()->ApplySkin();
+      }
+
     }
 
   }

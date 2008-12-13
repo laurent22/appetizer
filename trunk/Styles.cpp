@@ -18,6 +18,9 @@ MainPanelStyle Styles::MainPanel;
 InnerPanelStyle Styles::InnerPanel;
 IconStyle Styles::Icon;
 OptionPanelStyle Styles::OptionPanel;
+ArrowButtonStyle Styles::ArrowButton;
+OptionButtonStyle Styles::OptionButton;
+BrowseButtonStyle Styles::BrowseButton;
 
 
 void PaddingStyle::FromRect(const wxRect& rect) {
@@ -36,7 +39,7 @@ void Styles::GetSkinMetadata(const wxString& filePath, SkinMetadata& skinMetadat
 
   TiXmlElement* root = doc.FirstChildElement("Skin");
   if (!root) {
-    WLOG(_T("Styles::LoadSkinFile: Could not load XML. No Skin element found."));
+    WLOG(_T("Styles::LoadSkinFile: Could not load XML. No Skin element found: %s"), filePath);
     return;
   }
 
@@ -57,7 +60,7 @@ void Styles::LoadSkinFile(const wxString& filePath) {
 
   TiXmlElement* root = doc.FirstChildElement("Skin");
   if (!root) {
-    WLOG(_T("Styles::LoadSkinFile: Could not load XML. No Skin element found."));
+    WLOG(_T("Styles::LoadSkinFile: Could not load XML. No Skin element found: %s"), filePath);
     return;
   }
 
@@ -72,7 +75,9 @@ void Styles::LoadSkinFile(const wxString& filePath) {
   // *****************************************************************
   // Set default values
   // *****************************************************************
-  Styles::OptionPanel.ButtonIconColor = wxColour(255,255,255);
+  Styles::OptionButton.IconColor = wxColour(255,255,255);
+  Styles::ArrowButton.ColorDown = wxNullColour;
+  Styles::ArrowButton.ColorOver = wxNullColour;
   
   // *****************************************************************
   // Load the XML
@@ -83,26 +88,30 @@ void Styles::LoadSkinFile(const wxString& filePath) {
     wxRect resultRect;
 
     if (elementName == _T("ArrowButton")) {
-      XmlUtil::ReadElementTextAsRect(handle, "ScaleGrid", Styles::OptionPanel.ArrowButtonScaleGrid);
-      Styles::OptionPanel.ArrowButtonWidth = XmlUtil::ReadElementTextAsInt(handle, "Width");
+      XmlUtil::ReadElementTextAsRect(handle, "Rectangle", Styles::ArrowButton.SourceRectangle);
+      XmlUtil::ReadElementTextAsColor(handle, "ColorOver", Styles::ArrowButton.ColorOver);
+      XmlUtil::ReadElementTextAsColor(handle, "ColorDown", Styles::ArrowButton.ColorDown);
     }
 
-    if (elementName == _T("BarBackground")) {
-      XmlUtil::ReadElementTextAsRect(handle, "ScaleGrid", Styles::MainPanel.ScaleGrid);
-      XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
-      Styles::MainPanel.Padding.FromRect(resultRect);
+    if (elementName == _T("BrowseButton")) {
+      XmlUtil::ReadElementTextAsColor(handle, "ColorOver", Styles::BrowseButton.ColorOver);
+      XmlUtil::ReadElementTextAsColor(handle, "ColorDown", Styles::BrowseButton.ColorDown);
     }
 
     if (elementName == _T("OptionPanel")) {
-      XmlUtil::ReadElementTextAsRect(handle, "ScaleGrid", Styles::OptionPanel.ScaleGrid);
+      XmlUtil::ReadElementTextAsRect(handle, "Rectangle", Styles::OptionPanel.SourceRectangle);
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
       Styles::OptionPanel.Padding.FromRect(resultRect);
       Styles::OptionPanel.ButtonHGap = XmlUtil::ReadElementTextAsInt(handle, "HGap");
       Styles::OptionPanel.ButtonVGap = XmlUtil::ReadElementTextAsInt(handle, "VGap");
     }
 
+    if (elementName == _T("MainPanel")) {
+      XmlUtil::ReadElementTextAsRect(handle, "Rectangle", Styles::MainPanel.SourceRectangle);
+    }
+
     if (elementName == _T("IconPanel")) {
-      XmlUtil::ReadElementTextAsRect(handle, "ScaleGrid", Styles::InnerPanel.ScaleGrid);
+      XmlUtil::ReadElementTextAsRect(handle, "Rectangle", Styles::InnerPanel.SourceRectangle);
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
       Styles::InnerPanel.Padding.FromRect(resultRect);
     }
@@ -113,8 +122,10 @@ void Styles::LoadSkinFile(const wxString& filePath) {
     }
 
     if (elementName == _T("OptionButton")) {
-      XmlUtil::ReadElementTextAsPoint(handle, "DownIconOffset", Styles::OptionPanel.ButtonDownIconOffset);
-      XmlUtil::ReadElementTextAsColor(handle, "IconColor", Styles::OptionPanel.ButtonIconColor);
+      XmlUtil::ReadElementTextAsColor(handle, "ColorOver", Styles::OptionButton.ColorOver);
+      XmlUtil::ReadElementTextAsColor(handle, "ColorDown", Styles::OptionButton.ColorDown);
+      XmlUtil::ReadElementTextAsPoint(handle, "DownIconOffset", Styles::OptionButton.DownIconOffset);
+      XmlUtil::ReadElementTextAsColor(handle, "IconColor", Styles::OptionButton.IconColor);
     }
   }
 
@@ -131,6 +142,8 @@ bool Styles::IsSkinVersionCompatible(const wxString& skinVersion) {
   StringUtil::Split(fullVersion, splitted, _T("."));
   wxString tdVersion = splitted[0] + _T(".") + splitted[1];
   tdVersion.ToDouble(&dThisVersion);
+
+  if (dSkinVersion < 1.3 && dThisVersion >= 1.3) return false;
 
   return true;
 }

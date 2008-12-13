@@ -21,22 +21,24 @@ ImageButton(owner, id, point, size) {
 void OptionButton::ApplySkin() {
   skinInvalidated_ = false;
 
+  OptionButtonStyle style = Styles::OptionButton;
+
   wxString skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_") + GetName() + _T(".png"));
   if (!wxFileName::FileExists(skinFilePath)) skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_Default.png"));
   
   wxImage image(skinFilePath);
 
   if (image.IsOk()) {
-    Imaging::ColorizeImage(image, Styles::OptionPanel.ButtonIconColor);
+    Imaging::ColorizeImage(image, style.IconColor);
     SetIcon(new wxBitmap(image));
   }
 
   wxBitmap* buttonBitmap = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/OptionButton.png"), wxBITMAP_TYPE_PNG);
   LoadImages(buttonBitmap);
-  SetStateColors(wxNullColour, wxColour(0,128,255,50), wxColour(50,200,255,50));
+  SetStateColors(wxNullColour, style.ColorOver, style.ColorDown);
 
   FitToImage();
-  SetDownIconOffset(Styles::OptionPanel.ButtonDownIconOffset);
+  SetDownIconOffset(style.DownIconOffset);
 }
 
 

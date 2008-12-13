@@ -25,6 +25,7 @@ public:
   static wxString GetHelpDirectory();
   static wxString GetToolsDirectory();
   static wxString GetPluginsDirectory();
+  static wxString GetBaseSkinAssetsDirectory();
   static wxString GetIconCacheDirectory();
 
   static wxString GetApplicationPath();
@@ -52,6 +53,7 @@ private:
   static wxString SettingsDirectory_;
   static wxString BaseSkinDirectory_;
   static wxString DefaultSkinDirectory_;
+  static wxString BaseSkinAssetsDirectory_;
   static wxString LocalesDirectory_;
   static wxString HelpDirectory_;
   static wxString SettingsFile_;

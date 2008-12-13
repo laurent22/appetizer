@@ -29,6 +29,7 @@ wxString FilePaths::IconCacheDirectory_ = _T("");
 wxString FilePaths::ToolsDirectory_ = _T("");
 wxString FilePaths::PluginsDirectory_ = _T("");
 wxString FilePaths::PluginSettingsFile_ = _T("");
+wxString FilePaths::BaseSkinAssetsDirectory_ = _T("");
 
 
 wxString FilePaths::GetApplicationDrive() { return FilePaths::ApplicationDrive_; }
@@ -47,6 +48,7 @@ wxString FilePaths::GetWindowFile() { return FilePaths::WindowFile_; }
 wxString FilePaths::GetIconCacheDirectory() { return FilePaths::IconCacheDirectory_; }
 wxString FilePaths::GetPluginsDirectory() { return FilePaths::PluginsDirectory_; }
 wxString FilePaths::GetPluginSettingsFile() { return FilePaths::PluginSettingsFile_; }
+wxString FilePaths::GetBaseSkinAssetsDirectory() { return FilePaths::BaseSkinAssetsDirectory_; }
 wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
 
 wxString FilePaths::GetQuickLaunchDirectory() { 
@@ -159,7 +161,7 @@ wxString FilePaths::GetAllUsersShellDirectory(const wxString& itemName) {
 wxString FilePaths::GetSkinFile(const wxString& filename) {
   wxString output = FilePaths::GetSkinDirectory() + _T("/") + filename;
   if (wxFileName::FileExists(output)) return output;
-  return GetDefaultSkinDirectory() + _T("/") + filename;
+  return GetBaseSkinAssetsDirectory() + _T("/") + filename;
 }
 
 
@@ -202,6 +204,7 @@ void FilePaths::InitializePaths() {
   FilePaths::WindowFile_ = FilePaths::GetSettingsDirectory() + _T("/") + WINDOW_FILE_NAME;  
   FilePaths::HelpDirectory_ = FilePaths::GetDataDirectory() + _T("/") + HELP_FOLDER_NAME;  
   FilePaths::BaseSkinDirectory_ = FilePaths::GetDataDirectory() + _T("/") + SKIN_FOLDER_NAME; 
+  FilePaths::BaseSkinAssetsDirectory_ = FilePaths::BaseSkinDirectory_ + _T("/") + BASE_SKIN_ASSETS_FOLDER_NAME; 
   FilePaths::DefaultSkinDirectory_ = FilePaths::BaseSkinDirectory_ + _T("/") + DEFAULT_SKIN;
   FilePaths::IconCacheDirectory_ = FilePaths::DataDirectory_ + _T("/") + ICON_CACHE_FOLDER_NAME;
   FilePaths::ToolsDirectory_ = FilePaths::DataDirectory_ + _T("/") + TOOLS_FOLDER_NAME;

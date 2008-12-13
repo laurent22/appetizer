@@ -256,7 +256,8 @@ void ImageButton::UpdateControlBitmap() {
   painter->SetRotation(GetBitmapRotation());  
 
   wxMemoryDC destDC;
-  destDC.SelectObject(*controlBitmap_);    
+  destDC.SelectObject(*controlBitmap_);  
+  wxString n = GetName();
   painter->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
   
   if (iconBitmap_) {

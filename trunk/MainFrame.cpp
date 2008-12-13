@@ -84,6 +84,7 @@ MainFrame::MainFrame()
   nullPanel_ = new wxPanel(this, 0, 0, 0, 0); 
 
   arrowButton_ = new ImageButton(this, ID_BUTTON_Arrow, wxPoint(0, 0), wxSize(10, 10));
+  arrowButton_->SetName(_T("ArrowButton"));
   arrowButton_->SetCursor(wxCursor(wxCURSOR_HAND));
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
@@ -339,6 +340,25 @@ void MainFrame::ApplySkin(const wxString& skinName) {
   mainBackgroundDC.SelectObject(*mainBackgroundBitmap_);  
 
 
+
+
+
+
+
+  int iconPanelX = Styles::InnerPanel.SourceRectangle.GetX() - Styles::OptionPanel.SourceRectangle.GetRight();
+  int iconPanelY = Styles::InnerPanel.SourceRectangle.GetY() - Styles::OptionPanel.SourceRectangle.GetTop();
+  int iconPanelRightMargin = mainBackgroundBitmap_->GetWidth() - Styles::InnerPanel.SourceRectangle.GetRight();
+  int iconPanelBottomMargin = mainBackgroundBitmap_->GetHeight() - Styles::InnerPanel.SourceRectangle.GetBottom();
+
+  Styles::MainPanel.Padding.FromRect(wxRect(iconPanelX, iconPanelY, iconPanelRightMargin, iconPanelBottomMargin));
+
+
+
+
+
+
+
+
   maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/MainBackground.png"), false);
 
 
@@ -349,13 +369,13 @@ void MainFrame::ApplySkin(const wxString& skinName) {
 
 
 
-  wxBitmap* arrowBitmapUp = new wxBitmap(16, 64);  
+  wxBitmap* arrowBitmapUp = new wxBitmap(Styles::ArrowButton.SourceRectangle.GetWidth(), Styles::ArrowButton.SourceRectangle.GetHeight());  
   targetDC.SelectObject(*arrowBitmapUp);
-  targetDC.Blit(0, 0, arrowBitmapUp->GetWidth(), arrowBitmapUp->GetHeight(), &mainBackgroundDC, 0, 0);  
+  targetDC.Blit(0, 0, arrowBitmapUp->GetWidth(), arrowBitmapUp->GetHeight(), &mainBackgroundDC, Styles::ArrowButton.SourceRectangle.GetX(), Styles::ArrowButton.SourceRectangle.GetY());  
   targetDC.SelectObject(wxNullBitmap);
 
   arrowButton_->LoadImages(arrowBitmapUp);
-  arrowButton_->SetGrid(Styles::OptionPanel.ArrowButtonScaleGrid);
+  arrowButton_->SetStateColors(wxNullColour, Styles::ArrowButton.ColorOver, Styles::ArrowButton.ColorDown);
   wxDELETE(arrowButtonOpenIcon_);
   wxDELETE(arrowButtonCloseIcon_);
   arrowButtonOpenIcon_ = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/ArrowButtonIconRight.png"), wxBITMAP_TYPE_PNG);
@@ -371,12 +391,13 @@ void MainFrame::ApplySkin(const wxString& skinName) {
 
 
 
-  wxBitmap* barBackgroundBitmap = new wxBitmap(71, 64);  
+  wxBitmap* barBackgroundBitmap = new wxBitmap(Styles::MainPanel.SourceRectangle.GetWidth(), Styles::MainPanel.SourceRectangle.GetHeight());  
   targetDC.SelectObject(*barBackgroundBitmap);
-  targetDC.Blit(0, 0, barBackgroundBitmap->GetWidth(), barBackgroundBitmap->GetHeight(), &mainBackgroundDC, 58, 0);  
+  targetDC.Blit(0, 0, barBackgroundBitmap->GetWidth(), barBackgroundBitmap->GetHeight(), &mainBackgroundDC, Styles::MainPanel.SourceRectangle.GetX(), Styles::MainPanel.SourceRectangle.GetY());  
   targetDC.SelectObject(wxNullBitmap);
   backgroundPanel_->LoadImage(barBackgroundBitmap);
-  backgroundPanel_->SetGrid(Styles::MainPanel.ScaleGrid);
+
+
   
 
 
@@ -421,6 +442,12 @@ void MainFrame::SetRotated(bool rotated, bool swapWidthAndHeight) {
   arrowButton_->SetBitmapRotation(rotated ? -90 : 0);
   backgroundPanel_->SetBitmapRotation(rotated ? -90 : 0);
   resizerPanel_->SetBitmapRotation(rotated ? -90 : 0);
+
+  if (!rotated) {
+    resizerPanel_->SetCursor(wxCursor(wxCURSOR_SIZENWSE));
+  } else {
+    resizerPanel_->SetCursor(wxCursor(wxCURSOR_SIZENESW));
+  }
   
   UpdateLayout();
   UpdateMask();
@@ -542,16 +569,19 @@ void MainFrame::UpdateMask() {
 
 
 void MainFrame::UpdateLayout(int width, int height) {
+  if (!mainBackgroundBitmap_) return;
+
   int sideButtonGap = 0;
 
-  if (rotated_) {
-    int bgPanelHeight = height - Styles::OptionPanel.ArrowButtonWidth - optionPanelOpenWidth_;
+  if (rotated_) { // VERTICAL ORIENTATION
+
+    int bgPanelHeight = height - Styles::ArrowButton.SourceRectangle.GetWidth() - optionPanelOpenWidth_;
 
     arrowButton_->SetSize(
       0,
       bgPanelHeight + optionPanelOpenWidth_,
       width,
-      Styles::OptionPanel.ArrowButtonWidth);
+      Styles::ArrowButton.SourceRectangle.GetWidth());
 
     backgroundPanel_->SetSize(0, 0, width, bgPanelHeight);
 
@@ -560,10 +590,10 @@ void MainFrame::UpdateLayout(int width, int height) {
       Styles::MainPanel.Padding.Right,
       width - Styles::MainPanel.Padding.Height,
       bgPanelHeight - Styles::MainPanel.Padding.Width);
-    
+
     resizerPanel_->Move(
       width - resizerPanel_->GetRect().GetWidth(),
-      bgPanelHeight - resizerPanel_->GetRect().GetHeight());
+      0);
 
     optionPanel_->SetSize(
       0,
@@ -572,7 +602,7 @@ void MainFrame::UpdateLayout(int width, int height) {
       optionPanelOpenWidth_);
 
     closeSideButton_->Move(
-      Styles::MainPanel.Padding.Bottom,
+      Styles::InnerPanel.SourceRectangle.GetTop(),
       0);
 
     if (ejectSideButton_) {
@@ -581,18 +611,19 @@ void MainFrame::UpdateLayout(int width, int height) {
         closeSideButton_->GetRect().GetTop());
     }
 
-  } else {
+  } else { // HORIZONTAL ORIENTATION
+
     arrowButton_->SetSize(
       0,
       0,
-      Styles::OptionPanel.ArrowButtonWidth,
+      Styles::ArrowButton.SourceRectangle.GetWidth(),
       height);
     
-    int bgPanelX = Styles::OptionPanel.ArrowButtonWidth + optionPanelOpenWidth_;
+    int bgPanelX = Styles::ArrowButton.SourceRectangle.GetWidth() + optionPanelOpenWidth_;
     int bgPanelWidth = width - bgPanelX;
 
     backgroundPanel_->SetSize(bgPanelX, 0, bgPanelWidth, height);
-    
+
     iconPanel_->SetSize(
       Styles::MainPanel.Padding.Left,
       Styles::MainPanel.Padding.Top,
@@ -604,14 +635,14 @@ void MainFrame::UpdateLayout(int width, int height) {
       height - resizerPanel_->GetRect().GetHeight());
 
     optionPanel_->SetSize(
-      Styles::OptionPanel.ArrowButtonWidth,
+      Styles::ArrowButton.SourceRectangle.GetWidth(),
       0,
       optionPanelOpenWidth_,
       height);
 
     closeSideButton_->Move(
       bgPanelWidth - closeSideButton_->GetSize().GetWidth(),
-      Styles::MainPanel.Padding.Top);
+      Styles::InnerPanel.SourceRectangle.GetTop());
 
     if (ejectSideButton_) {
       ejectSideButton_->Move(
@@ -756,8 +787,12 @@ void MainFrame::OnResizerMouseDown(wxMouseEvent& evt) {
   windowDragData_.Resizing = true;
   windowDragData_.DraggingStarted = true;
   windowDragData_.InitMousePos = w->ClientToScreen(evt.GetPosition());
+
   windowDragData_.InitWindowSize.SetWidth(GetSize().GetWidth());
   windowDragData_.InitWindowSize.SetHeight(GetSize().GetHeight());
+
+  windowDragData_.InitWindowPos.x = wxGetApp().GetMainFrame()->GetRect().GetX();
+  windowDragData_.InitWindowPos.y = wxGetApp().GetMainFrame()->GetRect().GetY();
 }
 
 
@@ -776,6 +811,9 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
     wxPoint mouseOffset = mousePos - windowDragData_.InitMousePos;
 
     int newHeight = windowDragData_.InitWindowSize.GetHeight() + mouseOffset.y;
+
+    if (rotated_) newHeight = windowDragData_.InitWindowSize.GetHeight() - mouseOffset.y;
+
     if (newHeight < GetMinHeight()) {
       newHeight = GetMinHeight();
     } else if (newHeight > GetMaxHeight()) {
@@ -791,7 +829,14 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
 
     if (newWidth == GetSize().GetWidth() && newHeight == GetSize().GetHeight()) return;
 
-    SetSize(newWidth, newHeight);
+    if (rotated_) {
+      int newY = windowDragData_.InitWindowPos.y + mouseOffset.y;
+      int newX = windowDragData_.InitWindowPos.x;
+
+      SetSize(newX, newY, newWidth, newHeight);
+    } else {
+      SetSize(newWidth, newHeight);
+    }
 
     int previousPanelWidth = optionPanel_->GetRequiredWidth();
 

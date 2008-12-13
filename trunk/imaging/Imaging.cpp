@@ -358,20 +358,35 @@ void Imaging::ColorizeImage(wxImage& image, const wxColour& color) {
 
 
 void Imaging::DrawColorOverlay(wxBitmap& bitmap, const wxColour& color) {
-  wxBitmap bmp(bitmap.GetWidth(), bitmap.GetHeight());
+  int imageWidth = bitmap.GetWidth();
+  int imageHeight = bitmap.GetHeight();
+
+  wxBitmap bmp(imageWidth, imageHeight);
   wxMemoryDC dc;
   dc.SelectObject(bmp);
   dc.SetPen(wxPen(wxColour(0,0,0), 0, wxTRANSPARENT));
   dc.SetBrush(wxColour(color.Red(), color.Green(), color.Blue(), 255));
-  dc.DrawRectangle(0, 0, bitmap.GetWidth(), bitmap.GetHeight());
+  dc.DrawRectangle(0, 0, imageWidth, imageHeight);
   dc.SelectObject(wxNullBitmap);
 
   wxImage image = bmp.ConvertToImage();
   if (!image.HasAlpha()) image.InitAlpha();
+
+  wxImage sourceImage = bitmap.ConvertToImage();
+  bool sourceImageHasAlpha = sourceImage.HasAlpha();
+  int colorAlpha = color.Alpha();
   
-  for (int i = 0; i < image.GetWidth(); i++) {
-    for (int j = 0; j < image.GetHeight(); j++) {
-      image.SetAlpha(i, j, color.Alpha());
+  for (int i = 0; i < imageWidth; i++) {
+    for (int j = 0; j < imageHeight; j++) {
+      int newAlpha = colorAlpha;
+      
+      if (sourceImageHasAlpha) {        
+        double p = ((double)(sourceImage.GetAlpha(i, j)) / 255.0);
+        newAlpha *= p;
+        if (newAlpha > 255) newAlpha = 255;
+      }
+
+      image.SetAlpha(i, j, newAlpha);
     }
   }
 

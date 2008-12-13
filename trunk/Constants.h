@@ -26,6 +26,7 @@ const wxString WINDOW_FILE_NAME = _T("Window.xml");
 const wxString HELP_FILE_NAME = _T("Appetizer.chm");
 const wxString ICON_CACHE_FOLDER_NAME = _T("IconCache");
 const wxString SKIN_FILE_NAME = _T("Skin.xml");
+const wxString BASE_SKIN_ASSETS_FOLDER_NAME = _T("Base");
 const wxString DEFAULT_SKIN = _T("Default");
 const wxString CHECK_VERSION_URL = _T("http://app.etizer.org/VersionInfo.xml");
 const wxString ISO_DATE_FORMAT = _T("%Y-%m-%d %H:%M:%S");

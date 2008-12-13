@@ -106,9 +106,12 @@ bool XmlUtil::ReadElementTextAsColor(TiXmlHandle handle, const char* elementName
 
   long r; if (!splitted[0].ToLong(&r)) return false;
   long g; if (!splitted[1].ToLong(&g)) return false;
-  long b; if (!splitted[1].ToLong(&b)) return false;
+  long b; if (!splitted[2].ToLong(&b)) return false;
+  
+  long a = 255;
+  if (splitted.Count() >= 4) splitted[3].ToLong(&a);
 
-  resultColor = wxColour(r,g,b);
+  resultColor = wxColour(r,g,b,a);
   return true;
 }
 

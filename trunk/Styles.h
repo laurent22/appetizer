@@ -26,25 +26,39 @@ public:
 
 };
 
+class ArrowButtonStyle { public:
+  wxRect SourceRectangle;
+  wxColour ColorOver;
+  wxColour ColorDown;
+};
+
+class BrowseButtonStyle { public:
+  wxColour ColorOver;
+  wxColour ColorDown;
+};
+
 class MainPanelStyle { public:
   PaddingStyle Padding;
-  wxRect ScaleGrid;
+  wxRect SourceRectangle;
 };
 
 class InnerPanelStyle { public:
+  wxRect SourceRectangle;
   PaddingStyle Padding;
-  wxRect ScaleGrid;
 };
 
 class OptionPanelStyle { public:
+  wxRect SourceRectangle;
   PaddingStyle Padding;
-  int ArrowButtonWidth;
-  wxRect ArrowButtonScaleGrid;
-  wxRect ScaleGrid;
   int ButtonHGap;
   int ButtonVGap;
-  wxPoint ButtonDownIconOffset;
-  wxColour ButtonIconColor;
+};
+
+class OptionButtonStyle { public:
+  wxPoint DownIconOffset;
+  wxColour IconColor;
+  wxColour ColorOver;
+  wxColour ColorDown;
 };
 
 class IconStyle { public:
@@ -65,7 +79,10 @@ public:
   static MainPanelStyle MainPanel;
   static InnerPanelStyle InnerPanel;
   static IconStyle Icon;
+  static OptionButtonStyle OptionButton;
   static OptionPanelStyle OptionPanel;
+  static ArrowButtonStyle ArrowButton;
+  static BrowseButtonStyle BrowseButton;
 
   static void GetSkinMetadata(TiXmlElement* skinDocumentRoot, SkinMetadata& skinMetadata);
   static void GetSkinMetadata(const wxString& filePath, SkinMetadata& skinMetadata);

@@ -128,16 +128,16 @@ void OptionPanel::ApplySkin(wxBitmap* mainBackgroundBitmap) {
   wxMemoryDC targetDC;
   mainBackgroundDC.SelectObject(*mainBackgroundBitmap);  
 
-  wxBitmap* optionPanelBitmap = new wxBitmap(42, 64);  
+  wxBitmap* optionPanelBitmap = new wxBitmap(Styles::OptionPanel.SourceRectangle.GetWidth(), Styles::OptionPanel.SourceRectangle.GetHeight());  
   targetDC.SelectObject(*optionPanelBitmap);
-  targetDC.Blit(0, 0, optionPanelBitmap->GetWidth(), optionPanelBitmap->GetHeight(), &mainBackgroundDC, 16, 0);  
+  targetDC.Blit(0, 0, optionPanelBitmap->GetWidth(), optionPanelBitmap->GetHeight(), &mainBackgroundDC, Styles::OptionPanel.SourceRectangle.GetX(), Styles::OptionPanel.SourceRectangle.GetY());  
   targetDC.SelectObject(wxNullBitmap);
 
   skinInvalidated_ = false;
 
   LoadImage(optionPanelBitmap);
-  //LoadImage(FilePaths::GetSkinDirectory() + _T("/OptionPanel.png"));
-  SetGrid(Styles::OptionPanel.ScaleGrid);
+
+  //SetGrid(Styles::OptionPanel.ScaleGrid);
 
   for (int i = 0; i < buttons_.size(); i++) {    
     OptionButton* button = buttons_[i];

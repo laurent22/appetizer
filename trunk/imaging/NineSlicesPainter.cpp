@@ -108,10 +108,25 @@ void NineSlicesPainter::Draw(wxDC *destDC, wxCoord x, wxCoord y, wxCoord width, 
   if (gridIsExplicitelySet_) {
     grid = wxRect(grid_.GetLeft(), grid_.GetTop(), grid_.GetWidth(), grid_.GetHeight());
   } else {
-    grid.SetLeft(floor((double)(workBitmap->GetWidth() / 2)));
-    grid.SetTop(floor((double)(workBitmap->GetHeight() / 2)));
-    grid.SetWidth(1);
-    grid.SetHeight(1);
+
+    // If the grid wasn't set, use some defaults
+
+    if (sourceBitmap_->GetWidth() <= width) {
+      grid.SetLeft(floor((double)(sourceBitmap_->GetWidth() / 3)));      
+    } else {
+      grid.SetLeft(floor((double)(width / 3)));
+    }
+
+    grid.SetWidth(sourceBitmap_->GetWidth() - grid.GetLeft() * 2);
+
+    if (sourceBitmap_->GetHeight() <= height) {
+      grid.SetTop(floor((double)(sourceBitmap_->GetHeight() / 3)));          
+    } else {
+      grid.SetTop(floor((double)(height / 3)));      
+    }
+
+    grid.SetHeight(sourceBitmap_->GetHeight() - grid.GetTop() * 2);
+
     grid_ = grid;
   }
 
