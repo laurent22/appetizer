@@ -73,7 +73,7 @@ msgid "About %s..."
 msgstr " %s について..."
 
 msgid "Add special item"
-msgstr "特殊アイテムに追加"
+msgstr "特殊アイテムを追加"
 
 msgid "Add to Multi Launch group"
 msgstr "複数起動グループに追加"

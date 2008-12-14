@@ -1,4 +1,9 @@
-﻿Version 1.2.3.616 (2008-12-13):
+﻿Version 1.2.4.617 (2008-12-14):
+
+- Updated Japanese translation (Tilt)
+- Updated Korean translation (Wewe)
+
+Version 1.2.3.616 (2008-12-13):
 
 - Added Japanese translation (Tilt)
 - Added partial Korean translation (Wewe)
