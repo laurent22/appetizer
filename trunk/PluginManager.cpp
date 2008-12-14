@@ -14,7 +14,7 @@
 #include "FolderItemRenderer.h"
 #include "lua_glue/LuaUtil.h"
 #include "lua_glue/azOptionButton.h"
-#include "lua_glue/azIcon.h"
+//#include "lua_glue/azIcon.h"
 #include "lua_glue/azMenu.h"
 #include "lua_glue/azDockItem.h"
 
@@ -54,6 +54,8 @@ bool PluginManager::InstallPluginPackage(const wxString& filePath) {
   wxString targetDir = FilePaths::GetPluginsDirectory();
 
   wxZipInputStream zip(in);
+
+  wxString rootPluginDirectory;
   
   while (entry.reset(zip.GetNextEntry()), entry.get() != NULL) {
     wxString name = entry->GetName();
@@ -62,6 +64,9 @@ bool PluginManager::InstallPluginPackage(const wxString& filePath) {
     if (entry->IsDir()) {
       int perm = entry->GetMode();
       wxFileName::Mkdir(name, perm, wxPATH_MKDIR_FULL);
+
+      if (rootPluginDirectory == wxEmptyString) rootPluginDirectory = name; // Full path including trailing slash
+
     } else {
       zip.OpenEntry(*entry.get());
 
@@ -84,7 +89,7 @@ bool PluginManager::InstallPluginPackage(const wxString& filePath) {
 
   Plugin* p  = new Plugin();
   plugins_.push_back(p);
-  p->LoadMetadata(targetDir);
+  p->LoadMetadata(rootPluginDirectory);
   p->Enable(true);
   p->SetInitiallyEnabled(false);
 
@@ -99,6 +104,9 @@ void PluginManager::Initialize() {
 
   eventNames_.Add(_T("iconMenuOpening"));
   eventNames_.Add(_T("click"));
+  eventNames_.Add(_T("dockItemClick"));
+  eventNames_.Add(_T("trayIconMenuOpening"));
+  eventNames_.Add(_T("dockItemMenuOpening"));
 
 
   luaApplication = new azApplication();
@@ -131,7 +139,7 @@ void PluginManager::Initialize() {
 
 
 
-      bool pluginIsEnabled = true;
+      bool pluginIsEnabled = false;
 
       if (pluginSettingsXml) {        
         for (TiXmlElement* element = pluginSettingsXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
@@ -232,6 +240,8 @@ void PluginManager::DispatchEvent(wxObject* sender, const wxString& eventName, L
   if (!initialized_) return;
 
   int eventId = GetEventIdByName(eventName);
+  if (eventId == wxNOT_FOUND) WLOG(_T("Unknown event: %s"), eventName);
+
   DispatchEvent(sender, eventId, arguments);
 }
 

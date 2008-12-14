@@ -17,7 +17,7 @@
 #include "MessageBoxes.h"
 #include "ExtendedMenuItem.h"
 #include "gui/TreeViewDialog.h"
-#include "lua_glue/azIcon.h"
+//#include "lua_glue/azIcon.h"
 
 
 
@@ -173,10 +173,10 @@ void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
   menu->Append(menuItem);
 
   LuaHostTable table;
-  table[_T("icon")] = new LuaHostTableItem(this, LHT_wxObject);
+  table[_T("dockItem")] = new LuaHostTableItem(folderItem, LHT_wxObject);
   table[_T("menu")] = new LuaHostTableItem(menu, LHT_wxObject);
   
-  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("iconMenuOpening"), table);  
+  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("dockItemMenuOpening"), table);  
 
   PopupMenu(menu, wxDefaultPosition);
 
@@ -228,11 +228,16 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
       if (!folderItem->IsGroup()) {
         folderItem->Launch();
         wxGetApp().GetMainFrame()->DoAutoHide();
+      
+        LuaHostTable table;
+        table[_T("dockItem")] = new LuaHostTableItem(folderItem, LHT_wxObject);
+        wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("dockItemClick"), table);  
+
       } else {
         wxMenu* menu = folderItem->ToMenu();
         PopupMenu(menu, wxPoint(0, GetSize().GetHeight()));
         wxDELETE(menu);
-      }      
+      }
 
     }
 

@@ -93,8 +93,15 @@ void ConfigDialog::UpdatePluginListRow(long index) {
 
   wxString name = plugin->GetName();
 
+  wxString status;
+  if (d->error) {
+    status = _("Error");
+  } else {
+    status = d->enabled ? _("Enabled") : _("Disabled");
+  }
+
   pluginListView->SetItem(index, 0, name);
-  pluginListView->SetItem(index, 1, d->enabled ? _("Enabled") : _("Disabled"));
+  pluginListView->SetItem(index, 1, status);
 }
 
 
@@ -133,6 +140,7 @@ void ConfigDialog::ReloadPluginList() {
     ConfigDialogPluginData* d = new ConfigDialogPluginData();
     d->pluginIndex = i;
     d->enabled = plugin->IsEnabled();
+    d->error = plugin->GetState() == _T("error");
 
     configDialogPluginData_.push_back(d);
 
@@ -849,7 +857,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     if (userSettings->GetBool(_T("HotKeyAlt")) != hotKeyAltCheckBox->GetValue() ||
         userSettings->GetBool(_T("HotKeyShift")) != hotKeyShiftCheckBox->GetValue() ||
         userSettings->GetBool(_T("HotKeyControl")) != hotKeyCtrlCheckBox->GetValue() ||
-        userSettings->GetBool(_T("HotKeyKey")) != (int)hotKeyCode) {
+        userSettings->GetInt(_T("HotKeyKey")) != (int)hotKeyCode) {
 
         userSettings->SetBool(_T("HotKeyAlt"), hotKeyAltCheckBox->GetValue());
         userSettings->SetBool(_T("HotKeyShift"), hotKeyShiftCheckBox->GetValue());

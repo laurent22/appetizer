@@ -13,7 +13,8 @@
  *     
  * @beginEventTable
  * @event MenuOpening trayIconMenuOpening when the tray icon menu is about to be displayed
- * @event IconMenuOpening iconMenuOpening when a dock icon menu is about to be displayed
+ * @event DockItemMenuOpening dockItemMenuOpening when a dock item menu is about to be displayed
+ * @event DockItemClick dockItemClick when a dock item is clicked
  * @endEventTable
  * @see Global#appetizer
  *

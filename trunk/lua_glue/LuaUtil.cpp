@@ -11,7 +11,7 @@
 #include "azWrapper.h"
 #include "azGlobal.h"
 #include "azApplication.h"
-#include "azIcon.h"
+//#include "azIcon.h"
 #include "azOptionPanel.h"
 #include "azOptionButton.h"
 #include "azMenu.h"
@@ -48,12 +48,14 @@ bool luaConvertAndPushAsWrapper(lua_State* L, wxObject* o) {
 
 bool LuaUtil::DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value) {
   // wxObject* must be any supported wxWidgets object EXCEPT for azWrappers
-  // The function checks the type of "value" and try to find an associated wrapper.
-  // If it does, the object is converted to an azWrapper and push onto the Lua stack.
+  // The function checks the type of "value" and tries to find an associated wrapper.
+  // If it does, the object is converted to an azWrapper and pushed onto the Lua stack.
   // If it doesn't, the function returns false.
 
-  bool done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, value);
-  if (done) return true;
+  //bool done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, value);
+  //if (done) return true;
+
+  bool done = false;
 
   done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
   if (done) return true;

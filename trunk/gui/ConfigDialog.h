@@ -50,6 +50,7 @@ private:
   struct ConfigDialogPluginData {
     int pluginIndex;
     bool enabled;
+    bool error;
   };
 
   std::vector<ConfigDialogPluginData*> configDialogPluginData_;

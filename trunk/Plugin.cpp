@@ -12,7 +12,7 @@
 
 #include "lua_glue/azGlobal.h"
 #include "lua_glue/azApplication.h"
-#include "lua_glue/azIcon.h"
+//#include "lua_glue/azIcon.h"
 #include "lua_glue/azOptionPanel.h"
 #include "lua_glue/azOptionButton.h"
 #include "lua_glue/azMenu.h"
@@ -24,6 +24,7 @@
 Plugin::Plugin() {
   enabled_ = true;
   initiallyEnabled_ = enabled_;
+  state_ = _T("unloaded");
   
   L = NULL;
 }
@@ -99,11 +100,15 @@ void Plugin::LoadMetadata(const wxString& folderPath) {
 }
 
 
+wxString Plugin::GetState() { return state_; }
+
+
 bool Plugin::Load(const wxString& folderPath) {
   wxString luaFilePath = folderPath + wxFileName::GetPathSeparator() + _T("main.lua");
 
   if (!wxFileName::FileExists(luaFilePath)) {
     ELOG(_T("Plugin::Load: 'main.lua' is missing for plugin: ") + folderPath);
+    state_ = _T("error");
     return false;
   }
 
@@ -126,6 +131,7 @@ bool Plugin::Load(const wxString& folderPath) {
   if (sizeRead >= 3 && strcmp(firstThree, utf8bom) == 0) {
     MessageBoxes::ShowError(wxString::Format(_T("%s\n\n%s"), _("Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"), luaFilePath));
     f.close();
+    state_ = _T("error");
     return false;
   }
 
@@ -137,11 +143,12 @@ bool Plugin::Load(const wxString& folderPath) {
     const char* errorString = lua_tostring(L, -1);
     luaHost_logError(wxString(errorString, wxConvUTF8));
     OnLuaScopeClose();
+    state_ = _T("error");
     return false;
   }
 
   Lunar<azApplication>::Register(L);
-  Lunar<azIcon>::Register(L);
+  //Lunar<azIcon>::Register(L);
   Lunar<azMenu>::Register(L);
   Lunar<azDockItem>::Register(L);
   Lunar<azOptionButton>::Register(L);
@@ -174,10 +181,13 @@ bool Plugin::Load(const wxString& folderPath) {
     const char* errorString = lua_tostring(L, -1);
     luaHost_logError(wxString(errorString, wxConvUTF8));
     OnLuaScopeClose();
+    state_ = _T("error");
     return false;
   }
 
   OnLuaScopeClose();
+
+  state_ = _T("loaded");
 
   return true;
 }

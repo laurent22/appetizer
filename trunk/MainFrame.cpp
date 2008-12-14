@@ -55,6 +55,7 @@ MainFrame::MainFrame()
   rotated_ = false;
   activated_ = false;  
   closeOperationScheduled_ = false;
+  initialized_ = false;
 
   bool showLogWindow = false;
   #ifdef __WXDEBUG__
@@ -304,15 +305,17 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     ILOG(_T("Now is %s"), now.Format());
     ILOG(_T("Next update check on %s"), nextUpdateTime.Format());
 
-    if (nextUpdateTime.IsLaterThan(now)) return;
+    if (!nextUpdateTime.IsLaterThan(now)) {
+      wxGetApp().CheckForNewVersion(true);
 
-    wxGetApp().CheckForNewVersion(true);
+      now.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
 
-    now.Add(wxTimeSpan(24 * CHECK_VERSION_DAY_INTERVAL));
+      wxGetApp().GetUser()->GetSettings()->SetDateTime(_T("NextUpdateCheckTime"), now);
+      wxGetApp().GetUser()->ScheduleSave();
+    }
+    #endif //__WINDOWS__        
 
-    wxGetApp().GetUser()->GetSettings()->SetDateTime(_T("NextUpdateCheckTime"), now);
-    wxGetApp().GetUser()->ScheduleSave();
-    #endif //__WINDOWS__
+    initialized_ = true;
   }
 
   if (closeOperationScheduled_) {
@@ -734,12 +737,23 @@ void MainFrame::OnMouseCaptureLost(wxMouseCaptureLostEvent& evt) {
   // Any MSW application that uses wxWindow::CaptureMouse() must implement an 
   // wxEVT_MOUSE_CAPTURE_LOST event handler as of wxWidgets 2.8.0.
   wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
-  if (w->HasCapture()) w->ReleaseMouse();
+  if (w->HasCapture()) {
+    w->ReleaseMouse();
+    // Stupid mouse capture hack to make wxWidgets happy
+    w->Disconnect(wxID_ANY, wxEVT_MOUSE_CAPTURE_LOST, wxMouseCaptureLostEventHandler(MainFrame::OnMouseCaptureLost), NULL, this);
+  }
 }
 
 
 void MainFrame::OnMouseDown(wxMouseEvent& evt) {
-  static_cast<wxWindow*>(evt.GetEventObject())->CaptureMouse();
+  wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
+
+  w->CaptureMouse();
+
+  if (w->HasCapture()) {
+    // Stupid mouse capture hack to make wxWidgets happy
+    w->Connect(wxID_ANY, wxEVT_MOUSE_CAPTURE_LOST, wxMouseCaptureLostEventHandler(MainFrame::OnMouseCaptureLost), NULL, this);
+  }
 
   windowDragData_.Resizing = false;
   windowDragData_.DraggingStarted = true;
@@ -895,6 +909,12 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
 
 
 void MainFrame::OnClose(wxCloseEvent& evt) {
+  if (!initialized_) {
+    evt.Veto();
+    ILOG(_T("'Close' action vetoed because the frame is not yet initialized."));
+    return;
+  }
+
   RecurseCleanUp(this);
 
   TiXmlDocument doc;

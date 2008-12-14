@@ -25,13 +25,10 @@ end
 
 -- This function is called when an icon is right-clicked,
 -- before the popup menu is displayed
-function application_iconMenuOpening(event)
-	-- Get the icon
-	icon = event.icon
-	
-	-- Get the icon popup menu and associated shortcut object
+function application_dockItemMenuOpening(event)	
+	-- Get the icon popup menu and associated DockItem object
 	menu = event.menu
-	shortcut = icon:getDockItem()
+	shortcut = event.dockItem
 	
 	-- Get all the application groups, so that we
 	-- can build a submenu from it
@@ -61,6 +58,6 @@ function application_iconMenuOpening(event)
 end
 
 
--- Register a global event handler. "application_iconMenuOpening()" is going
+-- Register a global event handler. "application_dockItemMenuOpening()" is going
 -- to be called whenever an icon popup menu is about to be displayed
-appetizer:addEventListener("iconMenuOpening", "application_iconMenuOpening")
+appetizer:addEventListener("dockItemMenuOpening", "application_dockItemMenuOpening")

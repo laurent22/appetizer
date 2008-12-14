@@ -37,6 +37,7 @@ public:
   void Enable(bool enable);
   void Disable();
   bool IsEnabled();
+  wxString GetState();
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
 
 private:
@@ -47,6 +48,7 @@ private:
   bool enabled_;
   wxString uuid_;
   wxString name_;
+  wxString state_;
 
   void LoadPluginXml(const wxString& xmlFilePath);
 

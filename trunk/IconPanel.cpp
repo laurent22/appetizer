@@ -218,6 +218,11 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
         wxGetApp().GetUtilities().ShowTreeViewDialog(evt.GetId());
       } else {
         folderItem->Launch();
+
+        LuaHostTable table;
+        table[_T("dockItem")] = new LuaHostTableItem(folderItem, LHT_wxObject);
+        wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("dockItemClick"), table);  
+
       }
     }
 

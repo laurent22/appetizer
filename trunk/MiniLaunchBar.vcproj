@@ -1505,46 +1505,6 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\lua_glue\azIcon.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Unicode Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Unicode Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath=".\lua_glue\azMenu.cpp"
 					>
 					<FileConfiguration
@@ -2060,10 +2020,6 @@
 				</File>
 				<File
 					RelativePath=".\lua_glue\azGlobal.h"
-					>
-				</File>
-				<File
-					RelativePath=".\lua_glue\azIcon.h"
 					>
 				</File>
 				<File

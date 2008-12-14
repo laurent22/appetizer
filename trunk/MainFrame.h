@@ -72,6 +72,7 @@ class MainFrame: public wxFrame {
     wxPanel* nullPanel_;
     bool closeOperationScheduled_;
     wxBitmap* mainBackgroundBitmap_;
+    bool initialized_;
 
     void UpdateMask();
     void UpdateLayout();

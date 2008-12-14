@@ -84,8 +84,7 @@ bool FolderItem::IsDisposed() {
 
 
 FolderItem::~FolderItem() {
-  for (IconHashMap::iterator i = icons_.begin(); i != icons_.end(); ++i) wxDELETE(i->second);
-  icons_.clear();
+  ClearCachedIcons();
 }
 
 
@@ -412,6 +411,10 @@ void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
 
     folderItem->Launch();
     wxGetApp().GetMainFrame()->DoAutoHide();
+
+    LuaHostTable table;
+    table[_T("dockItem")] = new LuaHostTableItem(folderItem, LHT_wxObject);
+    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("dockItemClick"), table);  
 
   } else {
 
