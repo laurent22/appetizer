@@ -370,6 +370,7 @@ bool GenerateHelp::OnInit() {
   localeCodes.Add(_T("en"));
   localeCodes.Add(_T("fr"));  
   localeCodes.Add(_T("de"));  
+  localeCodes.Add(_T("ja"));  
 
   for (int i = 0; i < localeCodes.Count(); i++) {
     wxString localeCode = localeCodes[i];

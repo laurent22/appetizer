@@ -16,3 +16,4 @@ xgettext --from-code=utf-8 -C -n -k_ -o Data\Help\appetizer_help.pot generate_he
 msgmerge -U Data\Help\fr\appetizer_help.po Data\help\appetizer_help.pot
 msgmerge -U Data\Help\en\appetizer_help.po Data\help\appetizer_help.pot
 msgmerge -U Data\Help\de\appetizer_help.po Data\help\appetizer_help.pot
+msgmerge -U Data\Help\ja\appetizer_help.po Data\help\appetizer_help.pot
