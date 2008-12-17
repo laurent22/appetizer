@@ -118,14 +118,86 @@ Utilities::~Utilities() {
 }
 
 
+
+/********************************************************
+*
+* FUNCTION: GetDisksProperty(HANDLE hDevice, 
+* PSTORAGE_DEVICE_DESCRIPTOR pDevDesc)
+*
+* PURPOSE: get the info of specified device
+*
+* By f22_storm
+* http://www.codeproject.com/KB/winsdk/usbdisks.aspx
+*
+******************************************************/
+BOOL GetDisksProperty(HANDLE hDevice, 
+  PSTORAGE_DEVICE_DESCRIPTOR& pDevDesc)
+{
+ STORAGE_PROPERTY_QUERY Query; // input param for query
+
+ DWORD dwOutBytes; // IOCTL output length
+
+ BOOL bResult; // IOCTL return val
+
+
+ // specify the query type
+
+ Query.PropertyId = StorageDeviceProperty;
+ Query.QueryType = PropertyStandardQuery;
+
+ // Query using IOCTL_STORAGE_QUERY_PROPERTY 
+
+ bResult = ::DeviceIoControl(hDevice, // device handle
+
+ IOCTL_STORAGE_QUERY_PROPERTY, // info of device property
+
+  &Query, sizeof(STORAGE_PROPERTY_QUERY), // input data buffer
+
+  pDevDesc, pDevDesc->Size, // output data buffer
+
+  &dwOutBytes, // out's length
+
+  (LPOVERLAPPED)NULL); 
+
+ return bResult;
+}
+
+
 bool Utilities::IsApplicationOnPortableDrive() {
   #ifdef __WINDOWS__
-  UINT result = GetDriveType(FilePaths::GetApplicationDrive());
-  // Don't show the eject button if we are not on a removable drive.
-  // However, to be safe, do show it if the call to GetDriveType
-  // failed (result = 0 or 1)
-  if (result >= 2 && result != DRIVE_REMOVABLE) return false;
+
+  // Note that if anything fails in this function, it will
+  // return true, so the app will assume that it *is* on a portable drive.
+  wxString driveName = FilePaths::GetApplicationDrive();
+
+  UINT result = GetDriveType(driveName);
+
+  if (result <= 1) return true; // GetDriveType failed
+  if (result == DRIVE_REMOVABLE) return true; // We are on a removable drive
+  if (result != DRIVE_FIXED) return false; // We are definitely not a removable drive
+
+  // Here we handle the case where the drive type is DRIVE_FIXED. In that case
+  // the drive might be a USB hard drive, so we need to find out if it can
+  // be ejected or not.
+
+  wxString name = wxString::Format(_T("\\\\?\\%c:"), driveName[0]);
+
+  HANDLE hDevice = CreateFile(name, 
+    GENERIC_READ, 
+    FILE_SHARE_READ | FILE_SHARE_WRITE, 
+    NULL, OPEN_EXISTING, NULL, NULL);
+
+  if (hDevice == INVALID_HANDLE_VALUE) return true;
+
+	PSTORAGE_DEVICE_DESCRIPTOR pDevDesc = (PSTORAGE_DEVICE_DESCRIPTOR)new BYTE[sizeof(STORAGE_DEVICE_DESCRIPTOR) + 512 - 1];
+	pDevDesc->Size = sizeof(STORAGE_DEVICE_DESCRIPTOR) + 512 - 1;
+
+  if (!GetDisksProperty(hDevice, pDevDesc)) return true;
+  
+  return pDevDesc->BusType == BusTypeUsb;
+
   #endif // __WINDOWS__
+  
   return true;
 }
 
