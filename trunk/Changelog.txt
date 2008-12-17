@@ -1,4 +1,9 @@
-﻿Version 1.2.4.617 (2008-12-14):
+﻿Version 1.2.4.637 (2008-12-17):
+
+- Added Japanese help file (Tilt)
+- Fixed: USB hard drives were incorrectly detected as non-removable. As a result, the "Eject" button wasn't shown for these drives.
+
+Version 1.2.4.617 (2008-12-14):
 
 - Updated Japanese translation (Tilt)
 - Updated Korean translation (Wewe)
