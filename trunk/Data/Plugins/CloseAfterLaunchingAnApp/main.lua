@@ -15,6 +15,6 @@ function appetizer_dockItemClick(event)
 end
 
 
--- Register a global event handler. "application_shortcutLaunched()" is going
--- to be called whenever an icon popup menu is about to be displayed
+-- Register a global event handler. "appetizer_dockItemClick()" is going
+-- to be called whenever a dock item is clicked
 appetizer:addEventListener("dockItemClick", "appetizer_dockItemClick")

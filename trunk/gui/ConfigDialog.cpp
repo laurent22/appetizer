@@ -230,8 +230,18 @@ void ConfigDialog::UpdatePage(int pageIndex) {
           // Note: The folder name is the locale code
 
           // Get the language name from the file
-          wxString languageName = Localization::Instance()->GetLanguageName(folderName);
-          wxStringClientData* clientData = new wxStringClientData(folderName);  
+          wxArrayString localeArray;
+          StringUtil::Split(folderName, localeArray, _T("_"));
+
+          wxString languageCode = localeArray[0];
+          wxString countryCode;
+
+          if (localeArray.size() > 1) countryCode = localeArray[1];
+
+          wxString languageName = Localization::Instance()->GetLanguageName(languageCode);
+          wxStringClientData* clientData = new wxStringClientData(folderName); 
+
+          if (countryCode != wxEmptyString) languageName += _T(" (") + countryCode + _T(")");
 
           languageComboBox->Append(languageName, clientData);
 
