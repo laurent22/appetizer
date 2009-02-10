@@ -630,6 +630,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\ToolTipFrame.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\User.cpp"
 				>
 				<FileConfiguration
@@ -1804,6 +1808,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ToolTipFrame.h"
+				>
+			</File>
+			<File
 				RelativePath=".\TypeDefinitions.h"
 				>
 			</File>
@@ -1820,6 +1828,10 @@
 				>
 				<File
 					RelativePath=".\bitmap_controls\BitmapControl.h"
+					>
+				</File>
+				<File
+					RelativePath=".\BitmapLabel.h"
 					>
 				</File>
 				<File

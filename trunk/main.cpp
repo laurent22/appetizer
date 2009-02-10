@@ -26,6 +26,9 @@ IMPLEMENT_APP(MiniLaunchBar)
 int MiniLaunchBar::uniqueInt_ = 0;
 
 
+//#include "ToolTipFrame.h"
+
+
 /**
  * Initialize the application
  */
@@ -179,6 +182,10 @@ bool MiniLaunchBar::OnInit() {
   mainFrame_->Localize();  
 
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
+
+  //ToolTipFrame* f = new ToolTipFrame(mainFrame_);
+  
+  //f->ShowToolTip(_T("début - azdfjr alkfj alekjzlfkejl lfejzfkl ejzkljf kjzf lkejzlf jezklf jeklzfjeklzfj eklz FIN"), wxRect(200, 200, 100, 100));
 
   return true;
 } 
