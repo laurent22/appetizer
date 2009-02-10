@@ -33,7 +33,7 @@ void OptionButton::ApplySkin() {
     SetIcon(new wxBitmap(image));
   }
 
-  wxBitmap* buttonBitmap = new wxBitmap(FilePaths::GetSkinDirectory() + _T("/OptionButton.png"), wxBITMAP_TYPE_PNG);
+  wxBitmap* buttonBitmap = new wxBitmap(FilePaths::GetSkinFile(_T("OptionButton.png")), wxBITMAP_TYPE_PNG);
   LoadImages(buttonBitmap);
   SetStateColors(wxNullColour, style.ColorOver, style.ColorDown);
 

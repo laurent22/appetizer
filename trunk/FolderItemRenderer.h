@@ -44,6 +44,7 @@ private:
   int folderItemId_;
   NineSlicesPainter* iconOverlayPainterUp_;
   NineSlicesPainter* iconOverlayPainterDown_;
+  NineSlicesPainter* iconOverlayPainterInactive_;
   wxPoint pressPosition_;
   wxBitmap* multiLaunchIcon_;
   wxMenu* popupMenu_;

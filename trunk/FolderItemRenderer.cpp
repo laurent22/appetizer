@@ -47,6 +47,7 @@ BitmapControl(owner, id, point, size) {
 
   iconOverlayPainterDown_ = NULL;
   iconOverlayPainterUp_ = NULL;
+  iconOverlayPainterInactive_ = NULL;
   multiLaunchIcon_ = NULL;
   popupMenu_ = NULL;
   folderItemId_ = -1;
@@ -65,6 +66,7 @@ void FolderItemRenderer::DeleteSkinObjects() {
   wxDELETE(multiLaunchIcon_);
   wxDELETE(iconOverlayPainterUp_);
   wxDELETE(iconOverlayPainterDown_);
+  wxDELETE(iconOverlayPainterInactive_);
 }
 
 
@@ -319,16 +321,25 @@ void FolderItemRenderer::UpdateControlBitmap() {
     if (mousePressed_) { // DOWN state      
       if (!iconOverlayPainterDown_) {
         iconOverlayPainterDown_ = new NineSlicesPainter();
-        iconOverlayPainterDown_->LoadImage(FilePaths::GetSkinDirectory() + _T("/IconOverlayDown.png"));
+        iconOverlayPainterDown_->LoadImage(FilePaths::GetSkinFile(_T("/IconOverlayDown.png")));
       }
       iconOverlayPainterDown_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     } else { // UP state      
       if (!iconOverlayPainterUp_) {
         iconOverlayPainterUp_ = new NineSlicesPainter();
-        iconOverlayPainterUp_->LoadImage(FilePaths::GetSkinDirectory() + _T("/IconOverlayUp.png"));
+        iconOverlayPainterUp_->LoadImage(FilePaths::GetSkinFile(_T("/IconOverlayUp.png")));
       }
       iconOverlayPainterUp_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
     }
+
+  } else {
+
+    if (!iconOverlayPainterInactive_) {
+      iconOverlayPainterInactive_ = new NineSlicesPainter();
+      iconOverlayPainterInactive_->LoadImage(FilePaths::GetSkinFile(_T("IconOverlayInactive.png")));
+    }
+
+    iconOverlayPainterInactive_->Draw(&destDC, 0, 0, GetClientRect().GetWidth(), GetClientRect().GetHeight());
 
   }
 
