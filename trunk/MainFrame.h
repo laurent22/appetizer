@@ -122,6 +122,8 @@ class MainFrame: public wxFrame {
     bool GetRotated() const { return rotated_; }
     void SetRotated(bool rotated, bool swapWidthAndHeight = false);
 
+    void UpdateTransparency();
+
     int GetDisplayIndex();
     bool IsLeftOfDisplay();
     bool IsTopOfDisplay();

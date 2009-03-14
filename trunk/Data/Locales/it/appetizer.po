@@ -1,0 +1,578 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-10 15:29+0000\n"
+"PO-Revision-Date: 2009-03-14 17:35-0000\n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+"X-Poedit-Country: ITALY\n"
+
+msgid "%s Plugin Packages"
+msgstr "%s Pacchetti di Plugin"
+
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s sta per essere minimizzata nella System Tray.\n"
+"\n"
+"E' possibile modificare l'impostazione nella '%s' finestra ('%s' tab)"
+
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Versione %s.%s.%s (Build #%s)"
+
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString di Joe O'Leary"
+
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua di Roberto Ierusalimschy, Luiz Henrique de Figueiredo, e Waldemar Celes"
+
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini di Brodie Thiesfield"
+
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml di Yves Berquin"
+
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets dei rispettivi autori"
+
+msgid "- zlib by Jean-Loup Gailly and Mark Adler"
+msgstr "- zlib di Jean-Loup Gailly e Mark Adler"
+
+msgid "<None>"
+msgstr "<Nessuno>"
+
+msgid ""
+"A new version is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"\n"
+"Do you wish to download it now?"
+msgstr ""
+"E' disponibile una nuova versione\n"
+"\n"
+"Versione utilizzata: %s\n"
+"Nuova versione: %s\n"
+"Release notes: %s\n"
+"\n"
+"Vuoi effettuare il download?"
+
+msgid "About"
+msgstr "A proposito"
+
+msgid "About %s..."
+msgstr "A proposito di %s..."
+
+msgid "Add special item"
+msgstr "Aggiungi collegamento speciale"
+
+msgid "Add to Multi Launch group"
+msgstr "Aggiungi a Lancio Multiplo"
+
+msgid "All files"
+msgstr "Tutti i files"
+
+msgid "All supported files"
+msgstr "Tutti i files supportati"
+
+msgid "Allow only one instance of %s at a time"
+msgstr "Esegui solo una sessione di %s per volta"
+
+msgid "Alt +"
+msgstr "Alt +"
+
+msgid "Always on top"
+msgstr "In primo piano"
+
+msgid "Appearance"
+msgstr "Aspetto"
+
+msgid "Auto-hide after launching an application"
+msgstr "Nascondi dopo il lancio dell'applicazione"
+
+msgid "Available plugins"
+msgstr "Plugins validi"
+
+msgid "Backspace"
+msgstr "Barra spaziatrice"
+
+msgid ""
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Installando il file di autoesecuzione sul tio supporto rimovibile, %s si avvierà automaticamente quando inserirai il drive.\n"
+"\n"
+"Vuoi continuare?"
+
+msgid "Can not create file '%s'"
+msgstr "Non è possibile creare il file '%s'"
+
+msgid "Can not read zip entry '%s'"
+msgstr "Non è possibile leggere il valore zip '%s'"
+
+msgid "Cancel"
+msgstr "Annulla"
+
+msgid "Change icon..."
+msgstr "Cambia icona..."
+
+msgid "Check for update"
+msgstr "Cotrolla aggiornamenti"
+
+msgid "Close"
+msgstr "Chiudi"
+
+msgid "Close button minimizes to System Tray"
+msgstr "Minimizza nella Tray con il pulsante di chiusura"
+
+msgid "Configuration"
+msgstr "Configura"
+
+msgid "Confirmation"
+msgstr "Conferma"
+
+msgid "Contact:"
+msgstr "Contatti:"
+
+msgid "Control +"
+msgstr "Control +"
+
+msgid "Control Panel"
+msgstr "Pannello di Controllo"
+
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+msgid "Could not get update information"
+msgstr "Non posso aggiornare le informazioni"
+
+msgid "Could not initialize locale."
+msgstr "Non posso inizializzare locale"
+
+msgid "Could not install autorun file. Please try again."
+msgstr "Non è possibile installare il file di autoesecuzione. Riprovare."
+
+msgid "Could not open %s"
+msgstr "Non è possibile aprire %s"
+
+msgid "Credits"
+msgstr "Crediti"
+
+msgid "Current Drive"
+msgstr "Drive corrente"
+
+msgid "Default"
+msgstr "Default"
+
+msgid "Delete"
+msgstr "Canc"
+
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Le finestre di dialogo sono realizzate usando wxGlade di Alberto Griggio."
+
+msgid "Disable"
+msgstr "Disabilita"
+
+msgid "Disabled"
+msgstr "Disabilitato"
+
+msgid "Displays the log window (useful for debugging)"
+msgstr "Mostra finestra log"
+
+msgid "Displays this help message"
+msgstr "Mostra messaggio di aiuto"
+
+msgid "Do you wish to eject the drive?"
+msgstr "Vuoi espellere il drive?"
+
+msgid "Do you wish to remove this icon?"
+msgstr "Vuoi rimuovere l'icona?"
+
+msgid "Don't show this message again"
+msgstr "Non mostrare più questo messaggio"
+
+msgid "Down"
+msgstr "Basso"
+
+msgid "Dynamic libraries"
+msgstr "Librerie dinamiche"
+
+msgid "Eject drive"
+msgstr "Espelli"
+
+msgid "Enable"
+msgstr "Abilita"
+
+msgid "Enabled"
+msgstr "Abilitato"
+
+msgid "End"
+msgstr "Fine"
+
+msgid "Error"
+msgstr "Errore"
+
+msgid "Error launching web browser"
+msgstr "Errore del Web Browser"
+
+msgid "Escape"
+msgstr "Escape"
+
+msgid "Exclude these items from import operations"
+msgstr "Escludi questi elementi dalle operazioni di importazione"
+
+msgid "Executables"
+msgstr "Eseguibili"
+
+msgid "Extra Large (XP and above)"
+msgstr "Extra (XP e superiore)"
+
+msgid "General"
+msgstr "Generale"
+
+msgid "Get Support"
+msgstr "Supporto"
+
+msgid "Group"
+msgstr "Gruppo"
+
+msgid "Group Properties"
+msgstr "Proprietà Gruppo"
+
+msgid "Help"
+msgstr "Aiuto"
+
+msgid "Help Topics"
+msgstr "Aiuto"
+
+msgid "Hide"
+msgstr "Nascondi"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Horizontal"
+msgstr "Orizzontale"
+
+msgid "Hot key to hide / show the bar"
+msgstr "Hot key per nascondere / mostrare la barra"
+
+msgid "Icon file or library:"
+msgstr "File o libreria di icone:"
+
+msgid "Icon libraries"
+msgstr "Librerie di icone"
+
+msgid "Icon size:"
+msgstr "Dimensione icona:"
+
+msgid "Icon:"
+msgstr "Icona:"
+
+msgid "Icons"
+msgstr "Icone"
+
+msgid "Import"
+msgstr "Importa"
+
+msgid "Import shortcuts"
+msgstr "Importa collegamenti"
+
+msgid "Importing shortcuts... Please wait."
+msgstr "Importazione collegamenti in corso.... Attendere."
+
+msgid "Information"
+msgstr "Informazione"
+
+msgid "Install autorun file"
+msgstr "Installa file di autoesecuzione"
+
+msgid "Install..."
+msgstr "Installa..."
+
+msgid "Jumbo (Vista and above)"
+msgstr "Jumbo (Vista e superiore)"
+
+msgid "Language:"
+msgstr "Lingua:"
+
+msgid "Large"
+msgstr "Grandi"
+
+msgid "Left"
+msgstr "Sinistra"
+
+msgid "License"
+msgstr "Licenza"
+
+msgid "Loading tree..."
+msgstr "Albero di caricamento..."
+
+msgid "Location:"
+msgstr "Ubicazione:"
+
+msgid "Minimize to tray"
+msgstr "Minimizza nella Tray"
+
+msgid "Multi-launch"
+msgstr "Multilancio"
+
+msgid "My Computer"
+msgstr "Risorse del Computer"
+
+msgid "My Network Places"
+msgstr "Rete"
+
+msgid "Name:"
+msgstr "Nome:"
+
+msgid "New group..."
+msgstr "Nuovo Gruppo..."
+
+msgid "New shortcut..."
+msgstr "Nuovo Collegamento..."
+
+msgid "No"
+msgstr "No"
+
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Operations"
+msgstr "Operazioni"
+
+msgid "Organize group shortcuts"
+msgstr "Organizza Gruppo Collegamenti"
+
+msgid "Organize shortcuts"
+msgstr "Organizza collegamenti"
+
+msgid "Orientation:"
+msgstr "Orientamento:"
+
+msgid "Parameters:"
+msgstr "Parametri:"
+
+msgid "Please wait while your applications are being closed."
+msgstr "Per favore, attendere che l'applicazione venga chiusa."
+
+msgid "Please wait..."
+msgstr "Per favore, attendere..."
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "Lo script del Plugin non è nella configurazione corretta. Per favore lo codifichi come UTF-8 NO BOM o ASCII. Applica a:"
+
+msgid "Plugins"
+msgstr "Plugins"
+
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com applications"
+
+msgid "Properties"
+msgstr "Proprietà"
+
+msgid "Recycle Bin"
+msgstr "Cestino"
+
+msgid "Remove..."
+msgstr "Elimina..."
+
+msgid "Return"
+msgstr "Invio"
+
+msgid "Right"
+msgstr "Destra"
+
+msgid "Run multi-launch group on startup"
+msgstr "Esegui lancio multiplo di gruppi all'avvio"
+
+msgid "Save"
+msgstr "Salva"
+
+msgid "Search"
+msgstr "Cerca"
+
+msgid "Select a file or a folder"
+msgstr "Seleziona un file o una cartella"
+
+msgid "Select a plugin package"
+msgstr "Selezione un Pacchetto di Plugin"
+
+msgid "Select an icon"
+msgstr "Seleziona un'icona"
+
+msgid "Select an icon file or library"
+msgstr "Seleziona un file o una libreria di icone:"
+
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Percorso Utente (-u sarà ignorato)"
+
+msgid "Shift +"
+msgstr "Shift +"
+
+msgid "Shorcut Properties"
+msgstr "Proprietà Collegamento"
+
+msgid "Show"
+msgstr "Mostra"
+
+msgid "Show Desktop"
+msgstr "Mostra Desktop"
+
+msgid "Skin:"
+msgstr "Skin:"
+
+msgid "Small"
+msgstr "Piccole"
+
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Alcuni cambiamenti verranno effettuati al prossimo riavvio."
+
+msgid "Space"
+msgstr "Spazio"
+
+msgid "Start >>"
+msgstr "Avvio >>"
+
+msgid "Status"
+msgstr "Stato"
+
+msgid "Tab"
+msgstr "Tab"
+
+msgid "The autorun file has been installed successfully"
+msgstr "Il file di autoesecuzione è stato installato correttamente."
+
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "I cambiamenti fatti ai plugins saranno attivi al prossimo riavvio di  %s."
+
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "Il gruppo multilancio è attualmente vuoto. Vuoi un aiuto su questa caratteristica?"
+
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "Il plugin è stato installato correttamente. Esso verrà attivato al prossimo riavvio"
+
+msgid "The shorcut location doesn't exist. Do you wish to continue?"
+msgstr "L'origine del collegamento non esiste. Vuoi continuare?"
+
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Errore di registrazione della Hot Key. E' probabile che un'altra applicazione utilizzi la combinazione"
+
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Il file non esiste o è stato eliminato"
+
+msgid ""
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"Questo programma è free: tu puoi redistribuirlo e/o modificarlo secondo i termini di GNU General Public License, come pubblicato da Free Software Foundation, versione 3 della licenza, o versione successiva.\n"
+"\n"
+"Questo programma è distribuito nella speranza che sarà utile, ma SENZA ALCUNA GARANZIA; senza anche la garanzia tacita di COMMERCIABILITA' o APPROPRIATEZZA PER UN PARTICOLARE SCOPO.  Vedere GNU General Public License per maggiori dettagli.\n"
+"\n"
+"Tu avresti dovuto ricevere una copia del Gnu General Public License insieme a questo programma.  Se non è così, vedi <http://www.gnu.org/licenses />."
+
+msgid "This skin is not compatible with the current version of %s."
+msgstr "La Skin non è compatibile con la versione corrente di %s."
+
+msgid "This software uses a number of open source libraries including:"
+msgstr "Questo software usa un numero di librerie open source che includono:"
+
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Questa utilità ti aiuterà ad importare i collegamenti in %s.\n"
+"\n"
+"Per favore, seleziona qui sotto l'origine dei tuoi collegamenti:"
+
+msgid "Translators: %s"
+msgstr "Traduttore: %s"
+
+msgid "Unnamed"
+msgstr "Senza nome"
+
+msgid "Up"
+msgstr "Alto"
+
+msgid "Use default"
+msgstr "Usa default"
+
+msgid "Uses user data directory to save settings."
+msgstr "Salva settaggi in cartella utente"
+
+msgid "Vertical"
+msgstr "Verticale"
+
+msgid "Warning"
+msgstr "Attenzione"
+
+msgid "Web:"
+msgstr "Web:"
+
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Quando si espelle il drive, chiudere le applicazioni che lo bloccano"
+
+msgid "Windows Explorer"
+msgstr "Esplora Risorse"
+
+msgid "Windows Quick Launch toolbar"
+msgstr "Barra di Avvio Veloce di Windows"
+
+msgid "Windows Start Menu programs"
+msgstr "Programmi Menu di Avvio Windows"
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Non si hanno i privilegi per questa operazione."
+
+msgid "You have the latest version."
+msgstr "Questa è l'ultima versione"
+

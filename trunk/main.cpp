@@ -156,6 +156,7 @@ bool MiniLaunchBar::OnInit() {
   mainFrame_ = new MainFrame();
   mainFrame_->Show();
   mainFrame_->SetRotated(GetUser()->GetSettings()->GetBool(_T("Rotated")));  
+  mainFrame_->UpdateTransparency();
 
   SetTopWindow(mainFrame_);
 
@@ -183,6 +184,7 @@ bool MiniLaunchBar::OnInit() {
 
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
 
+  
   //ToolTipFrame* f = new ToolTipFrame(mainFrame_);
   
   //f->ShowToolTip(_T("début - azdfjr alkfj alekjzlfkejl lfejzfkl ejzkljf kjzf lkejzlf jezklf jeklzfjeklzfj eklz FIN"), wxRect(200, 200, 100, 100));

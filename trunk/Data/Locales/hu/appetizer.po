@@ -1,0 +1,807 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-10 15:29+0000\n"
+"PO-Revision-Date: 2009-02-15 18:06-0000\n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Elrejtés"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Megjelenítés"
+
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:405
+msgid "Eject drive"
+msgstr "Leválasztás"
+
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:873
+#: OptionPanel.cpp:151
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Beállítások"
+
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Bezárás"
+
+#: FolderItem.cpp:459
+#: gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Parancsikonok rendezése"
+
+#: FolderItem.cpp:570
+#: FolderItem.cpp:577
+#: FolderItem.cpp:600
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "A fájl nem létezik, vagy nem található. (Hiba: %s)"
+
+#: FolderItem.cpp:834
+msgid "Group"
+msgstr "Csoport"
+
+#: FolderItem.cpp:835
+msgid "Unnamed"
+msgstr "Névtelen"
+
+#: FolderItem.cpp:1043
+#: IconPanel.cpp:138
+msgid "Control Panel"
+msgstr "Vezérlőpult"
+
+#: FolderItem.cpp:1045
+#: IconPanel.cpp:139
+msgid "My Computer"
+msgstr "Sajátgép"
+
+#: FolderItem.cpp:1047
+#: IconPanel.cpp:140
+msgid "My Network Places"
+msgstr "Hálózati helyek"
+
+#: FolderItem.cpp:1049
+#: IconPanel.cpp:141
+msgid "Recycle Bin"
+msgstr "Lomtár"
+
+#: FolderItem.cpp:1051
+#: IconPanel.cpp:142
+msgid "Show Desktop"
+msgstr "Asztal megjelenítése"
+
+#: FolderItem.cpp:1053
+#: IconPanel.cpp:143
+msgid "Windows Explorer"
+msgstr "Windows Intéző"
+
+#: FolderItem.cpp:1055
+#: IconPanel.cpp:144
+msgid "Search"
+msgstr "Keresés"
+
+#: FolderItem.cpp:1057
+msgid "Current Drive"
+msgstr "Jelenlegi meghajtó"
+
+#: FolderItemRenderer.cpp:152
+#: gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "Eltávolítás..."
+
+#: FolderItemRenderer.cpp:157
+msgid "Add to Multi Launch group"
+msgstr "Hozzáadás csoportos futtatáshoz"
+
+#: FolderItemRenderer.cpp:166
+msgid "Organize group shortcuts"
+msgstr "Csoport parancsikonok rendezése"
+
+#: FolderItemRenderer.cpp:171
+#: gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Tulajdonságok"
+
+#: IconPanel.cpp:118
+#: OptionPanel.cpp:150
+msgid "New shortcut..."
+msgstr "Új parancsikon..."
+
+#: IconPanel.cpp:122
+msgid "New group..."
+msgstr "Új csoport..."
+
+#: IconPanel.cpp:148
+msgid "Add special item"
+msgstr "Különleges elemek hozzáadása"
+
+#: main.cpp:64
+msgid "Uses user data directory to save settings."
+msgstr "A felhasználói adatok maooáját használja a beállítások elmentésére."
+
+#: main.cpp:65
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Sets user data path (-u will be ignored)Beállítja a felhasználói adatok elérési útját (-u itt figyelmen kívül lesz hagyva )"
+
+#: main.cpp:66
+msgid "Displays the log window (useful for debugging)"
+msgstr "Megjeleníti a log ablakot (hibakereséshez ajánlott)"
+
+#: main.cpp:67
+msgid "Displays this help message"
+msgstr "Megjeleníti a súgót"
+
+#: main.cpp:125
+msgid "Could not initialize locale."
+msgstr "A helyi fájl nem található."
+
+#: main.cpp:212
+msgid "Large"
+msgstr "Nagy"
+
+#: main.cpp:213
+msgid "Extra Large (XP and above)"
+msgstr "Nagyon nagy (XP vagy újabb)"
+
+#: main.cpp:214
+msgid "Jumbo (Vista and above)"
+msgstr "Hatalmas (Vista vagy újabb)"
+
+#: main.cpp:218
+msgid "Small"
+msgstr "Kicsi"
+
+#: main.cpp:309
+msgid "Could not get update information"
+msgstr "Nem sierült frissítési információkat szerezni"
+
+#: main.cpp:323
+msgid "You have the latest version."
+msgstr "A jelenlegi a legfrissebb verzió."
+
+#: main.cpp:330
+#, c-format
+msgid ""
+"A new version is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"\n"
+"Do you wish to download it now?"
+msgstr ""
+"Egy újabb változat elérhető!\n"
+"\n"
+"Jelenlegi verzió: %s\n"
+"Új verzió: %s\n"
+"Megjegyzések: %s\n"
+"\n"
+"Letöltöd most?"
+
+#: main.cpp:336
+msgid "Error launching web browser"
+msgstr "Webböngésző elindítása sikertelen"
+
+#: MainFrame.cpp:223
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Nem sikerült beállítáani a gyorsbillentyűt. Talán egy másik alkalmazás már használja azt."
+
+#: MainFrame.cpp:404
+msgid "Minimize to tray"
+msgstr "Küldés a tálcára"
+
+#: MainFrame.cpp:873
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"Az %s most kis méretre vált. A Tálcán megtalálod.\n"
+"\n"
+"Az ezzel kapcsolatos beállításokat megváltoztathatod itt: '%s' ('%s' fül)"
+
+#: MainFrame.cpp:873
+#: gui\ConfigDialog.cpp:58
+msgid "Operations"
+msgstr "Műveletek"
+
+#: MainFrame.cpp:873
+#: utilities\Utilities.cpp:74
+#: utilities\Utilities.cpp:278
+msgid "Don't show this message again"
+msgstr "Ne mutasd ezt újra"
+
+#: MessageBoxes.cpp:15
+msgid "Error"
+msgstr "Hiba"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Információ"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Megerősítés"
+
+#: OptionPanel.cpp:149
+#: gui\ConfigDialog.cpp:63
+msgid "Help"
+msgstr "Segítség"
+
+#: OptionPanel.cpp:152
+msgid "Multi-launch"
+msgstr "Csoportos futtatás"
+
+#: OptionPanel.cpp:153
+#: gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Parancsikonok importálása"
+
+#: OptionPanel.cpp:314
+msgid "Help Topics"
+msgstr "Súgótémák"
+
+#: OptionPanel.cpp:315
+msgid "Get Support"
+msgstr "Támogatás"
+
+#: OptionPanel.cpp:317
+#: gui\AboutDialog.cpp:80
+#, c-format
+msgid "About %s..."
+msgstr "Az About %s-ről..."
+
+#: OptionPanel.cpp:327
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "A \"csoportos indítás\" csoport üres. Meg szeretnéd nézni a súgó idevágó részét?"
+
+#: Plugin.cpp:127
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "A Kiegészítő script formátuma nem megfelelő. Kódold át UTF-8 NO BOM vagy ASCII formátumba."
+
+#: PluginManager.cpp:46
+#, c-format
+msgid "Could not open %s"
+msgstr "A következő fájl megnyitása sikeretelen volt: %s"
+
+#: PluginManager.cpp:65
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "Hiba a zip bejegyzés megnyitásako: %s'"
+
+#: PluginManager.cpp:72
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "Nem sikerült létrehozni a következő fájlt: %s'"
+
+#: PluginManager.cpp:87
+#, c-format
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "A Kiegészítő sikeresen telepítve. Az új Kiegészítő az %s legközelebbi indításakor fog elindulni."
+
+#: Styles.cpp:68
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Ez a Külső nem kompatibilis a program jelenlegi verziójával: %s."
+
+#: utilities\Utilities.cpp:74
+msgid "Do you wish to remove this icon?"
+msgstr "Valóban törölni akarod az ikont?"
+
+#: utilities\Utilities.cpp:156
+msgid "Please wait while your applications are being closed."
+msgstr "Egy kis türelmet, amíg az alkalmazások bezáródnak."
+
+#: utilities\Utilities.cpp:175
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Nem rendelkezel megfelelő engedélyekkel ehhez a művelethez."
+
+#: utilities\Utilities.cpp:278
+msgid "Do you wish to eject the drive?"
+msgstr "Biztosa le akarod választani a cserélhető meghajtót?"
+
+#: gui\AboutDialog.cpp:62
+#, c-format
+msgid "Translators: %s"
+msgstr "Fordítók: %s"
+
+#: gui\AboutDialog.cpp:64
+msgid "This software uses a number of open source libraries including:"
+msgstr "Ez a szoftver több nyílt forráskódú könyvtárat is használ, többek között ezeket:"
+
+#: gui\AboutDialog.cpp:66
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini: Brodie Thiesfield"
+
+#: gui\AboutDialog.cpp:68
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml: Yves Berquin"
+
+#: gui\AboutDialog.cpp:70
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString: Joe O'Leary"
+
+#: gui\AboutDialog.cpp:72
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua: Roberto Ierusalimschy, Luiz Henrique de Figueiredo, és Waldemar Celes"
+
+#: gui\AboutDialog.cpp:74
+msgid "- zlib by Jean-Loup Gailly and Mark Adler"
+msgstr "- zlib: Jean-Loup Gailly és  Mark Adler"
+
+#: gui\AboutDialog.cpp:76
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets: a szerzők"
+
+#: gui\AboutDialog.cpp:78
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Az ablakok wxGlade (Alberto Griggio) felhasználásával készültek."
+
+#: gui\AboutDialog.cpp:81
+msgid "About"
+msgstr "A programról"
+
+#: gui\AboutDialog.cpp:82
+msgid "License"
+msgstr "Licensz"
+
+#: gui\AboutDialog.cpp:83
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "OK"
+
+#: gui\AboutDialog.cpp:84
+msgid "Credits"
+msgstr "Credits"
+
+#: gui\AboutDialog.cpp:88
+#, c-format
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+#: gui\AboutDialog.cpp:89
+msgid ""
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"Ez egy ingyenes szoftver: szabadon terjesztheted, és/vagy módosíthatod a Free Software Foundation által kiadott GNU General Public Licensz 3, vagy későbbi változatainak szabályai alapján.\n"
+"\n"
+"A programhoz mellékelve van a GNU General Public Licensz egy másolata. Ha nem, itt megtalálod: <http://www.gnu.org/licenses/>."
+
+#: gui\AboutDialog.cpp:90
+msgid "Web:"
+msgstr "Web:"
+
+#: gui\AboutDialog.cpp:91
+msgid "Contact:"
+msgstr "Kapcsolat:"
+
+#: gui\AboutDialog.cpp:99
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Verzió: %s.%s.%s (Build #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Igen"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "Nem"
+
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:62
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:80
+#: gui\ShortcutEditorDialog.cpp:43
+msgid "Cancel"
+msgstr "Mégsem"
+
+#: gui\ConfigDialog.cpp:56
+msgid "General"
+msgstr "Általános"
+
+#: gui\ConfigDialog.cpp:57
+msgid "Appearance"
+msgstr "Megjelenés"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Import"
+msgstr "Importálás"
+
+#: gui\ConfigDialog.cpp:60
+msgid "Plugins"
+msgstr "Kiegészítők"
+
+#: gui\ConfigDialog.cpp:61
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Save"
+msgstr "Mentés"
+
+#: gui\ConfigDialog.cpp:97
+msgid "Enabled"
+msgstr "Engedélyezve"
+
+#: gui\ConfigDialog.cpp:97
+msgid "Disabled"
+msgstr "Letiltva"
+
+#: gui\ConfigDialog.cpp:125
+msgid "Plugin"
+msgstr "Kiegészítő"
+
+#: gui\ConfigDialog.cpp:126
+msgid "Status"
+msgstr "Állapot"
+
+#: gui\ConfigDialog.cpp:195
+msgid "Language:"
+msgstr "Nyelv:"
+
+#: gui\ConfigDialog.cpp:196
+msgid "Always on top"
+msgstr "Mindig legfelül"
+
+#: gui\ConfigDialog.cpp:197
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "Csak egy példány futhat a programból. %s"
+
+#: gui\ConfigDialog.cpp:198
+#: gui\ConfigDialog.cpp:691
+msgid "Check for update"
+msgstr "Frissítések keresése"
+
+#: gui\ConfigDialog.cpp:199
+msgid "Install autorun file"
+msgstr "Autorun fájl létrehozása"
+
+#: gui\ConfigDialog.cpp:283
+msgid "Icon size:"
+msgstr "Ikonok mérete:"
+
+#: gui\ConfigDialog.cpp:284
+msgid "Skin:"
+msgstr "Külső:"
+
+#: gui\ConfigDialog.cpp:285
+msgid "Orientation:"
+msgstr "Ikonok elhelyezkedése:"
+
+#: gui\ConfigDialog.cpp:312
+msgid "Horizontal"
+msgstr "Vízszintes"
+
+#: gui\ConfigDialog.cpp:313
+msgid "Vertical"
+msgstr "Függőleges"
+
+#: gui\ConfigDialog.cpp:337
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#: gui\ConfigDialog.cpp:380
+msgid "Auto-hide after launching an application"
+msgstr "Az ablak elrejtése egy program indítása után"
+
+#: gui\ConfigDialog.cpp:381
+msgid "Run multi-launch group on startup"
+msgstr "A csoprtos futtatás programjainak indítása programindításkor"
+
+#: gui\ConfigDialog.cpp:382
+msgid "Hot key to hide / show the bar"
+msgstr "Gyorsbillentyű a program elrejtéséhez/megjelenítéséhez"
+
+#: gui\ConfigDialog.cpp:383
+msgid "Control +"
+msgstr "Control +"
+
+#: gui\ConfigDialog.cpp:384
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:385
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:386
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "A meghajtó lecsatlakoztatáakor zárd be azokat a lecsatlakoztatást blokkoló alkalmazásokat."
+
+#: gui\ConfigDialog.cpp:387
+msgid "Close button minimizes to System Tray"
+msgstr "A Bezárás gomb a tálcára küldi a programot"
+
+#: gui\ConfigDialog.cpp:398
+msgid "<None>"
+msgstr "<Üres>"
+
+#: gui\ConfigDialog.cpp:440
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+#: gui\ConfigDialog.cpp:441
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+#: gui\ConfigDialog.cpp:442
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+#: gui\ConfigDialog.cpp:443
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+#: gui\ConfigDialog.cpp:444
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+#: gui\ConfigDialog.cpp:445
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+#: gui\ConfigDialog.cpp:446
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+#: gui\ConfigDialog.cpp:447
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+#: gui\ConfigDialog.cpp:448
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+#: gui\ConfigDialog.cpp:449
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+#: gui\ConfigDialog.cpp:451
+msgid "Backspace"
+msgstr "Backspace"
+
+#: gui\ConfigDialog.cpp:452
+msgid "Tab"
+msgstr "Tab"
+
+#: gui\ConfigDialog.cpp:453
+msgid "Return"
+msgstr "Enter"
+
+#: gui\ConfigDialog.cpp:454
+msgid "Escape"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:455
+msgid "Space"
+msgstr "Space"
+
+#: gui\ConfigDialog.cpp:456
+msgid "Delete"
+msgstr "Delete"
+
+#: gui\ConfigDialog.cpp:458
+msgid "End"
+msgstr "End"
+
+#: gui\ConfigDialog.cpp:459
+msgid "Home"
+msgstr "Home"
+
+#: gui\ConfigDialog.cpp:460
+msgid "Left"
+msgstr "Bal"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Up"
+msgstr "Fel"
+
+#: gui\ConfigDialog.cpp:462
+msgid "Right"
+msgstr "Jobb"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Down"
+msgstr "Le"
+
+#: gui\ConfigDialog.cpp:521
+msgid "Exclude these items from import operations"
+msgstr "Ezeket az elemeket ne vegye bele az import műveletekbe"
+
+#: gui\ConfigDialog.cpp:553
+msgid "Available plugins"
+msgstr "Rendelkezésre álló kiegészítők"
+
+#: gui\ConfigDialog.cpp:554
+msgid "Enable"
+msgstr "Engedélyezés"
+
+#: gui\ConfigDialog.cpp:555
+msgid "Disable"
+msgstr "Letiltás"
+
+#: gui\ConfigDialog.cpp:556
+msgid "Install..."
+msgstr "Telepítés..."
+
+#: gui\ConfigDialog.cpp:558
+#, c-format
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "A Kiegészítők módosításai csak a program újraindítása után lépnek életbe. %s"
+
+#: gui\ConfigDialog.cpp:618
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Az autorun fájl létrehozásával, az %s ezután mindig automatikusan elindul, amint csatlakoztatod a meghajtót. \n"
+"\n"
+"Biztos, hogy folytatod?"
+
+#: gui\ConfigDialog.cpp:621
+msgid "Could not install autorun file. Please try again."
+msgstr "Az autorun fájlt nem sikerült létrehozni. Kérlek, próbáld újra..."
+
+#: gui\ConfigDialog.cpp:623
+msgid "The autorun file has been installed successfully"
+msgstr "Autorun fájl sikeresen létrehozva."
+
+#: gui\ConfigDialog.cpp:654
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s Kiegészítő Csomagok"
+
+#: gui\ConfigDialog.cpp:655
+#: gui\IconDialog.cpp:161
+msgid "All files"
+msgstr "Minden fájl"
+
+#: gui\ConfigDialog.cpp:657
+msgid "Select a plugin package"
+msgstr "Válassz kiegészítőcsomagot"
+
+#: gui\ConfigDialog.cpp:686
+msgid "Please wait..."
+msgstr "Egy kis türelmet..."
+
+#: gui\ConfigDialog.cpp:940
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Néhány beállítás csak az alkalmazás újraindítása után lép életbe."
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Fa betöltése..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "Válassz egy fájlt vagy mappát"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Válassz ikont"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Ikon fájl vagy könyvtár"
+
+#: gui\IconDialog.cpp:156
+msgid "All supported files"
+msgstr "Minden támogatott formátum"
+
+#: gui\IconDialog.cpp:157
+msgid "Icons"
+msgstr "Ikonok"
+
+#: gui\IconDialog.cpp:158
+msgid "Executables"
+msgstr "Alkalmazások"
+
+#: gui\IconDialog.cpp:159
+msgid "Dynamic libraries"
+msgstr "Dinamikus könyvtárak"
+
+#: gui\IconDialog.cpp:160
+msgid "Icon libraries"
+msgstr "Ikonkönyvtárak"
+
+#: gui\IconDialog.cpp:163
+msgid "Select an icon file or library"
+msgstr "Válasz egy ikon fájlt, vagy -könyvtárat"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Ez az eszköz segít a parancsikonokat az %s-be importálni.\n"
+"\n"
+"Válaszd ki, honnan importáljuk a parancsikonokat:"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "Portableapps.com programok"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "A Gyorsindítás eszköztár programjai"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "A Start menü programjai"
+
+#: gui\ImportWizardDialog.cpp:77
+msgid "Start >>"
+msgstr "Start >>"
+
+#: gui\ImportWizardDialog.cpp:118
+msgid "Importing shortcuts... Please wait."
+msgstr "Parancsikonok importálása... Egy kis türelmet..."
+
+#: gui\ShortcutEditorDialog.cpp:38
+msgid "Group Properties"
+msgstr "Csoport tulajdonságai"
+
+#: gui\ShortcutEditorDialog.cpp:38
+msgid "Shorcut Properties"
+msgstr "Parancsikon tulajdonságai"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Name:"
+msgstr "Név:"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Location:"
+msgstr "Hely:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Parameters:"
+msgstr "Paraméterek:"
+
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Icon:"
+msgstr "Ikon:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Change icon..."
+msgstr "Másik ikon..."
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Use default"
+msgstr "Alapértelmezett használata"
+
+#: gui\ShortcutEditorDialog.cpp:152
+msgid "The shorcut location doesn't exist. Do you wish to continue?"
+msgstr "A parancsikon elérési útja nem létezik. Folytatod?s"
+

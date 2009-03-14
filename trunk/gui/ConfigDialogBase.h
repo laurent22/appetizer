@@ -63,6 +63,8 @@ protected:
     wxComboBox* orientationComboBox;
     wxStaticText* skinLabel;
     wxComboBox* skinComboBox;
+    wxStaticText* transparencyLabel;
+    wxSlider* transparencySlider;
     wxPanel* notebook_pane_2;
     wxCheckBox* autohideCheckBox;
     wxCheckBox* multiLaunchAutoRunCheckBox;

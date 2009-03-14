@@ -41,6 +41,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     skinLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Skin:"));
     const wxString *skinComboBox_choices = NULL;
     skinComboBox = new wxComboBox(notebook_pane_2, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, skinComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
+    transparencyLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Transparency:"));
+    transparencySlider = new wxSlider(notebook_pane_2, wxID_ANY, 0, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS);
     autohideCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Hide after launching an application"));
     multiLaunchAutoRunCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("#Run multi-launch group on startup#"));
     closeAppOnEjectCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("#When ejecting the drive, close the apps that are locking it#"));
@@ -94,7 +96,7 @@ void ConfigDialogBase::do_layout()
     wxStaticBoxSizer* hotKeyGroupSizer = new wxStaticBoxSizer(hotKeyGroupSizer_staticbox, wxHORIZONTAL);
     wxFlexGridSizer* grid_sizer_3 = new wxFlexGridSizer(1, 4, 8, 8);
     wxBoxSizer* sizer_4 = new wxBoxSizer(wxHORIZONTAL);
-    wxFlexGridSizer* grid_sizer_1 = new wxFlexGridSizer(3, 2, 8, 8);
+    wxFlexGridSizer* grid_sizer_1 = new wxFlexGridSizer(4, 2, 8, 8);
     wxBoxSizer* sizer_3 = new wxBoxSizer(wxHORIZONTAL);
     wxFlexGridSizer* generalGridSizer = new wxFlexGridSizer(6, 2, 8, 8);
     generalGridSizer->Add(languageLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
@@ -116,6 +118,8 @@ void ConfigDialogBase::do_layout()
     grid_sizer_1->Add(orientationComboBox, 0, wxEXPAND, 0);
     grid_sizer_1->Add(skinLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_1->Add(skinComboBox, 0, wxEXPAND, 0);
+    grid_sizer_1->Add(transparencyLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
+    grid_sizer_1->Add(transparencySlider, 0, wxEXPAND, 0);
     grid_sizer_1->AddGrowableCol(1);
     sizer_4->Add(grid_sizer_1, 1, wxALL|wxEXPAND, 10);
     notebook_pane_2->SetSizer(sizer_4);

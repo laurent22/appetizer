@@ -301,7 +301,14 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       iconSizeLabel->SetLabel(_("Icon size:"));
       skinLabel->SetLabel(_("Skin:"));
       orientationLabel->SetLabel(_("Orientation:"));
+      transparencyLabel->SetLabel(_("Transparency:"));
+
+      //---------------------------------------------------------------------------
+      // Set transparency slider
+      //---------------------------------------------------------------------------
           
+      transparencySlider->SetValue(userSettings->GetInt(_T("WindowTransparency")));
+
       //---------------------------------------------------------------------------
       // Populate "icon size" dropdown list
       //---------------------------------------------------------------------------
@@ -801,6 +808,16 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     if (newIconSize != userSettings->GetInt(_T("IconSize"))) {
       userSettings->SetInt(_T("IconSize"), newIconSize);
       wxGetApp().User_IconSizeChange();
+    }
+
+    //---------------------------------------------------------------------------
+    // Apply changes to transparency
+    //---------------------------------------------------------------------------
+
+    int newTransparency = transparencySlider->GetValue();
+    if (newTransparency != userSettings->GetInt(_T("WindowTransparency"))) {
+      userSettings->SetInt(_T("WindowTransparency"), newTransparency);
+      wxGetApp().GetMainFrame()->UpdateTransparency();
     }
 
     //---------------------------------------------------------------------------

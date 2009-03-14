@@ -334,6 +334,14 @@ void MainFrame::ApplySkin(const wxString& skinName) {
     tSkinName = skinName;
   }
 
+
+  if (!wxFileName::DirExists(FilePaths::GetSkinDirectory())) {
+    WLOG(_T("Skin directory doesn't exist. Switching to default. ") + FilePaths::GetSkinDirectory());
+    wxGetApp().GetUser()->GetSettings()->SetString(_T("Skin"), _T("Default"));
+    tSkinName = _T("Default");
+  }
+
+
   Styles::LoadSkinFile(FilePaths::GetSkinDirectory() + _T("/") + SKIN_FILE_NAME);
 
   wxDELETE(mainBackgroundBitmap_);
@@ -868,6 +876,11 @@ void MainFrame::OnResizerMouseMove(wxMouseEvent& evt) {
     }
 
   }
+}
+
+
+void MainFrame::UpdateTransparency() {
+  wxTopLevelWindow::SetTransparent(wxGetApp().GetUser()->GetSettings()->GetInt(_T("WindowTransparency")));
 }
 
 
