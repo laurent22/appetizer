@@ -1,4 +1,13 @@
-﻿Version 1.3.1.126 (2009-02-10):
+﻿Version 1.3.1.222 (2009-04-12):
+
+- New option to set the transparency of the window
+- Added support for "Printer and Faxes" and "Network Connections" special items
+- Fixed: Appetizer would fail to launch a document if it doesn't have an extension. The "open with" dialog box is now displayed instead.
+- Fixed: Improved support for Vista (installation and saving of settings)
+- Added hungarian localization
+- Added italian localization (Massimo Lauria)
+
+Version 1.3.1.126 (2009-02-10):
 
 - Simplified skin system. There is now only one main background file per skin which contains most of the skin elements. That should make it much easier to create new skins.
 - Improved and generally made more consistent the plugin system.
