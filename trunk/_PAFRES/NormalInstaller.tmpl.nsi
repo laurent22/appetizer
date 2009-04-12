@@ -50,7 +50,7 @@ FunctionEnd
   InstallDirRegKey HKCU "Software\${APP_NAME}" ""
 
   ;Request application privileges for Windows Vista
-  RequestExecutionLevel user
+  RequestExecutionLevel admin
 
 ;--------------------------------
 ;Interface Settings
