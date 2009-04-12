@@ -47,6 +47,8 @@ public:
   int GetUniqueInt();
   void InitializePluginManager();
 
+  const bool GetCommandLineFound(const wxString& name);
+
   void FolderItems_CollectionChange();
   void FolderItems_FolderItemChange(FolderItem* folderItem);
   void User_LocaleChange();
@@ -60,6 +62,7 @@ private:
   virtual int OnExit();
   wxSingleInstanceChecker* singleInstanceChecker_;
   wxCmdLineParser commandLine_;
+  wxCmdLineParser fileCommandLine_;
   MainFrame* mainFrame_;
   Utilities utilities_;
   wxStopWatch stopWatch_;

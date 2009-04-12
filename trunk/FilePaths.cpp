@@ -192,7 +192,7 @@ void FilePaths::InitializePaths() {
   bool found = commandLine.Found(_T("d"), &userDataPath);
   if (found) {
     FilePaths::SettingsDirectory_ = userDataPath;
-  } else if (commandLine.Found(_T("u"))) {
+  } else if (wxGetApp().GetCommandLineFound(_T("u"))) {
     FilePaths::SettingsDirectory_ = wxString::Format(_T("%s/%s/%s"), wxStandardPaths().GetUserConfigDir(), APPLICATION_NAME, SETTING_FOLDER_NAME);
   } else {
     FilePaths::SettingsDirectory_ = FilePaths::GetDataDirectory() + _T("/") + SETTING_FOLDER_NAME;

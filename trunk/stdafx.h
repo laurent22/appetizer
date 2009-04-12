@@ -26,6 +26,7 @@
 #endif // __WXDEBUG__
 #endif // __WINDOWS__
 
+#include <wx/textfile.h>
 #include <wx/treebase.h>
 #include <wx/filefn.h>
 #include <wx/regex.h>

@@ -523,7 +523,7 @@ FolderItem* FolderItem::SearchChildByFilename(const wxString& filename, int matc
 void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   wxFileName filename(filePath);
 
-  if (filename.FileExists() || filename.IsRelative()) {
+  if (filename.FileExists() || filename.IsRelative() && !SystemUtil::IsPathADrive(filePath)) {
     //***************************************************************************
     // Launch executable
     //***************************************************************************   
@@ -568,14 +568,33 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
     // Launch document
     //***************************************************************************
 
-    wxFileType* fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(filename.GetExt());
-    if (!fileType) {
-      MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("UnknownMimeType")));
+    wxString fileExtension = filename.GetExt();
+    wxFileType* fileType = NULL;
+
+    if (fileExtension != wxEmptyString) {
+      fileType = wxTheMimeTypesManager->GetFileTypeFromExtension(fileExtension);
+      if (!fileType) {
+        MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("UnknownMimeType")));
+        return;
+      }
+    } else {
+      wxString filenameFullPath = filename.GetFullPath();
+
+      SHELLEXECUTEINFO sei;
+      memset(&sei,0,sizeof(SHELLEXECUTEINFO));
+      sei.cbSize = sizeof(SHELLEXECUTEINFO);
+      sei.lpVerb = _T("openas");
+      sei.lpFile = filenameFullPath.c_str();
+      sei.nShow = SW_NORMAL;
+      bool success = ShellExecuteEx(&sei);
+
+      // Don't need to display an error if !success since Windows will do it
+
       return;
     }
 
     wxString command; 
-    bool ok = fileType->GetOpenCommand(&command, wxFileType::MessageParameters(filePath, wxEmptyString)); 
+    bool ok = fileType && fileType->GetOpenCommand(&command, wxFileType::MessageParameters(filePath, wxEmptyString)); 
     if (!ok) {
       MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("CannotBuildCommand")));
     } else {
@@ -633,6 +652,18 @@ void FolderItem::Launch() {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{645FF040-5081-101B-9F08-00AA002F954E}");  
+
+
+    } else if (filePath_ == _T("$(Printers)")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+      parameters = _T(",::{2227A280-3AEA-1069-A2DE-08002B30309D}");  
+
+
+    } else if (filePath_ == _T("$(NetworkConnections)")) {
+
+      filePath = FilePaths::GetSystem32Directory() + _T("\\rundll32.exe");
+      parameters = _T("shell32.dll,Control_RunDLL ") + FilePaths::GetSystem32Directory() + _T("\\ncpa.cpl");
 
 
     } else if (filePath_ == _T("$(ShowDesktop)")) {
@@ -1026,6 +1057,10 @@ wxIcon* FolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize) {
     output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_MUSIC + inc);
   } else if (path == _T("$(MyVideo)")) {
     output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_MY_VIDEOS + inc);
+  } else if (path == _T("$(Printers)")) {
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_PRINTERS + inc);
+  } else if (path == _T("$(NetworkConnections)")) {
+    output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_NETWORK_CONNECTIONS + inc);
   }
 
   if (output) {
@@ -1058,6 +1093,10 @@ wxString FolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
       theName = _("Search");
     } else if (unresolvedFilePath == _T("$(Drive)")) {
       theName = _("Current Drive");
+    } else if (unresolvedFilePath == _T("$(Printers)")) {
+      theName = _("Printers and Faxes");
+    } else if (unresolvedFilePath == _T("$(NetworkConnections)")) {
+      theName = _("Network Connections");
     }
   }
 

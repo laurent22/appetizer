@@ -6,6 +6,31 @@
 ;Include Modern UI
 
   !include "MUI2.nsh"
+  
+;--------------------------------
+;Simple write text to file function
+;http://nsis.sourceforge.net/Simple_write_text_to_file
+  
+Function WriteToFile
+ Exch $0 ;file to write to
+ Exch
+ Exch $1 ;text to write
+ 
+  FileOpen $0 $0 a #open file
+   FileSeek $0 0 END #go to end
+   FileWrite $0 $1 #write to file
+  FileClose $0
+ 
+ Pop $1
+ Pop $0
+FunctionEnd
+ 
+!macro WriteToFile String File
+ Push "${String}"
+ Push "${File}"
+  Call WriteToFile
+!macroend
+!define WriteToFile "!insertmacro WriteToFile"
 
 ;--------------------------------
 ;General
@@ -59,6 +84,15 @@ Section "Appetizer" AppetizerSection
   
   File "${SOURCE_FOLDER}\${APP_NAME}.exe"
   File /r "${SOURCE_FOLDER}\Data"
+  
+  ; Create an Arguments.txt file next Appetizer.exe
+  ; with the /u option enabled. It means that when
+  ; installed through this installer, Appetizer will
+  ; use the user data directory (c:\documents and settings.. etc.)
+  ; to save its settings. I think it's necessary for Windows Vista.
+	Push "/u" ;text to write to file 
+	Push "$INSTDIR\Arguments.txt" ;file to write to 
+	Call WriteToFile
   
   ;Store installation folder
   WriteRegStr HKCU "Software\${APP_NAME}" "" $INSTDIR

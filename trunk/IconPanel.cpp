@@ -174,6 +174,8 @@ wxMenu* IconPanel::GetContextMenu() {
   ADD_SPECIAL_ITEM_TO_MENU(_("Show Desktop"), _T("$(ShowDesktop)"))
   ADD_SPECIAL_ITEM_TO_MENU(_("Windows Explorer"), _T("$(Explorer)"))
   ADD_SPECIAL_ITEM_TO_MENU(_("Search"), _T("$(Search)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("Printers and Faxes"), _T("$(Printers)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_("Network Connections"), _T("$(NetworkConnections)"))
 
   #undef ADD_SPECIAL_ITEM_TO_MENU
 

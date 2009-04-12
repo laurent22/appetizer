@@ -71,13 +71,41 @@ bool MiniLaunchBar::OnInit() {
     { wxCMD_LINE_NONE }
   };
 
+  fileCommandLine_.SetDesc(cmdLineDesc);  
+
+  wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
+  wxString applicationDirectory = executablePath.GetPath();
+  wxString argumentsFilePath = applicationDirectory + _T("/Arguments.txt");
+
+  if (wxFileName::FileExists(argumentsFilePath)) {
+
+    wxTextFile file;
+    bool success = file.Open(argumentsFilePath);
+    if (!success) {
+      ELOG(_T("Couldn't open ") + argumentsFilePath);
+    } else {
+      wxString line;
+      wxString fileArgv;
+
+      for (line = file.GetFirstLine(); !file.Eof(); line = file.GetNextLine()) {
+        line = line.Trim(true).Trim(false);
+        if (line == wxEmptyString) continue;        
+        fileArgv += _T(" ") + line;        
+      }
+
+      fileCommandLine_.SetCmdLine(fileArgv);
+      fileCommandLine_.Parse();
+    }
+
+  }
+
   commandLine_.SetDesc(cmdLineDesc);
   commandLine_.SetCmdLine(argc, argv);
   commandLine_.Parse(); 
 
   if (commandLine_.Found(_T("?"))) commandLine_.Usage();
 
-  // Required to enabled PNG support
+  // Required to enable PNG support
   wxInitAllImageHandlers();
 
   // Setting this option to "0" removed the flickering.
@@ -191,6 +219,12 @@ bool MiniLaunchBar::OnInit() {
 
   return true;
 } 
+
+
+const bool MiniLaunchBar::GetCommandLineFound(const wxString& name) {
+  if (commandLine_.Found(name)) return true;
+  return fileCommandLine_.Found(name);
+}
 
 
 void MiniLaunchBar::InitializePluginManager() {
