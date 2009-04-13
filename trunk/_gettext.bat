@@ -11,6 +11,9 @@ msgmerge -U Data\Locales\es\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\da\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\ja\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\ko\appetizer.po Data\Locales\appetizer.pot
+msgmerge -U Data\Locales\hu\appetizer.po Data\Locales\appetizer.pot
+msgmerge -U Data\Locales\it\appetizer.po Data\Locales\appetizer.pot
+msgmerge -U Data\Locales\pt_BR\appetizer.po Data\Locales\appetizer.pot
 
 xgettext --from-code=utf-8 -C -n -k_ -o Data\Help\appetizer_help.pot generate_help\main.cpp
 msgmerge -U Data\Help\fr\appetizer_help.po Data\help\appetizer_help.pot

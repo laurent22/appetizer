@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-10 15:29+0000\n"
+"POT-Creation-Date: 2009-04-13 09:52+0100\n"
 "PO-Revision-Date: 2008-12-14 13:11+0900\n"
 "Last-Translator: wewe <wewe68@naver.com>\n"
 "Language-Team: Appetizer Project\n"
@@ -25,158 +25,149 @@ msgstr "숨기기"
 msgid "Show"
 msgstr "보이기"
 
-#: ApplicationTrayIcon.cpp:41
-#: MainFrame.cpp:405
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:491
 msgid "Eject drive"
 msgstr "드라이브 꺼내기"
 
-#: ApplicationTrayIcon.cpp:46
-#: MainFrame.cpp:873
-#: OptionPanel.cpp:151
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1000 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "설정"
 
-#: ApplicationTrayIcon.cpp:60
-#: gui\TreeViewDialog.cpp:130
+#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
 msgid "Close"
 msgstr "종료"
 
-#: FolderItem.cpp:459
-#: gui\TreeViewDialog.cpp:129
+#: FolderItem.cpp:462 gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
 msgstr "단축키 정리"
 
-#: FolderItem.cpp:570
-#: FolderItem.cpp:577
-#: FolderItem.cpp:600
+#: FolderItem.cpp:577 FolderItem.cpp:599 FolderItem.cpp:622
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "이 파일이 존재하지 않거나 삭제되었습니다. (%s 에러)"
 
-#: FolderItem.cpp:834
+#: FolderItem.cpp:868
 msgid "Group"
 msgstr "분류"
 
-#: FolderItem.cpp:835
+#: FolderItem.cpp:869
 msgid "Unnamed"
 msgstr "제목없음"
 
-#: FolderItem.cpp:1043
-#: IconPanel.cpp:138
+#: FolderItem.cpp:1081 IconPanel.cpp:170
 msgid "Control Panel"
 msgstr "제어판"
 
-#: FolderItem.cpp:1045
-#: IconPanel.cpp:139
+#: FolderItem.cpp:1083 IconPanel.cpp:171
 msgid "My Computer"
 msgstr "내 컴퓨터"
 
-#: FolderItem.cpp:1047
-#: IconPanel.cpp:140
+#: FolderItem.cpp:1085 IconPanel.cpp:172
 msgid "My Network Places"
 msgstr "내 네트워크 환경"
 
-#: FolderItem.cpp:1049
-#: IconPanel.cpp:141
+#: FolderItem.cpp:1087 IconPanel.cpp:173
 msgid "Recycle Bin"
 msgstr "휴지통"
 
-#: FolderItem.cpp:1051
-#: IconPanel.cpp:142
+#: FolderItem.cpp:1089 IconPanel.cpp:174
 msgid "Show Desktop"
 msgstr "데스크톱 보기"
 
-#: FolderItem.cpp:1053
-#: IconPanel.cpp:143
+#: FolderItem.cpp:1091 IconPanel.cpp:175
 msgid "Windows Explorer"
 msgstr "원도우 탐색기"
 
-#: FolderItem.cpp:1055
-#: IconPanel.cpp:144
+#: FolderItem.cpp:1093 IconPanel.cpp:176
 msgid "Search"
 msgstr "찾기"
 
-#: FolderItem.cpp:1057
+#: FolderItem.cpp:1095
 msgid "Current Drive"
 msgstr "사용 드라이브"
 
-#: FolderItemRenderer.cpp:152
-#: gui\TreeViewDialog.cpp:106
+#: FolderItem.cpp:1097 IconPanel.cpp:177
+msgid "Printers and Faxes"
+msgstr ""
+
+#: FolderItem.cpp:1099 IconPanel.cpp:178
+msgid "Network Connections"
+msgstr ""
+
+#: FolderItemRenderer.cpp:154 gui\TreeViewDialog.cpp:106
 msgid "Remove..."
 msgstr "이동..."
 
-#: FolderItemRenderer.cpp:157
+#: FolderItemRenderer.cpp:159
 msgid "Add to Multi Launch group"
 msgstr "다중 실행 그룹에 추가"
 
-#: FolderItemRenderer.cpp:166
+#: FolderItemRenderer.cpp:168
 msgid "Organize group shortcuts"
 msgstr "그룹 단축키 정리"
 
-#: FolderItemRenderer.cpp:171
-#: gui\TreeViewDialog.cpp:111
+#: FolderItemRenderer.cpp:173 gui\TreeViewDialog.cpp:111
 msgid "Properties"
 msgstr "등록정보"
 
-#: IconPanel.cpp:118
-#: OptionPanel.cpp:150
+#: IconPanel.cpp:150 OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "신규..."
 
-#: IconPanel.cpp:122
+#: IconPanel.cpp:154
 msgid "New group..."
 msgstr "새 그룹..."
 
-#: IconPanel.cpp:148
+#: IconPanel.cpp:182
 msgid "Add special item"
 msgstr "특별 항목 추가"
 
-#: main.cpp:64
+#: main.cpp:67
 msgid "Uses user data directory to save settings."
 msgstr "사용자 폴더를 이용하여 설정 저장"
 
-#: main.cpp:65
+#: main.cpp:68
 msgid "Sets user data path (-u will be ignored)"
 msgstr "사용자 경로(-U 무시)"
 
-#: main.cpp:66
+#: main.cpp:69
 msgid "Displays the log window (useful for debugging)"
 msgstr "표시창 로드(디버깅에 도움)"
 
-#: main.cpp:67
+#: main.cpp:70
 msgid "Displays this help message"
 msgstr "도움말 표시"
 
-#: main.cpp:125
+#: main.cpp:156
 msgid "Could not initialize locale."
 msgstr "로케일을 초기화하지 못함."
 
-#: main.cpp:212
+#: main.cpp:255
 msgid "Large"
 msgstr "크게"
 
-#: main.cpp:213
+#: main.cpp:256
 msgid "Extra Large (XP and above)"
 msgstr "Extra Large (XP and above)"
 
-#: main.cpp:214
+#: main.cpp:257
 msgid "Jumbo (Vista and above)"
 msgstr "Jumbo (Vista and above)"
 
-#: main.cpp:218
+#: main.cpp:261
 msgid "Small"
 msgstr "작게"
 
-#: main.cpp:309
+#: main.cpp:352
 msgid "Could not get update information"
 msgstr "업데이트 정보를 얻을 수 없음."
 
-#: main.cpp:323
+#: main.cpp:366
 msgid "You have the latest version."
 msgstr "최신 버전입니다.."
 
-#: main.cpp:330
+#: main.cpp:373
 #, c-format
 msgid ""
 "A new version is available!\n"
@@ -195,19 +186,21 @@ msgstr ""
 "\n"
 "지금 다운로드 하시겠습니까??"
 
-#: main.cpp:336
+#: main.cpp:379
 msgid "Error launching web browser"
 msgstr "웹브라우저 오류"
 
-#: MainFrame.cpp:223
-msgid "There was an error registering the hot key. Another application may already have registered it."
+#: MainFrame.cpp:227
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
 msgstr "단축키를 등록하는 중 오류. 이미 등록되어 있습니다."
 
-#: MainFrame.cpp:404
+#: MainFrame.cpp:490
 msgid "Minimize to tray"
 msgstr "최소화"
 
-#: MainFrame.cpp:873
+#: MainFrame.cpp:1000
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -218,18 +211,15 @@ msgstr ""
 "\n"
 " '%s' 창에서 변경가능 ('%s'탭)"
 
-#: MainFrame.cpp:873
-#: gui\ConfigDialog.cpp:58
+#: MainFrame.cpp:1000 gui\ConfigDialog.cpp:58
 msgid "Operations"
 msgstr "작업"
 
-#: MainFrame.cpp:873
-#: utilities\Utilities.cpp:74
-#: utilities\Utilities.cpp:278
+#: MainFrame.cpp:1000 utilities\Utilities.cpp:74 utilities\Utilities.cpp:348
 msgid "Don't show this message again"
 msgstr "이 메시지를 다시 표지하지 않음"
 
-#: MessageBoxes.cpp:15
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:98
 msgid "Error"
 msgstr "에러"
 
@@ -245,63 +235,66 @@ msgstr "주의"
 msgid "Confirmation"
 msgstr "확인"
 
-#: OptionPanel.cpp:149
-#: gui\ConfigDialog.cpp:63
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:63
 msgid "Help"
 msgstr "도움말 항목"
 
-#: OptionPanel.cpp:152
+#: OptionPanel.cpp:166
 msgid "Multi-launch"
 msgstr "멀티-출시"
 
-#: OptionPanel.cpp:153
-#: gui\ImportWizardDialog.cpp:24
+#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
 msgstr "단축키 가져오기"
 
-#: OptionPanel.cpp:314
+#: OptionPanel.cpp:328
 msgid "Help Topics"
 msgstr "도움말 항목"
 
-#: OptionPanel.cpp:315
+#: OptionPanel.cpp:329
 msgid "Get Support"
 msgstr "지원 받기"
 
-#: OptionPanel.cpp:317
-#: gui\AboutDialog.cpp:80
+#: OptionPanel.cpp:331 gui\AboutDialog.cpp:80
 #, c-format
 msgid "About %s..."
 msgstr "%s 정보..."
 
-#: OptionPanel.cpp:327
-msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+#: OptionPanel.cpp:341
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
 msgstr "이 그룹은 비어 있습니다. 이 기능에 대한 도움말 항목을 보시겠습니까?"
 
-#: Plugin.cpp:127
-msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+#: Plugin.cpp:132
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
 msgstr "플러그인 스크립트 형식이 아닙니다.  UTF-8 NO BOM, ASCII 인코딩 적용:"
 
-#: PluginManager.cpp:46
+#: PluginManager.cpp:50
 #, c-format
 msgid "Could not open %s"
 msgstr "%s 를 열 수없습니다."
 
-#: PluginManager.cpp:65
+#: PluginManager.cpp:74
 #, c-format
 msgid "Can not read zip entry '%s'"
 msgstr " '%s' 항목을 읽을 수 없습니다."
 
-#: PluginManager.cpp:72
+#: PluginManager.cpp:81
 #, c-format
 msgid "Can not create file '%s'"
 msgstr " '%s' 파일을 만들 수 없습니다."
 
-#: PluginManager.cpp:87
+#: PluginManager.cpp:96
 #, c-format
-msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
 msgstr "플러그인이 성공적으로 설치 되었습니다.  %s  다음에 활성화 됩니다."
 
-#: Styles.cpp:68
+#: Styles.cpp:71 gui\ConfigDialog.cpp:847
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
 msgstr "이 스킨은 %s 버전과 호환되지 않습니다."
@@ -310,15 +303,15 @@ msgstr "이 스킨은 %s 버전과 호환되지 않습니다."
 msgid "Do you wish to remove this icon?"
 msgstr "이 아이콘을 제거할까요?"
 
-#: utilities\Utilities.cpp:156
+#: utilities\Utilities.cpp:226
 msgid "Please wait while your applications are being closed."
 msgstr "잠시 기라려 주십시오."
 
-#: utilities\Utilities.cpp:175
+#: utilities\Utilities.cpp:245
 msgid "You do not have sufficient privileges for this operation."
 msgstr "이 작업에 대한 권한이 없습니다."
 
-#: utilities\Utilities.cpp:278
+#: utilities\Utilities.cpp:348
 msgid "Do you wish to eject the drive?"
 msgstr "드라이브를 추출하시겠습니까?"
 
@@ -344,11 +337,9 @@ msgid "- CStdString by Joe O'Leary"
 msgstr ""
 
 #: gui\AboutDialog.cpp:72
-msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
-msgstr ""
-
-#: gui\AboutDialog.cpp:74
-msgid "- zlib by Jean-Loup Gailly and Mark Adler"
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
 msgstr ""
 
 #: gui\AboutDialog.cpp:76
@@ -367,10 +358,8 @@ msgstr "정보"
 msgid "License"
 msgstr "허가"
 
-#: gui\AboutDialog.cpp:83
-#: gui\BetterMessageDialog.cpp:111
-#: gui\FileOrFolderDialog.cpp:111
-#: gui\IconDialog.cpp:104
+#: gui\AboutDialog.cpp:83 gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
 msgid "OK"
 msgstr "확인"
 
@@ -388,11 +377,17 @@ msgstr ""
 
 #: gui\AboutDialog.cpp:89
 msgid ""
-"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
 
 #: gui\AboutDialog.cpp:90
@@ -416,12 +411,9 @@ msgstr "예"
 msgid "No"
 msgstr "아니오"
 
-#: gui\BetterMessageDialog.cpp:114
-#: gui\ConfigDialog.cpp:62
-#: gui\FileOrFolderDialog.cpp:112
-#: gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80
-#: gui\ShortcutEditorDialog.cpp:43
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:62
+#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:80 gui\ShortcutEditorDialog.cpp:43
 msgid "Cancel"
 msgstr "취소"
 
@@ -441,258 +433,264 @@ msgstr "가져오기"
 msgid "Plugins"
 msgstr "플러그인"
 
-#: gui\ConfigDialog.cpp:61
-#: gui\ShortcutEditorDialog.cpp:42
+#: gui\ConfigDialog.cpp:61 gui\ShortcutEditorDialog.cpp:42
 msgid "Save"
 msgstr "저장"
 
-#: gui\ConfigDialog.cpp:97
+#: gui\ConfigDialog.cpp:100
 msgid "Enabled"
 msgstr "활성화"
 
-#: gui\ConfigDialog.cpp:97
+#: gui\ConfigDialog.cpp:100
 msgid "Disabled"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:125
+#: gui\ConfigDialog.cpp:132
 msgid "Plugin"
 msgstr "플러그인"
 
-#: gui\ConfigDialog.cpp:126
+#: gui\ConfigDialog.cpp:133
 msgid "Status"
 msgstr "상태"
 
-#: gui\ConfigDialog.cpp:195
+#: gui\ConfigDialog.cpp:203
 msgid "Language:"
 msgstr "언어:"
 
-#: gui\ConfigDialog.cpp:196
+#: gui\ConfigDialog.cpp:204
 msgid "Always on top"
 msgstr "항상 맨 위에"
 
-#: gui\ConfigDialog.cpp:197
+#: gui\ConfigDialog.cpp:205
 #, c-format
 msgid "Allow only one instance of %s at a time"
 msgstr " %s 하나만 허용"
 
-#: gui\ConfigDialog.cpp:198
-#: gui\ConfigDialog.cpp:691
+#: gui\ConfigDialog.cpp:206 gui\ConfigDialog.cpp:721
 msgid "Check for update"
 msgstr "업데이트 확인"
 
-#: gui\ConfigDialog.cpp:199
+#: gui\ConfigDialog.cpp:207
 msgid "Install autorun file"
 msgstr "파일 설치"
 
-#: gui\ConfigDialog.cpp:283
+#: gui\ConfigDialog.cpp:301
 msgid "Icon size:"
 msgstr "아이콘:"
 
-#: gui\ConfigDialog.cpp:284
+#: gui\ConfigDialog.cpp:302
 msgid "Skin:"
 msgstr "스킨:"
 
-#: gui\ConfigDialog.cpp:285
+#: gui\ConfigDialog.cpp:303
 msgid "Orientation:"
 msgstr "오리엔테이션:"
 
-#: gui\ConfigDialog.cpp:312
+#: gui\ConfigDialog.cpp:304
+msgid "Transparency:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:338
 msgid "Horizontal"
 msgstr "수평"
 
-#: gui\ConfigDialog.cpp:313
+#: gui\ConfigDialog.cpp:339
 msgid "Vertical"
 msgstr "수직"
 
-#: gui\ConfigDialog.cpp:337
+#: gui\ConfigDialog.cpp:365
 msgid "Default"
 msgstr "기본값"
 
-#: gui\ConfigDialog.cpp:380
+#: gui\ConfigDialog.cpp:410
 msgid "Auto-hide after launching an application"
 msgstr "응용 프로그램 실행 후 숨기기"
 
-#: gui\ConfigDialog.cpp:381
+#: gui\ConfigDialog.cpp:411
 msgid "Run multi-launch group on startup"
 msgstr "시작할 때 멀티-그룹을 실행"
 
-#: gui\ConfigDialog.cpp:382
+#: gui\ConfigDialog.cpp:412
 msgid "Hot key to hide / show the bar"
 msgstr "단축키 숨김 / 보이기"
 
-#: gui\ConfigDialog.cpp:383
+#: gui\ConfigDialog.cpp:413
 msgid "Control +"
 msgstr "Control +"
 
-#: gui\ConfigDialog.cpp:384
+#: gui\ConfigDialog.cpp:414
 msgid "Alt +"
 msgstr "Alt +"
 
-#: gui\ConfigDialog.cpp:385
+#: gui\ConfigDialog.cpp:415
 msgid "Shift +"
 msgstr "Shift +"
 
-#: gui\ConfigDialog.cpp:386
+#: gui\ConfigDialog.cpp:416
 msgid "When ejecting the drive, close the apps that are locking it"
 msgstr "응용 프로그램을 닫고 잠긴 드라이브 꺼내기"
 
-#: gui\ConfigDialog.cpp:387
+#: gui\ConfigDialog.cpp:417
 msgid "Close button minimizes to System Tray"
 msgstr "닫기 버튼- 트레이로 최소화"
 
-#: gui\ConfigDialog.cpp:398
+#: gui\ConfigDialog.cpp:428
 msgid "<None>"
 msgstr "<없음>"
 
-#: gui\ConfigDialog.cpp:440
+#: gui\ConfigDialog.cpp:470
 msgid "Numpad 0"
 msgstr "Numpad 0"
 
-#: gui\ConfigDialog.cpp:441
+#: gui\ConfigDialog.cpp:471
 msgid "Numpad 1"
 msgstr "Numpad 1"
 
-#: gui\ConfigDialog.cpp:442
+#: gui\ConfigDialog.cpp:472
 msgid "Numpad 2"
 msgstr "Numpad 2"
 
-#: gui\ConfigDialog.cpp:443
+#: gui\ConfigDialog.cpp:473
 msgid "Numpad 3"
 msgstr "Numpad 3"
 
-#: gui\ConfigDialog.cpp:444
+#: gui\ConfigDialog.cpp:474
 msgid "Numpad 4"
 msgstr "Numpad 4"
 
-#: gui\ConfigDialog.cpp:445
+#: gui\ConfigDialog.cpp:475
 msgid "Numpad 5"
 msgstr "Numpad 5"
 
-#: gui\ConfigDialog.cpp:446
+#: gui\ConfigDialog.cpp:476
 msgid "Numpad 6"
 msgstr "Numpad 6"
 
-#: gui\ConfigDialog.cpp:447
+#: gui\ConfigDialog.cpp:477
 msgid "Numpad 7"
 msgstr "Numpad 7"
 
-#: gui\ConfigDialog.cpp:448
+#: gui\ConfigDialog.cpp:478
 msgid "Numpad 8"
 msgstr "Numpad 8"
 
-#: gui\ConfigDialog.cpp:449
+#: gui\ConfigDialog.cpp:479
 msgid "Numpad 9"
 msgstr "Numpad 9"
 
-#: gui\ConfigDialog.cpp:451
+#: gui\ConfigDialog.cpp:481
 msgid "Backspace"
 msgstr "Backspace"
 
-#: gui\ConfigDialog.cpp:452
+#: gui\ConfigDialog.cpp:482
 msgid "Tab"
 msgstr "Tab"
 
-#: gui\ConfigDialog.cpp:453
+#: gui\ConfigDialog.cpp:483
 msgid "Return"
 msgstr "Return"
 
-#: gui\ConfigDialog.cpp:454
+#: gui\ConfigDialog.cpp:484
 msgid "Escape"
 msgstr "Escape"
 
-#: gui\ConfigDialog.cpp:455
+#: gui\ConfigDialog.cpp:485
 msgid "Space"
 msgstr "Space"
 
-#: gui\ConfigDialog.cpp:456
+#: gui\ConfigDialog.cpp:486
 msgid "Delete"
 msgstr "이동..."
 
-#: gui\ConfigDialog.cpp:458
+#: gui\ConfigDialog.cpp:488
 msgid "End"
 msgstr "End"
 
-#: gui\ConfigDialog.cpp:459
+#: gui\ConfigDialog.cpp:489
 msgid "Home"
 msgstr "Home"
 
-#: gui\ConfigDialog.cpp:460
+#: gui\ConfigDialog.cpp:490
 msgid "Left"
 msgstr "Left"
 
-#: gui\ConfigDialog.cpp:461
+#: gui\ConfigDialog.cpp:491
 msgid "Up"
 msgstr "Up"
 
-#: gui\ConfigDialog.cpp:462
+#: gui\ConfigDialog.cpp:492
 msgid "Right"
 msgstr "Right"
 
-#: gui\ConfigDialog.cpp:463
+#: gui\ConfigDialog.cpp:493
 msgid "Down"
 msgstr "Down"
 
-#: gui\ConfigDialog.cpp:521
+#: gui\ConfigDialog.cpp:551
 msgid "Exclude these items from import operations"
 msgstr "가져오기 작업에서 다음 항목은 제외"
 
-#: gui\ConfigDialog.cpp:553
+#: gui\ConfigDialog.cpp:583
 msgid "Available plugins"
 msgstr "해당 플러그인"
 
-#: gui\ConfigDialog.cpp:554
+#: gui\ConfigDialog.cpp:584
 msgid "Enable"
 msgstr "사용"
 
-#: gui\ConfigDialog.cpp:555
+#: gui\ConfigDialog.cpp:585
 msgid "Disable"
 msgstr "사용 안 함"
 
-#: gui\ConfigDialog.cpp:556
+#: gui\ConfigDialog.cpp:586
 msgid "Install..."
 msgstr "설치..."
 
-#: gui\ConfigDialog.cpp:558
-#, c-format
-msgid "The changes made to the plugins will only be active the next time %s is started."
-msgstr "%s 은 플러그인이 활성화된 후에 시작 됩니다."
-
-#: gui\ConfigDialog.cpp:618
+#: gui\ConfigDialog.cpp:588
 #, c-format
 msgid ""
-"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr "%s 은 플러그인이 활성화된 후에 시작 됩니다."
+
+#: gui\ConfigDialog.cpp:648
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start "
+"automatically when you insert your drive.\n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:621
+#: gui\ConfigDialog.cpp:651
 msgid "Could not install autorun file. Please try again."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:623
+#: gui\ConfigDialog.cpp:653
 msgid "The autorun file has been installed successfully"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:654
+#: gui\ConfigDialog.cpp:684
 #, c-format
 msgid "%s Plugin Packages"
 msgstr "%s 플러그인 패키지"
 
-#: gui\ConfigDialog.cpp:655
-#: gui\IconDialog.cpp:161
+#: gui\ConfigDialog.cpp:685 gui\IconDialog.cpp:161
 msgid "All files"
 msgstr "모든 파일"
 
-#: gui\ConfigDialog.cpp:657
+#: gui\ConfigDialog.cpp:687
 msgid "Select a plugin package"
 msgstr "선택 플러그인 패키지"
 
-#: gui\ConfigDialog.cpp:686
+#: gui\ConfigDialog.cpp:716
 msgid "Please wait..."
 msgstr "잠시 기다려주십시오..."
 
-#: gui\ConfigDialog.cpp:940
-msgid "Some of these changes will only be applied until after you restart the application."
+#: gui\ConfigDialog.cpp:990
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
 msgstr ""
 
 #: gui\FileOrFolderDialog.cpp:76
@@ -801,4 +799,3 @@ msgstr "사용자 기본값"
 #: gui\ShortcutEditorDialog.cpp:152
 msgid "The shorcut location doesn't exist. Do you wish to continue?"
 msgstr "바로가기가 존재하지 않습니다. 계속하시겠습니까?"
-
