@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-13 09:52+0100\n"
+"POT-Creation-Date: 2009-04-26 17:48+0100\n"
 "PO-Revision-Date: 2008-11-08 13:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -201,7 +201,7 @@ msgid ""
 "Note that you may change this behavior in the '%s' windows ('%s' tab)"
 msgstr ""
 
-#: MainFrame.cpp:1000 gui\ConfigDialog.cpp:58
+#: MainFrame.cpp:1000 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr ""
 msgid "Don't show this message again"
 msgstr ""
 
-#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:98
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:100
 msgid "Error"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Confirmation"
 msgstr ""
 
-#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:63
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
 msgid "Help"
 msgstr ""
 
@@ -284,7 +284,7 @@ msgid ""
 "time %s is started"
 msgstr ""
 
-#: Styles.cpp:71 gui\ConfigDialog.cpp:847
+#: Styles.cpp:71 gui\ConfigDialog.cpp:849
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
 msgstr ""
@@ -398,249 +398,249 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:62
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
 #: gui\ImportWizardDialog.cpp:80 gui\ShortcutEditorDialog.cpp:43
 msgid "Cancel"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:56
+#: gui\ConfigDialog.cpp:58
 msgid "General"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:57
+#: gui\ConfigDialog.cpp:59
 msgid "Appearance"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:59
+#: gui\ConfigDialog.cpp:61
 msgid "Import"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:60
+#: gui\ConfigDialog.cpp:62
 msgid "Plugins"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:61 gui\ShortcutEditorDialog.cpp:42
+#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:42
 msgid "Save"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:100
+#: gui\ConfigDialog.cpp:102
 msgid "Enabled"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:100
+#: gui\ConfigDialog.cpp:102
 msgid "Disabled"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:132
+#: gui\ConfigDialog.cpp:134
 msgid "Plugin"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:133
+#: gui\ConfigDialog.cpp:135
 msgid "Status"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:203
+#: gui\ConfigDialog.cpp:205
 msgid "Language:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:204
+#: gui\ConfigDialog.cpp:206
 msgid "Always on top"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:205
+#: gui\ConfigDialog.cpp:207
 #, c-format
 msgid "Allow only one instance of %s at a time"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:206 gui\ConfigDialog.cpp:721
+#: gui\ConfigDialog.cpp:208 gui\ConfigDialog.cpp:723
 msgid "Check for update"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:207
+#: gui\ConfigDialog.cpp:209
 msgid "Install autorun file"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:301
+#: gui\ConfigDialog.cpp:303
 msgid "Icon size:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:302
+#: gui\ConfigDialog.cpp:304
 msgid "Skin:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:303
+#: gui\ConfigDialog.cpp:305
 msgid "Orientation:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:304
+#: gui\ConfigDialog.cpp:306
 msgid "Transparency:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:338
+#: gui\ConfigDialog.cpp:340
 msgid "Horizontal"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:339
+#: gui\ConfigDialog.cpp:341
 msgid "Vertical"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:365
+#: gui\ConfigDialog.cpp:367
 msgid "Default"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:410
+#: gui\ConfigDialog.cpp:412
 msgid "Auto-hide after launching an application"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:411
+#: gui\ConfigDialog.cpp:413
 msgid "Run multi-launch group on startup"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:412
+#: gui\ConfigDialog.cpp:414
 msgid "Hot key to hide / show the bar"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:413
+#: gui\ConfigDialog.cpp:415
 msgid "Control +"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:414
+#: gui\ConfigDialog.cpp:416
 msgid "Alt +"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:415
+#: gui\ConfigDialog.cpp:417
 msgid "Shift +"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:416
+#: gui\ConfigDialog.cpp:418
 msgid "When ejecting the drive, close the apps that are locking it"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:417
+#: gui\ConfigDialog.cpp:419
 msgid "Close button minimizes to System Tray"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:428
+#: gui\ConfigDialog.cpp:430
 msgid "<None>"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:470
+#: gui\ConfigDialog.cpp:472
 msgid "Numpad 0"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:471
+#: gui\ConfigDialog.cpp:473
 msgid "Numpad 1"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:472
+#: gui\ConfigDialog.cpp:474
 msgid "Numpad 2"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:473
+#: gui\ConfigDialog.cpp:475
 msgid "Numpad 3"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:474
+#: gui\ConfigDialog.cpp:476
 msgid "Numpad 4"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:475
+#: gui\ConfigDialog.cpp:477
 msgid "Numpad 5"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:476
+#: gui\ConfigDialog.cpp:478
 msgid "Numpad 6"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:477
+#: gui\ConfigDialog.cpp:479
 msgid "Numpad 7"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:478
+#: gui\ConfigDialog.cpp:480
 msgid "Numpad 8"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:479
+#: gui\ConfigDialog.cpp:481
 msgid "Numpad 9"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:481
+#: gui\ConfigDialog.cpp:483
 msgid "Backspace"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:482
+#: gui\ConfigDialog.cpp:484
 msgid "Tab"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:483
+#: gui\ConfigDialog.cpp:485
 msgid "Return"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:484
+#: gui\ConfigDialog.cpp:486
 msgid "Escape"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:485
+#: gui\ConfigDialog.cpp:487
 msgid "Space"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:486
+#: gui\ConfigDialog.cpp:488
 msgid "Delete"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:488
+#: gui\ConfigDialog.cpp:490
 msgid "End"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:489
+#: gui\ConfigDialog.cpp:491
 msgid "Home"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:490
+#: gui\ConfigDialog.cpp:492
 msgid "Left"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:491
+#: gui\ConfigDialog.cpp:493
 msgid "Up"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:492
+#: gui\ConfigDialog.cpp:494
 msgid "Right"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:493
+#: gui\ConfigDialog.cpp:495
 msgid "Down"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:551
+#: gui\ConfigDialog.cpp:553
 msgid "Exclude these items from import operations"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:583
+#: gui\ConfigDialog.cpp:585
 msgid "Available plugins"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:584
+#: gui\ConfigDialog.cpp:586
 msgid "Enable"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:585
+#: gui\ConfigDialog.cpp:587
 msgid "Disable"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:586
+#: gui\ConfigDialog.cpp:588
 msgid "Install..."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:588
+#: gui\ConfigDialog.cpp:590
 #, c-format
 msgid ""
 "The changes made to the plugins will only be active the next time %s is "
 "started."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:648
+#: gui\ConfigDialog.cpp:650
 #, c-format
 msgid ""
 "By installing the autorun file on your removable drive, %s will start "
@@ -649,32 +649,32 @@ msgid ""
 "Do you wish to continue?"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:651
+#: gui\ConfigDialog.cpp:653
 msgid "Could not install autorun file. Please try again."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:653
+#: gui\ConfigDialog.cpp:655
 msgid "The autorun file has been installed successfully"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:684
+#: gui\ConfigDialog.cpp:686
 #, c-format
 msgid "%s Plugin Packages"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:685 gui\IconDialog.cpp:161
+#: gui\ConfigDialog.cpp:687 gui\IconDialog.cpp:161
 msgid "All files"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:687
+#: gui\ConfigDialog.cpp:689
 msgid "Select a plugin package"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:716
+#: gui\ConfigDialog.cpp:718
 msgid "Please wait..."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:990
+#: gui\ConfigDialog.cpp:992
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."
@@ -781,5 +781,5 @@ msgid "Use default"
 msgstr ""
 
 #: gui\ShortcutEditorDialog.cpp:152
-msgid "The shorcut location doesn't exist. Do you wish to continue?"
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
 msgstr ""

@@ -39,7 +39,7 @@ function application_dockItemMenuOpening(event)
 	if table.maxn(groups) == 0 then return 0; end
 	
 	-- Create the "Add to group" sub menu
-	subMenu = Menu:new("Add to group")
+	subMenu = Menu:new("Move to group")
 	
 	for i, group in pairs(groups) do
 		-- Create a menu item with the group name as a label

@@ -149,7 +149,7 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     // If the shortcut location doesn't exist, just show a warning but allow
     // the user to continue. Invalid shortcuts are allowed since they
     // might be referencing files from a different computer.
-    int result = MessageBoxes::ShowWarning(_("The shorcut location doesn't exist. Do you wish to continue?"), wxYES | wxNO);
+    int result = MessageBoxes::ShowWarning(_("The shortcut location doesn't exist. Do you wish to continue?"), wxYES | wxNO);
     if (result == wxID_NO) return;
   }
 

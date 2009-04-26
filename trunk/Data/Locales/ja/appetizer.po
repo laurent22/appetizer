@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ap\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-13 09:52+0100\n"
+"POT-Creation-Date: 2009-04-26 17:48+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Tilt <tiltstr@gmail.com>\n"
@@ -209,7 +209,7 @@ msgstr ""
 "\n"
 "'%s' ウィンドウ('%s' タブ)から、この動作を変更することが出来ます。"
 
-#: MainFrame.cpp:1000 gui\ConfigDialog.cpp:58
+#: MainFrame.cpp:1000 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "操作"
 
@@ -217,7 +217,7 @@ msgstr "操作"
 msgid "Don't show this message again"
 msgstr "次回から表示しない"
 
-#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:98
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:100
 msgid "Error"
 msgstr "エラー"
 
@@ -233,7 +233,7 @@ msgstr "警告"
 msgid "Confirmation"
 msgstr "確認"
 
-#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:63
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
 msgid "Help"
 msgstr "ヘルプ"
 
@@ -298,7 +298,7 @@ msgstr ""
 "プラグインのインストールに成功しました。　%s を次回起動した時から有効になりま"
 "す。"
 
-#: Styles.cpp:71 gui\ConfigDialog.cpp:847
+#: Styles.cpp:71 gui\ConfigDialog.cpp:849
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
 msgstr "現在のバージョン %s に対応していないスキンです。"
@@ -426,250 +426,250 @@ msgstr "はい"
 msgid "No"
 msgstr "いいえ"
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:62
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
 #: gui\ImportWizardDialog.cpp:80 gui\ShortcutEditorDialog.cpp:43
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: gui\ConfigDialog.cpp:56
+#: gui\ConfigDialog.cpp:58
 msgid "General"
 msgstr "一般"
 
-#: gui\ConfigDialog.cpp:57
+#: gui\ConfigDialog.cpp:59
 msgid "Appearance"
 msgstr "外観"
 
-#: gui\ConfigDialog.cpp:59
+#: gui\ConfigDialog.cpp:61
 msgid "Import"
 msgstr "インポート"
 
-#: gui\ConfigDialog.cpp:60
+#: gui\ConfigDialog.cpp:62
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: gui\ConfigDialog.cpp:61 gui\ShortcutEditorDialog.cpp:42
+#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:42
 msgid "Save"
 msgstr "保存"
 
-#: gui\ConfigDialog.cpp:100
+#: gui\ConfigDialog.cpp:102
 msgid "Enabled"
 msgstr "有効"
 
-#: gui\ConfigDialog.cpp:100
+#: gui\ConfigDialog.cpp:102
 msgid "Disabled"
 msgstr "無効"
 
-#: gui\ConfigDialog.cpp:132
+#: gui\ConfigDialog.cpp:134
 msgid "Plugin"
 msgstr "プラグイン"
 
-#: gui\ConfigDialog.cpp:133
+#: gui\ConfigDialog.cpp:135
 msgid "Status"
 msgstr "ステータス"
 
-#: gui\ConfigDialog.cpp:203
+#: gui\ConfigDialog.cpp:205
 msgid "Language:"
 msgstr "言語:"
 
-#: gui\ConfigDialog.cpp:204
+#: gui\ConfigDialog.cpp:206
 msgid "Always on top"
 msgstr "常に手前表示"
 
-#: gui\ConfigDialog.cpp:205
+#: gui\ConfigDialog.cpp:207
 #, c-format
 msgid "Allow only one instance of %s at a time"
 msgstr "%s のインスタンスをひとつだけ許可"
 
-#: gui\ConfigDialog.cpp:206 gui\ConfigDialog.cpp:721
+#: gui\ConfigDialog.cpp:208 gui\ConfigDialog.cpp:723
 msgid "Check for update"
 msgstr "アップデートを確認"
 
-#: gui\ConfigDialog.cpp:207
+#: gui\ConfigDialog.cpp:209
 msgid "Install autorun file"
 msgstr "オートランファイルをインストール"
 
-#: gui\ConfigDialog.cpp:301
+#: gui\ConfigDialog.cpp:303
 msgid "Icon size:"
 msgstr "アイコンサイズ:"
 
-#: gui\ConfigDialog.cpp:302
+#: gui\ConfigDialog.cpp:304
 msgid "Skin:"
 msgstr "スキン:"
 
-#: gui\ConfigDialog.cpp:303
+#: gui\ConfigDialog.cpp:305
 msgid "Orientation:"
 msgstr "方向:"
 
-#: gui\ConfigDialog.cpp:304
+#: gui\ConfigDialog.cpp:306
 msgid "Transparency:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:338
+#: gui\ConfigDialog.cpp:340
 msgid "Horizontal"
 msgstr "左右"
 
-#: gui\ConfigDialog.cpp:339
+#: gui\ConfigDialog.cpp:341
 msgid "Vertical"
 msgstr "上下"
 
-#: gui\ConfigDialog.cpp:365
+#: gui\ConfigDialog.cpp:367
 msgid "Default"
 msgstr "デフォルト"
 
-#: gui\ConfigDialog.cpp:410
+#: gui\ConfigDialog.cpp:412
 msgid "Auto-hide after launching an application"
 msgstr "アプリケーション起動後に自動的に隠れる"
 
-#: gui\ConfigDialog.cpp:411
+#: gui\ConfigDialog.cpp:413
 msgid "Run multi-launch group on startup"
 msgstr "スタートアップ時に複数起動グループを実行"
 
-#: gui\ConfigDialog.cpp:412
+#: gui\ConfigDialog.cpp:414
 msgid "Hot key to hide / show the bar"
 msgstr "ホットキーでバーを表示/隠す"
 
-#: gui\ConfigDialog.cpp:413
+#: gui\ConfigDialog.cpp:415
 msgid "Control +"
 msgstr "Control +"
 
-#: gui\ConfigDialog.cpp:414
+#: gui\ConfigDialog.cpp:416
 msgid "Alt +"
 msgstr "Alt +"
 
-#: gui\ConfigDialog.cpp:415
+#: gui\ConfigDialog.cpp:417
 msgid "Shift +"
 msgstr "Shift +"
 
-#: gui\ConfigDialog.cpp:416
+#: gui\ConfigDialog.cpp:418
 msgid "When ejecting the drive, close the apps that are locking it"
 msgstr ""
 "ドライブをイジェクトするときは、ロックしているアプリケーションを終了する"
 
-#: gui\ConfigDialog.cpp:417
+#: gui\ConfigDialog.cpp:419
 msgid "Close button minimizes to System Tray"
 msgstr "閉じるボタンでシステムトレイに最小化"
 
-#: gui\ConfigDialog.cpp:428
+#: gui\ConfigDialog.cpp:430
 msgid "<None>"
 msgstr "<なし>"
 
-#: gui\ConfigDialog.cpp:470
+#: gui\ConfigDialog.cpp:472
 msgid "Numpad 0"
 msgstr "Numpad 0"
 
-#: gui\ConfigDialog.cpp:471
+#: gui\ConfigDialog.cpp:473
 msgid "Numpad 1"
 msgstr "Numpad 1"
 
-#: gui\ConfigDialog.cpp:472
+#: gui\ConfigDialog.cpp:474
 msgid "Numpad 2"
 msgstr "Numpad 2"
 
-#: gui\ConfigDialog.cpp:473
+#: gui\ConfigDialog.cpp:475
 msgid "Numpad 3"
 msgstr "Numpad 3"
 
-#: gui\ConfigDialog.cpp:474
+#: gui\ConfigDialog.cpp:476
 msgid "Numpad 4"
 msgstr "Numpad 4"
 
-#: gui\ConfigDialog.cpp:475
+#: gui\ConfigDialog.cpp:477
 msgid "Numpad 5"
 msgstr "Numpad 5"
 
-#: gui\ConfigDialog.cpp:476
+#: gui\ConfigDialog.cpp:478
 msgid "Numpad 6"
 msgstr "Numpad 6"
 
-#: gui\ConfigDialog.cpp:477
+#: gui\ConfigDialog.cpp:479
 msgid "Numpad 7"
 msgstr "Numpad 7"
 
-#: gui\ConfigDialog.cpp:478
+#: gui\ConfigDialog.cpp:480
 msgid "Numpad 8"
 msgstr "Numpad 8"
 
-#: gui\ConfigDialog.cpp:479
+#: gui\ConfigDialog.cpp:481
 msgid "Numpad 9"
 msgstr "Numpad 9"
 
-#: gui\ConfigDialog.cpp:481
+#: gui\ConfigDialog.cpp:483
 msgid "Backspace"
 msgstr "Backspace"
 
-#: gui\ConfigDialog.cpp:482
+#: gui\ConfigDialog.cpp:484
 msgid "Tab"
 msgstr "Tab"
 
-#: gui\ConfigDialog.cpp:483
+#: gui\ConfigDialog.cpp:485
 msgid "Return"
 msgstr "Return"
 
-#: gui\ConfigDialog.cpp:484
+#: gui\ConfigDialog.cpp:486
 msgid "Escape"
 msgstr "Escape"
 
-#: gui\ConfigDialog.cpp:485
+#: gui\ConfigDialog.cpp:487
 msgid "Space"
 msgstr "Space"
 
-#: gui\ConfigDialog.cpp:486
+#: gui\ConfigDialog.cpp:488
 msgid "Delete"
 msgstr "Delete"
 
-#: gui\ConfigDialog.cpp:488
+#: gui\ConfigDialog.cpp:490
 msgid "End"
 msgstr "End"
 
-#: gui\ConfigDialog.cpp:489
+#: gui\ConfigDialog.cpp:491
 msgid "Home"
 msgstr "Home"
 
-#: gui\ConfigDialog.cpp:490
+#: gui\ConfigDialog.cpp:492
 msgid "Left"
 msgstr "Left"
 
-#: gui\ConfigDialog.cpp:491
+#: gui\ConfigDialog.cpp:493
 msgid "Up"
 msgstr "Up"
 
-#: gui\ConfigDialog.cpp:492
+#: gui\ConfigDialog.cpp:494
 msgid "Right"
 msgstr "Right"
 
-#: gui\ConfigDialog.cpp:493
+#: gui\ConfigDialog.cpp:495
 msgid "Down"
 msgstr "Down"
 
-#: gui\ConfigDialog.cpp:551
+#: gui\ConfigDialog.cpp:553
 msgid "Exclude these items from import operations"
 msgstr "これらの操作をインポートから除外する"
 
-#: gui\ConfigDialog.cpp:583
+#: gui\ConfigDialog.cpp:585
 msgid "Available plugins"
 msgstr "利用可能なプラグイン"
 
-#: gui\ConfigDialog.cpp:584
+#: gui\ConfigDialog.cpp:586
 msgid "Enable"
 msgstr "有効"
 
-#: gui\ConfigDialog.cpp:585
+#: gui\ConfigDialog.cpp:587
 msgid "Disable"
 msgstr "無効"
 
-#: gui\ConfigDialog.cpp:586
+#: gui\ConfigDialog.cpp:588
 msgid "Install..."
 msgstr "インストール..."
 
-#: gui\ConfigDialog.cpp:588
+#: gui\ConfigDialog.cpp:590
 #, c-format
 msgid ""
 "The changes made to the plugins will only be active the next time %s is "
 "started."
 msgstr "プラグインの変更は、%s を次回起動した時から有効になります。"
 
-#: gui\ConfigDialog.cpp:648
+#: gui\ConfigDialog.cpp:650
 #, c-format
 msgid ""
 "By installing the autorun file on your removable drive, %s will start "
@@ -682,32 +682,32 @@ msgstr ""
 "\n"
 "本当に続行しますか? "
 
-#: gui\ConfigDialog.cpp:651
+#: gui\ConfigDialog.cpp:653
 msgid "Could not install autorun file. Please try again."
 msgstr "オートランファイルをインストールできません、再試行してください。"
 
-#: gui\ConfigDialog.cpp:653
+#: gui\ConfigDialog.cpp:655
 msgid "The autorun file has been installed successfully"
 msgstr "オートランファイルは正常にインストールされました。"
 
-#: gui\ConfigDialog.cpp:684
+#: gui\ConfigDialog.cpp:686
 #, c-format
 msgid "%s Plugin Packages"
 msgstr "プラグインパッケージ %s "
 
-#: gui\ConfigDialog.cpp:685 gui\IconDialog.cpp:161
+#: gui\ConfigDialog.cpp:687 gui\IconDialog.cpp:161
 msgid "All files"
 msgstr "すべてのファイル"
 
-#: gui\ConfigDialog.cpp:687
+#: gui\ConfigDialog.cpp:689
 msgid "Select a plugin package"
 msgstr "プラグインパッケージを選択"
 
-#: gui\ConfigDialog.cpp:716
+#: gui\ConfigDialog.cpp:718
 msgid "Please wait..."
 msgstr "お待ちください..."
 
-#: gui\ConfigDialog.cpp:990
+#: gui\ConfigDialog.cpp:992
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."
@@ -817,7 +817,8 @@ msgid "Use default"
 msgstr "デフォルトで使用"
 
 #: gui\ShortcutEditorDialog.cpp:152
-msgid "The shorcut location doesn't exist. Do you wish to continue?"
+#, fuzzy
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
 msgstr "ショートカット先にアイテムが存在しません。続行しますか?"
 
 #~ msgid "- zlib by Jean-Loup Gailly and Mark Adler"

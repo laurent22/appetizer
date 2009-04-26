@@ -52,7 +52,9 @@ void ConfigDialog::OnShow(wxShowEvent& evt) { }
 
 
 void ConfigDialog::Localize() {
-  SetTitle(_("Configuration"));  
+  wxString title = _("Configuration");
+  title.Replace(_T("&"), _T(""), true);
+  SetTitle(title);  
   notebook->SetPageText(CONFIG_DIALOG_INDEX_GENERAL, _("General"));
   notebook->SetPageText(CONFIG_DIALOG_INDEX_APPEARANCE, _("Appearance"));
   notebook->SetPageText(CONFIG_DIALOG_INDEX_OPERATIONS, _("Operations"));
