@@ -1,0 +1,416 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer Help\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-10 14:59+0000\n"
+"PO-Revision-Date: 2008-12-10 15:00-0000\n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: generate_help\main.cpp:123
+msgid "Introduction"
+msgstr "Introduction"
+
+#: generate_help\main.cpp:124
+msgid "About Appetizer"
+msgstr "À propos d'Appetizer"
+
+#: generate_help\main.cpp:125
+msgid "Appetizer is a free application launcher, or dock, for Windows. It allows organizing and launching your applications and other shortcuts into a convenient dock. The app is skinable and entirely customizable."
+msgstr "Appetizer est un utilitaire gratuit qui permet de gérer ses programmes et raccourcis sous Windows. Le logiciel peut-être facilement personnalisé à l'aide de thèmes et plugins."
+
+#: generate_help\main.cpp:126
+msgid "Additionally, the application supports the [http://portableapps.com PortableApps.com] format. So if you use Appetizer on a removable drive in the PortableApps.com format, the application will detect it and automatically import all your applications along with the 'Documents', 'Videos', 'Music' and 'Pictures' folders."
+msgstr "En outre, si vous utilisez Appetizer depuis une clef USB au format [http://portableapps.com PortableApps.com], le logiciel le détecte et importe automatiquement sur la barre tous vos logiciels ainsi que vos dossiers 'Documents', 'Videos', 'Music' et 'Pictures'."
+
+#: generate_help\main.cpp:131
+msgid "Features"
+msgstr "Fonctionalités"
+
+#: generate_help\main.cpp:134
+msgid "Support for multiple skins"
+msgstr "Apparence personalisable"
+
+#: generate_help\main.cpp:135
+msgid "Support for plugins"
+msgstr "Gestion de plugins"
+
+#: generate_help\main.cpp:136
+msgid "Resizable dock, which allows displaying the icons both horizontally or vertically."
+msgstr "Mode horizontal et vertical"
+
+#: generate_help\main.cpp:137
+msgid "Three sizes of icons: Small, large and extra-large"
+msgstr "Trois tailles d'icônes disponible"
+
+#: generate_help\main.cpp:138
+msgid "Support for custom icons"
+msgstr "Gestion de d'icônes personnalisées"
+
+#: generate_help\main.cpp:139
+msgid "'Wizard' to automatically imports shortcuts from various locations"
+msgstr "Outil pour importer automatiquement ses raccourcis depuis divers endroits"
+
+#: generate_help\main.cpp:140
+msgid "Organize the icons by drag & dropping them"
+msgstr "Organisation des icônes par glissé-déposé"
+
+#: generate_help\main.cpp:141
+msgid "'Multi-launch' functionality"
+msgstr "Possibilité de lancer plusieurs programmes simultanément"
+
+#: generate_help\main.cpp:142
+msgid "Regroup multiple shortcuts within one menu"
+msgstr "Groupe plusieurs raccourcis sous une même icône"
+
+#: generate_help\main.cpp:143
+msgid "Hot key to hide / show the dock"
+msgstr "Raccourci clavier pour afficher / cacher le programme"
+
+#: generate_help\main.cpp:144
+msgid "Special items to provide extra functionalities: hide / show the desktop, Recycle Bin, Control Panel, etc."
+msgstr "Raccourcis spéciaux pour fournir des fonctionnalités supplémentaires : montrer le bureau, Corbeille, Panneau de Configuration, etc."
+
+#: generate_help\main.cpp:145
+msgid "Support for multiple languages"
+msgstr "Disponible en plusieurs langues"
+
+#: generate_help\main.cpp:146
+msgid "Minimize to tray icon functionality"
+msgstr "Peut être minimisé dans la barre de notification"
+
+#: generate_help\main.cpp:157
+msgid "Using Appetizer"
+msgstr "Utiliser Appetizer"
+
+#: generate_help\main.cpp:158
+msgid "Appetizer is made to be simple and intuitive. To get more information about an icon or a button, simply move the mouse over it. Additionally, try right-clicking the dock in different places - certain parts of the application such as the icons or the icon panel provide various contextual actions."
+msgstr "Appetizer est simple et intuitif à utiliser. En général, pour obtenir plus d'information sur une icône ou un bouton, déplacer la souris par dessus pour faire apparaitre une bulle d'aide. En outre, essayez de faire un clique-droit en divers endroit du programme pour voir quelles actions contextuelles sont disponibles."
+
+#: generate_help\main.cpp:163
+msgid "Adding a shortcut"
+msgstr "Ajouter un raccourci"
+
+#: generate_help\main.cpp:164
+msgid "To add a shortcut, right-click anywhere on the icon panel and select 'New shortcut', then select a file or folder. Alternatively, you may also directly drag and drop a file onto the dock."
+msgstr "Pour ajouter un raccourci, faire un clique-droit n'importe où sur la panneau d'icône et sélectionner 'Nouveau raccourci', ensuire sélectionner un fichier ou dossier. Autrement, vous pouvez également glisser / déposer un fichier directement sur le panneau d'icônes."
+
+#: generate_help\main.cpp:169
+msgid "Adding a group of shortcuts"
+msgstr "Ajouter un groupe de raccourcis"
+
+#: generate_help\main.cpp:170
+msgid "To create a group of shortcuts, right-click anywhere on the icon panel, select 'New group', give a name to the group, and click 'Save'. To add shortcuts to this group, click or right-click on it and select 'Organize group shortcuts'. The newly opened window display all your shortcuts in a tree-like control. You can drag & drop these icons to add them to the group. You can also reorder them, still by drag & dropping them. Once this is done, click the 'Close' button."
+msgstr "Pour ajouter un groupe de raccourcis, faites un clique droit dans la zone où se trouve les icônes et sélectionnez 'Nouveau groupe', puis cliquez 'Sauvegarder'. Pour ajouter des raccourcis à ce groupe, cliquez dessus et sélectionnez 'Organiser le groupe'. La fenêtre nouvellement ouverte affiche tous vos raccourcis dans une arborescence. Vous pouvez glisser-déposer ces icônes pour les ajouter au groupe. Une fois cela fait, cliquez sur le bouton 'Fermer'."
+
+#: generate_help\main.cpp:175
+msgid "Adding a special items"
+msgstr "Ajouter un raccourci spécial"
+
+#: generate_help\main.cpp:176
+msgid "Special items provide additional functionalities that would not be possible using a normal shortcut. The special items include a 'Show desktop' button, the Recycle Bin, a link to the Control Panel, etc."
+msgstr "Les raccourcis spéciaux fournissent des fonctionnalités supplémentaires qui n'auraient pas été possibles avec un raccourci normal."
+
+#: generate_help\main.cpp:177
+msgid "To add a special item, right-click on the dock and select 'Add special item'."
+msgstr "Pour ajouter un raccourci spécial, faire un clique droit sur le panneau d'icônes puis sélectionner 'Ajouter raccourci spécial'."
+
+#: generate_help\main.cpp:182
+msgid "Modifying, moving or deleting a group or shortcut"
+msgstr "Modifier, déplacer ou supprimer  un groupe ou un raccourci"
+
+#: generate_help\main.cpp:183
+msgid "To change the properties of an icon, such as its name or location, right-click on it and select 'Properties'. To move an icon to a different location, click and drag it. To remove a shortcut, right-click on it and select 'Remove'."
+msgstr "Pour changer les propriétés d'une icône, tel que son nom, faite un clique-droit dessus puis sélectionnez 'Propriétés'. Pour déplacer l'icône, cliquez-déposez là. Pour supprimer une icône, faites un clique-droit dessus puis sélectionnez 'Enlever'."
+
+#: generate_help\main.cpp:189
+msgid "Changing the properties of a shortcut or group"
+msgstr "Changer les propriétés d'un raccourci ou groupe"
+
+#: generate_help\main.cpp:190
+msgid "To change the properties of a shortcut or group, right-click on an icon and select 'Properties'. The following options are available:"
+msgstr "Pour changer les propriétés d'un raccourci ou groupe, faire un clique droit sur une icône puis sélectionner 'Propriétés'. Les options suivantes sont disponibles :"
+
+#: generate_help\main.cpp:192
+msgid "Name: The name displayed in the tooltip"
+msgstr "Nom : Le nom affiché dans l'info-bulle"
+
+#: generate_help\main.cpp:193
+msgid "Location: The target of the shortcut. Click on the '...' button to change it."
+msgstr "Emplacement : La cible du raccourci. Cliquer sur '...' pour la changer."
+
+#: generate_help\main.cpp:194
+msgid "Parameters: You may also specify some additional command line arguments in this field. This could be a path to a file or some switches specific to the application. This field is only relevant for executables and is optional."
+msgstr "Paramètres : Vous pouvez également spécifier des paramètres de ligne de commande dans ce champ. Cela peut-être le chemin vers un fichier ou des options spécifiques au programme. Ce champ est optionel."
+
+#: generate_help\main.cpp:195
+msgid "Icon: Click on 'Change icon' to select a custom icon. Click on 'Use default' to revert the icon to the default."
+msgstr "Icône : Cliquer sur 'Changer icône' pour sélectionner une autre icône. Cliquer 'Utiliser défaut' pour restaurer l'icône initiale."
+
+#: generate_help\main.cpp:201
+msgid "Minimizing / Maximizing the dock"
+msgstr "Minimiser / Maximiser Appetizer"
+
+#: generate_help\main.cpp:202
+msgid "The dock can be minimized to the tray icon by clicking on the 'x' button. To bring it back to front, simply click on the tray icon. Note that this behavior can be changed in the 'Configuration' dialog"
+msgstr "Le logiciel peut être minimisé dans la zone de notifications en cliquant sur le bouton 'x'. Pour la rendre visible à nouveau, cliquez sur l'icône dans la barre de notifications."
+
+#: generate_help\main.cpp:203
+msgid "Right-click on the tray icon for additional options."
+msgstr "Faite un clique-droit sur l'icône dans la barre de notifications pour plus d'options."
+
+#: generate_help\main.cpp:209
+msgid "The option panel"
+msgstr "La panneau d'options"
+
+#: generate_help\main.cpp:211
+msgid "The option panel pops up when you click on the big arrow button. If you move the mouse over any of its buttons, a tooltip will show up giving you more information."
+msgstr "Le panneau d'options apparait lorsque vous cliquer sur le bouton fléché. Si vous déplacez la souris au dessus d'un de ses boutons, une bulle d'aide expliquant la fonction du bouton apparait."
+
+#: generate_help\main.cpp:217
+msgid "Importing several shortcuts automatically"
+msgstr "Importer plusieurs raccourcis automatiquement"
+
+#: generate_help\main.cpp:218
+msgid "It is possible to automatically import shortcuts into Appetizer from various locations, including the Windows 'Start menu', the 'Quick Launch' toolbar, or the PortableApps folder. To do so, click on [images/ImportButton.jpg] in the [#OptionPanel option panel] and select where you would like to import shortcuts from, then click 'Start'."
+msgstr "Il est possible d'importer automatiquement des raccourcis dans Appetizer à partir de diverses sources, y compris le menu 'Démarrer' de Windows, la barre de 'Lancement Rapide', ou encore à partir du dossier 'PortableApps'. Pour cela, cliquez sur [images/ImportButton.jpg] dans le [#OptionPanel panneau d'options] et sélectionnez d'où vous souhaitez importer vos raccourcis. Puis cliquez sur 'Démarrer'."
+
+#: generate_help\main.cpp:224
+msgid "Launching several application simultaneously"
+msgstr "Démarrer plusieurs logiciels simultanément"
+
+#: generate_help\main.cpp:225
+msgid "Appetizer provides a functionality to launch several applications at the click of a button. This is equivalent to the Startup menu on Windows, except that it launches the app on your portable drive. To use this 'Multi-launch' group, follow these steps:"
+msgstr "Appetizer permet de lancer plusieurs programmes simplement en cliquant sur un bouton. Ceci est l'équivalent du menu 'Démarrage' de Windows, à ceci près qu'il lance les logiciels présent sur votre disque portatif. Pour utiliser cette fonctionalité de 'Lancement multiple', suivez ces instructions :"
+
+#: generate_help\main.cpp:227
+msgid "Right-click on any icon and select 'Multi-launch group' from the context menu"
+msgstr "Faites un clique-droit sur n'importe quelle icône et sélectionnez 'Groupe de lancements multiples'"
+
+#: generate_help\main.cpp:228
+msgid "You can add as many shortcuts as you wish"
+msgstr "Vous pouvez ajouter autant d'icônes que vous le souhaitez"
+
+#: generate_help\main.cpp:229
+msgid "To trigger the 'Multi-launch' group, open the [#OptionPanel option panel] and click on the 'Multi-launch' button: [images/Multilaunch.jpg]"
+msgstr "Pour déclencher le 'Groupe de lancement multiple', ouvrez le [#OptionPanel panneau d'options] et cliquez sur le bouton 'Lancement multiple' : [images/Multilaunch.jpg]"
+
+#: generate_help\main.cpp:237
+#: generate_help\main.cpp:320
+msgid "Plugins"
+msgstr "Plugins"
+
+#: generate_help\main.cpp:238
+msgid "Appetizer supports a plugin system that allows easily adding new functionalities and customizing the application to your needs."
+msgstr "Appetizer fourni un système de plugin qui permet de facilement ajouter de nouvelles fonctionnalités et de personnaliser le logiciel comme vous le souhaitez."
+
+#: generate_help\main.cpp:245
+msgid "Adding a plugin"
+msgstr "Ajouter un plugin"
+
+#: generate_help\main.cpp:246
+msgid "To add a plugin, follow these steps:"
+msgstr "Pour ajouter un plugin, suivez ces indications :"
+
+#: generate_help\main.cpp:248
+msgid "Open the [#Configuring Configuration dialog]."
+msgstr "Ouvrez la [#Configuring fenêtre de configuration]."
+
+#: generate_help\main.cpp:249
+msgid "Open the 'Plugins' tab."
+msgstr "Ouvrez l'onglet 'Plugins'"
+
+#: generate_help\main.cpp:250
+msgid "Click the 'Install...' button and open the plugin's .zpl package."
+msgstr "Cliquez 'Installer...' et ouvrez le fichier .zpl du plugin."
+
+#: generate_help\main.cpp:251
+msgid "If everything went well, you should see a message saying that the plugin was successfully installed. However, note that it will only be active the next time Appetizer is started."
+msgstr "Si tout s'est bien passé, vous devriez voir un message indiquant que le plugin a été installé avec succès. Cependant, notez qu'il ne sera actif que la prochaine fois que Appetizer est démarré."
+
+#: generate_help\main.cpp:258
+msgid "Creating a plugin"
+msgstr "Créer un plugin"
+
+#: generate_help\main.cpp:259
+msgid "Information on how to create a plugin is available on [http://app.etizer.org/wiki/plugin-tutorial Appetizer's website]"
+msgstr "Des renseignements sur la création de plugin sont disponibles sur [http://app.etizer.org/wiki/plugin-tutorial le site d'Appetizer]"
+
+#: generate_help\main.cpp:266
+msgid "Configuring Appetizer"
+msgstr "Configurer Appetizer"
+
+#: generate_help\main.cpp:267
+msgid "The configuration dialogue is accessible by clicking on the 'Configuration' button in the [#OptionPanel option panel]. The description of each setting is given below:"
+msgstr "La fenêtre de configuration est disponible en cliquant sur le bouton 'Configuration' dans le [#OptionPanel panneau d'options]. La description de chaque option est donnée ci-dessous :"
+
+#: generate_help\main.cpp:274
+msgid "General"
+msgstr "Général"
+
+#: generate_help\main.cpp:276
+msgid "[b]Language:[/b] Select your language here. If you wish to contribute and translate Appetizer in your own language, please [#Translating follow this link]."
+msgstr "[b]Langue :[/b] Sélectionnez votre langue ici. Si vous souhaitez contribuer et traduire Appetizer dans votre langue, veuillez [#Translating suivre ce lien]."
+
+#: generate_help\main.cpp:277
+msgid "[b]Always on top:[/b] If this is selected the bar will always remain on top of the other windows."
+msgstr "[b]Toujour visible :[/b] Si cette option est sélectionnée, Appetizer restera tout le temps visible."
+
+#: generate_help\main.cpp:278
+msgid "[b]Allow only one instance of Appetizer at a time:[/b] If this is selected, only one instance of Appetizer can run at a time."
+msgstr "[b]N'autoriser qu'une seule copie d'Appetizer à la fois :[/b] Si cela est sélectionné, seule une copie d'Appetizer ne pourra tourner à la fois."
+
+#: generate_help\main.cpp:279
+msgid "[b]Install autorun file:[/b] Clicking this button will install an autorun file on your removable drive. This will allow Appetizer to automatically start when you insert the drive. However, note that in some instances Windows may prevent the autorun from being executed, for example for security reason or because the computer is set that way."
+msgstr "[b]Installer le fichier d'autorun :[/b] Cliquez ce bouton pour installer le fichier d'autorun sur votre disque amovible. Cela permettra à Appetizer de démarrer automatiquement lorsque vous insérez le disque. Cependant, notez que dans certains cas Windows peut empêcher l'autorun d'être exécuté, par exemple pour des raisons de sécurité ou parce que l'ordinateur est configuré pour ne pas lancer l'autorun."
+
+#: generate_help\main.cpp:280
+msgid "[b]Check for update:[/b] Click this button to check if a new update is available."
+msgstr "[b]Rechercher des mises à jour :[/b] Cliquez ce bouton pour vérifier si une nouvelle version est disponible."
+
+#: generate_help\main.cpp:287
+msgid "Appearance"
+msgstr "Apparence"
+
+#: generate_help\main.cpp:289
+msgid "[b]Icon size:[/b] Choose the size of the icons."
+msgstr "[b]Taille des icônes :[/b] Choisissez la taille des icônes."
+
+#: generate_help\main.cpp:290
+msgid "[b]Orientation:[/b] The bar can be vertically or horizontally orientated."
+msgstr "[b]Orientation :[/b] La barre peut être orientée verticalement ou horizontalement."
+
+#: generate_help\main.cpp:291
+msgid "[b]Skin:[/b] Choose one of the available skins."
+msgstr "[b]Apperance :[/b] Changez l'apparene globale d'Appetizer en utilisant ce menu."
+
+#: generate_help\main.cpp:298
+msgid "Operations"
+msgstr "Opérations"
+
+#: generate_help\main.cpp:300
+msgid "[b]Auto-hide after launching an application:[/b] Select this option to have Appetizer hides itself each time you launch an application."
+msgstr "[b]Cacher la barre après avoir lancé un programme :[/b] Sélectionnez cette option pour que Appetizer soit minimisé dans la barre de notification à chaque fois que vous lancez un programme."
+
+#: generate_help\main.cpp:301
+msgid "[b]When ejecting the drive, close the apps that are locking it:[/b] If this option is selected, all the apps that are open on your removable drive will be closed when you click on the 'Eject' button."
+msgstr "[b]Fermer les logiciels bloquants lors de l'éjection du disque : [/b] Si cette option est sélectionnée, tous les logiciels qui sont ouverts sur le disque amovible seront fermées lorsque vous cliquerez sur le bouton d'éjection."
+
+#: generate_help\main.cpp:302
+msgid "[b]Run multi-launch group on startup:[/b] Tick off this option to automatically run the [#Multilaunch multi-launch group] on startup."
+msgstr "[b]Démarrer le groupe de Lancement Multiple au démarrage :[/b] Sélectionnez cette option pour démarrer automatiquement le groupe de [#Multilaunch lancement multiple] au démarrage."
+
+#: generate_help\main.cpp:303
+msgid "[b]'Close' button minimizes to System Tray:[/b] By default, the application is minimized to the System Tray when the 'Close' button is clicked. Tick off this option to make the 'Close' button actually close the app."
+msgstr "[b]Le bouton \"Fermer\" minimise dans la zone de notification :[/b] Par défaut, Appetizer est minimisé dans la zone de notification lorsque le bouton \"Fermer\" est cliqué. Décochez cette option si vous souhaitez que le bouton \"Fermer\" ferme réellement le logiciel."
+
+#: generate_help\main.cpp:304
+msgid "[b]Hot key to hide / show the bar:[/b] Select the hot key to hide / show the bar. Select 'none' to disable it."
+msgstr "[b]Raccourci clavier pour cacher / montrer la barre :[/b] Sélectionnez la raccourci clavier pour montrer / cacher Appetizer. Sélectionnez \"Aucun\" pour désactiver le raccourci clavier."
+
+#: generate_help\main.cpp:311
+msgid "Import"
+msgstr "Importer"
+
+#: generate_help\main.cpp:313
+msgid "[b]Exclude these items from the import operations:[/b] Normally, when importing shortcuts using the [#Import import tool], all the executables are added to the dock. If you wish to exclude certain files, add them to this list. The item names may be specified with [http://www.computerhope.com/jargon/w/wildcard.htm wildcards]. Note that this list is also automatically populated whenever you remove a shortcut from the dock."
+msgstr "[b]Ignorer ces fichiers lors des opérations d'importation :[/b] Normalement, l'[#Import outil d'importation] importe tous les exécutables qu'il trouve. Si vous souhaitez exclure certains fichiers ou dossiers, ajoutez les à cette liste. Le nom des fichiers peut être spécifié à l'aide de [http://enacit1.epfl.ch/didacticiel_unix_leao/shell/wildcard.html métacaractères]. Les raccourcis que vous enlevez de la barre d'icônes sont également automatiquement ajoutés à cette liste."
+
+#: generate_help\main.cpp:321
+msgid "This tab displays the plugins that are currently installed along with their status."
+msgstr "Cet onglet affiche les plugins qui sont affichés ainsi que leurs status."
+
+#: generate_help\main.cpp:323
+msgid "[b]Enable / Disable buttons:[/b] Click these buttons to enable / disable the selected plugin."
+msgstr "[b]Boutons Active / Désactive :[/b] Cliquez ces boutons pour activer / désactiver les plugins sélectionnez."
+
+#: generate_help\main.cpp:324
+msgid "[b]Install...:[/b] Click to [#AddingPlugins install a new plugin]."
+msgstr "[b]Installer... :[/b] Cliquer pour [#AddingPlugins installer un nouveau plugin]."
+
+#: generate_help\main.cpp:330
+msgid "Other tips"
+msgstr "Autres astuces"
+
+#: generate_help\main.cpp:332
+msgid "You can resize the dock by clicking and dragging its bottom right corner."
+msgstr "Vous pouvez redimensionner la barre en cliquant et déplacant son coin en bas à droite."
+
+#: generate_help\main.cpp:333
+msgid "You can move it by clicking anywhere on the icon panel and dragging."
+msgstr "Vous pouvez la déplacer en cliquant n'importe où et en déplacant."
+
+#: generate_help\main.cpp:334
+msgid "The bar will snap to the borders of the screens as you move it."
+msgstr "La barre se 'collera' au bord de l'écran lorsque vous la déplacez."
+
+#: generate_help\main.cpp:341
+msgid "Translating Appetizer"
+msgstr "Traduire Appetizer"
+
+#: generate_help\main.cpp:342
+#, c-format
+msgid "If Appetizer is not available in your own language, you can easily create your own translation. Please [%s follow this link] for more information."
+msgstr "Si Appetizer n'est pas disponible dans votre lange, vous pouvez facilement créer votre propre translation. Veuillez [%s suivre ce lien] pour plus d'information."
+
+#: generate_help\main.cpp:348
+msgid "Support and links"
+msgstr "Aide et liens"
+
+#: generate_help\main.cpp:349
+#, c-format
+msgid "Official home page: %s"
+msgstr "Page d'accueil officielle : %s"
+
+#: generate_help\main.cpp:351
+#, c-format
+msgid "Some information on how to create a plugin: %s"
+msgstr "Renseignements pour la création de plugins : %s"
+
+#: generate_help\main.cpp:353
+#, c-format
+msgid "For bug reports, suggestions, comments or translations, please contact %s"
+msgstr "Pour les rapports de bugs, suggestions, commentaires et traductions, veuillez contacter %s"
+
+#~ msgid ""
+#~ "To add a shortcut, right-click anywhere on the icon panel and select 'New "
+#~ "shortcut', then click on [images/SelectFile.jpg] to select a file or "
+#~ "[images/SelectFolder.jpg] to select a folder. Once this is done, the "
+#~ "'Name' field should be automatically populated based on the file or "
+#~ "folder you've chosen. Finally, you may also specify some additional "
+#~ "parameters in the 'Parameters' field. This could be a path to a file or "
+#~ "some switches specific to the application. This field is only relevant "
+#~ "for executables and is optional."
+#~ msgstr ""
+#~ "Pour ajouter un raccourci, faites un clique droit dans la zone où se "
+#~ "trouve les icônes et sélectionnez 'Nouveau raccourci', ensuite cliquez "
+#~ "sur [images/SelectFile.jpg] pour sélectionner un fichier ou [images/"
+#~ "SelectFolder.jpg] pour sélectionner un dossier. Une fois cela fait, le "
+#~ "champs 'Nom' devrait être automatiquement rempli en fonction du nom du "
+#~ "fichier ou dossier que vous avez choisi. Finalement, vous pouvez "
+#~ "également spécifier quelques paramères additionels dans le champs "
+#~ "'Paramètres'. Cela peut être par exemple le chemin vers un fichier ou "
+#~ "certaines options spécifique au raccourci. Ce champs n'est utile que pour "
+#~ "les exécutables et est optionel."
+#~ msgid ""
+#~ "A group can take the icon of any of the shortcuts it contains. To do so, "
+#~ "right-click on a group and select 'Properties'. Then click on 'Select a "
+#~ "different icon'. If the group doesn't contain any shortcut, only the "
+#~ "default icon can be selected."
+#~ msgstr ""
+#~ "Un groupe peut prendre l'icône de n'importe quel raccourci qu'il "
+#~ "contient. Pour cela, faite un clique-droit sur un groupe et sélectionnez "
+#~ "'Propriétés' puis cliquez sur 'Sélectionner une autre icône'. Si le "
+#~ "groupe ne contient aucun raccourcis, seule l'icône par défaut est "
+#~ "disponible."
+
