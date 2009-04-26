@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<Skin compatibleVersion="1.3" author="Laurent Cozic" name="Blue Glass">
+
+	<!-- 
+	
+	Some general notes about the Skin.xml file:
+	
+	- The paddings are expressed as (Left, Top, Right, Bottom)
+	
+	- The option buttons can be customized by adding this tag to the XML:
+	
+		<OptionButton>
+			<IconColor>130,130,130</IconColor>
+			<DownIconOffset>0,1</DownIconOffset>
+		</OptionButton>
+			
+	- The colors are expressed as (Red, Green, Blue, Alpha). The Alpha is optional.
+	
+	- Many skin files are optional - see the BlueGlass skin for the files that are actually required.
+	
+	-->
+	
+	<ArrowButton>
+		<Rectangle>0,0,18,64</Rectangle>
+		<ColorOver>0,128,255,20</ColorOver>
+		<ColorDown>0,128,255,60</ColorDown>
+	</ArrowButton>
+	
+	<OptionPanel>
+		<Rectangle>18,0,42,64</Rectangle>
+		<Padding>6,4,6,4</Padding>
+		<HGap>4</HGap> <!-- The horizontal gap between the buttons -->
+		<VGap>3</VGap> <!-- The vertical gap between the buttons -->
+	</OptionPanel>
+	
+	<MainPanel>
+		<Rectangle>60,0,73,64</Rectangle>
+	</MainPanel>
+	
+	<OptionButton>
+		<IconColor>110,110,110</IconColor>
+		<ColorOver>0,128,255,30</ColorOver>
+		<ColorDown>0,128,255,80</ColorDown>
+	</OptionButton>
+	
+	<IconPanel>
+		<Rectangle>69,9,48,46</Rectangle>
+		<Padding>8,4,8,4</Padding>
+	</IconPanel>
+	
+	<BrowseButton>
+		<ColorOver>255,255,255,255</ColorOver>
+	</BrowseButton>
+	
+	<Icon>
+		<Padding>4,4,4,4</Padding>
+	</Icon>
+	
+</Skin>

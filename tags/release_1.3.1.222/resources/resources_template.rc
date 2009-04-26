@@ -1,0 +1,37 @@
+amain ICON "Data/Skin/Application.ico"
+
+#include "wx/msw/wx.rc"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION ____VERSION_COMA____
+ PRODUCTVERSION ____VERSION_COMA____
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "A portable dock for your applications.\0"
+            VALUE "CompanyName", "Appetizer Project\0"
+            VALUE "FileDescription", "Appetizer\0"
+            VALUE "FileVersion", "____VERSION____"
+            VALUE "InternalName", "MiniLaunchBar\0"
+            VALUE "LegalCopyright", "Copyright (C) 2008 Laurent Cozic\0"
+            VALUE "OriginalFilename", "Appetizer.exe\0"
+            VALUE "ProductName", "Appetizer\0"
+            VALUE "ProductVersion", "____VERSION____"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x000, 1252
+    END
+END
