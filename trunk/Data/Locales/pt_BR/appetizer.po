@@ -3,10 +3,9 @@ msgstr ""
 "Project-Id-Version: Portugês (Brasil)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 17:48+0100\n"
-"PO-Revision-Date: 2009-04-26 15:52-0000\n"
+"PO-Revision-Date: 2009-04-26 17:53-0000\n"
 "Last-Translator: Laurent Cozic\n"
-"Language-Team: Marcus Malzer <mmalzer@gmail.com>, Gabriel Mendes "
-"<gabrielpmendes@gmail.com>\n"
+"Language-Team: Marcus Malzer <mmalzer@gmail.com>, Gabriel Mendes <gabrielpmendes@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,24 +20,31 @@ msgstr "Esconder"
 msgid "Show"
 msgstr "Exibir"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:491
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:491
 msgid "Eject drive"
 msgstr "Ejetar Drive"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1000 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:1000
+#: OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Configuração"
 
-#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
 msgid "Close"
 msgstr "Fechar"
 
-#: FolderItem.cpp:462 gui\TreeViewDialog.cpp:129
+#: FolderItem.cpp:462
+#: gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
 msgstr "Organizar atalhos"
 
-#: FolderItem.cpp:577 FolderItem.cpp:599 FolderItem.cpp:622
+#: FolderItem.cpp:577
+#: FolderItem.cpp:599
+#: FolderItem.cpp:622
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "O Arquivo não existe ou foi deletado (Erro %s)"
@@ -51,31 +57,38 @@ msgstr "Grupo"
 msgid "Unnamed"
 msgstr "Sem nome"
 
-#: FolderItem.cpp:1081 IconPanel.cpp:170
+#: FolderItem.cpp:1081
+#: IconPanel.cpp:170
 msgid "Control Panel"
 msgstr "Painel de Controle"
 
-#: FolderItem.cpp:1083 IconPanel.cpp:171
+#: FolderItem.cpp:1083
+#: IconPanel.cpp:171
 msgid "My Computer"
 msgstr "Meu Computador"
 
-#: FolderItem.cpp:1085 IconPanel.cpp:172
+#: FolderItem.cpp:1085
+#: IconPanel.cpp:172
 msgid "My Network Places"
 msgstr "Meus Locais de Rede"
 
-#: FolderItem.cpp:1087 IconPanel.cpp:173
+#: FolderItem.cpp:1087
+#: IconPanel.cpp:173
 msgid "Recycle Bin"
 msgstr "Lixeira"
 
-#: FolderItem.cpp:1089 IconPanel.cpp:174
+#: FolderItem.cpp:1089
+#: IconPanel.cpp:174
 msgid "Show Desktop"
 msgstr "Exibir Área de Trabalho"
 
-#: FolderItem.cpp:1091 IconPanel.cpp:175
+#: FolderItem.cpp:1091
+#: IconPanel.cpp:175
 msgid "Windows Explorer"
 msgstr "Windows Explorer"
 
-#: FolderItem.cpp:1093 IconPanel.cpp:176
+#: FolderItem.cpp:1093
+#: IconPanel.cpp:176
 msgid "Search"
 msgstr "Procurar"
 
@@ -83,15 +96,18 @@ msgstr "Procurar"
 msgid "Current Drive"
 msgstr "Drive Atual"
 
-#: FolderItem.cpp:1097 IconPanel.cpp:177
+#: FolderItem.cpp:1097
+#: IconPanel.cpp:177
 msgid "Printers and Faxes"
 msgstr "Fax e Impressoras"
 
-#: FolderItem.cpp:1099 IconPanel.cpp:178
+#: FolderItem.cpp:1099
+#: IconPanel.cpp:178
 msgid "Network Connections"
 msgstr "Conexões de Rede"
 
-#: FolderItemRenderer.cpp:154 gui\TreeViewDialog.cpp:106
+#: FolderItemRenderer.cpp:154
+#: gui\TreeViewDialog.cpp:106
 msgid "Remove..."
 msgstr "Remover..."
 
@@ -103,11 +119,13 @@ msgstr "Adicionar ao grupo Multi-Launch"
 msgid "Organize group shortcuts"
 msgstr "Organizar grupos de atalhos"
 
-#: FolderItemRenderer.cpp:173 gui\TreeViewDialog.cpp:111
+#: FolderItemRenderer.cpp:173
+#: gui\TreeViewDialog.cpp:111
 msgid "Properties"
 msgstr "Propriedades"
 
-#: IconPanel.cpp:150 OptionPanel.cpp:164
+#: IconPanel.cpp:150
+#: OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "Novo atalho..."
 
@@ -187,12 +205,8 @@ msgid "Error launching web browser"
 msgstr "Erro ao abri o navegador"
 
 #: MainFrame.cpp:227
-msgid ""
-"There was an error registering the hot key. Another application may already "
-"have registered it."
-msgstr ""
-"Foi encontrado um erro ao registrar a tecla de atalho. Outra aplicação pode "
-"já ter registrado."
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Foi encontrado um erro ao registrar a tecla de atalho. Outra aplicação pode já ter registrado."
 
 #: MainFrame.cpp:490
 msgid "Minimize to tray"
@@ -209,15 +223,19 @@ msgstr ""
 "\n"
 "Saiba que você pode mudar esta opção na janela '%s' (aba '%s')"
 
-#: MainFrame.cpp:1000 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1000
+#: gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Operações"
 
-#: MainFrame.cpp:1000 utilities\Utilities.cpp:74 utilities\Utilities.cpp:348
+#: MainFrame.cpp:1000
+#: utilities\Utilities.cpp:74
+#: utilities\Utilities.cpp:348
 msgid "Don't show this message again"
 msgstr "Não mostrar esta mensgaem novamente"
 
-#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:100
+#: MessageBoxes.cpp:15
+#: gui\ConfigDialog.cpp:100
 msgid "Error"
 msgstr "Erro"
 
@@ -233,7 +251,8 @@ msgstr "Cuidado"
 msgid "Confirmation"
 msgstr "Confirmação"
 
-#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+#: OptionPanel.cpp:163
+#: gui\ConfigDialog.cpp:65
 msgid "Help"
 msgstr "Ajuda"
 
@@ -241,7 +260,8 @@ msgstr "Ajuda"
 msgid "Multi-launch"
 msgstr "Multi-launch"
 
-#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+#: OptionPanel.cpp:167
+#: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
 msgstr "Importar atalhos"
 
@@ -253,26 +273,19 @@ msgstr "Tópicos da Ajuda"
 msgid "Get Support"
 msgstr "Obter Suporte"
 
-#: OptionPanel.cpp:331 gui\AboutDialog.cpp:80
+#: OptionPanel.cpp:331
+#: gui\AboutDialog.cpp:80
 #, c-format
 msgid "About %s..."
 msgstr "Sobre %s..."
 
 #: OptionPanel.cpp:341
-msgid ""
-"The multilaunch group is currently empty. Do you wish to show the help topic "
-"about this feature?"
-msgstr ""
-"O grupo multilaunch está vazio. Deseja visualizar o tópico de ajuda sobre "
-"este recurso?"
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "O grupo multilaunch está vazio. Deseja visualizar o tópico de ajuda sobre este recurso?"
 
 #: Plugin.cpp:132
-msgid ""
-"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
-"or ASCII. Applies to:"
-msgstr ""
-"O script do plugin não está no formato certo. Por favor codifique como UTF-8 "
-"NO BOM ou ASCII."
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "O script do plugin não está no formato certo. Por favor codifique como UTF-8 NO BOM ou ASCII."
 
 #: PluginManager.cpp:50
 #, c-format
@@ -291,14 +304,11 @@ msgstr "Não é possível criar o arquivo '%s'"
 
 #: PluginManager.cpp:96
 #, c-format
-msgid ""
-"The plugin has been installed successfully. It will be activated the next "
-"time %s is started"
-msgstr ""
-"O plugin foi instalado com sucesso. Ele será ativado na próxima vez que o %s "
-"for iniciado"
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "O plugin foi instalado com sucesso. Ele será ativado na próxima vez que o %s for iniciado"
 
-#: Styles.cpp:71 gui\ConfigDialog.cpp:849
+#: Styles.cpp:71
+#: gui\ConfigDialog.cpp:849
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
 msgstr "A skin não é compatível com a versão atual do %s."
@@ -341,11 +351,8 @@ msgid "- CStdString by Joe O'Leary"
 msgstr "- CStdString por Joe O'Leary"
 
 #: gui\AboutDialog.cpp:72
-msgid ""
-"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
-"Celes"
-msgstr ""
-"- LUA por Roberto Ierusalimschy, Luiz Henrique de Figueiredo e Waldemar Celes"
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- LUA por Roberto Ierusalimschy, Luiz Henrique de Figueiredo e Waldemar Celes"
 
 #: gui\AboutDialog.cpp:76
 msgid "- wxWidgets by their respective authors"
@@ -363,8 +370,10 @@ msgstr "Sobre"
 msgid "License"
 msgstr "Licença"
 
-#: gui\AboutDialog.cpp:83 gui\BetterMessageDialog.cpp:111
-#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+#: gui\AboutDialog.cpp:83
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
 msgid "OK"
 msgstr "OK"
 
@@ -379,29 +388,17 @@ msgstr "Copyright © %s"
 
 #: gui\AboutDialog.cpp:89
 msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Este programa é um software livre: você pode redistribuí-lo e/ou modificá-lo "
-"sob os termos da GNU General Public License, como foi publicada pela Free "
-"Software Foundation, qualque das 3 versões dos termos ou qualquer versão "
-"mais atual.\n"
+"Este programa é um software livre: você pode redistribuí-lo e/ou modificá-lo sob os termos da GNU General Public License, como foi publicada pela Free Software Foundation, qualque das 3 versões dos termos ou qualquer versão mais atual.\n"
 "\n"
-"Este programa é distrubuído na esperança de ser útil, mas NÃO POSSUI "
-"GARANTIA; sem, até mesmo, a garantia de MERCADO ou a de USO PARA PROPÓSITO "
-"PARTICULAR. See the Gnu General Publi License para mais detalhes.\n"
+"Este programa é distrubuído na esperança de ser útil, mas NÃO POSSUI GARANTIA; sem, até mesmo, a garantia de MERCADO ou a de USO PARA PROPÓSITO PARTICULAR. See the Gnu General Publi License para mais detalhes.\n"
 "\n"
-"Você deve ter recebido uma cópia da GNU General Public License junto com "
-"este programa. Se não, veja em <http://www.gnu.org/licenses/>."
+"Você deve ter recebido uma cópia da GNU General Public License junto com este programa. Se não, veja em <http://www.gnu.org/licenses/>."
 
 #: gui\AboutDialog.cpp:90
 msgid "Web:"
@@ -424,9 +421,12 @@ msgstr "Sim"
 msgid "No"
 msgstr "Não"
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
-#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80 gui\ShortcutEditorDialog.cpp:43
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:80
+#: gui\ShortcutEditorDialog.cpp:43
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -446,7 +446,8 @@ msgstr "Importar"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:42
+#: gui\ConfigDialog.cpp:63
+#: gui\ShortcutEditorDialog.cpp:42
 msgid "Save"
 msgstr "Salvar"
 
@@ -479,7 +480,8 @@ msgstr "Sempre no topo"
 msgid "Allow only one instance of %s at a time"
 msgstr "Permitir apenas uma instâcia do %s por vez"
 
-#: gui\ConfigDialog.cpp:208 gui\ConfigDialog.cpp:723
+#: gui\ConfigDialog.cpp:208
+#: gui\ConfigDialog.cpp:723
 msgid "Check for update"
 msgstr "Verificar por atualizações"
 
@@ -661,30 +663,23 @@ msgstr "Instalar..."
 
 #: gui\ConfigDialog.cpp:590
 #, c-format
-msgid ""
-"The changes made to the plugins will only be active the next time %s is "
-"started."
-msgstr ""
-"As mudanças feitas aos plugins só serão ativadas da próxima vez em que o %s "
-"for iniciado."
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "As mudanças feitas aos plugins só serão ativadas da próxima vez em que o %s for iniciado."
 
 #: gui\ConfigDialog.cpp:650
 #, c-format
 msgid ""
-"By installing the autorun file on your removable drive, %s will start "
-"automatically when you insert your drive.\n"
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"Instalando o atalho em um disco removível, o %s iniciará automaticamente "
-"quando você inserir o disco.\n"
+"Instalando o atalho em um disco removível, o %s iniciará automaticamente quando você inserir o disco.\n"
 "\n"
 "Deseja continuar?"
 
 #: gui\ConfigDialog.cpp:653
 msgid "Could not install autorun file. Please try again."
-msgstr ""
-"não foi possível instalar o arquivo AutoRun. Por favor tente novamente."
+msgstr "não foi possível instalar o arquivo AutoRun. Por favor tente novamente."
 
 #: gui\ConfigDialog.cpp:655
 msgid "The autorun file has been installed successfully"
@@ -695,7 +690,8 @@ msgstr "O arquivo de AutoRun foi instalado com sucesso"
 msgid "%s Plugin Packages"
 msgstr "Pacotes de Plugin do %s"
 
-#: gui\ConfigDialog.cpp:687 gui\IconDialog.cpp:161
+#: gui\ConfigDialog.cpp:687
+#: gui\IconDialog.cpp:161
 msgid "All files"
 msgstr "Todos os arquivos"
 
@@ -708,11 +704,8 @@ msgid "Please wait..."
 msgstr "Por favor espere..."
 
 #: gui\ConfigDialog.cpp:992
-msgid ""
-"Some of these changes will only be applied until after you restart the "
-"application."
-msgstr ""
-"Algumas dessas mudanças só serão aplicadas após o programa ser reiniciado."
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Algumas dessas mudanças só serão aplicadas após o programa ser reiniciado."
 
 #: gui\FileOrFolderDialog.cpp:76
 msgid "Loading tree..."
@@ -818,9 +811,9 @@ msgid "Use default"
 msgstr "Usar Padrão"
 
 #: gui\ShortcutEditorDialog.cpp:152
-#, fuzzy
 msgid "The shortcut location doesn't exist. Do you wish to continue?"
 msgstr "A localização do atalho não existe. Você deseja continuar?"
 
 #~ msgid "- zlib by Jean-Loup Gailly and Mark Adler"
 #~ msgstr "- zlib por Jean-Loup Gailly e Mark Adler"
+
