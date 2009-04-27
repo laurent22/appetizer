@@ -53,4 +53,4 @@ private:
 };
 
 
-#endif // __Plugin_H
+#endif // __PluginManager_H

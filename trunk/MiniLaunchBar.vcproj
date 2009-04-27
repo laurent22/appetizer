@@ -588,6 +588,14 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\PluginPreference.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PluginPreferences.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -1649,6 +1657,18 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\lua_glue\azPreferences.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\lua_glue\azSystem.cpp"
 					>
 					<FileConfiguration
@@ -1797,6 +1817,14 @@
 			</File>
 			<File
 				RelativePath=".\PluginManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PluginPreference.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PluginPreferences.h"
 				>
 			</File>
 			<File
@@ -2048,6 +2076,10 @@
 				</File>
 				<File
 					RelativePath=".\lua_glue\azOptionPanel.h"
+					>
+				</File>
+				<File
+					RelativePath=".\lua_glue\azPreferences.h"
 					>
 				</File>
 				<File

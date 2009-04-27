@@ -2,6 +2,61 @@
 -- Use of this source code is governed by a GNU/GPL license that can be
 -- found in the LICENSE file.
 
+
+function preferencesTest()	
+	trace("Creating a preference...")
+	preferences:registerPreference({
+		type = "Text",
+		name = "first",
+		defaultValue = "this is the default value",
+		title = "Le titre : "
+	})
+	
+--	trace("Creating the same preference - should trigger an error");
+--	preferences:registerPreference({
+--		type = "Text",
+--		name = "firstPreference",
+--		defaultValue = "valeur par defaut",
+--		title = "Le titre : "
+--	})
+	
+--	trace("Creating an invalid preference - should trigger an error");
+--	preferences:registerPreference({
+--		type = "Blablabla",
+--		name = "blablaPreference",
+--		defaultValue = "valeur par defaut",
+--		title = "Le titre : "
+--	})
+	
+	preferences:registerPreference({
+		type = "TextArea",
+		name = "textAreaTest",
+		defaultValue = "",
+		title = "Text area : "
+	})
+	
+	preferences:registerPreference({
+		type = "Popup",
+		name = "popupTest",
+		defaultValue = "two",
+		title = "Popup : ",
+		options = {
+			one = "First option",
+			two = "Secont option",
+			three = "Third option"
+		}
+	})
+	
+	trace("Getting first preference. Should return default value: ", preferences:getValue("first")); 
+	
+	trace("Setting first preference value...");
+	preferences:setValue("first", "new value");
+	
+	trace("first preference new value: ", preferences:getValue("first"));
+	
+end
+
+
 function shortcutTest()
 	trace("Creating new dockItem...")
 	s = DockItem:new(false)
@@ -222,9 +277,9 @@ end
 
 
 trace("Creating new button")	
-button = OptionButton():new()
+button = OptionButton:new()
 
-trace("Setting tooltip");
+trace("Setting tooltip")
 button:setToolTip("My plugin button")
 
 trace("Adding button to option panel")
@@ -243,3 +298,16 @@ for i = 0, (buttonCount - 1) do
 	trace("Button tooltip = ", button:getToolTip())
 end
 
+
+
+function prefButton_click(event)
+	preferencesTest()
+end
+
+prefButton = OptionButton:new()
+prefButton:setToolTip("Preferences Test")
+prefButton:addEventListener("click", "prefButton_click")
+optionPanel:addButton(prefButton)
+
+
+preferencesTest()

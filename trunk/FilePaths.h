@@ -25,6 +25,7 @@ public:
   static wxString GetHelpDirectory();
   static wxString GetToolsDirectory();
   static wxString GetPluginsDirectory();
+  static wxString GetPluginPreferenceDirectory();
   static wxString GetBaseSkinAssetsDirectory();
   static wxString GetIconCacheDirectory();
 
@@ -42,6 +43,7 @@ public:
   static wxString GetQuickLaunchDirectory();  
 
   static void CreateSettingsDirectory();
+  static void CreateDirectoryIfNotExists(const wxString& path);
   static void InitializePaths();
   static wxString GetSkinFile(const wxString& filename);
 
@@ -66,6 +68,7 @@ private:
   static wxString ToolsDirectory_;
   static wxString PluginsDirectory_;
   static wxString PluginSettingsFile_;
+  static wxString PluginPreferenceDirectory_;
 
 };
 

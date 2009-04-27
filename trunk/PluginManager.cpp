@@ -14,7 +14,6 @@
 #include "FolderItemRenderer.h"
 #include "lua_glue/LuaUtil.h"
 #include "lua_glue/azOptionButton.h"
-//#include "lua_glue/azIcon.h"
 #include "lua_glue/azMenu.h"
 #include "lua_glue/azDockItem.h"
 

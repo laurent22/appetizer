@@ -26,9 +26,6 @@ IMPLEMENT_APP(MiniLaunchBar)
 int MiniLaunchBar::uniqueInt_ = 0;
 
 
-//#include "ToolTipFrame.h"
-
-
 /**
  * Initialize the application
  */

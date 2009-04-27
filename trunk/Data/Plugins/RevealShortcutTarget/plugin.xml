@@ -4,5 +4,5 @@
 	<!-- Plugin name -->
 	<Name>"Open containing folder" menu item</Name>
 	<!-- ID to uniquely identify the plugin. New plugins can get a new UUID from http://www.famkruithof.net/uuid/uuidgen (for example) -->
-	<UUID>c383ffc0-c30a-11dd-ad8b-0800200c9a66</UUID>
+	<UUID>org.etizer.app.plugins.revealShortcut</UUID>
 </Plugin>

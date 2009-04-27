@@ -9,10 +9,10 @@
 #include "Plugin.h"
 #include "MiniLaunchBar.h"
 #include "MessageBoxes.h"
+#include "FilePaths.h"
 
 #include "lua_glue/azGlobal.h"
 #include "lua_glue/azApplication.h"
-//#include "lua_glue/azIcon.h"
 #include "lua_glue/azOptionPanel.h"
 #include "lua_glue/azOptionButton.h"
 #include "lua_glue/azMenu.h"
@@ -147,8 +147,21 @@ bool Plugin::Load(const wxString& folderPath) {
     return false;
   }
 
+  wxString preferenceFile;
+
+  if (GetUUID() == wxEmptyString) {
+    WLOG(_T("Plugin::Load: The plugin doesn't have a UUID so preferences won't be saved: ") + folderPath);
+  } else {
+    preferenceFile = FilePaths::GetPluginPreferenceDirectory() +
+                     wxFileName::GetPathSeparator() +
+                     GetUUID() +
+                     _T(".xml");
+  }
+
+  preferences_ = new PluginPreferences(preferenceFile);
+  luaPreferences_ = new azPreferences(preferences_);
+
   Lunar<azApplication>::Register(L);
-  //Lunar<azIcon>::Register(L);
   Lunar<azMenu>::Register(L);
   Lunar<azDockItem>::Register(L);
   Lunar<azOptionButton>::Register(L);
@@ -156,6 +169,7 @@ bool Plugin::Load(const wxString& folderPath) {
   Lunar<azDialogs>::Register(L);
   Lunar<azSystem>::Register(L);
   Lunar<azMenuItem>::Register(L);
+  Lunar<azPreferences>::Register(L);
 
   PluginManager* pluginManager = wxGetApp().GetPluginManager();
   
@@ -173,6 +187,10 @@ bool Plugin::Load(const wxString& folderPath) {
 
   lua_pushliteral(L, "system");
   Lunar<azSystem>::push(L, pluginManager->luaSystem);
+  lua_settable(L, LUA_GLOBALSINDEX);
+
+  lua_pushliteral(L, "preferences");
+  Lunar<azPreferences>::push(L, luaPreferences_);
   lua_settable(L, LUA_GLOBALSINDEX);
 
   error = lua_pcall(L, 0, 0, 0);

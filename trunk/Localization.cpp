@@ -172,6 +172,7 @@ Localization::Localization() {
   languageCodeHashMapS_[_T("ja")] = _T("日本語");  
   languageCodeHashMapS_[_T("ko")] = _T("한국말");
   languageCodeHashMapS_[_T("sv")] = _T("Svenska");    
+  languageCodeHashMapS_[_T("el")] = _T("ελληνικά");    
 }
 
 

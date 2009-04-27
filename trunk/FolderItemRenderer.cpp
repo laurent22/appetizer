@@ -17,7 +17,7 @@
 #include "MessageBoxes.h"
 #include "ExtendedMenuItem.h"
 #include "gui/TreeViewDialog.h"
-//#include "lua_glue/azIcon.h"
+
 
 
 

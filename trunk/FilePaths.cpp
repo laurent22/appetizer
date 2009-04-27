@@ -30,6 +30,7 @@ wxString FilePaths::ToolsDirectory_ = _T("");
 wxString FilePaths::PluginsDirectory_ = _T("");
 wxString FilePaths::PluginSettingsFile_ = _T("");
 wxString FilePaths::BaseSkinAssetsDirectory_ = _T("");
+wxString FilePaths::PluginPreferenceDirectory_ = _T("");
 
 
 wxString FilePaths::GetApplicationDrive() { return FilePaths::ApplicationDrive_; }
@@ -49,6 +50,7 @@ wxString FilePaths::GetIconCacheDirectory() { return FilePaths::IconCacheDirecto
 wxString FilePaths::GetPluginsDirectory() { return FilePaths::PluginsDirectory_; }
 wxString FilePaths::GetPluginSettingsFile() { return FilePaths::PluginSettingsFile_; }
 wxString FilePaths::GetBaseSkinAssetsDirectory() { return FilePaths::BaseSkinAssetsDirectory_; }
+wxString FilePaths::GetPluginPreferenceDirectory() { return FilePaths::PluginPreferenceDirectory_; }
 wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
 
 wxString FilePaths::GetQuickLaunchDirectory() { 
@@ -172,6 +174,13 @@ void FilePaths::CreateSettingsDirectory() {
 }
 
 
+void FilePaths::CreateDirectoryIfNotExists(const wxString& path) {
+  if (wxFileName::DirExists(path)) return;
+  
+  wxFileName::Mkdir(path, 0777, wxPATH_MKDIR_FULL);
+}
+
+
 void FilePaths::InitializePaths() {
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
   wxString applicationDirectory = executablePath.GetPath();
@@ -210,4 +219,5 @@ void FilePaths::InitializePaths() {
   FilePaths::ToolsDirectory_ = FilePaths::DataDirectory_ + _T("/") + TOOLS_FOLDER_NAME;
   FilePaths::PluginsDirectory_ = FilePaths::DataDirectory_ + _T("/") + PLUGINS_FOLDER_NAME;
   FilePaths::PluginSettingsFile_ = FilePaths::GetSettingsDirectory() + _T("/") + PLUGINS_FILE_NAME;
+  FilePaths::PluginPreferenceDirectory_ = FilePaths::GetSettingsDirectory() + _T("/") + PLUGINS_PREFERENCES_FOLDER_NAME;
 }

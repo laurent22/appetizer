@@ -13,6 +13,7 @@
 #include "TypeDefinitions.h"
 #include "ExtendedMenuItem.h"
 #include "lua_glue/LuaUtil.h"
+#include "lua_glue/azPreferences.h"
 
 
 class Plugin {
@@ -49,6 +50,9 @@ private:
   wxString uuid_;
   wxString name_;
   wxString state_;
+
+  PluginPreferences* preferences_;
+  azPreferences* luaPreferences_;
 
   void LoadPluginXml(const wxString& xmlFilePath);
 
