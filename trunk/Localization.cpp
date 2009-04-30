@@ -173,6 +173,10 @@ Localization::Localization() {
   languageCodeHashMapS_[_T("ko")] = _T("한국말");
   languageCodeHashMapS_[_T("sv")] = _T("Svenska");    
   languageCodeHashMapS_[_T("el")] = _T("ελληνικά");    
+  languageCodeHashMapS_[_T("zh")] = _T("简体中文");  // TODO: Special case for simplified and traditional chinese // Traditional 繁體中文
+  languageCodeHashMapS_[_T("ro")] = _T("Română"); 
+  languageCodeHashMapS_[_T("et")] = _T("Eesti Keel"); 
+
 }
 
 

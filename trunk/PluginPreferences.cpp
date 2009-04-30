@@ -13,6 +13,7 @@
 
 PluginPreferences::PluginPreferences(const wxString& filePath) {
   filePath_ = filePath;
+  Load();
 }
 
 
@@ -70,10 +71,28 @@ void PluginPreferences::Save() {
 void PluginPreferences::Load() {
   if (!wxFileName::FileExists(filePath_)) return;
   
-  //TiXmlDocument doc(FilePaths::GetPluginSettingsFile().mb_str());
-  //doc.LoadFile(TIXML_ENCODING_UTF8);
-  //TiXmlElement* pluginSettingsXml = doc.FirstChildElement("Plugins");
-  //if (!pluginSettingsXml) WLOG(_T("PluginManager::Initialize: Could not load XML. No Plugins element found."));
+  TiXmlDocument doc(filePath_.mb_str());
+  doc.LoadFile(TIXML_ENCODING_UTF8);
+  TiXmlElement* preferencesXml = doc.FirstChildElement("PluginPreferences");
+  if (!preferencesXml) WLOG(_T("PluginPreferences::Load: Could not load XML. No PluginPreferences element found."));
 
+  for (TiXmlElement* element = preferencesXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
+    wxString elementName = wxString(element->Value(), wxConvUTF8);
+
+    TiXmlHandle handle(element);
+
+    wxString preferenceName = XmlUtil::ReadElementText(handle, "Name");
+    wxString preferenceValue = XmlUtil::ReadElementText(handle, "Value");
+
+    PluginPreference* preference = GetPreference(preferenceName);
+    if (!preference) {
+      // Fail silently - if the preference is set in the XML but 
+      // hasn't been registered, it may mean that it is obsolete.
+      // We just ignore it.
+      continue;
+    }
+
+    preference->SetValue(preferenceValue);
+  }
 
 }
