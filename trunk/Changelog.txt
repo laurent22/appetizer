@@ -1,4 +1,14 @@
-﻿Version 1.3.1.222 (2009-04-12):
+﻿Version 1.3.2.337 (2009-05-02):
+
+- Greek localization
+- Turkish localization
+- Chinese (Simplified) localization + help file
+- Estonian localization + help file
+- Romanian localization
+- Help files are now in PDF format instead of CHM
+- Minor improvement and bug fixes.
+
+Version 1.3.1.222 (2009-04-12):
 
 - New option to set the transparency of the window
 - Added support for "Printer and Faxes" and "Network Connections" special items
