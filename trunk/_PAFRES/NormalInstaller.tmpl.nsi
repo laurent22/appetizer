@@ -10,6 +10,7 @@
 ;--------------------------------
 ;Simple write text to file function
 ;http://nsis.sourceforge.net/Simple_write_text_to_file
+
   
 Function WriteToFile
  Exch $0 ;file to write to
@@ -90,9 +91,13 @@ Section "Appetizer" AppetizerSection
   ; installed through this installer, Appetizer will
   ; use the user data directory (c:\documents and settings.. etc.)
   ; to save its settings. I think it's necessary for Windows Vista.
+  
+  IfFileExists "$INSTDIR\Arguments.txt" argumentsTxtExists 0
 	Push "/u" ;text to write to file 
 	Push "$INSTDIR\Arguments.txt" ;file to write to 
 	Call WriteToFile
+	
+	argumentsTxtExists:
   
   ;Store installation folder
   WriteRegStr HKCU "Software\${APP_NAME}" "" $INSTDIR

@@ -12,6 +12,8 @@
 
 WX_DECLARE_STRING_HASH_MAP(wxString, LanguageCodeHashMap);
 WX_DECLARE_STRING_HASH_MAP(wxString, LanguageCodeHashMapS);
+WX_DECLARE_STRING_HASH_MAP(wxString, CountryCodeHashMap);
+WX_DECLARE_STRING_HASH_MAP(wxString, CountryCodeHashMapS);
 
 
 class Localization {
@@ -25,12 +27,17 @@ public:
   wxString GetLanguageName(const wxString& languageCode, bool defaultToEnglish = true);
   wxString GetLanguageNameInEnglish(const wxString& languageCode);
   wxString GetLanguageCodeOnly(const wxString& canonicalName);
+  wxString GetFullDisplayName(const wxString& canonicalName);
+  wxString GetCountryCodeOnly(const wxString& canonicalName);
+  wxString GetCountryName(const wxString& countryCode);
 
 private:
 
   static Localization* instance_;
   LanguageCodeHashMap languageCodeHashMap_;
   LanguageCodeHashMapS languageCodeHashMapS_;
+  CountryCodeHashMap countryCodeHashMap_;
+  CountryCodeHashMapS countryCodeHashMapS_;
   
 };
 

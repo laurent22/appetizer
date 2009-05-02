@@ -30,7 +30,7 @@ int MiniLaunchBar::uniqueInt_ = 0;
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(86178);
+  //_CrtSetBreakAlloc(22469);
 
   // Remove GUI log errors
   delete wxLog::SetActiveTarget(new wxLogStderr());
@@ -209,11 +209,6 @@ bool MiniLaunchBar::OnInit() {
 
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
 
-  
-  //ToolTipFrame* f = new ToolTipFrame(mainFrame_);
-  
-  //f->ShowToolTip(_T("début - azdfjr alkfj alekjzlfkejl lfejzfkl ejzkljf kjzf lkejzlf jezklf jeklzfjeklzfj eklz FIN"), wxRect(200, 200, 100, 100));
-
   return true;
 } 
 
@@ -260,9 +255,9 @@ wxString MiniLaunchBar::GetIconSizeName(int iconSize) {
 
 
 wxString MiniLaunchBar::GetContactEmail() {
-  wxString e(_T("tizer@c"));
-  e += _T("ozic.net");
-  e.Prepend(_T("appe"));
+  wxString e(_T("tizer.o"));
+  e += _T("rg");
+  e.Prepend(_T("app@e"));
   return e;
 }
 

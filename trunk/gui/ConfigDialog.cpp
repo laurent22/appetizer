@@ -223,37 +223,38 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       int englishIndex = 0;
       selectedIndex = -1;
       
+      std::map<wxString, wxString> languageNamesToFolderNames;
+      wxArrayString languageNames;
+      
       if (wxFileName::DirExists(localeFolderPath) && localeFolder.Open(localeFolderPath)) {
         wxString folderName;
         bool success = localeFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
         int i = 0;
 
         while (success) {
-          // Note: The folder name is the locale code
+          // Note: The folder name is the locale code (canonical name)
 
-          // Get the language name from the file
-          wxArrayString localeArray;
-          StringUtil::Split(folderName, localeArray, _T("_"));
-
-          wxString languageCode = localeArray[0];
-          wxString countryCode;
-
-          if (localeArray.size() > 1) countryCode = localeArray[1];
-
-          wxString languageName = Localization::Instance()->GetLanguageName(languageCode);
-          wxStringClientData* clientData = new wxStringClientData(folderName); 
-
-          if (countryCode != wxEmptyString) languageName += _T(" (") + countryCode + _T(")");
-
-          languageComboBox->Append(languageName, clientData);
-
-          if (folderName == currentLocaleCode) selectedIndex = i;
-          if (folderName == _T("en")) englishIndex = i;
-
+          wxString languageName = Localization::Instance()->GetFullDisplayName(folderName);
+          languageNames.Add(languageName);          
+          languageNamesToFolderNames[languageName] = folderName;
           success = localeFolder.GetNext(&folderName);      
           i++;
         }
       } 
+
+      languageNames.Sort();
+
+      for (int i = 0; i < languageNames.Count(); i++) {
+        wxString folderName = languageNamesToFolderNames[languageNames[i]];
+
+        if (folderName == currentLocaleCode) selectedIndex = i;
+        if (folderName == _T("en")) englishIndex = i;
+
+        languageComboBox->Append(
+          languageNames[i],
+          new wxStringClientData(folderName)
+        );
+      }
 
       if (selectedIndex < 0) selectedIndex = englishIndex;
 

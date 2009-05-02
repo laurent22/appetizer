@@ -53,7 +53,7 @@ PluginPreferences* azPreferences::Get() const {
 
 
 azPreferences::~azPreferences() {
-
+  //wxDELETE(preferences_);
 }
 
 

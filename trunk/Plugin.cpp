@@ -25,6 +25,8 @@ Plugin::Plugin() {
   enabled_ = true;
   initiallyEnabled_ = enabled_;
   state_ = _T("unloaded");
+  luaPreferences_ = NULL;
+  preferences_ = NULL;
   
   L = NULL;
 }
@@ -39,6 +41,9 @@ Plugin::~Plugin() {
     wxArrayString* v = it->second;
     wxDELETE(v);
   }
+
+  wxDELETE(preferences_);
+  wxDELETE(luaPreferences_);
 }
 
 
@@ -112,6 +117,10 @@ bool Plugin::Load(const wxString& folderPath) {
     return false;
   }
 
+  // ***********************************************************
+  // Misc. Lua initialization
+  // ***********************************************************
+
   L = lua_open();
 
   luaopen_base(L);
@@ -119,7 +128,19 @@ bool Plugin::Load(const wxString& folderPath) {
   luaopen_string(L);
   luaopen_math(L);
 
+  // ***********************************************************
+  // Register the global "trace" function
+  // ***********************************************************
+
   lua_register(L, "trace", azPrint);
+
+  // ***********************************************************
+  // Lua and wxWidgets don't handle UTF-8 files with BOM, so
+  // here we check if the script file has a BOM and we exit
+  // if that's the case.
+  // See http://www.xs4all.nl/~mechiel/projects/bomstrip/
+  // for more info
+  // ***********************************************************
 
   const char* utf8bom = "\xef\xbb\xbf";
   char firstThree[4];
@@ -136,6 +157,10 @@ bool Plugin::Load(const wxString& folderPath) {
   }
 
   f.close();
+
+  // ***********************************************************
+  // Try to load the script file
+  // ***********************************************************
   
   int error = luaL_loadfile(L, luaFilePath.mb_str());
 
@@ -146,6 +171,10 @@ bool Plugin::Load(const wxString& folderPath) {
     state_ = _T("error");
     return false;
   }
+
+  // ***********************************************************
+  // Initialize and load preferences
+  // ***********************************************************
 
   wxString preferenceFile;
 
@@ -161,6 +190,11 @@ bool Plugin::Load(const wxString& folderPath) {
   preferences_ = new PluginPreferences(preferenceFile);
   luaPreferences_ = new azPreferences(preferences_);
 
+  // ***********************************************************
+  // Register Appetizer classes to make them available
+  // to Lua scripts
+  // ***********************************************************
+
   Lunar<azApplication>::Register(L);
   Lunar<azMenu>::Register(L);
   Lunar<azDockItem>::Register(L);
@@ -170,6 +204,10 @@ bool Plugin::Load(const wxString& folderPath) {
   Lunar<azSystem>::Register(L);
   Lunar<azMenuItem>::Register(L);
   Lunar<azPreferences>::Register(L);
+
+  // ***********************************************************
+  // Register Appetizer's global variables
+  // ***********************************************************
 
   PluginManager* pluginManager = wxGetApp().GetPluginManager();
   
@@ -193,6 +231,10 @@ bool Plugin::Load(const wxString& folderPath) {
   Lunar<azPreferences>::push(L, luaPreferences_);
   lua_settable(L, LUA_GLOBALSINDEX);
 
+  // ***********************************************************
+  // Run the script
+  // ***********************************************************
+
   error = lua_pcall(L, 0, 0, 0);
 
   if (error) {
@@ -202,6 +244,10 @@ bool Plugin::Load(const wxString& folderPath) {
     state_ = _T("error");
     return false;
   }
+
+  // ***********************************************************
+  // OnLuaScopeClose() is going to do clean-up
+  // ***********************************************************
 
   OnLuaScopeClose();
 

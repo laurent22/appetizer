@@ -4,12 +4,17 @@
   found in the LICENSE file.
 */
 
-// NOTE: Once written, the generated files must be open with a text editor 
-// and converted to ANSI (which is the only format that HHC seems to support)
-// For example in Notepad++: Menu Format > Convert to ANSI
+
+// NOTE: This app generates the HTML help files out of the .po files. It is only expected to
+//       be run directly from Visual C++ or equivalent dev environment
 //
-// To open a particular topic (when compiled with chmProcesador):
-// hh.exe mk:@MSITStore:c:\full\path\to\Appetizer.chm::1.htm#NameOfAnchor
+// NOTE: To add a new language, add it to the localeCodes array at the bottom of this file
+//
+// NOTE: To convert the generated HTML files to PDF, follow these steps:
+//
+// 1. Open the HTML file in Write (OpenOffice.org)
+// 2. Scroll down the document so as to display all the picture (without that, some of them shows up at the wrong dimension once converted)
+// 3. Export to PDF.
 
 
 #include <wx/wx.h>
@@ -20,6 +25,8 @@
 #include <wx/arrstr.h>
 #include <wx/file.h>
 #include <wx/regex.h>
+#include <wx/image.h>
+#include <wx/filename.h>
 #include "HtmlEntities.h"
 
 extern wxArrayString heSymbols;
@@ -77,13 +84,33 @@ wxString Sanitize(const wxString& text) {
   return output;
 }
 
+void IMG(const wxString& src) {
+  wxString fullPath = _T("Data/Help/en/") + src;
+  wxFileName f(fullPath);
+  wxImage img;
+  wxString ext = f.GetExt().Lower();
+  if (ext == _T("png")) {
+    img.LoadFile(fullPath, wxBITMAP_TYPE_PNG);
+  } else if (ext == _T("jpg")) {
+    img.LoadFile(fullPath, wxBITMAP_TYPE_JPEG);
+  } else if (ext == _T("gif")) {
+    img.LoadFile(fullPath, wxBITMAP_TYPE_GIF);
+  }
+
+  wxString imgWidth;
+  imgWidth << img.GetWidth();
+  wxString imgHeight;
+  imgHeight << img.GetHeight();
+
+  gCurrentString += _T("<img width='") + imgWidth + _T("' height='") + imgHeight + _T("' src='") + Sanitize(src) + _T("'/>\n");
+}
+
 
 void H1(const wxString& text) { gCurrentString += _T("\n<h1>") + Sanitize(text) + _T("</h1>\n"); }
 void H2(const wxString& text) { gCurrentString += _T("\n<h2>") + Sanitize(text) + _T("</h2>\n"); }
 void H3(const wxString& text) { gCurrentString += _T("\n<h3>") + Sanitize(text) + _T("</h3>\n"); }
 void H4(const wxString& text) { gCurrentString += _T("\n<h4>") + Sanitize(text) + _T("</h4>\n"); }
 void P(const wxString& text) { gCurrentString += _T("<p>") + Sanitize(text) + _T("</p>\n"); }
-void IMG(const wxString& src) { gCurrentString += _T("<img src='") + Sanitize(src) + _T("'/>\n"); }
 void BR() { gCurrentString += _T("<br/>\n"); }
 void StartList() { gCurrentString += _T("<ul>\n"); } 
 void EndList() { gCurrentString += _T("</ul>\n"); } 
@@ -95,14 +122,11 @@ void AddAnchor(const wxString& name) { A(_T(""), _T(""), name); }
 
 wxString GenerateHTMLString() {
   gCurrentString = _T("");
+  wxInitAllImageHandlers();
 
   AddStringLn(_T("<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.0 Transitional//EN'>"));
   AddStringLn(_T("<html>"));
-  AddStringLn(_T("<head>"));
-  // Although the file is going to be written as UTF-8, we set the charset here to
-  // Western-1252, which is the only format supported by CHM files. The generated HTML files
-  // then need to be converted to ANSI using a text editor.
-  AddStringLn(_T("<meta http-equiv='content-type' content='text/html; charset=Western-1252'>"));
+  AddStringLn(_T("<meta http-equiv='content-type' content='text/html; charset=UTF-8'>"));
   AddStringLn(_T("<title>Appetizer</title>"));
   AddStringLn(_T("<style TYPE='text/css'>"));
 	AddStringLn(_T("<!--"));
@@ -146,7 +170,7 @@ wxString GenerateHTMLString() {
   LI(_("Minimize to tray icon functionality"));
   EndList();
 
-  IMG(_T("images/Screenshot.jpg"));
+  //IMG(_T("images/Screenshot.jpg"));
 
 
   // *******************************************************************************
@@ -347,9 +371,7 @@ wxString GenerateHTMLString() {
   AddAnchor(_T("Links"));
   H2(_("Support and links"));
   P(wxString::Format(_("Official home page: %s"), _T("[http://app.etizer.org http://app.etizer.org]")));
-  //P(wxString::Format(_("Project home page: %s"), _T("[https://sourceforge.net/projects/appetizer https://sourceforge.net/projects/appetizer]")));
   P(wxString::Format(_("Some information on how to create a plugin: %s"), _T("[http://app.etizer.org/wiki/plugin-tutorial http://app.etizer.org/wiki/plugin-tutorial]")));
-  //P(wxString::Format(_("Beta versions and preleases are usually on [%s PortableApps Beta Testing forum]"), _T("http://portableapps.com/forums/development/beta_testing")));
   P(wxString::Format(_("For bug reports, suggestions, comments or translations, please contact %s"), imayle));//wxString::Format(_T("<a href=\"mailto:%s\">%s</a> or post on the beta forum."), imayle, imayle)));
 
   AddStringLn(_T("</body>"));
@@ -362,15 +384,17 @@ wxString GenerateHTMLString() {
 bool GenerateHelp::OnInit() {
   InitializeHtmlEntities();
 
-  imayle = _T("tizer@c");
-  imayle += _T("ozic.net");
-  imayle.Prepend(_T("appe"));
+  imayle = _T("tizer.o");
+  imayle += _T("rg");
+  imayle.Prepend(_T("app@e"));
 
   wxArrayString localeCodes;
   localeCodes.Add(_T("en"));
   localeCodes.Add(_T("fr"));  
   localeCodes.Add(_T("de"));  
   localeCodes.Add(_T("ja"));  
+  localeCodes.Add(_T("zh_CN"));  
+  localeCodes.Add(_T("et")); 
 
   for (int i = 0; i < localeCodes.Count(); i++) {
     wxString localeCode = localeCodes[i];

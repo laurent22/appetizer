@@ -1667,6 +1667,14 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="..\stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\lua_glue\azSystem.cpp"

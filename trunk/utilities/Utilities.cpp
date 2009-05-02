@@ -185,14 +185,26 @@ bool Utilities::IsApplicationOnPortableDrive() {
     FILE_SHARE_READ | FILE_SHARE_WRITE, 
     NULL, OPEN_EXISTING, NULL, NULL);
 
-  if (hDevice == INVALID_HANDLE_VALUE) return true;
+  bool output = false;
 
-	PSTORAGE_DEVICE_DESCRIPTOR pDevDesc = (PSTORAGE_DEVICE_DESCRIPTOR)new BYTE[sizeof(STORAGE_DEVICE_DESCRIPTOR) + 512 - 1];
-	pDevDesc->Size = sizeof(STORAGE_DEVICE_DESCRIPTOR) + 512 - 1;
+  if (hDevice == INVALID_HANDLE_VALUE) {
+    output = true;
+  } else {
+	  PSTORAGE_DEVICE_DESCRIPTOR pDevDesc = (PSTORAGE_DEVICE_DESCRIPTOR)new BYTE[sizeof(STORAGE_DEVICE_DESCRIPTOR) + 512 - 1];
+	  pDevDesc->Size = sizeof(STORAGE_DEVICE_DESCRIPTOR) + 512 - 1;
 
-  if (!GetDisksProperty(hDevice, pDevDesc)) return true;
-  
-  return pDevDesc->BusType == BusTypeUsb;
+    if (!GetDisksProperty(hDevice, pDevDesc)) {
+      output = true;
+    } else {
+      output = pDevDesc->BusType == BusTypeUsb;
+    }
+
+    delete pDevDesc;
+  }
+
+  if (hDevice && hDevice != INVALID_HANDLE_VALUE) CloseHandle(hDevice);
+
+  return output;
 
   #endif // __WINDOWS__
   
@@ -400,23 +412,17 @@ void Utilities::ShowHelpFile(const wxString& anchor) {
   f.Normalize();
   helpFile = f.GetFullPath();
 
-  #ifdef __MLB_USE_PDF_HELP__
-    // Keep support for PDF in case some languages don't work with CHM files
-    FolderItem* pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
-    if (pdfReaderFolderItem) {
-      pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
-      return;
-    }    
-  }
-  #endif
-
-  if (anchor != wxEmptyString) {
-    // hh.exe mk:@MSITStore:c:\full\path\to\Appetizer.chm::1.htm#NameOfAnchor
-    wxString parameters = wxString::Format(_T("mk:@MSITStore:%s::1.htm#%s"), helpFile, anchor);
-    FolderItem::Launch(FilePaths::GetHHPath(), parameters);
+  // Built-in support for SumatraPDF and Foxit Reader. If any of these applications is on the
+  // dock, use it to open the PDF file
+  FolderItem* pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
+  if (!pdfReaderFolderItem) pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("Foxit Reader"));
+  
+  if (pdfReaderFolderItem) {
+    pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
+    return;
   } else {
     FolderItem::Launch(helpFile);
-  }  
+  }
 }
 
 

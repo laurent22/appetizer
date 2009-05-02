@@ -173,10 +173,41 @@ Localization::Localization() {
   languageCodeHashMapS_[_T("ko")] = _T("한국말");
   languageCodeHashMapS_[_T("sv")] = _T("Svenska");    
   languageCodeHashMapS_[_T("el")] = _T("ελληνικά");    
-  languageCodeHashMapS_[_T("zh")] = _T("简体中文");  // TODO: Special case for simplified and traditional chinese // Traditional 繁體中文
+  languageCodeHashMapS_[_T("zh")] = _T("中文");  // TODO: Special case for simplified and traditional chinese // Traditional 繁體中文
   languageCodeHashMapS_[_T("ro")] = _T("Română"); 
   languageCodeHashMapS_[_T("et")] = _T("Eesti Keel"); 
 
+  countryCodeHashMapS_[_T("BR")] = _T("Brasil"); 
+  countryCodeHashMapS_[_T("CN")] = _T("中国"); 
+}
+
+
+wxString Localization::GetFullDisplayName(const wxString& canonicalName) {
+  wxString languageCode = GetLanguageCodeOnly(canonicalName);
+  wxString countryCode = GetCountryCodeOnly(canonicalName);
+
+  wxString output = GetLanguageName(languageCode);
+
+  if (countryCode != wxEmptyString) {
+    wxString extraString;
+
+    if (languageCode == _T("zh") && countryCode == _T("CN")) {
+      extraString = _T("简体"); // "Simplified" in "Simplified Chinese"
+    } else if (languageCode == _T("zh")) {
+      extraString = _T("繁體"); // "Traditional" in "Traditional Chinese"
+    } else {
+      extraString = GetCountryName(countryCode);
+    }
+
+    output += _T(" (") + extraString + _T(")");
+  }
+
+  return output;
+}
+
+
+wxString Localization::GetCountryName(const wxString& countryCode) {
+  return countryCodeHashMapS_[countryCode];
 }
 
 
@@ -195,6 +226,12 @@ wxString Localization::GetLanguageName(const wxString& languageCode, bool defaul
 wxString Localization::GetLanguageCodeOnly(const wxString& canonicalName) {
   if (canonicalName.Len() < 2) return canonicalName;
   return canonicalName.Mid(0, 2);
+}
+
+
+wxString Localization::GetCountryCodeOnly(const wxString& canonicalName) {
+  if (canonicalName.Len() <= 2) return wxEmptyString;
+  return canonicalName.Mid(3, 2);
 }
 
 
