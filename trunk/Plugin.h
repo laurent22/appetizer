@@ -14,6 +14,7 @@
 #include "ExtendedMenuItem.h"
 #include "lua_glue/LuaUtil.h"
 #include "lua_glue/azPreferences.h"
+#include "gui/PluginPreferencesDialog.h"
 
 
 class Plugin {
@@ -40,6 +41,8 @@ public:
   bool IsEnabled();
   wxString GetState();
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
+  void ShowPreferencesDialog();
+  PluginPreferences* GetPreferences();
 
 private:
 
@@ -53,6 +56,8 @@ private:
 
   PluginPreferences* preferences_;
   azPreferences* luaPreferences_;
+
+  PluginPreferencesDialog* preferencesDialog_;
 
   void LoadPluginXml(const wxString& xmlFilePath);
 

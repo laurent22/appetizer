@@ -23,7 +23,8 @@ ID_CDLG_BUTTON_EnablePlugin,
 ID_CDLG_BUTTON_DisablePlugin,
 ID_CDLG_BUTTON_PluginListView,
 ID_CDLG_BUTTON_Help,
-ID_CDLG_BUTTON_InstallPlugin
+ID_CDLG_BUTTON_InstallPlugin,
+ID_CDLG_BUTTON_ConfigPlugin
 };
 // end wxGlade
 
@@ -80,6 +81,7 @@ protected:
     wxListCtrl* pluginListView;
     wxButton* enablePluginButton;
     wxButton* disablePluginButton;
+    wxButton* configPluginButton;
     wxStaticText* label_4;
     wxButton* installPluginButton;
     wxStaticText* pluginChangeInfoLabel;

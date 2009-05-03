@@ -26,6 +26,11 @@ PluginPreferences::~PluginPreferences() {
 }
 
 
+int PluginPreferences::Count() {
+  return preferences_.size();
+}
+
+
 PluginPreference* PluginPreferences::RegisterPreference(PluginPreference* preference) {
   preferences_.push_back(preference);
   return preference;

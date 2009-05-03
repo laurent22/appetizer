@@ -27,6 +27,7 @@ Plugin::Plugin() {
   state_ = _T("unloaded");
   luaPreferences_ = NULL;
   preferences_ = NULL;
+  preferencesDialog_ = NULL;
   
   L = NULL;
 }
@@ -44,6 +45,20 @@ Plugin::~Plugin() {
 
   wxDELETE(preferences_);
   wxDELETE(luaPreferences_);
+}
+
+
+void Plugin::ShowPreferencesDialog() {
+  if (!preferencesDialog_) {
+    preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
+  }
+
+  preferencesDialog_->Show();
+}
+
+
+PluginPreferences* Plugin::GetPreferences() {
+  return preferences_;
 }
 
 

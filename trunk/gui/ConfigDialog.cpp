@@ -63,6 +63,7 @@ void ConfigDialog::Localize() {
   saveButton->SetLabel(_("Save"));
   cancelButton->SetLabel(_("Cancel"));  
   helpButton->SetLabel(_("Help"));
+  configPluginButton->SetLabel(_("Options"));
 }
 
 
@@ -110,6 +111,7 @@ void ConfigDialog::UpdatePluginListRow(long index) {
 void ConfigDialog::UpdatePluginControlsFromSelection() {
   enablePluginButton->Enable(false);
   disablePluginButton->Enable(false);
+  configPluginButton->Enable(false);
 
   long itemIndex = GetPluginListSelectedIndex();
   if (itemIndex < 0) return;
@@ -121,6 +123,7 @@ void ConfigDialog::UpdatePluginControlsFromSelection() {
 
   enablePluginButton->Enable(!d->enabled);
   disablePluginButton->Enable(!enablePluginButton->IsEnabled());
+  configPluginButton->Enable(true);
 }
 
 
@@ -673,6 +676,24 @@ void ConfigDialog::OnButtonClick(wxCommandEvent& evt) {
       UpdatePluginListRow(itemIndex);
       UpdatePluginControlsFromSelection();
       
+      } break;
+
+    case ID_CDLG_BUTTON_ConfigPlugin: {
+
+      long itemIndex = GetPluginListSelectedIndex();
+      if (itemIndex < 0) return;
+
+      long dataIndex = pluginListView->GetItemData(itemIndex);
+      ConfigDialogPluginData* d = configDialogPluginData_.at(dataIndex);
+
+      if (!d->enabled) {
+        MessageBoxes::ShowInformation(_("Please enable the plugin in order to change its options."));
+        return;        
+      }
+
+      Plugin* plugin = wxGetApp().GetPluginManager()->GetPlugins().at(d->pluginIndex);
+      plugin->ShowPreferencesDialog();
+
       } break;
 
     case ID_CDLG_BUTTON_Help: {

@@ -56,6 +56,7 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     pluginListView = new wxListCtrl(notebook_pane_5, ID_CDLG_BUTTON_PluginListView, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL|wxSTATIC_BORDER);
     enablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_EnablePlugin, wxT("#Enable#"));
     disablePluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_DisablePlugin, wxT("#Disable#"));
+    configPluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_ConfigPlugin, wxT("#Config#"));
     label_4 = new wxStaticText(notebook_pane_5, wxID_ANY, wxEmptyString);
     installPluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_InstallPlugin, wxT("Install..."));
     pluginChangeInfoLabel = new wxStaticText(notebook_pane_5, wxID_ANY, wxT("#Changes made to plugins will only be active the next time %s is started#"));
@@ -73,7 +74,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(400, 320));
+    SetSize(wxSize(474, 320));
     // end wxGlade
 }
 
@@ -142,6 +143,7 @@ void ConfigDialogBase::do_layout()
     availablePluginsBox->Add(pluginListView, 1, wxLEFT|wxRIGHT|wxTOP|wxEXPAND, 8);
     sizer_10->Add(enablePluginButton, 0, wxBOTTOM, 4);
     sizer_10->Add(disablePluginButton, 0, wxLEFT, 8);
+    sizer_10->Add(configPluginButton, 0, wxLEFT, 8);
     sizer_11->Add(label_4, 1, 0, 0);
     sizer_11->Add(installPluginButton, 0, wxRIGHT, 8);
     sizer_10->Add(sizer_11, 1, wxEXPAND|wxALIGN_RIGHT, 0);
