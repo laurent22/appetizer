@@ -15,6 +15,7 @@
 #include "../FilePaths.h"
 #include "../Constants.h"
 #include "../FolderItem.h"
+#include "../Styles.h"
 
 
 Utilities::Utilities() {
@@ -57,6 +58,56 @@ bool Utilities::InstallAutorunFile() {
   f.Close();
 
   return true;
+}
+
+
+void Utilities::SwitchSkin(const wxString& skinName) {
+  UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();
+
+  if (skinName != userSettings->GetString(_T("Skin"))) {
+
+    wxString skinDirectory = FilePaths::GetBaseSkinDirectory() + _T("/") + skinName;
+    if (!wxFileName::DirExists(skinDirectory)) {
+      ELOG(_T("Cannot find skin directory: ") + skinDirectory);
+      return;
+    }
+
+    wxString skinXmlPath = skinDirectory + _T("/") + SKIN_FILE_NAME;
+    SkinMetadata metadata;
+
+    Styles::GetSkinMetadata(skinXmlPath, metadata);
+
+    if (!Styles::IsSkinVersionCompatible(metadata.CompatibleVersion)) {
+      MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
+    } else {
+      userSettings->SetString(_T("Skin"), skinName);
+      wxGetApp().GetMainFrame()->ApplySkin();
+    }
+
+  }
+
+}
+
+
+wxArrayString Utilities::GetSkinNames() {
+  wxString skinFolderPath = FilePaths::GetBaseSkinDirectory();
+
+  wxArrayString output;
+  wxDir skinFolder;
+
+  if (wxFileName::DirExists(skinFolderPath) && skinFolder.Open(skinFolderPath)) {
+    wxString folderName;
+    bool success = skinFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS);
+    int i = 0;
+
+    while (success) {
+      if (folderName != _T("Base")) output.Add(folderName);
+      success = skinFolder.GetNext(&folderName);      
+    }
+  } 
+
+  return output;
+
 }
 
 
@@ -162,6 +213,10 @@ BOOL GetDisksProperty(HANDLE hDevice,
 
 
 bool Utilities::IsApplicationOnPortableDrive() {
+  #ifdef __WXDEBUG__
+  return true;
+  #endif
+
   #ifdef __WINDOWS__
 
   // Note that if anything fails in this function, it will

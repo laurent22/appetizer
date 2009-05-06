@@ -37,6 +37,8 @@ public:
   void KillLockingProcesses(const wxString& drive, bool painless = true);
   void CreateAndRunVBScript(const wxString& filePath, const wxString& script);
   wxString CreateUUID();
+  void SwitchSkin(const wxString& skinName);
+  wxArrayString GetSkinNames();
   void Localize();
 
 private:

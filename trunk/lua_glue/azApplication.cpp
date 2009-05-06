@@ -57,6 +57,8 @@ Lunar<azApplication>::RegType azApplication::methods[] = {
   method(azApplication, installAutoRunFile),
   method(azApplication, getDrive),
   method(azApplication, showHelpFile),
+  method(azApplication, getSkinNames),  
+  method(azApplication, setSkin),
   {0,0}
 };
 
@@ -278,5 +280,31 @@ int azApplication::getDrive(lua_State *L) { LuaUtil::PushString(L, FilePaths::Ge
 int azApplication::showHelpFile(lua_State *L) {
   wxString anchor = LuaUtil::ToString(L, 1, true);
   wxGetApp().GetUtilities().ShowHelpFile(anchor);
+  return 0;
+}
+
+
+int azApplication::getSkinNames(lua_State *L) {
+  wxArrayString skinNames = wxGetApp().GetUtilities().GetSkinNames();
+
+  lua_createtable(L, skinNames.size(), 0);
+  int tableIndex = lua_gettop(L);
+
+  for (int i = 0; i < skinNames.Count(); i++) {
+    wxString skinName = skinNames[i];
+
+    lua_pushinteger(L, i + 1);
+    lua_pushstring(L, skinName.mb_str());
+    lua_settable(L, tableIndex);
+  }
+
+  return 1;
+}
+
+
+int azApplication::setSkin(lua_State *L) {
+  wxString skinName = LuaUtil::ToString(L, 1);
+  wxGetApp().GetUtilities().SwitchSkin(skinName);
+  
   return 0;
 }

@@ -188,19 +188,19 @@ wxString Localization::GetFullDisplayName(const wxString& canonicalName) {
 
   wxString output = GetLanguageName(languageCode);
 
-  if (countryCode != wxEmptyString) {
-    wxString extraString;
+  wxString extraString;
 
+  if (countryCode != wxEmptyString) {
     if (languageCode == _T("zh") && countryCode == _T("CN")) {
       extraString = _T("简体"); // "Simplified" in "Simplified Chinese"
-    } else if (languageCode == _T("zh")) {
-      extraString = _T("繁體"); // "Traditional" in "Traditional Chinese"
     } else {
       extraString = GetCountryName(countryCode);
-    }
-
-    output += _T(" (") + extraString + _T(")");
+    }    
   }
+
+  if (languageCode == _T("zh") && countryCode == wxEmptyString) extraString = _T("繁體"); // "Traditional" in "Traditional Chinese"
+
+  if (extraString != wxEmptyString) output += _T(" (") + extraString + _T(")");
 
   return output;
 }

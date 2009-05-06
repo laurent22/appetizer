@@ -21,6 +21,9 @@ FileRemoveDir %releaseDirectory%\Data\Skin\NightBlue, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\NightRed, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\PAMClassic, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\Sonix, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\LCD, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\LCD pink, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\Logo, 1
 FileRemoveDir %releaseDirectory%\Data\Settings, 1
 FileRemoveDir %releaseDirectory%\Data\IconCache, 1
 

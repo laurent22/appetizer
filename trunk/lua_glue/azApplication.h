@@ -38,7 +38,9 @@ public:
   int installAutoRunFile(lua_State *L);
   int getDrive(lua_State *L);
   int showHelpFile(lua_State *L);
-  
+  int getSkinNames(lua_State *L);
+  int setSkin(lua_State *L);
+
   static const char className[];
   static Lunar<azApplication>::RegType methods[];
 

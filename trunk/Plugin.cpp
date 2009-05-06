@@ -49,11 +49,10 @@ Plugin::~Plugin() {
 
 
 void Plugin::ShowPreferencesDialog() {
-  if (!preferencesDialog_) {
-    preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
-  }
-
-  preferencesDialog_->Show();
+  preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
+  preferencesDialog_->LoadPreferences(this);
+  preferencesDialog_->ShowModal();
+  wxDELETE(preferencesDialog_);
 }
 
 

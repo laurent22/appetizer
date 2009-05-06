@@ -31,6 +31,11 @@ int PluginPreferences::Count() {
 }
 
 
+PluginPreference* PluginPreferences::GetPreferenceAt(int index) {
+  return preferences_.at(index);
+}
+
+
 PluginPreference* PluginPreferences::RegisterPreference(PluginPreference* preference) {
   preferences_.push_back(preference);
   return preference;

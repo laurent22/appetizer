@@ -23,6 +23,7 @@ public:
   ~PluginPreferences();
   PluginPreference* RegisterPreference(PluginPreference* preference);
   PluginPreference* GetPreference(const wxString& name);
+  PluginPreference* GetPreferenceAt(int index);
   int Count();
   void Save();
   void Load();

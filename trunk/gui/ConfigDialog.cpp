@@ -861,20 +861,7 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     clientData = (wxStringClientData*)(skinComboBox->GetClientObject(skinComboBox->GetSelection()));
     wxString skinName = clientData->GetData();
 
-    if (skinName != userSettings->GetString(_T("Skin"))) {
-      wxString skinXmlPath = FilePaths::GetBaseSkinDirectory() + _T("/") + skinName + _T("/") + SKIN_FILE_NAME;
-      SkinMetadata metadata;
-
-      Styles::GetSkinMetadata(skinXmlPath, metadata);
-
-      if (!Styles::IsSkinVersionCompatible(metadata.CompatibleVersion)) {
-        MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
-      } else {
-        userSettings->SetString(_T("Skin"), skinName);
-        wxGetApp().GetMainFrame()->ApplySkin();
-      }
-
-    }
+    wxGetApp().GetUtilities().SwitchSkin(skinName);
 
   }
 

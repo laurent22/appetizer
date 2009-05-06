@@ -19,6 +19,15 @@ enum {
 };
 
 
+struct PluginPreferenceDialogControl {
+  wxStaticText* label;
+  wxWindow* control;
+};
+
+
+typedef std::vector<PluginPreferenceDialogControl*> PluginPreferenceDialogControls;
+
+
 class PluginPreferencesDialog: public wxDialog {
 
 public:
@@ -32,7 +41,9 @@ public:
 
 protected:
 
-  wxGridSizer* mainSizer;
+  
+  wxFlexGridSizer* mainSizer;
+  PluginPreferenceDialogControls controls_;
 
   Plugin* plugin_;
 

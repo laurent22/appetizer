@@ -9,12 +9,20 @@
 #include "PluginPreference.h"
 
 
-PluginPreference::PluginPreference(int type, const wxString& name, const wxString& defaultValue) {
+PluginPreference::PluginPreference(int type, const wxString& name, const wxString& defaultValue, const wxString& title, const wxString& description, PluginPreferenceOptions options) {
   name_ = name;
   type_ = type;
+  title_ = title;
+  options_ = options;
+  description_ = description;
   defaultValue_ = defaultValue;
   invalidated_ = false;
   hasBeenSet_ = false;
+}
+
+
+PluginPreferenceOptions PluginPreference::GetOptions() {
+  return options_;
 }
 
 
@@ -26,6 +34,21 @@ wxString PluginPreference::GetName() {
 wxString PluginPreference::GetValue() {
   if (hasBeenSet_) return value_;
   return GetDefaultValue();
+}
+
+
+int PluginPreference::GetType() {
+  return type_;
+}
+
+
+wxString PluginPreference::GetTitle() {
+  return title_;
+}
+
+
+wxString PluginPreference::GetDescription() {
+  return description_;
 }
 
 

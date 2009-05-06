@@ -68,6 +68,7 @@ wxBitmap* IconPanel::GetControlBitmap() {
   if (!parent) return NineSlicesPanel::GetControlBitmap();
 
   wxBitmap* parentBitmap = parent->GetControlBitmap(); 
+  if (!parentBitmap) return NineSlicesPanel::GetControlBitmap();;
 
   wxRect rect = this->GetRect();
   if (rect.GetLeft() < 0) rect.SetLeft(0);

@@ -4,12 +4,13 @@
 
 
 function preferencesTest()	
+
 	trace("Creating a preference...")
 	preferences:registerPreference({
 		type = "Text",
 		name = "first",
 		defaultValue = "this is the default value",
-		title = "Le titre : "
+		title = "Le titre"
 	})
 	
 --	trace("Creating the same preference - should trigger an error");
@@ -32,17 +33,17 @@ function preferencesTest()
 		type = "TextArea",
 		name = "textAreaTest",
 		defaultValue = "",
-		title = "Text area : "
+		title = "Text area"
 	})
 	
 	preferences:registerPreference({
 		type = "Popup",
 		name = "popupTest",
 		defaultValue = "two",
-		title = "Popup : ",
+		title = "Popup",
 		options = {
 			one = "First option",
-			two = "Secont option",
+			two = "Second option",
 			three = "Third option"
 		}
 	})
@@ -301,6 +302,7 @@ end
 
 
 function prefButton_click(event)
+	--appetizer:setSkin("Default");
 	preferencesTest()
 end
 
@@ -311,3 +313,11 @@ optionPanel:addButton(prefButton)
 
 
 preferencesTest()
+
+
+
+--skinNames = appetizer:getSkinNames();
+--
+--for key,value in pairs(skinNames) do
+--	trace(key, value)
+--end

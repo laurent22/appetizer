@@ -84,7 +84,11 @@ PluginPreferencesDialog::PluginPreferencesDialog(wxWindow* parent, wxWindowID id
 
 
 PluginPreferencesDialog::~PluginPreferencesDialog() {
-
+  for(int i = 0; i < controls_.size(); i++) {
+    PluginPreferenceDialogControl* controlData = controls_.at(i);
+    wxDELETE(controlData);
+  }
+  controls_.clear();
 }
 
 
@@ -96,13 +100,84 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
 
   int border = 12;
   int gap = 8;
-  int windowWidth = 320;
-  int y = border;
-  int x = border;
+  int windowWidth = 400;
 
-  mainSizer = new wxGridSizer(preferences->Count(), 2, gap, gap);
+  wxBoxSizer* rootSizer = new wxBoxSizer(wxHORIZONTAL);
+  wxBoxSizer* innerSizer = new wxBoxSizer(wxVERTICAL);
+  mainSizer = new wxFlexGridSizer(preferences->Count(), 2, gap, gap);
+  mainSizer->AddGrowableCol(1);
+  wxBoxSizer* buttonSizer = new wxBoxSizer(wxHORIZONTAL);
 
-  // TODO: Call LoadPreferences when clicking on "Options" button
+  for (int i = 0; i < preferences->Count(); i++) {
+    PluginPreference* preference = preferences->GetPreferenceAt(i);
+    wxStaticText* label = new wxStaticText(this, wxID_ANY, preference->GetTitle());
+
+    PluginPreferenceDialogControl* controlData = new PluginPreferenceDialogControl();
+
+    wxWindow* control = NULL;
+
+    if (preference->GetType() == PluginPreferenceType::Text) {
+
+      control = new wxTextCtrl(this, wxID_ANY);
+      wxTextCtrl* textBox = dynamic_cast<wxTextCtrl*>(control);
+      textBox->SetValue(preference->GetValue());
+
+    } else if (preference->GetType() == PluginPreferenceType::TextArea) {
+
+      control = new wxTextCtrl(this, wxID_ANY);
+      wxTextCtrl* textBox = dynamic_cast<wxTextCtrl*>(control);
+      textBox->SetValue(preference->GetValue());
+
+    } else if (preference->GetType() == PluginPreferenceType::Popup) {
+
+      control = new wxComboBox(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 0, wxCB_READONLY);
+      wxComboBox* comboBox = dynamic_cast<wxComboBox*>(control);
+
+      PluginPreferenceOptions options = preference->GetOptions();
+      PluginPreferenceOptions::iterator it;
+      int selectedIndex = 0;
+      int currentIndex = 0;
+      
+      for(it = options.begin(); it != options.end(); ++it) {
+        wxStringClientData* data = new wxStringClientData(it->first);
+        comboBox->Append(it->second, data);
+        if (it->first == preference->GetValue()) {
+          selectedIndex = currentIndex;
+        }
+        currentIndex++;
+      }
+
+      comboBox->Select(selectedIndex);
+
+    }
+
+    mainSizer->Add(label, 0, wxEXPAND, 0);
+    mainSizer->Add(control, 0, wxEXPAND, 0);   
+
+    controlData->control = control;
+    controlData->label = label;
+
+    controls_.push_back(controlData);
+  }
+
+  wxButton* saveButton = new wxButton(this, wxID_SAVE, _("Save"));
+  wxButton* cancelButton = new wxButton(this, wxID_CANCEL, _("Cancel"));
+
+  buttonSizer->Add(saveButton, 0);
+  buttonSizer->Add(cancelButton, 0, wxLEFT, gap);
+
+
+  innerSizer->Add(mainSizer, 1, wxALL | wxEXPAND, border);
+  innerSizer->Add(buttonSizer, 1, wxALL | wxALIGN_RIGHT, border);
+  rootSizer->Add(innerSizer, 1, wxALL|wxEXPAND, 0);
+
+  SetSizer(rootSizer);
+
+  rootSizer->SetSizeHints(this);
+
+  int windowHeight = GetSize().GetHeight();
+
+  SetSize(windowWidth, windowHeight);
 }
 
 
