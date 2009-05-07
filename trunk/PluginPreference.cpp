@@ -9,11 +9,12 @@
 #include "PluginPreference.h"
 
 
-PluginPreference::PluginPreference(int type, const wxString& name, const wxString& defaultValue, const wxString& title, const wxString& description, PluginPreferenceOptions options) {
+PluginPreference::PluginPreference(int type, const wxString& name, const wxString& defaultValue, const wxString& title, const wxString& description, PluginPreferenceGroup* group, PluginPreferenceOptions options) {
   name_ = name;
   type_ = type;
   title_ = title;
   options_ = options;
+  group_ = group;
   description_ = description;
   defaultValue_ = defaultValue;
   invalidated_ = false;
@@ -23,6 +24,11 @@ PluginPreference::PluginPreference(int type, const wxString& name, const wxStrin
 
 PluginPreferenceOptions PluginPreference::GetOptions() {
   return options_;
+}
+
+
+PluginPreferenceGroup* PluginPreference::GetGroup() {
+  return group_;
 }
 
 

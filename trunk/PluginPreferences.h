@@ -12,6 +12,9 @@
 #include "PluginPreference.h"
 
 
+typedef std::vector<PluginPreferenceGroup*> PluginPreferenceGroupVector;
+
+
 
 
 
@@ -21,15 +24,20 @@ public:
 
   PluginPreferences(const wxString& filePath);
   ~PluginPreferences();
-  PluginPreference* RegisterPreference(PluginPreference* preference);
+  void RegisterPreferenceGroup(PluginPreferenceGroup* preferenceGroup);
+  void RegisterPreference(PluginPreference* preference);
   PluginPreference* GetPreference(const wxString& name);
   PluginPreference* GetPreferenceAt(int index);
+  PluginPreferenceGroup* GetPreferenceGroup(const wxString& name);
+  PluginPreferenceGroupVector GetPreferenceGroups();
+  int CountGroupPreferences(const wxString& groupName);
   int Count();
   void Save();
   void Load();
 
 private:
 
+  PluginPreferenceGroupVector preferenceGroups_;
   PluginPreferenceVector preferences_;
   wxString filePath_;
 

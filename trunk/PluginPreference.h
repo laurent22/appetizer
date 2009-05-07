@@ -6,9 +6,16 @@
 
 #include "stdafx.h"
 
+
 #ifndef __PluginPreference_H
 #define __PluginPreference_H
 
+
+
+class PluginPreferenceGroup { public:
+  wxString Name;
+  wxString Title;
+};
 
 
 struct PluginPreferenceType {
@@ -27,10 +34,11 @@ class PluginPreference {
 
 public:
 
-  PluginPreference(int type, const wxString& name, const wxString& defaultValue, const wxString& title, const wxString& description, PluginPreferenceOptions options);
+  PluginPreference(int type, const wxString& name, const wxString& defaultValue, const wxString& title, const wxString& description, PluginPreferenceGroup* group, PluginPreferenceOptions options);
   wxString GetName();
   wxString GetValue();
   wxString GetTitle();
+  PluginPreferenceGroup* GetGroup();
   PluginPreferenceOptions GetOptions();
   int GetType();
   wxString GetDescription();
@@ -46,6 +54,7 @@ private:
   wxString defaultValue_;
   wxString title_;
   wxString description_;
+  PluginPreferenceGroup* group_;
   int type_;
   PluginPreferenceOptions options_;
   bool hasBeenSet_;

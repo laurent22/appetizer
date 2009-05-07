@@ -10,7 +10,16 @@ function preferencesTest()
 		type = "Text",
 		name = "first",
 		defaultValue = "this is the default value",
-		title = "Le titre"
+		title = "Le titre",
+		group = "First group"
+	})
+	
+	preferences:registerPreference({
+		type = "Text",
+		name = "secondPref",
+		defaultValue = "this is the default value",
+		title = "Le titre",
+		group = "First group"
 	})
 	
 --	trace("Creating the same preference - should trigger an error");
@@ -30,13 +39,6 @@ function preferencesTest()
 --	})
 	
 	preferences:registerPreference({
-		type = "TextArea",
-		name = "textAreaTest",
-		defaultValue = "",
-		title = "Text area"
-	})
-	
-	preferences:registerPreference({
 		type = "Popup",
 		name = "popupTest",
 		defaultValue = "two",
@@ -46,6 +48,14 @@ function preferencesTest()
 			two = "Second option",
 			three = "Third option"
 		}
+	})
+	
+	preferences:registerPreference({
+		type = "TextArea",
+		name = "textAreaTest",
+		defaultValue = "",
+		title = "Text area",
+		group = "Second group"
 	})
 	
 	trace("Getting first preference. Should return default value: ", preferences:getValue("first")); 

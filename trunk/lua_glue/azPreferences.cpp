@@ -75,6 +75,7 @@ int azPreferences::registerPreference(lua_State *L) {
   wxString inputDefaultValue = LuaUtil::GetStringFromTable(L, 1, _T("defaultValue"));
   wxString inputTitle = LuaUtil::GetStringFromTable(L, 1, _T("title"));
   wxString inputDescription = LuaUtil::GetStringFromTable(L, 1, _T("description"));
+  wxString inputGroup = LuaUtil::GetStringFromTable(L, 1, _T("group"));
 
   PluginPreferenceOptions inputOptions;
 
@@ -119,7 +120,19 @@ int azPreferences::registerPreference(lua_State *L) {
     return 0;
   }
 
-  PluginPreference* preference = new PluginPreference(prefType, inputName, inputDefaultValue, inputTitle, inputDescription, inputOptions);
+  PluginPreferenceGroup* group = NULL;
+  
+  if (inputGroup != wxEmptyString) {
+    group = preferences_->GetPreferenceGroup(inputGroup);
+    if (!group) {
+      group = new PluginPreferenceGroup();
+      group->Name = inputGroup;
+      group->Title = inputGroup;
+      preferences_->RegisterPreferenceGroup(group);
+    }
+  }
+
+  PluginPreference* preference = new PluginPreference(prefType, inputName, inputDefaultValue, inputTitle, inputDescription, group, inputOptions);
   Get()->RegisterPreference(preference);
 
   return 0;

@@ -22,7 +22,12 @@ PluginPreferences::~PluginPreferences() {
     PluginPreference* p = preferences_.at(i);
     wxDELETE(p);
   }
+  for (int i = 0; i < preferenceGroups_.size(); i++) {
+    PluginPreferenceGroup* g = preferenceGroups_.at(i);
+    wxDELETE(g);
+  }
   preferences_.clear();
+  preferenceGroups_.clear();
 }
 
 
@@ -36,9 +41,8 @@ PluginPreference* PluginPreferences::GetPreferenceAt(int index) {
 }
 
 
-PluginPreference* PluginPreferences::RegisterPreference(PluginPreference* preference) {
+void PluginPreferences::RegisterPreference(PluginPreference* preference) {
   preferences_.push_back(preference);
-  return preference;
 }
 
 
@@ -46,6 +50,42 @@ PluginPreference* PluginPreferences::GetPreference(const wxString& name) {
   for (int i = 0; i < preferences_.size(); i++) {
     PluginPreference* p = preferences_.at(i);
     if (p->GetName() == name) return p;
+  }
+  return NULL;
+}
+
+
+PluginPreferenceGroupVector PluginPreferences::GetPreferenceGroups() {
+  return preferenceGroups_;
+}
+
+
+int PluginPreferences::CountGroupPreferences(const wxString& groupName) {
+  int output = 0;
+
+  for (int i = 0; i < preferences_.size(); i++) {
+    PluginPreference* p = preferences_.at(i);
+    if (groupName == wxEmptyString) {
+      if (!p->GetGroup()) output++;
+    } else {
+      if (p->GetGroup() && p->GetGroup()->Name == groupName) output++;
+    }
+  }
+
+  return output;
+}
+
+
+void PluginPreferences::RegisterPreferenceGroup(PluginPreferenceGroup* preferenceGroup) {
+  if (GetPreferenceGroup(preferenceGroup->Name)) return;
+  preferenceGroups_.push_back(preferenceGroup);
+}
+
+
+PluginPreferenceGroup* PluginPreferences::GetPreferenceGroup(const wxString& name) {
+  for (int i = 0; i < preferenceGroups_.size(); i++) {
+    PluginPreferenceGroup* p = preferenceGroups_.at(i);
+    if (p->Name == name) return p;
   }
   return NULL;
 }
