@@ -6,6 +6,7 @@
 
 #include "../stdafx.h"
 #include "../Plugin.h"
+#include "../PluginPreference.h"
 
 class Plugin;
 
@@ -22,6 +23,7 @@ enum {
 struct PluginPreferenceDialogControl {
   wxStaticText* label;
   wxWindow* control;
+  PluginPreference* preference;
 };
 
 

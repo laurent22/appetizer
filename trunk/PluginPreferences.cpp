@@ -11,7 +11,13 @@
 #include "FilePaths.h"
 
 
+BEGIN_EVENT_TABLE(PluginPreferences, wxEvtHandler)
+  EVT_TIMER(ID_TIMER_PluginPreferences_ScheduleSave, PluginPreferences::OnTimer)
+END_EVENT_TABLE()
+
+
 PluginPreferences::PluginPreferences(const wxString& filePath) {
+  scheduledSaveTimer_ = NULL;
   filePath_ = filePath;
   Load();
 }
@@ -31,6 +37,19 @@ PluginPreferences::~PluginPreferences() {
 }
 
 
+void PluginPreferences::OnTimer(wxTimerEvent& evt) {
+  ILOG(_T("PluginPreferences: Doing scheduled save"));
+  Save();
+}
+
+
+void PluginPreferences::ScheduleSave() {
+  if (!scheduledSaveTimer_) scheduledSaveTimer_ = new wxTimer(this, ID_TIMER_PluginPreferences_ScheduleSave);
+
+  scheduledSaveTimer_->Start(2000, true);
+}
+
+
 int PluginPreferences::Count() {
   return preferences_.size();
 }
@@ -42,6 +61,14 @@ PluginPreference* PluginPreferences::GetPreferenceAt(int index) {
 
 
 void PluginPreferences::RegisterPreference(PluginPreference* preference) {
+  for (int i = 0; i < savedData_.size(); i++) {
+    PluginPreferenceSavedData d = savedData_.at(i);
+    if (d.Name == preference->GetName()) {
+      preference->SetValue(d.Value);
+      break;
+    }
+  }
+  
   preferences_.push_back(preference);
 }
 
@@ -120,6 +147,8 @@ void PluginPreferences::Save() {
 
 void PluginPreferences::Load() {
   if (!wxFileName::FileExists(filePath_)) return;
+
+  savedData_.clear();
   
   TiXmlDocument doc(filePath_.mb_str());
   doc.LoadFile(TIXML_ENCODING_UTF8);
@@ -134,15 +163,11 @@ void PluginPreferences::Load() {
     wxString preferenceName = XmlUtil::ReadElementText(handle, "Name");
     wxString preferenceValue = XmlUtil::ReadElementText(handle, "Value");
 
-    PluginPreference* preference = GetPreference(preferenceName);
-    if (!preference) {
-      // Fail silently - if the preference is set in the XML but 
-      // hasn't been registered, it may mean that it is obsolete.
-      // We just ignore it.
-      continue;
-    }
+    PluginPreferenceSavedData d;
+    d.Name = preferenceName;
+    d.Value = preferenceValue;
 
-    preference->SetValue(preferenceValue);
+    savedData_.push_back(d);
   }
 
 }

@@ -161,7 +161,7 @@ int azPreferences::setValue(lua_State *L) {
 
   preference->SetValue(inputValue);
 
-  preferences_->Save();
+  preferences_->ScheduleSave();
 
   return 0;
 }

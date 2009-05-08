@@ -61,7 +61,7 @@ function preferencesTest()
 	trace("Getting first preference. Should return default value: ", preferences:getValue("first")); 
 	
 	trace("Setting first preference value...");
-	preferences:setValue("first", "new value");
+	--preferences:setValue("first", "new value");
 	
 	trace("first preference new value: ", preferences:getValue("first"));
 	

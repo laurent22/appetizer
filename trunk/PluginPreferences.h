@@ -10,15 +10,21 @@
 #define __PluginPreferences_H
 
 #include "PluginPreference.h"
+#include "Enumerations.h"
 
 
 typedef std::vector<PluginPreferenceGroup*> PluginPreferenceGroupVector;
 
 
+struct PluginPreferenceSavedData {
+  wxString Name;
+  wxString Value;
+};
+
+typedef std::vector<PluginPreferenceSavedData> PluginPreferenceSavedDataVector;
 
 
-
-class PluginPreferences {
+class PluginPreferences : public wxEvtHandler {
 
 public:
 
@@ -30,8 +36,10 @@ public:
   PluginPreference* GetPreferenceAt(int index);
   PluginPreferenceGroup* GetPreferenceGroup(const wxString& name);
   PluginPreferenceGroupVector GetPreferenceGroups();
+  void OnTimer(wxTimerEvent& evt);
   int CountGroupPreferences(const wxString& groupName);
   int Count();
+  void ScheduleSave();
   void Save();
   void Load();
 
@@ -39,7 +47,11 @@ private:
 
   PluginPreferenceGroupVector preferenceGroups_;
   PluginPreferenceVector preferences_;
+  wxTimer* scheduledSaveTimer_;
   wxString filePath_;
+  PluginPreferenceSavedDataVector savedData_;
+
+  DECLARE_EVENT_TABLE()
 
 };
 

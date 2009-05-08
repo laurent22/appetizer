@@ -46,6 +46,8 @@ public:
   void SetValue(const wxString& value);
   bool IsInvalidated();
   bool ValueHasBeenSet();
+  void Validate();
+  void Invalidate();
 
 private:
 
@@ -59,7 +61,6 @@ private:
   PluginPreferenceOptions options_;
   bool hasBeenSet_;
   bool invalidated_;
-  void Invalidate();
 
 };
 

@@ -59,8 +59,9 @@ wxString PluginPreference::GetDescription() {
 
 
 void PluginPreference::SetValue(const wxString& value) {
-  if (value_ == value) return;
   hasBeenSet_ = true;
+
+  if (value_ == value) return;
   value_ = value;
   Invalidate();
 }
@@ -73,6 +74,11 @@ wxString PluginPreference::GetDefaultValue() {
 
 void PluginPreference::Invalidate() {
   invalidated_ = true;
+}
+
+
+void PluginPreference::Validate() {
+  invalidated_ = false;
 }
 
 
