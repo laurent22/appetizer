@@ -22,6 +22,22 @@ function preferencesTest()
 		group = "First group"
 	})
 	
+	preferences:registerPreference({
+		type = "File",
+		name = "filetest",
+		defaultValue = "c:\\default\\value",
+		title = "File test:",
+		group = "First group"
+	})
+	
+	preferences:registerPreference({
+		type = "CheckBox",
+		name = "checkboxtest",
+		defaultValue = "true",
+		title = "Checkbox test:",
+		group = "First group"
+	})
+	
 --	trace("Creating the same preference - should trigger an error");
 --	preferences:registerPreference({
 --		type = "Text",

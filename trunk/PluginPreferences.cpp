@@ -119,6 +119,8 @@ PluginPreferenceGroup* PluginPreferences::GetPreferenceGroup(const wxString& nam
 
 
 void PluginPreferences::Save() {
+  if (filePath_ == wxEmptyString) return;
+
   TiXmlDocument doc;
   doc.LinkEndChild(new TiXmlDeclaration("1.0", "UTF-8", ""));
 
@@ -146,6 +148,7 @@ void PluginPreferences::Save() {
 
 
 void PluginPreferences::Load() {
+  if (filePath_ == wxEmptyString) return;
   if (!wxFileName::FileExists(filePath_)) return;
 
   savedData_.clear();

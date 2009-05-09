@@ -120,10 +120,11 @@ void ConfigDialog::UpdatePluginControlsFromSelection() {
   ConfigDialogPluginData* d = configDialogPluginData_.at(dataIndex);
 
   Plugin* plugin = wxGetApp().GetPluginManager()->GetPlugins().at(d->pluginIndex);
+  PluginPreferences* preferences = plugin->GetPreferences();
 
   enablePluginButton->Enable(!d->enabled);
   disablePluginButton->Enable(!enablePluginButton->IsEnabled());
-  configPluginButton->Enable(true);
+  configPluginButton->Enable(preferences && preferences->Count() > 0);
 }
 
 

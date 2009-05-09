@@ -17,7 +17,7 @@ END_EVENT_TABLE()
 
 PluginPreferencesDialog::PluginPreferencesDialog(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
 : wxDialog(parent, id, title, pos, size, style) {
-
+  preferences_ = NULL;
 }
 
 
@@ -30,11 +30,10 @@ PluginPreferencesDialog::~PluginPreferencesDialog() {
 }
 
 
-void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
+void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bool flatView, const wxString& saveButtonLabel) {
   SetTitle(_("Preferences"));
 
-  plugin_ = plugin;
-  PluginPreferences* preferences = plugin->GetPreferences();
+  preferences_ = preferences;
   PluginPreferenceGroupVector preferenceGroups = preferences->GetPreferenceGroups();
 
   int border = 10;
@@ -42,7 +41,7 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
   int windowWidth = 400;
 
   wxBoxSizer* rootSizer = new wxBoxSizer(wxVERTICAL);
-  wxNotebook* notebook = new wxNotebook(this, wxID_ANY);
+  wxNotebook* notebook = flatView ? NULL : new wxNotebook(this, wxID_ANY);
   wxBoxSizer* bottomSizer = new wxBoxSizer(wxHORIZONTAL);
 
 
@@ -51,7 +50,7 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
 
 
   int groupIndex = -1;
-  int groupCount = preferenceGroups.size();
+  int groupCount = notebook ? preferenceGroups.size() : 0;
 
   while (groupIndex < groupCount) {
     wxString groupTitle;
@@ -69,12 +68,20 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
       preferenceCount = preferences->CountGroupPreferences(group->Name);
     }
 
-    wxPanel* panel = new wxPanel(notebook);
-    notebook->AddPage(panel, groupTitle);
-    panels[groupName] = panel;
+    wxPanel* panel = NULL;
+
+    if (notebook) {
+      panel = new wxPanel(notebook);
+      notebook->AddPage(panel, groupTitle);
+      panels[groupName] = panel;
+    }
 
     wxBoxSizer* boxSizer = new wxBoxSizer(wxHORIZONTAL);
-    panel->SetSizer(boxSizer);
+    if (notebook) {
+      panel->SetSizer(boxSizer);
+    } else {
+      rootSizer->Add(boxSizer, 1, wxLEFT | wxRIGHT | wxTOP | wxEXPAND, 4);
+    }
 
     wxFlexGridSizer* gridSizer = new wxFlexGridSizer(preferenceCount, 2, 8, 8);
     boxSizer->Add(gridSizer, 1, wxALL | wxEXPAND, 10);
@@ -90,22 +97,34 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
     PluginPreference* preference = preferences->GetPreferenceAt(i);
     PluginPreferenceGroup* preferenceGroup = preference->GetGroup();
 
-    wxPanel* groupPanel = NULL;
+    wxWindow* groupPanel = NULL;
     wxFlexGridSizer* gridSizer = NULL;
 
-    if (preferenceGroup) {
-      groupPanel = panels[preferenceGroup->Name];
-      gridSizer = panelGridSizers[preferenceGroup->Name];
-    } else {
-      groupPanel = panels[_T("general")];
+    if (!notebook) {
+
+      groupPanel = this;
       gridSizer = panelGridSizers[_T("general")];
+
+    } else {
+
+      if (preferenceGroup) {
+        groupPanel = panels[preferenceGroup->Name];
+        gridSizer = panelGridSizers[preferenceGroup->Name];
+      } else {
+        groupPanel = panels[_T("general")];
+        gridSizer = panelGridSizers[_T("general")];
+      }
+
     }
 
-    wxStaticText* label = new wxStaticText(groupPanel, wxID_ANY, preference->GetTitle(), wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER_VERTICAL);
+    wxStaticText* label = new wxStaticText(groupPanel, wxID_ANY, preference->GetTitle(), wxDefaultPosition, wxDefaultSize);
+    gridSizer->Add(label, 0, wxEXPAND | wxTOP, 2);
 
     PluginPreferenceDialogControl* controlData = new PluginPreferenceDialogControl();
 
     wxWindow* control = NULL;
+    bool controlAdded = false;
+    bool showLabel = true;
 
     if (preference->GetType() == PluginPreferenceType::Text) {
 
@@ -115,9 +134,40 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
 
     } else if (preference->GetType() == PluginPreferenceType::TextArea) {
 
+      control = new wxTextCtrl(groupPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+      wxTextCtrl* textBox = dynamic_cast<wxTextCtrl*>(control);
+      textBox->SetValue(preference->GetValue());
+      textBox->SetMinSize(wxSize(100, 100));
+      textBox->SetSize(textBox->GetSize().GetWidth(), 100);
+
+    } else if (preference->GetType() == PluginPreferenceType::CheckBox) {
+
+      control = new wxCheckBox(groupPanel, wxID_ANY, wxEmptyString);
+      wxCheckBox* checkBox = dynamic_cast<wxCheckBox*>(control);
+      checkBox->SetValue(preference->GetValue() == _T("1") || preference->GetValue().Lower() == _T("true"));
+      checkBox->SetLabel(preference->GetTitle());
+
+      showLabel = false;
+
+    } else if (preference->GetType() == PluginPreferenceType::File) {
+
+      controlAdded = true;
+
+      wxFlexGridSizer* sizer = new wxFlexGridSizer(1, 2, 4, 4);
+      sizer->AddGrowableCol(0);
+
       control = new wxTextCtrl(groupPanel, wxID_ANY);
       wxTextCtrl* textBox = dynamic_cast<wxTextCtrl*>(control);
       textBox->SetValue(preference->GetValue());
+
+      wxButton* browseButton = new wxButton(groupPanel, wxID_ANY);
+      browseButton->SetLabel(_T("..."));
+      browseButton->SetMinSize(wxSize(30, browseButton->GetMinHeight()));
+      
+      sizer->Add(textBox, 0, wxEXPAND, 0);
+      sizer->Add(browseButton, 0, 0, 0);           
+
+      gridSizer->Add(sizer, 0, wxEXPAND, 0);
 
     } else if (preference->GetType() == PluginPreferenceType::Popup) {
 
@@ -142,8 +192,8 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
 
     }
 
-    gridSizer->Add(label, 0, wxEXPAND, 0);
-    gridSizer->Add(control, 0, wxEXPAND, 0);   
+    if (!showLabel) label->SetLabel(_T(""));
+    if (!controlAdded) gridSizer->Add(control, 0, wxEXPAND, 0);  
 
     controlData->control = control;
     controlData->label = label;
@@ -154,11 +204,8 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
   }
 
 
-
-
-
   wxStaticText* bottomSizerFiller = new wxStaticText(this, wxID_ANY, _T(""));
-  wxButton* saveButton = new wxButton(this, wxID_SAVE, _("Save"));
+  wxButton* saveButton = new wxButton(this, wxID_SAVE, saveButtonLabel);
   wxButton* cancelButton = new wxButton(this, wxID_CANCEL, _("Cancel"));
 
 
@@ -166,10 +213,8 @@ void PluginPreferencesDialog::LoadPreferences(Plugin* plugin) {
   bottomSizer->Add(saveButton, 0, wxRIGHT | wxALIGN_BOTTOM, border);
   bottomSizer->Add(cancelButton, 0, wxALIGN_BOTTOM, 0);
 
-  rootSizer->Add(notebook, 1, wxLEFT | wxRIGHT | wxTOP | wxEXPAND, 4);
+  if (notebook) rootSizer->Add(notebook, 1, wxLEFT | wxRIGHT | wxTOP | wxEXPAND, 4);
   rootSizer->Add(bottomSizer, 0, wxALL | wxEXPAND | wxALIGN_RIGHT, border);
-
-
 
 
   SetSizer(rootSizer);
@@ -204,7 +249,7 @@ void PluginPreferencesDialog::OnButtonClicked(wxCommandEvent& evt) {
         
       }
 
-      plugin_->GetPreferences()->ScheduleSave();
+      preferences_->ScheduleSave();
 
       EndModal(wxID_CLOSE);
       

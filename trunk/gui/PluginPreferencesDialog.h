@@ -5,10 +5,8 @@
 */
 
 #include "../stdafx.h"
-#include "../Plugin.h"
+#include "../PluginPreferences.h"
 #include "../PluginPreference.h"
-
-class Plugin;
 
 
 #ifndef __PluginPreferencesDialog_H
@@ -36,7 +34,7 @@ public:
 
   PluginPreferencesDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE, const wxString& name = _T("importWizardDialog"));
   ~PluginPreferencesDialog();
-  void LoadPreferences(Plugin* plugin);
+  void LoadPreferences(PluginPreferences* preferences, bool flatView = false, const wxString& saveButtonLabel = _("OK"));
 
   void OnButtonClicked(wxCommandEvent& evt);
   void OnCheckBoxClicked(wxCommandEvent& evt);
@@ -47,7 +45,7 @@ protected:
   wxFlexGridSizer* mainSizer;
   PluginPreferenceDialogControls controls_;
 
-  Plugin* plugin_;
+  PluginPreferences* preferences_;
 
   wxButton* saveButton;
   wxButton* cancelButton;

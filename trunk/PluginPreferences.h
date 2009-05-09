@@ -28,7 +28,7 @@ class PluginPreferences : public wxEvtHandler {
 
 public:
 
-  PluginPreferences(const wxString& filePath);
+  PluginPreferences(const wxString& filePath = wxEmptyString);
   ~PluginPreferences();
   void RegisterPreferenceGroup(PluginPreferenceGroup* preferenceGroup);
   void RegisterPreference(PluginPreference* preference);

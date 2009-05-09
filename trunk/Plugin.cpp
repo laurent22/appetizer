@@ -50,9 +50,9 @@ Plugin::~Plugin() {
 
 void Plugin::ShowPreferencesDialog() {
   preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
-  preferencesDialog_->LoadPreferences(this);
+  preferencesDialog_->LoadPreferences(this->GetPreferences());
   preferencesDialog_->ShowModal();
-  wxDELETE(preferencesDialog_);
+  preferencesDialog_->Destroy();
 }
 
 

@@ -115,6 +115,14 @@ int azPreferences::registerPreference(lua_State *L) {
     prefType = PluginPreferenceType::TextArea;
   } else if (inputType == _T("Popup")) {
     prefType = PluginPreferenceType::Popup;
+  } else if (inputType == _T("CheckBox")) {
+    prefType = PluginPreferenceType::CheckBox;
+  } else if (inputType == _T("File")) {
+    prefType = PluginPreferenceType::File;
+  } else if (inputType == _T("Spinner")) {
+    prefType = PluginPreferenceType::Spinner;
+  } else if (inputType == _T("Hidden")) {
+    prefType = PluginPreferenceType::Hidden;
   } else {
     luaL_error(L, wxString::Format(_T("Unknown preference type: %s"), inputType).mb_str());
     return 0;

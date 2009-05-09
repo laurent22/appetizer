@@ -22,7 +22,11 @@ struct PluginPreferenceType {
   enum {
     Text,
     TextArea,
-    Popup
+    Popup,
+    CheckBox,
+    File,
+    Spinner,
+    Hidden
   };
 };
 
