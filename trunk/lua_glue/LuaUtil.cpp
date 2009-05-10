@@ -52,9 +52,6 @@ bool LuaUtil::DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value) {
   // If it does, the object is converted to an azWrapper and pushed onto the Lua stack.
   // If it doesn't, the function returns false.
 
-  //bool done = luaConvertAndPushAsWrapper<FolderItemRenderer, azIcon>(L, value);
-  //if (done) return true;
-
   bool done = false;
 
   done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
@@ -202,4 +199,126 @@ wxString LuaUtil::GetStringFromTable(lua_State *L, int tableIndex, const wxStrin
   lua_pop(L, 1);
 
   return output;
+}
+
+
+bool LuaUtil::GetBoolFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional) {
+  lua_pushstring(L, key.mb_str());
+  lua_gettable(L, tableIndex);
+  
+  bool output = false;
+
+  if (!lua_isboolean(L, -1)) {
+    if (!isOptional) {
+      luaL_typerror(L, -1, lua_typename(L, LUA_TSTRING));
+    }
+  } else {
+    output = LuaUtil::ToBoolean(L, -1);
+  }
+  
+  lua_pop(L, 1);
+
+  return output;
+}
+
+
+PluginPreference* LuaUtil::ToPluginPreference(lua_State *L, PluginPreferences* preferences, int index) {
+  wxString inputType = LuaUtil::GetStringFromTable(L, index, _T("type"), false);
+  wxString inputName = LuaUtil::GetStringFromTable(L, index, _T("name"), false);
+  wxString inputDefaultValue = LuaUtil::GetStringFromTable(L, index, _T("defaultValue"));
+  wxString inputTitle = LuaUtil::GetStringFromTable(L, index, _T("title"));
+  wxString inputDescription = LuaUtil::GetStringFromTable(L, index, _T("description"));
+  wxString inputGroup = LuaUtil::GetStringFromTable(L, index, _T("group"));
+  wxString inputMinValue = LuaUtil::GetStringFromTable(L, index, _T("minValue"));
+  wxString inputMaxValue = LuaUtil::GetStringFromTable(L, index, _T("maxValue"));
+  bool inputSecure = LuaUtil::GetBoolFromTable(L, index, _T("secure"));
+
+  PluginPreferenceOptions inputOptions;
+
+  lua_pushstring(L, "options");
+  lua_gettable(L, index);
+  int isTable = lua_istable(L, -1);
+
+  if (isTable) {
+    lua_pushnil(L);
+
+    while (lua_next(L, -2) != 0) {
+      lua_pushvalue(L, -2); // Push a copy of the key onto the stack
+      const char* key = lua_tostring(L, -1); // Get the key
+      lua_pop(L, 1); // Pop the key copy off
+
+      lua_pushvalue(L, -1); // Push a copy of the value onto the stack
+      const char* value = lua_tostring(L, -1); // Get the value
+      lua_pop(L, 1); // Pop the value copy off
+
+      inputOptions[wxString(key, wxConvUTF8)] = wxString(value, wxConvUTF8);
+
+      lua_pop(L, 1); // Pop the value off
+    }
+    
+  }
+
+  lua_pop(L, 1); // Pop the "options" table off
+
+
+  int prefType = 0;
+
+  if (preferences->GetPreference(inputName)) {
+    luaL_error(L, wxString::Format(_T("There is already a preference with this name: %s"), inputName).mb_str());
+    return NULL;
+  }
+
+  if (inputType == _T("Text")) {
+    prefType = PluginPreferenceType::Text;
+  } else if (inputType == _T("TextArea")) {
+    prefType = PluginPreferenceType::TextArea;
+  } else if (inputType == _T("Popup")) {
+    prefType = PluginPreferenceType::Popup;
+  } else if (inputType == _T("CheckBox")) {
+    prefType = PluginPreferenceType::CheckBox;
+  } else if (inputType == _T("File")) {
+    prefType = PluginPreferenceType::File;
+  } else if (inputType == _T("Spinner")) {
+    prefType = PluginPreferenceType::Spinner;
+  } else if (inputType == _T("Hidden")) {
+    prefType = PluginPreferenceType::Hidden;
+  } else {
+    luaL_error(L, wxString::Format(_T("Unknown preference type: %s"), inputType).mb_str());
+    return NULL;
+  }
+
+  PluginPreferenceGroup* group = NULL;
+  
+  if (inputGroup != wxEmptyString) {
+    group = preferences->GetPreferenceGroup(inputGroup);
+    if (!group) {
+      group = new PluginPreferenceGroup();
+      group->Name = inputGroup;
+      group->Title = inputGroup;
+      preferences->RegisterPreferenceGroup(group);
+    }
+  }
+
+  PluginPreference* preference = new PluginPreference(prefType, inputName, inputDefaultValue, inputTitle, inputDescription, group, inputOptions);
+  if (inputMinValue != wxEmptyString && inputMaxValue != wxEmptyString) {
+    double dMin = 0;
+    bool success = inputMinValue.ToDouble(&dMin);
+    if (!success) {
+      luaL_error(L, wxString::Format(_T("%s in not a number"), inputMinValue).mb_str());
+      return NULL;
+    }
+
+    double dMax = 0;
+    success = inputMaxValue.ToDouble(&dMax);
+    if (!success) {
+      luaL_error(L, wxString::Format(_T("%s in not a number"), inputMaxValue).mb_str());
+      return NULL;
+    }
+
+    preference->SetRange(dMin, dMax);
+  }
+
+  preference->SetSecure(inputSecure);
+
+  return preference;
 }

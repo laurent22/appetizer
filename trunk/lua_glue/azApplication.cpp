@@ -28,6 +28,7 @@
 #include "azDockItem.h"
 #include "azGlobal.h"
 #include "LuaUtil.h"
+#include "../Plugin.h"
 #include "../FilePaths.h"
 #include "../MiniLaunchBar.h"
 

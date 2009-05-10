@@ -31,6 +31,7 @@ Lunar<azPreferences>::RegType azPreferences::methods[] = {
   method(azPreferences, registerPreference),
   method(azPreferences, getValue),
   method(azPreferences, setValue),
+  method(azPreferences, registerPreferenceGroup),
   {0,0}
 };
 
@@ -69,78 +70,24 @@ azPreferences::azPreferences(lua_State *L) {
 }
 
 
-int azPreferences::registerPreference(lua_State *L) {
-  wxString inputType = LuaUtil::GetStringFromTable(L, 1, _T("type"), false);
+int azPreferences::registerPreferenceGroup(lua_State *L) {
   wxString inputName = LuaUtil::GetStringFromTable(L, 1, _T("name"), false);
-  wxString inputDefaultValue = LuaUtil::GetStringFromTable(L, 1, _T("defaultValue"));
   wxString inputTitle = LuaUtil::GetStringFromTable(L, 1, _T("title"));
-  wxString inputDescription = LuaUtil::GetStringFromTable(L, 1, _T("description"));
-  wxString inputGroup = LuaUtil::GetStringFromTable(L, 1, _T("group"));
 
-  PluginPreferenceOptions inputOptions;
+  PluginPreferenceGroup* group = new PluginPreferenceGroup();
+  group->Name = inputName;
+  group->Title = inputTitle;
 
-  lua_pushstring(L, "options");
-  lua_gettable(L, 1);
-  int isTable = lua_istable(L, -1);
+  Get()->RegisterPreferenceGroup(group);
 
-  if (isTable) {
-    lua_pushnil(L);
-
-    while (lua_next(L, -2) != 0) {
-      lua_pushvalue(L, -2); // Push a copy of the key onto the stack
-      const char* key = lua_tostring(L, -1); // Get the key
-      lua_pop(L, 1); // Pop the key copy off
-
-      lua_pushvalue(L, -1); // Push a copy of the value onto the stack
-      const char* value = lua_tostring(L, -1); // Get the value
-      lua_pop(L, 1); // Pop the value copy off
-
-      inputOptions[wxString(key, wxConvUTF8)] = wxString(value, wxConvUTF8);
-
-      lua_pop(L, 1); // Pop the value off
-    }
-  }
+  return 0;
+}
 
 
-  int prefType = 0;
 
-  if (Get()->GetPreference(inputName)) {
-    luaL_error(L, wxString::Format(_T("There is already a preference with this name: %s"), inputName).mb_str());
-    return 0;
-  }
-
-  if (inputType == _T("Text")) {
-    prefType = PluginPreferenceType::Text;
-  } else if (inputType == _T("TextArea")) {
-    prefType = PluginPreferenceType::TextArea;
-  } else if (inputType == _T("Popup")) {
-    prefType = PluginPreferenceType::Popup;
-  } else if (inputType == _T("CheckBox")) {
-    prefType = PluginPreferenceType::CheckBox;
-  } else if (inputType == _T("File")) {
-    prefType = PluginPreferenceType::File;
-  } else if (inputType == _T("Spinner")) {
-    prefType = PluginPreferenceType::Spinner;
-  } else if (inputType == _T("Hidden")) {
-    prefType = PluginPreferenceType::Hidden;
-  } else {
-    luaL_error(L, wxString::Format(_T("Unknown preference type: %s"), inputType).mb_str());
-    return 0;
-  }
-
-  PluginPreferenceGroup* group = NULL;
+int azPreferences::registerPreference(lua_State *L) {
+  PluginPreference* preference = LuaUtil::ToPluginPreference(L, Get(), 1);
   
-  if (inputGroup != wxEmptyString) {
-    group = preferences_->GetPreferenceGroup(inputGroup);
-    if (!group) {
-      group = new PluginPreferenceGroup();
-      group->Name = inputGroup;
-      group->Title = inputGroup;
-      preferences_->RegisterPreferenceGroup(group);
-    }
-  }
-
-  PluginPreference* preference = new PluginPreference(prefType, inputName, inputDefaultValue, inputTitle, inputDescription, group, inputOptions);
   Get()->RegisterPreference(preference);
 
   return 0;
@@ -153,6 +100,16 @@ int azPreferences::getValue(lua_State *L) {
   
   PluginPreference* preference = preferences_->GetPreference(inputName);
   if (!preference) return 0;
+
+  if (preference->GetType() == PluginPreferenceType::Spinner) {
+    lua_pushinteger(L, preference->GetIntValue());
+    return 1;
+  }
+
+  if (preference->GetType() == PluginPreferenceType::CheckBox) {
+    lua_pushboolean(L, preference->GetBoolValue());
+    return 1;
+  }
 
   lua_pushstring(L, preference->GetValue().ToUTF8());
 
@@ -173,5 +130,3 @@ int azPreferences::setValue(lua_State *L) {
 
   return 0;
 }
-
-

@@ -10,6 +10,7 @@
 #define __azPreferences_H
 
 
+#include "../PluginPreference.h"
 #include "../PluginPreferences.h"
 #include "azWrapper.h"
 
@@ -22,9 +23,12 @@ public:
   azPreferences(lua_State *L);
   ~azPreferences();
 
+  int registerPreferenceGroup(lua_State *L);
   int registerPreference(lua_State *L);
   int getValue(lua_State *L);
   int setValue(lua_State *L);
+
+  
 
   
   static const char className[];

@@ -24,7 +24,9 @@ public:
   int showConfigDialog(lua_State *L);
   int showNewShortcutDialog(lua_State *L);
   int showImportDialog(lua_State *L);
-  int showEjectDriveDialog(lua_State *L);    
+  int showEjectDriveDialog(lua_State *L); 
+  int showPreferences(lua_State *L);
+  int showForm(lua_State *L);
   
   static const char className[];
   static Lunar<azDialogs>::RegType methods[];

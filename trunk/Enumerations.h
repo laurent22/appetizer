@@ -41,7 +41,8 @@ enum {
   ID_TIMER_PluginPreferences_ScheduleSave,
   ID_BUTTON_IconPanel_BrowseButton,
   ID_BUTTON_MainFrame_CloseButton,
-  ID_BUTTON_MainFrame_EjectButton
+  ID_BUTTON_MainFrame_EjectButton,
+  ID_BUTTON_PluginPreferenceDialog_BrowseButton
 };
 
 

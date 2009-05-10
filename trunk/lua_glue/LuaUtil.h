@@ -5,6 +5,9 @@
 */
 
 #include "../stdafx.h"
+#include "../PluginPreference.h"
+#include "../PluginPreferences.h"
+
 
 #ifndef __LuaUtil_H
 #define __LuaUtil_H
@@ -48,7 +51,9 @@ public:
   static void PushString(lua_State *L, const wxString& s);
   static wxString ToString(lua_State *L, int n, bool isOptional = false, const wxString& defaultValue = wxEmptyString);
   static wxString GetStringFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional = true);
+  static bool GetBoolFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional = true);
   static bool ToBoolean(lua_State* L, int n, bool isOptional = false, bool defaultValue = false);
+  static PluginPreference* ToPluginPreference(lua_State *L, PluginPreferences* preferences, int index);
 
   static bool DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value);
   static int ConvertAndPushLuaHostTable(lua_State *L, LuaHostTable& table);

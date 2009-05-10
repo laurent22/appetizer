@@ -19,12 +19,37 @@ PluginPreference::PluginPreference(int type, const wxString& name, const wxStrin
   defaultValue_ = defaultValue;
   invalidated_ = false;
   hasBeenSet_ = false;
+  secure_ = false;
+  minValue_ = 0;
+  maxValue_ = 100;
+}
+
+
+void PluginPreference::SetSecure(bool secure) {
+  secure_ = secure;
+}
+
+
+bool PluginPreference::IsSecure() {
+  return secure_;
 }
 
 
 PluginPreferenceOptions PluginPreference::GetOptions() {
   return options_;
 }
+
+
+void PluginPreference::SetRange(double minValue, double maxValue) {
+  if (minValue > maxValue) return;
+
+  minValue_ = minValue;
+  maxValue_ = maxValue;
+}
+
+
+double PluginPreference::GetMinValue() { return minValue_; }
+double PluginPreference::GetMaxValue() { return maxValue_; }
 
 
 PluginPreferenceGroup* PluginPreference::GetGroup() {
@@ -37,9 +62,39 @@ wxString PluginPreference::GetName() {
 }
 
 
+bool PluginPreference::IsBoolean() { return GetType() == PluginPreferenceType::CheckBox; }
+bool PluginPreference::IsInteger() { return GetType() == PluginPreferenceType::Spinner; }
+bool PluginPreference::IsDouble() { return false; }
+bool PluginPreference::IsString() { return !IsBoolean() && !IsInteger() && !IsDouble(); }
+
+
+
 wxString PluginPreference::GetValue() {
   if (hasBeenSet_) return value_;
   return GetDefaultValue();
+}
+
+
+double PluginPreference::GetDoubleValue() {
+  wxString value = GetValue();
+  double output;
+  bool done = value.ToDouble(&output);
+  if (!done) return 0;
+  return output;
+}
+
+
+int PluginPreference::GetIntValue() {
+  wxString value = GetValue();
+  long output;
+  bool done = value.ToLong(&output);
+  if (!done) return 0;
+  return (int)output;
+}
+
+
+bool PluginPreference::GetBoolValue() {
+  return value_ == _T("1") || value_.Lower() == _T("true");
 }
 
 
@@ -62,7 +117,29 @@ void PluginPreference::SetValue(const wxString& value) {
   hasBeenSet_ = true;
 
   if (value_ == value) return;
+
+  if (GetType() == PluginPreferenceType::Spinner) {
+
+    double dValue;
+    bool converted = value.ToDouble(&dValue);
+    if (!converted) {
+      ELOG(_T("PluginPreference: value is not a number"));
+      return;
+    }
+
+    double fValue = (double)dValue;
+
+    if (minValue_ != maxValue_) {
+      if (fValue < minValue_ || fValue > maxValue_) {
+        ELOG(wxString::Format(_T("PluginPreference: value of '%s' is not within correct range (%d, %d)."), GetName(), GetMinValue(), GetMaxValue()));
+        return;
+      }
+    }
+
+  }
+    
   value_ = value;
+  
   Invalidate();
 }
 

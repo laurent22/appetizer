@@ -22,6 +22,7 @@ struct PluginPreferenceDialogControl {
   wxStaticText* label;
   wxWindow* control;
   PluginPreference* preference;
+  wxStaticText* descriptionLabel;
 };
 
 
@@ -46,6 +47,8 @@ protected:
   PluginPreferenceDialogControls controls_;
 
   PluginPreferences* preferences_;
+
+  std::map<wxButton*, wxTextCtrl*> browseButtonToTextBoxMap_;
 
   wxButton* saveButton;
   wxButton* cancelButton;

@@ -34,6 +34,8 @@ PluginPreferences::~PluginPreferences() {
   }
   preferences_.clear();
   preferenceGroups_.clear();
+
+  wxDELETE(scheduledSaveTimer_);
 }
 
 

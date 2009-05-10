@@ -6,6 +6,8 @@
 
 #include "../stdafx.h"
 #include "../PluginPreferences.h"
+#include "../FolderItem.h"
+#include "../MiniLaunchBar.h"
 
 #include "PluginPreferencesDialog.h"
 
@@ -92,6 +94,7 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
   }
   
 
+  int generalPageCount = 0;
 
   for (int i = 0; i < preferences->Count(); i++) {
     PluginPreference* preference = preferences->GetPreferenceAt(i);
@@ -104,6 +107,7 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
 
       groupPanel = this;
       gridSizer = panelGridSizers[_T("general")];
+      generalPageCount++;
 
     } else {
 
@@ -113,6 +117,7 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
       } else {
         groupPanel = panels[_T("general")];
         gridSizer = panelGridSizers[_T("general")];
+        generalPageCount++;
       }
 
     }
@@ -128,7 +133,7 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
 
     if (preference->GetType() == PluginPreferenceType::Text) {
 
-      control = new wxTextCtrl(groupPanel, wxID_ANY);
+      control = new wxTextCtrl(groupPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, preference->IsSecure() ? wxTE_PASSWORD : 0);
       wxTextCtrl* textBox = dynamic_cast<wxTextCtrl*>(control);
       textBox->SetValue(preference->GetValue());
 
@@ -144,14 +149,12 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
 
       control = new wxCheckBox(groupPanel, wxID_ANY, wxEmptyString);
       wxCheckBox* checkBox = dynamic_cast<wxCheckBox*>(control);
-      checkBox->SetValue(preference->GetValue() == _T("1") || preference->GetValue().Lower() == _T("true"));
+      checkBox->SetValue(preference->GetBoolValue());
       checkBox->SetLabel(preference->GetTitle());
 
       showLabel = false;
 
     } else if (preference->GetType() == PluginPreferenceType::File) {
-
-      controlAdded = true;
 
       wxFlexGridSizer* sizer = new wxFlexGridSizer(1, 2, 4, 4);
       sizer->AddGrowableCol(0);
@@ -160,7 +163,7 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
       wxTextCtrl* textBox = dynamic_cast<wxTextCtrl*>(control);
       textBox->SetValue(preference->GetValue());
 
-      wxButton* browseButton = new wxButton(groupPanel, wxID_ANY);
+      wxButton* browseButton = new wxButton(groupPanel, ID_BUTTON_PluginPreferenceDialog_BrowseButton);
       browseButton->SetLabel(_T("..."));
       browseButton->SetMinSize(wxSize(30, browseButton->GetMinHeight()));
       
@@ -168,6 +171,16 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
       sizer->Add(browseButton, 0, 0, 0);           
 
       gridSizer->Add(sizer, 0, wxEXPAND, 0);
+
+      browseButtonToTextBoxMap_[browseButton] = textBox;
+      controlAdded = true;
+
+    } else if (preference->GetType() == PluginPreferenceType::Spinner) {
+
+      control = new wxSpinCtrl(groupPanel, wxID_ANY);
+      wxSpinCtrl* spinner = dynamic_cast<wxSpinCtrl*>(control);
+      spinner->SetRange(preference->GetMinValue(), preference->GetMaxValue());
+      spinner->SetValue(preference->GetIntValue());
 
     } else if (preference->GetType() == PluginPreferenceType::Popup) {
 
@@ -195,12 +208,30 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
     if (!showLabel) label->SetLabel(_T(""));
     if (!controlAdded) gridSizer->Add(control, 0, wxEXPAND, 0);  
 
+    wxString description = preference->GetDescription();
+    wxStaticText* descriptionLabel = NULL;
+
+    if (description != wxEmptyString) {
+      wxStaticText* dummyLabel = new wxStaticText(groupPanel, wxID_ANY, wxEmptyString);
+      descriptionLabel = new wxStaticText(groupPanel, wxID_ANY, description);
+      
+      gridSizer->Add(dummyLabel, 0, wxEXPAND, 0);
+      gridSizer->Add(descriptionLabel, 0, wxEXPAND | wxBOTTOM, 6);  
+    }
+
     controlData->control = control;
     controlData->label = label;
     controlData->preference = preference;
+    controlData->descriptionLabel = descriptionLabel;
 
     controls_.push_back(controlData);
 
+  }
+
+
+  if (generalPageCount == 0) {
+    if (notebook) notebook->RemovePage(0);
+    if (panels[_T("general")]) panels[_T("general")]->Destroy();
   }
 
 
@@ -222,13 +253,29 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
 
   SetSize(windowWidth, GetSize().GetHeight());
 
+  for (int i = 0; i < controls_.size(); i++) {
+    PluginPreferenceDialogControl* controlData = controls_.at(i);
+    wxWindow* control = controlData->control;
+    wxStaticText* descriptionLabel = controlData->descriptionLabel;
+    if (!descriptionLabel) continue;
+
+    descriptionLabel->Wrap(descriptionLabel->GetSize().GetWidth());
+    
+  }
+
+  rootSizer->SetSizeHints(this);
+
+  SetSize(windowWidth, GetSize().GetHeight());
+
 }
 
 
 void PluginPreferencesDialog::OnButtonClicked(wxCommandEvent& evt) {
+  wxButton* button = static_cast<wxButton*>(evt.GetEventObject());
+
   switch (evt.GetId()) {
 
-    case wxID_SAVE:
+    case wxID_SAVE: {
 
       for (int i = 0; i < controls_.size(); i++) {
         PluginPreferenceDialogControl* controlData = controls_.at(i);
@@ -246,14 +293,48 @@ void PluginPreferencesDialog::OnButtonClicked(wxCommandEvent& evt) {
           preference->SetValue(textBox->GetValue());
           continue;
         }
+
+        wxCheckBox* checkBox = dynamic_cast<wxCheckBox*>(controlData->control);
+        if (checkBox) {
+          preference->SetValue(checkBox->GetValue() ? _T("1") : _T("0"));
+          continue;
+        }
+
+        wxSpinCtrl* spinner = dynamic_cast<wxSpinCtrl*>(controlData->control);
+        if (spinner) {
+          wxString stringValue;
+          stringValue << spinner->GetValue();
+          preference->SetValue(stringValue);
+          continue;
+        }
         
       }
 
       preferences_->ScheduleSave();
 
-      EndModal(wxID_CLOSE);
+      EndModal(wxSAVE);
       
-      break;
+      } break;
+
+    case ID_BUTTON_PluginPreferenceDialog_BrowseButton: {
+
+      wxFileDialog* d = new wxFileDialog(this);
+      int result = d->ShowModal();
+
+      if (result == wxID_OK) {
+        wxString newValue = d->GetPath();
+        
+        if (wxGetApp().GetUtilities().IsApplicationOnPortableDrive()) {
+          newValue = FolderItem::ConvertToRelativePath(newValue);
+        }
+
+        wxTextCtrl* textBox = browseButtonToTextBoxMap_[button];
+        if (!textBox) return; // can't happen  
+
+        textBox->SetValue(newValue);
+      }
+
+      } break;
 
     default:
 

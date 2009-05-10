@@ -5,13 +5,24 @@
 
 function preferencesTest()	
 
+	preferences:registerPreferenceGroup({
+		name = "first",
+		title = "First group"
+	})
+	
+	preferences:registerPreferenceGroup({
+		name = "second",
+		title = "Second group"
+	})
+
 	trace("Creating a preference...")
 	preferences:registerPreference({
 		type = "Text",
 		name = "first",
 		defaultValue = "this is the default value",
 		title = "Le titre",
-		group = "First group"
+		description = "This is the first description azkljeazkej ajzekl jazklejzlakj eazl eklzjza kljezkljkjzazj aejkl ajze jazekl azjel zajle jz ejklazekl jazjkle ajklze jklz",
+		group = "first"
 	})
 	
 	preferences:registerPreference({
@@ -19,7 +30,8 @@ function preferencesTest()
 		name = "secondPref",
 		defaultValue = "this is the default value",
 		title = "Le titre",
-		group = "First group"
+		description = "secondpref description azkljeazkej ajzekl jazklejzlakj eazl",
+		group = "first"
 	})
 	
 	preferences:registerPreference({
@@ -27,15 +39,24 @@ function preferencesTest()
 		name = "filetest",
 		defaultValue = "c:\\default\\value",
 		title = "File test:",
-		group = "First group"
+		group = "first"
 	})
 	
 	preferences:registerPreference({
 		type = "CheckBox",
 		name = "checkboxtest",
 		defaultValue = "true",
-		title = "Checkbox test:",
-		group = "First group"
+		title = "Checkbox test",
+		group = "first"
+	})
+	
+	preferences:registerPreference({
+		type = "Spinner",
+		name = "spinnertest",
+		defaultValue = 22,
+		title = "Spinner test:",
+		minValue = -20,
+		maxValue = 50
 	})
 	
 --	trace("Creating the same preference - should trigger an error");
@@ -71,7 +92,7 @@ function preferencesTest()
 		name = "textAreaTest",
 		defaultValue = "",
 		title = "Text area",
-		group = "Second group"
+		group = "second"
 	})
 	
 	trace("Getting first preference. Should return default value: ", preferences:getValue("first")); 
@@ -326,10 +347,85 @@ for i = 0, (buttonCount - 1) do
 end
 
 
+function formTest()
+
+	controls = {}
+
+	table.insert(controls, {
+		type = "Text",
+		name = "first",
+		defaultValue = "this is the default value",
+		title = "Le titre",
+		description = "This is the first description azkljeazkej ajzekl jazklejzlakj eazl eklzjza kljezkljkjzazj aejkl ajze jazekl azjel zajle jz ejklazekl jazjkle ajklze jklz",
+		group = "First group"
+	})
+	
+	table.insert(controls, {
+		type = "Text",
+		name = "secondPref",
+		defaultValue = "this is the default value",
+		title = "Le titre",
+		secure = true,
+		description = "secondpref description azkljeazkej ajzekl jazklejzlakj eazl",
+		group = "First group"
+	})
+	
+	table.insert(controls, {
+		type = "File",
+		name = "filetest",
+		defaultValue = "c:\\default\\value",
+		title = "File test:",
+		group = "First group"
+	})
+	
+	table.insert(controls, {
+		type = "CheckBox",
+		name = "checkboxtest",
+		defaultValue = "true",
+		title = "Checkbox test",
+		group = "First group"
+	})
+	
+	table.insert(controls, {
+		type = "Spinner",
+		name = "spinnertest",
+		defaultValue = 22,
+		title = "Spinner test:",
+		minValue = -20,
+		maxValue = 50
+	})
+	
+	table.insert(controls, {
+		type = "Popup",
+		name = "popupTest",
+		defaultValue = "two",
+		title = "Popup",
+		options = {
+			one = "First option",
+			two = "Second option",
+			three = "Third option"
+		}
+	})
+	
+	table.insert(controls, {
+		type = "TextArea",
+		name = "textAreaTest",
+		defaultValue = "",
+		title = "Text area",
+		group = "Second group"
+	})
+	
+	return dialogs:showForm(controls, "Please select some values", "Save")
+
+end
+
+
 
 function prefButton_click(event)
 	--appetizer:setSkin("Default");
-	preferencesTest()
+	--dialogs:showPreferences();
+	--preferencesTest()
+	--formTest()
 end
 
 prefButton = OptionButton:new()
@@ -338,9 +434,25 @@ prefButton:addEventListener("click", "prefButton_click")
 optionPanel:addButton(prefButton)
 
 
+
 preferencesTest()
 
+function appetizer_preferenceChange(event)
+	trace("CHANGE")
+end
 
+appetizer:addEventListener("preferenceChange", "appetizer_preferenceChange")
+
+--result = formTest()
+--
+--trace("================")
+--
+--for key,value in pairs(result) do
+--	trace(value)
+--end
+
+
+--prefButton_click(nil)
 
 --skinNames = appetizer:getSkinNames();
 --

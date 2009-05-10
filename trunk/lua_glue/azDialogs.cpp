@@ -17,9 +17,12 @@
 #include "../stdafx.h"
 
 #include "azDialogs.h"
+#include "azPreferences.h"
 #include "LuaUtil.h"
 #include "../MiniLaunchBar.h"
 #include "../MessageBoxes.h"
+#include "../gui/PluginPreferencesDialog.h"
+
 
 
 
@@ -39,6 +42,8 @@ Lunar<azDialogs>::RegType azDialogs::methods[] = {
   method(azDialogs, showNewShortcutDialog),
   method(azDialogs, showImportDialog),
   method(azDialogs, showEjectDriveDialog),
+  method(azDialogs, showPreferences),  
+  method(azDialogs, showForm),
   {0,0}
 };
 
@@ -163,3 +168,68 @@ int azDialogs::showImportDialog(lua_State *L) { wxGetApp().GetUtilities().ShowIm
  * 
  */	
 int azDialogs::showEjectDriveDialog(lua_State *L) { wxGetApp().GetUtilities().ShowEjectDriveDialog(); return 0; }
+
+
+int azDialogs::showPreferences(lua_State *L) {
+  Plugin* plugin = wxGetApp().GetPluginManager()->GetPluginByLuaState(L);
+  if (!plugin) return 0;
+
+  plugin->ShowPreferencesDialog();
+
+  return 0;
+}
+
+
+int azDialogs::showForm(lua_State *L) {
+  Plugin* plugin = wxGetApp().GetPluginManager()->GetPluginByLuaState(L);
+  if (!plugin) return 0;
+
+  if (!lua_istable(L, 1)) {
+    luaL_error(L, "The first parameter must be a table");
+    return 0;
+  }
+
+  wxString inputTitle = LuaUtil::ToString(L, 2, true, _T("Appetizer"));
+  wxString inputOkButtonLabel = LuaUtil::ToString(L, 3, true, _("OK"));
+
+  PluginPreferences* preferences = new PluginPreferences();
+
+  lua_pushnil(L);
+
+  while (lua_next(L, 1) != 0) {
+    PluginPreference* p = LuaUtil::ToPluginPreference(L, preferences, -2);
+    preferences->RegisterPreference(p);
+
+    lua_pop(L, 1); // pop the value but keep the key for the next iteration
+  }
+
+
+  PluginPreferencesDialog* dialog = new PluginPreferencesDialog(wxGetApp().GetMainFrame(), wxID_ANY);
+  dialog->LoadPreferences(preferences, true, inputOkButtonLabel);
+  dialog->SetTitle(inputTitle);
+  dialog->ShowModal();  
+  dialog->Destroy();
+
+  lua_createtable(L, preferences->Count(), 0);
+  int tableIndex = lua_gettop(L);
+
+  for (int i = 0; i < preferences->Count(); i++) {
+    PluginPreference* p = preferences->GetPreferenceAt(i);
+    lua_pushinteger(L, i);
+
+    if (p->IsBoolean()) {
+      lua_pushboolean(L, p->GetBoolValue());
+    } else if (p->IsInteger()) {
+      lua_pushinteger(L, p->GetIntValue());
+    } else {
+      lua_pushstring(L, p->GetValue().mb_str());
+    }
+    
+    lua_settable(L, tableIndex);
+  }
+
+  wxDELETE(preferences);
+
+  return 1;
+}
+

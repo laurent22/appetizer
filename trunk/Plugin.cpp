@@ -18,6 +18,7 @@
 #include "lua_glue/azMenu.h"
 #include "lua_glue/azMenuItem.h"
 #include "lua_glue/azDockItem.h"
+#include "lua_glue/LuaUtil.h"
 
 
 
@@ -51,8 +52,13 @@ Plugin::~Plugin() {
 void Plugin::ShowPreferencesDialog() {
   preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
   preferencesDialog_->LoadPreferences(this->GetPreferences());
-  preferencesDialog_->ShowModal();
+  int result = preferencesDialog_->ShowModal();
   preferencesDialog_->Destroy();
+
+  if (result == wxSAVE) {
+    LuaHostTable table;
+    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("preferenceChange"), table);  
+  }
 }
 
 
