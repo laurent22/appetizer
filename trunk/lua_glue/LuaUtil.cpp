@@ -188,6 +188,11 @@ wxString LuaUtil::GetStringFromTable(lua_State *L, int tableIndex, const wxStrin
   
   wxString output;
 
+  if (lua_isboolean(L, -1)) {
+    bool bOutput = LuaUtil::ToBoolean(L, -1, isOptional);
+    return bOutput ? _T("true") : _T("false");
+  }
+
   if (!lua_isstring(L, -1)) {
     if (!isOptional) {
       luaL_typerror(L, -1, lua_typename(L, LUA_TSTRING));

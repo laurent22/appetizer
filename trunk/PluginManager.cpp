@@ -106,6 +106,7 @@ void PluginManager::Initialize() {
   eventNames_.Add(_T("dockItemClick"));
   eventNames_.Add(_T("trayIconMenuOpening"));
   eventNames_.Add(_T("dockItemMenuOpening"));
+  eventNames_.Add(_T("preferenceChange"));
 
 
   luaApplication = new azApplication();

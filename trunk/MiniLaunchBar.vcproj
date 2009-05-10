@@ -815,26 +815,6 @@
 				Name="utilities"
 				>
 				<File
-					RelativePath=".\utilities\EncryptionUtil.cpp"
-					>
-					<FileConfiguration
-						Name="Unicode Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Unicode Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="../stdafx.h"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
 					RelativePath=".\utilities\IconGetter.cpp"
 					>
 					<FileConfiguration
@@ -1677,6 +1657,18 @@
 					</FileConfiguration>
 				</File>
 				<File
+					RelativePath=".\lua_glue\azPlugin.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\lua_glue\azPreferences.cpp"
 					>
 					<FileConfiguration
@@ -1919,7 +1911,7 @@
 				Name="utilities"
 				>
 				<File
-					RelativePath=".\utilities\EncryptionUtil.h"
+					RelativePath=".\lua_glue\azPlugin.h"
 					>
 				</File>
 				<File

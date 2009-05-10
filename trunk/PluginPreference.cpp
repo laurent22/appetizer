@@ -94,7 +94,8 @@ int PluginPreference::GetIntValue() {
 
 
 bool PluginPreference::GetBoolValue() {
-  return value_ == _T("1") || value_.Lower() == _T("true");
+  wxString v = GetValue();
+  return v == _T("1") || v.Lower() == _T("true");
 }
 
 
