@@ -1,3 +1,11 @@
+
+
+--trace(plugin)
+
+
+
+
+
 preferences:registerPreference({
 	type = "TextArea",
 	name = "includedFiles",
@@ -29,12 +37,20 @@ preferences:registerPreference({
 })
 
 
-function encryptFile(filePath, password)
+trace(plugin:getPath())
 
-end
 
-result = system:runCommand('s:\\Docs\\PROGS\\C++\\MiniLaunchBar\\trunk\\Data\\Plugins\\Securizer\\Resources\\ccrypt.exe --encrypt --key abc --suffix .ccrypt1_7 "s:\\Docs\\PROGS\\C++\\MiniLaunchBar\\trunk\\Data\\Plugins\\Securizer\\Resources\\wx.chm"')
 
-trace(result)
+
+--button = OptionButton:new()
+--optionPanel:addButton(button)
+--button:addEventListener("click", "optionButton_click")
+
+
+
+
+--result = system:runCommand('s:\\Docs\\PROGS\\C++\\MiniLaunchBar\\trunk\\Data\\Plugins\\Securizer\\Resources\\ccrypt.exe --encrypt --key abc --suffix .ccrypt1_7 "s:\\Docs\\PROGS\\C++\\MiniLaunchBar\\trunk\\Data\\Plugins\\Securizer\\Resources\\wx.chm"')
+
+--trace(result)
 
 --'cmd /c "dir c: /On"')

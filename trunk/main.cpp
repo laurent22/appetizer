@@ -331,40 +331,11 @@ User* MiniLaunchBar::GetUser() {
 }
 
 
-//#include "PluginPreferences.h"
-//#include "PluginPreference.h"
-//#include "gui/PluginPreferencesDialog.h"
-
-
 /**
  * Check if the new version of the app is available
  * @param silent If this is set to false, no error messages will be displayed to the user
  */
 void MiniLaunchBar::CheckForNewVersion(bool silent) {
-
-  //PluginPreferenceOptions options;
-
-  //PluginPreferences* preferences = new PluginPreferences();
-  //preferences->RegisterPreference(new PluginPreference(
-  //  PluginPreferenceType::Text,
-  //  _T("testpref"),
-  //  _T("test"),
-  //  _T("TITLE"),
-  //  _T("desc"),
-  //  NULL,
-  //  options));
-  //preferences->RegisterPreference(new PluginPreference(
-  //  PluginPreferenceType::Text,
-  //  _T("testpreaf"),
-  //  _T("test"),
-  //  _T("TITLE"),
-  //  _T("desc"),
-  //  NULL,
-  //  options));
-  //PluginPreferencesDialog* dialog = new PluginPreferencesDialog(GetMainFrame(), wxID_ANY);
-  //dialog->Show();
-  //dialog->LoadPreferences(preferences);
-
 
   ILOG(_T("Looking for an update..."));
   UpdaterVersionInfo versionInfo;

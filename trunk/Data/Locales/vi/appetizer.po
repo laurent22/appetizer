@@ -1,0 +1,821 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-26 17:48+0100\n"
+"PO-Revision-Date: 2009-05-11 18:48-0000\n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Vietnamese\n"
+"X-Poedit-Country: VIET NAM\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Giấu"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Cho thấy"
+
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:491
+msgid "Eject drive"
+msgstr "Lấy ra khỏi máy"
+
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:1000
+#: OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Thiết kế"
+
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Tắt đi"
+
+#: FolderItem.cpp:462
+#: gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Sắp xếp phần đường tắt"
+
+#: FolderItem.cpp:577
+#: FolderItem.cpp:599
+#: FolderItem.cpp:622
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Phần này đã bị xóa hoặc không hiện hữu (Error %s)"
+
+#: FolderItem.cpp:868
+msgid "Group"
+msgstr "Nhóm"
+
+#: FolderItem.cpp:869
+msgid "Unnamed"
+msgstr "Không có tên"
+
+#: FolderItem.cpp:1081
+#: IconPanel.cpp:170
+msgid "Control Panel"
+msgstr "Trung tâm điều khiển"
+
+#: FolderItem.cpp:1083
+#: IconPanel.cpp:171
+msgid "My Computer"
+msgstr "Máy điện toán của tôi"
+
+#: FolderItem.cpp:1085
+#: IconPanel.cpp:172
+msgid "My Network Places"
+msgstr "Hệ thống máy điện toán của tôi"
+
+#: FolderItem.cpp:1087
+#: IconPanel.cpp:173
+msgid "Recycle Bin"
+msgstr "Thùng rác"
+
+#: FolderItem.cpp:1089
+#: IconPanel.cpp:174
+msgid "Show Desktop"
+msgstr "Cho thấy Desktop"
+
+#: FolderItem.cpp:1091
+#: IconPanel.cpp:175
+msgid "Windows Explorer"
+msgstr "Dùng Windows Explorer"
+
+#: FolderItem.cpp:1093
+#: IconPanel.cpp:176
+msgid "Search"
+msgstr "Tra tìm"
+
+#: FolderItem.cpp:1095
+msgid "Current Drive"
+msgstr "Drive hiện tại"
+
+#: FolderItem.cpp:1097
+#: IconPanel.cpp:177
+msgid "Printers and Faxes"
+msgstr "Máy in và máy fax"
+
+#: FolderItem.cpp:1099
+#: IconPanel.cpp:178
+msgid "Network Connections"
+msgstr "Nối hệ thống máy điện toán "
+
+#: FolderItemRenderer.cpp:154
+#: gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "Tháo ra..."
+
+#: FolderItemRenderer.cpp:159
+msgid "Add to Multi Launch group"
+msgstr "Thêm vào phần Multi Launch"
+
+#: FolderItemRenderer.cpp:168
+msgid "Organize group shortcuts"
+msgstr "Sắp xếp thứ tự phần đường tắt"
+
+#: FolderItemRenderer.cpp:173
+#: gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Properties"
+
+#: IconPanel.cpp:150
+#: OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "Đường tắt mới..."
+
+#: IconPanel.cpp:154
+msgid "New group..."
+msgstr "Nhóm mới..."
+
+#: IconPanel.cpp:182
+msgid "Add special item"
+msgstr "Thêm vào phần Special Item"
+
+#: main.cpp:67
+msgid "Uses user data directory to save settings."
+msgstr "Lưu trữ các thay đổi "
+
+#: main.cpp:68
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Chỉ định dùng data path (-u sẽ không được để ý đến)"
+
+#: main.cpp:69
+msgid "Displays the log window (useful for debugging)"
+msgstr "Cho thấy phần ghi chú (dùng cho debugging)"
+
+#: main.cpp:70
+msgid "Displays this help message"
+msgstr "Cho thấy phần giúp đỡ này"
+
+#: main.cpp:156
+msgid "Could not initialize locale."
+msgstr "Không thể cho chạy phần initialize locale"
+
+#: main.cpp:255
+msgid "Large"
+msgstr "Lớn"
+
+#: main.cpp:256
+msgid "Extra Large (XP and above)"
+msgstr "Rất lớn (XP và hệ thống điều hành mới hơn)"
+
+#: main.cpp:257
+msgid "Jumbo (Vista and above)"
+msgstr "Rất, rất lớn"
+
+#: main.cpp:261
+msgid "Small"
+msgstr "Nhỏ"
+
+#: main.cpp:352
+msgid "Could not get update information"
+msgstr "Không thể cập nhật hóa"
+
+#: main.cpp:366
+msgid "You have the latest version."
+msgstr "Bạn đã có phiên bản mới nhất rồi"
+
+#: main.cpp:373
+#, c-format
+msgid ""
+"A new version is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"\n"
+"Do you wish to download it now?"
+msgstr ""
+"Có phiên bản mới!\n"
+"\n"
+"Phiên bản hiện tại bạn có: %s\n"
+"Phiên bản mới: %s\n"
+"Ghi chú: %s\n"
+"\n"
+"Bạn muốn được cập nhật hóa bây giờ?"
+
+#: main.cpp:379
+msgid "Error launching web browser"
+msgstr "Web browser bị lỗi, không chạy được"
+
+#: MainFrame.cpp:227
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Không thể chỉ định Hot Key, một thảo trình khác có thể đã dùng Hot Key này rồi."
+
+#: MainFrame.cpp:490
+msgid "Minimize to tray"
+msgstr "Mang xuống System Tray"
+
+#: MainFrame.cpp:1000
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s sẽ được mang xuống System Tray.\n"
+"\n"
+"Bạn có thể thay đổi phần này trong '%s' windows ('%s' tab)"
+
+#: MainFrame.cpp:1000
+#: gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "Operations"
+
+#: MainFrame.cpp:1000
+#: utilities\Utilities.cpp:74
+#: utilities\Utilities.cpp:348
+msgid "Don't show this message again"
+msgstr "Đừng cho thấy phần này nữa"
+
+#: MessageBoxes.cpp:15
+#: gui\ConfigDialog.cpp:100
+msgid "Error"
+msgstr "Bị lỗi"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Tin tức"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Báo động"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Xác nhận"
+
+#: OptionPanel.cpp:163
+#: gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "Hướng dẫn - Giúp đỡ"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "Multi-launch"
+
+#: OptionPanel.cpp:167
+#: gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Chuyển phần đường tắt vào thảo trình"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "Chủ đề các phần hướng dẫn - Giúp đỡ"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "Yêu cầu trợ giúp"
+
+#: OptionPanel.cpp:331
+#: gui\AboutDialog.cpp:80
+#, c-format
+msgid "About %s..."
+msgstr "Đã được %s..."
+
+#: OptionPanel.cpp:341
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "Phần multilaunch group hiện chưa có gì. Bạn cần hướng dẫn cách sử dụng phần này?"
+
+#: Plugin.cpp:132
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "Thảo trình phụ dùng sai cách. Xin lưu trữ dưới dạng UTF-8 NO BOM hoặc ASCII. Dùng cho:"
+
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr "Không thể mở %s"
+
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "Không đọc được zip entry '%s'"
+
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "Không thể tạo ra '%s'"
+
+#: PluginManager.cpp:96
+#, c-format
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "Thảo trình phụ đã được gắn. Thảo trình phụ %s sẽ bắt đầu hoạt động lần tới."
+
+#: Styles.cpp:71
+#: gui\ConfigDialog.cpp:849
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Áo này không chạy được với phiên bản %s."
+
+#: utilities\Utilities.cpp:74
+msgid "Do you wish to remove this icon?"
+msgstr "Bạn muốn tháo bỏ biểu tượng này?"
+
+#: utilities\Utilities.cpp:226
+msgid "Please wait while your applications are being closed."
+msgstr "Xin vui lòng đợi trong lúc thảo trình đang đóng lại."
+
+#: utilities\Utilities.cpp:245
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Bạn không đủ thẩm quyền làm điều này"
+
+#: utilities\Utilities.cpp:348
+msgid "Do you wish to eject the drive?"
+msgstr "Bạn muốn eject drive?"
+
+#: gui\AboutDialog.cpp:62
+#, c-format
+msgid "Translators: %s"
+msgstr "Chuyển dịch: %s"
+
+#: gui\AboutDialog.cpp:64
+msgid "This software uses a number of open source libraries including:"
+msgstr "Thảo trình này dùng một số phần open source kể cả:"
+
+#: gui\AboutDialog.cpp:66
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini của Brodie Thiesfield"
+
+#: gui\AboutDialog.cpp:68
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml của Yves Berquin"
+
+#: gui\AboutDialog.cpp:70
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString của Joe O'Leary"
+
+#: gui\AboutDialog.cpp:72
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua của Roberto Ierusalimschy, Luiz Henrique de Figueiredo, và Waldemar Celes"
+
+#: gui\AboutDialog.cpp:76
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets của những người thiết kế nó"
+
+#: gui\AboutDialog.cpp:78
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Dialog boxes thiết kế bằng wxGlade của Alberto Griggio."
+
+#: gui\AboutDialog.cpp:81
+msgid "About"
+msgstr "Về thảo trình này"
+
+#: gui\AboutDialog.cpp:82
+msgid "License"
+msgstr "License"
+
+#: gui\AboutDialog.cpp:83
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "Đồng ý"
+
+#: gui\AboutDialog.cpp:84
+msgid "Credits"
+msgstr "Ghi nhận đóng góp"
+
+#: gui\AboutDialog.cpp:88
+#, c-format
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+#: gui\AboutDialog.cpp:89
+msgid ""
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"Thảo trình này hoàn toàn miễn phí: Bạn có thể phân phát, thay đổi hoặc chuyển cho người khác dùng theo quy ước của GNU General Public License đã được hội Free Software Foundation xuất bản, dùng phiên bản 3 hoặc mới hơn.\n"
+"\n"
+"Thảo trình này HOÀN TOÀN KHÔNG CÓ BẢO ĐẢM GÌ; cũng không có bất cứ TRÁCH NHIỆM TRỢ GIÚP KỸ THUẬT NÀO với bất cứ cơ quan, đoàn thể nào. Xin đọc thêm phần GNU General Public License. \n"
+"Bạn đã nhận được một bản sao của GNU General Public License chung với thảo trình này. Nếu bạn không nhận được, xin đến thăm Vietwikipedia.org Cầu hoặc đến thăm <http://www.gnu.org/licenses/>."
+
+#: gui\AboutDialog.cpp:90
+msgid "Web:"
+msgstr "Trang nhà:"
+
+#: gui\AboutDialog.cpp:91
+msgid "Contact:"
+msgstr "Liên lạc:"
+
+#: gui\AboutDialog.cpp:99
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Phiên Bản %s.%s.%s (Build #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Đồng ý"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "Không đồng ý"
+
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:80
+#: gui\ShortcutEditorDialog.cpp:43
+msgid "Cancel"
+msgstr "Hủy bỏ"
+
+#: gui\ConfigDialog.cpp:58
+msgid "General"
+msgstr "Tổng quát"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Appearance"
+msgstr "Appearance"
+
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "Mang vào"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "Thảo trình phụ"
+
+#: gui\ConfigDialog.cpp:63
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Save"
+msgstr "Lưu trữ"
+
+#: gui\ConfigDialog.cpp:102
+msgid "Enabled"
+msgstr "Cho chạy"
+
+#: gui\ConfigDialog.cpp:102
+msgid "Disabled"
+msgstr "Ngưng chạy"
+
+#: gui\ConfigDialog.cpp:134
+msgid "Plugin"
+msgstr "Thảo trình phụ"
+
+#: gui\ConfigDialog.cpp:135
+msgid "Status"
+msgstr "Tình trạng"
+
+#: gui\ConfigDialog.cpp:205
+msgid "Language:"
+msgstr "Ngôn ngữ:"
+
+#: gui\ConfigDialog.cpp:206
+msgid "Always on top"
+msgstr "Luôn luôn nằm trên"
+
+#: gui\ConfigDialog.cpp:207
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "%s - cho phép 1 thảo trình chạy mà thôi"
+
+#: gui\ConfigDialog.cpp:208
+#: gui\ConfigDialog.cpp:723
+msgid "Check for update"
+msgstr "Xem coi có cập nhật hóa nào mới hay không"
+
+#: gui\ConfigDialog.cpp:209
+msgid "Install autorun file"
+msgstr "Gắn phần Tự Động Chạy"
+
+#: gui\ConfigDialog.cpp:303
+msgid "Icon size:"
+msgstr "Cỡ của biểu tượng"
+
+#: gui\ConfigDialog.cpp:304
+msgid "Skin:"
+msgstr "Áo:"
+
+#: gui\ConfigDialog.cpp:305
+msgid "Orientation:"
+msgstr "Orientation:"
+
+#: gui\ConfigDialog.cpp:306
+msgid "Transparency:"
+msgstr "Transparency:"
+
+#: gui\ConfigDialog.cpp:340
+msgid "Horizontal"
+msgstr "Horizontal"
+
+#: gui\ConfigDialog.cpp:341
+msgid "Vertical"
+msgstr "Vertical"
+
+#: gui\ConfigDialog.cpp:367
+msgid "Default"
+msgstr "Định sẵn"
+
+#: gui\ConfigDialog.cpp:412
+msgid "Auto-hide after launching an application"
+msgstr "Tự giấu đi (auto-hide) sau khi đã chạy"
+
+#: gui\ConfigDialog.cpp:413
+msgid "Run multi-launch group on startup"
+msgstr "Chạy multi-launch group ở startup"
+
+#: gui\ConfigDialog.cpp:414
+msgid "Hot key to hide / show the bar"
+msgstr "Hot Key để giấu/cho thấy phần bar"
+
+#: gui\ConfigDialog.cpp:415
+msgid "Control +"
+msgstr "Control +"
+
+#: gui\ConfigDialog.cpp:416
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:417
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:418
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Khi tháo drive ra khỏi máy, đóng tất cả thảo trình đang chạy"
+
+#: gui\ConfigDialog.cpp:419
+msgid "Close button minimizes to System Tray"
+msgstr "Đóng nút \"mang xuống System Tray\""
+
+#: gui\ConfigDialog.cpp:430
+msgid "<None>"
+msgstr "<Không>"
+
+#: gui\ConfigDialog.cpp:472
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+#: gui\ConfigDialog.cpp:473
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+#: gui\ConfigDialog.cpp:474
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+#: gui\ConfigDialog.cpp:475
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+#: gui\ConfigDialog.cpp:476
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+#: gui\ConfigDialog.cpp:477
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+#: gui\ConfigDialog.cpp:478
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+#: gui\ConfigDialog.cpp:479
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+#: gui\ConfigDialog.cpp:480
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+#: gui\ConfigDialog.cpp:481
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+#: gui\ConfigDialog.cpp:483
+msgid "Backspace"
+msgstr "Backspace"
+
+#: gui\ConfigDialog.cpp:484
+msgid "Tab"
+msgstr "Tab"
+
+#: gui\ConfigDialog.cpp:485
+msgid "Return"
+msgstr "Return"
+
+#: gui\ConfigDialog.cpp:486
+msgid "Escape"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:487
+msgid "Space"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:488
+msgid "Delete"
+msgstr "Delete - Xóa"
+
+#: gui\ConfigDialog.cpp:490
+msgid "End"
+msgstr "End"
+
+#: gui\ConfigDialog.cpp:491
+msgid "Home"
+msgstr "Home - Trang chính"
+
+#: gui\ConfigDialog.cpp:492
+msgid "Left"
+msgstr "Trái"
+
+#: gui\ConfigDialog.cpp:493
+msgid "Up"
+msgstr "Lên"
+
+#: gui\ConfigDialog.cpp:494
+msgid "Right"
+msgstr "Phải"
+
+#: gui\ConfigDialog.cpp:495
+msgid "Down"
+msgstr "Xuống"
+
+#: gui\ConfigDialog.cpp:553
+msgid "Exclude these items from import operations"
+msgstr "Không tính những phần này trong import operations"
+
+#: gui\ConfigDialog.cpp:585
+msgid "Available plugins"
+msgstr "Những thảo trình phụ có sẵn"
+
+#: gui\ConfigDialog.cpp:586
+msgid "Enable"
+msgstr "Cho chạy"
+
+#: gui\ConfigDialog.cpp:587
+msgid "Disable"
+msgstr "Không cho chạy nữa"
+
+#: gui\ConfigDialog.cpp:588
+msgid "Install..."
+msgstr "Cài vào máy..."
+
+#: gui\ConfigDialog.cpp:590
+#, c-format
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "Thay đổi trong thảo trình phụ của %s sẽ hoạt động trong lần tới"
+
+#: gui\ConfigDialog.cpp:650
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Khi gắn phần Tự Động Chạy vào USB, %s sẽ tự động chạy khi được cắm vào máy.\n"
+"\n"
+"Bạn có muốn tiếp tục?"
+
+#: gui\ConfigDialog.cpp:653
+msgid "Could not install autorun file. Please try again."
+msgstr "Không thể cài phần Tự Động Chạy. Xin thử lại lần nữa."
+
+#: gui\ConfigDialog.cpp:655
+msgid "The autorun file has been installed successfully"
+msgstr "Phần Tự Động Chạy đã được gắn."
+
+#: gui\ConfigDialog.cpp:686
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s Plugin Packages"
+
+#: gui\ConfigDialog.cpp:687
+#: gui\IconDialog.cpp:161
+msgid "All files"
+msgstr "Tất cả mọi dữ liệu"
+
+#: gui\ConfigDialog.cpp:689
+msgid "Select a plugin package"
+msgstr "Chọn một thảo trình phụ"
+
+#: gui\ConfigDialog.cpp:718
+msgid "Please wait..."
+msgstr "Xin vui lòng đợi..."
+
+#: gui\ConfigDialog.cpp:992
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Sau khi tắt và mở thảo trình này, bạn mới thấy các điều vừa được thay đổi"
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Loading tree..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "Chọn một dữ liệu hay một cặp giấy"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Chọn một biểu tượng"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Hồ sơ hình biểu tượng hoặc library:"
+
+#: gui\IconDialog.cpp:156
+msgid "All supported files"
+msgstr "Tất cả các tài liệu được phép dùng"
+
+#: gui\IconDialog.cpp:157
+msgid "Icons"
+msgstr "Biểu tượng"
+
+#: gui\IconDialog.cpp:158
+msgid "Executables"
+msgstr "Executables"
+
+#: gui\IconDialog.cpp:159
+msgid "Dynamic libraries"
+msgstr "Executables"
+
+#: gui\IconDialog.cpp:160
+msgid "Icon libraries"
+msgstr "Thư viện các hình biểu tượng"
+
+#: gui\IconDialog.cpp:163
+msgid "Select an icon file or library"
+msgstr "Chọn một hồ sơ hình biểu tượng hoặc một library"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Phần này sẽ giúp bạn chuyển các đường tắt shortcuts vào %s.\n"
+"\n"
+"Chọn chuyển các đường tắt từ đâu:"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "Thảo trình từ PortableApps.com"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "Windows Quick Launch toolbar"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "Windows Start Menu programs"
+
+#: gui\ImportWizardDialog.cpp:77
+msgid "Start >>"
+msgstr "Windows Start Menu programs"
+
+#: gui\ImportWizardDialog.cpp:118
+msgid "Importing shortcuts... Please wait."
+msgstr "Đang chuyển phần đường tắt vào thảo trình... Xin đợi giây lát"
+
+#: gui\ShortcutEditorDialog.cpp:38
+msgid "Group Properties"
+msgstr "Properties của nhóm"
+
+#: gui\ShortcutEditorDialog.cpp:38
+msgid "Shorcut Properties"
+msgstr "Propeties của phần đường tắt"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Name:"
+msgstr "Tên:"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Location:"
+msgstr "Địa điểm:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Parameters:"
+msgstr "Parameters:"
+
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Icon:"
+msgstr "Biểu tượng:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Change icon..."
+msgstr "Thay đổi biểu tượng..."
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Use default"
+msgstr "Dùng phần định sẵn"
+
+#: gui\ShortcutEditorDialog.cpp:152
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Không tìm thấy phần đường tắt. Bạn vẫn muốn tiếp tục?"
+

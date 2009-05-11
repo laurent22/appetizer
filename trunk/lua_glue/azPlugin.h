@@ -11,7 +11,6 @@
 
 
 #include "azWrapper.h"
-#include "../Plugin.h"
 
 
 
@@ -19,6 +18,7 @@ class azPlugin : public azWrapper {
 
 public:
 
+  azPlugin();
   azPlugin(lua_State *L);
   ~azPlugin();
 
@@ -26,11 +26,6 @@ public:
   
   static const char className[];
   static Lunar<azPlugin>::RegType methods[];
-
-  Plugin* Get() const;
-
-private:
-
 
 };
 

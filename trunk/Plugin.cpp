@@ -27,6 +27,7 @@ Plugin::Plugin() {
   initiallyEnabled_ = enabled_;
   state_ = _T("unloaded");
   luaPreferences_ = NULL;
+  luaPlugin_ = NULL;
   preferences_ = NULL;
   preferencesDialog_ = NULL;
   
@@ -46,6 +47,7 @@ Plugin::~Plugin() {
 
   wxDELETE(preferences_);
   wxDELETE(luaPreferences_);
+  wxDELETE(luaPlugin_);
 }
 
 
@@ -115,6 +117,11 @@ void Plugin::LoadPluginXml(const wxString& xmlFilePath) {
 }
 
 
+wxString Plugin::GetFolderPath() {
+  return folderPath_;
+}
+
+
 void Plugin::LoadMetadata(const wxString& folderPath) {
   wxString xmlFilePath = folderPath + wxFileName::GetPathSeparator() + _T("plugin.xml");
   LoadPluginXml(xmlFilePath);
@@ -136,6 +143,8 @@ bool Plugin::Load(const wxString& folderPath) {
     state_ = _T("error");
     return false;
   }
+
+  folderPath_ = folderPath;
 
   // ***********************************************************
   // Misc. Lua initialization
@@ -210,27 +219,30 @@ bool Plugin::Load(const wxString& folderPath) {
   preferences_ = new PluginPreferences(preferenceFile);
   luaPreferences_ = new azPreferences(preferences_);
 
+  luaPlugin_ = new azPlugin();
+
   // ***********************************************************
   // Register Appetizer classes to make them available
   // to Lua scripts
   // ***********************************************************
 
+  Lunar<azPlugin>::Register(L); 
   Lunar<azApplication>::Register(L);
   Lunar<azMenu>::Register(L);
   Lunar<azDockItem>::Register(L);
   Lunar<azOptionButton>::Register(L);
   Lunar<azOptionPanel>::Register(L);
-  Lunar<azDialogs>::Register(L);
+  Lunar<azDialogs>::Register(L);  
   Lunar<azSystem>::Register(L);
-  Lunar<azMenuItem>::Register(L);
-  Lunar<azPreferences>::Register(L);
+  Lunar<azMenuItem>::Register(L);  
+  Lunar<azPreferences>::Register(L);   
 
   // ***********************************************************
   // Register Appetizer's global variables
   // ***********************************************************
 
   PluginManager* pluginManager = wxGetApp().GetPluginManager();
-  
+
   lua_pushliteral(L, "appetizer");
   Lunar<azApplication>::push(L, pluginManager->luaApplication);
   lua_settable(L, LUA_GLOBALSINDEX);
@@ -249,6 +261,10 @@ bool Plugin::Load(const wxString& folderPath) {
 
   lua_pushliteral(L, "preferences");
   Lunar<azPreferences>::push(L, luaPreferences_);
+  lua_settable(L, LUA_GLOBALSINDEX);
+
+  lua_pushliteral(L, "plugin");
+  Lunar<azPlugin>::push(L, luaPlugin_);
   lua_settable(L, LUA_GLOBALSINDEX);
 
   // ***********************************************************

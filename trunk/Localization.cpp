@@ -176,6 +176,7 @@ Localization::Localization() {
   languageCodeHashMapS_[_T("zh")] = _T("中文");  // TODO: Special case for simplified and traditional chinese // Traditional 繁體中文
   languageCodeHashMapS_[_T("ro")] = _T("Română"); 
   languageCodeHashMapS_[_T("et")] = _T("Eesti Keel"); 
+  //languageCodeHashMapS_[_T("vi")] = _T("Tiếng Việt"); 
 
   countryCodeHashMapS_[_T("BR")] = _T("Brasil"); 
   countryCodeHashMapS_[_T("CN")] = _T("中国"); 
