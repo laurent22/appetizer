@@ -295,7 +295,7 @@ int azApplication::getSkinNames(lua_State *L) {
     wxString skinName = skinNames[i];
 
     lua_pushinteger(L, i + 1);
-    lua_pushstring(L, skinName.mb_str());
+    LuaUtil::PushString(L, skinName);
     lua_settable(L, tableIndex);
   }
 

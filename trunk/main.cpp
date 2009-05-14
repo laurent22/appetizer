@@ -26,6 +26,7 @@ IMPLEMENT_APP(MiniLaunchBar)
 int MiniLaunchBar::uniqueInt_ = 0;
 
 
+#include "utilities/SystemUtil.h"
 
 /**
  * Initialize the application
@@ -422,7 +423,7 @@ bool MiniLaunchBar::ChangeLocale(const wxString& localeCode) {
 
   wxDELETE(locale_);
 
-	locale_ = new wxLocale();
+  locale_ = new wxLocale();
   locale_->Init(info->Language);
   locale_->AddCatalogLookupPathPrefix(FilePaths::GetLocalesDirectory());
   locale_->AddCatalog(_T("appetizer"));

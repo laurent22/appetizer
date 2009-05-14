@@ -18,3 +18,9 @@ bool SystemUtil::IsPathADrive(const wxString& path) {
   return false;
 }
 
+
+void SystemUtil::GetDirectoryContents(wxArrayString& fileItems, const wxString& directory, bool recurse) {
+  int flags = wxDIR_FILES;
+  if (recurse) flags |= wxDIR_DIRS;
+  wxDir::GetAllFiles(directory, &fileItems, wxEmptyString, flags);
+}

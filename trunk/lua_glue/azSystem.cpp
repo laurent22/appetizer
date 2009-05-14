@@ -21,6 +21,9 @@
 #include "azSystem.h"
 #include "azGlobal.h"
 #include "LuaUtil.h"
+#include "../FolderItem.h"
+#include "../utilities/SystemUtil.h"
+#include "../utilities/StringUtil.h"
 #include "../MiniLaunchBar.h"
 #include "../FilePaths.h"
 
@@ -40,6 +43,9 @@ const char azSystem::className[] = "System";
 Lunar<azSystem>::RegType azSystem::methods[] = {
   method(azSystem, runCommand),
   method(azSystem, killLockingProcesses),
+  method(azSystem, getDirectoryContents),
+  method(azSystem, fileMatchesPattern),
+  method(azSystem, resolvePath),
   {0,0}
 };
 
@@ -225,3 +231,47 @@ int azSystem::killLockingProcesses(lua_State *L) {
   return 0;
 }
 
+
+int azSystem::getDirectoryContents(lua_State *L) {
+  wxString inputDirectory = LuaUtil::ToString(L, 1);
+  bool inputRecurse = LuaUtil::ToBoolean(L, 2, true, false);
+  
+  wxArrayString files;
+  SystemUtil::GetDirectoryContents(files, inputDirectory, inputRecurse);
+
+  lua_createtable(L, files.Count(), 0);
+  int tableIndex = lua_gettop(L);
+
+  for (int i = 0; i < files.Count(); i++) {
+    wxString file = files[i];
+
+    lua_pushinteger(L, i + 1);
+    LuaUtil::PushString(L, file);
+    lua_settable(L, tableIndex);
+  }
+  
+  return 1;
+}
+
+
+int azSystem::fileMatchesPattern(lua_State *L) {
+  wxString inputFilename = LuaUtil::ToString(L, 1);
+  wxString inputPattern = LuaUtil::ToString(L, 2);
+
+  bool itDoes = StringUtil::FileMatchesPattern(inputPattern, inputFilename);
+
+  lua_pushboolean(L, itDoes);
+
+  return 1;
+}
+
+
+int azSystem::resolvePath(lua_State *L) {
+  wxString inputFilePath = LuaUtil::ToString(L, 1);
+
+  wxString output = FolderItem::ResolvePath(inputFilePath, false);
+
+  LuaUtil::PushString(L, output);
+
+  return 1;
+}

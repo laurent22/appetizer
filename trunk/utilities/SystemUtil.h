@@ -15,6 +15,7 @@ class SystemUtil {
 public:
 
   static bool IsPathADrive(const wxString& path);
+  static void GetDirectoryContents(wxArrayString& fileItems, const wxString& directory, bool recurse = false);
 
 };
 

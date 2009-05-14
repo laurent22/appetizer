@@ -207,22 +207,25 @@ int azDialogs::showForm(lua_State *L) {
   PluginPreferencesDialog* dialog = new PluginPreferencesDialog(wxGetApp().GetMainFrame(), wxID_ANY);
   dialog->LoadPreferences(preferences, true, inputOkButtonLabel);
   dialog->SetTitle(inputTitle);
-  dialog->ShowModal();  
+  int result = dialog->ShowModal();  
   dialog->Destroy();
+
+  if (result != wxSAVE) return 0;
 
   lua_createtable(L, preferences->Count(), 0);
   int tableIndex = lua_gettop(L);
 
   for (int i = 0; i < preferences->Count(); i++) {
     PluginPreference* p = preferences->GetPreferenceAt(i);
-    lua_pushinteger(L, i);
+    
+    LuaUtil::PushString(L, p->GetName());
 
     if (p->IsBoolean()) {
       lua_pushboolean(L, p->GetBoolValue());
     } else if (p->IsInteger()) {
       lua_pushinteger(L, p->GetIntValue());
     } else {
-      lua_pushstring(L, p->GetValue().mb_str());
+      LuaUtil::PushString(L, p->GetValue());
     }
     
     lua_settable(L, tableIndex);
