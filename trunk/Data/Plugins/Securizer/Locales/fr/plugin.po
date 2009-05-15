@@ -1,0 +1,114 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Securizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-15 22:58-0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\\..\n"
+
+#: ..\../main.lua:122
+msgid "Included files:"
+msgstr "Fichiers inclus :"
+
+#: ..\../main.lua:123
+msgid "List of files to be encrypted. Put one item per line. Wildcard such as '*' or '?' are supported. Use the special variable $(Drive) to specify the drive Appetizer is installed on."
+msgstr "Liste des fichiers à crypter. Un fichier par ligne. Les caractères spéciaux tel que '*' ou '?' sont acceptés. Utilisez la variable $(Drive) pour spécifier le lecteur sur lequel Appetizer est installé."
+
+#: ..\../main.lua:130
+msgid "Excluded files:"
+msgstr "Fichiers exclus :"
+
+#: ..\../main.lua:131
+msgid "List of files to be excluded."
+msgstr "Liste des fichiers à exclure :"
+
+#: ..\../main.lua:138
+msgid "Ask me to encrypt my files when I close Appetizer"
+msgstr "Crypte mes fichiers lorsque je ferme Appetizer"
+
+#: ..\../main.lua:145
+msgid "Ask me to decrypt my files when I open Appetizer"
+msgstr "Décrypte mes fichiers lorsqu'Appetizer démarre"
+
+#: ..\../main.lua:229
+msgid "Fatal i/o error (was the file already open?)"
+msgstr "Erreur E/S fatale (le fichier était peut-être déjà ouvert)"
+
+#: ..\../main.lua:230
+msgid "Incorrect password (or wrong file format)"
+msgstr "Mot de passe incorrect (ou format de fichier incorrect)"
+
+#: ..\../main.lua:233
+msgid "Non-fatal i/o error (file is missing, or not readable)"
+msgstr "Erreur E/S non-fatale (fichier est manquant, ou n'est pas lisible)"
+
+#: ..\../main.lua:302
+msgid "The password must be between 4 and 20 characters."
+msgstr "Le mot de passe doit être entre 4 et 20 caractères"
+
+#: ..\../main.lua:310
+msgid "The password must only contain letters and numbers."
+msgstr "Le mot de passe ne doit contenir que des lettres et des nombres."
+
+#: ..\../main.lua:333
+msgid "Password:"
+msgstr "Mot de passe :"
+
+#: ..\../main.lua:334
+msgid "Please type-in a password between 4 and 20 characters. Only letters and numbers are accepted."
+msgstr "Veuillez taper un mot de passe d'entre 4 et 20 caractères. Seuls les chiffres et lettres sont acceptés."
+
+#: ..\../main.lua:342
+msgid "Confirm:"
+msgstr "Confirmer :"
+
+#: ..\../main.lua:343
+msgid "Please confirm the password"
+msgstr "Veuillez confirmer votre mot de passe"
+
+#: ..\../main.lua:347
+msgid "Type-in your password"
+msgstr "Tapez votre mot de passe"
+
+#: ..\../main.lua:365
+msgid "Passwords do not match."
+msgstr "Les mots de passe ne correspondent pas."
+
+#: ..\../main.lua:391
+msgid "Encryption in progress. Please wait..."
+msgstr "Cryptage en cours. Veuillez patienter..."
+
+#: ..\../main.lua:393
+msgid "Decryption in progress. Please wait..."
+msgstr "Décryptage en cours. Veuillez patienter..."
+
+#: ..\../main.lua:396
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+#: ..\../main.lua:408
+msgid "Some errors occured during the operation:"
+msgstr "Quelques erreurs se sont produites durant l'opération :"
+
+#: ..\../main.lua:440
+msgid "Start encryption"
+msgstr "Démarrer le cryptage"
+
+#: ..\../main.lua:444
+msgid "Start decryption"
+msgstr "Démarrer le décryptage"
+
+#: ..\../main.lua:448
+msgid "Configuration"
+msgstr "Configuration"
+

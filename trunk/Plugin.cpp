@@ -10,6 +10,7 @@
 #include "MiniLaunchBar.h"
 #include "MessageBoxes.h"
 #include "FilePaths.h"
+#include "Constants.h"
 
 #include "lua_glue/azGlobal.h"
 #include "lua_glue/azApplication.h"
@@ -36,6 +37,8 @@ Plugin::Plugin() {
 
 
 Plugin::~Plugin() {
+  if (GetPreferences()) GetPreferences()->Save();
+
   if (L) lua_close(L);
 
   std::map<std::pair<wxObject*, int>, wxArrayString*>::iterator it = eventRegister_.begin();
@@ -158,10 +161,11 @@ bool Plugin::Load(const wxString& folderPath) {
   luaopen_math(L);
 
   // ***********************************************************
-  // Register the global "trace" function
+  // Register global functions
   // ***********************************************************
 
   lua_register(L, "trace", azPrint);
+  lua_register(L, "_", azTranslate);
 
   // ***********************************************************
   // Lua and wxWidgets don't handle UTF-8 files with BOM, so
@@ -266,6 +270,15 @@ bool Plugin::Load(const wxString& folderPath) {
   lua_pushliteral(L, "plugin");
   Lunar<azPlugin>::push(L, luaPlugin_);
   lua_settable(L, LUA_GLOBALSINDEX);
+
+  // ***********************************************************
+  // Initialize plugin locale
+  // ***********************************************************
+  
+  // TODO: Check that Locales path exists
+
+  wxGetApp().GetLocale()->AddCatalogLookupPathPrefix(folderPath + _T("/") + LOCALES_FOLDER_NAME);
+  wxGetApp().GetLocale()->AddCatalog(_T("plugin"));
 
   // ***********************************************************
   // Run the script

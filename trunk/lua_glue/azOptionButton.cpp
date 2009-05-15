@@ -44,6 +44,8 @@ Lunar<azOptionButton>::RegType azOptionButton::methods[] = {
   method(azOptionButton, getToolTip),
   method(azOptionButton, getName),
   method(azOptionButton, setName),
+  method(azOptionButton, getIconFile),
+  method(azOptionButton, setIconFile),
   {0,0}
 };
 
@@ -194,3 +196,22 @@ int azOptionButton::getName(lua_State *L) { CheckWrappedObject(L, Get()); LuaUti
  * 
  */	
 int azOptionButton::setName(lua_State *L) { CheckWrappedObject(L, Get());Get()->SetName(LuaUtil::ToString(L, 1)); return 0; }
+
+
+int azOptionButton::getIconFile(lua_State *L) {
+  CheckWrappedObject(L, Get());
+
+  LuaUtil::PushString(L, Get()->GetIconFilePath());
+
+  return 1;
+}
+
+
+int azOptionButton::setIconFile(lua_State *L) {
+  CheckWrappedObject(L, Get());
+
+  wxString inputFilePath = LuaUtil::ToString(L, 1);
+  Get()->SetIconFilePath(inputFilePath);
+
+  return 0;
+}

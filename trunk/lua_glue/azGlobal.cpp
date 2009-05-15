@@ -8,6 +8,7 @@
 #include "../stdafx.h"
 
 #include "azGlobal.h"
+#include "LuaUtil.h"
 
 
 //*****************************************************************
@@ -59,4 +60,13 @@ int azPrint(lua_State *L) {
   ILOG(_T("%s %s"), _T("[Lua Script]"), output);
 
   return 0;
+}
+
+
+int azTranslate(lua_State *L) {
+  wxString inputString = LuaUtil::ToString(L, 1);
+
+  LuaUtil::PushString(L, wxGetTranslation(inputString));
+
+  return 1;
 }

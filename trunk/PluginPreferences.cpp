@@ -48,7 +48,7 @@ void PluginPreferences::OnTimer(wxTimerEvent& evt) {
 void PluginPreferences::ScheduleSave() {
   if (!scheduledSaveTimer_) scheduledSaveTimer_ = new wxTimer(this, ID_TIMER_PluginPreferences_ScheduleSave);
 
-  scheduledSaveTimer_->Start(2000, true);
+  scheduledSaveTimer_->Start(500, true);
 }
 
 
@@ -130,6 +130,8 @@ void PluginPreferences::Save() {
   xmlRoot->SetAttribute("version", "1.0");
   doc.LinkEndChild(xmlRoot);
 
+  bool somethingToSave = false;
+
   for (int i = 0; i < preferences_.size(); i++) {
     PluginPreference* preference = preferences_.at(i);
     if (!preference->ValueHasBeenSet()) continue;
@@ -139,7 +141,11 @@ void PluginPreferences::Save() {
 
     XmlUtil::AppendTextElement(xmlPref, "Name", preference->GetName());
     XmlUtil::AppendTextElement(xmlPref, "Value", preference->GetValue());
+
+    somethingToSave = true;
   }
+
+  if (!somethingToSave) return;
 
   wxFileName f(filePath_);
 

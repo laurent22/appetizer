@@ -1,0 +1,114 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Securizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-15 22:58-0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: _\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\\..\n"
+
+#: ..\../main.lua:122
+msgid "Included files:"
+msgstr ""
+
+#: ..\../main.lua:123
+msgid "List of files to be encrypted. Put one item per line. Wildcard such as '*' or '?' are supported. Use the special variable $(Drive) to specify the drive Appetizer is installed on."
+msgstr ""
+
+#: ..\../main.lua:130
+msgid "Excluded files:"
+msgstr ""
+
+#: ..\../main.lua:131
+msgid "List of files to be excluded."
+msgstr ""
+
+#: ..\../main.lua:138
+msgid "Ask me to encrypt my files when I close Appetizer"
+msgstr ""
+
+#: ..\../main.lua:145
+msgid "Ask me to decrypt my files when I open Appetizer"
+msgstr ""
+
+#: ..\../main.lua:229
+msgid "Fatal i/o error (was the file already open?)"
+msgstr ""
+
+#: ..\../main.lua:230
+msgid "Incorrect password (or wrong file format)"
+msgstr ""
+
+#: ..\../main.lua:233
+msgid "Non-fatal i/o error (file is missing, or not readable)"
+msgstr ""
+
+#: ..\../main.lua:302
+msgid "The password must be between 4 and 20 characters."
+msgstr ""
+
+#: ..\../main.lua:310
+msgid "The password must only contain letters and numbers."
+msgstr ""
+
+#: ..\../main.lua:333
+msgid "Password:"
+msgstr ""
+
+#: ..\../main.lua:334
+msgid "Please type-in a password between 4 and 20 characters. Only letters and numbers are accepted."
+msgstr ""
+
+#: ..\../main.lua:342
+msgid "Confirm:"
+msgstr ""
+
+#: ..\../main.lua:343
+msgid "Please confirm the password"
+msgstr ""
+
+#: ..\../main.lua:347
+msgid "Type-in your password"
+msgstr ""
+
+#: ..\../main.lua:365
+msgid "Passwords do not match."
+msgstr ""
+
+#: ..\../main.lua:391
+msgid "Encryption in progress. Please wait..."
+msgstr ""
+
+#: ..\../main.lua:393
+msgid "Decryption in progress. Please wait..."
+msgstr ""
+
+#: ..\../main.lua:396
+msgid "Please wait..."
+msgstr ""
+
+#: ..\../main.lua:408
+msgid "Some errors occured during the operation:"
+msgstr ""
+
+#: ..\../main.lua:440
+msgid "Start encryption"
+msgstr ""
+
+#: ..\../main.lua:444
+msgid "Start decryption"
+msgstr ""
+
+#: ..\../main.lua:448
+msgid "Configuration"
+msgstr ""
+

@@ -28,6 +28,8 @@ public:
   int setToolTip(lua_State *L);
   int getName(lua_State *L);
   int setName(lua_State *L);
+  int getIconFile(lua_State *L);
+  int setIconFile(lua_State *L);
   int popupMenu(lua_State *L);
   
   static const char className[];

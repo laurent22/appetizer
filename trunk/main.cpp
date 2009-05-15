@@ -32,7 +32,7 @@ int MiniLaunchBar::uniqueInt_ = 0;
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(22469);
+  //_CrtSetBreakAlloc(28860);
 
   // Remove GUI log errors
   delete wxLog::SetActiveTarget(new wxLogStderr());
@@ -429,6 +429,11 @@ bool MiniLaunchBar::ChangeLocale(const wxString& localeCode) {
   locale_->AddCatalog(_T("appetizer"));
 
   return true;
+}
+
+
+wxLocale* MiniLaunchBar::GetLocale() {
+  return locale_;
 }
 
 

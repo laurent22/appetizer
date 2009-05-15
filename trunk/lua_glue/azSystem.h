@@ -26,6 +26,7 @@ public:
   int getDirectoryContents(lua_State *L);	
   int fileMatchesPattern(lua_State *L);
   int resolvePath(lua_State *L);
+  int getLastCommandErrorCode(lua_State *L);
   
   static const char className[];
   static Lunar<azSystem>::RegType methods[];
@@ -33,6 +34,7 @@ public:
 private:
 
   std::vector<wxProcess*> createdProcesses_;
+  int lastCommandErrorCode_;
 
 };
 

@@ -60,6 +60,8 @@ Lunar<azApplication>::RegType azApplication::methods[] = {
   method(azApplication, showHelpFile),
   method(azApplication, getSkinNames),  
   method(azApplication, setSkin),
+  method(azApplication, enable),  
+  method(azApplication, disable),
   {0,0}
 };
 
@@ -307,5 +309,25 @@ int azApplication::setSkin(lua_State *L) {
   wxString skinName = LuaUtil::ToString(L, 1);
   wxGetApp().GetUtilities().SwitchSkin(skinName);
   
+  return 0;
+}
+
+
+int azApplication::enable(lua_State *L) {
+  bool enable = LuaUtil::ToBoolean(L, 1, true, true);
+
+  if (enable) {
+    wxGetApp().GetMainFrame()->Enable();
+  } else {
+    wxGetApp().GetMainFrame()->Disable();
+  }
+
+  return 0;
+}
+
+
+int azApplication::disable(lua_State *L) {
+  wxGetApp().GetMainFrame()->Disable();
+
   return 0;
 }

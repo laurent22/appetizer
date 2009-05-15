@@ -27,9 +27,15 @@ public:
   int showEjectDriveDialog(lua_State *L); 
   int showPreferences(lua_State *L);
   int showForm(lua_State *L);
+  int showSplashForm(lua_State *L);
+  int closeSplashForm(lua_State *L);
   
   static const char className[];
   static Lunar<azDialogs>::RegType methods[];
+
+private:
+
+  std::vector<wxDialog*> splashDialogs_;
   
 };
 

@@ -13,6 +13,7 @@ int luaHost_logError(const wxString& s);
 int luaHost_logInfo(const wxString& s);
 
 int azPrint(lua_State *L);
+int azTranslate(lua_State *L);
 
 
 #endif // __azGlobal_H

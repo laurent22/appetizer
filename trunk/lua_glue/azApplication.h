@@ -40,6 +40,8 @@ public:
   int showHelpFile(lua_State *L);
   int getSkinNames(lua_State *L);
   int setSkin(lua_State *L);
+  int enable(lua_State *L);
+  int disable(lua_State *L);
 
   static const char className[];
   static Lunar<azApplication>::RegType methods[];

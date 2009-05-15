@@ -44,6 +44,8 @@ Lunar<azDialogs>::RegType azDialogs::methods[] = {
   method(azDialogs, showEjectDriveDialog),
   method(azDialogs, showPreferences),  
   method(azDialogs, showForm),
+  method(azDialogs, showSplashForm),  
+  method(azDialogs, closeSplashForm), 
   {0,0}
 };
 
@@ -210,7 +212,10 @@ int azDialogs::showForm(lua_State *L) {
   int result = dialog->ShowModal();  
   dialog->Destroy();
 
-  if (result != wxSAVE) return 0;
+  if (result != wxSAVE) {
+    wxDELETE(preferences);
+    return 0;
+  }
 
   lua_createtable(L, preferences->Count(), 0);
   int tableIndex = lua_gettop(L);
@@ -236,3 +241,57 @@ int azDialogs::showForm(lua_State *L) {
   return 1;
 }
 
+
+int azDialogs::showSplashForm(lua_State *L) {
+  wxString inputMessage = LuaUtil::ToString(L, 1);
+  wxString inputTitle = LuaUtil::ToString(L, 2, true);
+
+  int margin = 20;
+
+  wxDialog* dialog = new wxDialog(wxGetApp().GetMainFrame(), wxID_ANY, inputTitle, wxDefaultPosition, wxDefaultSize, wxCAPTION | wxSTAY_ON_TOP);
+
+  wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+
+  wxStaticText* messageLabel = new wxStaticText(dialog, wxID_ANY, inputMessage);
+  wxSize bestSize = messageLabel->GetBestSize();
+  int messageWidth = bestSize.GetWidth();
+
+  if (messageWidth > 200) {
+    messageWidth = 200;
+    messageLabel->Wrap(messageWidth);
+    bestSize = messageLabel->GetBestSize();    
+  }
+
+  messageLabel->SetSize(bestSize);
+
+  sizer->Add(messageLabel, 0, wxALL, margin);
+
+  dialog->SetSizer(sizer);
+  sizer->SetSizeHints(dialog);
+
+  dialog->Show();
+
+  splashDialogs_.push_back(dialog);
+
+  lua_pushinteger(L, splashDialogs_.size() - 1);
+
+  return 1;
+}
+
+
+int azDialogs::closeSplashForm(lua_State *L) {
+  int dialogIndex = luaL_checkinteger(L, 1);
+
+  if (splashDialogs_.size() <= dialogIndex) {
+    luaL_error(L, "Invalid splash form ID");
+    return 0;
+  }
+
+  wxDialog* dialog = splashDialogs_.at(dialogIndex);
+  if (!dialog) return 0;
+
+  dialog->Destroy();
+  splashDialogs_[dialogIndex] = NULL;
+
+  return 0;
+}

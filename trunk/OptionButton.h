@@ -21,12 +21,15 @@ public:
 
   void InvalidateSkin();
   void ApplySkin();
+  wxString GetIconFilePath();
+  void SetIconFilePath(const wxString& iconFilePath);
 
   void OnPaint(wxPaintEvent& evt);
 
 private:
 
   bool skinInvalidated_;
+  wxString iconFilePath_;
 
 };
 

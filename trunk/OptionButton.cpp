@@ -18,12 +18,31 @@ ImageButton(owner, id, point, size) {
 }
 
 
+wxString OptionButton::GetIconFilePath() {
+  return iconFilePath_;
+}
+
+
+void OptionButton::SetIconFilePath(const wxString& iconFilePath) {
+  if (iconFilePath == iconFilePath_) return;
+  
+  iconFilePath_ = iconFilePath;
+  InvalidateSkin();
+}
+
+
 void OptionButton::ApplySkin() {
   skinInvalidated_ = false;
 
   OptionButtonStyle style = Styles::OptionButton;
 
-  wxString skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_") + GetName() + _T(".png"));
+  wxString skinFilePath;
+  if (iconFilePath_ != wxEmptyString) {
+    skinFilePath = iconFilePath_;
+  } else {
+    skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_") + GetName() + _T(".png"));
+  }
+
   if (!wxFileName::FileExists(skinFilePath)) skinFilePath = FilePaths::GetSkinFile(_T("ButtonIcon_Default.png"));
   
   wxImage image(skinFilePath);

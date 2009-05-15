@@ -46,6 +46,7 @@ public:
   PluginManager* GetPluginManager();
   int GetUniqueInt();
   void InitializePluginManager();
+  wxLocale* GetLocale();
 
   const bool GetCommandLineFound(const wxString& name);
 

@@ -107,6 +107,9 @@ void PluginManager::Initialize() {
   eventNames_.Add(_T("trayIconMenuOpening"));
   eventNames_.Add(_T("dockItemMenuOpening"));
   eventNames_.Add(_T("preferenceChange"));
+  eventNames_.Add(_T("earlyBird"));
+  eventNames_.Add(_T("ready"));
+  eventNames_.Add(_T("close"));
 
 
   luaApplication = new azApplication();

@@ -46,6 +46,7 @@ Lunar<azSystem>::RegType azSystem::methods[] = {
   method(azSystem, getDirectoryContents),
   method(azSystem, fileMatchesPattern),
   method(azSystem, resolvePath),
+  method(azSystem, getLastCommandErrorCode),  
   {0,0}
 };
 
@@ -57,7 +58,9 @@ Lunar<azSystem>::RegType azSystem::methods[] = {
 //*****************************************************************
 
 
-azSystem::azSystem() {}
+azSystem::azSystem() {
+  lastCommandErrorCode_ = 0;
+}
 
 
 azSystem::~azSystem() {
@@ -176,6 +179,7 @@ int azSystem::runCommand(lua_State *L) {
   long exitCode;
 
   if (async) {
+
     azSystemProcess* process = new azSystemProcess(NULL);
     process->Redirect();
     process->luaState = L;
@@ -184,13 +188,16 @@ int azSystem::runCommand(lua_State *L) {
     createdProcesses_.push_back(process);
 
     exitCode = ::wxExecute(command, wxEXEC_NOHIDE | wxEXEC_ASYNC, process);
+    lastCommandErrorCode_ = exitCode;
 
     luaHost_logInfo(wxString::Format(_T("Command exited with code %d"), exitCode));
 
   } else {   
+
     wxArrayString result;
 
     exitCode = ::wxExecute(command, result, wxEXEC_SYNC);
+    lastCommandErrorCode_ = exitCode;
 
     luaHost_logInfo(wxString::Format(_T("Command exited with code %d"), exitCode));
 
@@ -206,6 +213,13 @@ int azSystem::runCommand(lua_State *L) {
   }
 
   return 0;  
+}
+
+
+int azSystem::getLastCommandErrorCode(lua_State *L) {
+  lua_pushinteger(L, lastCommandErrorCode_);
+
+  return 1;
 }
 
 

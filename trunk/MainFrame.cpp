@@ -265,10 +265,16 @@ void MainFrame::DoAutoHide() {
 
 
 void MainFrame::OnIdle(wxIdleEvent& evt) {
+  LuaHostTable emptyEventTable;
+
   if (!firstIdleEventSent_) {
 
     // Wait until the main loop is running
     if (!wxApp::IsMainLoopRunning()) return;
+
+    // ***********************************************************************************
+    // Complete the initialization process
+    // ***********************************************************************************
 
     firstIdleEventSent_ = true;
 
@@ -277,6 +283,8 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     // ***********************************************************************************
 
     wxGetApp().InitializePluginManager();
+    
+    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("earlyBird"), emptyEventTable); 
 
     // ***********************************************************************************
     // Do auto-multilaunch
@@ -316,10 +324,13 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     #endif //__WINDOWS__        
 
     initialized_ = true;
+
+    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("ready"), emptyEventTable); 
   }
 
   if (closeOperationScheduled_) {
     closeOperationScheduled_ = false;
+    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("close"), emptyEventTable); 
     Close();
   }
 }
