@@ -26,8 +26,6 @@ IMPLEMENT_APP(MiniLaunchBar)
 int MiniLaunchBar::uniqueInt_ = 0;
 
 
-#include "utilities/SystemUtil.h"
-
 /**
  * Initialize the application
  */
@@ -54,9 +52,9 @@ bool MiniLaunchBar::OnInit() {
   user_ = new User();
 
   allowedIconSizes_.push_back(SMALL_ICON_SIZE);
+  allowedIconSizes_.push_back(MEDIUM_ICON_SIZE);
   allowedIconSizes_.push_back(LARGE_ICON_SIZE);
   allowedIconSizes_.push_back(EXTRA_LARGE_ICON_SIZE);
-  //allowedIconSizes_.push_back(JUMBO_ICON_SIZE);
 
   // ***********************************************************************************
   // Initialize the command line object
@@ -124,6 +122,7 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
 
   GetUser()->Load();
+  UserSettings* userSettings = GetUser()->GetSettings();
 
   // ***********************************************************************************
   // Initialize locale
@@ -141,12 +140,12 @@ bool MiniLaunchBar::OnInit() {
       if (info) {
         localeSet = ChangeLocale(info->CanonicalName);
         if (localeSet) {
-          GetUser()->GetSettings()->SetString(_T("Locale"), Localization::Instance()->GetLanguageCodeOnly(info->CanonicalName));
+          userSettings->SetString(_T("Locale"), Localization::Instance()->GetLanguageCodeOnly(info->CanonicalName));
         }
       }
     }
   } else {
-    localeSet = ChangeLocale(GetUser()->GetSettings()->GetString(_T("Locale")));
+    localeSet = ChangeLocale(userSettings->GetString(_T("Locale")));
   }
     
   if (!localeSet) {
@@ -161,7 +160,7 @@ bool MiniLaunchBar::OnInit() {
   // At this point, user settings are loaded
   // ***********************************************************************************
 
-  if (GetUser()->GetSettings()->GetBool(_T("UniqueApplicationInstance"))) {
+  if (userSettings->GetBool(_T("UniqueApplicationInstance"))) {
     const wxString name = wxString::Format(_T("%s-%s"), APPLICATION_NAME, wxGetUserId());
     singleInstanceChecker_ = new wxSingleInstanceChecker(name);
 
@@ -182,17 +181,12 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
   mainFrame_ = new MainFrame();
   mainFrame_->Show();
-  mainFrame_->SetRotated(GetUser()->GetSettings()->GetBool(_T("Rotated")));  
+  mainFrame_->SetRotated(userSettings->GetBool(_T("Rotated")));  
   mainFrame_->UpdateTransparency();
 
   SetTopWindow(mainFrame_);
 
   if (IsFirstLaunch()) {
-    mainFrame_->InvalidateLayout();
-    mainFrame_->InvalidateMask();
-    mainFrame_->Update();
-    mainFrame_->OpenOptionPanel();
-
     user_->AddAutoAddExclusion(_T("*setup.exe"));
     user_->AddAutoAddExclusion(_T("*unins*.exe"));
     user_->AddAutoAddExclusion(_T("*installer.exe"));
@@ -202,6 +196,13 @@ bool MiniLaunchBar::OnInit() {
     user_->AddAutoAddExclusion(_T("*uninst.exe"));
     user_->AddAutoAddExclusion(_T("*setup*.exe"));
   } 
+
+  if (userSettings->GetBool(_T("OptionPanelOpen"))) {
+    mainFrame_->InvalidateLayout();
+    mainFrame_->InvalidateMask();
+    mainFrame_->Update();
+    mainFrame_->OpenOptionPanel();
+  }
 
   // ***********************************************************************************
   // Localize the main frame (this is going to recursively call
@@ -247,6 +248,7 @@ wxString MiniLaunchBar::GetIconSizeName(int iconSize) {
   switch (iconSize) {
 
     case LARGE_ICON_SIZE: return _("Large"); break;
+    case MEDIUM_ICON_SIZE: return _("Medium"); break;
     case EXTRA_LARGE_ICON_SIZE: return _("Extra Large (XP and above)"); break;
     case JUMBO_ICON_SIZE: return _("Jumbo (Vista and above)"); break;
 
@@ -365,9 +367,9 @@ void MiniLaunchBar::CheckForNewVersion(bool silent) {
   }
 
   wxString message;
-  message = wxString::Format(_("A new version is available!\n\nYour version: %s\nNew version: %s\nRelease notes: %s\n\nDo you wish to download it now?"), thisVersion, versionInfo.Version, versionInfo.ReleaseNotes);
+  message = wxString::Format(_("A new version of Appetizer is available!\n\nYour version: %s\nNew version: %s\nRelease notes: %s\nDo you wish to download it now?"), thisVersion, versionInfo.Version, versionInfo.ReleaseNotes);
       
-  int result = MessageBoxes::ShowConfirmation(message);
+  int result = MessageBoxes::ShowConfirmation(message, 2|8, wxEmptyString, false, _("New version of Appetizer"));
 
   if (result == wxID_YES) {
     bool wasLaunched = ::wxLaunchDefaultBrowser(versionInfo.PageURL, wxBROWSER_NEW_WINDOW);
@@ -494,7 +496,8 @@ void MiniLaunchBar::User_IconSizeChange() {
  * will allow the application to properly close.
  */ 
 void MiniLaunchBar::CloseApplication() {
-  user_->Save();
+  GetUser()->GetSettings()->SetBool(_T("OptionPanelOpen"), GetMainFrame()->IsOptionPanelOpen());  
+  GetUser()->Save(true);
 
   wxDELETE(user_);
   wxDELETE(singleInstanceChecker_);

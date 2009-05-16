@@ -89,3 +89,52 @@ bool StringUtil::FileMatchesPattern(const wxString& pattern, const wxString& fil
   wxRegEx regex(p, wxRE_ADVANCED);
   return regex.Matches(f);
 }
+
+
+wxString StringUtil::RemoveTrailingSlash(const wxString& path) {
+  wxString output(path);
+  
+  while (output.Length() > 0) {
+    wxChar c = output[output.Length() - 1];
+    if (c != '\\' && c != '/' && c != ':') return output;
+    output = output.Mid(0, output.Length() - 1);
+  }
+
+  return output;
+}
+
+
+int StringUtil::CompareVersions(const wxString& v1, const wxString& v2) {
+  wxArrayString s1;
+  wxArrayString s2;
+  StringUtil::Split(v1, s1, _T("."));
+	StringUtil::Split(v2, s2, _T("."));
+
+  std::vector<int> nv1;
+  std::vector<int> nv2;
+
+  for (int i = 0; i < s1.Count(); i++) {
+    long n = 0;
+    s1[i].ToLong(&n);
+    nv1.push_back((int)n);		
+  }
+
+  for (int i = 0; i < s2.Count(); i++) {
+    long n = 0;
+    s2[i].ToLong(&n);
+    nv2.push_back((int)n);		
+  }
+	
+  while (nv1.size() < nv2.size()) nv1.push_back(0);
+	while (nv2.size() < nv1.size()) nv2.push_back(0);
+			
+	for (int i = 0; i < nv1.size(); i++) {
+		int e1 = nv1[i];
+		int e2 = nv2[i];
+		
+		if (e1 > e2) return +1;
+		if (e1 < e2) return -1;
+	}
+
+  return 0;
+}

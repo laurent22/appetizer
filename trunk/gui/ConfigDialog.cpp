@@ -167,6 +167,16 @@ void ConfigDialog::OnNoteBookPageChanged(wxNotebookEvent& evt) {
 }
 
 
+void ConfigDialog::OnDownloadMoreSkinLinkMouseDown(wxMouseEvent& evt) {
+  ::wxLaunchDefaultBrowser(_T("http://app.etizer.org/skins"), wxBROWSER_NEW_WINDOW);
+}
+
+
+void ConfigDialog::OnDownloadMorePluginLinkMouseDown(wxMouseEvent& evt) {
+  ::wxLaunchDefaultBrowser(_T("http://app.etizer.org/plugins"), wxBROWSER_NEW_WINDOW);
+}
+
+
 void ConfigDialog::UpdatePage(int pageIndex) {
   if (updatedPages_[pageIndex]) return;
 
@@ -308,8 +318,12 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       iconSizeLabel->SetLabel(_("Icon size:"));
       skinLabel->SetLabel(_("Skin:"));
       orientationLabel->SetLabel(_("Orientation:"));
-      transparencyLabel->SetLabel(_("Transparency:"));
+      transparencyLabel->SetLabel(_("Opacity:"));
+      downloadMoreSkinLink->SetLabel(_("Download more skins"));
 
+      wxGetApp().GetUtilities().ConvertStaticTextToLink(downloadMoreSkinLink);
+      downloadMoreSkinLink->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(ConfigDialog::OnDownloadMoreSkinLinkMouseDown), NULL, this);
+      
       //---------------------------------------------------------------------------
       // Set transparency slider
       //---------------------------------------------------------------------------
@@ -591,10 +605,14 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       enablePluginButton->SetLabel(_("Enable"));
       disablePluginButton->SetLabel(_("Disable"));
       installPluginButton->SetLabel(_("Install..."));
+      downloadMorePluginLink->SetLabel(_("Download more plugins"));
       
       pluginChangeInfoLabel->SetLabel(wxString::Format(_("The changes made to the plugins will only be active the next time %s is started."), APPLICATION_NAME));
       pluginChangeInfoLabel->Wrap(pluginChangeInfoLabel->GetParent()->GetRect().GetWidth() - 16);
       pluginChangeInfoLabel->SetSize(pluginChangeInfoLabel->GetBestSize());
+
+      wxGetApp().GetUtilities().ConvertStaticTextToLink(downloadMorePluginLink);
+      downloadMorePluginLink->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(ConfigDialog::OnDownloadMorePluginLinkMouseDown), NULL, this);
 
       //---------------------------------------------------------------------------
       // Populate list view dialog

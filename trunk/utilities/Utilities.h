@@ -39,6 +39,7 @@ public:
   wxString CreateUUID();
   void SwitchSkin(const wxString& skinName);
   wxArrayString GetSkinNames();
+  void ConvertStaticTextToLink(wxStaticText* label);
   void Localize();
 
 private:

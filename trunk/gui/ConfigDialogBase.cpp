@@ -41,6 +41,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     skinLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Skin:"));
     const wxString *skinComboBox_choices = NULL;
     skinComboBox = new wxComboBox(notebook_pane_2, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, skinComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
+    label_6 = new wxStaticText(notebook_pane_2, wxID_ANY, wxEmptyString);
+    downloadMoreSkinLink = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("#Download more skins#"));
     transparencyLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Transparency:"));
     transparencySlider = new wxSlider(notebook_pane_2, wxID_ANY, 0, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS);
     autohideCheckBox = new wxCheckBox(notebook_pane_3, wxID_ANY, wxT("Hide after launching an application"));
@@ -59,6 +61,7 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     configPluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_ConfigPlugin, wxT("#Config#"));
     label_4 = new wxStaticText(notebook_pane_5, wxID_ANY, wxEmptyString);
     installPluginButton = new wxButton(notebook_pane_5, ID_CDLG_BUTTON_InstallPlugin, wxT("Install..."));
+    downloadMorePluginLink = new wxStaticText(notebook_pane_5, wxID_ANY, wxT("#Download more plugins#"));
     pluginChangeInfoLabel = new wxStaticText(notebook_pane_5, wxID_ANY, wxT("#Changes made to plugins will only be active the next time %s is started#"));
     helpButton = new wxButton(this, ID_CDLG_BUTTON_Help, wxT("#Help#"));
     saveButton = new wxButton(this, ID_CDLG_BUTTON_Save, wxT("Save"));
@@ -74,7 +77,7 @@ void ConfigDialogBase::set_properties()
 {
     // begin wxGlade: ConfigDialogBase::set_properties
     SetTitle(wxT("dialog_1"));
-    SetSize(wxSize(474, 320));
+    SetSize(wxSize(474, 419));
     // end wxGlade
 }
 
@@ -119,6 +122,8 @@ void ConfigDialogBase::do_layout()
     grid_sizer_1->Add(orientationComboBox, 0, wxEXPAND, 0);
     grid_sizer_1->Add(skinLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_1->Add(skinComboBox, 0, wxEXPAND, 0);
+    grid_sizer_1->Add(label_6, 0, 0, 0);
+    grid_sizer_1->Add(downloadMoreSkinLink, 0, 0, 0);
     grid_sizer_1->Add(transparencyLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_1->Add(transparencySlider, 0, wxEXPAND, 0);
     grid_sizer_1->AddGrowableCol(1);
@@ -148,6 +153,7 @@ void ConfigDialogBase::do_layout()
     sizer_11->Add(installPluginButton, 0, wxRIGHT, 8);
     sizer_10->Add(sizer_11, 1, wxEXPAND|wxALIGN_RIGHT, 0);
     availablePluginsBox->Add(sizer_10, 0, wxLEFT|wxTOP|wxEXPAND, 8);
+    availablePluginsBox->Add(downloadMorePluginLink, 0, wxLEFT|wxTOP|wxBOTTOM, 8);
     sizer_8->Add(availablePluginsBox, 1, wxEXPAND, 0);
     sizer_8->Add(pluginChangeInfoLabel, 0, wxTOP, 8);
     sizer_7->Add(sizer_8, 1, wxALL|wxEXPAND, 8);

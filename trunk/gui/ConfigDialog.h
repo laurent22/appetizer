@@ -41,6 +41,8 @@ private:
   void OnButtonClick(wxCommandEvent& evt);
   void OnListViewPluginSelectionChanged(wxListEvent& evt);
   void OnHelp(wxHelpEvent& evt);
+  void OnDownloadMoreSkinLinkMouseDown(wxMouseEvent& evt);
+  void OnDownloadMorePluginLinkMouseDown(wxMouseEvent& evt);
 
   long GetPluginListSelectedIndex();
   void ReloadPluginList();

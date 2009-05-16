@@ -62,6 +62,7 @@ Lunar<azApplication>::RegType azApplication::methods[] = {
   method(azApplication, setSkin),
   method(azApplication, enable),  
   method(azApplication, disable),
+  method(azApplication, getDirectory),
   {0,0}
 };
 
@@ -330,4 +331,10 @@ int azApplication::disable(lua_State *L) {
   wxGetApp().GetMainFrame()->Disable();
 
   return 0;
+}
+
+
+int azApplication::getDirectory(lua_State *L) {
+  LuaUtil::PushString(L, FilePaths::GetApplicationDirectory());
+  return 1;
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- NOTE: this file and all its settings are optionals. Only main.lua is required -->
+<Plugin version="1.0">
+	<!-- Plugin name -->
+	<Name>Securizer</Name>
+	<!-- Minimum Appetizer version required by the plugin -->
+	<MinimumVersion>1.3.3</MinimumVersion>
+	<!-- Version of plugin -->
+	<Version>1.0.1</Version>
+	<!-- ID to uniquely identify the plugin. New plugins can get a new UUID from http://www.famkruithof.net/uuid/uuidgen (for example) -->
+	<UUID>org.etizer.app.plugins.securizer</UUID>
+</Plugin>

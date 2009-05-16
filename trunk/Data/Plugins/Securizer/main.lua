@@ -180,24 +180,30 @@ function getFullFilePaths(fileString, resolvePatterns)
 	local files = string_split(fileString, "\n")
 	local output = {}
 	
+	local applicationDirectory = appetizer:getDirectory()
+	
 	for i, file in ipairs(files) do
-		local fullPath = system:resolvePath(file)
+		local fullPath = system:resolvePath(file, true)
 		
 		if resolvePatterns then
 		
 			local pattern = getFilename(fullPath, true)
 			local filePath = getFilePath(fullPath)
 			
-			if filePath == '' then
-				filePath = appetizer:getDrive()
-			end
-					
-			local fullFilePaths = system:getDirectoryContents(filePath, true)
+			if filePath:sub(1, applicationDirectory:len()) ~= applicationDirectory then -- always skip Appetizer directory
 			
-			for j, fullFilePath in ipairs(fullFilePaths) do
-				if system:fileMatchesPattern(fullFilePath, pattern) then
-					table.insert(output, fullFilePath)
+				if filePath == '' then
+					filePath = appetizer:getDrive()
 				end
+						
+				local fullFilePaths = system:getDirectoryContents(filePath, true)
+				
+				for j, fullFilePath in ipairs(fullFilePaths) do
+					if system:fileMatchesPattern(fullFilePath, pattern) then
+						table.insert(output, fullFilePath)
+					end
+				end
+				
 			end
 			
 		else

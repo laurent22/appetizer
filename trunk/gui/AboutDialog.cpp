@@ -24,18 +24,10 @@ AboutDialog::AboutDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 : AboutDialogBase(parent, id, title, pos, size, style) {
   iconBitmap->SetBitmap(wxBitmap(FilePaths::GetBaseSkinDirectory() + _T("/ApplicationIcon48.png"), wxBITMAP_TYPE_PNG));
   
-  wxFont linkLabelFont(linkLabel->GetFont());
-  linkLabelFont.SetUnderlined(true);
-  linkLabel->SetFont(linkLabelFont);
-  linkLabel->SetForegroundColour(wxColour(0,0,255));
-  linkLabel->SetCursor(wxCursor(wxCURSOR_HAND));
+  wxGetApp().GetUtilities().ConvertStaticTextToLink(linkLabel);
   linkLabel->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(AboutDialog::OnLinkLabelMouseDown), NULL, this);
 
-  wxFont contactLabelFont(linkLabel->GetFont());
-  contactLabelFont.SetUnderlined(true);
-  contactLabel2->SetFont(contactLabelFont);
-  contactLabel2->SetForegroundColour(wxColour(0,0,255));
-  contactLabel2->SetCursor(wxCursor(wxCURSOR_HAND));
+  wxGetApp().GetUtilities().ConvertStaticTextToLink(contactLabel2);
   contactLabel2->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(AboutDialog::OnContactLabelMouseDown), NULL, this);
   
   Localize();
@@ -70,7 +62,9 @@ void AboutDialog::Localize() {
   creditText += _("- CStdString by Joe O'Leary");
   creditText += _T("\n");
   creditText += _("- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes");
-  creditText += _T("\n");  
+  creditText += _T("\n");
+  creditText += _("- ccrypt by Peter Selinger");
+  creditText += _T("\n"); 
   creditText += _("- wxWidgets by their respective authors");
   creditText += _T("\n\n");  
   creditText += _("Dialog boxes are built using wxGlade by Alberto Griggio.");
@@ -82,7 +76,7 @@ void AboutDialog::Localize() {
   creditLabel->SetLabel(_("Credits"));
   creditTextBox->SetValue(wxString::Format(
     creditText,
-    _T("Simeon, Werner Künkel, Pieter Kerstens, Michał Trzebiatowski, Tilt, Wewe68, Manuel Gutierrez Borras (Piojo Lopez), Henrik Agersted, Some Random User, Massimo Lauria, Metin Selçuk, Leif Larsson, Marcus Malzer, Petros Kiladitis, Cris, 李明, Brian")));
+    _T("Simeon, Werner Künkel, Pieter Kerstens, Michał Trzebiatowski, Tilt, Wewe68, Manuel Gutierrez Borras (Piojo Lopez), Henrik Agersted, Some Random User, Massimo Lauria, Metin Selçuk, Leif Larsson, Marcus Malzer, Petros Kiladitis, Cris, 李明, Brian, Tam Vo Le")));
   copyrightLabel->SetLabel(wxString::Format(_("Copyright © %s"), _T("2008 Laurent Cozic")));
   licenseTextBox->SetValue(_("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."));
   webLabel->SetLabel(_("Web:"));

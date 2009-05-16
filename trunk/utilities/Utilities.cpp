@@ -500,3 +500,12 @@ void Utilities::ShowTreeViewDialog(int selectedFolderItemId) {
   treeViewDialog_->SelectAndExpandFolderItem(selectedFolderItem);
   treeViewDialog_->ShowModal();
 }
+
+
+void Utilities::ConvertStaticTextToLink(wxStaticText* label) {
+  wxFont linkLabelFont(label->GetFont());
+  linkLabelFont.SetUnderlined(true);
+  label->SetFont(linkLabelFont);
+  label->SetForegroundColour(wxColour(0,0,255));
+  label->SetCursor(wxCursor(wxCURSOR_HAND));
+}

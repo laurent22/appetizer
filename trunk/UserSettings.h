@@ -22,30 +22,6 @@ public:
 
   UserSettings();
 
-  //int IconSize;
-  //wxString Locale;
-  //wxString PortableAppsPath;
-  //wxString DocumentsPath;
-  //wxString MusicPath;
-  //wxString PicturesPath;
-  //wxString VideosPath;
-  //wxString Skin;
-  //bool MinimizeOnClose;
-  //bool Rotated;
-  //wxDateTime NextUpdateCheckTime;
-  //bool AlwaysOnTop;
-  //bool AutoHideApplication;
-  //bool UniqueApplicationInstance;
-  //bool ShowDeleteIconMessage;
-  //bool ShowEjectDriveMessage;
-  //bool ShowMinimizeMessage;
-  //bool RunMultiLaunchOnStartUp;
-  //bool CloseAppsOnEject;
-  //bool HotKeyControl;
-  //bool HotKeyAlt;
-  //bool HotKeyShift;
-  //int HotKeyKey;
-
   void Save();
   void Load();
 

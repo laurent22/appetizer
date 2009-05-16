@@ -638,10 +638,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\ToolTipFrame.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\User.cpp"
 				>
 				<FileConfiguration
@@ -1853,10 +1849,6 @@
 			</File>
 			<File
 				RelativePath=".\Styles.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ToolTipFrame.h"
 				>
 			</File>
 			<File

@@ -282,8 +282,9 @@ int azSystem::fileMatchesPattern(lua_State *L) {
 
 int azSystem::resolvePath(lua_State *L) {
   wxString inputFilePath = LuaUtil::ToString(L, 1);
+  bool normalize = LuaUtil::ToBoolean(L, 2, true, false);
 
-  wxString output = FolderItem::ResolvePath(inputFilePath, false);
+  wxString output = FolderItem::ResolvePath(inputFilePath, normalize);
 
   LuaUtil::PushString(L, output);
 

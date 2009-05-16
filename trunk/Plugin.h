@@ -44,6 +44,8 @@ public:
   void Disable();
   bool IsEnabled();
   wxString GetState();
+  wxString GetVersion();
+  wxString GetMinimumVersion();
   bool HandleMenuItemClick(ExtendedMenuItem* menuItem);
   void ShowPreferencesDialog();
   wxString GetFolderPath();
@@ -57,6 +59,8 @@ private:
   bool enabled_;
   wxString uuid_;
   wxString name_;
+  wxString version_;
+  wxString minimumVersion_;
   wxString state_;
   wxString folderPath_;
 

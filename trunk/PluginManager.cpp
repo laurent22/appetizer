@@ -16,6 +16,7 @@
 #include "lua_glue/azOptionButton.h"
 #include "lua_glue/azMenu.h"
 #include "lua_glue/azDockItem.h"
+#include "utilities/StringUtil.h"
 
 
 PluginManager::PluginManager() {
@@ -57,7 +58,7 @@ bool PluginManager::InstallPluginPackage(const wxString& filePath) {
   wxString rootPluginDirectory;
   
   while (entry.reset(zip.GetNextEntry()), entry.get() != NULL) {
-    wxString name = entry->GetName();
+    wxString name = StringUtil::RemoveTrailingSlash(entry->GetName());
     name = targetDir + wxFileName::GetPathSeparator() + name;
 
     if (entry->IsDir()) {

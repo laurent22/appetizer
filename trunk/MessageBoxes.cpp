@@ -11,23 +11,23 @@
 #include "gui/BetterMessageDialog.h"
 
 
-int MessageBoxes::ShowError(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState) {
-  return BetterMessageDialog::ShowMessage(message, _("Error"), style | wxICON_ERROR, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
+int MessageBoxes::ShowError(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState, const wxString& title) {
+  return BetterMessageDialog::ShowMessage(message, title == wxEmptyString ? _("Error") : title, style | wxICON_ERROR, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
 }
 
 
-int MessageBoxes::ShowInformation(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState) {  
-  return BetterMessageDialog::ShowMessage(message, _("Information"), style | wxICON_INFORMATION, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
+int MessageBoxes::ShowInformation(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState, const wxString& title) {  
+  return BetterMessageDialog::ShowMessage(message, title == wxEmptyString ? _("Information") : title, style | wxICON_INFORMATION, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
 }
 
 
-int MessageBoxes::ShowWarning(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState) {
-  return BetterMessageDialog::ShowMessage(message, _("Warning"), style | wxICON_EXCLAMATION, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
+int MessageBoxes::ShowWarning(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState, const wxString& title) {
+  return BetterMessageDialog::ShowMessage(message, title == wxEmptyString ? _("Warning") : title, style | wxICON_EXCLAMATION, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
 }
 
 
-int MessageBoxes::ShowConfirmation(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState) {
-  return BetterMessageDialog::ShowMessage(message, _("Confirmation"), style | wxICON_QUESTION, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
+int MessageBoxes::ShowConfirmation(const wxString& message, long style, const wxString& checkBoxLabel, bool checkBoxState, const wxString& title) {
+  return BetterMessageDialog::ShowMessage(message, title == wxEmptyString ? _("Confirmation") : title, style | wxICON_QUESTION, checkBoxLabel != wxEmptyString, checkBoxState, checkBoxLabel, wxGetApp().GetMainFrame());
 }
 
 

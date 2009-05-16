@@ -12,6 +12,9 @@
 #include "FilePaths.h"
 #include "Constants.h"
 
+#include "utilities/VersionInfo.h"
+#include "utilities/StringUtil.h"
+
 #include "lua_glue/azGlobal.h"
 #include "lua_glue/azApplication.h"
 #include "lua_glue/azOptionPanel.h"
@@ -31,6 +34,8 @@ Plugin::Plugin() {
   luaPlugin_ = NULL;
   preferences_ = NULL;
   preferencesDialog_ = NULL;
+  version_ = _T("0.0");
+  minimumVersion_ = _T("0.0");
   
   L = NULL;
 }
@@ -117,6 +122,18 @@ void Plugin::LoadPluginXml(const wxString& xmlFilePath) {
 
   name_ = XmlUtil::ReadElementText(handle, "Name");
   uuid_ = XmlUtil::ReadElementText(handle, "UUID");
+  version_ = XmlUtil::ReadElementText(handle, "Version", _T("0.0"));
+  minimumVersion_ = XmlUtil::ReadElementText(handle, "MinimumVersion", _T("0.0"));
+}
+
+
+wxString Plugin::GetVersion() {
+  return version_;
+}
+
+
+wxString Plugin::GetMinimumVersion() {
+  return minimumVersion_;
 }
 
 
@@ -146,6 +163,13 @@ bool Plugin::Load(const wxString& folderPath) {
     state_ = _T("error");
     return false;
   }
+
+  wxString thisVersion = VersionInfo::GetVersionString();
+  if (StringUtil::CompareVersions(GetMinimumVersion(), thisVersion) > 0) {
+    ELOG(_T("Plugin::Load: Plugin requires a minimum version of ") + GetMinimumVersion());
+    state_ = _T("error");
+    return false;
+  }  
 
   folderPath_ = folderPath;
 

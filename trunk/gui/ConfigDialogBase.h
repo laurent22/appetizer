@@ -64,6 +64,8 @@ protected:
     wxComboBox* orientationComboBox;
     wxStaticText* skinLabel;
     wxComboBox* skinComboBox;
+    wxStaticText* label_6;
+    wxStaticText* downloadMoreSkinLink;
     wxStaticText* transparencyLabel;
     wxSlider* transparencySlider;
     wxPanel* notebook_pane_2;
@@ -84,6 +86,7 @@ protected:
     wxButton* configPluginButton;
     wxStaticText* label_4;
     wxButton* installPluginButton;
+    wxStaticText* downloadMorePluginLink;
     wxStaticText* pluginChangeInfoLabel;
     wxPanel* notebook_pane_5;
     wxNotebook* notebook;

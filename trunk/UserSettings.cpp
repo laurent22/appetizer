@@ -33,6 +33,7 @@ UserSettings::UserSettings() {
   SetBool(_T("HotKeyShift"), false);
   SetInt(_T("HotKeyKey"), 0);
   SetInt(_T("WindowTransparency"), 255);
+  SetBool(_T("OptionPanelOpen"), true);
 
   SetBool(_T("ShowDeleteIconMessage"), true);
   SetBool(_T("ShowEjectDriveMessage"), true);
