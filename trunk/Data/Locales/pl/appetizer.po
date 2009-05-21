@@ -1,14 +1,14 @@
 # Appetizer application translation file
 # Copyright (C) 2008 Laurent Cozic
 # This file is distributed under the same license as Appetizer.
-# Michał Trzebiatowski, 2008.
+# Michał Trzebiatowski, 2008, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 17:48+0100\n"
-"PO-Revision-Date: 2009-04-26 17:53-0000\n"
+"PO-Revision-Date: 2009-05-21 19:01-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -104,12 +104,12 @@ msgstr "Bieżący napęd"
 #: FolderItem.cpp:1097
 #: IconPanel.cpp:177
 msgid "Printers and Faxes"
-msgstr ""
+msgstr "Drukarki i faksy"
 
 #: FolderItem.cpp:1099
 #: IconPanel.cpp:178
 msgid "Network Connections"
-msgstr ""
+msgstr "Połączenia sieciowe"
 
 #: FolderItemRenderer.cpp:154
 #: gui\TreeViewDialog.cpp:106
@@ -508,7 +508,7 @@ msgstr "Orientacja:"
 
 #: gui\ConfigDialog.cpp:306
 msgid "Transparency:"
-msgstr ""
+msgstr "Przezroczystość:"
 
 #: gui\ConfigDialog.cpp:340
 msgid "Horizontal"
