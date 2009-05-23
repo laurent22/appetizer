@@ -34,11 +34,13 @@ public:
   int GetInt(const wxString& name);
   bool GetBool(const wxString& name);
   wxDateTime GetDateTime(const wxString& name);
+  wxColor GetColor(const wxString& name);
 
   void SetString(const wxString& name, const wxString& value);
   void SetInt(const wxString& name, int value);
   void SetBool(const wxString& name, bool value);
   void SetDateTime(const wxString& name, const wxDateTime& dateTime);
+  void SetColor(const wxString& name, wxColor& color);
 
 private:
 

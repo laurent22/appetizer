@@ -63,12 +63,23 @@ class OptionButtonStyle { public:
 
 class IconStyle { public:
   PaddingStyle Padding;
+  int LabelGap;
 };
 
 struct SkinMetadata {
   wxString Name;
   wxString CompatibleVersion;
   wxString Author;
+};
+
+struct FontStyle {
+  wxColor Color;
+  wxColor ShadowColor;
+  float ShadowAlpha;
+  int ShadowOffset;
+  int Size;
+  wxString Face;
+  int Weight;
 };
 
 
@@ -83,6 +94,7 @@ public:
   static OptionPanelStyle OptionPanel;
   static ArrowButtonStyle ArrowButton;
   static BrowseButtonStyle BrowseButton;
+  static FontStyle Font;
 
   static void GetSkinMetadata(TiXmlElement* skinDocumentRoot, SkinMetadata& skinMetadata);
   static void GetSkinMetadata(const wxString& filePath, SkinMetadata& skinMetadata);

@@ -34,6 +34,7 @@ UserSettings::UserSettings() {
   SetInt(_T("HotKeyKey"), 0);
   SetInt(_T("WindowTransparency"), 255);
   SetBool(_T("OptionPanelOpen"), true);
+  SetBool(_T("ShowIconLabels"), true);
 
   SetBool(_T("ShowDeleteIconMessage"), true);
   SetBool(_T("ShowEjectDriveMessage"), true);
@@ -76,6 +77,13 @@ bool UserSettings::GetBool(const wxString& name) {
 }
 
 
+wxColor UserSettings::GetColor(const wxString& name) {
+  wxColor c;
+  c.Set(GetString(name));
+  return c;
+}
+
+
 wxDateTime UserSettings::GetDateTime(const wxString& name) {
   wxDateTime output;
 
@@ -98,6 +106,11 @@ void UserSettings::SetInt(const wxString& name, int value) {
 
 void UserSettings::SetBool(const wxString& name, bool value) {
   SetString(name, value ? _T("1") : _T("0"));
+}
+
+
+void UserSettings::SetColor(const wxString& name, wxColor& color) {
+  SetString(name, color.GetAsString(wxC2S_HTML_SYNTAX));
 }
 
 

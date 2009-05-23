@@ -9,6 +9,7 @@
 #include "FilePaths.h"
 #include "Constants.h"
 #include "MiniLaunchBar.h"
+#include "utilities/StringUtil.h"
 
 
 wxString FilePaths::ApplicationDrive_ = _T("");
@@ -52,6 +53,8 @@ wxString FilePaths::GetPluginSettingsFile() { return FilePaths::PluginSettingsFi
 wxString FilePaths::GetBaseSkinAssetsDirectory() { return FilePaths::BaseSkinAssetsDirectory_; }
 wxString FilePaths::GetPluginPreferenceDirectory() { return FilePaths::PluginPreferenceDirectory_; }
 wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
+wxString FilePaths::GetWindowsFontDirectory() { return GetWindowsDirectory() + _T("\\fonts"); }
+
 
 wxString FilePaths::GetQuickLaunchDirectory() { 
   wxFileName f(_T("%APPDATA%\\Microsoft\\Internet Explorer\\Quick Launch"));
@@ -70,6 +73,26 @@ wxString FilePaths::GetApplicationPath() {
   #endif
 
   return ApplicationPath_;
+}
+
+
+wxString FilePaths::GetFontFilePath(const wxString& fontAlias) {
+  wxString filename;
+
+  wxLogNull* logNo = new wxLogNull();
+
+  wxRegKey* regKey = new wxRegKey(_T("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"));
+  if (!regKey->Exists()) {
+    ELOG(_T("Cannot get font file name from HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts"));
+    filename = wxEmptyString;
+  } else {
+    regKey->QueryValue(fontAlias + _T(" (TrueType)"), filename);
+  }
+  
+  wxDELETE(regKey);
+  wxDELETE(logNo);
+
+  return GetWindowsFontDirectory() + _T("\\") + filename;
 }
 
 
@@ -184,6 +207,8 @@ void FilePaths::CreateDirectoryIfNotExists(const wxString& path) {
 void FilePaths::InitializePaths() {
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
   wxString applicationDirectory = FolderItem::ResolvePath(executablePath.GetPath(), true);
+  //applicationDirectory = StringUtil::RemoveTrailingSlash(applicationDirectory);
+
   wxString applicationDrive;
   wxFileName::SplitPath(executablePath.GetPath(), &applicationDrive, NULL, NULL, NULL, false, wxPATH_NATIVE);
 

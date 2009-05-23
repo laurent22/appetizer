@@ -35,6 +35,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     iconSizeLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Icon size:"));
     const wxString *iconSizeComboBox_choices = NULL;
     iconSizeComboBox = new wxComboBox(notebook_pane_2, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, iconSizeComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
+    label_7 = new wxStaticText(notebook_pane_2, wxID_ANY, wxEmptyString);
+    showIconLabelCheckBox = new wxCheckBox(notebook_pane_2, wxID_ANY, wxT("Show labels"));
     orientationLabel = new wxStaticText(notebook_pane_2, wxID_ANY, wxT("Orientation:"));
     const wxString *orientationComboBox_choices = NULL;
     orientationComboBox = new wxComboBox(notebook_pane_2, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, 0, orientationComboBox_choices, wxCB_DROPDOWN|wxCB_READONLY);
@@ -118,6 +120,8 @@ void ConfigDialogBase::do_layout()
     notebook_1_pane_1->SetSizer(sizer_3);
     grid_sizer_1->Add(iconSizeLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_1->Add(iconSizeComboBox, 0, wxEXPAND, 0);
+    grid_sizer_1->Add(label_7, 0, 0, 0);
+    grid_sizer_1->Add(showIconLabelCheckBox, 0, 0, 0);
     grid_sizer_1->Add(orientationLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     grid_sizer_1->Add(orientationComboBox, 0, wxEXPAND, 0);
     grid_sizer_1->Add(skinLabel, 0, wxALIGN_CENTER_VERTICAL, 0);

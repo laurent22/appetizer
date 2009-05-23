@@ -30,7 +30,7 @@ int MiniLaunchBar::uniqueInt_ = 0;
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(28860);
+  //_CrtSetBreakAlloc(18609);
 
   // Remove GUI log errors
   delete wxLog::SetActiveTarget(new wxLogStderr());
@@ -48,6 +48,8 @@ bool MiniLaunchBar::OnInit() {
   mainFrame_ = NULL;
   locale_ = NULL;
   pluginManager_ = NULL;
+  ftLibrary_ = NULL;
+  ftFace_ = NULL;
   stopWatch_.Start();
   user_ = new User();
 
@@ -210,10 +212,39 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
   mainFrame_->Localize();  
 
+  FilePaths::GetFontFilePath(_T("Arial"));
+
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
 
   return true;
 } 
+
+
+FT_Library MiniLaunchBar::GetFreeTypeLibrary() {
+  if (!ftLibrary_) {
+    FT_Error error = FT_Init_FreeType(&ftLibrary_);
+    if (error) ELOG(_T("Error initializing FT library"));
+  }
+  return ftLibrary_;
+}
+
+
+FT_Face MiniLaunchBar::GetFreeTypeFace() {
+  if (!ftFace_) {
+    wxString fontName = Styles::Font.Face;
+    wxString fontPath;
+
+    if (Styles::Font.Weight == wxBOLD) {
+      fontPath = FilePaths::GetFontFilePath(fontName + _T(" Bold"));
+    }
+
+    if (fontPath == wxEmptyString) fontPath = FilePaths::GetFontFilePath(fontName);
+
+    FT_Error error = FT_New_Face(ftLibrary_, fontPath.mb_str(), 0, &ftFace_); 
+    if (error) ELOG(_T("Error initializing FT face"));
+  }
+  return ftFace_;
+}
 
 
 const bool MiniLaunchBar::GetCommandLineFound(const wxString& name) {
@@ -503,6 +534,11 @@ void MiniLaunchBar::CloseApplication() {
   wxDELETE(singleInstanceChecker_);
   wxDELETE(locale_);
   wxDELETE(pluginManager_);
+
+  if (ftLibrary_) {
+    FT_Done_FreeType(ftLibrary_);
+    ftLibrary_ = NULL;
+  }
 
   BetterMessageDialog::DestroyInstance();
   Localization::Destroy();

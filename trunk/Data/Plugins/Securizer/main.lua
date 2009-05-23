@@ -180,25 +180,30 @@ function getFullFilePaths(fileString, resolvePatterns)
 	local files = string_split(fileString, "\n")
 	local output = {}
 	
+	local applicationFilePath = appetizer:getFilePath()
 	local applicationDirectory = appetizer:getDirectory()
-	
+	local applicationDataDir = appetizer:getDataDirectory()
+		
 	for i, file in ipairs(files) do
 		local fullPath = system:resolvePath(file, true)
 		
 		if resolvePatterns then
 		
-			local pattern = getFilename(fullPath, true)
+			local pattern = getFilename(file, true)
 			local filePath = getFilePath(fullPath)
 			
-			if filePath:sub(1, applicationDirectory:len()) ~= applicationDirectory then -- always skip Appetizer directory
-			
+			if (filePath ~= applicationFilePath) and (filePath:sub(1, applicationDataDir:len()) ~= applicationDataDir) then -- always skip Appetizer files and directory
+						
 				if filePath == '' then
 					filePath = appetizer:getDrive()
 				end
 						
 				local fullFilePaths = system:getDirectoryContents(filePath, true)
-				
+					
+					
+								
 				for j, fullFilePath in ipairs(fullFilePaths) do
+					
 					if system:fileMatchesPattern(fullFilePath, pattern) then
 						table.insert(output, fullFilePath)
 					end
@@ -248,6 +253,8 @@ function doCrypt(password, encrypt)
 		local includedFilePath = getFilePath(includedFile)
 		local includedFilename = getFilename(includedFile, true)
 		local includedFileExt = getFileExtension(includedFile)
+		
+		
 				
 		if ((includedFileExt == 'ccrypt1_7') and (encrypt)) or ((includedFileExt ~= 'ccrypt1_7') and (not encrypt)) then
 		
@@ -490,4 +497,3 @@ end
 
 appetizer:addEventListener("earlyBird", "appetizer_earlyBird")
 appetizer:addEventListener("close", "appetizer_close")
-

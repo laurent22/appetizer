@@ -1169,6 +1169,8 @@ wxString FolderItem::ResolvePath(const wxString& filePath, bool normalizeToo) {
   
   f.Normalize();
 
+  wxString n = f.GetName();
+
   return f.GetFullPath();
 }
 

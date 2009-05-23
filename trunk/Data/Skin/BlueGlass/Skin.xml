@@ -56,4 +56,14 @@
 		<Padding>4,4,4,4</Padding>
 	</Icon>
 	
+	<IconLabelFont>
+		<Color>255,255,255</Color>
+		<Size>8</Size>
+		<Face>Arial</Face>
+		<Weight>Bold</Weight>		
+		<ShadowColor>0,0,0</ShadowColor>
+		<ShadowAlpha>0</ShadowAlpha>
+		<ShadowOffset>0</ShadowOffset>
+	</IconLabelFont>
+	
 </Skin>

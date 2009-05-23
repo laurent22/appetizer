@@ -63,6 +63,8 @@ Lunar<azApplication>::RegType azApplication::methods[] = {
   method(azApplication, enable),  
   method(azApplication, disable),
   method(azApplication, getDirectory),
+  method(azApplication, getFilePath),
+  method(azApplication, getDataDirectory),
   {0,0}
 };
 
@@ -336,5 +338,17 @@ int azApplication::disable(lua_State *L) {
 
 int azApplication::getDirectory(lua_State *L) {
   LuaUtil::PushString(L, FilePaths::GetApplicationDirectory());
+  return 1;
+}
+
+
+int azApplication::getFilePath(lua_State *L) {
+  LuaUtil::PushString(L, FilePaths::GetApplicationPath());
+  return 1;
+}
+
+
+int azApplication::getDataDirectory(lua_State *L) {
+  LuaUtil::PushString(L, FilePaths::GetDataDirectory());
   return 1;
 }

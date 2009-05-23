@@ -21,6 +21,7 @@ OptionPanelStyle Styles::OptionPanel;
 ArrowButtonStyle Styles::ArrowButton;
 OptionButtonStyle Styles::OptionButton;
 BrowseButtonStyle Styles::BrowseButton;
+FontStyle Styles::Font;
 
 
 void PaddingStyle::FromRect(const wxRect& rect) {
@@ -78,6 +79,14 @@ void Styles::LoadSkinFile(const wxString& filePath) {
   Styles::OptionButton.IconColor = wxColour(255,255,255);
   Styles::ArrowButton.ColorDown = wxNullColour;
   Styles::ArrowButton.ColorOver = wxNullColour;
+  Styles::Icon.LabelGap = 10;
+  Styles::Font.Color = wxColor(0,0,0);
+  Styles::Font.Face = _T("Arial");
+  Styles::Font.Size = 8;
+  Styles::Font.Weight = wxBOLD;
+  Styles::Font.ShadowColor = wxColor(255,255,255);
+  Styles::Font.ShadowAlpha = 0.2;
+  Styles::Font.ShadowOffset = 1;
   
   // *****************************************************************
   // Load the XML
@@ -119,6 +128,18 @@ void Styles::LoadSkinFile(const wxString& filePath) {
     if (elementName == _T("Icon")) {
       XmlUtil::ReadElementTextAsRect(handle, "Padding", resultRect);
       Styles::Icon.Padding.FromRect(resultRect);
+    }
+
+    if (elementName == _T("IconLabelFont")) {
+      XmlUtil::ReadElementTextAsColor(handle, "Color", Styles::Font.Color);
+      XmlUtil::ReadElementTextAsColor(handle, "ShadowColor", Styles::Font.ShadowColor);
+      Styles::Font.Face = XmlUtil::ReadElementText(handle, "Face", _T("Arial"));
+      Styles::Font.ShadowOffset = XmlUtil::ReadElementTextAsInt(handle, "ShadowOffset", 1);
+      int shadowAlpha = XmlUtil::ReadElementTextAsInt(handle, "ShadowAlpha", 20);
+      Styles::Font.ShadowAlpha = (float)shadowAlpha / 100.0;
+      Styles::Font.Size = XmlUtil::ReadElementTextAsInt(handle, "Size", 8);
+      wxString weight = XmlUtil::ReadElementText(handle, "Weight", _T("Normal"));
+      Styles::Font.Weight = weight == _T("Bold") ? wxBOLD : wxNORMAL;
     }
 
     if (elementName == _T("OptionButton")) {

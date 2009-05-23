@@ -41,10 +41,12 @@ public:
   static wxString GetUserShellDirectory(const wxString& itemName);
   static wxString GetAllUsersShellDirectory(const wxString& itemName);
   static wxString GetQuickLaunchDirectory();  
+  static wxString GetWindowsFontDirectory(); 
 
   static void CreateSettingsDirectory();
   static void CreateDirectoryIfNotExists(const wxString& path);
   static void InitializePaths();
+  static wxString GetFontFilePath(const wxString& fontAlias);
   static wxString GetSkinFile(const wxString& filename);
 
 private:

@@ -16,6 +16,8 @@
 class PluginManager;
 #include "PluginManager.h"
 #include "utilities/Utilities.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H 
 
 
 // Forward declarations:
@@ -55,6 +57,9 @@ public:
   void User_LocaleChange();
   void User_IconSizeChange();
 
+  FT_Library GetFreeTypeLibrary();
+  FT_Face GetFreeTypeFace();
+
 private:
 
   static int uniqueInt_;
@@ -74,6 +79,9 @@ private:
   LongVector launchedProcessIds_;
   IntVector allowedIconSizes_;
   PluginManager* pluginManager_;
+
+  FT_Library ftLibrary_; 
+  FT_Face ftFace_;
 
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;

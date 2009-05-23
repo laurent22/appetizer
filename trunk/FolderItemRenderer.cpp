@@ -26,6 +26,7 @@ int FolderItemRenderer::uniqueID_ = 0;
 int FolderItemRenderer::addToGroupMenuItemOffset_ = 10000;
 
 
+
 BEGIN_EVENT_TABLE(FolderItemRenderer, BitmapControl)
   EVT_MOTION(FolderItemRenderer::OnMotion)
   EVT_ENTER_WINDOW(FolderItemRenderer::OnEnterWindow)
@@ -44,6 +45,10 @@ BitmapControl(owner, id, point, size) {
   // Make sure that each renderer has a unique ID
   FolderItemRenderer::uniqueID_++;
   SetId(FolderItemRenderer::uniqueID_);
+  
+  labelFont_ = NULL;
+  labelPosition_ = wxBOTTOM;
+  label_ = NULL;
 
   iconOverlayPainterDown_ = NULL;
   iconOverlayPainterUp_ = NULL;
@@ -57,8 +62,43 @@ BitmapControl(owner, id, point, size) {
 }
 
 
+void FolderItemRenderer::UpdateInnerLabel() {
+  if (!label_) return;
+
+  FolderItem* folderItem = GetFolderItem();
+
+  if (!labelFont_) {
+    labelFont_ = wxFont::New(Styles::Font.Size, wxFONTFAMILY_DEFAULT, Styles::Font.Weight == wxBOLD ? wxFONTFLAG_BOLD : wxFONTFLAG_DEFAULT, Styles::Font.Face, wxFONTENCODING_DEFAULT);
+  }
+
+  label_->SetFont(*labelFont_);
+
+  wxString labelText = folderItem ? folderItem->GetName() : _T("");
+  label_->SetLabel(labelText);
+
+  while (label_->GetBestSize().GetWidth() > GetSize().GetWidth() - Styles::Icon.Padding.Width) {
+    if (labelText.Length() == 0) break;
+
+    labelText = labelText.Mid(0, labelText.Length() - 1);
+    label_->SetLabel(labelText + _T("..."));
+  }  
+}
+
+
+wxStaticText* FolderItemRenderer::GetLabel() {
+  if (!label_) {
+    label_ = new wxStaticText(this, wxID_ANY, _T("m")); 
+    label_->Hide();
+  }
+  
+  return label_;
+}
+
+
 FolderItemRenderer::~FolderItemRenderer() {
   DeleteSkinObjects();
+  wxDELETE(label_);
+  wxDELETE(labelFont_);
 }
 
 
@@ -78,6 +118,7 @@ wxMenu* FolderItemRenderer::GetPopupMenu() {
 void FolderItemRenderer::ApplySkin() {
   // All the renderer's assets are lazily created on UpdateControlBitmap()
   // so just reset everything here, and invalidate the bitmap.
+  wxDELETE(labelFont_);
   DeleteSkinObjects();
   InvalidateControlBitmap();
 }
@@ -293,9 +334,70 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 void FolderItemRenderer::FitToContent() {
   int iconSize = wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize();
-  SetSize(iconSize + Styles::Icon.Padding.Width,
-          iconSize + Styles::Icon.Padding.Height);
+  int w = iconSize;
+  int h = iconSize;
+
+  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("ShowIconLabels"))) {
+    wxStaticText* label = GetLabel();
+    if (labelPosition_ == wxBOTTOM) {
+      h += Styles::Icon.LabelGap;
+      h += label->GetBestSize().GetHeight();
+      if (w < MIN_BOTTOM_ICON_LABEL_WIDTH) w = MIN_BOTTOM_ICON_LABEL_WIDTH;
+    } else if (labelPosition_ == wxRIGHT) {
+      w += label->GetBestSize().GetWidth();
+    }
+  }
+
+  SetSize(w + Styles::Icon.Padding.Width,
+          h + Styles::Icon.Padding.Height);
 }
+
+
+void FolderItemRenderer::FT_DrawTextToImage(wxImage& image, FT_Bitmap &fontBitmap, int targetX, int targetY, wxColor& color, float alpha) {
+  int labelColorR = color.Red();
+  int labelColorG = color.Green();
+  int labelColorB = color.Blue();
+
+  for (int x = 0; x < fontBitmap.width; x++) {
+		for (int y = 0; y < fontBitmap.rows; y++) {
+			int bitmapIndex = x + y * fontBitmap.pitch;
+			int color = fontBitmap.buffer[bitmapIndex];
+
+      int destX = targetX + x;
+      int destY = targetY + y;
+      if (destX > image.GetWidth() - 1) continue;
+      if (destY > image.GetHeight() - 1) continue;
+      if (destX < 0) continue;
+      if (destY < 0) continue;
+
+      int oldAlpha = image.GetAlpha(destX, destY);
+
+      if (oldAlpha == 0) {
+
+        image.SetRGB(destX, destY, labelColorR,labelColorG,labelColorB);      
+        image.SetAlpha(destX, destY, floor((float)color * alpha));
+
+      } else {
+
+        float p = (float)color / 255.0;
+
+        int r = floor(((1.0 - p) * (float)image.GetRed(destX, destY)) + p * (float)labelColorR);
+        int g = floor(((1.0 - p) * (float)image.GetGreen(destX, destY)) + p * (float)labelColorG);
+        int b = floor(((1.0 - p) * (float)image.GetBlue(destX, destY)) + p * (float)labelColorB);
+
+        int newAlpha = floor((float)color * alpha) + oldAlpha;
+        if (newAlpha > 255) newAlpha = 255;
+        
+        image.SetAlpha(destX, destY, newAlpha);
+        image.SetRGB(destX, destY, r, g, b);
+
+      }
+
+		}
+	}
+}
+
+
 
 
 void FolderItemRenderer::UpdateControlBitmap() {
@@ -313,6 +415,8 @@ void FolderItemRenderer::UpdateControlBitmap() {
 
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);
+
+
 
   if (mouseInside_) {
     // If the mouse is inside the control,
@@ -353,7 +457,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   if (icon && icon->IsOk()) {  
 
     int x = (GetSize().GetWidth() - drawnSize) / 2;
-    int y = (GetSize().GetHeight() - drawnSize) / 2;
+    int y = Styles::Icon.Padding.Top;
 
     if (Imaging::IsBadIcon(*icon)) {
       wxBitmap* bitmap = Imaging::IconToBitmapWithAlpha(*icon);
@@ -373,18 +477,83 @@ void FolderItemRenderer::UpdateControlBitmap() {
       destDC.DrawBitmap(
         *multiLaunchIcon_,
         Styles::Icon.Padding.Left + userSettingsIconSize / 2 - multiLaunchIcon_->GetWidth() / 2,
-        Styles::Icon.Padding.Top + userSettingsIconSize - multiLaunchIcon_->GetHeight() / 2);
+        Styles::Icon.Padding.Top + userSettingsIconSize - multiLaunchIcon_->GetHeight() / 2
+      );
     }
+  }
+  
+
+  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("ShowIconLabels"))) {
+
+    wxStaticText* label = GetLabel();
+    UpdateInnerLabel();
+
+    int labelWidth = GetSize().GetWidth();//label->GetBestSize().GetWidth();
+    int labelHeight = label->GetBestSize().GetHeight();
+
+    FT_Error error;
+
+    FT_Library ftLibrary = wxGetApp().GetFreeTypeLibrary();
+    FT_Face ftFace = wxGetApp().GetFreeTypeFace();
+
+    if (ftLibrary && ftFace) {
+
+      error = FT_Set_Char_Size(ftFace, 0, Styles::Font.Size * 64, 96,96);
+      FT_GlyphSlot slot = ftFace->glyph;
+
+      int pen_x = 0;
+      int pen_y = labelHeight - floor(Styles::Font.Size / 2.0);
+
+      wxImage targetImage(labelWidth > GetSize().GetWidth() ? GetSize().GetWidth() : labelWidth, labelHeight);
+      targetImage.InitAlpha();
+      for (int x = 0; x < targetImage.GetWidth(); x++) {
+        for (int y = 0; y < targetImage.GetHeight(); y++) {
+          targetImage.SetAlpha(x, y, 0);
+        }
+      }      
+
+      wxColor labelColor = Styles::Font.Color;
+
+      for ( int n = 0; n < label->GetLabel().Length(); n++ ) {
+        FT_ULong c = label->GetLabel()[n];
+        if (c == 0) break;
+
+        /* retrieve glyph index from character code */ 
+	      FT_UInt glyph_index; 
+	      glyph_index = FT_Get_Char_Index(ftFace, c); /* load glyph image into the slot (erase previous one) */ 
+	      error = FT_Load_Glyph(ftFace, glyph_index, FT_LOAD_DEFAULT);
+	      if (error) continue; /* ignore errors */
+
+	      /* convert to an anti-aliased bitmap */ 
+	      error = FT_Render_Glyph(ftFace->glyph, FT_RENDER_MODE_NORMAL);
+	      if (error) continue;
+
+	      /* now, draw to our target surface */ 
+        FT_DrawTextToImage(targetImage, slot->bitmap, pen_x + slot->bitmap_left, pen_y - slot->bitmap_top + Styles::Font.ShadowOffset, Styles::Font.ShadowColor, Styles::Font.ShadowAlpha);
+        FT_DrawTextToImage(targetImage, slot->bitmap, pen_x + slot->bitmap_left, pen_y - slot->bitmap_top, labelColor);
+
+	      /* increment pen position */ 
+	      pen_x += slot->advance.x >> 6;
+	      pen_y += slot->advance.y >> 6; /* not useful for now */ 
+      } 
+
+      int destX = (GetSize().GetWidth() - pen_x) / 2;  //(GetSize().GetWidth() - targetImage.GetWidth()) / 2;
+      destDC.DrawBitmap(wxBitmap(targetImage), destX, userSettingsIconSize + Styles::Icon.LabelGap);
+
+    }
+
   }
 
   destDC.SelectObject(wxNullBitmap);
 
   SetToolTip(folderItem->GetName(true));
+
 }
 
 
 void FolderItemRenderer::LoadData(int folderItemId) {  
   folderItemId_ = folderItemId;  
+  wxDELETE(labelFont_);
 
   InvalidateControlBitmap();
 }

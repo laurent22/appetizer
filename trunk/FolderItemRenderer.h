@@ -15,6 +15,8 @@
 #include "FolderItem.h"
 #include "utilities/MathUtil.h"
 #include "TypeDefinitions.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H 
 
 
 
@@ -48,7 +50,17 @@ private:
   wxPoint pressPosition_;
   wxBitmap* multiLaunchIcon_;
   wxMenu* popupMenu_;
+  wxStaticText* label_;
+  int labelPosition_;
+  wxFont* labelFont_;
 
+
+  wxStaticText* GetLabel();
+
+  void UpdateInnerLabel();
+  
+  void FT_DrawTextToImage(wxImage& image, FT_Bitmap &fontBitmap, int targetX, int targetY, wxColor& color, float alpha = 1.0);
+  
   void OnEnterWindow(wxMouseEvent& evt);
   void OnLeaveWindow(wxMouseEvent& evt);
   void OnLeftDown(wxMouseEvent& evt);

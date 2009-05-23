@@ -43,6 +43,8 @@ public:
   int enable(lua_State *L);
   int disable(lua_State *L);
   int getDirectory(lua_State *L);
+  int getFilePath(lua_State *L);
+  int getDataDirectory(lua_State *L);
 
   static const char className[];
   static Lunar<azApplication>::RegType methods[];

@@ -653,7 +653,8 @@ void IconPanel::UpdateLayout() {
   int width = GetRect().GetWidth();
   int height = GetRect().GetHeight();
 
-  int iconSize = -1;
+  int iconWidth = -1;
+  int iconHeight = -1;
   firstOffScreenIconIndex_ = -1;
 
   bool firstHiddenFound = false;
@@ -666,15 +667,18 @@ void IconPanel::UpdateLayout() {
     int newX = x;
     int newY = y;
 
-    if (iconSize < 0) iconSize = renderer->GetRect().GetWidth();
+    if (iconWidth < 0) {
+      iconWidth = renderer->GetRect().GetWidth();
+      iconHeight = renderer->GetRect().GetHeight();
+    }
 
-    if (i > 0 && newX + iconSize > width - Styles::InnerPanel.Padding.Right) {
+    if (i > 0 && newX + iconWidth > width - Styles::InnerPanel.Padding.Right) {
       newX = Styles::InnerPanel.Padding.Left;
-      newY += iconSize;
+      newY += iconHeight;
       y = newY;
     }
 
-    if (newY + iconSize > height - Styles::InnerPanel.Padding.Bottom) {
+    if (newY + iconHeight > height - Styles::InnerPanel.Padding.Bottom) {
       if (firstOffScreenIconIndex_ < 0) firstOffScreenIconIndex_ = i;
       renderer->Hide();
       firstHiddenFound = true;
@@ -684,10 +688,10 @@ void IconPanel::UpdateLayout() {
     
     renderer->Move(newX, newY);
     
-    maxWidth_ = newX + iconSize;
-    maxHeight_ = newY + iconSize;
+    maxWidth_ = newX + iconWidth;
+    maxHeight_ = newY + iconHeight;
 
-    x = newX + iconSize;
+    x = newX + iconWidth;
   }  
 
   maxWidth_ += Styles::InnerPanel.Padding.Right;

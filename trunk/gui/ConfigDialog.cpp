@@ -320,10 +320,12 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       orientationLabel->SetLabel(_("Orientation:"));
       transparencyLabel->SetLabel(_("Opacity:"));
       downloadMoreSkinLink->SetLabel(_("Download more skins"));
+      showIconLabelCheckBox->SetLabel(_("Show icon labels"));
 
       wxGetApp().GetUtilities().ConvertStaticTextToLink(downloadMoreSkinLink);
       downloadMoreSkinLink->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(ConfigDialog::OnDownloadMoreSkinLinkMouseDown), NULL, this);
-      
+      showIconLabelCheckBox->SetValue(userSettings->GetBool(_T("ShowIconLabels")));
+
       //---------------------------------------------------------------------------
       // Set transparency slider
       //---------------------------------------------------------------------------
@@ -838,6 +840,11 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   // *********************************************************************************************
 
   if (updatedPages_[CONFIG_DIALOG_INDEX_APPEARANCE]) {
+
+    if (userSettings->GetBool(_T("ShowIconLabels")) != showIconLabelCheckBox->GetValue()) {
+      userSettings->SetBool(_T("ShowIconLabels"), showIconLabelCheckBox->GetValue());
+      wxGetApp().User_IconSizeChange();
+    }
 
     //---------------------------------------------------------------------------
     // Apply changes to icon size

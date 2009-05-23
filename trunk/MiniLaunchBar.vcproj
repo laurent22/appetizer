@@ -184,7 +184,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;./third_party"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswud&quot;;./third_party;.\third_party\freetype\include"
 				PreprocessorDefinitions="wxUSE_GUI=1;__WXDEBUG__;WINNT"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
@@ -203,7 +203,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib wxbase28ud_net.lib wxregexud.lib psapi.lib c:\lua\lua5.1.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpngd.lib wxzlibd.lib wxjpegd.lib wxtiffd.lib wxmsw28ud_core.lib wxbase28ud.lib wxmsw28ud_adv.lib wxbase28ud_net.lib wxregexud.lib psapi.lib c:\lua\lua5.1.lib .\third_party\freetype\objs\win32\vc2008\freetype239MT_D.lib"
 				OutputFile=".\Appetizer-debug.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreDefaultLibraryNames="LIBCMT.lib"
@@ -259,7 +259,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="1"
-				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;./third_party"
+				AdditionalIncludeDirectories="&quot;$(WXWIN)\include&quot;;&quot;$(WXWIN)\lib\vc_lib\mswu&quot;;./third_party;.\third_party\freetype\include"
 				PreprocessorDefinitions="wxUSE_GUI=1;WINNT"
 				IgnoreStandardIncludePath="false"
 				RuntimeLibrary="0"
@@ -279,7 +279,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib psapi.lib c:\lua\lua5.1.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib psapi.lib c:\lua\lua5.1.lib .\third_party\freetype\objs\win32\vc2008\freetype239MT.lib"
 				OutputFile=".\Appetizer.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -1663,6 +1663,14 @@
 							PrecompiledHeaderThrough="../stdafx.h"
 						/>
 					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\lua_glue\azPreferences.cpp"
@@ -1871,10 +1879,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\BitmapLabel.h"
-					>
-				</File>
-				<File
 					RelativePath=".\bitmap_controls\ImageButton.h"
 					>
 				</File>
@@ -1950,6 +1954,10 @@
 			<Filter
 				Name="third_party"
 				>
+				<File
+					RelativePath=".\third_party\freetype\include\ft2build.h"
+					>
+				</File>
 				<File
 					RelativePath=".\third_party\simpleini\SimpleIni.h"
 					>

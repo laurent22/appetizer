@@ -26,6 +26,8 @@
 #endif // __WXDEBUG__
 #endif // __WINDOWS__
 
+//#include <wx/graphics.h>
+//#include <wx/dynlib.h>
 #include <wx/textfile.h>
 #include <wx/treebase.h>
 #include <wx/filefn.h>

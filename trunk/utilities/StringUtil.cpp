@@ -96,7 +96,7 @@ wxString StringUtil::RemoveTrailingSlash(const wxString& path) {
   
   while (output.Length() > 0) {
     wxChar c = output[output.Length() - 1];
-    if (c != '\\' && c != '/' && c != ':') return output;
+    if (c != '\\' && c != '/') return output;
     output = output.Mid(0, output.Length() - 1);
   }
 

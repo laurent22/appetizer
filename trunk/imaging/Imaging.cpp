@@ -396,3 +396,163 @@ void Imaging::DrawColorOverlay(wxBitmap& bitmap, const wxColour& color) {
   dc.DrawBitmap(bmp, 0, 0);
   dc.SelectObject(wxNullBitmap);
 }
+
+
+void Imaging::DrawLabelWithTransparency(wxDC* destination, const wxString& text, const wxRect& rect, int alignment, wxColor& backgroundColor) {
+
+  wxMemoryDC dc;
+  
+  wxBitmap textBitmap(rect.GetWidth(), rect.GetHeight());
+
+  dc.SelectObject(textBitmap);
+
+  dc.SetFont(destination->GetFont());
+  dc.SetTextForeground(destination->GetTextForeground());
+  dc.SetBrush(wxBrush(wxColor(255,255,255)));
+  dc.SetPen(wxPen(wxColor(255,0,0), 0));
+  dc.DrawRectangle(0,0,rect.GetWidth(), rect.GetHeight());
+  dc.DrawLabel(text, rect, alignment);  
+
+
+  wxImage image(textBitmap.GetWidth(), textBitmap.GetHeight());
+  image.InitAlpha();
+
+  wxColour pixelColor;
+
+  // @hack: To force the image to have an 8-bit alpha channel
+  // we set one of the pixel alpha value to 1 or 254. Otherwise we'll get
+  // a 1 bit alpha channel which still won't render properly.
+  bool hackedPixelSet = false;
+  wxColor textColor = destination->GetTextForeground();
+  
+  for (int x = 0; x < textBitmap.GetWidth(); x++) {
+    for (int y = 0; y < textBitmap.GetHeight(); y++) {
+      dc.GetPixel(x, y, &pixelColor); 
+
+      //image.SetRGB(x, y, pixelColor.Red(), pixelColor.Green(), pixelColor.Blue());
+
+      if (pixelColor.Red() != 255 && pixelColor.Green() != 255 && pixelColor.Blue() != 255) {
+        //int alpha = floor(((float)pixelColor.Red() + (float)pixelColor.Green() + (float)pixelColor.Blue() / 3.0) * 255.0);
+        int alpha = 255;
+        image.SetAlpha(x, y, alpha);
+        image.SetRGB(x, y, textColor.Red(), textColor.Green(), textColor.Blue());
+      } else {
+        if (!hackedPixelSet) {
+          image.SetAlpha(x,y,1);
+          hackedPixelSet = true;
+        } else {
+          image.SetAlpha(x, y, 0);
+        }
+        
+      }
+
+    }
+  }
+
+  if (!hackedPixelSet) {
+    // Haven't set the hacked pixel transparency yet, probably because
+    // all the pixels are opaque, so we do it:
+    if (image.GetWidth() > 0 && image.GetHeight() > 0) image.SetAlpha(0, 0, 254);
+  }    
+
+  destination->DrawBitmap(wxBitmap(image), 0,0);
+
+
+
+  dc.SelectObject(wxNullBitmap);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //wxMemoryDC dc;
+  //
+  //wxBitmap textBitmap(rect.GetWidth(), rect.GetHeight());
+
+  //dc.SelectObject(textBitmap);
+
+  //dc.SetFont(destination->GetFont());
+  //dc.SetTextForeground(wxColor(0,0,0));
+  //dc.SetBrush(wxBrush(backgroundColor));
+  //dc.SetPen(wxPen(wxColor(255,0,0), 0));
+  //dc.DrawRectangle(0,0,rect.GetWidth(), rect.GetHeight());
+  //dc.DrawLabel(text, rect, alignment);  
+
+
+  //wxImage image(textBitmap.GetWidth(), textBitmap.GetHeight());
+  //image.InitAlpha();
+
+  //wxColour pixelColor;
+
+  //// @hack: To force the image to have an 8-bit alpha channel
+  //// we set one of the pixel alpha value to 1 or 254. Otherwise we'll get
+  //// a 1 bit alpha channel which still won't render properly.
+  //bool hackedPixelSet = false;
+  //wxColor textColor = destination->GetTextForeground();
+  //
+  //for (int x = 0; x < textBitmap.GetWidth(); x++) {
+  //  for (int y = 0; y < textBitmap.GetHeight(); y++) {
+  //    dc.GetPixel(x, y, &pixelColor); 
+
+  //    image.SetRGB(x, y, pixelColor.Red(), pixelColor.Green(), pixelColor.Blue());
+
+  //    //if (pixelColor.Red() != 255 && pixelColor.Green() != 255 && pixelColor.Blue() != 255) {
+  //    //  //int alpha = floor(((float)pixelColor.Red() + (float)pixelColor.Green() + (float)pixelColor.Blue() / 3.0) * 255.0);
+  //    //  int alpha = 255;
+  //    //  image.SetAlpha(x, y, alpha);
+  //    //  image.SetRGB(x, y, textColor.Red(), textColor.Green(), textColor.Blue());
+  //    //} else {
+  //    //  if (!hackedPixelSet) {
+  //    //    image.SetAlpha(x,y,1);
+  //    //    hackedPixelSet = true;
+  //    //  } else {
+  //    //    image.SetAlpha(x, y, 0);
+  //    //  }
+  //    //  
+  //    //}
+
+  //  }
+  //}
+
+  //if (!hackedPixelSet) {
+  //  // Haven't set the hacked pixel transparency yet, probably because
+  //  // all the pixels are opaque, so we do it:
+  //  if (image.GetWidth() > 0 && image.GetHeight() > 0) image.SetAlpha(0, 0, 254);
+  //}    
+
+  //destination->DrawBitmap(wxBitmap(image), 0,0);
+
+
+
+  //dc.SelectObject(wxNullBitmap);
+}
