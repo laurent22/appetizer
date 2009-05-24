@@ -974,10 +974,21 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
   wxIcon* output = NULL;  
 
   if (customIconPath_ != wxEmptyString) {
-    if (customIconIndex_ > 0) {
-      output = IconGetter::GetExecutableIcon(FolderItem::ResolvePath(customIconPath_), iconSize, customIconIndex_);
+    
+    wxFileName fn(customIconPath_);
+
+    if (fn.GetExt().Lower() == _T("png")) {
+
+      output = Imaging::CreateIconFromPng(FolderItem::ResolvePath(customIconPath_), iconSize);
+
     } else {
-      output = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(customIconPath_), iconSize, true);
+
+      if (customIconIndex_ > 0) {
+        output = IconGetter::GetExecutableIcon(FolderItem::ResolvePath(customIconPath_), iconSize, customIconIndex_);
+      } else {
+        output = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(customIconPath_), iconSize, true);
+      }
+
     }
   }
 

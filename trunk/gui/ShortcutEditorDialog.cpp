@@ -78,11 +78,21 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
 
   if (selectedIconPath_ != wxEmptyString) {
     wxIcon* icon = NULL;
+    wxFileName fn(selectedIconPath_);
 
-    if (selectedIconIndex_ > 0) {
-      icon = IconGetter::GetExecutableIcon(selectedIconPath_, LARGE_ICON_SIZE, selectedIconIndex_);
+    if (fn.GetExt().Lower() == _T("png")) {
+
+      icon = Imaging::CreateIconFromPng(FolderItem::ResolvePath(selectedIconPath_), LARGE_ICON_SIZE);
+      //icon = IconGetter::GetExecutableIcon(selectedIconPath_, LARGE_ICON_SIZE, selectedIconIndex_);
+
     } else {
-      icon = IconGetter::GetFolderItemIcon(selectedIconPath_, LARGE_ICON_SIZE);
+
+      if (selectedIconIndex_ > 0) {
+        icon = IconGetter::GetExecutableIcon(selectedIconPath_, LARGE_ICON_SIZE, selectedIconIndex_);
+      } else {
+        icon = IconGetter::GetFolderItemIcon(selectedIconPath_, LARGE_ICON_SIZE);
+      }
+
     }
 
     if (icon) iconStaticBitmap->SetBitmap(*icon);

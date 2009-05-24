@@ -26,6 +26,18 @@ void Imaging::StretchBlit(wxDC* destDC, wxDC* sourceDC, wxCoord destX, wxCoord d
 }
 
 
+wxIcon* Imaging::CreateIconFromPng(const wxString& filePath, int iconSize) {
+  wxImage img(filePath, wxBITMAP_TYPE_PNG);
+  if (!img.HasAlpha()) img.InitAlpha();
+  img = img.Rescale(iconSize, iconSize, wxIMAGE_QUALITY_HIGH);
+  
+  wxIcon* output = new wxIcon();
+  output->CopyFromBitmap(wxBitmap(img));
+  
+  return output;
+}
+
+
 void Imaging::StretchDrawBitmap(wxDC* destDC, wxBitmap& bitmap, wxCoord destX, wxCoord destY, wxCoord destWidth, wxCoord destHeight) {
   if (destWidth <= 0 || destHeight <= 0) return;
 

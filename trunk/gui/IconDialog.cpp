@@ -135,12 +135,25 @@ void IconDialog::LoadIconSource(const wxString& filePath) {
   listViewImageList = new wxImageList(32, 32);
 
   if (fileExtension == _T("exe") || fileExtension == _T("dll") || fileExtension == _T("ico") || fileExtension == _T("icl")) {
+
     for (int i = 0; true; i++) {
       wxIcon* icon = IconGetter::GetExecutableIcon(iconSourcePath_, 32, i);
       if (!icon) break;
       listViewImageList->Add(*icon);
       wxDELETE(icon);
     }
+
+  } else if (fileExtension == _T("png")) {
+
+    wxImage img(iconSourcePath_, wxBITMAP_TYPE_PNG);
+    if (!img.HasAlpha()) img.InitAlpha();
+    img = img.Rescale(32, 32, wxIMAGE_QUALITY_HIGH);
+    
+    wxIcon* icon = new wxIcon();
+    icon->CopyFromBitmap(wxBitmap(img));
+    listViewImageList->Add(*icon);
+    wxDELETE(icon);
+
   }
 
   listView->SetImageList(listViewImageList, wxIMAGE_LIST_NORMAL);
@@ -153,8 +166,9 @@ void IconDialog::LoadIconSource(const wxString& filePath) {
 
 void IconDialog::OnBrowseButtonClick(wxCommandEvent& evt) {
   wxString wildCard;
-  wildCard = wxString::Format(_T("%s%s"),   _("All supported files"), _T(" (*.ico, *.exe, *.dll, *.icl)|*.ico;*.exe;*.dll;*.icl"));
+  wildCard = wxString::Format(_T("%s%s"),   _("All supported files"), _T(" (*.ico, *.png, *.exe, *.dll, *.icl)|*.ico;*.png;*.exe;*.dll;*.icl"));
   wildCard += wxString::Format(_T("|%s%s"), _("Icons"),               _T(" (*.ico)|*.ico"));
+  wildCard += wxString::Format(_T("|%s%s"), _("Icons"),               _T(" (*.png)|*.png"));
   wildCard += wxString::Format(_T("|%s%s"), _("Executables"),         _T(" (*.exe)|*.exe"));
   wildCard += wxString::Format(_T("|%s%s"), _("Dynamic libraries"),   _T(" (*.dll)|*.dll"));
   wildCard += wxString::Format(_T("|%s%s"), _("Icon libraries"),      _T(" (*.icl)|*.icl"));

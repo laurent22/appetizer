@@ -29,6 +29,8 @@ public:
   static void ColorizeImage(wxImage& image, const wxColour& color);
   static void ColorizeImage(wxImage& image, unsigned char red, unsigned char green, unsigned char blue);
 
+  static wxIcon* CreateIconFromPng(const wxString& filePath, int iconSize);
+
 };
 
 #endif

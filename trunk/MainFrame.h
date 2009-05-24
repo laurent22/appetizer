@@ -73,6 +73,10 @@ class MainFrame: public wxFrame {
     bool closeOperationScheduled_;
     wxBitmap* mainBackgroundBitmap_;
     bool initialized_;
+    int closeStep_;
+
+
+    void DoCloseStep(int step);
 
     void UpdateMask();
     void UpdateLayout();

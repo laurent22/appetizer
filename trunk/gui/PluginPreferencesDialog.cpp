@@ -19,6 +19,7 @@ END_EVENT_TABLE()
 
 PluginPreferencesDialog::PluginPreferencesDialog(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
 : wxDialog(parent, id, title, pos, size, style) {
+  SetName(_T("PluginPreferenceDialog"));
   preferences_ = NULL;
 }
 
@@ -139,10 +140,11 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
 
     } else if (preference->GetType() == PluginPreferenceType::TextArea) {
 
-      control = new wxTextCtrl(groupPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+      control = new wxTextCtrl(groupPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_DONTWRAP);
       wxTextCtrl* textBox = dynamic_cast<wxTextCtrl*>(control);
       textBox->SetValue(preference->GetValue());
       textBox->SetMinSize(wxSize(100, 100));
+      
       textBox->SetSize(textBox->GetSize().GetWidth(), 100);
 
     } else if (preference->GetType() == PluginPreferenceType::CheckBox) {

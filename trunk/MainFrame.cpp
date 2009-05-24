@@ -56,6 +56,7 @@ MainFrame::MainFrame()
   activated_ = false;  
   closeOperationScheduled_ = false;
   initialized_ = false;
+  closeStep_ = -1;
 
   bool showLogWindow = false;
   #ifdef __WXDEBUG__
@@ -333,6 +334,76 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("close"), emptyEventTable); 
     Close();
   }
+
+  if (closeStep_ >= 0) {
+
+    DoCloseStep(closeStep_);
+    closeStep_++;
+
+  }
+}
+
+
+void MainFrame::DoCloseStep(int step) {
+  
+  if (step == 0) {
+  
+    RecurseCleanUp(this);  
+
+  } else if (step == 1) {
+
+    TiXmlDocument doc;
+    doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
+    TiXmlElement* xmlRoot = new TiXmlElement("Window");;
+    xmlRoot->SetAttribute("version", "1.0");
+    doc.LinkEndChild(xmlRoot);
+
+    XmlUtil::AppendTextElement(xmlRoot, "DisplayIndex", GetDisplayIndex());
+    XmlUtil::AppendTextElement(xmlRoot, "IsLeftOfDisplay", IsLeftOfDisplay());
+    XmlUtil::AppendTextElement(xmlRoot, "IsTopOfDisplay", IsTopOfDisplay());
+
+    if (rotated_) {
+      XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth());
+      XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight() - optionPanelOpenWidth_);
+    } else {
+      XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth() - optionPanelOpenWidth_);
+      XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight());
+    }
+    
+    int hGap;
+    int vGap;
+
+    wxDisplay display(GetDisplayIndex());
+
+    if (IsLeftOfDisplay()) {
+      hGap = GetRect().GetLeft() - display.GetGeometry().GetLeft();
+    } else {    
+      hGap = display.GetGeometry().GetRight() - GetRect().GetRight();
+    }
+
+    if (IsTopOfDisplay()) {
+      vGap = GetRect().GetTop() - display.GetGeometry().GetTop();
+    } else {    
+      vGap = display.GetGeometry().GetBottom() - GetRect().GetBottom();
+    }
+
+    XmlUtil::AppendTextElement(xmlRoot, "HorizontalGap", hGap);
+    XmlUtil::AppendTextElement(xmlRoot, "VerticalGap", vGap);
+
+    FilePaths::CreateSettingsDirectory();
+    doc.SaveFile(FilePaths::GetWindowFile().mb_str());
+
+    arrowButton_->SetIcon(NULL);
+    wxDELETE(arrowButtonCloseIcon_);
+    wxDELETE(arrowButtonOpenIcon_);
+    wxDELETE(mainBackgroundBitmap_);
+
+    wxGetApp().CloseApplication();
+
+    Destroy();
+
+  }
+
 }
 
 
@@ -917,6 +988,8 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
   wxWindowList& children = window->GetChildren();
   for (int i = children.size() - 1; i >= 0; i--) {
     wxWindow* child = children[i];
+
+    wxString n = child->GetName();
     
     wxDialog* childAsDialog = wxDynamicCast(child, wxDialog);
     if (childAsDialog) {
@@ -933,63 +1006,22 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
 
 
 void MainFrame::OnClose(wxCloseEvent& evt) {
-  if (!initialized_) {
-    evt.Veto();
+  evt.Veto();
+
+  if (closeStep_ >= 0) {
+    ILOG(_T("'Close' action vetoed because the frame is already being closed."));
+    return;
+  }
+
+  if (!initialized_) {    
     ILOG(_T("'Close' action vetoed because the frame is not yet initialized."));
     return;
   }
 
-  RecurseCleanUp(this);
+  // Start the closing process (see OnIdle() event)
+  closeStep_ = 0;
 
-  TiXmlDocument doc;
-  doc.LinkEndChild(new TiXmlDeclaration("1.0", "", ""));
-  TiXmlElement* xmlRoot = new TiXmlElement("Window");;
-  xmlRoot->SetAttribute("version", "1.0");
-  doc.LinkEndChild(xmlRoot);
-
-  XmlUtil::AppendTextElement(xmlRoot, "DisplayIndex", GetDisplayIndex());
-  XmlUtil::AppendTextElement(xmlRoot, "IsLeftOfDisplay", IsLeftOfDisplay());
-  XmlUtil::AppendTextElement(xmlRoot, "IsTopOfDisplay", IsTopOfDisplay());
-
-  if (rotated_) {
-    XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth());
-    XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight() - optionPanelOpenWidth_);
-  } else {
-    XmlUtil::AppendTextElement(xmlRoot, "Width", GetRect().GetWidth() - optionPanelOpenWidth_);
-    XmlUtil::AppendTextElement(xmlRoot, "Height", GetRect().GetHeight());
-  }
-  
-  int hGap;
-  int vGap;
-
-  wxDisplay display(GetDisplayIndex());
-
-  if (IsLeftOfDisplay()) {
-    hGap = GetRect().GetLeft() - display.GetGeometry().GetLeft();
-  } else {    
-    hGap = display.GetGeometry().GetRight() - GetRect().GetRight();
-  }
-
-  if (IsTopOfDisplay()) {
-    vGap = GetRect().GetTop() - display.GetGeometry().GetTop();
-  } else {    
-    vGap = display.GetGeometry().GetBottom() - GetRect().GetBottom();
-  }
-
-  XmlUtil::AppendTextElement(xmlRoot, "HorizontalGap", hGap);
-  XmlUtil::AppendTextElement(xmlRoot, "VerticalGap", vGap);
-
-  FilePaths::CreateSettingsDirectory();
-  doc.SaveFile(FilePaths::GetWindowFile().mb_str());
-
-  arrowButton_->SetIcon(NULL);
-  wxDELETE(arrowButtonCloseIcon_);
-  wxDELETE(arrowButtonOpenIcon_);
-  wxDELETE(mainBackgroundBitmap_);
-
-  wxGetApp().CloseApplication();
-
-  Destroy();
+  return;
 }
 
 
