@@ -26,10 +26,143 @@ void Imaging::StretchBlit(wxDC* destDC, wxDC* sourceDC, wxCoord destX, wxCoord d
 }
 
 
+// The following two local functions are for the B-spline weighting of the
+// bicubic sampling algorithm
+static inline double spline_cube(double value)
+{
+    return value <= 0.0 ? 0.0 : value * value * value;
+}
+
+
+static inline double spline_weight(double value)
+{
+    return (spline_cube(value + 2) -
+            4 * spline_cube(value + 1) +
+            6 * spline_cube(value) -
+            4 * spline_cube(value - 1)) / 6;
+}
+
+
+
+// This is the bicubic resampling algorithm
+wxImage Imaging::ResampleBicubic(wxImage& image, int width, int height)
+{
+    // This function implements a Bicubic B-Spline algorithm for resampling.
+    // This method is certainly a little slower than wxImage's default pixel
+    // replication method, however for most reasonably sized images not being
+    // upsampled too much on a fairly average CPU this difference is hardly
+    // noticeable and the results are far more pleasing to look at.
+    //
+    // This particular bicubic algorithm does pixel weighting according to a
+    // B-Spline that basically implements a Gaussian bell-like weighting
+    // kernel. Because of this method the results may appear a bit blurry when
+    // upsampling by large factors.  This is basically because a slight
+    // gaussian blur is being performed to get the smooth look of the upsampled
+    // image.
+
+    // Edge pixels: 3-4 possible solutions
+    // - (Wrap/tile) Wrap the image, take the color value from the opposite
+    // side of the image.
+    // - (Mirror)    Duplicate edge pixels, so that pixel at coordinate (2, n),
+    // where n is nonpositive, will have the value of (2, 1).
+    // - (Ignore)    Simply ignore the edge pixels and apply the kernel only to
+    // pixels which do have all neighbours.
+    // - (Clamp)     Choose the nearest pixel along the border. This takes the
+    // border pixels and extends them out to infinity.
+    //
+    // NOTE: below the y_offset and x_offset variables are being set for edge
+    // pixels using the "Mirror" method mentioned above
+
+    wxImage ret_image;
+
+    ret_image.Create(width, height, false);
+
+    unsigned char* src_data = image.GetData();//M_IMGDATA->m_data;
+      unsigned char* src_alpha = image.GetAlpha();
+    unsigned char* dst_data = ret_image.GetData();
+    unsigned char* dst_alpha = NULL;
+
+    if ( src_alpha )
+    {
+        ret_image.SetAlpha();
+        dst_alpha = ret_image.GetAlpha();
+    }
+
+    for ( int dsty = 0; dsty < height; dsty++ )
+    {
+        // We need to calculate the source pixel to interpolate from - Y-axis
+      double srcpixy = double(dsty * image.GetHeight()) / height;
+        double dy = srcpixy - (int)srcpixy;
+
+        for ( int dstx = 0; dstx < width; dstx++ )
+        {
+            // X-axis of pixel to interpolate from
+          double srcpixx = double(dstx * image.GetWidth()) / width;
+            double dx = srcpixx - (int)srcpixx;
+
+            // Sums for each color channel
+            double sum_r = 0, sum_g = 0, sum_b = 0, sum_a = 0;
+
+            // Here we actually determine the RGBA values for the destination pixel
+            for ( int k = -1; k <= 2; k++ )
+            {
+                // Y offset
+                int y_offset = srcpixy + k < 0.0
+                                ? 0
+                                : srcpixy + k >= image.GetHeight()
+                                       ? image.GetHeight() - 1
+                                       : (int)(srcpixy + k);
+
+                // Loop across the X axis
+                for ( int i = -1; i <= 2; i++ )
+                {
+                    // X offset
+                    int x_offset = srcpixx + i < 0.0
+                                    ? 0
+                                    : srcpixx + i >= image.GetWidth()
+                                            ? image.GetWidth() - 1
+                                            : (int)(srcpixx + i);
+
+                    // Calculate the exact position where the source data
+                    // should be pulled from based on the x_offset and y_offset
+                    int src_pixel_index = y_offset*image.GetWidth() + x_offset;
+
+                    // Calculate the weight for the specified pixel according
+                    // to the bicubic b-spline kernel we're using for
+                    // interpolation
+                    double
+                        pixel_weight = spline_weight(i - dx)*spline_weight(k - dy);
+
+                    // Create a sum of all velues for each color channel
+                    // adjusted for the pixel's calculated weight
+                    sum_r += src_data[src_pixel_index * 3 + 0] * pixel_weight;
+                    sum_g += src_data[src_pixel_index * 3 + 1] * pixel_weight;
+                    sum_b += src_data[src_pixel_index * 3 + 2] * pixel_weight;
+                    if ( src_alpha )
+                        sum_a += src_alpha[src_pixel_index] * pixel_weight;
+                }
+            }
+
+            // Put the data into the destination image.  The summed values are
+            // of double data type and are rounded here for accuracy
+            dst_data[0] = (unsigned char)(sum_r + 0.5);
+            dst_data[1] = (unsigned char)(sum_g + 0.5);
+            dst_data[2] = (unsigned char)(sum_b + 0.5);
+            dst_data += 3;
+
+            if ( src_alpha )
+                *dst_alpha++ = (unsigned char)sum_a;
+        }
+    }
+
+    return ret_image;
+}
+
+
 wxIcon* Imaging::CreateIconFromPng(const wxString& filePath, int iconSize) {
   wxImage img(filePath, wxBITMAP_TYPE_PNG);
   if (!img.HasAlpha()) img.InitAlpha();
-  img = img.Rescale(iconSize, iconSize, wxIMAGE_QUALITY_HIGH);
+  img = Imaging::ResampleBicubic(img, iconSize, iconSize);
   
   wxIcon* output = new wxIcon();
   output->CopyFromBitmap(wxBitmap(img));

@@ -31,6 +31,8 @@ public:
 
   static wxIcon* CreateIconFromPng(const wxString& filePath, int iconSize);
 
+  static wxImage ResampleBicubic(wxImage& image, int width, int height);
+
 };
 
 #endif
