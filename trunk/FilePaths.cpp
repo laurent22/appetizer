@@ -54,6 +54,7 @@ wxString FilePaths::GetBaseSkinAssetsDirectory() { return FilePaths::BaseSkinAss
 wxString FilePaths::GetPluginPreferenceDirectory() { return FilePaths::PluginPreferenceDirectory_; }
 wxString FilePaths::GetHHPath() { return GetWindowsDirectory() + _T("\\hh.exe"); }
 wxString FilePaths::GetWindowsFontDirectory() { return GetWindowsDirectory() + _T("\\fonts"); }
+wxString FilePaths::GetTempDirectory() { return GetSettingsDirectory() + _T("\\Temp"); }
 
 
 wxString FilePaths::GetQuickLaunchDirectory() { 

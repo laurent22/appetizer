@@ -41,6 +41,7 @@ public:
   wxArrayString GetSkinNames();
   void ConvertStaticTextToLink(wxStaticText* label);
   void Localize();
+  void CreateShortcut(const wxString& filePath, const wxString& shortcutPath, const wxString& iconPath, int iconIndex);
 
 private:
 

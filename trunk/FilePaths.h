@@ -28,6 +28,7 @@ public:
   static wxString GetPluginPreferenceDirectory();
   static wxString GetBaseSkinAssetsDirectory();
   static wxString GetIconCacheDirectory();
+  static wxString GetTempDirectory();
 
   static wxString GetApplicationPath();
   static wxString GetSettingsFile();
@@ -71,6 +72,7 @@ private:
   static wxString PluginsDirectory_;
   static wxString PluginSettingsFile_;
   static wxString PluginPreferenceDirectory_;
+  //static wxString TempDirectory_;
 
 };
 

@@ -380,13 +380,13 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
             wxDELETE(cFullPath);
 
-            #endif // __WINDOWS__
-          }   
+            return true;
 
-        } else {
-          folderItem->Launch();
+            #endif // __WINDOWS__
+          } 
+
         }
-        return true;
+
       }
 
       for (int i = 0; i < filenames.Count(); i++) {

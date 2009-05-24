@@ -60,6 +60,10 @@ public:
   FT_Library GetFreeTypeLibrary();
   FT_Face GetFreeTypeFace();
 
+  #ifdef __WINDOWS__
+  OSVERSIONINFO GetOsInfo();
+  #endif // __WINDOWS__
+
 private:
 
   static int uniqueInt_;
@@ -85,7 +89,7 @@ private:
 
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;
-  #endif
+  #endif // __WINDOWS__
 
 };
 

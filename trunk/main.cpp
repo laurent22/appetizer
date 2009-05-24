@@ -30,7 +30,7 @@ int MiniLaunchBar::uniqueInt_ = 0;
  * Initialize the application
  */
 bool MiniLaunchBar::OnInit() {
-  //_CrtSetBreakAlloc(18609);
+  //_CrtSetBreakAlloc(18609);  
 
   // Remove GUI log errors
   delete wxLog::SetActiveTarget(new wxLogStderr());
@@ -211,8 +211,6 @@ bool MiniLaunchBar::OnInit() {
   // all the Localize() handlers)
   // ***********************************************************************************
   mainFrame_->Localize();  
-
-  FilePaths::GetFontFilePath(_T("Arial"));
 
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
 
@@ -407,6 +405,13 @@ void MiniLaunchBar::CheckForNewVersion(bool silent) {
     if (!wasLaunched) MessageBoxes::ShowError(_("Error launching web browser"));
   }
 }
+
+
+#ifdef __WINDOWS__
+OSVERSIONINFO MiniLaunchBar::GetOsInfo() {
+  return osInfo_;
+}
+#endif // __WINDOWS__
 
 
 int MiniLaunchBar::GetOSValidIconSize(int requiredIconSize) {

@@ -136,6 +136,35 @@ bool Utilities::RemoveFolderItemWithConfirmation(FolderItem* folderItem) {
 }
 
 
+void Utilities::CreateShortcut(const wxString& filePath, const wxString& shortcutPath, const wxString& iconPath, int iconIndex) {
+  if (wxFileName::FileExists(shortcutPath)) {
+    int answer = MessageBoxes::ShowConfirmation(_("A shortcut with this name already exists. Do you wish to overwrite it?"));
+    if (answer == wxID_YES) {
+      wxRemoveFile(shortcutPath);
+    } else {
+      return;
+    }
+  }
+
+  wxString script;
+  script += _T("Set objShell = WScript.CreateObject(\"WScript.Shell\")\n");
+  script += _T("Set link = objShell.CreateShortcut(\"") + shortcutPath + _T("\")\n");
+  script += _T("link.TargetPath = \"") + filePath + _T("\"\n");
+
+  if (iconPath != wxEmptyString) {
+    wxString fullIconPath = iconPath;
+    script += _T("link.IconLocation = \"") + iconPath + _T(",") + wxString::Format(_T("%d"), iconIndex) + _T("\"\n");
+  }
+
+  script += _T("link.Save");
+
+  wxString scriptFilePath = FilePaths::GetTempDirectory() + _T("\\") + CreateUUID() + _T(".vbs");
+  FilePaths::CreateDirectoryIfNotExists(FilePaths::GetTempDirectory());
+
+  CreateAndRunVBScript(scriptFilePath, script);
+}
+
+
 wxString Utilities::CreateUUID() {
   // http://nogeekhere.blogspot.com/2008/07/how-to-generate-uuid-guid-in-c.html
 

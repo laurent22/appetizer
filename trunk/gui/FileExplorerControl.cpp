@@ -315,7 +315,7 @@ void FileExplorerControl::PopulateFolder(const wxTreeItemId& itemId) {
     if (!wxFileName::DirExists(itemObject->GetPath()) || !folder.Open(itemObject->GetPath())) return;
 
     wxString folderItemName;
-    bool success = folder.GetFirst(&folderItemName, wxALL_FILES_PATTERN, wxDIR_FILES | wxDIR_DIRS);
+    bool success = folder.GetFirst(&folderItemName, wxALL_FILES_PATTERN, wxDIR_FILES | wxDIR_DIRS | wxDIR_HIDDEN);
     int i = 0;    
 
     while (success) {

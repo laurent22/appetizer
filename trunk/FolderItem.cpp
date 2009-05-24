@@ -629,7 +629,13 @@ void FolderItem::Launch() {
   wxString parameters;
   wxString filePath;
 
+
+
   if (filePath_.Index(_T("$(")) != wxNOT_FOUND) {
+
+    #ifdef __WINDOWS__
+
+    OSVERSIONINFO osInfo = wxGetApp().GetOsInfo();
 
     if (filePath_ == _T("$(ControlPanel)")) {
 
@@ -645,19 +651,22 @@ void FolderItem::Launch() {
     } else if (filePath_ == _T("$(MyNetwork)")) {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
-      parameters = _T(",::{208D2C60-3AEA-1069-A2D7-08002B30309D}");  
+      parameters = _T(",::{208D2C60-3AEA-1069-A2D7-08002B30309D}"); // XP and below
+      if (osInfo.dwMajorVersion >= 6) parameters = _T("shell:NetworkPlacesFolder"); // Vista and above
 
 
     } else if (filePath_ == _T("$(RecycleBin)")) {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
-      parameters = _T(",::{645FF040-5081-101B-9F08-00AA002F954E}");  
+      parameters = _T(",::{645FF040-5081-101B-9F08-00AA002F954E}"); // XP and below  
+      if (osInfo.dwMajorVersion >= 6) parameters = _T("shell:RecycleBinFolder"); // Vista and above
 
 
     } else if (filePath_ == _T("$(Printers)")) {
 
       filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
-      parameters = _T(",::{2227A280-3AEA-1069-A2DE-08002B30309D}");  
+      parameters = _T(",::{2227A280-3AEA-1069-A2DE-08002B30309D}"); // XP and below  
+      if (osInfo.dwMajorVersion >= 6) parameters = _T("shell:PrintersFolder"); // Vista and above
 
 
     } else if (filePath_ == _T("$(NetworkConnections)")) {
@@ -740,6 +749,10 @@ void FolderItem::Launch() {
 
 
     }
+
+    #endif // __WINDOWS__
+
+
   }
 
 

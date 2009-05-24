@@ -17,12 +17,16 @@ Loop %releaseDirectory%\.svn, 2, 1
 }
 
 FileRemoveDir %releaseDirectory%\Data\Plugins\TestUnit, 1
+FileRemoveDir %releaseDirectory%\Data\Plugins\Securizer, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\NightBlue, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\NightRed, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\PAMClassic, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\Sonix, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\LCD, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\LCD pink, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\GreenGlass, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\iAppetizer, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\OrangeGlass, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\Logo, 1
 FileRemoveDir %releaseDirectory%\Data\Settings, 1
 FileRemoveDir %releaseDirectory%\Data\IconCache, 1
