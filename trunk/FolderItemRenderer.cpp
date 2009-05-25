@@ -47,7 +47,6 @@ BitmapControl(owner, id, point, size) {
   SetId(FolderItemRenderer::uniqueID_);
   
   labelFont_ = NULL;
-  labelPosition_ = wxBOTTOM;
   label_ = NULL;
 
   iconOverlayPainterDown_ = NULL;
@@ -76,7 +75,13 @@ void FolderItemRenderer::UpdateInnerLabel() {
   wxString labelText = folderItem ? folderItem->GetName() : _T("");
   label_->SetLabel(labelText);
 
-  while (label_->GetBestSize().GetWidth() > GetSize().GetWidth() - Styles::Icon.Padding.Width) {
+  int maxWidth = GetSize().GetWidth() - Styles::Icon.Padding.Width;
+
+  if (wxGetApp().GetUser()->GetSettings()->GetString(_T("IconLabelPosition")) == _T("right")) {
+    maxWidth = RIGHT_ICON_LABEL_WIDTH;
+  }
+
+  while (label_->GetBestSize().GetWidth() > maxWidth) {
     if (labelText.Length() == 0) break;
 
     labelText = labelText.Mid(0, labelText.Length() - 1);
@@ -337,15 +342,20 @@ void FolderItemRenderer::FitToContent() {
   int w = iconSize;
   int h = iconSize;
 
-  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("ShowIconLabels"))) {
-    wxStaticText* label = GetLabel();
-    if (labelPosition_ == wxBOTTOM) {
+  wxString labelPosition = wxGetApp().GetUser()->GetSettings()->GetString(_T("IconLabelPosition"));
+
+  if (labelPosition != _T("hidden")) {
+
+    wxStaticText* label = GetLabel();   
+
+    if (labelPosition == _T("bottom")) {
       h += Styles::Icon.LabelGap;
       h += label->GetBestSize().GetHeight();
       if (w < MIN_BOTTOM_ICON_LABEL_WIDTH) w = MIN_BOTTOM_ICON_LABEL_WIDTH;
-    } else if (labelPosition_ == wxRIGHT) {
-      w += label->GetBestSize().GetWidth();
+    } else if (labelPosition == _T("right")) {
+      w += RIGHT_ICON_LABEL_WIDTH + Styles::Icon.LabelGap;
     }
+
   }
 
   SetSize(w + Styles::Icon.Padding.Width,
@@ -416,6 +426,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);
 
+  wxString labelPosition = wxGetApp().GetUser()->GetSettings()->GetString(_T("IconLabelPosition"));
 
 
   if (mouseInside_) {
@@ -457,6 +468,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   if (icon && icon->IsOk()) {  
 
     int x = (GetSize().GetWidth() - drawnSize) / 2;
+    if (labelPosition == _T("right")) x = Styles::Icon.Padding.Left;
     int y = Styles::Icon.Padding.Top;
 
     if (Imaging::IsBadIcon(*icon)) {
@@ -483,13 +495,15 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
   
 
-  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("ShowIconLabels"))) {
+  if (labelPosition != _T("hidden")) {
 
     wxStaticText* label = GetLabel();
     UpdateInnerLabel();
 
-    int labelWidth = GetSize().GetWidth();//label->GetBestSize().GetWidth();
+    int labelWidth = GetSize().GetWidth();
     int labelHeight = label->GetBestSize().GetHeight();
+
+    if (labelPosition == _T("right")) labelWidth = RIGHT_ICON_LABEL_WIDTH;
 
     FT_Error error;
 
@@ -537,8 +551,15 @@ void FolderItemRenderer::UpdateControlBitmap() {
 	      pen_y += slot->advance.y >> 6; /* not useful for now */ 
       } 
 
-      int destX = (GetSize().GetWidth() - pen_x) / 2;  //(GetSize().GetWidth() - targetImage.GetWidth()) / 2;
-      destDC.DrawBitmap(wxBitmap(targetImage), destX, userSettingsIconSize + Styles::Icon.LabelGap);
+      int destX = (GetSize().GetWidth() - pen_x) / 2;
+      int destY = userSettingsIconSize + Styles::Icon.LabelGap;
+
+      if (labelPosition == _T("right")) {
+        destX = Styles::Icon.Padding.Left + userSettingsIconSize + Styles::Icon.LabelGap;
+        destY = ((Styles::Icon.Padding.Height + userSettingsIconSize) - labelHeight) / 2;
+      }
+
+      destDC.DrawBitmap(wxBitmap(targetImage), destX, destY);
 
     }
 

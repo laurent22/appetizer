@@ -320,17 +320,31 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       orientationLabel->SetLabel(_("Orientation:"));
       transparencyLabel->SetLabel(_("Opacity:"));
       downloadMoreSkinLink->SetLabel(_("Download more skins"));
-      showIconLabelCheckBox->SetLabel(_("Show icon labels"));
+      labelPositionLabel->SetLabel(_("Label position:"));
 
       wxGetApp().GetUtilities().ConvertStaticTextToLink(downloadMoreSkinLink);
       downloadMoreSkinLink->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(ConfigDialog::OnDownloadMoreSkinLinkMouseDown), NULL, this);
-      showIconLabelCheckBox->SetValue(userSettings->GetBool(_T("ShowIconLabels")));
 
       //---------------------------------------------------------------------------
       // Set transparency slider
       //---------------------------------------------------------------------------
           
       transparencySlider->SetValue(userSettings->GetInt(_T("WindowTransparency")));
+
+      //---------------------------------------------------------------------------
+      // Populate "label position" dropdown list
+      //---------------------------------------------------------------------------
+
+      labelPositionComboBox->Clear();
+
+      labelPositionComboBox->Append(_("Hidden"), new wxStringClientData(_T("hidden")));
+      labelPositionComboBox->Append(_("Bottom"), new wxStringClientData(_T("bottom")));
+      labelPositionComboBox->Append(_("Right"), new wxStringClientData(_T("right")));
+
+      wxString labelPosition = userSettings->GetString(_T("IconLabelPosition"));
+      if (labelPosition == _T("hidden")) labelPositionComboBox->Select(0);
+      if (labelPosition == _T("bottom")) labelPositionComboBox->Select(1);
+      if (labelPosition == _T("right")) labelPositionComboBox->Select(2);
 
       //---------------------------------------------------------------------------
       // Populate "icon size" dropdown list
@@ -841,8 +855,11 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (updatedPages_[CONFIG_DIALOG_INDEX_APPEARANCE]) {
 
-    if (userSettings->GetBool(_T("ShowIconLabels")) != showIconLabelCheckBox->GetValue()) {
-      userSettings->SetBool(_T("ShowIconLabels"), showIconLabelCheckBox->GetValue());
+    clientData = (wxStringClientData*)(labelPositionComboBox->GetClientObject(labelPositionComboBox->GetSelection()));
+    wxString newLabelPosition = clientData->GetData();
+
+    if (userSettings->GetString(_T("IconLabelPosition")) != newLabelPosition) {
+      userSettings->SetString(_T("IconLabelPosition"), newLabelPosition);
       wxGetApp().User_IconSizeChange();
     }
 

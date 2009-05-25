@@ -61,5 +61,6 @@ const int LARGE_ICON_SIZE = 32;
 const int EXTRA_LARGE_ICON_SIZE = 48;
 const int JUMBO_ICON_SIZE = 256;
 const int MIN_BOTTOM_ICON_LABEL_WIDTH = 64;
+const int RIGHT_ICON_LABEL_WIDTH = 128;
 
 #endif // __Constants_H

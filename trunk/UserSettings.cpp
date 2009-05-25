@@ -34,7 +34,7 @@ UserSettings::UserSettings() {
   SetInt(_T("HotKeyKey"), 0);
   SetInt(_T("WindowTransparency"), 255);
   SetBool(_T("OptionPanelOpen"), true);
-  SetBool(_T("ShowIconLabels"), true);
+  SetBool(_T("IconLabelPosition"), _T("bottom"));
 
   SetBool(_T("ShowDeleteIconMessage"), true);
   SetBool(_T("ShowEjectDriveMessage"), true);

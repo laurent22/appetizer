@@ -51,7 +51,6 @@ private:
   wxBitmap* multiLaunchIcon_;
   wxMenu* popupMenu_;
   wxStaticText* label_;
-  int labelPosition_;
   wxFont* labelFont_;
 
 

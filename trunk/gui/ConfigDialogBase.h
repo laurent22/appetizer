@@ -60,8 +60,8 @@ protected:
     wxPanel* notebook_1_pane_1;
     wxStaticText* iconSizeLabel;
     wxComboBox* iconSizeComboBox;
-    wxStaticText* label_7;
-    wxCheckBox* showIconLabelCheckBox;
+    wxStaticText* labelPositionLabel;
+    wxComboBox* labelPositionComboBox;
     wxStaticText* orientationLabel;
     wxComboBox* orientationComboBox;
     wxStaticText* skinLabel;
