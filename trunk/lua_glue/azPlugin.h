@@ -22,7 +22,8 @@ public:
   azPlugin(lua_State *L);
   ~azPlugin();
 
-  int getPath(lua_State *L);  
+  int getDirectory(lua_State *L);  
+  int addEventListener(lua_State *L);
   
   static const char className[];
   static Lunar<azPlugin>::RegType methods[];

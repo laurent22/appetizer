@@ -66,6 +66,12 @@ bool LuaUtil::DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value) {
   done = luaConvertAndPushAsWrapper<FolderItem, azDockItem>(L, value);
   if (done) return true;
 
+  if (dynamic_cast<Plugin*>(value)) {
+    Plugin* plugin = dynamic_cast<Plugin*>(value);
+    Lunar<azPlugin>::push(L, plugin->luaPlugin);
+    return true;
+  }
+
   if (dynamic_cast<MiniLaunchBar*>(value)) {
     Lunar<azApplication>::push(L, wxGetApp().GetPluginManager()->luaApplication);
     return true;

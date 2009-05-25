@@ -8,13 +8,14 @@
 
 /**
  * This class represents an application. You do not need to directly create an instance
- * of it. Instead, use the <code>appetizer</code> global object to call the 
- * application methods.
+ * of it. Instead, directly use the methods and properties of the <code>appetizer</code> global object.
  *     
  * @beginEventTable
  * @event MenuOpening trayIconMenuOpening when the tray icon menu is about to be displayed
  * @event DockItemMenuOpening dockItemMenuOpening when a dock item menu is about to be displayed
  * @event DockItemClick dockItemClick when a dock item is clicked
+ * @event Ready ready when the application is fully ready
+ * @event Close close when the application is about to be closed
  * @endEventTable
  * @see Global#appetizer
  *
@@ -273,6 +274,7 @@ int azApplication::installAutoRunFile(lua_State *L) { wxGetApp().GetUtilities().
 
 /**
  * Returns the drive on which the application is running.
+ * @return String Drive name.
  * 
  */	
 int azApplication::getDrive(lua_State *L) { LuaUtil::PushString(L, FilePaths::GetApplicationDrive()); return 1; }
@@ -290,6 +292,10 @@ int azApplication::showHelpFile(lua_State *L) {
 }
 
 
+/**
+ * Returns the list of skins currently installed.
+ * @return Array The list of string names.
+ */	
 int azApplication::getSkinNames(lua_State *L) {
   wxArrayString skinNames = wxGetApp().GetUtilities().GetSkinNames();
 
@@ -308,6 +314,12 @@ int azApplication::getSkinNames(lua_State *L) {
 }
 
 
+/**
+ * Switches the skin to the given skin name. Use <code>getSkinNames</code>
+ * to get the list of possible skins.
+ * @param String skinName The skin name.
+ * @see #getSkinNames()
+ */	
 int azApplication::setSkin(lua_State *L) {
   wxString skinName = LuaUtil::ToString(L, 1);
   wxGetApp().GetUtilities().SwitchSkin(skinName);
@@ -316,6 +328,11 @@ int azApplication::setSkin(lua_State *L) {
 }
 
 
+/**
+ * Enables the application.
+ * @param Boolean enable Sets this to <code>false</code> to disable the application instead (default true)
+ * @see #disable()
+ */	
 int azApplication::enable(lua_State *L) {
   bool enable = LuaUtil::ToBoolean(L, 1, true, true);
 
@@ -329,6 +346,10 @@ int azApplication::enable(lua_State *L) {
 }
 
 
+/**
+ * Disables the application.
+ * @see #enable()
+ */	
 int azApplication::disable(lua_State *L) {
   wxGetApp().GetMainFrame()->Disable();
 
@@ -336,18 +357,30 @@ int azApplication::disable(lua_State *L) {
 }
 
 
+/**
+ * Gets the application directory
+ * @return String The application directory
+ */	
 int azApplication::getDirectory(lua_State *L) {
   LuaUtil::PushString(L, FilePaths::GetApplicationDirectory());
   return 1;
 }
 
 
+/**
+ * Gets the application file path
+ * @return String The application file path
+ */	
 int azApplication::getFilePath(lua_State *L) {
   LuaUtil::PushString(L, FilePaths::GetApplicationPath());
   return 1;
 }
 
 
+/**
+ * Gets the application data directory
+ * @return String The application data directory
+ */	
 int azApplication::getDataDirectory(lua_State *L) {
   LuaUtil::PushString(L, FilePaths::GetDataDirectory());
   return 1;

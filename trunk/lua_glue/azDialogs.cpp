@@ -172,6 +172,11 @@ int azDialogs::showImportDialog(lua_State *L) { wxGetApp().GetUtilities().ShowIm
 int azDialogs::showEjectDriveDialog(lua_State *L) { wxGetApp().GetUtilities().ShowEjectDriveDialog(); return 0; }
 
 
+/**
+ * Shows the Preferences dialog box of the plugin.
+ * @see Preferences
+ * 
+ */	
 int azDialogs::showPreferences(lua_State *L) {
   Plugin* plugin = wxGetApp().GetPluginManager()->GetPluginByLuaState(L);
   if (!plugin) return 0;
@@ -182,6 +187,67 @@ int azDialogs::showPreferences(lua_State *L) {
 }
 
 
+/**
+ * Builds and displays a form dialog, which can be used to get user's input.
+ * The function takes, as a first parameter, a table of objects, each representing a
+ * control (such as a check box or text field). The properties of these controls
+ * are the same as the properties of a preference.
+ * @example This script creates three controls and displays them.
+ * <listing version="3.0">
+ * -- Build the table of controls
+ * controls = {}
+ *
+ * -- Add a text field
+ * table.insert(controls, {
+ *   type = "Text",
+ *   name = "textExample",
+ *   title = "Type some text:",
+ *   description = "This is a text field"
+ * })
+ *
+ * -- Add a check box
+ * table.insert(controls, {
+ *   type = "CheckBox",
+ *   name = "checkboxExample",
+ *   defaultValue = "true",
+ *   title = "Are you sure?"
+ * })
+ *
+ * -- Add a popup
+ * table.insert(controls, {
+ *   type = "Popup",
+ *   name = "popupExample",
+ *   defaultValue = "two",
+ *   title = "Popup",
+ *   options = {
+ *     one = "First option",
+ *     two = "Second option",
+ *     three = "Third option"
+ *   }
+ * })
+ *
+ * -- Display the form
+ * result = dialogs:showForm(controls, "Please select some values", "Save")
+ *
+ * if result == null then
+ *   trace("User cancelled")
+ * else
+ *   for key, value in pairs(result) do
+ *     trace(key, " = ", value)
+ *   end
+ * end
+ * 
+ * appetizer:addEventListener("trayIconMenuOpening", "appetizer_trayIconMenuOpening")
+ * 
+ * trace("Listening to the "trayIconMenuOpening" event...")
+ * </listing>
+ * @param Array controls The table of controls
+ * @param String title The form title (default "Appetizer")
+ * @param String buttonLabel The form button label (default "OK")
+ * @result Array An associative array containing the key / value pairs or <code>null</code> if the user cancels
+ * @see Preferences
+ * 
+ */	
 int azDialogs::showForm(lua_State *L) {
   Plugin* plugin = wxGetApp().GetPluginManager()->GetPluginByLuaState(L);
   if (!plugin) return 0;
@@ -242,6 +308,22 @@ int azDialogs::showForm(lua_State *L) {
 }
 
 
+/**
+ * Displays some text on a modal splash screen. It can be used for example as a "waiting" screen during
+ * a time consuming operation. The function returns an ID that you will need to close the form
+ * using <code>closeSplashScreen</code>.
+ * @example This script opens a splash form, does some processing and close the form.
+ * <listing version="3.0">
+ * local formId = dialogs:showSplashForm("Operation in progress...", "Please wait...")
+ * doSomeTimeConsumingOperationHere()
+ * dialogs:closeSplashForm(formId)
+ * </listing>
+ * @param String message The message to display
+ * @param String title The form title (default "")
+ * @return Number The form identifier
+ * @see #closeSplashScreen
+ * 
+ */	
 int azDialogs::showSplashForm(lua_State *L) {
   wxString inputMessage = LuaUtil::ToString(L, 1);
   wxString inputTitle = LuaUtil::ToString(L, 2, true);
@@ -279,6 +361,12 @@ int azDialogs::showSplashForm(lua_State *L) {
 }
 
 
+/**
+ * Closes a splash form opened with <code>showSplashForm</code>.
+ * @param Number formId The form identifier
+ * @see #showSplashForm
+ * 
+ */	
 int azDialogs::closeSplashForm(lua_State *L) {
   int dialogIndex = luaL_checkinteger(L, 1);
 

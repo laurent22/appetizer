@@ -21,7 +21,7 @@ class azPreferences;
 class azPlugin;
 
 
-class Plugin {
+class Plugin : public wxObject {
 
 public:
 
@@ -51,6 +51,9 @@ public:
   wxString GetFolderPath();
   PluginPreferences* GetPreferences();
 
+  azPlugin* luaPlugin;
+  azPreferences* luaPreferences; 
+
 private:
 
   lua_State* L;
@@ -64,9 +67,7 @@ private:
   wxString state_;
   wxString folderPath_;
 
-  PluginPreferences* preferences_;
-  azPreferences* luaPreferences_;
-  azPlugin* luaPlugin_;
+  PluginPreferences* preferences_;   
 
   PluginPreferencesDialog* preferencesDialog_;
 

@@ -28,6 +28,19 @@ package {
 	 */		
 		public var system:System;
 		
+		
+	/**
+	 * The current plugin object. May be used to access functions and properties related to the plugin itself
+	 */		
+		public var plugin:Plugin;
+		
+	
+	/**
+	 * The preference registry. Can be used to get or set preference values
+	 */		
+		public var preferences:Preferences;
+		
+		
 	/**
 	 * Debug function used to display a message in the debug window. Any number of
 	 * parameters can be specified.
@@ -38,6 +51,13 @@ package {
 	 * </listing>
 	 */		
 		public function trace(s1:String = "", s2:String = "", etc:String = ""):void {}
+		
+	/**
+	 * Makes the wrapped string localizable. See Securizer plugin for an example.
+	 * @param String string The string to tag for localization
+	 * @return String The localized string
+	 */		
+		public function _(string:String):String { return ""; }
 		
 	}	
 	

@@ -1,4 +1,18 @@
-﻿Version 1.3.2.337 (2009-05-02):
+﻿Version 1.4.1.1 Beta (2009-05-24):
+
+- New: plugins can now have a Configuration dialog
+- New: many new plugin functions (possibility to change button icons, file functions, dialog functions, skin functions, new events, etc.)
+- New: Vietnamese translation (Tam Vo Le)
+- New: "Securizer" plugin to encrypt / decrypt important documents on a USB key (separate download)
+- New: option panel is now open on startup if it was open last time Appetizer was closed
+- New: support for icon labels
+- New: support for PNG icons
+- Fixed: Vista issue with special items
+- Fixed: File / Folder browse dialog now also shows hidden files and folders such as PortableApps's folders
+- Fixed: Dropping a file onto an icon should now works as expected, and launch the app with the file as a parameter
+- Updated Polish translation (MT)
+
+Version 1.3.2.337 (2009-05-02):
 
 - Greek localization
 - Turkish localization

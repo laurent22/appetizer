@@ -162,7 +162,7 @@ function cryptFile(filePath, password, encrypt)
 		e = '--decrypt'
 	end
 	
-	local command = plugin:getPath() .. '/Resources/ccrypt.exe ' .. e .. ' --key ' .. password .. ' --suffix .ccrypt1_7 --force --quiet --strictsuffix "' .. filePath .. '"'
+	local command = plugin:getDirectory() .. '/Resources/ccrypt.exe ' .. e .. ' --key ' .. password .. ' --suffix .ccrypt1_7 --force --quiet --strictsuffix "' .. filePath .. '"'
 	local output = system:runCommand(command)
 end
 
@@ -468,7 +468,7 @@ end
 
 cryptButton = OptionButton:new()
 cryptButton:setToolTip("Securizer")
-cryptButton:setIconFile(plugin:getPath() .. '/Resources/ButtonIcon_Key.png')
+cryptButton:setIconFile(plugin:getDirectory() .. '/Resources/ButtonIcon_Key.png')
 cryptButton:addEventListener("click", "cryptButton_click")
 
 optionPanel:addButton(cryptButton)

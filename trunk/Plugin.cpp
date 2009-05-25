@@ -30,8 +30,8 @@ Plugin::Plugin() {
   enabled_ = true;
   initiallyEnabled_ = enabled_;
   state_ = _T("unloaded");
-  luaPreferences_ = NULL;
-  luaPlugin_ = NULL;
+  luaPreferences = NULL;
+  luaPlugin = NULL;
   preferences_ = NULL;
   preferencesDialog_ = NULL;
   version_ = _T("0.0");
@@ -59,8 +59,8 @@ Plugin::~Plugin() {
   }
 
   wxDELETE(preferences_);
-  wxDELETE(luaPreferences_);
-  wxDELETE(luaPlugin_);
+  wxDELETE(luaPreferences);
+  wxDELETE(luaPlugin);
 }
 
 
@@ -68,14 +68,11 @@ void Plugin::ShowPreferencesDialog() {
   if (!preferencesDialog_) preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
   preferencesDialog_->LoadPreferences(this->GetPreferences());
   int result = preferencesDialog_->ShowModal();
-  //if (!preferencesDialog_) return;
-
-  //preferencesDialog_->Destroy();
-  //preferencesDialog_ = NULL;
 
   if (result == wxSAVE) {
     LuaHostTable table;
-    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("preferenceChange"), table);  
+    wxGetApp().GetPluginManager()->DispatchEvent(this, _T("preferenceChange"), table);  
+    //wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("preferenceChange"), table);  
   }
 }
 
@@ -253,9 +250,9 @@ bool Plugin::Load(const wxString& folderPath) {
   }
 
   preferences_ = new PluginPreferences(preferenceFile);
-  luaPreferences_ = new azPreferences(preferences_);
+  luaPreferences = new azPreferences(preferences_);
 
-  luaPlugin_ = new azPlugin();
+  luaPlugin = new azPlugin();
 
   // ***********************************************************
   // Register Appetizer classes to make them available
@@ -296,11 +293,11 @@ bool Plugin::Load(const wxString& folderPath) {
   lua_settable(L, LUA_GLOBALSINDEX);
 
   lua_pushliteral(L, "preferences");
-  Lunar<azPreferences>::push(L, luaPreferences_);
+  Lunar<azPreferences>::push(L, luaPreferences);
   lua_settable(L, LUA_GLOBALSINDEX);
 
   lua_pushliteral(L, "plugin");
-  Lunar<azPlugin>::push(L, luaPlugin_);
+  Lunar<azPlugin>::push(L, luaPlugin);
   lua_settable(L, LUA_GLOBALSINDEX);
 
   // ***********************************************************

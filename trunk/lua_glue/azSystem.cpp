@@ -246,6 +246,13 @@ int azSystem::killLockingProcesses(lua_State *L) {
 }
 
 
+/**
+ * Gets the list of files in the given directory.
+ * @param String directory The directory to retrieve the files from.
+ * @param Boolean recursively Set this to <code>true</code> to look for files into subfolders too (default false)
+ * @result Array List of files
+ * 
+ */	
 int azSystem::getDirectoryContents(lua_State *L) {
   wxString inputDirectory = LuaUtil::ToString(L, 1);
   bool inputRecurse = LuaUtil::ToBoolean(L, 2, true, false);
@@ -268,6 +275,20 @@ int azSystem::getDirectoryContents(lua_State *L) {
 }
 
 
+/**
+ * Returns <code>true</code> if the given file path matches the given pattern.
+ * @example This script checks if a file path matches some patterns
+ * <listing version="3.0">
+ * local filePath = "c:\temp\test.txt"
+ * trace(system:fileMatchesPattern(filePath, "c:\temp\*.txt") -- displays "true"
+ * trace(system:fileMatchesPattern(filePath, "c:\temp\t?st.txt") -- displays "true"
+ * trace(system:fileMatchesPattern(filePath, "c:\temp\*.doc") -- displays "false"
+ * </listing>
+ * @param String filePath The path to a file
+ * @param String pattern The pattern
+ * @result Boolean <code>true</code> if the file path and pattern match
+ * 
+ */	
 int azSystem::fileMatchesPattern(lua_State *L) {
   wxString inputFilename = LuaUtil::ToString(L, 1);
   wxString inputPattern = LuaUtil::ToString(L, 2);
@@ -280,6 +301,12 @@ int azSystem::fileMatchesPattern(lua_State *L) {
 }
 
 
+/**
+ * Resolves a file path by converting "..", "." and special variables (such as $(Drive) or %windir%) to actual paths.
+ * @param String filePath The path to resolve
+ * @result String The resolved path
+ * 
+ */	
 int azSystem::resolvePath(lua_State *L) {
   wxString inputFilePath = LuaUtil::ToString(L, 1);
   bool normalize = LuaUtil::ToBoolean(L, 2, true, false);

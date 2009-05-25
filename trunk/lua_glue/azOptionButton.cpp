@@ -198,6 +198,12 @@ int azOptionButton::getName(lua_State *L) { CheckWrappedObject(L, Get()); LuaUti
 int azOptionButton::setName(lua_State *L) { CheckWrappedObject(L, Get());Get()->SetName(LuaUtil::ToString(L, 1)); return 0; }
 
 
+/**
+ * 
+ * Gets the icon file associated with the button.
+ * @return String The icon file path.
+ * 
+ */	
 int azOptionButton::getIconFile(lua_State *L) {
   CheckWrappedObject(L, Get());
 
@@ -207,6 +213,12 @@ int azOptionButton::getIconFile(lua_State *L) {
 }
 
 
+/**
+ * 
+ * Sets the icon associated with the button. Set it to an empty string to use the default icon.
+ * @param String iconFile The icon file path.
+ * 
+ */	
 int azOptionButton::setIconFile(lua_State *L) {
   CheckWrappedObject(L, Get());
 

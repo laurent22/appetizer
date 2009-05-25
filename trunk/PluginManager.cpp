@@ -102,7 +102,6 @@ bool PluginManager::InstallPluginPackage(const wxString& filePath) {
 void PluginManager::Initialize() {
   if (initialized_) return;
 
-  eventNames_.Add(_T("iconMenuOpening"));
   eventNames_.Add(_T("click"));
   eventNames_.Add(_T("dockItemClick"));
   eventNames_.Add(_T("trayIconMenuOpening"));
