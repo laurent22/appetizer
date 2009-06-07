@@ -199,13 +199,7 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
 
   } else if (name == _T("newShortcut")) {
 
-    FileOrFolderDialog* d = new FileOrFolderDialog(this);
-    int result = d->ShowModal();
-    if (result == wxID_OK) {
-      wxGetApp().GetUser()->AddNewFolderItemFromPath(wxGetApp().GetUser()->GetRootFolderItem(), d->GetPath());
-    }  
-
-    d->Destroy();
+    wxGetApp().GetUser()->EditNewFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
 
   } else if (name == _T("newGroup")) {
 
@@ -473,7 +467,6 @@ void IconPanel::OnSize(wxSizeEvent& evt) {
   BitmapControl::OnSize(evt);
 
   InvalidateLayout();
-  //InvalidateIcons();
 }
 
 
@@ -652,6 +645,8 @@ void IconPanel::UpdateLayout() {
   int y = Styles::InnerPanel.Padding.Top;
   int width = GetRect().GetWidth();
   int height = GetRect().GetHeight();
+  int iconAreaRight = width - Styles::InnerPanel.Padding.Right;
+  int iconAreaBottom = height - Styles::InnerPanel.Padding.Bottom;
 
   int iconWidth = -1;
   int iconHeight = -1;
@@ -672,13 +667,13 @@ void IconPanel::UpdateLayout() {
       iconHeight = renderer->GetRect().GetHeight();
     }
 
-    if (i > 0 && newX + iconWidth > width - Styles::InnerPanel.Padding.Right) {
+    if (i > 0 && newX + iconWidth > iconAreaRight) {
       newX = Styles::InnerPanel.Padding.Left;
       newY += iconHeight;
       y = newY;
     }
 
-    if (newY + iconHeight > height - Styles::InnerPanel.Padding.Bottom) {
+    if (newY + iconHeight > iconAreaBottom) {
       if (firstOffScreenIconIndex_ < 0) firstOffScreenIconIndex_ = i;
       renderer->Hide();
       firstHiddenFound = true;

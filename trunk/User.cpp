@@ -160,6 +160,8 @@ FolderItem* User::EditNewFolderItem(FolderItem* parent, bool isGroup) {
     return folderItem;
   }
 
+  folderItem->Dispose();
+
   return NULL;
 }
 

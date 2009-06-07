@@ -110,7 +110,7 @@ void PluginManager::Initialize() {
   eventNames_.Add(_T("earlyBird"));
   eventNames_.Add(_T("ready"));
   eventNames_.Add(_T("close"));
-
+  eventNames_.Add(_T("shorcutLaunching"));
 
   luaApplication = new azApplication();
   luaOptionPanel = new azOptionPanel();

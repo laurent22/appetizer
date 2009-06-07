@@ -15,6 +15,7 @@
 #include "../MessageBoxes.h"
 #include "../utilities/IconGetter.h"
 #include "../utilities/VersionInfo.h"
+#include "../utilities/StringUtil.h"
 
 
 BEGIN_EVENT_TABLE(ShortcutEditorDialog, wxDialog)
@@ -44,6 +45,7 @@ void ShortcutEditorDialog::Localize() {
   iconLabel->SetLabel(_("Icon:"));
   changeIconButton->SetLabel(_("Change icon..."));
   useDefaultIconButton->SetLabel(_("Use default"));
+  locationTextBoxDesc->SetLabel(_("The location may be a file, a folder or a URL."));
 }
 
 
@@ -56,6 +58,7 @@ void ShortcutEditorDialog::EnableDisableFields() {
   parametersLabel->Enable(!isGroup);
   parametersTextBox->Enable(!isGroup);
   browseButton->Enable(!isGroup);
+  locationTextBoxDesc->Enable(!isGroup);
 }
 
 
@@ -76,14 +79,15 @@ void ShortcutEditorDialog::LoadFolderItem(FolderItem* folderItem) {
 
 void ShortcutEditorDialog::UpdateFolderItemIconFields() {    
 
+  wxIcon* icon = NULL;
+
   if (selectedIconPath_ != wxEmptyString) {
-    wxIcon* icon = NULL;
+    
     wxFileName fn(selectedIconPath_);
 
     if (fn.GetExt().Lower() == _T("png")) {
 
       icon = Imaging::CreateIconFromPng(FolderItem::ResolvePath(selectedIconPath_), LARGE_ICON_SIZE);
-      //icon = IconGetter::GetExecutableIcon(selectedIconPath_, LARGE_ICON_SIZE, selectedIconIndex_);
 
     } else {
 
@@ -100,24 +104,34 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
 
   } else {
 
-    if (folderItem_->IsGroup()) {
-      wxIcon* icon = FolderItem::CreateDefaultGroupIcon(LARGE_ICON_SIZE);
-      if (icon) {
-        iconStaticBitmap->SetBitmap(*icon);
-        wxDELETE(icon);
-      }
+    if (folderItem_->IsWebLink()) {
+
+      icon = IconGetter::GetDefaultWebLinkIcon(LARGE_ICON_SIZE);
+      if (icon) iconStaticBitmap->SetBitmap(*icon);
+      wxDELETE(icon);
+
     } else {
 
-      wxIcon* icon = FolderItem::CreateSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
-      if (icon) {
-        iconStaticBitmap->SetBitmap(*icon);
+      if (folderItem_->IsGroup()) {
+        icon = FolderItem::CreateDefaultGroupIcon(LARGE_ICON_SIZE);
+        if (icon) {
+          iconStaticBitmap->SetBitmap(*icon);
+          wxDELETE(icon);
+        }
       } else {
-        icon = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);
-        if (icon) iconStaticBitmap->SetBitmap(*icon);
+
+        icon = FolderItem::CreateSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
+        if (icon) {
+          iconStaticBitmap->SetBitmap(*icon);
+        } else {
+          icon = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);
+          if (icon) iconStaticBitmap->SetBitmap(*icon);
+        }
+
+        wxDELETE(icon);
+        
       }
 
-      wxDELETE(icon);
-      
     }
 
   }
@@ -150,17 +164,23 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
   wxString folderItemFilePath = locationTextBox->GetValue();
   wxString folderItemName = nameTextBox->GetValue();
 
-  wxFileName filename(FolderItem::ResolvePath(folderItemFilePath));
-  filename.Normalize();
+  folderItemFilePath.Trim(true).Trim(false);
 
-  wxString f = filename.GetFullPath();
+  if (!StringUtil::IsWebLink(folderItemFilePath)) {
 
-  if (!wxFileName::FileExists(f) && !wxFileName::DirExists(filename.GetFullPath())) {
-    // If the shortcut location doesn't exist, just show a warning but allow
-    // the user to continue. Invalid shortcuts are allowed since they
-    // might be referencing files from a different computer.
-    int result = MessageBoxes::ShowWarning(_("The shortcut location doesn't exist. Do you wish to continue?"), wxYES | wxNO);
-    if (result == wxID_NO) return;
+    wxFileName filename(FolderItem::ResolvePath(folderItemFilePath));
+    filename.Normalize();
+
+    wxString f = filename.GetFullPath();
+
+    if (!wxFileName::FileExists(f) && !wxFileName::DirExists(filename.GetFullPath())) {
+      // If the shortcut location doesn't exist, just show a warning but allow
+      // the user to continue. Invalid shortcuts are allowed since they
+      // might be referencing files from a different computer.
+      int result = MessageBoxes::ShowWarning(_("The shortcut location doesn't exist. Do you wish to continue?"), wxYES | wxNO);
+      if (result == wxID_NO) return;
+    }
+
   }
 
   folderItem_->SetCustomIcon(selectedIconPath_, selectedIconIndex_);

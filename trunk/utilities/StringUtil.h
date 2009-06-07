@@ -20,6 +20,7 @@ public:
   static bool FileMatchesPattern(const wxString& pattern, const wxString& filePath);
   static wxString RemoveTrailingSlash(const wxString& path);
   static int CompareVersions(const wxString& v1, const wxString& v2);
+  static bool IsWebLink(const wxString& string);
 
 };
 

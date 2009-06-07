@@ -56,6 +56,15 @@ void IconGetter::Destroy() {
 }
 
 
+wxIcon* IconGetter::GetDefaultWebLinkIcon(int iconSize) {
+  wxIcon* output = IconGetter::GetDefaultTypeIcon(iconSize, _T("html"));
+  if (output) return output;
+
+  output = IconGetter::GetDefaultTypeIcon(iconSize, _T("htm"));
+  return output;
+}
+
+
 
 wxString IconGetter::GetSystem32Path() {
   if (system32Path_ == wxEmptyString) {

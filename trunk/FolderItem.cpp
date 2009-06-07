@@ -10,6 +10,7 @@
 #include "utilities/IconGetter.h"
 #include "utilities/VersionInfo.h"
 #include "utilities/SystemUtil.h"
+#include "utilities/StringUtil.h"
 #include "MessageBoxes.h"
 #include "Enumerations.h"
 #include "FilePaths.h"
@@ -83,6 +84,10 @@ bool FolderItem::IsDisposed() {
 }
 
 
+// DO NOT MANUALLY DELETE FOLDER ITEMS. Instead,
+// tag them for deletion using Dispose(). The
+// garbage collector in DestroyStaticData()
+// will do the rest.
 FolderItem::~FolderItem() {
   ClearCachedIcons();
 }
@@ -521,9 +526,34 @@ FolderItem* FolderItem::SearchChildByFilename(const wxString& filename, int matc
 
 
 void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
+
+  wxString* filePathP = new wxString(filePath);
+  wxString* argumentsP = new wxString(arguments);
+  wxString* cancelP = new wxString(_T("0"));
+
+  LuaHostTable eventTable;
+  eventTable[_T("cancel")] = new LuaHostTableItem((wxObject*)cancelP, LHT_boolean);
+  eventTable[_T("filePath")] = new LuaHostTableItem((wxObject*)filePathP, LHT_string);
+  eventTable[_T("arguments")] = new LuaHostTableItem((wxObject*)argumentsP, LHT_string);
+  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("shorcutLaunching"), eventTable);
+  
+  wxDELETE(filePathP);
+  wxDELETE(argumentsP);
+  wxDELETE(cancelP);
+  
+  //***************************************************************************
+  // Launch web link
+  //***************************************************************************
+
+  if (StringUtil::IsWebLink(filePath)) {
+    ::wxLaunchDefaultBrowser(filePath, wxBROWSER_NEW_WINDOW);
+    return;
+  }  
+
   wxFileName filename(filePath);
 
   if (filename.FileExists() || filename.IsRelative() && !SystemUtil::IsPathADrive(filePath)) {
+
     //***************************************************************************
     // Launch executable
     //***************************************************************************   
@@ -977,6 +1007,11 @@ wxIcon* FolderItem::CreateDefaultGroupIcon(int iconSize) {
 }
 
 
+bool FolderItem::IsWebLink() {
+  return StringUtil::IsWebLink(GetFilePath());
+}
+
+
 wxIcon* FolderItem::GetIcon(int iconSize) {
 
   iconSize = wxGetApp().GetOSValidIconSize(iconSize);
@@ -1004,6 +1039,10 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
 
     }
   }
+
+  if (!output && IsWebLink()) {
+    output = IconGetter::GetDefaultWebLinkIcon(iconSize);
+  }  
 
   #ifdef __MLB_USE_ICON_DISK_CACHE__
   wxString cacheHash;

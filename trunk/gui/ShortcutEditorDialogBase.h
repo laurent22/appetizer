@@ -43,6 +43,8 @@ protected:
     wxStaticText* locationLabel;
     wxTextCtrl* locationTextBox;
     wxButton* browseButton;
+    wxStaticText* label_1;
+    wxStaticText* locationTextBoxDesc;
     wxStaticText* parametersLabel;
     wxTextCtrl* parametersTextBox;
     wxStaticText* iconLabel;

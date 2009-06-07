@@ -336,7 +336,7 @@ end
 -- *****************************************************************
 
 
-function askForPassword(confirm)
+function askForPassword(confirm, title)
 	local controls = {}
 	
 	table.insert(controls, {
@@ -357,7 +357,7 @@ function askForPassword(confirm)
 		})
 	end
 	
-	local result = dialogs:showForm(controls, _("Type-in your password"))
+	local result = dialogs:showForm(controls, title)
 	
 	if not result then
 		return ""
@@ -392,7 +392,14 @@ end
 
 
 function askForPasswordAndCrypt(encrypt)
-	local password = askForPassword(encrypt)
+	local title = ""
+	if encrypt then
+		title = _("Encryption")
+	else
+		title = _("Decryption")
+	end
+	
+	local password = askForPassword(encrypt, title)
 	if password == "" then
 		return
 	end

@@ -43,6 +43,19 @@ wxString StringUtil::RemoveDriveFromPath(const wxString& path) {
 }
 
 
+bool StringUtil::IsWebLink(const wxString& string) {
+  wxString s = string;
+  s.Trim(true).Trim(false);
+
+  if (s.Mid(0, 7) == _T("http://")) return true;
+  if (s.Mid(0, 8) == _T("https://")) return true;
+  if (s.Mid(0, 6) == _T("ftp://")) return true;
+  if (s.Mid(0, 7) == _T("file://")) return true;
+
+  return false;
+}
+
+
 void StringUtil::Split(const wxString& toSplit, wxArrayString& resultArray, const wxString& delimiter) {
   wxString currentString;
   int delimiterLength = delimiter.Len();

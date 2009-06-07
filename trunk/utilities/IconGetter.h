@@ -61,6 +61,8 @@ class IconGetter {
      */
     static wxIcon* GetFolderIcon(const wxString& filePath, int iconSize = 32);
 
+    static wxIcon* GetDefaultWebLinkIcon(int iconSize = 32);
+
 
     static wxString GetSystem32Path();
     static wxIcon* GetDefaultFileIcon(int iconSize);

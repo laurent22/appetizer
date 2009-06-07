@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Securizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-15 22:58-0000\n"
+"POT-Creation-Date: 2009-05-25 14:03-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: \n"
@@ -40,75 +40,82 @@ msgstr "Crypte mes fichiers lorsque je ferme Appetizer"
 msgid "Ask me to decrypt my files when I open Appetizer"
 msgstr "Décrypte mes fichiers lorsqu'Appetizer démarre"
 
-#: ..\../main.lua:229
+#: ..\../main.lua:240
 msgid "Fatal i/o error (was the file already open?)"
 msgstr "Erreur E/S fatale (le fichier était peut-être déjà ouvert)"
 
-#: ..\../main.lua:230
+#: ..\../main.lua:241
 msgid "Incorrect password (or wrong file format)"
 msgstr "Mot de passe incorrect (ou format de fichier incorrect)"
 
-#: ..\../main.lua:233
+#: ..\../main.lua:244
 msgid "Non-fatal i/o error (file is missing, or not readable)"
 msgstr "Erreur E/S non-fatale (fichier est manquant, ou n'est pas lisible)"
 
-#: ..\../main.lua:302
+#: ..\../main.lua:315
 msgid "The password must be between 4 and 20 characters."
 msgstr "Le mot de passe doit être entre 4 et 20 caractères"
 
-#: ..\../main.lua:310
+#: ..\../main.lua:323
 msgid "The password must only contain letters and numbers."
 msgstr "Le mot de passe ne doit contenir que des lettres et des nombres."
 
-#: ..\../main.lua:333
+#: ..\../main.lua:346
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: ..\../main.lua:334
+#: ..\../main.lua:347
 msgid "Please type-in a password between 4 and 20 characters. Only letters and numbers are accepted."
 msgstr "Veuillez taper un mot de passe d'entre 4 et 20 caractères. Seuls les chiffres et lettres sont acceptés."
 
-#: ..\../main.lua:342
+#: ..\../main.lua:355
 msgid "Confirm:"
 msgstr "Confirmer :"
 
-#: ..\../main.lua:343
+#: ..\../main.lua:356
 msgid "Please confirm the password"
 msgstr "Veuillez confirmer votre mot de passe"
 
-#: ..\../main.lua:347
-msgid "Type-in your password"
-msgstr "Tapez votre mot de passe"
-
-#: ..\../main.lua:365
+#: ..\../main.lua:378
 msgid "Passwords do not match."
 msgstr "Les mots de passe ne correspondent pas."
 
-#: ..\../main.lua:391
+#: ..\../main.lua:397
+msgid "Encryption"
+msgstr "Démarrer le cryptage"
+
+#: ..\../main.lua:399
+msgid "Decryption"
+msgstr "Démarrer le décryptage"
+
+#: ..\../main.lua:411
 msgid "Encryption in progress. Please wait..."
 msgstr "Cryptage en cours. Veuillez patienter..."
 
-#: ..\../main.lua:393
+#: ..\../main.lua:413
 msgid "Decryption in progress. Please wait..."
 msgstr "Décryptage en cours. Veuillez patienter..."
 
-#: ..\../main.lua:396
+#: ..\../main.lua:416
 msgid "Please wait..."
 msgstr "Veuillez patienter..."
 
-#: ..\../main.lua:408
+#: ..\../main.lua:428
 msgid "Some errors occured during the operation:"
 msgstr "Quelques erreurs se sont produites durant l'opération :"
 
-#: ..\../main.lua:440
+#: ..\../main.lua:460
 msgid "Start encryption"
 msgstr "Démarrer le cryptage"
 
-#: ..\../main.lua:444
+#: ..\../main.lua:464
 msgid "Start decryption"
 msgstr "Démarrer le décryptage"
 
-#: ..\../main.lua:448
+#: ..\../main.lua:468
 msgid "Configuration"
 msgstr "Configuration"
+
+#~ msgid "Type-in your password"
+#~ msgstr "Tapez votre mot de passe"
 

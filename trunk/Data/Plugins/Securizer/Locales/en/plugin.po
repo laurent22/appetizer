@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Securizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-15 22:58-0000\n"
+"POT-Creation-Date: 2009-05-25 14:02-0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: \n"
@@ -40,75 +40,79 @@ msgstr ""
 msgid "Ask me to decrypt my files when I open Appetizer"
 msgstr ""
 
-#: ..\../main.lua:229
+#: ..\../main.lua:240
 msgid "Fatal i/o error (was the file already open?)"
 msgstr ""
 
-#: ..\../main.lua:230
+#: ..\../main.lua:241
 msgid "Incorrect password (or wrong file format)"
 msgstr ""
 
-#: ..\../main.lua:233
+#: ..\../main.lua:244
 msgid "Non-fatal i/o error (file is missing, or not readable)"
 msgstr ""
 
-#: ..\../main.lua:302
+#: ..\../main.lua:315
 msgid "The password must be between 4 and 20 characters."
 msgstr ""
 
-#: ..\../main.lua:310
+#: ..\../main.lua:323
 msgid "The password must only contain letters and numbers."
 msgstr ""
 
-#: ..\../main.lua:333
+#: ..\../main.lua:346
 msgid "Password:"
 msgstr ""
 
-#: ..\../main.lua:334
+#: ..\../main.lua:347
 msgid "Please type-in a password between 4 and 20 characters. Only letters and numbers are accepted."
 msgstr ""
 
-#: ..\../main.lua:342
+#: ..\../main.lua:355
 msgid "Confirm:"
 msgstr ""
 
-#: ..\../main.lua:343
+#: ..\../main.lua:356
 msgid "Please confirm the password"
 msgstr ""
 
-#: ..\../main.lua:347
-msgid "Type-in your password"
-msgstr ""
-
-#: ..\../main.lua:365
+#: ..\../main.lua:378
 msgid "Passwords do not match."
 msgstr ""
 
-#: ..\../main.lua:391
+#: ..\../main.lua:397
+msgid "Encryption"
+msgstr ""
+
+#: ..\../main.lua:399
+msgid "Decryption"
+msgstr ""
+
+#: ..\../main.lua:411
 msgid "Encryption in progress. Please wait..."
 msgstr ""
 
-#: ..\../main.lua:393
+#: ..\../main.lua:413
 msgid "Decryption in progress. Please wait..."
 msgstr ""
 
-#: ..\../main.lua:396
+#: ..\../main.lua:416
 msgid "Please wait..."
 msgstr ""
 
-#: ..\../main.lua:408
+#: ..\../main.lua:428
 msgid "Some errors occured during the operation:"
 msgstr ""
 
-#: ..\../main.lua:440
+#: ..\../main.lua:460
 msgid "Start encryption"
 msgstr ""
 
-#: ..\../main.lua:444
+#: ..\../main.lua:464
 msgid "Start decryption"
 msgstr ""
 
-#: ..\../main.lua:448
+#: ..\../main.lua:468
 msgid "Configuration"
 msgstr ""
 

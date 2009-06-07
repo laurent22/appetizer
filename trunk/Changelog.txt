@@ -1,4 +1,9 @@
-﻿Version 1.4.1.1 Beta (2009-05-24):
+﻿Version 1.4.2.22 Beta (2009-05-25):
+
+- New: Icon labels can now be displayed below or to the right of the icon.
+- Fixed minor plugin issue
+
+Version 1.4.1.1 Beta (2009-05-24):
 
 - New: plugins can now have a Configuration dialog
 - New: many new plugin functions (possibility to change button icons, file functions, dialog functions, skin functions, new events, etc.)

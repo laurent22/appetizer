@@ -342,9 +342,15 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       labelPositionComboBox->Append(_("Right"), new wxStringClientData(_T("right")));
 
       wxString labelPosition = userSettings->GetString(_T("IconLabelPosition"));
-      if (labelPosition == _T("hidden")) labelPositionComboBox->Select(0);
-      if (labelPosition == _T("bottom")) labelPositionComboBox->Select(1);
-      if (labelPosition == _T("right")) labelPositionComboBox->Select(2);
+      if (labelPosition == _T("hidden")) {
+        labelPositionComboBox->Select(0);
+      } else if (labelPosition == _T("bottom")) {
+        labelPositionComboBox->Select(1);
+      } else if (labelPosition == _T("right")) {
+        labelPositionComboBox->Select(2);
+      } else {
+        labelPositionComboBox->Select(0);
+      }
 
       //---------------------------------------------------------------------------
       // Populate "icon size" dropdown list

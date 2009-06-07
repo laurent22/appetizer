@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-26 17:48+0100\n"
-"PO-Revision-Date: 2009-04-26 17:53-0000\n"
+"PO-Revision-Date: 2009-06-07 12:22-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -104,12 +104,12 @@ msgstr "Huidige Drive"
 #: FolderItem.cpp:1097
 #: IconPanel.cpp:177
 msgid "Printers and Faxes"
-msgstr ""
+msgstr "Printers en Faxen:"
 
 #: FolderItem.cpp:1099
 #: IconPanel.cpp:178
 msgid "Network Connections"
-msgstr ""
+msgstr "Netwerkconnecties:"
 
 #: FolderItemRenderer.cpp:154
 #: gui\TreeViewDialog.cpp:106
@@ -508,7 +508,7 @@ msgstr "Orientatie"
 
 #: gui\ConfigDialog.cpp:306
 msgid "Transparency:"
-msgstr ""
+msgstr "Transparantie:"
 
 #: gui\ConfigDialog.cpp:340
 msgid "Horizontal"

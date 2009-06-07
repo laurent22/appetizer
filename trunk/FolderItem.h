@@ -48,6 +48,7 @@ public:
   void SetFilePath(const wxString& filePath);
   void SetName(const wxString& name);  
   void ClearCachedIcons();  
+  bool IsWebLink();
 
   static wxIcon* CreateSpecialItemIcon(const wxString& path, int iconSize);
   static wxIcon* CreateDefaultGroupIcon(int iconSize);

@@ -330,25 +330,36 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
   }
 
   if (closeOperationScheduled_) {
-    closeOperationScheduled_ = false;
-    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("close"), emptyEventTable); 
+    closeOperationScheduled_ = false;    
     Close();
   }
 
   if (closeStep_ >= 0) {
 
-    DoCloseStep(closeStep_);
-    closeStep_++;
+    DoCloseStep();
 
   }
+
 }
 
 
-void MainFrame::DoCloseStep(int step) {
-  
+void MainFrame::DoCloseStep() {
+
+  if (closeStep_ < 0) return;
+
+  int step = closeStep_;
+
+  // Set it to -1 for now to make sure that a given step is not executed more than once
+  // It needs to be set back to set + 1, once the step has been done.
+  closeStep_ = -1; 
+
   if (step == 0) {
   
+    LuaHostTable emptyEventTable;
+    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("close"), emptyEventTable); 
     RecurseCleanUp(this);  
+
+    closeStep_ = step + 1;
 
   } else if (step == 1) {
 
@@ -401,6 +412,8 @@ void MainFrame::DoCloseStep(int step) {
     wxGetApp().CloseApplication();
 
     Destroy();
+
+    closeStep_ = step + 1;
 
   }
 

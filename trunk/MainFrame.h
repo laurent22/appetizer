@@ -76,7 +76,7 @@ class MainFrame: public wxFrame {
     int closeStep_;
 
 
-    void DoCloseStep(int step);
+    void DoCloseStep();
 
     void UpdateMask();
     void UpdateLayout();

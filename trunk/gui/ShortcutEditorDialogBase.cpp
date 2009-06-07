@@ -17,6 +17,8 @@ ShortcutEditorDialogBase::ShortcutEditorDialogBase(wxWindow* parent, int id, con
     locationLabel = new wxStaticText(this, wxID_ANY, wxT("Location:"));
     locationTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
     browseButton = new wxButton(this, ID_SHORTCUTDLG_BUTTON_Browse, wxT("..."));
+    label_1 = new wxStaticText(this, wxID_ANY, wxEmptyString);
+    locationTextBoxDesc = new wxStaticText(this, wxID_ANY, wxT("#The location may be a file, a folder or a URL.#"));
     parametersLabel = new wxStaticText(this, wxID_ANY, wxT("Parameters:"));
     parametersTextBox = new wxTextCtrl(this, wxID_ANY, wxEmptyString);
     iconLabel = new wxStaticText(this, wxID_ANY, wxT("Icon:"));
@@ -57,6 +59,8 @@ void ShortcutEditorDialogBase::do_layout()
     sizer_4->Add(locationTextBox, 1, wxRIGHT|wxALIGN_CENTER_VERTICAL, 8);
     sizer_4->Add(browseButton, 0, 0, 0);
     inputSizers->Add(sizer_4, 1, wxEXPAND, 0);
+    inputSizers->Add(label_1, 0, 0, 0);
+    inputSizers->Add(locationTextBoxDesc, 0, wxBOTTOM, 5);
     inputSizers->Add(parametersLabel, 0, wxALIGN_CENTER_VERTICAL, 0);
     inputSizers->Add(parametersTextBox, 0, wxEXPAND, 0);
     inputSizers->Add(iconLabel, 0, wxALIGN_CENTER_VERTICAL, 0);

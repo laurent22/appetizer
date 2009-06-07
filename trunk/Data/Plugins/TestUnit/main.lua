@@ -443,6 +443,23 @@ end
 
 appetizer:addEventListener("preferenceChange", "appetizer_preferenceChange")
 
+
+
+function appetizer_shorcutLaunching(event)
+	trace(event.filePath)
+	trace(event.arguments)
+	trace(event.cancel)
+end
+
+
+appetizer:addEventListener("shorcutLaunching", "appetizer_shorcutLaunching")
+
+
+
+
+
+
+
 --result = formTest()
 --
 --trace("================")
