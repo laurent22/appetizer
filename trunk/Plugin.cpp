@@ -195,6 +195,7 @@ bool Plugin::Load(const wxString& folderPath) {
 
   lua_register(L, "trace", azPrint);
   lua_register(L, "_", azTranslate);
+  lua_register(L, "cancelEvent", azCancelEvent);
 
   // ***********************************************************
   // Lua and wxWidgets don't handle UTF-8 files with BOM, so
@@ -355,6 +356,15 @@ void Plugin::AddEventListener(wxObject* object, const wxString& eventName, const
 }
 
 
+void Plugin::CancelEvent(int eventId) {
+  LuaHostTable* eventTable = dispatchedEvents_[eventId];
+  if (!eventTable) return;
+
+  wxString* cancel = (wxString*)((*eventTable)[_T("cancel")]->value);
+  cancel->SetChar(0, _T('1'));
+}
+
+
 void Plugin::DispatchEvent(wxObject* sender, const wxString& eventName, LuaHostTable& arguments) {
   int eventId = wxGetApp().GetPluginManager()->GetEventIdByName(eventName);
   DispatchEvent(sender, eventId, arguments);
@@ -369,6 +379,7 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable& argument
 
   for (int i = 0; i < functionNames->Count(); i++) {
     wxString n = (*functionNames)[i];
+    int eventId = wxGetApp().GetUniqueInt();
 
     // ************************************************
     // Push the function to call onto the stack
@@ -389,13 +400,23 @@ void Plugin::DispatchEvent(wxObject* sender, int eventId, LuaHostTable& argument
     lua_pushstring(L, "sender");
     bool done = LuaUtil::DetectTypeAndPushAsWrapper(L, sender);
     if (!done) wxLogDebug(_T("[ERROR] Cannot detect type of sender"));
-    lua_settable(L, tableIndex);   
+    lua_settable(L, tableIndex);
+
+    lua_pushstring(L, "id");
+    lua_pushinteger(L, eventId);
+    lua_settable(L, tableIndex);
+    
+    dispatchedEvents_[eventId] = &arguments;
 
     // *********************************************************
     // Call the function
     // *********************************************************
 
     int errorCode = lua_pcall(L, 1, 0, 0);
+
+    dispatchedEvents_[eventId] = NULL;
+
+    //bool test = LuaUtil::GetBoolFromTable(L, tableIndex, _T("cancel"));
 
     if (errorCode) {
       const char* errorString = lua_tostring(L, -1);

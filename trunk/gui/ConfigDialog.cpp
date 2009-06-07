@@ -221,6 +221,9 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       oneInstanceCheckBox->SetLabel(wxString::Format(_("Allow only one instance of %s at a time"), APPLICATION_NAME));
       checkForUpdateButton->SetLabel(_("Check for update"));
       installAutorunButton->SetLabel(_("Install autorun file"));
+      startupCheckBox->SetLabel(_T("Start Appetizer on system startup"));
+
+      startupCheckBox->SetValue(wxGetApp().IsLaunchedOnStartup());
 
       //---------------------------------------------------------------------------
       // Populate language dropdown list
@@ -837,6 +840,8 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     }
 
     userSettings->SetBool(_T("UniqueApplicationInstance"), oneInstanceCheckBox->GetValue());
+
+    wxGetApp().SetLaunchOnStartup(startupCheckBox->GetValue());
 
   }
 

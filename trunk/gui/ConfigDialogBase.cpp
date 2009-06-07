@@ -28,6 +28,8 @@ ConfigDialogBase::ConfigDialogBase(wxWindow* parent, int id, const wxString& tit
     alwaysOnTopCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Always on top"));
     label_2 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     oneInstanceCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("Allow only one instance of %s at a time"));
+    label_7 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
+    startupCheckBox = new wxCheckBox(notebook_1_pane_1, wxID_ANY, wxT("#Start Appetizer on system startup#"));
     label_5 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
     installAutorunButton = new wxButton(notebook_1_pane_1, ID_CDLG_BUTTON_InstallAutorunButton, wxT("#Install autorun file#"));
     label_3 = new wxStaticText(notebook_1_pane_1, wxID_ANY, wxEmptyString);
@@ -112,6 +114,8 @@ void ConfigDialogBase::do_layout()
     generalGridSizer->Add(alwaysOnTopCheckBox, 0, 0, 0);
     generalGridSizer->Add(label_2, 0, 0, 0);
     generalGridSizer->Add(oneInstanceCheckBox, 0, 0, 0);
+    generalGridSizer->Add(label_7, 0, 0, 0);
+    generalGridSizer->Add(startupCheckBox, 0, 0, 0);
     generalGridSizer->Add(label_5, 0, 0, 0);
     generalGridSizer->Add(installAutorunButton, 0, wxEXPAND, 0);
     generalGridSizer->Add(label_3, 0, 0, 0);

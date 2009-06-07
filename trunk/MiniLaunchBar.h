@@ -49,6 +49,8 @@ public:
   int GetUniqueInt();
   void InitializePluginManager();
   wxLocale* GetLocale();
+  bool IsLaunchedOnStartup();
+  void SetLaunchOnStartup(bool launch);
 
   const bool GetCommandLineFound(const wxString& name);
 

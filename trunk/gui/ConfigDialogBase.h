@@ -53,6 +53,8 @@ protected:
     wxCheckBox* alwaysOnTopCheckBox;
     wxStaticText* label_2;
     wxCheckBox* oneInstanceCheckBox;
+    wxStaticText* label_7;
+    wxCheckBox* startupCheckBox;
     wxStaticText* label_5;
     wxButton* installAutorunButton;
     wxStaticText* label_3;

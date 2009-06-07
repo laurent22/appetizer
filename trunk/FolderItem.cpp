@@ -536,10 +536,18 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
   eventTable[_T("filePath")] = new LuaHostTableItem((wxObject*)filePathP, LHT_string);
   eventTable[_T("arguments")] = new LuaHostTableItem((wxObject*)argumentsP, LHT_string);
   wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("shorcutLaunching"), eventTable);
+
+  wxString* sCancelled = (wxString*)(eventTable[_T("cancel")]->value);
+  bool cancelled = sCancelled->Mid(0,1) == _T("1");
   
   wxDELETE(filePathP);
   wxDELETE(argumentsP);
   wxDELETE(cancelP);
+
+  if (cancelled) {
+    ILOG(_T("Launch has been cancelled by plugin"));
+    return;
+  }
   
   //***************************************************************************
   // Launch web link

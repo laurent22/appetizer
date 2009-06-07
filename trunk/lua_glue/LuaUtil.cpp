@@ -221,10 +221,32 @@ bool LuaUtil::GetBoolFromTable(lua_State *L, int tableIndex, const wxString& key
 
   if (!lua_isboolean(L, -1)) {
     if (!isOptional) {
-      luaL_typerror(L, -1, lua_typename(L, LUA_TSTRING));
+      luaL_typerror(L, -1, lua_typename(L, LUA_TBOOLEAN));
     }
   } else {
     output = LuaUtil::ToBoolean(L, -1);
+  }
+  
+  lua_pop(L, 1);
+
+  return output;
+}
+
+
+bool LuaUtil::GetIntFromTable(lua_State *L, int tableIndex, const wxString& key, bool isOptional) {
+  wxASSERT_MSG(0, _T("Function is not working - don't use"));
+
+  lua_pushstring(L, key.mb_str());
+  lua_gettable(L, tableIndex);
+  
+  int output = 0;
+
+  if (!lua_isnumber(L, -1)) {
+    if (!isOptional) {
+      luaL_typerror(L, -1, lua_typename(L, LUA_TNUMBER));
+    }
+  } else {
+    output = lua_tointeger(L, -1);
   }
   
   lua_pop(L, 1);

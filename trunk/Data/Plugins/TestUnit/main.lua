@@ -448,7 +448,9 @@ appetizer:addEventListener("preferenceChange", "appetizer_preferenceChange")
 function appetizer_shorcutLaunching(event)
 	trace(event.filePath)
 	trace(event.arguments)
-	trace(event.cancel)
+	
+	cancelEvent(event)
+	--event.cancel = true
 end
 
 

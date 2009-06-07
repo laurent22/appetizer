@@ -14,6 +14,7 @@ int luaHost_logInfo(const wxString& s);
 
 int azPrint(lua_State *L);
 int azTranslate(lua_State *L);
+int azCancelEvent(lua_State *L);
 
 
 #endif // __azGlobal_H

@@ -330,7 +330,7 @@ int azDialogs::showSplashForm(lua_State *L) {
 
   int margin = 20;
 
-  wxDialog* dialog = new wxDialog(wxGetApp().GetMainFrame(), wxID_ANY, inputTitle, wxDefaultPosition, wxDefaultSize, wxCAPTION | wxSTAY_ON_TOP);
+  wxDialog* dialog = new wxDialog(wxGetApp().GetMainFrame(), wxID_ANY, inputTitle, wxDefaultPosition, wxDefaultSize, wxCAPTION);
 
   wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 

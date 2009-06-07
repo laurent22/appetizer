@@ -66,6 +66,8 @@ void AboutDialog::Localize() {
   creditText += _T("\n");
   creditText += _("- ccrypt by Peter Selinger");
   creditText += _T("\n"); 
+  creditText += _("- FreeType by its respective contributors");
+  creditText += _T("\n"); 
   creditText += _("- wxWidgets by their respective authors");
   creditText += _T("\n\n");  
   creditText += _("Dialog boxes are built using wxGlade by Alberto Griggio.");

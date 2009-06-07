@@ -9,6 +9,7 @@
 
 #include "azGlobal.h"
 #include "LuaUtil.h"
+#include "../MiniLaunchBar.h"
 
 
 //*****************************************************************
@@ -69,4 +70,19 @@ int azTranslate(lua_State *L) {
   LuaUtil::PushString(L, wxGetTranslation(inputString));
 
   return 1;
+}
+
+
+int azCancelEvent(lua_State *L) {
+  Plugin* p = wxGetApp().GetPluginManager()->GetPluginByLuaState(L);
+  if (!p) return 0;
+
+  wxString eventId = LuaUtil::GetStringFromTable(L, 1, _T("id"));
+
+  long n = 0;
+  eventId.ToLong(&n);
+
+  p->CancelEvent(n);
+
+  return 0;
 }

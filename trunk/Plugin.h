@@ -50,6 +50,7 @@ public:
   void ShowPreferencesDialog();
   wxString GetFolderPath();
   PluginPreferences* GetPreferences();
+  void CancelEvent(int eventId);
 
   azPlugin* luaPlugin;
   azPreferences* luaPreferences; 
@@ -74,6 +75,7 @@ private:
   void LoadPluginXml(const wxString& xmlFilePath);
 
   std::map<std::pair<wxObject*, int>, wxArrayString*> eventRegister_;
+  std::map<int, LuaHostTable*> dispatchedEvents_;
 
 };
 

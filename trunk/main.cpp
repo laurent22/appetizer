@@ -212,10 +212,42 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
   mainFrame_->Localize();  
 
+  SetLaunchOnStartup(true);
+
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
 
   return true;
 } 
+
+
+bool MiniLaunchBar::IsLaunchedOnStartup() {
+  wxRegKey regKey(_T("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
+  if (regKey.Exists()) {
+    return regKey.HasValue(_T("Appetizer"));
+  } else {
+    ELOG(_T("Couldn't get HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
+  }
+
+  return false;
+}
+
+
+void MiniLaunchBar::SetLaunchOnStartup(bool launch) {
+  //if (utilities_.IsApplicationOnPortableDrive()) return;
+
+  wxRegKey regKey(_T("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
+  if (!regKey.Exists()) {
+    ELOG(_T("Couldn't get HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
+    return;
+  }
+
+  if (launch) {
+    regKey.SetValue(_T("Appetizer"), _T("\"") + FilePaths::GetApplicationPath() + _T("\""));
+  } else {
+    if (!regKey.HasValue(_T("Appetizer"))) return;
+    regKey.DeleteValue(_T("Appetizer"));
+  }
+}
 
 
 FT_Library MiniLaunchBar::GetFreeTypeLibrary() {
