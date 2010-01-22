@@ -1,0 +1,621 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-26 17:48+0100\n"
+"PO-Revision-Date: 2009-08-28 10:51+0100\n"
+"Last-Translator: Sepp Winkler <sepp.winkler@gmail.com>\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+
+msgid "%s Plugin Packages"
+msgstr "%s balíčky zásuvných modulov"
+
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s bude minimalizovaný do oblasti oznámení. \n"
+"\n"
+"Možete zmeniť toto správanie v '%s' windows ('%s' tab)"
+
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Verzia %s.%s.%s (Build #%s)"
+
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString od Joe O'Learyho"
+
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
+msgstr ""
+"- Lua od Roberta Ierusalimschyho, Luiza Henrique de Figueiredo, and "
+"Waldemara Celesa"
+
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini od Brodieho Thiesfielda"
+
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml od Yvesa Berquina"
+
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets od ich autorov"
+
+msgid "<None>"
+msgstr "<None>"
+
+msgid ""
+"A new version is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"\n"
+"Do you wish to download it now?"
+msgstr ""
+"Nová verzia je dostupná! \n"
+"\n"
+"Vaša verzia: %s\n"
+"Nová verzia: %s\n"
+"Poznámky vydania: %s\n"
+"\n"
+"Chcete ju stiahnuť teraz? "
+
+msgid "About"
+msgstr "O programe"
+
+msgid "About %s..."
+msgstr "O %s..."
+
+msgid "Add special item"
+msgstr "Pridať špeciálnu položku"
+
+msgid "Add to Multi Launch group"
+msgstr "Pridať skupinu Viacnásobného spustenia"
+
+msgid "All files"
+msgstr "Všetky súbory"
+
+msgid "All supported files"
+msgstr "Všetky podporované súbory"
+
+msgid "Allow only one instance of %s at a time"
+msgstr "Povoliť len jednu inštanciu %s"
+
+msgid "Alt +"
+msgstr "Alt +"
+
+msgid "Always on top"
+msgstr "Vždy na vrchu"
+
+msgid "Appearance"
+msgstr "Vzhľad"
+
+msgid "Auto-hide after launching an application"
+msgstr "Automaticky skryť po spustení aplikácie"
+
+msgid "Available plugins"
+msgstr "Dostupné zásuvné moduly"
+
+msgid "Backspace"
+msgstr "Backspace"
+
+msgid ""
+"By installing the autorun file on your removable drive, %s will start "
+"automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Nainštalovaním súboru autorun na vymeniteľný disk sa %s automaticky spustí "
+"pri pripojení disku. \n"
+"\n"
+"Želáte si pokračovať?"
+
+msgid "Can not create file '%s'"
+msgstr "Nedá sa čítať súbor '%s'"
+
+msgid "Can not read zip entry '%s'"
+msgstr "Nedá sa čítať vstup zip '%s'"
+
+msgid "Cancel"
+msgstr "Zrušiť"
+
+msgid "Change icon..."
+msgstr "Zmeniť ikonu..."
+
+msgid "Check for update"
+msgstr "Skontrolovať aktualizácie"
+
+msgid "Close"
+msgstr "Zatvoriť"
+
+msgid "Close button minimizes to System Tray"
+msgstr "Tlačidlo atvorenia minimalizuje program do oblasti oznámení"
+
+msgid "Configuration"
+msgstr "Nastavenie"
+
+msgid "Confirmation"
+msgstr "Potvrdenie"
+
+msgid "Contact:"
+msgstr "Kontakt:"
+
+msgid "Control +"
+msgstr "Control +"
+
+msgid "Control Panel"
+msgstr "Ovládací panel"
+
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+msgid "Could not get update information"
+msgstr "Nedá sa získať informácia o aktualizácii"
+
+msgid "Could not initialize locale."
+msgstr "Nedá sa inicilizovať lokalita."
+
+msgid "Could not install autorun file. Please try again."
+msgstr ""
+"Nie je možné nainštalovať súbor autorun. Skúste vykonať operáciu znova."
+
+msgid "Could not open %s"
+msgstr "Nedá sa otvoriť %s"
+
+msgid "Credits"
+msgstr "Poďakovanie"
+
+msgid "Current Drive"
+msgstr "Aktuálny disk"
+
+msgid "Default"
+msgstr "Predvolené"
+
+msgid "Delete"
+msgstr "Delete"
+
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Dialógové okná sú vytvorené pomocou wxGlade od Alberta Griggia."
+
+msgid "Disable"
+msgstr "Vypnúť"
+
+msgid "Disabled"
+msgstr "Vypnuté"
+
+msgid "Displays the log window (useful for debugging)"
+msgstr "Zobrazí okno denníka (užitočné pri ladení)"
+
+msgid "Displays this help message"
+msgstr "Zobrazí túto správu pomocníka"
+
+msgid "Do you wish to eject the drive?"
+msgstr "Prajete si odpojiť disk?"
+
+msgid "Do you wish to remove this icon?"
+msgstr "Prajete si odstrániť túto ikonu?"
+
+msgid "Don't show this message again"
+msgstr "Nezobrazovať toto upozornenie znovu"
+
+msgid "Down"
+msgstr "Šípka dole"
+
+msgid "Dynamic libraries"
+msgstr "Dynamické knižnice"
+
+msgid "Eject drive"
+msgstr "Odpojiť disk"
+
+msgid "Enable"
+msgstr "Zapnúť"
+
+msgid "Enabled"
+msgstr "Zapnuté"
+
+msgid "End"
+msgstr "End"
+
+msgid "Error"
+msgstr "Chyba"
+
+msgid "Error launching web browser"
+msgstr "Chyba pri spustení prehliadača internetu"
+
+msgid "Escape"
+msgstr "Escape"
+
+msgid "Exclude these items from import operations"
+msgstr "Vylúčiť tieto položky z importovania"
+
+msgid "Executables"
+msgstr "Spustiteľné súbory"
+
+msgid "Extra Large (XP and above)"
+msgstr "Extra veľké (XP a vyššie)"
+
+msgid "General"
+msgstr "Všeobecné"
+
+msgid "Get Support"
+msgstr "Získať podporu"
+
+msgid "Group"
+msgstr "Skupina"
+
+msgid "Group Properties"
+msgstr "Vlastnosti skupiny"
+
+msgid "Help"
+msgstr "Pomocník"
+
+msgid "Help Topics"
+msgstr "Témy pomocníka"
+
+msgid "Hide"
+msgstr "Skryť"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Horizontal"
+msgstr "Horizontálne"
+
+msgid "Hot key to hide / show the bar"
+msgstr "Klávesová skratka pre skrytie / zobrazenie panelu"
+
+msgid "Icon file or library:"
+msgstr "Súbor ikony alebo knižnica:"
+
+msgid "Icon libraries"
+msgstr "Knižnice s ikonami"
+
+msgid "Icon size:"
+msgstr "Veľkosť ikony:"
+
+msgid "Icon:"
+msgstr "Ikona:"
+
+msgid "Icons"
+msgstr "Ikony"
+
+msgid "Import"
+msgstr "Importovať"
+
+msgid "Import shortcuts"
+msgstr "Importovať zástupcov"
+
+msgid "Importing shortcuts... Please wait."
+msgstr "Importovanie zástupcov... Prosím čakajte."
+
+msgid "Information"
+msgstr "Informácia"
+
+msgid "Install autorun file"
+msgstr "Inštalovať súbor autorun"
+
+msgid "Install..."
+msgstr "Inštalovať..."
+
+msgid "Jumbo (Vista and above)"
+msgstr "Obrovské (Vista a vyššie)"
+
+msgid "Language:"
+msgstr "Jazyk:"
+
+msgid "Large"
+msgstr "Veľké"
+
+msgid "Left"
+msgstr "Šípka vľavo"
+
+msgid "License"
+msgstr "Licencia"
+
+msgid "Loading tree..."
+msgstr "Načítavanie stromu..."
+
+msgid "Location:"
+msgstr "Umiestnenie:"
+
+msgid "Minimize to tray"
+msgstr "Minimalizovať do oblasti oznámení"
+
+msgid "Multi-launch"
+msgstr "Viacnásobné spustenie"
+
+msgid "My Computer"
+msgstr "Tento počítač"
+
+msgid "My Network Places"
+msgstr "Moje miesta v sieti"
+
+msgid "Name:"
+msgstr "Názov:"
+
+msgid "Network Connections"
+msgstr "Sieťové pripojenia"
+
+msgid "New group..."
+msgstr "Nová skupina"
+
+msgid "New shortcut..."
+msgstr "Nový zástupca"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Operations"
+msgstr "Operácie"
+
+msgid "Organize group shortcuts"
+msgstr "Organizovať skupinu zástupcov"
+
+msgid "Organize shortcuts"
+msgstr "Organizovať zástupcov"
+
+msgid "Orientation:"
+msgstr "Orientácia:"
+
+msgid "Parameters:"
+msgstr "Parametre:"
+
+msgid "Please wait while your applications are being closed."
+msgstr "Počkajte kým nebudú aplikácie ukončené."
+
+msgid "Please wait..."
+msgstr "Prosím čakajte..."
+
+msgid "Plugin"
+msgstr "Zásuvný modul"
+
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
+msgstr ""
+"Skript zásuvného modulu nie je v správnom formáte. Kódujte ho ako UTF-8 NO "
+"BOM alebo ASCII. Aplikuje sa na:"
+
+msgid "Plugins"
+msgstr "Zásuvné moduly"
+
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com aplikácie"
+
+msgid "Printers and Faxes"
+msgstr "Tlačiarne a faxy"
+
+msgid "Properties"
+msgstr "Vlastnosti"
+
+msgid "Recycle Bin"
+msgstr "Kôš"
+
+msgid "Remove..."
+msgstr "Odstrániť..."
+
+msgid "Return"
+msgstr "Enter"
+
+msgid "Right"
+msgstr "Šípka hore"
+
+msgid "Run multi-launch group on startup"
+msgstr "Spustiť skupinu viacnásobného spustenia pri štarte"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "Search"
+msgstr "Hľadať"
+
+msgid "Select a file or a folder"
+msgstr "Vybrať súbor alebo zložku"
+
+msgid "Select a plugin package"
+msgstr "Vybrať balíček zásuvného modulu"
+
+msgid "Select an icon"
+msgstr "Vybrať ikonu"
+
+msgid "Select an icon file or library"
+msgstr "Vybrať súbor ikony alebo knižnicu"
+
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Nastaví cestu používateľských údajov (-u bude ignorované)"
+
+msgid "Shift +"
+msgstr "Shift +"
+
+msgid "Shorcut Properties"
+msgstr "Vlastnosti zástupcu"
+
+msgid "Show"
+msgstr "Zobraziť"
+
+msgid "Show Desktop"
+msgstr "Zobraziť plochu"
+
+msgid "Skin:"
+msgstr "Téma:"
+
+msgid "Small"
+msgstr "Malé"
+
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
+msgstr "Niektoré z týchto zmien sa prejavia až po reštarte programu."
+
+msgid "Space"
+msgstr "Medzerník"
+
+msgid "Start >>"
+msgstr "Štart >>"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "Tab"
+msgstr "Tab"
+
+msgid "The autorun file has been installed successfully"
+msgstr "Súbor autorun bol uspešne nainštlovaný."
+
+msgid ""
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr "Zmeny v zásuvných moduloch budú aktívne po nasledujúcom spustení %s."
+
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr ""
+"Skupina viacnásobného spustenia je prázdna. Chcete zobraziť pomocníka k "
+"tejto funkcii?"
+
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
+msgstr ""
+"Zásuvný modul bol úspešne nainštalovaný. Bude zapnutý pri ďalšom spustení %s"
+
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Umiestnenie zástupcov neexistuje. Želáte si pokračovať?"
+
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr ""
+"Nastala chyba pri registrovaní klávesovej skratky. Môže už byť registrovaná "
+"inou aplikáciou."
+
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Tento súbor neexistuje alebo bol odstránený (Chyba %s)"
+
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"Tento program je voľný software: môžete ho redistribuovať a/alebo "
+"modifikovať podľa ustanovení GNU General Public License publikovanej Free "
+"Software Foundation vo verzii 3, alebo akejkoľvek neskoršej verzii. \n"
+"\n"
+"Tento progrm je distribuovaný v očakávaní jeho užitočnosti, ale BEZ "
+"AKEJKOĽVEK ZÁRUKY, bez akejkoľvek obsiahnutej záruky PREDAJNOSTI alebo "
+"VHODNOSTI NA INÉ ÚČELY. Pre viac podrobností si prečítajte GNU General "
+"Public License. \n"
+"\n"
+"Mali by ste dostať kópiu GNU General Public License spolu s týmto programom. "
+"Ak nie, pozrite sa na <http://www.gnu.org/licenses/>."
+
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Táto téma nie je kompatibilná so súčasnou verziou %s."
+
+msgid "This software uses a number of open source libraries including:"
+msgstr "Tento program využiva nasledujúce open source knižnice:"
+
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Tento nástroj vám pomôže naimportovať zástupcov do %s. \n"
+"\n"
+"Vyberte možnosti odkiaľ si želáte naimportovať zástupcov:"
+
+msgid "Translators: %s"
+msgstr "Prekladatelia: %s"
+
+msgid "Transparency:"
+msgstr "Priehľadnosť:"
+
+msgid "Unnamed"
+msgstr "Nepomenovaný"
+
+msgid "Up"
+msgstr "Šípka vpravo"
+
+msgid "Use default"
+msgstr "Použiť predvolené"
+
+msgid "Uses user data directory to save settings."
+msgstr "Použije zložku používateľa pre uloženie nastvení"
+
+msgid "Vertical"
+msgstr "Zvislo"
+
+msgid "Warning"
+msgstr "Upozornenie"
+
+msgid "Web:"
+msgstr "Web:"
+
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Pri odpojení disku zatvoriť aplikácie, ktoré ho uzamkýnajú"
+
+msgid "Windows Explorer"
+msgstr "Prieskumník Windows"
+
+msgid "Windows Quick Launch toolbar"
+msgstr "Panel rýchleho spustenia Windows"
+
+msgid "Windows Start Menu programs"
+msgstr "Menu štart Windows"
+
+msgid "Yes"
+msgstr "Áno"
+
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Nemáte dostatočné oprávnenia pre túto operáciu."
+
+msgid "You have the latest version."
+msgstr "Máte poslednú verziu."

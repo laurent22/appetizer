@@ -1,0 +1,532 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-26 17:48+0100\n"
+"PO-Revision-Date: 2009-08-08 14:33+0300\n"
+"Last-Translator: Dark Preacher <dark4832@mail.ru>\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+
+msgid "%s Plugin Packages"
+msgstr "%s архивы плагинов"
+
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s будет свёрнуто в системный трей.\n"
+"\n"
+"Вы можете изменить эти настройки в '%s' окне ('%s' вкладка)"
+
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Версия %s.%s.%s (билд #%s)"
+
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString, автор: Joe O'Leary"
+
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
+msgstr ""
+"- Lua, авторы: Roberto Ierusalimschy, Luiz Henrique de Figueiredo и Waldemar "
+"Celes"
+
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini, автор: Brodie Thiesfield"
+
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml, автор: Yves Berquin"
+
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets от разных авторов"
+
+msgid "<None>"
+msgstr "<Нет>"
+
+msgid ""
+"A new version is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"\n"
+"Do you wish to download it now?"
+msgstr ""
+"Новая версия доступна для скачивания!\n"
+"\n"
+"Ваша версия: %s\n"
+"Новая версия: %s\n"
+"Примечания к выпуску: %s\n"
+"\n"
+"Желаете скачать обновление сейчас?"
+
+msgid "About"
+msgstr "О программе"
+
+msgid "About %s..."
+msgstr "О программе %s..."
+
+msgid "Add special item"
+msgstr "Добавить специальный ярлык"
+
+msgid "Add to Multi Launch group"
+msgstr "Добавить в группу Мульти запуска"
+
+msgid "All files"
+msgstr "Все файлы"
+
+msgid "All supported files"
+msgstr "Все поддерживаемые файлы"
+
+msgid "Allow only one instance of %s at a time"
+msgstr "Разрешить только одну копию программы"
+
+msgid "Alt +"
+msgstr "Alt +"
+
+msgid "Always on top"
+msgstr "Поверх других окон"
+
+msgid "Appearance"
+msgstr "Внешний вид"
+
+msgid "Auto-hide after launching an application"
+msgstr "Скрывать после запуска программы"
+
+msgid "Available plugins"
+msgstr "Доступные плагины"
+
+msgid ""
+"By installing the autorun file on your removable drive, %s will start "
+"automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"После установки файла автозапуска программа %s будет автоматически "
+"запускаться при подключении устройства.\n"
+"\n"
+"Вы хотите продолжить?"
+
+msgid "Can not create file '%s'"
+msgstr "Невозможно создать '%s' файл"
+
+msgid "Can not read zip entry '%s'"
+msgstr "Невозможно прочитать zip '%s'"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Change icon..."
+msgstr "Изменить иконку..."
+
+msgid "Check for update"
+msgstr "Проверить обновление"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Close button minimizes to System Tray"
+msgstr "Кнопка закрытия минимизирует в системный трей"
+
+msgid "Configuration"
+msgstr "Конфигурация"
+
+msgid "Confirmation"
+msgstr "Подтверждение"
+
+msgid "Contact:"
+msgstr "Контакты:"
+
+msgid "Control +"
+msgstr "Control +"
+
+msgid "Control Panel"
+msgstr "Панель управления"
+
+msgid "Copyright © %s"
+msgstr "Копирайт © %s"
+
+msgid "Could not get update information"
+msgstr "Невозможно получить информацию об обновлениях"
+
+msgid "Could not initialize locale."
+msgstr "Невозможно инициализировать локаль."
+
+msgid "Could not install autorun file. Please try again."
+msgstr "Невозможно установить файл автозапуска. Попробуйте ещё раз."
+
+msgid "Could not open %s"
+msgstr "Невозможно открыть %s"
+
+msgid "Credits"
+msgstr "Разработчики"
+
+msgid "Current Drive"
+msgstr "Текущий привод"
+
+msgid "Default"
+msgstr "По-умолчанию"
+
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Диалоговые окна сделаны с помощью wxGlade, автор: Alberto Griggio."
+
+msgid "Disable"
+msgstr "Отключить"
+
+msgid "Disabled"
+msgstr "Отключен"
+
+msgid "Displays the log window (useful for debugging)"
+msgstr "Отображать журнал сообщений (полезно для отладки)"
+
+msgid "Displays this help message"
+msgstr "Отображает это сообщение"
+
+msgid "Do you wish to eject the drive?"
+msgstr "Вы хотите извлечь устройство?"
+
+msgid "Do you wish to remove this icon?"
+msgstr "Вы хотите удалить эту иконку?"
+
+msgid "Don't show this message again"
+msgstr "Больше не отображать это сообщение"
+
+msgid "Dynamic libraries"
+msgstr "Динамические библиотеки"
+
+msgid "Eject drive"
+msgstr "Извлечь устройство"
+
+msgid "Enable"
+msgstr "Включить"
+
+msgid "Enabled"
+msgstr "Включен"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "Error launching web browser"
+msgstr "Ошибка запуска веб-браузера"
+
+msgid "Exclude these items from import operations"
+msgstr "Исключить эти элементы из импорта"
+
+msgid "Executables"
+msgstr "Программы"
+
+msgid "Extra Large (XP and above)"
+msgstr "Очень большие (XP и выше)"
+
+msgid "General"
+msgstr "Основные"
+
+msgid "Get Support"
+msgstr "Получить помощь"
+
+msgid "Group"
+msgstr "Группа"
+
+msgid "Group Properties"
+msgstr "Параметры группы"
+
+msgid "Help"
+msgstr "Помощь"
+
+msgid "Help Topics"
+msgstr "Справка"
+
+msgid "Hide"
+msgstr "Спрятать"
+
+msgid "Horizontal"
+msgstr "Горизонтальная"
+
+msgid "Hot key to hide / show the bar"
+msgstr "Горячая клавиша для скрытия/показа панели запуска"
+
+msgid "Icon file or library:"
+msgstr "Файл иконки или библиотеки:"
+
+msgid "Icon libraries"
+msgstr "Библиотеки иконок"
+
+msgid "Icon size:"
+msgstr "Размер иконки:"
+
+msgid "Icon:"
+msgstr "Иконка:"
+
+msgid "Icons"
+msgstr "Иконки"
+
+msgid "Import"
+msgstr "Импорт"
+
+msgid "Import shortcuts"
+msgstr "Импортировать ярлыки"
+
+msgid "Importing shortcuts... Please wait."
+msgstr "Импорт ярлыков.. Пожалуйста подождите."
+
+msgid "Information"
+msgstr "Информация"
+
+msgid "Install autorun file"
+msgstr "Установить файл автозапуска"
+
+msgid "Install..."
+msgstr "Установить..."
+
+msgid "Jumbo (Vista and above)"
+msgstr "Джумбо (Vista и выше)"
+
+msgid "Language:"
+msgstr "Язык:"
+
+msgid "Large"
+msgstr "Большие"
+
+msgid "License"
+msgstr "Лицензия"
+
+msgid "Loading tree..."
+msgstr "Загрузка дерева..."
+
+msgid "Location:"
+msgstr "Расположение:"
+
+msgid "Minimize to tray"
+msgstr "Свернуть в системный трей"
+
+msgid "Multi-launch"
+msgstr "Мульти-запуск"
+
+msgid "My Computer"
+msgstr "Мой компьютер"
+
+msgid "My Network Places"
+msgstr "Сетевое окружение"
+
+msgid "Name:"
+msgstr "Наименование:"
+
+msgid "Network Connections"
+msgstr "Сетевые подключения"
+
+msgid "New group..."
+msgstr "Новая группа..."
+
+msgid "New shortcut..."
+msgstr "Новый ярлык..."
+
+msgid "No"
+msgstr "Нет"
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "Operations"
+msgstr "Операции"
+
+msgid "Organize group shortcuts"
+msgstr "Упорядочить ярлыки группы"
+
+msgid "Organize shortcuts"
+msgstr "Упорядочить ярлыки"
+
+msgid "Orientation:"
+msgstr "Ориентация:"
+
+msgid "Parameters:"
+msgstr "Параметры:"
+
+msgid "Please wait while your applications are being closed."
+msgstr "Пожалуйста подождите пока ваши приложения закроются."
+
+msgid "Please wait..."
+msgstr "Пожалуйста подождите..."
+
+msgid "Plugin"
+msgstr "Плагин"
+
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
+msgstr ""
+"Неправильный формат сценария плагина. Пожалуйста, перекодируйте его в UTF-8 "
+"без BOM или в ASCII. Применимо к:"
+
+msgid "Plugins"
+msgstr "Плагины"
+
+msgid "PortableApps.com applications"
+msgstr "Приложения PortableApps.com"
+
+msgid "Printers and Faxes"
+msgstr "Принтеры и факсы"
+
+msgid "Properties"
+msgstr "Свойства"
+
+msgid "Recycle Bin"
+msgstr "Корзина"
+
+msgid "Remove..."
+msgstr "Удалить..."
+
+msgid "Run multi-launch group on startup"
+msgstr "Запускать группу мульти-запуска при старте"
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Select a file or a folder"
+msgstr "Выберите файл или папку"
+
+msgid "Select a plugin package"
+msgstr "Выберите архив плагина"
+
+msgid "Select an icon"
+msgstr "Выберите иконку"
+
+msgid "Select an icon file or library"
+msgstr "Выберите файл иконки или библиотеку"
+
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Указать путь к данным пользователя (-u будет проигнорированно)"
+
+msgid "Shift +"
+msgstr "Shift +"
+
+msgid "Shorcut Properties"
+msgstr "Параметры ярлыка"
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "Show Desktop"
+msgstr "Свернуть все окна"
+
+msgid "Skin:"
+msgstr "Шкурка:"
+
+msgid "Small"
+msgstr "Маленькие"
+
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
+msgstr ""
+"Некоторые из сделанных изменений вступят в силу после перезапуска программы."
+
+msgid "Start >>"
+msgstr "Пуск >>"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "The autorun file has been installed successfully"
+msgstr "Файл автозапуска успешно установлен"
+
+msgid ""
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr "Изменения в плагинах вступят в силу после перезапуска %s."
+
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr ""
+"Группа мульти-запуска пуста. Вы  желаете просмотреть соответствующий раздел "
+"справки?"
+
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
+msgstr ""
+"Плагин был успешно установлен. Он будет активирован после перезапуска %s"
+
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Расположение ярлыка несуществует. Вы хотите продолжить?"
+
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr ""
+"Во время регистрации горячей клавиши произошла ошибка. Возможно это "
+"сочетание уже используется другой программой"
+
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Этот файл несуществует или был удалён (Ошибка %s)"
+
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Эта шкурка не совместима с текущей версией %s."
+
+msgid "This software uses a number of open source libraries including:"
+msgstr ""
+"Это программное обеспечение использует некоторые открытые библиотеки, "
+"включая:"
+
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Этот инструмент поможет вам импортировать ярлыки в %s.\n"
+"\n"
+"Пожалуйста, выберите откуда вы хотите импортировать ярлыки:"
+
+msgid "Translators: %s"
+msgstr "Переводчики: %s"
+
+msgid "Transparency:"
+msgstr "Прозрачность:"
+
+msgid "Unnamed"
+msgstr "Без имени"
+
+msgid "Use default"
+msgstr "По-умолчанию"
+
+msgid "Uses user data directory to save settings."
+msgstr "Использовать папку профиля пользователя для сохранения настроек."
+
+msgid "Vertical"
+msgstr "Вертикальная"
+
+msgid "Warning"
+msgstr "Предупреждение"
+
+msgid "Web:"
+msgstr "Сайт:"
+
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Закрывать программы блокирующие устройство при извлечении"
+
+msgid "Windows Explorer"
+msgstr "Проводник"
+
+msgid "Windows Quick Launch toolbar"
+msgstr "Быстрый запуск Windows"
+
+msgid "Windows Start Menu programs"
+msgstr "Программы меню из Пуск"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "You do not have sufficient privileges for this operation."
+msgstr "У вас недостаточно прав для этой операции."
+
+msgid "You have the latest version."
+msgstr "У вас самая последняя версия."
