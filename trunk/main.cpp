@@ -212,8 +212,6 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
   mainFrame_->Localize();  
 
-  SetLaunchOnStartup(true);
-
   // Note: the rest of the initialization code is in MainFrame::OnIdle (on the first IDLE event)
 
   return true;
@@ -233,8 +231,6 @@ bool MiniLaunchBar::IsLaunchedOnStartup() {
 
 
 void MiniLaunchBar::SetLaunchOnStartup(bool launch) {
-  //if (utilities_.IsApplicationOnPortableDrive()) return;
-
   wxRegKey regKey(_T("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
   if (!regKey.Exists()) {
     ELOG(_T("Couldn't get HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
@@ -242,7 +238,14 @@ void MiniLaunchBar::SetLaunchOnStartup(bool launch) {
   }
 
   if (launch) {
-    regKey.SetValue(_T("Appetizer"), _T("\"") + FilePaths::GetApplicationPath() + _T("\""));
+    wxString userDataPath;
+    bool found = commandLine_.Found(_T("d"), &userDataPath);
+    
+    wxString appetizerCommand;
+    appetizerCommand = _T("\"") + FilePaths::GetApplicationPath() + _T("\"");
+    if (found) appetizerCommand += _T(" /d \"") + userDataPath + _T("\"");
+
+    regKey.SetValue(_T("Appetizer"), appetizerCommand);
   } else {
     if (!regKey.HasValue(_T("Appetizer"))) return;
     regKey.DeleteValue(_T("Appetizer"));

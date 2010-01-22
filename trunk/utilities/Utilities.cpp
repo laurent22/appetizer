@@ -353,8 +353,13 @@ void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
   // if it ignores the CLOSE signal.
   // ***********************************************************************
 
+  wxString applicationName = wxFileName(FilePaths::GetApplicationPath()).GetName();
+
   for (int i = 0; i < moduleVector.size(); i++) {
     ProcessUtilModule* m = moduleVector.at(i);
+
+    wxFileName f(m->path);
+    if (f.GetName().Contains(applicationName)) continue;
 
     WindowsEnumerator we;
     we.EnumerateForProcess(m->id);
@@ -403,6 +408,9 @@ void Utilities::KillLockingProcesses(const wxString& drive, bool painless) {
 
   for (int i = 0; i < moduleVector.size(); i++) {
     ProcessUtilModule* m = moduleVector.at(i);
+
+    wxFileName f(m->path);
+    if (f.GetName().Contains(applicationName)) continue;
 
     if (m->id <= 0) continue;
 

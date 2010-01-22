@@ -16,6 +16,7 @@ Loop %releaseDirectory%\.svn, 2, 1
   FileRemoveDir %A_LoopFileFullPath%, 1
 }
 
+FileDelete %releaseDirectory%\Data\Plugins\_BuildPlugins.ahk
 FileRemoveDir %releaseDirectory%\Data\Plugins\TestUnit, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\Securizer, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\AddToGroupOnRightClick, 1

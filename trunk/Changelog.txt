@@ -1,4 +1,13 @@
-﻿Version 1.4.2.22 Beta (2009-05-25):
+﻿Version 1.4.3.103 Beta (2009-06-07)
+ 
+- Support for web links
+- Fixed crash when saving config dialog, because no value was assigned to label position
+- Improved closing of Appetizer, which hopefully should no longer crash
+- Updated Dutch locale
+- Updated Swedish locale
+- Start on system startup feature
+
+Version 1.4.2.22 Beta (2009-05-25):
 
 - New: Icon labels can now be displayed below or to the right of the icon.
 - Fixed minor plugin issue

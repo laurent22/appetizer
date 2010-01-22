@@ -279,7 +279,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib psapi.lib c:\lua\lua5.1.lib .\third_party\freetype\objs\win32\vc2008\freetype239MT.lib"
+				AdditionalDependencies="version.lib comctl32.lib rpcrt4.lib winmm.lib advapi32.lib wsock32.lib wxpng.lib wxzlib.lib wxjpeg.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxmsw28u_adv.lib wxbase28u_net.lib wxregexu.lib psapi.lib .\third_party\lua\objs\win32\lua5.1.lib .\third_party\freetype\objs\win32\vc2008\freetype239MT.lib"
 				OutputFile=".\Appetizer.exe"
 				AdditionalLibraryDirectories="&quot;$(WXWIN)\lib\vc_lib&quot;"
 				IgnoreAllDefaultLibraries="false"

@@ -2,9 +2,15 @@
 ; Initialize some paths
 ; ****************************************************************
 
-upxExe = c:\Program Files\UPX\upx.exe
-sevenZipExe = c:\Program Files\7-Zip\7z.exe
-nsisExe = C:\Program Files\NSIS\makensisw.exe
+; Note: AutoHotKey, UPX, NSIS and 7-Zip must be installed.
+; Change the paths below to the ones on your machine.
+
+; Additionally, the following NSIS plugins must be installed:
+; MoreInfo, FindProc, NewAdvSplash 
+
+upxExe = s:\Programmes\UPX\upx.exe
+sevenZipExe = s:\Programmes\7-Zip\7z.exe
+nsisExe = s:\Programmes\NSIS\makensisw.exe
 pafSourceDir = _PAF!\Other\Source
 pafAppInfoDir = _PAF!\App\AppInfo
 pafAppDir = _PAF!\App

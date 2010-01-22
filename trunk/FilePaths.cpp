@@ -208,8 +208,6 @@ void FilePaths::CreateDirectoryIfNotExists(const wxString& path) {
 void FilePaths::InitializePaths() {
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
   wxString applicationDirectory = FolderItem::ResolvePath(executablePath.GetPath(), true);
-  //applicationDirectory = StringUtil::RemoveTrailingSlash(applicationDirectory);
-
   wxString applicationDrive;
   wxFileName::SplitPath(executablePath.GetPath(), &applicationDrive, NULL, NULL, NULL, false, wxPATH_NATIVE);
 
@@ -226,6 +224,13 @@ void FilePaths::InitializePaths() {
   wxString userDataPath;
   bool found = commandLine.Found(_T("d"), &userDataPath);
   if (found) {
+    wxFileName f(userDataPath);
+    if (f.IsRelative()) {
+      userDataPath = FilePaths::GetApplicationDirectory() + _T("/") + userDataPath;
+      f = wxFileName(userDataPath);
+      f.Normalize();
+      userDataPath = f.GetFullPath();
+    }
     FilePaths::SettingsDirectory_ = userDataPath;
   } else if (wxGetApp().GetCommandLineFound(_T("u"))) {
     FilePaths::SettingsDirectory_ = wxString::Format(_T("%s/%s/%s"), wxStandardPaths().GetUserConfigDir(), APPLICATION_NAME, SETTING_FOLDER_NAME);

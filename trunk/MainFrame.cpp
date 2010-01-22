@@ -337,6 +337,7 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
   if (closeStep_ >= 0) {
 
     DoCloseStep();
+    evt.RequestMore();
 
   }
 
@@ -349,14 +350,19 @@ void MainFrame::DoCloseStep() {
 
   int step = closeStep_;
 
+  ILOG(wxString::Format(_T("Doing close step: %d"), closeStep_));
+
   // Set it to -1 for now to make sure that a given step is not executed more than once
   // It needs to be set back to set + 1, once the step has been done.
   closeStep_ = -1; 
 
   if (step == 0) {
   
+    ILOG(wxString::Format(_T("Dispatching 'close' event to plugins.")));
     LuaHostTable emptyEventTable;
     wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("close"), emptyEventTable); 
+    
+    ILOG(wxString::Format(_T("Recursively cleaning up window.")));
     RecurseCleanUp(this);  
 
     closeStep_ = step + 1;
@@ -417,6 +423,7 @@ void MainFrame::DoCloseStep() {
 
   }
 
+  ILOG(wxString::Format(_T("Next close step will be: %d"), closeStep_));
 }
 
 
@@ -1032,6 +1039,7 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
   }
 
   // Start the closing process (see OnIdle() event)
+  ILOG(_T("Starting close operation (Step 0)"));
   closeStep_ = 0;
 
   return;
