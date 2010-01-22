@@ -24,6 +24,7 @@ FileRemoveDir %releaseDirectory%\Data\Plugins\RevealShortcutTarget, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\NightBlue, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\NightRed, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\PAMClassic, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\DarkBlue, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\Sonix, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\LCD, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\LCD pink, 1
