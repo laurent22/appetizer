@@ -17,6 +17,7 @@ Loop %releaseDirectory%\.svn, 2, 1
 }
 
 FileDelete %releaseDirectory%\Data\Plugins\_BuildPlugins.ahk
+FileDelete %releaseDirectory%\Data\Plugins\*.zpl
 FileRemoveDir %releaseDirectory%\Data\Plugins\TestUnit, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\Securizer, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\AddToGroupOnRightClick, 1
@@ -33,6 +34,7 @@ FileRemoveDir %releaseDirectory%\Data\Skin\GreenGlass, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\iAppetizer, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\OrangeGlass, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\Logo, 1
+FileRemoveDir %releaseDirectory%\Data\Skin\DarkGlass, 1
 FileRemoveDir %releaseDirectory%\Data\Settings, 1
 FileRemoveDir %releaseDirectory%\Data\IconCache, 1
 

@@ -1,4 +1,13 @@
-﻿Version 1.4.3.103 Beta (2009-06-07)
+﻿Version 1.4.4.148 Beta (2010-01-23)
+
+- Fixed bug with "Start on system startup" option when app was installed using PortableApps installer
+- Fixed bug where app was always starting on system startup even after the option had been unticked
+- Fixed bug with Appetizer closing procedure (wasn't closing at all anymore, just crashing)
+- Set default window transparency to 235 (looks nicer)
+- "Kill locking apps on shutdown" option no longer kills Appetizer and allows it to close properly
+- Added Portuguese, Slovak and Russian translations
+
+Version 1.4.3.103 Beta (2009-06-07)
  
 - Support for web links
 - Fixed crash when saving config dialog, because no value was assigned to label position
