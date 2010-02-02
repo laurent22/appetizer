@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-26 17:48+0100\n"
+"POT-Creation-Date: 2010-01-25 10:56+0000\n"
 "PO-Revision-Date: 2009-08-08 14:33+0300\n"
 "Last-Translator: Dark Preacher <dark4832@mail.ru>\n"
 "Language-Team: Appetizer Project\n"
@@ -12,50 +12,168 @@ msgstr ""
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
 
-msgid "%s Plugin Packages"
-msgstr "%s архивы плагинов"
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Спрятать"
 
-msgid ""
-"%s is now going to be minimized to the System Tray.\n"
-"\n"
-"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Показать"
+
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:593
+msgid "Eject drive"
+msgstr "Извлечь устройство"
+
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1064 OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Конфигурация"
+
+#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Закрыть"
+
+#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Упорядочить ярлыки"
+
+#: FolderItem.cpp:615 FolderItem.cpp:637 FolderItem.cpp:660
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Этот файл несуществует или был удалён (Ошибка %s)"
+
+#: FolderItem.cpp:919
+msgid "Group"
+msgstr "Группа"
+
+#: FolderItem.cpp:920
+msgid "Unnamed"
+msgstr "Без имени"
+
+#: FolderItem.cpp:1152 IconPanel.cpp:171
+msgid "Control Panel"
+msgstr "Панель управления"
+
+#: FolderItem.cpp:1154 IconPanel.cpp:172
+msgid "My Computer"
+msgstr "Мой компьютер"
+
+#: FolderItem.cpp:1156 IconPanel.cpp:173
+msgid "My Network Places"
+msgstr "Сетевое окружение"
+
+#: FolderItem.cpp:1158 IconPanel.cpp:174
+msgid "Recycle Bin"
+msgstr "Корзина"
+
+#: FolderItem.cpp:1160 IconPanel.cpp:175
+msgid "Show Desktop"
+msgstr "Свернуть все окна"
+
+#: FolderItem.cpp:1162 IconPanel.cpp:176
+msgid "Windows Explorer"
+msgstr "Проводник"
+
+#: FolderItem.cpp:1164 IconPanel.cpp:177
+msgid "Search"
+msgstr "Поиск"
+
+#: FolderItem.cpp:1166
+msgid "Current Drive"
+msgstr "Текущий привод"
+
+#: FolderItem.cpp:1168 IconPanel.cpp:178
+msgid "Printers and Faxes"
+msgstr "Принтеры и факсы"
+
+#: FolderItem.cpp:1170 IconPanel.cpp:179
+msgid "Network Connections"
+msgstr "Сетевые подключения"
+
+#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "Удалить..."
+
+#: FolderItemRenderer.cpp:205
+msgid "Add to Multi Launch group"
+msgstr "Добавить в группу Мульти запуска"
+
+#: FolderItemRenderer.cpp:214
+msgid "Organize group shortcuts"
+msgstr "Упорядочить ярлыки группы"
+
+#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Свойства"
+
+#: IconPanel.cpp:151 OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "Новый ярлык..."
+
+#: IconPanel.cpp:155
+msgid "New group..."
+msgstr "Новая группа..."
+
+#: IconPanel.cpp:183
+msgid "Add special item"
+msgstr "Добавить специальный ярлык"
+
+#: main.cpp:66
+msgid "Uses user data directory to save settings."
+msgstr "Использовать папку профиля пользователя для сохранения настроек."
+
+#: main.cpp:67
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Указать путь к данным пользователя (-u будет проигнорированно)"
+
+#: main.cpp:68
+msgid "Displays the log window (useful for debugging)"
+msgstr "Отображать журнал сообщений (полезно для отладки)"
+
+#: main.cpp:69
+msgid "Displays this help message"
+msgstr "Отображает это сообщение"
+
+#: main.cpp:156
+msgid "Could not initialize locale."
+msgstr "Невозможно инициализировать локаль."
+
+#: main.cpp:314
+msgid "Large"
+msgstr "Большие"
+
+#: main.cpp:315
+msgid "Medium"
 msgstr ""
-"%s будет свёрнуто в системный трей.\n"
-"\n"
-"Вы можете изменить эти настройки в '%s' окне ('%s' вкладка)"
 
-msgid "%s, Version %s.%s.%s (Build #%s)"
-msgstr "%s, Версия %s.%s.%s (билд #%s)"
+#: main.cpp:316
+msgid "Extra Large (XP and above)"
+msgstr "Очень большие (XP и выше)"
 
-msgid "- CStdString by Joe O'Leary"
-msgstr "- CStdString, автор: Joe O'Leary"
+#: main.cpp:317
+msgid "Jumbo (Vista and above)"
+msgstr "Джумбо (Vista и выше)"
 
+#: main.cpp:321
+msgid "Small"
+msgstr "Маленькие"
+
+#: main.cpp:413
+msgid "Could not get update information"
+msgstr "Невозможно получить информацию об обновлениях"
+
+#: main.cpp:427
+msgid "You have the latest version."
+msgstr "У вас самая последняя версия."
+
+#: main.cpp:434
+#, fuzzy, c-format
 msgid ""
-"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
-"Celes"
-msgstr ""
-"- Lua, авторы: Roberto Ierusalimschy, Luiz Henrique de Figueiredo и Waldemar "
-"Celes"
-
-msgid "- Simpleini by Brodie Thiesfield"
-msgstr "- Simpleini, автор: Brodie Thiesfield"
-
-msgid "- TinyXml by Yves Berquin"
-msgstr "- TinyXml, автор: Yves Berquin"
-
-msgid "- wxWidgets by their respective authors"
-msgstr "- wxWidgets от разных авторов"
-
-msgid "<None>"
-msgstr "<Нет>"
-
-msgid ""
-"A new version is available!\n"
+"A new version of Appetizer is available!\n"
 "\n"
 "Your version: %s\n"
 "New version: %s\n"
 "Release notes: %s\n"
-"\n"
 "Do you wish to download it now?"
 msgstr ""
 "Новая версия доступна для скачивания!\n"
@@ -66,42 +184,531 @@ msgstr ""
 "\n"
 "Желаете скачать обновление сейчас?"
 
-msgid "About"
-msgstr "О программе"
+#: main.cpp:436
+msgid "New version of Appetizer"
+msgstr ""
 
+#: main.cpp:440
+msgid "Error launching web browser"
+msgstr "Ошибка запуска веб-браузера"
+
+#: MainFrame.cpp:228
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr ""
+"Во время регистрации горячей клавиши произошла ошибка. Возможно это "
+"сочетание уже используется другой программой"
+
+#: MainFrame.cpp:592
+msgid "Minimize to tray"
+msgstr "Свернуть в системный трей"
+
+#: MainFrame.cpp:1064
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s будет свёрнуто в системный трей.\n"
+"\n"
+"Вы можете изменить эти настройки в '%s' окне ('%s' вкладка)"
+
+#: MainFrame.cpp:1064 gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "Операции"
+
+#: MainFrame.cpp:1064 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+msgid "Don't show this message again"
+msgstr "Больше не отображать это сообщение"
+
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+msgid "Error"
+msgstr "Ошибка"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Информация"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Подтверждение"
+
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "Помощь"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "Мульти-запуск"
+
+#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Импортировать ярлыки"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "Справка"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "Получить помощь"
+
+#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#, c-format
 msgid "About %s..."
 msgstr "О программе %s..."
 
-msgid "Add special item"
-msgstr "Добавить специальный ярлык"
+#: OptionPanel.cpp:341
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr ""
+"Группа мульти-запуска пуста. Вы  желаете просмотреть соответствующий раздел "
+"справки?"
 
-msgid "Add to Multi Launch group"
-msgstr "Добавить в группу Мульти запуска"
+#: Plugin.cpp:216
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
+msgstr ""
+"Неправильный формат сценария плагина. Пожалуйста, перекодируйте его в UTF-8 "
+"без BOM или в ASCII. Применимо к:"
 
-msgid "All files"
-msgstr "Все файлы"
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr "Невозможно открыть %s"
 
-msgid "All supported files"
-msgstr "Все поддерживаемые файлы"
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "Невозможно прочитать zip '%s'"
 
-msgid "Allow only one instance of %s at a time"
-msgstr "Разрешить только одну копию программы"
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "Невозможно создать '%s' файл"
 
-msgid "Alt +"
-msgstr "Alt +"
+#: PluginManager.cpp:96
+#, c-format
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
+msgstr ""
+"Плагин был успешно установлен. Он будет активирован после перезапуска %s"
 
-msgid "Always on top"
-msgstr "Поверх других окон"
+#: Styles.cpp:72 utilities\Utilities.cpp:81
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Эта шкурка не совместима с текущей версией %s."
 
+#: utilities\Utilities.cpp:125
+msgid "Do you wish to remove this icon?"
+msgstr "Вы хотите удалить эту иконку?"
+
+#: utilities\Utilities.cpp:141
+#, fuzzy
+msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
+msgstr "Расположение ярлыка несуществует. Вы хотите продолжить?"
+
+#: utilities\Utilities.cpp:322
+msgid "Please wait while your applications are being closed."
+msgstr "Пожалуйста подождите пока ваши приложения закроются."
+
+#: utilities\Utilities.cpp:341
+msgid "You do not have sufficient privileges for this operation."
+msgstr "У вас недостаточно прав для этой операции."
+
+#: utilities\Utilities.cpp:452
+msgid "Do you wish to eject the drive?"
+msgstr "Вы хотите извлечь устройство?"
+
+#: gui\AboutDialog.cpp:55
+#, c-format
+msgid "Translators: %s"
+msgstr "Переводчики: %s"
+
+#: gui\AboutDialog.cpp:57
+msgid "This software uses a number of open source libraries including:"
+msgstr ""
+"Это программное обеспечение использует некоторые открытые библиотеки, "
+"включая:"
+
+#: gui\AboutDialog.cpp:59
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini, автор: Brodie Thiesfield"
+
+#: gui\AboutDialog.cpp:61
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml, автор: Yves Berquin"
+
+#: gui\AboutDialog.cpp:63
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString, автор: Joe O'Leary"
+
+#: gui\AboutDialog.cpp:65
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
+msgstr ""
+"- Lua, авторы: Roberto Ierusalimschy, Luiz Henrique de Figueiredo и Waldemar "
+"Celes"
+
+#: gui\AboutDialog.cpp:67
+msgid "- ccrypt by Peter Selinger"
+msgstr ""
+
+#: gui\AboutDialog.cpp:69
+#, fuzzy
+msgid "- FreeType by its respective contributors"
+msgstr "- wxWidgets от разных авторов"
+
+#: gui\AboutDialog.cpp:71
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets от разных авторов"
+
+#: gui\AboutDialog.cpp:73
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Диалоговые окна сделаны с помощью wxGlade, автор: Alberto Griggio."
+
+#: gui\AboutDialog.cpp:76
+msgid "About"
+msgstr "О программе"
+
+#: gui\AboutDialog.cpp:77
+msgid "License"
+msgstr "Лицензия"
+
+#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "ОК"
+
+#: gui\AboutDialog.cpp:79
+msgid "Credits"
+msgstr "Разработчики"
+
+#: gui\AboutDialog.cpp:83
+#, c-format
+msgid "Copyright © %s"
+msgstr "Копирайт © %s"
+
+#: gui\AboutDialog.cpp:84
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+
+#: gui\AboutDialog.cpp:85
+msgid "Web:"
+msgstr "Сайт:"
+
+#: gui\AboutDialog.cpp:86
+msgid "Contact:"
+msgstr "Контакты:"
+
+#: gui\AboutDialog.cpp:94
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Версия %s.%s.%s (билд #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Да"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "Нет"
+
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:80 gui\PluginPreferencesDialog.cpp:242
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Cancel"
+msgstr "Отмена"
+
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:64
+msgid "General"
+msgstr "Основные"
+
+#: gui\ConfigDialog.cpp:59
 msgid "Appearance"
 msgstr "Внешний вид"
 
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "Импорт"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "Плагины"
+
+#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+msgid "Save"
+msgstr "Сохранить"
+
+#: gui\ConfigDialog.cpp:66
+#, fuzzy
+msgid "Options"
+msgstr "Операции"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Enabled"
+msgstr "Включен"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Disabled"
+msgstr "Отключен"
+
+#: gui\ConfigDialog.cpp:138
+msgid "Plugin"
+msgstr "Плагин"
+
+#: gui\ConfigDialog.cpp:139
+msgid "Status"
+msgstr "Статус"
+
+#: gui\ConfigDialog.cpp:219
+msgid "Language:"
+msgstr "Язык:"
+
+#: gui\ConfigDialog.cpp:220
+msgid "Always on top"
+msgstr "Поверх других окон"
+
+#: gui\ConfigDialog.cpp:221
+#, fuzzy, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "Разрешить только одну копию программы"
+
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:789
+msgid "Check for update"
+msgstr "Проверить обновление"
+
+#: gui\ConfigDialog.cpp:223
+msgid "Install autorun file"
+msgstr "Установить файл автозапуска"
+
+#: gui\ConfigDialog.cpp:321
+msgid "Icon size:"
+msgstr "Размер иконки:"
+
+#: gui\ConfigDialog.cpp:322
+msgid "Skin:"
+msgstr "Шкурка:"
+
+#: gui\ConfigDialog.cpp:323
+msgid "Orientation:"
+msgstr "Ориентация:"
+
+#: gui\ConfigDialog.cpp:324
+msgid "Opacity:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:325
+msgid "Download more skins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:326
+msgid "Label position:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:343
+#, fuzzy
+msgid "Hidden"
+msgstr "Спрятать"
+
+#: gui\ConfigDialog.cpp:344
+msgid "Bottom"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:345 gui\ConfigDialog.cpp:538
+msgid "Right"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:384
+msgid "Horizontal"
+msgstr "Горизонтальная"
+
+#: gui\ConfigDialog.cpp:385
+msgid "Vertical"
+msgstr "Вертикальная"
+
+#: gui\ConfigDialog.cpp:411
+msgid "Default"
+msgstr "По-умолчанию"
+
+#: gui\ConfigDialog.cpp:456
 msgid "Auto-hide after launching an application"
 msgstr "Скрывать после запуска программы"
 
+#: gui\ConfigDialog.cpp:457
+msgid "Run multi-launch group on startup"
+msgstr "Запускать группу мульти-запуска при старте"
+
+#: gui\ConfigDialog.cpp:458
+msgid "Hot key to hide / show the bar"
+msgstr "Горячая клавиша для скрытия/показа панели запуска"
+
+#: gui\ConfigDialog.cpp:459
+msgid "Control +"
+msgstr "Control +"
+
+#: gui\ConfigDialog.cpp:460
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:462
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Закрывать программы блокирующие устройство при извлечении"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Close button minimizes to System Tray"
+msgstr "Кнопка закрытия минимизирует в системный трей"
+
+#: gui\ConfigDialog.cpp:474
+msgid "<None>"
+msgstr "<Нет>"
+
+#: gui\ConfigDialog.cpp:516
+msgid "Numpad 0"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:517
+msgid "Numpad 1"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:518
+msgid "Numpad 2"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:519
+msgid "Numpad 3"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:520
+msgid "Numpad 4"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:521
+msgid "Numpad 5"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:522
+msgid "Numpad 6"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:523
+msgid "Numpad 7"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:524
+msgid "Numpad 8"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:525
+msgid "Numpad 9"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:527
+msgid "Backspace"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:528
+msgid "Tab"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:529
+msgid "Return"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:530
+msgid "Escape"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:531
+#, fuzzy
+msgid "Space"
+msgstr "Сохранить"
+
+#: gui\ConfigDialog.cpp:532
+#, fuzzy
+msgid "Delete"
+msgstr "По-умолчанию"
+
+#: gui\ConfigDialog.cpp:534
+#, fuzzy
+msgid "End"
+msgstr "Включен"
+
+#: gui\ConfigDialog.cpp:535
+msgid "Home"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:536
+msgid "Left"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:537
+msgid "Up"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:539
+msgid "Down"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:597
+msgid "Exclude these items from import operations"
+msgstr "Исключить эти элементы из импорта"
+
+#: gui\ConfigDialog.cpp:629
 msgid "Available plugins"
 msgstr "Доступные плагины"
 
+#: gui\ConfigDialog.cpp:630
+msgid "Enable"
+msgstr "Включить"
+
+#: gui\ConfigDialog.cpp:631
+msgid "Disable"
+msgstr "Отключить"
+
+#: gui\ConfigDialog.cpp:632
+msgid "Install..."
+msgstr "Установить..."
+
+#: gui\ConfigDialog.cpp:633
+msgid "Download more plugins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:635
+#, c-format
+msgid ""
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr "Изменения в плагинах вступят в силу после перезапуска %s."
+
+#: gui\ConfigDialog.cpp:698
+#, c-format
 msgid ""
 "By installing the autorun file on your removable drive, %s will start "
 "automatically when you insert your drive.\n"
@@ -113,370 +720,84 @@ msgstr ""
 "\n"
 "Вы хотите продолжить?"
 
-msgid "Can not create file '%s'"
-msgstr "Невозможно создать '%s' файл"
-
-msgid "Can not read zip entry '%s'"
-msgstr "Невозможно прочитать zip '%s'"
-
-msgid "Cancel"
-msgstr "Отмена"
-
-msgid "Change icon..."
-msgstr "Изменить иконку..."
-
-msgid "Check for update"
-msgstr "Проверить обновление"
-
-msgid "Close"
-msgstr "Закрыть"
-
-msgid "Close button minimizes to System Tray"
-msgstr "Кнопка закрытия минимизирует в системный трей"
-
-msgid "Configuration"
-msgstr "Конфигурация"
-
-msgid "Confirmation"
-msgstr "Подтверждение"
-
-msgid "Contact:"
-msgstr "Контакты:"
-
-msgid "Control +"
-msgstr "Control +"
-
-msgid "Control Panel"
-msgstr "Панель управления"
-
-msgid "Copyright © %s"
-msgstr "Копирайт © %s"
-
-msgid "Could not get update information"
-msgstr "Невозможно получить информацию об обновлениях"
-
-msgid "Could not initialize locale."
-msgstr "Невозможно инициализировать локаль."
-
+#: gui\ConfigDialog.cpp:701
 msgid "Could not install autorun file. Please try again."
 msgstr "Невозможно установить файл автозапуска. Попробуйте ещё раз."
 
-msgid "Could not open %s"
-msgstr "Невозможно открыть %s"
-
-msgid "Credits"
-msgstr "Разработчики"
-
-msgid "Current Drive"
-msgstr "Текущий привод"
-
-msgid "Default"
-msgstr "По-умолчанию"
-
-msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
-msgstr "Диалоговые окна сделаны с помощью wxGlade, автор: Alberto Griggio."
-
-msgid "Disable"
-msgstr "Отключить"
-
-msgid "Disabled"
-msgstr "Отключен"
-
-msgid "Displays the log window (useful for debugging)"
-msgstr "Отображать журнал сообщений (полезно для отладки)"
-
-msgid "Displays this help message"
-msgstr "Отображает это сообщение"
-
-msgid "Do you wish to eject the drive?"
-msgstr "Вы хотите извлечь устройство?"
-
-msgid "Do you wish to remove this icon?"
-msgstr "Вы хотите удалить эту иконку?"
-
-msgid "Don't show this message again"
-msgstr "Больше не отображать это сообщение"
-
-msgid "Dynamic libraries"
-msgstr "Динамические библиотеки"
-
-msgid "Eject drive"
-msgstr "Извлечь устройство"
-
-msgid "Enable"
-msgstr "Включить"
-
-msgid "Enabled"
-msgstr "Включен"
-
-msgid "Error"
-msgstr "Ошибка"
-
-msgid "Error launching web browser"
-msgstr "Ошибка запуска веб-браузера"
-
-msgid "Exclude these items from import operations"
-msgstr "Исключить эти элементы из импорта"
-
-msgid "Executables"
-msgstr "Программы"
-
-msgid "Extra Large (XP and above)"
-msgstr "Очень большие (XP и выше)"
-
-msgid "General"
-msgstr "Основные"
-
-msgid "Get Support"
-msgstr "Получить помощь"
-
-msgid "Group"
-msgstr "Группа"
-
-msgid "Group Properties"
-msgstr "Параметры группы"
-
-msgid "Help"
-msgstr "Помощь"
-
-msgid "Help Topics"
-msgstr "Справка"
-
-msgid "Hide"
-msgstr "Спрятать"
-
-msgid "Horizontal"
-msgstr "Горизонтальная"
-
-msgid "Hot key to hide / show the bar"
-msgstr "Горячая клавиша для скрытия/показа панели запуска"
-
-msgid "Icon file or library:"
-msgstr "Файл иконки или библиотеки:"
-
-msgid "Icon libraries"
-msgstr "Библиотеки иконок"
-
-msgid "Icon size:"
-msgstr "Размер иконки:"
-
-msgid "Icon:"
-msgstr "Иконка:"
-
-msgid "Icons"
-msgstr "Иконки"
-
-msgid "Import"
-msgstr "Импорт"
-
-msgid "Import shortcuts"
-msgstr "Импортировать ярлыки"
-
-msgid "Importing shortcuts... Please wait."
-msgstr "Импорт ярлыков.. Пожалуйста подождите."
-
-msgid "Information"
-msgstr "Информация"
-
-msgid "Install autorun file"
-msgstr "Установить файл автозапуска"
-
-msgid "Install..."
-msgstr "Установить..."
-
-msgid "Jumbo (Vista and above)"
-msgstr "Джумбо (Vista и выше)"
-
-msgid "Language:"
-msgstr "Язык:"
-
-msgid "Large"
-msgstr "Большие"
-
-msgid "License"
-msgstr "Лицензия"
-
-msgid "Loading tree..."
-msgstr "Загрузка дерева..."
-
-msgid "Location:"
-msgstr "Расположение:"
-
-msgid "Minimize to tray"
-msgstr "Свернуть в системный трей"
-
-msgid "Multi-launch"
-msgstr "Мульти-запуск"
-
-msgid "My Computer"
-msgstr "Мой компьютер"
-
-msgid "My Network Places"
-msgstr "Сетевое окружение"
-
-msgid "Name:"
-msgstr "Наименование:"
-
-msgid "Network Connections"
-msgstr "Сетевые подключения"
-
-msgid "New group..."
-msgstr "Новая группа..."
-
-msgid "New shortcut..."
-msgstr "Новый ярлык..."
-
-msgid "No"
-msgstr "Нет"
-
-msgid "OK"
-msgstr "ОК"
-
-msgid "Operations"
-msgstr "Операции"
-
-msgid "Organize group shortcuts"
-msgstr "Упорядочить ярлыки группы"
-
-msgid "Organize shortcuts"
-msgstr "Упорядочить ярлыки"
-
-msgid "Orientation:"
-msgstr "Ориентация:"
-
-msgid "Parameters:"
-msgstr "Параметры:"
-
-msgid "Please wait while your applications are being closed."
-msgstr "Пожалуйста подождите пока ваши приложения закроются."
-
-msgid "Please wait..."
-msgstr "Пожалуйста подождите..."
-
-msgid "Plugin"
-msgstr "Плагин"
-
-msgid ""
-"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
-"or ASCII. Applies to:"
+#: gui\ConfigDialog.cpp:703
+msgid "The autorun file has been installed successfully"
+msgstr "Файл автозапуска успешно установлен"
+
+#: gui\ConfigDialog.cpp:734
+msgid "Please enable the plugin in order to change its options."
 msgstr ""
-"Неправильный формат сценария плагина. Пожалуйста, перекодируйте его в UTF-8 "
-"без BOM или в ASCII. Применимо к:"
 
-msgid "Plugins"
-msgstr "Плагины"
+#: gui\ConfigDialog.cpp:752
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s архивы плагинов"
 
-msgid "PortableApps.com applications"
-msgstr "Приложения PortableApps.com"
+#: gui\ConfigDialog.cpp:753 gui\IconDialog.cpp:175
+msgid "All files"
+msgstr "Все файлы"
 
-msgid "Printers and Faxes"
-msgstr "Принтеры и факсы"
-
-msgid "Properties"
-msgstr "Свойства"
-
-msgid "Recycle Bin"
-msgstr "Корзина"
-
-msgid "Remove..."
-msgstr "Удалить..."
-
-msgid "Run multi-launch group on startup"
-msgstr "Запускать группу мульти-запуска при старте"
-
-msgid "Save"
-msgstr "Сохранить"
-
-msgid "Search"
-msgstr "Поиск"
-
-msgid "Select a file or a folder"
-msgstr "Выберите файл или папку"
-
+#: gui\ConfigDialog.cpp:755
 msgid "Select a plugin package"
 msgstr "Выберите архив плагина"
 
-msgid "Select an icon"
-msgstr "Выберите иконку"
+#: gui\ConfigDialog.cpp:784
+msgid "Please wait..."
+msgstr "Пожалуйста подождите..."
 
-msgid "Select an icon file or library"
-msgstr "Выберите файл иконки или библиотеку"
-
-msgid "Sets user data path (-u will be ignored)"
-msgstr "Указать путь к данным пользователя (-u будет проигнорированно)"
-
-msgid "Shift +"
-msgstr "Shift +"
-
-msgid "Shorcut Properties"
-msgstr "Параметры ярлыка"
-
-msgid "Show"
-msgstr "Показать"
-
-msgid "Show Desktop"
-msgstr "Свернуть все окна"
-
-msgid "Skin:"
-msgstr "Шкурка:"
-
-msgid "Small"
-msgstr "Маленькие"
-
+#: gui\ConfigDialog.cpp:1055
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."
 msgstr ""
 "Некоторые из сделанных изменений вступят в силу после перезапуска программы."
 
-msgid "Start >>"
-msgstr "Пуск >>"
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Загрузка дерева..."
 
-msgid "Status"
-msgstr "Статус"
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "Выберите файл или папку"
 
-msgid "The autorun file has been installed successfully"
-msgstr "Файл автозапуска успешно установлен"
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Выберите иконку"
 
-msgid ""
-"The changes made to the plugins will only be active the next time %s is "
-"started."
-msgstr "Изменения в плагинах вступят в силу после перезапуска %s."
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Файл иконки или библиотеки:"
 
-msgid ""
-"The multilaunch group is currently empty. Do you wish to show the help topic "
-"about this feature?"
-msgstr ""
-"Группа мульти-запуска пуста. Вы  желаете просмотреть соответствующий раздел "
-"справки?"
+#: gui\IconDialog.cpp:169
+msgid "All supported files"
+msgstr "Все поддерживаемые файлы"
 
-msgid ""
-"The plugin has been installed successfully. It will be activated the next "
-"time %s is started"
-msgstr ""
-"Плагин был успешно установлен. Он будет активирован после перезапуска %s"
+#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+msgid "Icons"
+msgstr "Иконки"
 
-msgid "The shortcut location doesn't exist. Do you wish to continue?"
-msgstr "Расположение ярлыка несуществует. Вы хотите продолжить?"
+#: gui\IconDialog.cpp:172
+msgid "Executables"
+msgstr "Программы"
 
-msgid ""
-"There was an error registering the hot key. Another application may already "
-"have registered it."
-msgstr ""
-"Во время регистрации горячей клавиши произошла ошибка. Возможно это "
-"сочетание уже используется другой программой"
+#: gui\IconDialog.cpp:173
+msgid "Dynamic libraries"
+msgstr "Динамические библиотеки"
 
-msgid "This file doesn't exist or has been deleted (Error %s)"
-msgstr "Этот файл несуществует или был удалён (Ошибка %s)"
+#: gui\IconDialog.cpp:174
+msgid "Icon libraries"
+msgstr "Библиотеки иконок"
 
-msgid "This skin is not compatible with the current version of %s."
-msgstr "Эта шкурка не совместима с текущей версией %s."
+#: gui\IconDialog.cpp:177
+msgid "Select an icon file or library"
+msgstr "Выберите файл иконки или библиотеку"
 
-msgid "This software uses a number of open source libraries including:"
-msgstr ""
-"Это программное обеспечение использует некоторые открытые библиотеки, "
-"включая:"
-
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
 msgid ""
 "This tool will help you import your shortcuts into %s.\n"
 "\n"
@@ -486,47 +807,69 @@ msgstr ""
 "\n"
 "Пожалуйста, выберите откуда вы хотите импортировать ярлыки:"
 
-msgid "Translators: %s"
-msgstr "Переводчики: %s"
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "Приложения PortableApps.com"
 
-msgid "Transparency:"
-msgstr "Прозрачность:"
-
-msgid "Unnamed"
-msgstr "Без имени"
-
-msgid "Use default"
-msgstr "По-умолчанию"
-
-msgid "Uses user data directory to save settings."
-msgstr "Использовать папку профиля пользователя для сохранения настроек."
-
-msgid "Vertical"
-msgstr "Вертикальная"
-
-msgid "Warning"
-msgstr "Предупреждение"
-
-msgid "Web:"
-msgstr "Сайт:"
-
-msgid "When ejecting the drive, close the apps that are locking it"
-msgstr "Закрывать программы блокирующие устройство при извлечении"
-
-msgid "Windows Explorer"
-msgstr "Проводник"
-
+#: gui\ImportWizardDialog.cpp:44
 msgid "Windows Quick Launch toolbar"
 msgstr "Быстрый запуск Windows"
 
+#: gui\ImportWizardDialog.cpp:45
 msgid "Windows Start Menu programs"
 msgstr "Программы меню из Пуск"
 
-msgid "Yes"
-msgstr "Да"
+#: gui\ImportWizardDialog.cpp:77
+msgid "Start >>"
+msgstr "Пуск >>"
 
-msgid "You do not have sufficient privileges for this operation."
-msgstr "У вас недостаточно прав для этой операции."
+#: gui\ImportWizardDialog.cpp:118
+msgid "Importing shortcuts... Please wait."
+msgstr "Импорт ярлыков.. Пожалуйста подождите."
 
-msgid "You have the latest version."
-msgstr "У вас самая последняя версия."
+#: gui\PluginPreferencesDialog.cpp:37
+msgid "Preferences"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Group Properties"
+msgstr "Параметры группы"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Shorcut Properties"
+msgstr "Параметры ярлыка"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Name:"
+msgstr "Наименование:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Location:"
+msgstr "Расположение:"
+
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Parameters:"
+msgstr "Параметры:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Icon:"
+msgstr "Иконка:"
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Change icon..."
+msgstr "Изменить иконку..."
+
+#: gui\ShortcutEditorDialog.cpp:47
+msgid "Use default"
+msgstr "По-умолчанию"
+
+#: gui\ShortcutEditorDialog.cpp:48
+msgid "The location may be a file, a folder or a URL."
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:180
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Расположение ярлыка несуществует. Вы хотите продолжить?"
+
+#~ msgid "Transparency:"
+#~ msgstr "Прозрачность:"

@@ -125,17 +125,10 @@ MainFrame::MainFrame()
   }
 
   frameIcon_.LoadFile(FilePaths::GetBaseSkinDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
-
-  // We need to provide a .ico file that only contains a 16x16 icon. If we give a .ico with
-  // multiple sizes (16, 32, 48), Windows is going to use the 32x32 size and resize it to 16x16 O_o
-  wxIcon trayIcon(FilePaths::GetBaseSkinDirectory() + _T("/Application16.ico"), wxBITMAP_TYPE_ICO);
-  taskBarIcon_.SetIcon(trayIcon);
-
   SetIcon(frameIcon_);
   SetTitle(APPLICATION_NAME);
-
+  ShowTrayIcon();
   ApplySkin();
-
   RegisterHideShowHotKey();
 
 
@@ -182,7 +175,21 @@ MainFrame::MainFrame()
 
     SetSize(x, y, width, height);
   }
-} 
+}
+
+
+void MainFrame::ShowTrayIcon(bool doShow) {
+  if (doShow == taskBarIcon_.IsIconInstalled()) return;
+  
+  if (doShow) {
+    // We need to provide a .ico file that only contains a 16x16 icon. If we give a .ico with
+    // multiple sizes (16, 32, 48), Windows is going to use the 32x32 size and resize it to 16x16 O_o
+    wxIcon trayIcon(FilePaths::GetBaseSkinDirectory() + _T("/Application16.ico"), wxBITMAP_TYPE_ICO);
+    taskBarIcon_.SetIcon(trayIcon);
+  } else {
+    taskBarIcon_.RemoveIcon();
+  }
+}
 
 
 wxWindow* MainFrame::GetNullPanelObjectById(int id) {
@@ -353,7 +360,7 @@ void MainFrame::DoCloseStep() {
   ILOG(wxString::Format(_T("Doing close step: %d"), closeStep_));
 
   // Set it to -1 for now to make sure that a given step is not executed more than once
-  // It needs to be set back to set + 1, once the step has been done.
+  // It needs to be set back to step + 1, once the step has been done.
   closeStep_ = -1; 
 
   if (step == 0) {

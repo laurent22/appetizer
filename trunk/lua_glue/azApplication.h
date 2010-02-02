@@ -45,6 +45,7 @@ public:
   int getDirectory(lua_State *L);
   int getFilePath(lua_State *L);
   int getDataDirectory(lua_State *L);
+  int showTrayIcon(lua_State *L);
 
   static const char className[];
   static Lunar<azApplication>::RegType methods[];

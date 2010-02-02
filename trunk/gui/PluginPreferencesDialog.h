@@ -42,11 +42,11 @@ public:
 
 protected:
 
-  
   wxFlexGridSizer* mainSizer;
   PluginPreferenceDialogControls controls_;
 
   PluginPreferences* preferences_;
+  void ClearControls();
 
   std::map<wxButton*, wxTextCtrl*> browseButtonToTextBoxMap_;
 

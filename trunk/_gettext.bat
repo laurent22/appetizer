@@ -20,4 +20,8 @@ msgmerge -U Data\Locales\ro\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\sv\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\tr\appetizer.po Data\Locales\appetizer.pot
 msgmerge -U Data\Locales\zh\appetizer.po Data\Locales\appetizer.pot
-
+msgmerge -U Data\Locales\pt\appetizer.po Data\Locales\appetizer.pot
+msgmerge -U Data\Locales\ru\appetizer.po Data\Locales\appetizer.pot
+msgmerge -U Data\Locales\sk\appetizer.po Data\Locales\appetizer.pot
+msgmerge -U Data\Locales\vi\appetizer.po Data\Locales\appetizer.pot
+msgmerge -U Data\Locales\zh_CN\appetizer.po Data\Locales\appetizer.pot

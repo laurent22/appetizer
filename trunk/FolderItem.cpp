@@ -662,6 +662,139 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
 }
 
 
+wxString FolderItem::GetSpecialItemFilePath(const wxString& specialItem) {
+
+  wxString filePath;
+
+  if (specialItem.Index(_T("$(")) != wxNOT_FOUND) {
+
+    #ifdef __WINDOWS__
+
+    OSVERSIONINFO osInfo = wxGetApp().GetOsInfo();
+
+    if (specialItem == _T("$(ControlPanel)")) {
+
+      filePath = FilePaths::GetSystem32Directory() + _T("\\control.exe");
+
+
+    } else if (specialItem == _T("$(MyComputer)")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+
+
+    } else if (specialItem == _T("$(MyNetwork)")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+
+
+    } else if (specialItem == _T("$(Prompt)")) {
+
+      filePath = FilePaths::GetSystem32Directory() + _T("\\cmd.exe");
+
+
+    } else if (specialItem == _T("$(Calculator)")) {
+
+      filePath = FilePaths::GetSystem32Directory() + _T("\\calc.exe");
+
+
+    } else if (specialItem == _T("$(Write)")) {
+
+      filePath = FolderItem::ResolvePath(_T("%ProgramFiles%\\Windows NT\\Accessories\\wordpad.exe")); // Windows 7 (and maybe Vista)
+      if (!wxFileName::FileExists(filePath)) filePath = FilePaths::GetSystem32Directory() + _T("\\write.exe");
+
+
+    } else if (specialItem == _T("$(Paint)")) {
+
+      filePath = FilePaths::GetSystem32Directory() + _T("\\pbrush.exe");
+      if (!wxFileName::FileExists(filePath)) filePath = FilePaths::GetWindowsDirectory() + _T("\\pbrush.exe");
+      if (!wxFileName::FileExists(filePath)) filePath = FilePaths::GetSystem32Directory() + _T("\\mspaint.exe");
+
+
+    } else if (specialItem == _T("$(Notepad)")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\notepad.exe");
+      if (!wxFileName::FileExists(filePath)) filePath = FilePaths::GetSystem32Directory() + _T("\\notepad.exe");
+
+
+    } else if (specialItem == _T("$(RecycleBin)")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+
+
+    } else if (specialItem == _T("$(Printers)")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+
+
+    } else if (specialItem == _T("$(NetworkConnections)")) {
+
+      filePath = FilePaths::GetSystem32Directory() + _T("\\rundll32.exe");
+
+
+    } else if (specialItem == _T("$(Explorer)")) {
+
+      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
+
+
+    } else if (specialItem == _T("$(MyDocuments)")) {
+
+      wxLogNull logNo;
+
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("Personal"), filePath);
+      } else {
+        ELOG(_T("Couldn't get My Documents path"));
+      }
+
+
+    } else if (specialItem == _T("$(MyPictures)")) {
+
+      wxLogNull logNo;
+
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("My Pictures"), filePath);
+      } else {
+        ELOG(_T("Couldn't get My Pictures path"));
+      }
+
+
+    } else if (specialItem == _T("$(MyMusic)")) {
+
+      wxLogNull logNo;                          
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("My Music"), filePath);
+      } else {
+        ELOG(_T("Couldn't get My Music path"));
+      }
+
+
+    } else if (specialItem == _T("$(MyVideo)")) {
+
+      wxLogNull logNo;
+
+      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"));
+      if (regKey.Exists()) {
+        regKey.QueryValue(_T("My Video"), filePath);
+      } else {
+        ELOG(_T("Couldn't get My Video path"));
+      }
+
+
+    }
+
+    #endif // __WINDOWS__
+
+
+  }
+
+
+  return filePath;
+}
+
+
 void FolderItem::Launch() {
 
   wxString parameters;
@@ -675,41 +808,33 @@ void FolderItem::Launch() {
 
     OSVERSIONINFO osInfo = wxGetApp().GetOsInfo();
 
-    if (filePath_ == _T("$(ControlPanel)")) {
+    filePath = FolderItem::GetSpecialItemFilePath(filePath_);
+    
+    if (filePath_ == _T("$(MyComputer)")) {
 
-      filePath = FilePaths::GetSystem32Directory() + _T("\\control.exe");
-
-
-    } else if (filePath_ == _T("$(MyComputer)")) {
-
-      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{20D04FE0-3AEA-1069-A2D8-08002B30309D}");
 
 
     } else if (filePath_ == _T("$(MyNetwork)")) {
 
-      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{208D2C60-3AEA-1069-A2D7-08002B30309D}"); // XP and below
       if (osInfo.dwMajorVersion >= 6) parameters = _T("shell:NetworkPlacesFolder"); // Vista and above
 
 
     } else if (filePath_ == _T("$(RecycleBin)")) {
 
-      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{645FF040-5081-101B-9F08-00AA002F954E}"); // XP and below  
       if (osInfo.dwMajorVersion >= 6) parameters = _T("shell:RecycleBinFolder"); // Vista and above
 
 
     } else if (filePath_ == _T("$(Printers)")) {
 
-      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
       parameters = _T(",::{2227A280-3AEA-1069-A2DE-08002B30309D}"); // XP and below  
       if (osInfo.dwMajorVersion >= 6) parameters = _T("shell:PrintersFolder"); // Vista and above
 
 
     } else if (filePath_ == _T("$(NetworkConnections)")) {
 
-      filePath = FilePaths::GetSystem32Directory() + _T("\\rundll32.exe");
       parameters = _T("shell32.dll,Control_RunDLL ") + FilePaths::GetSystem32Directory() + _T("\\ncpa.cpl");
 
 
@@ -725,10 +850,6 @@ void FolderItem::Launch() {
 
       return;
 
-    } else if (filePath_ == _T("$(Explorer)")) {
-
-      filePath = FilePaths::GetWindowsDirectory() + _T("\\explorer.exe");
-
 
     } else if (filePath_ == _T("$(Search)")) {
 
@@ -739,52 +860,6 @@ void FolderItem::Launch() {
         fileContent);
 
       return;
-
-    } else if (filePath_ == _T("$(MyDocuments)")) {
-
-      wxLogNull logNo;
-
-      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
-      if (regKey.Exists()) {
-        regKey.QueryValue(_T("Personal"), filePath);
-      } else {
-        ELOG(_T("Couldn't get My Documents path"));
-      }
-
-    } else if (filePath_ == _T("$(MyPictures)")) {
-
-      wxLogNull logNo;
-
-      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders"));
-      if (regKey.Exists()) {
-        regKey.QueryValue(_T("My Pictures"), filePath);
-      } else {
-        ELOG(_T("Couldn't get My Pictures path"));
-      }
-
-
-    } else if (filePath_ == _T("$(MyMusic)")) {
-
-      wxLogNull logNo;                          
-      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"));
-      if (regKey.Exists()) {
-        regKey.QueryValue(_T("My Music"), filePath);
-      } else {
-        ELOG(_T("Couldn't get My Music path"));
-      }
-
-
-    } else if (filePath_ == _T("$(MyVideo)")) {
-
-      wxLogNull logNo;
-
-      wxRegKey regKey(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders"));
-      if (regKey.Exists()) {
-        regKey.QueryValue(_T("My Video"), filePath);
-      } else {
-        ELOG(_T("Couldn't get My Video path"));
-      }
-
 
     }
 
@@ -1132,6 +1207,8 @@ wxIcon* FolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize) {
     output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_PRINTERS + inc);
   } else if (path == _T("$(NetworkConnections)")) {
     output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_NETWORK_CONNECTIONS + inc);
+  } else {
+    output = IconGetter::GetExecutableIcon(FolderItem::GetSpecialItemFilePath(path), iconSize);
   }
 
   if (output) {
@@ -1168,6 +1245,16 @@ wxString FolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
       theName = _("Printers and Faxes");
     } else if (unresolvedFilePath == _T("$(NetworkConnections)")) {
       theName = _("Network Connections");
+    } else if (unresolvedFilePath == _T("$(Calculator)")) {
+      theName = _("Calculator");
+    } else if (unresolvedFilePath == _T("$(Paint)")) {
+      theName = _("Paint Brush");
+    } else if (unresolvedFilePath == _T("$(Notepad)")) {
+      theName = _("Notepad");
+    } else if (unresolvedFilePath == _T("$(Write)")) {
+      theName = _("WordPad");
+    } else if (unresolvedFilePath == _T("$(Prompt)")) {
+      theName = _("Command Prompt");
     }
   }
 

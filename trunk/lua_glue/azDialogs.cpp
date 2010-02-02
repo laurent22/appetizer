@@ -257,8 +257,14 @@ int azDialogs::showForm(lua_State *L) {
     return 0;
   }
 
-  wxString inputTitle = LuaUtil::ToString(L, 2, true, _T("Appetizer"));
+  wxString inputTitle = LuaUtil::ToString(L, 2, true, _T(""));
   wxString inputOkButtonLabel = LuaUtil::ToString(L, 3, true, _("OK"));
+
+  if (inputTitle == _T("")) {
+    inputTitle = plugin->GetName();
+  } else {
+    inputTitle = plugin->GetName() + _T(" - ") + inputTitle;
+  }
 
   PluginPreferences* preferences = new PluginPreferences();
 

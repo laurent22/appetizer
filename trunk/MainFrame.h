@@ -133,6 +133,7 @@ class MainFrame: public wxFrame {
     bool IsTopOfDisplay();
 
     void RecurseCleanUp(wxWindow* window);
+    void ShowTrayIcon(bool doShow = true);
 
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);

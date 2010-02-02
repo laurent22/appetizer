@@ -31,6 +31,7 @@ public:
   void PortableAppsFormatSynchronization();
   void StartMenuSynchronization();
   void QuickLaunchSynchronization();
+  void CustomFolderSynchronization(const wxString& folderPath);
 
   int EditFolderItem(FolderItem* folderItem);
   FolderItem* EditNewFolderItem(FolderItem* parent, bool isGroup = false);

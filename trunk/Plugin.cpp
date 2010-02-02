@@ -65,7 +65,8 @@ Plugin::~Plugin() {
 
 
 void Plugin::ShowPreferencesDialog() {
-  if (!preferencesDialog_) preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
+  if (preferencesDialog_) preferencesDialog_->Destroy();
+  preferencesDialog_ = new PluginPreferencesDialog(wxGetApp().GetMainFrame());
   preferencesDialog_->LoadPreferences(this->GetPreferences());
   int result = preferencesDialog_->ShowModal();
 

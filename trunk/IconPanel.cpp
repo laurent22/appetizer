@@ -159,8 +159,8 @@ wxMenu* IconPanel::GetContextMenu() {
   wxMenu* specialMenu = new wxMenu();
   wxIcon* specialIcon = NULL;
 
-  #define ADD_SPECIAL_ITEM_TO_MENU(text, specialItemMacro) \
-    menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), text); \
+  #define ADD_SPECIAL_ITEM_TO_MENU(specialItemMacro) \
+    menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), FolderItem::GetDisplayName(specialItemMacro)); \
     menuItem->SetMetadata(_T("name"), _T("addSpecialItem")); \
     menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
     specialIcon = FolderItem::CreateSpecialItemIcon(specialItemMacro, 16); \
@@ -168,15 +168,22 @@ wxMenu* IconPanel::GetContextMenu() {
     wxDELETE(specialIcon); \
     specialMenu->Append(menuItem);
 
-  ADD_SPECIAL_ITEM_TO_MENU(_("Control Panel"), _T("$(ControlPanel)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("My Computer"), _T("$(MyComputer)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("My Network Places"), _T("$(MyNetwork)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("Recycle Bin"), _T("$(RecycleBin)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("Show Desktop"), _T("$(ShowDesktop)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("Windows Explorer"), _T("$(Explorer)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("Search"), _T("$(Search)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("Printers and Faxes"), _T("$(Printers)"))
-  ADD_SPECIAL_ITEM_TO_MENU(_("Network Connections"), _T("$(NetworkConnections)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(MyComputer)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(MyNetwork)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(NetworkConnections)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(ControlPanel)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Printers)"))
+  specialMenu->AppendSeparator();
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(RecycleBin)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(ShowDesktop)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Search)"))
+  specialMenu->AppendSeparator();
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Explorer)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Calculator)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Notepad)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Paint)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Write)"))
+  ADD_SPECIAL_ITEM_TO_MENU(_T("$(Prompt)"))
 
   #undef ADD_SPECIAL_ITEM_TO_MENU
 

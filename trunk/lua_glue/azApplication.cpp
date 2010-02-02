@@ -66,6 +66,7 @@ Lunar<azApplication>::RegType azApplication::methods[] = {
   method(azApplication, getDirectory),
   method(azApplication, getFilePath),
   method(azApplication, getDataDirectory),
+  method(azApplication, showTrayIcon),
   {0,0}
 };
 
@@ -384,4 +385,16 @@ int azApplication::getFilePath(lua_State *L) {
 int azApplication::getDataDirectory(lua_State *L) {
   LuaUtil::PushString(L, FilePaths::GetDataDirectory());
   return 1;
+}
+
+
+/**
+ * Show or hide the application tray icon
+ * @param Boolean enable Sets this to <code>false</code> to hide the application tray icon (default true)
+ */	
+int azApplication::showTrayIcon(lua_State *L) {
+  bool doShow = LuaUtil::ToBoolean(L, 1, true, true);
+  wxGetApp().GetMainFrame()->ShowTrayIcon(doShow);
+
+  return 0;
 }

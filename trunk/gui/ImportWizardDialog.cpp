@@ -43,6 +43,7 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
   sourceNames.Add(_T("portableApps")); sourceLabels.Add(_("PortableApps.com applications"));
   sourceNames.Add(_T("quickLaunch")); sourceLabels.Add(_("Windows Quick Launch toolbar"));
   sourceNames.Add(_T("startupMenu")); sourceLabels.Add(_("Windows Start Menu programs"));
+  sourceNames.Add(_T("custom")); sourceLabels.Add(_("Let me select a different location"));
 
   for (int i = 0; i < sourceNames.Count(); i++) {
     wxString n = sourceNames[i];
@@ -130,6 +131,13 @@ void ImportWizardDialog::OnButtonClicked(wxCommandEvent& evt) {
           wxGetApp().GetUser()->QuickLaunchSynchronization();
         } else if (c->GetName() == _T("startupMenu")) {
           wxGetApp().GetUser()->StartMenuSynchronization();
+        } else if (c->GetName() == _T("custom")) {
+          wxDirDialog dirDialog(this, _("Please select the folder to import the shortcuts from."));
+          int result = dirDialog.ShowModal();
+          if (result == wxID_OK) {
+            wxGetApp().GetUser()->CustomFolderSynchronization(dirDialog.GetPath());
+          }
+          //wxGetApp().GetUser()->QuickLaunchSynchronization();
         }
       }
 

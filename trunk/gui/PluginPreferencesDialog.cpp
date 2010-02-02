@@ -24,16 +24,25 @@ PluginPreferencesDialog::PluginPreferencesDialog(wxWindow* parent, wxWindowID id
 }
 
 
-PluginPreferencesDialog::~PluginPreferencesDialog() {
+void PluginPreferencesDialog::ClearControls() {
   for(int i = 0; i < controls_.size(); i++) {
     PluginPreferenceDialogControl* controlData = controls_.at(i);
+    wxDELETE(controlData->control);
+    wxDELETE(controlData->label);
     wxDELETE(controlData);
   }
   controls_.clear();
 }
 
 
+PluginPreferencesDialog::~PluginPreferencesDialog() {
+  ClearControls();
+}
+
+
 void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bool flatView, const wxString& saveButtonLabel) {
+  //ClearControls();
+  
   SetTitle(_("Preferences"));
 
   preferences_ = preferences;
@@ -274,6 +283,8 @@ void PluginPreferencesDialog::LoadPreferences(PluginPreferences* preferences, bo
 
 void PluginPreferencesDialog::OnButtonClicked(wxCommandEvent& evt) {
   wxButton* button = static_cast<wxButton*>(evt.GetEventObject());
+
+  ILOG(_T("OnButtonClicked"));
 
   switch (evt.GetId()) {
 

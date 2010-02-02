@@ -302,6 +302,13 @@ void User::QuickLaunchSynchronization() {
 }
 
 
+void User::CustomFolderSynchronization(const wxString& folderPath) {
+  wxArrayString foundFilePaths; 
+  wxDir::GetAllFiles(folderPath, &foundFilePaths, _T("*.exe"), wxDIR_FILES | wxDIR);
+  BatchAddFolderItems(foundFilePaths, true);
+}
+
+
 void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions) {
   bool folderItemsChanged = false;
 

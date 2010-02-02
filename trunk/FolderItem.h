@@ -50,6 +50,7 @@ public:
   void ClearCachedIcons();  
   bool IsWebLink();
 
+  static wxString GetSpecialItemFilePath(const wxString& specialItem);
   static wxIcon* CreateSpecialItemIcon(const wxString& path, int iconSize);
   static wxIcon* CreateDefaultGroupIcon(int iconSize);
 
