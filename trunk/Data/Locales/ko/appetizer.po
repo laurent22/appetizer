@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 10:48+0000\n"
+"POT-Creation-Date: 2010-02-03 15:09+0000\n"
 "PO-Revision-Date: 2009-04-26 17:53-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -25,11 +25,11 @@ msgstr "숨기기"
 msgid "Show"
 msgstr "보이기"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:593
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
 msgid "Eject drive"
 msgstr "드라이브 꺼내기"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1064 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "설정"
@@ -47,52 +47,72 @@ msgstr "단축키 정리"
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "이 파일이 존재하지 않거나 삭제되었습니다. (%s 에러)"
 
-#: FolderItem.cpp:919
+#: FolderItem.cpp:994
 msgid "Group"
 msgstr "분류"
 
-#: FolderItem.cpp:920
+#: FolderItem.cpp:995
 msgid "Unnamed"
 msgstr "제목없음"
 
-#: FolderItem.cpp:1152 IconPanel.cpp:171
+#: FolderItem.cpp:1229
 msgid "Control Panel"
 msgstr "제어판"
 
-#: FolderItem.cpp:1154 IconPanel.cpp:172
+#: FolderItem.cpp:1231
 msgid "My Computer"
 msgstr "내 컴퓨터"
 
-#: FolderItem.cpp:1156 IconPanel.cpp:173
+#: FolderItem.cpp:1233
 msgid "My Network Places"
 msgstr "내 네트워크 환경"
 
-#: FolderItem.cpp:1158 IconPanel.cpp:174
+#: FolderItem.cpp:1235
 msgid "Recycle Bin"
 msgstr "휴지통"
 
-#: FolderItem.cpp:1160 IconPanel.cpp:175
+#: FolderItem.cpp:1237
 msgid "Show Desktop"
 msgstr "데스크톱 보기"
 
-#: FolderItem.cpp:1162 IconPanel.cpp:176
+#: FolderItem.cpp:1239
 msgid "Windows Explorer"
 msgstr "원도우 탐색기"
 
-#: FolderItem.cpp:1164 IconPanel.cpp:177
+#: FolderItem.cpp:1241
 msgid "Search"
 msgstr "찾기"
 
-#: FolderItem.cpp:1166
+#: FolderItem.cpp:1243
 msgid "Current Drive"
 msgstr "사용 드라이브"
 
-#: FolderItem.cpp:1168 IconPanel.cpp:178
+#: FolderItem.cpp:1245
 msgid "Printers and Faxes"
 msgstr ""
 
-#: FolderItem.cpp:1170 IconPanel.cpp:179
+#: FolderItem.cpp:1247
 msgid "Network Connections"
+msgstr ""
+
+#: FolderItem.cpp:1249
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1251
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "Command Prompt"
 msgstr ""
 
 #: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
@@ -119,7 +139,7 @@ msgstr "신규..."
 msgid "New group..."
 msgstr "새 그룹..."
 
-#: IconPanel.cpp:183
+#: IconPanel.cpp:190
 msgid "Add special item"
 msgstr "특별 항목 추가"
 
@@ -197,17 +217,17 @@ msgstr ""
 msgid "Error launching web browser"
 msgstr "웹브라우저 오류"
 
-#: MainFrame.cpp:228
+#: MainFrame.cpp:235
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
 msgstr "단축키를 등록하는 중 오류. 이미 등록되어 있습니다."
 
-#: MainFrame.cpp:592
+#: MainFrame.cpp:599
 msgid "Minimize to tray"
 msgstr "최소화"
 
-#: MainFrame.cpp:1064
+#: MainFrame.cpp:1071
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -218,11 +238,11 @@ msgstr ""
 "\n"
 " '%s' 창에서 변경가능 ('%s'탭)"
 
-#: MainFrame.cpp:1064 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "작업"
 
-#: MainFrame.cpp:1064 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "이 메시지를 다시 표지하지 않음"
 
@@ -273,7 +293,7 @@ msgid ""
 "about this feature?"
 msgstr "이 그룹은 비어 있습니다. 이 기능에 대한 도움말 항목을 보시겠습니까?"
 
-#: Plugin.cpp:216
+#: Plugin.cpp:217
 msgid ""
 "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
 "or ASCII. Applies to:"
@@ -433,12 +453,12 @@ msgstr "아니오"
 
 #: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80 gui\PluginPreferencesDialog.cpp:242
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "취소"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:64
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "일반"
 
@@ -499,6 +519,10 @@ msgstr "업데이트 확인"
 #: gui\ConfigDialog.cpp:223
 msgid "Install autorun file"
 msgstr "파일 설치"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -807,15 +831,23 @@ msgstr "윈도우 빠른 실행 도구 모음"
 msgid "Windows Start Menu programs"
 msgstr "윈도우 시작 메뉴 프로그램"
 
-#: gui\ImportWizardDialog.cpp:77
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
 msgstr "시작 >>"
 
-#: gui\ImportWizardDialog.cpp:118
+#: gui\ImportWizardDialog.cpp:119
 msgid "Importing shortcuts... Please wait."
 msgstr "가져오기 단축키... 잠시 기다려주십시오."
 
-#: gui\PluginPreferencesDialog.cpp:37
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 10:48+0000\n"
+"POT-Creation-Date: 2010-02-03 15:09+0000\n"
 "PO-Revision-Date: 2009-04-26 17:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -25,11 +25,11 @@ msgstr "Ocultar"
 msgid "Show"
 msgstr "Mostrar"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:593
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
 msgid "Eject drive"
 msgstr "Expulsar la unidad"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1064 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Configuracion"
@@ -47,52 +47,72 @@ msgstr "Organizar accesos directos"
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "El archivo no existe o ha sido borrado (Error %s)"
 
-#: FolderItem.cpp:919
+#: FolderItem.cpp:994
 msgid "Group"
 msgstr "Grupo"
 
-#: FolderItem.cpp:920
+#: FolderItem.cpp:995
 msgid "Unnamed"
 msgstr ""
 
-#: FolderItem.cpp:1152 IconPanel.cpp:171
+#: FolderItem.cpp:1229
 msgid "Control Panel"
 msgstr "Panel de Control"
 
-#: FolderItem.cpp:1154 IconPanel.cpp:172
+#: FolderItem.cpp:1231
 msgid "My Computer"
 msgstr "Mi PC"
 
-#: FolderItem.cpp:1156 IconPanel.cpp:173
+#: FolderItem.cpp:1233
 msgid "My Network Places"
 msgstr "Mis Sitios de red"
 
-#: FolderItem.cpp:1158 IconPanel.cpp:174
+#: FolderItem.cpp:1235
 msgid "Recycle Bin"
 msgstr "Papelera de reciclaje"
 
-#: FolderItem.cpp:1160 IconPanel.cpp:175
+#: FolderItem.cpp:1237
 msgid "Show Desktop"
 msgstr "Mostrar escritorio"
 
-#: FolderItem.cpp:1162 IconPanel.cpp:176
+#: FolderItem.cpp:1239
 msgid "Windows Explorer"
 msgstr "Explorador de windows"
 
-#: FolderItem.cpp:1164 IconPanel.cpp:177
+#: FolderItem.cpp:1241
 msgid "Search"
 msgstr "Buscar"
 
-#: FolderItem.cpp:1166
+#: FolderItem.cpp:1243
 msgid "Current Drive"
 msgstr ""
 
-#: FolderItem.cpp:1168 IconPanel.cpp:178
+#: FolderItem.cpp:1245
 msgid "Printers and Faxes"
 msgstr ""
 
-#: FolderItem.cpp:1170 IconPanel.cpp:179
+#: FolderItem.cpp:1247
 msgid "Network Connections"
+msgstr ""
+
+#: FolderItem.cpp:1249
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1251
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "Command Prompt"
 msgstr ""
 
 #: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
@@ -119,7 +139,7 @@ msgstr "Nuevo acceso directo..."
 msgid "New group..."
 msgstr "Nuevo grupo..."
 
-#: IconPanel.cpp:183
+#: IconPanel.cpp:190
 msgid "Add special item"
 msgstr "Agregar item especial"
 
@@ -199,7 +219,7 @@ msgstr ""
 msgid "Error launching web browser"
 msgstr "Error ejecutando el navegador web"
 
-#: MainFrame.cpp:228
+#: MainFrame.cpp:235
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
@@ -207,11 +227,11 @@ msgstr ""
 "Hubo un error registrando el atajo de teclado. Otra aplicación puede haberla "
 "registrado ya."
 
-#: MainFrame.cpp:592
+#: MainFrame.cpp:599
 msgid "Minimize to tray"
 msgstr "Minimizar a la barra de tareas"
 
-#: MainFrame.cpp:1064
+#: MainFrame.cpp:1071
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -219,11 +239,11 @@ msgid ""
 "Note that you may change this behavior in the '%s' windows ('%s' tab)"
 msgstr ""
 
-#: MainFrame.cpp:1064 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Operaciones"
 
-#: MainFrame.cpp:1064 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "No mostrar este mensaje de nuevo"
 
@@ -276,7 +296,7 @@ msgstr ""
 "El grupo multilaunch está actualmente vacio. ¿Desea ver la ayuda sobre esta "
 "característica?"
 
-#: Plugin.cpp:216
+#: Plugin.cpp:217
 msgid ""
 "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
 "or ASCII. Applies to:"
@@ -445,12 +465,12 @@ msgstr "No"
 
 #: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80 gui\PluginPreferencesDialog.cpp:242
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:64
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "General"
 
@@ -512,6 +532,10 @@ msgstr "Comprobar actualización"
 #: gui\ConfigDialog.cpp:223
 msgid "Install autorun file"
 msgstr "Instalar archivo de autoarranque"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -828,15 +852,23 @@ msgstr "Barra de herramientas de inicio rápido de Windows "
 msgid "Windows Start Menu programs"
 msgstr "Menú de Inicio de Windows"
 
-#: gui\ImportWizardDialog.cpp:77
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
 msgstr "Empezar >>"
 
-#: gui\ImportWizardDialog.cpp:118
+#: gui\ImportWizardDialog.cpp:119
 msgid "Importing shortcuts... Please wait."
 msgstr "Importando accesos directos...Por favor espere."
 
-#: gui\PluginPreferencesDialog.cpp:37
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
 msgstr ""
 

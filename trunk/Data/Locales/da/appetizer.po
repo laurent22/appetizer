@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 10:48+0000\n"
+"POT-Creation-Date: 2010-02-03 15:09+0000\n"
 "PO-Revision-Date: 2009-04-26 17:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -26,11 +26,11 @@ msgstr "Minimer"
 msgid "Show"
 msgstr "Maksimer"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:593
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
 msgid "Eject drive"
 msgstr "Afbryd/skub ud"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1064 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Indstillinger"
@@ -48,53 +48,73 @@ msgstr "Organiser genveje"
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Filen eksisterer ikke eller er blevet slettet (Fejl %s)"
 
-#: FolderItem.cpp:919
+#: FolderItem.cpp:994
 msgid "Group"
 msgstr "Gruppe"
 
-#: FolderItem.cpp:920
+#: FolderItem.cpp:995
 msgid "Unnamed"
 msgstr "Unavngivet"
 
-#: FolderItem.cpp:1152 IconPanel.cpp:171
+#: FolderItem.cpp:1229
 msgid "Control Panel"
 msgstr "KontrolPanel"
 
-#: FolderItem.cpp:1154 IconPanel.cpp:172
+#: FolderItem.cpp:1231
 msgid "My Computer"
 msgstr "Denne computer"
 
-#: FolderItem.cpp:1156 IconPanel.cpp:173
+#: FolderItem.cpp:1233
 msgid "My Network Places"
 msgstr "Netværkssteder"
 
-#: FolderItem.cpp:1158 IconPanel.cpp:174
+#: FolderItem.cpp:1235
 msgid "Recycle Bin"
 msgstr "Papirkurv"
 
-#: FolderItem.cpp:1160 IconPanel.cpp:175
+#: FolderItem.cpp:1237
 msgid "Show Desktop"
 msgstr "Vis Skrivebord"
 
-#: FolderItem.cpp:1162 IconPanel.cpp:176
+#: FolderItem.cpp:1239
 msgid "Windows Explorer"
 msgstr "Windows Stifinder"
 
-#: FolderItem.cpp:1164 IconPanel.cpp:177
+#: FolderItem.cpp:1241
 msgid "Search"
 msgstr "Søg"
 
-#: FolderItem.cpp:1166
+#: FolderItem.cpp:1243
 msgid "Current Drive"
 msgstr "Aktuelt drev"
 
-#: FolderItem.cpp:1168 IconPanel.cpp:178
+#: FolderItem.cpp:1245
 msgid "Printers and Faxes"
 msgstr "Printere og faxenheder"
 
-#: FolderItem.cpp:1170 IconPanel.cpp:179
+#: FolderItem.cpp:1247
 msgid "Network Connections"
 msgstr "Netværksforbindelser"
+
+#: FolderItem.cpp:1249
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1251
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "Command Prompt"
+msgstr ""
 
 #: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
 msgid "Remove..."
@@ -120,7 +140,7 @@ msgstr "Ny genvej"
 msgid "New group..."
 msgstr "Ny gruppe"
 
-#: IconPanel.cpp:183
+#: IconPanel.cpp:190
 msgid "Add special item"
 msgstr "Tilføj..."
 
@@ -198,17 +218,17 @@ msgstr ""
 msgid "Error launching web browser"
 msgstr "Fejl under opstart af internet browser"
 
-#: MainFrame.cpp:228
+#: MainFrame.cpp:235
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
 msgstr "Fejl! Kan ikke definere genvejstast. Måske er den allerede i brug."
 
-#: MainFrame.cpp:592
+#: MainFrame.cpp:599
 msgid "Minimize to tray"
 msgstr "Minimer"
 
-#: MainFrame.cpp:1064
+#: MainFrame.cpp:1071
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -219,11 +239,11 @@ msgstr ""
 "\n"
 "Bemærk: handlingen kan ændres i '%s/%s'"
 
-#: MainFrame.cpp:1064 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Handlinger"
 
-#: MainFrame.cpp:1064 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "Vis ikke denne besked igen"
 
@@ -276,7 +296,7 @@ msgstr ""
 "Ingen programmer er valgt til Multistart.\n"
 "Se hjælp til denne funktion?"
 
-#: Plugin.cpp:216
+#: Plugin.cpp:217
 msgid ""
 "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
 "or ASCII. Applies to:"
@@ -449,12 +469,12 @@ msgstr "Nej"
 
 #: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80 gui\PluginPreferencesDialog.cpp:242
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "Anuller"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:64
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "Overordnet"
 
@@ -515,6 +535,10 @@ msgstr "Kontroller version"
 #: gui\ConfigDialog.cpp:223
 msgid "Install autorun file"
 msgstr "Opret autorun fil"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -827,15 +851,23 @@ msgstr "Værktøjslinien Hurtig start"
 msgid "Windows Start Menu programs"
 msgstr "Menuen start"
 
-#: gui\ImportWizardDialog.cpp:77
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
 msgstr "Start >>"
 
-#: gui\ImportWizardDialog.cpp:118
+#: gui\ImportWizardDialog.cpp:119
 msgid "Importing shortcuts... Please wait."
 msgstr "Opretter genveje... Vent lidt"
 
-#: gui\PluginPreferencesDialog.cpp:37
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
 msgstr ""
 

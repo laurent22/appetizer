@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ap\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 10:48+0000\n"
+"POT-Creation-Date: 2010-02-03 15:09+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Tilt <tiltstr@gmail.com>\n"
@@ -21,11 +21,11 @@ msgstr "隠す"
 msgid "Show"
 msgstr "表示"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:593
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
 msgid "Eject drive"
 msgstr "ドライブをイジェクト"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1064 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "設定"
@@ -43,52 +43,72 @@ msgstr "ショートカットの分類"
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "このファイルは存在しないか、または削除されています(エラー%s)"
 
-#: FolderItem.cpp:919
+#: FolderItem.cpp:994
 msgid "Group"
 msgstr "グループ"
 
-#: FolderItem.cpp:920
+#: FolderItem.cpp:995
 msgid "Unnamed"
 msgstr "無題"
 
-#: FolderItem.cpp:1152 IconPanel.cpp:171
+#: FolderItem.cpp:1229
 msgid "Control Panel"
 msgstr "コントロールパネル"
 
-#: FolderItem.cpp:1154 IconPanel.cpp:172
+#: FolderItem.cpp:1231
 msgid "My Computer"
 msgstr "マイコンピュータ"
 
-#: FolderItem.cpp:1156 IconPanel.cpp:173
+#: FolderItem.cpp:1233
 msgid "My Network Places"
 msgstr "マイネットワーク"
 
-#: FolderItem.cpp:1158 IconPanel.cpp:174
+#: FolderItem.cpp:1235
 msgid "Recycle Bin"
 msgstr "ゴミ箱"
 
-#: FolderItem.cpp:1160 IconPanel.cpp:175
+#: FolderItem.cpp:1237
 msgid "Show Desktop"
 msgstr "デスクトップの表示"
 
-#: FolderItem.cpp:1162 IconPanel.cpp:176
+#: FolderItem.cpp:1239
 msgid "Windows Explorer"
 msgstr "エクスプローラ"
 
-#: FolderItem.cpp:1164 IconPanel.cpp:177
+#: FolderItem.cpp:1241
 msgid "Search"
 msgstr "検索"
 
-#: FolderItem.cpp:1166
+#: FolderItem.cpp:1243
 msgid "Current Drive"
 msgstr "現在のドライブ"
 
-#: FolderItem.cpp:1168 IconPanel.cpp:178
+#: FolderItem.cpp:1245
 msgid "Printers and Faxes"
 msgstr ""
 
-#: FolderItem.cpp:1170 IconPanel.cpp:179
+#: FolderItem.cpp:1247
 msgid "Network Connections"
+msgstr ""
+
+#: FolderItem.cpp:1249
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1251
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "Command Prompt"
 msgstr ""
 
 #: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
@@ -115,7 +135,7 @@ msgstr "新規ショートカット"
 msgid "New group..."
 msgstr "新規グループ..."
 
-#: IconPanel.cpp:183
+#: IconPanel.cpp:190
 msgid "Add special item"
 msgstr "特殊アイテムを追加"
 
@@ -193,7 +213,7 @@ msgstr ""
 msgid "Error launching web browser"
 msgstr "ウェブブラウザの起動に失敗"
 
-#: MainFrame.cpp:228
+#: MainFrame.cpp:235
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
@@ -201,11 +221,11 @@ msgstr ""
 "ホットキーの登録に失敗しました。別のアプリケーションによって使用されている可"
 "能性があります。"
 
-#: MainFrame.cpp:592
+#: MainFrame.cpp:599
 msgid "Minimize to tray"
 msgstr "最小化でトレイに移動"
 
-#: MainFrame.cpp:1064
+#: MainFrame.cpp:1071
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -216,11 +236,11 @@ msgstr ""
 "\n"
 "'%s' ウィンドウ('%s' タブ)から、この動作を変更することが出来ます。"
 
-#: MainFrame.cpp:1064 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "操作"
 
-#: MainFrame.cpp:1064 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "次回から表示しない"
 
@@ -273,7 +293,7 @@ msgstr ""
 "現在、複数起動グループにはアイテムがありません。この機能に関するヘルプを表示"
 "しますか?"
 
-#: Plugin.cpp:216
+#: Plugin.cpp:217
 msgid ""
 "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
 "or ASCII. Applies to:"
@@ -449,12 +469,12 @@ msgstr "いいえ"
 
 #: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80 gui\PluginPreferencesDialog.cpp:242
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:64
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "一般"
 
@@ -515,6 +535,10 @@ msgstr "アップデートを確認"
 #: gui\ConfigDialog.cpp:223
 msgid "Install autorun file"
 msgstr "オートランファイルをインストール"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -828,15 +852,23 @@ msgstr "Windows - クイック起動バー"
 msgid "Windows Start Menu programs"
 msgstr "Windows - スタートメニュープログラム"
 
-#: gui\ImportWizardDialog.cpp:77
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
 msgstr "開始>>"
 
-#: gui\ImportWizardDialog.cpp:118
+#: gui\ImportWizardDialog.cpp:119
 msgid "Importing shortcuts... Please wait."
 msgstr "ショートカットのインポート中... お待ちください"
 
-#: gui\PluginPreferencesDialog.cpp:37
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
 msgstr ""
 

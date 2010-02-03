@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 10:48+0000\n"
+"POT-Creation-Date: 2010-02-03 15:09+0000\n"
 "PO-Revision-Date: 2009-04-27 19:29-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -25,11 +25,11 @@ msgstr "Απόκρυψη"
 msgid "Show"
 msgstr "Εμφάνιση"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:593
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
 msgid "Eject drive"
 msgstr "Εξαγωγή μέσου"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1064 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Ρυθμίσεις"
@@ -47,53 +47,73 @@ msgstr "Οργάνωση συντομεύσεων"
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Το αρχείο αυτό δεν υπάρχει ή έχει διαγραφεί (Σφάλμαr %s)"
 
-#: FolderItem.cpp:919
+#: FolderItem.cpp:994
 msgid "Group"
 msgstr "Ομάδα"
 
-#: FolderItem.cpp:920
+#: FolderItem.cpp:995
 msgid "Unnamed"
 msgstr "Ανώνυμο"
 
-#: FolderItem.cpp:1152 IconPanel.cpp:171
+#: FolderItem.cpp:1229
 msgid "Control Panel"
 msgstr "Πίνακας ελέγχου"
 
-#: FolderItem.cpp:1154 IconPanel.cpp:172
+#: FolderItem.cpp:1231
 msgid "My Computer"
 msgstr "Ο υπολογιστής μου"
 
-#: FolderItem.cpp:1156 IconPanel.cpp:173
+#: FolderItem.cpp:1233
 msgid "My Network Places"
 msgstr "Θέσεις δικτύου"
 
-#: FolderItem.cpp:1158 IconPanel.cpp:174
+#: FolderItem.cpp:1235
 msgid "Recycle Bin"
 msgstr "Κάδος ανακύκλωσης"
 
-#: FolderItem.cpp:1160 IconPanel.cpp:175
+#: FolderItem.cpp:1237
 msgid "Show Desktop"
 msgstr "Προβολή επιφάνειας εργασίας"
 
-#: FolderItem.cpp:1162 IconPanel.cpp:176
+#: FolderItem.cpp:1239
 msgid "Windows Explorer"
 msgstr "Εξερεύνηση των windows"
 
-#: FolderItem.cpp:1164 IconPanel.cpp:177
+#: FolderItem.cpp:1241
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: FolderItem.cpp:1166
+#: FolderItem.cpp:1243
 msgid "Current Drive"
 msgstr "Τρέχον δίσκος"
 
-#: FolderItem.cpp:1168 IconPanel.cpp:178
+#: FolderItem.cpp:1245
 msgid "Printers and Faxes"
 msgstr "Φαξ και Εκτυπωτές"
 
-#: FolderItem.cpp:1170 IconPanel.cpp:179
+#: FolderItem.cpp:1247
 msgid "Network Connections"
 msgstr "Συνδέσεις δικτύου"
+
+#: FolderItem.cpp:1249
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1251
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "Command Prompt"
+msgstr ""
 
 #: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
 msgid "Remove..."
@@ -119,7 +139,7 @@ msgstr "Νέα συντόμευση..."
 msgid "New group..."
 msgstr "Νέα ομάδα..."
 
-#: IconPanel.cpp:183
+#: IconPanel.cpp:190
 msgid "Add special item"
 msgstr "Προσθήκη ειδικού αντικειμένου"
 
@@ -197,7 +217,7 @@ msgstr ""
 msgid "Error launching web browser"
 msgstr "Σφάλμα κατά το άνοιγμα του φυλλομετρητή"
 
-#: MainFrame.cpp:228
+#: MainFrame.cpp:235
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
@@ -205,11 +225,11 @@ msgstr ""
 "Σφάλμα κατά την κατοχύρωση της συνόμευση πλήκτρων. Κάποια άλλη εφαρμογή την "
 "χρησιμοποιεί."
 
-#: MainFrame.cpp:592
+#: MainFrame.cpp:599
 msgid "Minimize to tray"
 msgstr "Ελαχιστοποίηση στη μπάρα ειδοποιήσεων"
 
-#: MainFrame.cpp:1064
+#: MainFrame.cpp:1071
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -221,11 +241,11 @@ msgstr ""
 "Σημειώστε ότι μπορείτε να αλλάξετε αυτή τη συμπεριφορά από το παράθυρο '%"
 "s' (καρτέλα '%s')"
 
-#: MainFrame.cpp:1064 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Χειρισμοί"
 
-#: MainFrame.cpp:1064 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "Να μην εμφανιστεί αυτό το μήνυμα ξανά"
 
@@ -278,7 +298,7 @@ msgstr ""
 "Η ομάδα multilaunch είναι άδεια. Θέλετε να δείτε το θέμα βοήθειας για αυτό "
 "το χαρακτηριστικό;"
 
-#: Plugin.cpp:216
+#: Plugin.cpp:217
 msgid ""
 "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
 "or ASCII. Applies to:"
@@ -458,12 +478,12 @@ msgstr "Όχι"
 
 #: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
 #: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:80 gui\PluginPreferencesDialog.cpp:242
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "Άκυρο"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:64
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "Γενικές"
 
@@ -524,6 +544,10 @@ msgstr "Έλεγχος για ενημερώσεις"
 #: gui\ConfigDialog.cpp:223
 msgid "Install autorun file"
 msgstr "Εγκατάσταση αρχείου αυτόματης εκτέλεσης"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -842,15 +866,23 @@ msgstr "Γραμμή γρήγορης εκκίνησης των Windows"
 msgid "Windows Start Menu programs"
 msgstr "Προγράμματα του μενού Έναρξης των Windows"
 
-#: gui\ImportWizardDialog.cpp:77
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
 msgstr "Έναρξη >>"
 
-#: gui\ImportWizardDialog.cpp:118
+#: gui\ImportWizardDialog.cpp:119
 msgid "Importing shortcuts... Please wait."
 msgstr "Εισαγωγή συντομεύσεων... Παρακαλώ περιμένετε."
 
-#: gui\PluginPreferencesDialog.cpp:37
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
 msgstr ""
 
