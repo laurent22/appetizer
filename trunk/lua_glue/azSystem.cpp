@@ -42,6 +42,7 @@ const char azSystem::className[] = "System";
 
 Lunar<azSystem>::RegType azSystem::methods[] = {
   method(azSystem, runCommand),
+  method(azSystem, open),
   method(azSystem, killLockingProcesses),
   method(azSystem, getDirectoryContents),
   method(azSystem, fileMatchesPattern),
@@ -220,6 +221,23 @@ int azSystem::getLastCommandErrorCode(lua_State *L) {
   lua_pushinteger(L, lastCommandErrorCode_);
 
   return 1;
+}
+
+
+/**
+ * Open the given document, URL or application. Additional, optional command line arguments can also be specified.
+ * @param String filePath Path to the document, application or URL.
+ * @param String arguments Optional command line arguments.
+ * @param Boolean safe Sets this to <code>true</code> for the "safe" mode or <code>false</code> for the "forced" mode. (default true)
+ * 
+ */	
+int azSystem::open(lua_State *L) {
+  wxString filePath = LuaUtil::ToString(L, 1, false);
+  wxString arguments = LuaUtil::ToString(L, 2, true);
+
+  FolderItem::Launch(filePath, arguments, false);
+
+  return 0;
 }
 
 

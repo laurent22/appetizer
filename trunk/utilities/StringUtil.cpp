@@ -91,16 +91,38 @@ bool StringUtil::FileMatchesPattern(const wxString& pattern, const wxString& fil
   p = p.Lower();
   f = f.Lower();
 
-  p.Replace(_T("\\"), _T("\\\\"), true);
-  p.Replace(_T("/"), _T("\\"), true);
-  p.Replace(_T("."), _T("\\."), true);
-  p.Replace(_T("*"), _T(".*"), true);  
-  p.Replace(_T("?"), _T("."), true);  
+  if (p.Contains(_T("*")) || p.Contains(_T("?"))) {
 
-  f.Replace(_T("/"), _T("\\"));
+    // Escape special regular expression characters
+    p.Replace(_T("\\"), _T("\\\\"), true);
+    p.Replace(_T("/"), _T("\\"), true);
+    p.Replace(_T("."), _T("\\."), true);
+    p.Replace(_T("+"), _T("\\+"), true);
+    p.Replace(_T("|"), _T("\\|"), true); 
+    p.Replace(_T("$"), _T("\\$"), true); 
+    p.Replace(_T("^"), _T("\\^"), true); 
+    p.Replace(_T("{"), _T("\\{"), true);  
+    p.Replace(_T("}"), _T("\\}"), true);  
+    p.Replace(_T("["), _T("\\["), true);  
+    p.Replace(_T("]"), _T("\\]"), true);  
+    p.Replace(_T("("), _T("\\("), true);  
+    p.Replace(_T(")"), _T("\\)"), true); 
+     
+    // Replace wildcards with regex special characters
+    p.Replace(_T("*"), _T(".*"), true);  
+    p.Replace(_T("?"), _T("."), true);  
 
-  wxRegEx regex(p, wxRE_ADVANCED);
-  return regex.Matches(f);
+    f.Replace(_T("/"), _T("\\"));
+
+    wxRegEx regex(p, wxRE_ADVANCED);    
+
+    return regex.Matches(f);
+  
+  } else {
+        
+    return p == f;  
+
+  }
 }
 
 

@@ -23,6 +23,7 @@ FileRemoveDir %releaseDirectory%\Data\Plugins\Securizer, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\AddToGroupOnRightClick, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\CloseAfterLaunchingAnApp, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\RevealShortcutTarget, 1
+FileRemoveDir %releaseDirectory%\Data\Plugins\TrayIconExtras, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\NightBlue, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\NightRed, 1
 FileRemoveDir %releaseDirectory%\Data\Skin\PAMClassic, 1

@@ -22,6 +22,8 @@ public:
   static int CompareVersions(const wxString& v1, const wxString& v2);
   static bool IsWebLink(const wxString& string);
 
+private:
+
 };
 
 #endif // __StringUtil_H

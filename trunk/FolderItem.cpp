@@ -453,7 +453,7 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
     return NULL;
   }
 
-  wxMenu* menu = new wxMenu(GetName());
+  wxMenu* menu = new wxMenu();
   ExtendedMenuItem* menuItem = NULL;
 
   for (int i = 0; i < children_.size(); i++) {
@@ -525,28 +525,30 @@ FolderItem* FolderItem::SearchChildByFilename(const wxString& filename, int matc
 }
 
 
-void FolderItem::Launch(const wxString& filePath, const wxString& arguments) {
+void FolderItem::Launch(const wxString& filePath, const wxString& arguments, bool notifyPlugins) {
 
-  wxString* filePathP = new wxString(filePath);
-  wxString* argumentsP = new wxString(arguments);
-  wxString* cancelP = new wxString(_T("0"));
+  if (notifyPlugins) {
+    wxString* filePathP = new wxString(filePath);
+    wxString* argumentsP = new wxString(arguments);
+    wxString* cancelP = new wxString(_T("0"));
 
-  LuaHostTable eventTable;
-  eventTable[_T("cancel")] = new LuaHostTableItem((wxObject*)cancelP, LHT_boolean);
-  eventTable[_T("filePath")] = new LuaHostTableItem((wxObject*)filePathP, LHT_string);
-  eventTable[_T("arguments")] = new LuaHostTableItem((wxObject*)argumentsP, LHT_string);
-  wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("shorcutLaunching"), eventTable);
+    LuaHostTable eventTable;
+    eventTable[_T("cancel")] = new LuaHostTableItem((wxObject*)cancelP, LHT_boolean);
+    eventTable[_T("filePath")] = new LuaHostTableItem((wxObject*)filePathP, LHT_string);
+    eventTable[_T("arguments")] = new LuaHostTableItem((wxObject*)argumentsP, LHT_string);
+    wxGetApp().GetPluginManager()->DispatchEvent(&(wxGetApp()), _T("shorcutLaunching"), eventTable);
 
-  wxString* sCancelled = (wxString*)(eventTable[_T("cancel")]->value);
-  bool cancelled = sCancelled->Mid(0,1) == _T("1");
-  
-  wxDELETE(filePathP);
-  wxDELETE(argumentsP);
-  wxDELETE(cancelP);
+    wxString* sCancelled = (wxString*)(eventTable[_T("cancel")]->value);
+    bool cancelled = sCancelled->Mid(0,1) == _T("1");
+    
+    wxDELETE(filePathP);
+    wxDELETE(argumentsP);
+    wxDELETE(cancelP);
 
-  if (cancelled) {
-    ILOG(_T("Launch has been cancelled by plugin"));
-    return;
+    if (cancelled) {
+      ILOG(_T("Launch has been cancelled by plugin"));
+      return;
+    }
   }
   
   //***************************************************************************

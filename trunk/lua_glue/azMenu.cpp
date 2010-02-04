@@ -121,7 +121,7 @@ azMenu::~azMenu() {
  * 
  */	
 azMenu::azMenu(lua_State *L) {
-  wxString text = LuaUtil::ToString(L, 1);
+  wxString text = LuaUtil::ToString(L, 1, true);
 
   menu_ = new wxMenu(text);
   ownContent_ = true;

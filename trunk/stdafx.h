@@ -93,6 +93,7 @@
 #include <vector>
 #include <memory.h>
 #include <fstream>
+#include <map>
 
 #include <tinyxml/tinyxml.h>
 #include <simpleini/SimpleIni.h>

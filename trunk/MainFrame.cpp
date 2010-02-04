@@ -56,6 +56,7 @@ MainFrame::MainFrame()
   activated_ = false;  
   closeOperationScheduled_ = false;
   initialized_ = false;
+  isClosing_ = false;
   closeStep_ = -1;
 
   bool showLogWindow = false;
@@ -341,19 +342,12 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     Close();
   }
 
-  if (closeStep_ >= 0) {
-
-    DoCloseStep();
-    evt.RequestMore();
-
-  }
-
 }
 
 
-void MainFrame::DoCloseStep() {
+bool MainFrame::DoCloseStep() {
 
-  if (closeStep_ < 0) return;
+  if (closeStep_ < 0 || !isClosing_) return false;
 
   int step = closeStep_;
 
@@ -427,10 +421,14 @@ void MainFrame::DoCloseStep() {
     Destroy();
 
     closeStep_ = step + 1;
+    
+    return true;
 
   }
 
   ILOG(wxString::Format(_T("Next close step will be: %d"), closeStep_));
+
+  return false;
 }
 
 
@@ -1032,24 +1030,30 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
 }
 
 
-void MainFrame::OnClose(wxCloseEvent& evt) {
-  evt.Veto();
+bool MainFrame::IsClosing() {
+  return isClosing_;
+}
 
-  if (closeStep_ >= 0) {
+
+void MainFrame::OnClose(wxCloseEvent& evt) {
+  if (IsClosing()) {
     ILOG(_T("'Close' action vetoed because the frame is already being closed."));
+    evt.Veto();
     return;
   }
 
   if (!initialized_) {    
     ILOG(_T("'Close' action vetoed because the frame is not yet initialized."));
+    evt.Veto();
     return;
   }
 
   // Start the closing process (see OnIdle() event)
   ILOG(_T("Starting close operation (Step 0)"));
+  Disable();
+  isClosing_ = true;
   closeStep_ = 0;
-
-  return;
+  while (!DoCloseStep());
 }
 
 

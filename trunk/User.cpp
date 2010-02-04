@@ -129,7 +129,7 @@ void User::Load() {
       wxString path = wxString::FromUTF8(cString);
       path.Trim(true).Trim(false);
       if (path == wxEmptyString) continue;
-      AddAutoAddExclusion(FolderItem::ConvertToRelativePath(path));
+      autoAddExclusions_.Add(FolderItem::ConvertToRelativePath(path));
     } else {
       WLOG(wxString::Format(_T("User::Load: Unknown element: %s"), elementName));
     }

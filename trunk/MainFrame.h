@@ -40,6 +40,7 @@ class MainFrame: public wxFrame {
       wxSize InitWindowSize;
     };
     
+    bool isClosing_;
     bool rotated_;
     bool needLayoutUpdate_;
     bool needMaskUpdate_;
@@ -76,7 +77,7 @@ class MainFrame: public wxFrame {
     int closeStep_;
 
 
-    void DoCloseStep();
+    bool DoCloseStep();
 
     void UpdateMask();
     void UpdateLayout();
@@ -99,6 +100,8 @@ class MainFrame: public wxFrame {
     int GetMinWidth();
     int GetMaxHeight();
     int GetMaxWidth();
+
+    bool IsClosing();
 
     wxBitmap* GetMainBackgroundBitmap();
     wxWindow* GetNullPanelObjectById(int id);

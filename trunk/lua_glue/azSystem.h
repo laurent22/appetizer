@@ -22,6 +22,7 @@ public:
   ~azSystem();
 
   int runCommand(lua_State *L);
+  int open(lua_State *L);
   int killLockingProcesses(lua_State *L);	
   int getDirectoryContents(lua_State *L);	
   int fileMatchesPattern(lua_State *L);

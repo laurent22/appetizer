@@ -1,0 +1,16 @@
+Securizer protects your sensitive documents by encrypting them.
+
+== USAGE ==
+
+- When Appetizer closes, Securizer asks you for the password you'd like to use to encrypt your documents. Choose a password long enought - between 4 to 20 characters.
+- Then the next time Appetizer is opened, you will be asked for your password again. Input it and your documents will be decrypted.
+
+== TECHNICAL DETAILS ==
+
+- Securizer uses ccrypt for the encryption and uses the safest encryption method so there is no risk of losing files, even if ccrypt or Appetizer crashes.
+- Encrypted files are given a unique extension (.ccrypt1_7). This ensure that a file will not be accidentally encrypted twice (or decrypted when it's not encrypted).
+
+== LICENSE ==
+
+- Securizer is released under the same license of Appetizer, as of January 2010
+- ccrypt is copyright (c) Peter Selinger. License and documentation are available at http://ccrypt.sourceforge.net/

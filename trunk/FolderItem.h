@@ -64,7 +64,7 @@ public:
 
   void Launch();
   void LaunchWithArguments(const wxString& arguments);
-  static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString);
+  static void Launch(const wxString& filePath, const wxString& arguments = wxEmptyString, bool notifyPlugins = true);
 
   TiXmlElement* ToXml();
   void FromXml(TiXmlElement* xml);

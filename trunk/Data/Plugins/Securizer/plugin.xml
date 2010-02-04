@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!-- NOTE: this file and all its settings are optionals. Only main.lua is required -->
-<Plugin version="1.0">
+<Plugin version="1.0.1">
 	<!-- Plugin name -->
 	<Name>Securizer</Name>
 	<!-- Minimum Appetizer version required by the plugin -->

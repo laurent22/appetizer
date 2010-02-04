@@ -115,10 +115,16 @@ end
 --
 -- *****************************************************************
 
+local docExtensions = {"txt", "rtf", "ini", "xml", "odt", "ods", "odp", "doc", "docx", "xls", "ppt"}
+local includedDefaultValue = "";
+for i,v in ipairs(docExtensions) do
+	includedDefaultValue = includedDefaultValue .. "$(Drive)\\*." .. v .. "\n"
+end
+
 preferences:registerPreference({
 	type = "TextArea",
 	name = "includedFiles",
-	defaultValue = "$(Drive)\\*.txt\n$(Drive)\\*.odt\n$(Drive)\\*.doc\n$(Drive)\\*.docx",
+	defaultValue = includedDefaultValue,
 	title = _("Included files:"),
 	description = _("List of files to be encrypted. Put one item per line. Wildcard such as '*' or '?' are supported. Use the special variable $(Drive) to specify the drive Appetizer is installed on.")
 })
@@ -454,8 +460,13 @@ function popupMenu_configuration()
 end
 
 
+function popupMenu_help()
+	system:open(plugin:getDirectory() .. "\\Resources\\Help.txt")
+end
+
+
 function cryptButton_click(event)
-	local menu = Menu:new("Securizer")
+	local menu = Menu:new()
 	
 	menuItem = MenuItem:new(_("Start encryption"))
 	menuItem:setOnSelected("popupMenu_encrypt")
@@ -463,6 +474,12 @@ function cryptButton_click(event)
 	
 	menuItem = MenuItem:new(_("Start decryption"))
 	menuItem:setOnSelected("popupMenu_decrypt")
+	menu:append(menuItem)
+	
+	menu:appendSeparator()
+	
+	menuItem = MenuItem:new(_("Help"))
+	menuItem:setOnSelected("popupMenu_help")
 	menu:append(menuItem)
 	
 	menuItem = MenuItem:new(_("Configuration"))
