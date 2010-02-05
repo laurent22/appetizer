@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-03 15:09+0000\n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
 "PO-Revision-Date: 2009-08-28 10:51+0100\n"
 "Last-Translator: Sepp Winkler <sepp.winkler@gmail.com>\n"
 "Language-Team: Appetizer Project\n"
@@ -20,11 +20,11 @@ msgstr "Skryť"
 msgid "Show"
 msgstr "Zobraziť"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
 msgid "Eject drive"
 msgstr "Odpojiť disk"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Nastavenie"
@@ -37,76 +37,76 @@ msgstr "Zatvoriť"
 msgid "Organize shortcuts"
 msgstr "Organizovať zástupcov"
 
-#: FolderItem.cpp:615 FolderItem.cpp:637 FolderItem.cpp:660
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Tento súbor neexistuje alebo bol odstránený (Chyba %s)"
 
-#: FolderItem.cpp:994
+#: FolderItem.cpp:996
 msgid "Group"
 msgstr "Skupina"
 
-#: FolderItem.cpp:995
+#: FolderItem.cpp:997
 msgid "Unnamed"
 msgstr "Nepomenovaný"
 
-#: FolderItem.cpp:1229
+#: FolderItem.cpp:1231
 msgid "Control Panel"
 msgstr "Ovládací panel"
 
-#: FolderItem.cpp:1231
+#: FolderItem.cpp:1233
 msgid "My Computer"
 msgstr "Tento počítač"
 
-#: FolderItem.cpp:1233
+#: FolderItem.cpp:1235
 msgid "My Network Places"
 msgstr "Moje miesta v sieti"
 
-#: FolderItem.cpp:1235
+#: FolderItem.cpp:1237
 msgid "Recycle Bin"
 msgstr "Kôš"
 
-#: FolderItem.cpp:1237
+#: FolderItem.cpp:1239
 msgid "Show Desktop"
 msgstr "Zobraziť plochu"
 
-#: FolderItem.cpp:1239
+#: FolderItem.cpp:1241
 msgid "Windows Explorer"
 msgstr "Prieskumník Windows"
 
-#: FolderItem.cpp:1241
+#: FolderItem.cpp:1243
 msgid "Search"
 msgstr "Hľadať"
 
-#: FolderItem.cpp:1243
+#: FolderItem.cpp:1245
 msgid "Current Drive"
 msgstr "Aktuálny disk"
 
-#: FolderItem.cpp:1245
+#: FolderItem.cpp:1247
 msgid "Printers and Faxes"
 msgstr "Tlačiarne a faxy"
 
-#: FolderItem.cpp:1247
+#: FolderItem.cpp:1249
 msgid "Network Connections"
 msgstr "Sieťové pripojenia"
 
-#: FolderItem.cpp:1249
+#: FolderItem.cpp:1251
 msgid "Calculator"
 msgstr ""
 
-#: FolderItem.cpp:1251
+#: FolderItem.cpp:1253
 msgid "Paint Brush"
 msgstr ""
 
-#: FolderItem.cpp:1253
+#: FolderItem.cpp:1255
 msgid "Notepad"
 msgstr ""
 
-#: FolderItem.cpp:1255
+#: FolderItem.cpp:1257
 msgid "WordPad"
 msgstr ""
 
-#: FolderItem.cpp:1257
+#: FolderItem.cpp:1259
 msgid "Command Prompt"
 msgstr ""
 
@@ -126,67 +126,72 @@ msgstr "Organizovať skupinu zástupcov"
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: IconPanel.cpp:151 OptionPanel.cpp:164
+#: IconPanel.cpp:152 OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "Nový zástupca"
 
-#: IconPanel.cpp:155
+#: IconPanel.cpp:156
 msgid "New group..."
 msgstr "Nová skupina"
 
-#: IconPanel.cpp:190
+#: IconPanel.cpp:191
 msgid "Add special item"
 msgstr "Pridať špeciálnu položku"
 
-#: main.cpp:66
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "Importovať zástupcov"
+
+#: main.cpp:68
 msgid "Uses user data directory to save settings."
 msgstr "Použije zložku používateľa pre uloženie nastvení"
 
-#: main.cpp:67
+#: main.cpp:69
 msgid "Sets user data path (-u will be ignored)"
 msgstr "Nastaví cestu používateľských údajov (-u bude ignorované)"
 
-#: main.cpp:68
+#: main.cpp:70
 msgid "Displays the log window (useful for debugging)"
 msgstr "Zobrazí okno denníka (užitočné pri ladení)"
 
-#: main.cpp:69
+#: main.cpp:71
 msgid "Displays this help message"
 msgstr "Zobrazí túto správu pomocníka"
 
-#: main.cpp:156
+#: main.cpp:158
 msgid "Could not initialize locale."
 msgstr "Nedá sa inicilizovať lokalita."
 
-#: main.cpp:314
+#: main.cpp:316
 msgid "Large"
 msgstr "Veľké"
 
-#: main.cpp:315
+#: main.cpp:317
 msgid "Medium"
 msgstr ""
 
-#: main.cpp:316
+#: main.cpp:318
 msgid "Extra Large (XP and above)"
 msgstr "Extra veľké (XP a vyššie)"
 
-#: main.cpp:317
+#: main.cpp:319
 msgid "Jumbo (Vista and above)"
 msgstr "Obrovské (Vista a vyššie)"
 
-#: main.cpp:321
+#: main.cpp:323
 msgid "Small"
 msgstr "Malé"
 
-#: main.cpp:413
+#: main.cpp:415
 msgid "Could not get update information"
 msgstr "Nedá sa získať informácia o aktualizácii"
 
-#: main.cpp:427
+#: main.cpp:429
 msgid "You have the latest version."
 msgstr "Máte poslednú verziu."
 
-#: main.cpp:434
+#: main.cpp:436
 #, fuzzy, c-format
 msgid ""
 "A new version of Appetizer is available!\n"
@@ -204,15 +209,15 @@ msgstr ""
 "\n"
 "Chcete ju stiahnuť teraz? "
 
-#: main.cpp:436
+#: main.cpp:438
 msgid "New version of Appetizer"
 msgstr ""
 
-#: main.cpp:440
+#: main.cpp:442
 msgid "Error launching web browser"
 msgstr "Chyba pri spustení prehliadača internetu"
 
-#: MainFrame.cpp:235
+#: MainFrame.cpp:236
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
@@ -220,11 +225,11 @@ msgstr ""
 "Nastala chyba pri registrovaní klávesovej skratky. Môže už byť registrovaná "
 "inou aplikáciou."
 
-#: MainFrame.cpp:599
+#: MainFrame.cpp:597
 msgid "Minimize to tray"
 msgstr "Minimalizovať do oblasti oznámení"
 
-#: MainFrame.cpp:1071
+#: MainFrame.cpp:1072
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -235,11 +240,11 @@ msgstr ""
 "\n"
 "Možete zmeniť toto správanie v '%s' windows ('%s' tab)"
 
-#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Operácie"
 
-#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "Nezobrazovať toto upozornenie znovu"
 
@@ -525,7 +530,7 @@ msgstr "Vždy na vrchu"
 msgid "Allow only one instance of %s at a time"
 msgstr "Povoliť len jednu inštanciu %s"
 
-#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:789
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
 msgid "Check for update"
 msgstr "Skontrolovať aktualizácie"
 
@@ -561,183 +566,191 @@ msgstr ""
 msgid "Label position:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:343
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
 #, fuzzy
 msgid "Hidden"
 msgstr "Skryť"
 
-#: gui\ConfigDialog.cpp:344
+#: gui\ConfigDialog.cpp:349
 msgid "Bottom"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:345 gui\ConfigDialog.cpp:538
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
 msgid "Right"
 msgstr "Šípka hore"
 
-#: gui\ConfigDialog.cpp:384
+#: gui\ConfigDialog.cpp:389
 msgid "Horizontal"
 msgstr "Horizontálne"
 
-#: gui\ConfigDialog.cpp:385
+#: gui\ConfigDialog.cpp:390
 msgid "Vertical"
 msgstr "Zvislo"
 
-#: gui\ConfigDialog.cpp:411
+#: gui\ConfigDialog.cpp:416
 msgid "Default"
 msgstr "Predvolené"
 
-#: gui\ConfigDialog.cpp:456
+#: gui\ConfigDialog.cpp:461
 msgid "Auto-hide after launching an application"
 msgstr "Automaticky skryť po spustení aplikácie"
 
-#: gui\ConfigDialog.cpp:457
+#: gui\ConfigDialog.cpp:462
 msgid "Run multi-launch group on startup"
 msgstr "Spustiť skupinu viacnásobného spustenia pri štarte"
 
-#: gui\ConfigDialog.cpp:458
+#: gui\ConfigDialog.cpp:463
 msgid "Hot key to hide / show the bar"
 msgstr "Klávesová skratka pre skrytie / zobrazenie panelu"
 
-#: gui\ConfigDialog.cpp:459
+#: gui\ConfigDialog.cpp:464
 msgid "Control +"
 msgstr "Control +"
 
-#: gui\ConfigDialog.cpp:460
+#: gui\ConfigDialog.cpp:465
 msgid "Alt +"
 msgstr "Alt +"
 
-#: gui\ConfigDialog.cpp:461
+#: gui\ConfigDialog.cpp:466
 msgid "Shift +"
 msgstr "Shift +"
 
-#: gui\ConfigDialog.cpp:462
+#: gui\ConfigDialog.cpp:467
 msgid "When ejecting the drive, close the apps that are locking it"
 msgstr "Pri odpojení disku zatvoriť aplikácie, ktoré ho uzamkýnajú"
 
-#: gui\ConfigDialog.cpp:463
+#: gui\ConfigDialog.cpp:468
 msgid "Close button minimizes to System Tray"
 msgstr "Tlačidlo atvorenia minimalizuje program do oblasti oznámení"
 
-#: gui\ConfigDialog.cpp:474
+#: gui\ConfigDialog.cpp:479
 msgid "<None>"
 msgstr "<None>"
 
-#: gui\ConfigDialog.cpp:516
+#: gui\ConfigDialog.cpp:521
 msgid "Numpad 0"
 msgstr "Numpad 0"
 
-#: gui\ConfigDialog.cpp:517
+#: gui\ConfigDialog.cpp:522
 msgid "Numpad 1"
 msgstr "Numpad 1"
 
-#: gui\ConfigDialog.cpp:518
+#: gui\ConfigDialog.cpp:523
 msgid "Numpad 2"
 msgstr "Numpad 2"
 
-#: gui\ConfigDialog.cpp:519
+#: gui\ConfigDialog.cpp:524
 msgid "Numpad 3"
 msgstr "Numpad 3"
 
-#: gui\ConfigDialog.cpp:520
+#: gui\ConfigDialog.cpp:525
 msgid "Numpad 4"
 msgstr "Numpad 4"
 
-#: gui\ConfigDialog.cpp:521
+#: gui\ConfigDialog.cpp:526
 msgid "Numpad 5"
 msgstr "Numpad 5"
 
-#: gui\ConfigDialog.cpp:522
+#: gui\ConfigDialog.cpp:527
 msgid "Numpad 6"
 msgstr "Numpad 6"
 
-#: gui\ConfigDialog.cpp:523
+#: gui\ConfigDialog.cpp:528
 msgid "Numpad 7"
 msgstr "Numpad 7"
 
-#: gui\ConfigDialog.cpp:524
+#: gui\ConfigDialog.cpp:529
 msgid "Numpad 8"
 msgstr "Numpad 8"
 
-#: gui\ConfigDialog.cpp:525
+#: gui\ConfigDialog.cpp:530
 msgid "Numpad 9"
 msgstr "Numpad 9"
 
-#: gui\ConfigDialog.cpp:527
+#: gui\ConfigDialog.cpp:532
 msgid "Backspace"
 msgstr "Backspace"
 
-#: gui\ConfigDialog.cpp:528
+#: gui\ConfigDialog.cpp:533
 msgid "Tab"
 msgstr "Tab"
 
-#: gui\ConfigDialog.cpp:529
+#: gui\ConfigDialog.cpp:534
 msgid "Return"
 msgstr "Enter"
 
-#: gui\ConfigDialog.cpp:530
+#: gui\ConfigDialog.cpp:535
 msgid "Escape"
 msgstr "Escape"
 
-#: gui\ConfigDialog.cpp:531
+#: gui\ConfigDialog.cpp:536
 msgid "Space"
 msgstr "Medzerník"
 
-#: gui\ConfigDialog.cpp:532
+#: gui\ConfigDialog.cpp:537
 msgid "Delete"
 msgstr "Delete"
 
-#: gui\ConfigDialog.cpp:534
+#: gui\ConfigDialog.cpp:539
 msgid "End"
 msgstr "End"
 
-#: gui\ConfigDialog.cpp:535
+#: gui\ConfigDialog.cpp:540
 msgid "Home"
 msgstr "Home"
 
-#: gui\ConfigDialog.cpp:536
+#: gui\ConfigDialog.cpp:541
 msgid "Left"
 msgstr "Šípka vľavo"
 
-#: gui\ConfigDialog.cpp:537
+#: gui\ConfigDialog.cpp:542
 msgid "Up"
 msgstr "Šípka vpravo"
 
-#: gui\ConfigDialog.cpp:539
+#: gui\ConfigDialog.cpp:544
 msgid "Down"
 msgstr "Šípka dole"
 
-#: gui\ConfigDialog.cpp:597
+#: gui\ConfigDialog.cpp:602
 msgid "Exclude these items from import operations"
 msgstr "Vylúčiť tieto položky z importovania"
 
-#: gui\ConfigDialog.cpp:629
+#: gui\ConfigDialog.cpp:634
 msgid "Available plugins"
 msgstr "Dostupné zásuvné moduly"
 
-#: gui\ConfigDialog.cpp:630
+#: gui\ConfigDialog.cpp:635
 msgid "Enable"
 msgstr "Zapnúť"
 
-#: gui\ConfigDialog.cpp:631
+#: gui\ConfigDialog.cpp:636
 msgid "Disable"
 msgstr "Vypnúť"
 
-#: gui\ConfigDialog.cpp:632
+#: gui\ConfigDialog.cpp:637
 msgid "Install..."
 msgstr "Inštalovať..."
 
-#: gui\ConfigDialog.cpp:633
+#: gui\ConfigDialog.cpp:638
 msgid "Download more plugins"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:635
+#: gui\ConfigDialog.cpp:640
 #, c-format
 msgid ""
 "The changes made to the plugins will only be active the next time %s is "
 "started."
 msgstr "Zmeny v zásuvných moduloch budú aktívne po nasledujúcom spustení %s."
 
-#: gui\ConfigDialog.cpp:698
+#: gui\ConfigDialog.cpp:703
 #, c-format
 msgid ""
 "By installing the autorun file on your removable drive, %s will start "
@@ -750,37 +763,37 @@ msgstr ""
 "\n"
 "Želáte si pokračovať?"
 
-#: gui\ConfigDialog.cpp:701
+#: gui\ConfigDialog.cpp:706
 msgid "Could not install autorun file. Please try again."
 msgstr ""
 "Nie je možné nainštalovať súbor autorun. Skúste vykonať operáciu znova."
 
-#: gui\ConfigDialog.cpp:703
+#: gui\ConfigDialog.cpp:708
 msgid "The autorun file has been installed successfully"
 msgstr "Súbor autorun bol uspešne nainštlovaný."
 
-#: gui\ConfigDialog.cpp:734
+#: gui\ConfigDialog.cpp:739
 msgid "Please enable the plugin in order to change its options."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:752
+#: gui\ConfigDialog.cpp:757
 #, c-format
 msgid "%s Plugin Packages"
 msgstr "%s balíčky zásuvných modulov"
 
-#: gui\ConfigDialog.cpp:753 gui\IconDialog.cpp:175
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
 msgid "All files"
 msgstr "Všetky súbory"
 
-#: gui\ConfigDialog.cpp:755
+#: gui\ConfigDialog.cpp:760
 msgid "Select a plugin package"
 msgstr "Vybrať balíček zásuvného modulu"
 
-#: gui\ConfigDialog.cpp:784
+#: gui\ConfigDialog.cpp:789
 msgid "Please wait..."
 msgstr "Prosím čakajte..."
 
-#: gui\ConfigDialog.cpp:1055
+#: gui\ConfigDialog.cpp:1070
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."

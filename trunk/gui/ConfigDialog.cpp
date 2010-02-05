@@ -881,10 +881,12 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
     if (userSettings->GetBool(_T("TrayIcon")) != showTrayIconCheckbox->GetValue()) {
       userSettings->SetBool(_T("TrayIcon"), showTrayIconCheckbox->GetValue());
+      mustRestart = true;
     }
 
     if (userSettings->GetBool(_T("TaskBarIcon")) != showTaskBarIconCheckBox->GetValue()) {
       userSettings->SetBool(_T("TaskBarIcon"), showTaskBarIconCheckBox->GetValue());
+      mustRestart = true;
     }
 
     //---------------------------------------------------------------------------

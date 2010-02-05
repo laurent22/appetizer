@@ -137,6 +137,20 @@ void User::Load() {
 }
 
 
+appFolderItem* User::CreateFolderItemFromShortcut(wxString shortcutPath) {
+  ShortcutInfo info(shortcutPath, (HWND)(wxGetApp().GetMainFrame()->GetHandle()));
+  if (!info.IsOk()) return NULL;
+
+  appFolderItem* folderItem = appFolderItem::CreateFolderItem();
+  folderItem->SetFilePath(appFolderItem::ConvertToRelativePath(info.GetPath()));
+  folderItem->AutoSetName();
+  folderItem->SetCustomIcon(info.GetIconLocation(), info.GetIconIndex());
+  folderItem->SetParameters(info.GetArguments());
+
+  return folderItem;
+}
+
+
 appFolderItem* User::AddNewFolderItemFromPath(appFolderItem* parent, wxString folderItemPath) {
   appFolderItem* folderItem = appFolderItem::CreateFolderItem();
   folderItem->SetFilePath(appFolderItem::ConvertToRelativePath(folderItemPath));
@@ -150,14 +164,8 @@ appFolderItem* User::AddNewFolderItemFromPath(appFolderItem* parent, wxString fo
 
 
 appFolderItem* User::AddNewFolderItemFromShortcut(appFolderItem* parent, wxString shortcutPath) {
-  ShortcutInfo info(shortcutPath, (HWND)(wxGetApp().GetMainFrame()->GetHandle()));
-  if (!info.IsOk()) return NULL;
-
-  appFolderItem* folderItem = appFolderItem::CreateFolderItem();
-  folderItem->SetFilePath(appFolderItem::ConvertToRelativePath(info.GetPath()));
-  folderItem->AutoSetName();
-  folderItem->SetCustomIcon(info.GetIconLocation(), info.GetIconIndex());
-  folderItem->SetParameters(info.GetArguments());
+  appFolderItem* folderItem = CreateFolderItemFromShortcut(shortcutPath);
+  if (!folderItem) return NULL;
 
   parent->AddChild(folderItem);
   wxGetApp().FolderItems_CollectionChange();
@@ -322,6 +330,13 @@ void User::QuickLaunchSynchronization() {
 void User::CustomFolderSynchronization(const wxString& folderPath) {
   wxArrayString foundFilePaths; 
   wxDir::GetAllFiles(folderPath, &foundFilePaths, _T("*.exe"), wxDIR_FILES | wxDIR);
+  wxArrayString temp; 
+  wxDir::GetAllFiles(folderPath, &temp, _T("*.lnk"), wxDIR_FILES | wxDIR);
+
+  for (int i = 0; i < temp.GetCount(); i++) {
+    foundFilePaths.Add(temp[i]);
+  }
+
   BatchAddFolderItems(foundFilePaths, true);
 }
 
@@ -335,6 +350,7 @@ void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddEx
 
   for (int i = 0; i < filePaths.GetCount(); i++) {   
     wxString filePath = filePaths[i];
+    wxString extension = wxFileName(filePath).GetExt().Lower();
     wxString resolvedPath = appFolderItem::ResolvePath(filePath);
     wxString relativePath = appFolderItem::ConvertToRelativePath(filePath);
 
@@ -347,11 +363,17 @@ void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddEx
     appFolderItem* foundFolderItem = rootFolderItem_->GetChildByResolvedPath(resolvedPath);
     if (foundFolderItem) continue;
 
-    appFolderItem* folderItem = appFolderItem::CreateFolderItem();
-    folderItem->SetFilePath(relativePath);
-    folderItem->AutoSetName();
+    appFolderItem* folderItem = NULL;
+
+    if (extension == _T("lnk")) folderItem = CreateFolderItemFromShortcut(filePath);
+
+    if (!folderItem) {  // Either the file is not a shortcut (.lnk), or is a shortcut that could not be resolved (in which case CreateFolderItemFromShortcut() returns NULL)
+      folderItem = appFolderItem::CreateFolderItem();
+      folderItem->SetFilePath(relativePath);
+      folderItem->AutoSetName();
+    }
+
     folderItem->SetAutomaticallyAdded(true);
-    
     rootFolderItem_->AddChild(folderItem);
 
     folderItemsChanged = true;

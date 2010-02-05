@@ -38,6 +38,7 @@ public:
   appFolderItem* EditNewFolderItem(appFolderItem* parent, bool isGroup = false);
   appFolderItem* AddNewFolderItemFromPath(appFolderItem* parent, wxString folderItemPath);
   appFolderItem* AddNewFolderItemFromShortcut(appFolderItem* parent, wxString shortcutPath);
+  appFolderItem* CreateFolderItemFromShortcut(wxString shortcutPath);
 
   void AddAutoAddExclusion(const wxString& filePath);
   bool IsAutoAddExclusion(const wxString& filePath);

@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-03 15:09+0000\n"
-"PO-Revision-Date: 2009-04-27 19:29-0000\n"
-"Last-Translator: Laurent Cozic\n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
+"PO-Revision-Date: 2010-02-05 23:12-0000\n"
+"Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,11 +25,11 @@ msgstr "Απόκρυψη"
 msgid "Show"
 msgstr "Εμφάνιση"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
 msgid "Eject drive"
 msgstr "Εξαγωγή μέσου"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Ρυθμίσεις"
@@ -42,76 +42,76 @@ msgstr "Κλείσιμο"
 msgid "Organize shortcuts"
 msgstr "Οργάνωση συντομεύσεων"
 
-#: FolderItem.cpp:615 FolderItem.cpp:637 FolderItem.cpp:660
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Το αρχείο αυτό δεν υπάρχει ή έχει διαγραφεί (Σφάλμαr %s)"
 
-#: FolderItem.cpp:994
+#: FolderItem.cpp:996
 msgid "Group"
 msgstr "Ομάδα"
 
-#: FolderItem.cpp:995
+#: FolderItem.cpp:997
 msgid "Unnamed"
 msgstr "Ανώνυμο"
 
-#: FolderItem.cpp:1229
+#: FolderItem.cpp:1231
 msgid "Control Panel"
 msgstr "Πίνακας ελέγχου"
 
-#: FolderItem.cpp:1231
+#: FolderItem.cpp:1233
 msgid "My Computer"
 msgstr "Ο υπολογιστής μου"
 
-#: FolderItem.cpp:1233
+#: FolderItem.cpp:1235
 msgid "My Network Places"
 msgstr "Θέσεις δικτύου"
 
-#: FolderItem.cpp:1235
+#: FolderItem.cpp:1237
 msgid "Recycle Bin"
 msgstr "Κάδος ανακύκλωσης"
 
-#: FolderItem.cpp:1237
+#: FolderItem.cpp:1239
 msgid "Show Desktop"
 msgstr "Προβολή επιφάνειας εργασίας"
 
-#: FolderItem.cpp:1239
+#: FolderItem.cpp:1241
 msgid "Windows Explorer"
 msgstr "Εξερεύνηση των windows"
 
-#: FolderItem.cpp:1241
+#: FolderItem.cpp:1243
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: FolderItem.cpp:1243
+#: FolderItem.cpp:1245
 msgid "Current Drive"
 msgstr "Τρέχον δίσκος"
 
-#: FolderItem.cpp:1245
+#: FolderItem.cpp:1247
 msgid "Printers and Faxes"
 msgstr "Φαξ και Εκτυπωτές"
 
-#: FolderItem.cpp:1247
+#: FolderItem.cpp:1249
 msgid "Network Connections"
 msgstr "Συνδέσεις δικτύου"
 
-#: FolderItem.cpp:1249
+#: FolderItem.cpp:1251
 msgid "Calculator"
 msgstr ""
 
-#: FolderItem.cpp:1251
+#: FolderItem.cpp:1253
 msgid "Paint Brush"
 msgstr ""
 
-#: FolderItem.cpp:1253
+#: FolderItem.cpp:1255
 msgid "Notepad"
 msgstr ""
 
-#: FolderItem.cpp:1255
+#: FolderItem.cpp:1257
 msgid "WordPad"
 msgstr ""
 
-#: FolderItem.cpp:1257
+#: FolderItem.cpp:1259
 msgid "Command Prompt"
 msgstr ""
 
@@ -131,68 +131,73 @@ msgstr "Οργάνωση ομάδας συντομεύσεων"
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: IconPanel.cpp:151 OptionPanel.cpp:164
+#: IconPanel.cpp:152 OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "Νέα συντόμευση..."
 
-#: IconPanel.cpp:155
+#: IconPanel.cpp:156
 msgid "New group..."
 msgstr "Νέα ομάδα..."
 
-#: IconPanel.cpp:190
+#: IconPanel.cpp:191
 msgid "Add special item"
 msgstr "Προσθήκη ειδικού αντικειμένου"
 
-#: main.cpp:66
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "Εισαγωγή συντομεύσεων"
+
+#: main.cpp:68
 msgid "Uses user data directory to save settings."
 msgstr "Χρήση του φακέλου δεδομένων χρήστη για αποθήκευση των ρυθμίσεων"
 
-#: main.cpp:67
+#: main.cpp:69
 msgid "Sets user data path (-u will be ignored)"
 msgstr "Καθορισμός του φακέλου δεδομένων χρήστη (-u θα αγνοηθεί)"
 
-#: main.cpp:68
+#: main.cpp:70
 msgid "Displays the log window (useful for debugging)"
 msgstr "Εμφάνιση του παραθύρου συμβάντων (χρήσιμο για debugging)"
 
-#: main.cpp:69
+#: main.cpp:71
 msgid "Displays this help message"
 msgstr "Εμφάνιση αυτού του βοηθητικού μηνύματος"
 
-#: main.cpp:156
+#: main.cpp:158
 msgid "Could not initialize locale."
 msgstr "Δεν είναι δυνατή η έναρξη του τοπικού."
 
-#: main.cpp:314
+#: main.cpp:316
 msgid "Large"
 msgstr "Μεγάλο"
 
-#: main.cpp:315
+#: main.cpp:317
 msgid "Medium"
-msgstr ""
+msgstr "Μέσο"
 
-#: main.cpp:316
+#: main.cpp:318
 msgid "Extra Large (XP and above)"
 msgstr "Πολύ μεγάλο (XP ή νεότερο)"
 
-#: main.cpp:317
+#: main.cpp:319
 msgid "Jumbo (Vista and above)"
 msgstr "Τεράστιο (Vista ή νεότερο)"
 
-#: main.cpp:321
+#: main.cpp:323
 msgid "Small"
 msgstr "Μικρό"
 
-#: main.cpp:413
+#: main.cpp:415
 msgid "Could not get update information"
 msgstr "Δεν μπορούν να ληφθούν πληροφορίες ενημέρωσης"
 
-#: main.cpp:427
+#: main.cpp:429
 msgid "You have the latest version."
 msgstr "Έχετε την πιο πρόσφατη έκδοση."
 
-#: main.cpp:434
-#, fuzzy, c-format
+#: main.cpp:436
+#, c-format
 msgid ""
 "A new version of Appetizer is available!\n"
 "\n"
@@ -207,17 +212,17 @@ msgstr ""
 "Νέα έκδοση: %s\n"
 "Σημειώσεις: %s\n"
 "\n"
-"Θέλετε να την μεταφορτώσετε τώρα;"
+"Θέλετε να την κατεβάσετε τώρα;"
 
-#: main.cpp:436
+#: main.cpp:438
 msgid "New version of Appetizer"
-msgstr ""
+msgstr "Νέα έκδοση του Appetizer"
 
-#: main.cpp:440
+#: main.cpp:442
 msgid "Error launching web browser"
 msgstr "Σφάλμα κατά το άνοιγμα του φυλλομετρητή"
 
-#: MainFrame.cpp:235
+#: MainFrame.cpp:236
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
@@ -225,11 +230,11 @@ msgstr ""
 "Σφάλμα κατά την κατοχύρωση της συνόμευση πλήκτρων. Κάποια άλλη εφαρμογή την "
 "χρησιμοποιεί."
 
-#: MainFrame.cpp:599
+#: MainFrame.cpp:597
 msgid "Minimize to tray"
 msgstr "Ελαχιστοποίηση στη μπάρα ειδοποιήσεων"
 
-#: MainFrame.cpp:1071
+#: MainFrame.cpp:1072
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -241,11 +246,11 @@ msgstr ""
 "Σημειώστε ότι μπορείτε να αλλάξετε αυτή τη συμπεριφορά από το παράθυρο '%"
 "s' (καρτέλα '%s')"
 
-#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Χειρισμοί"
 
-#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "Να μην εμφανιστεί αυτό το μήνυμα ξανά"
 
@@ -340,9 +345,8 @@ msgid "Do you wish to remove this icon?"
 msgstr "Θέλετε σίγουρα να αφαιρεθεί το εικονίδιο;"
 
 #: utilities\Utilities.cpp:141
-#, fuzzy
 msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
-msgstr "Η τοποθεσία της συντόμευσης δεν υπάρχει. Θέλετε να συνεχίσετε;"
+msgstr "Η τοποθεσία της συντόμευσης υπάρχει ήδη. Θέλετε να την επικαλύψετε;"
 
 #: utilities\Utilities.cpp:322
 msgid "Please wait while your applications are being closed."
@@ -389,12 +393,11 @@ msgstr ""
 
 #: gui\AboutDialog.cpp:67
 msgid "- ccrypt by Peter Selinger"
-msgstr ""
+msgstr "- ccrypt από τον Peter Selinger"
 
 #: gui\AboutDialog.cpp:69
-#, fuzzy
 msgid "- FreeType by its respective contributors"
-msgstr "- wxWidgets από τους συγγραφείς του"
+msgstr "- FreeType από τους αντίστοιχους συντελεστές του"
 
 #: gui\AboutDialog.cpp:71
 msgid "- wxWidgets by their respective authors"
@@ -504,9 +507,8 @@ msgid "Save"
 msgstr "Αποθήκευση"
 
 #: gui\ConfigDialog.cpp:66
-#, fuzzy
 msgid "Options"
-msgstr "Χειρισμοί"
+msgstr "Επιλογές"
 
 #: gui\ConfigDialog.cpp:103
 msgid "Enabled"
@@ -537,7 +539,7 @@ msgstr "Πάντα σε πρώτο πλάνο"
 msgid "Allow only one instance of %s at a time"
 msgstr "Επιτρέπετε να τρέχει μόνο ένα %s τη φορά"
 
-#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:789
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
 msgid "Check for update"
 msgstr "Έλεγχος για ενημερώσεις"
 
@@ -563,187 +565,194 @@ msgstr "Προσανατολισμός:"
 
 #: gui\ConfigDialog.cpp:324
 msgid "Opacity:"
-msgstr ""
+msgstr "Διαφάνεια:"
 
 #: gui\ConfigDialog.cpp:325
 msgid "Download more skins"
-msgstr ""
+msgstr "Κατέβασμα περισσότερων θεμάτων"
 
 #: gui\ConfigDialog.cpp:326
 msgid "Label position:"
+msgstr "Θέση ετικέτας:"
+
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:343
-#, fuzzy
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
 msgid "Hidden"
-msgstr "Απόκρυψη"
+msgstr "Κρυφό"
 
-#: gui\ConfigDialog.cpp:344
+#: gui\ConfigDialog.cpp:349
 msgid "Bottom"
-msgstr ""
+msgstr "Κάτω μέρος"
 
-#: gui\ConfigDialog.cpp:345 gui\ConfigDialog.cpp:538
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
 msgid "Right"
 msgstr "Δεξιό βέλος"
 
-#: gui\ConfigDialog.cpp:384
+#: gui\ConfigDialog.cpp:389
 msgid "Horizontal"
 msgstr "Οριζόντιος"
 
-#: gui\ConfigDialog.cpp:385
+#: gui\ConfigDialog.cpp:390
 msgid "Vertical"
 msgstr "Κατακόρυφος"
 
-#: gui\ConfigDialog.cpp:411
+#: gui\ConfigDialog.cpp:416
 msgid "Default"
 msgstr "Προεπιλογή"
 
-#: gui\ConfigDialog.cpp:456
+#: gui\ConfigDialog.cpp:461
 msgid "Auto-hide after launching an application"
 msgstr "Αυτόματη απόκρυψη μετά το άνοιγμα μιας εφαρμογής"
 
-#: gui\ConfigDialog.cpp:457
+#: gui\ConfigDialog.cpp:462
 msgid "Run multi-launch group on startup"
 msgstr "Εκτέλεση της ομάδας multi-launch κατά την έναρξη"
 
-#: gui\ConfigDialog.cpp:458
+#: gui\ConfigDialog.cpp:463
 msgid "Hot key to hide / show the bar"
 msgstr "Συντόμευση για κρύψιμο / εμφάνιση της μπάρας"
 
-#: gui\ConfigDialog.cpp:459
+#: gui\ConfigDialog.cpp:464
 msgid "Control +"
 msgstr "Control +"
 
-#: gui\ConfigDialog.cpp:460
+#: gui\ConfigDialog.cpp:465
 msgid "Alt +"
 msgstr "Alt +"
 
-#: gui\ConfigDialog.cpp:461
+#: gui\ConfigDialog.cpp:466
 msgid "Shift +"
 msgstr "Shift +"
 
-#: gui\ConfigDialog.cpp:462
+#: gui\ConfigDialog.cpp:467
 msgid "When ejecting the drive, close the apps that are locking it"
 msgstr ""
 "Κατά την εξαγωγή του δίκσου, κλείσιμο των εφαρμογών που τέχουν απ' αυτών"
 
-#: gui\ConfigDialog.cpp:463
+#: gui\ConfigDialog.cpp:468
 msgid "Close button minimizes to System Tray"
 msgstr "Ελαχιστοποίηση στη μπάρα ειδοποιήσεων με το κουμπί του κλεισίματος"
 
-#: gui\ConfigDialog.cpp:474
+#: gui\ConfigDialog.cpp:479
 msgid "<None>"
 msgstr "<Κανένα>"
 
-#: gui\ConfigDialog.cpp:516
+#: gui\ConfigDialog.cpp:521
 msgid "Numpad 0"
 msgstr "Αριθμητικό 0"
 
-#: gui\ConfigDialog.cpp:517
+#: gui\ConfigDialog.cpp:522
 msgid "Numpad 1"
 msgstr "Αριθμητικό 1"
 
-#: gui\ConfigDialog.cpp:518
+#: gui\ConfigDialog.cpp:523
 msgid "Numpad 2"
 msgstr "Αριθμητικό 2"
 
-#: gui\ConfigDialog.cpp:519
+#: gui\ConfigDialog.cpp:524
 msgid "Numpad 3"
 msgstr "Αριθμητικό 3"
 
-#: gui\ConfigDialog.cpp:520
+#: gui\ConfigDialog.cpp:525
 msgid "Numpad 4"
 msgstr "Αριθμητικό 4"
 
-#: gui\ConfigDialog.cpp:521
+#: gui\ConfigDialog.cpp:526
 msgid "Numpad 5"
 msgstr "Αριθμητικό 5"
 
-#: gui\ConfigDialog.cpp:522
+#: gui\ConfigDialog.cpp:527
 msgid "Numpad 6"
 msgstr "Αριθμητικό 6"
 
-#: gui\ConfigDialog.cpp:523
+#: gui\ConfigDialog.cpp:528
 msgid "Numpad 7"
 msgstr "Αριθμητικό 7"
 
-#: gui\ConfigDialog.cpp:524
+#: gui\ConfigDialog.cpp:529
 msgid "Numpad 8"
 msgstr "Αριθμητικό 8"
 
-#: gui\ConfigDialog.cpp:525
+#: gui\ConfigDialog.cpp:530
 msgid "Numpad 9"
 msgstr "Αριθμητικό 9"
 
-#: gui\ConfigDialog.cpp:527
+#: gui\ConfigDialog.cpp:532
 msgid "Backspace"
 msgstr "Backspace"
 
-#: gui\ConfigDialog.cpp:528
+#: gui\ConfigDialog.cpp:533
 msgid "Tab"
 msgstr "Tab"
 
-#: gui\ConfigDialog.cpp:529
+#: gui\ConfigDialog.cpp:534
 msgid "Return"
 msgstr "Enter"
 
-#: gui\ConfigDialog.cpp:530
+#: gui\ConfigDialog.cpp:535
 msgid "Escape"
 msgstr "Escape"
 
-#: gui\ConfigDialog.cpp:531
+#: gui\ConfigDialog.cpp:536
 msgid "Space"
 msgstr "Κενό"
 
-#: gui\ConfigDialog.cpp:532
+#: gui\ConfigDialog.cpp:537
 msgid "Delete"
 msgstr "Delete"
 
-#: gui\ConfigDialog.cpp:534
+#: gui\ConfigDialog.cpp:539
 msgid "End"
 msgstr "End"
 
-#: gui\ConfigDialog.cpp:535
+#: gui\ConfigDialog.cpp:540
 msgid "Home"
 msgstr "Home"
 
-#: gui\ConfigDialog.cpp:536
+#: gui\ConfigDialog.cpp:541
 msgid "Left"
 msgstr "Αριστερό βέλος"
 
-#: gui\ConfigDialog.cpp:537
+#: gui\ConfigDialog.cpp:542
 msgid "Up"
 msgstr "Πάνω βέλος"
 
-#: gui\ConfigDialog.cpp:539
+#: gui\ConfigDialog.cpp:544
 msgid "Down"
 msgstr "Κάτω βέλος"
 
-#: gui\ConfigDialog.cpp:597
+#: gui\ConfigDialog.cpp:602
 msgid "Exclude these items from import operations"
 msgstr "Εξαίρεση αυτών των στοιχείων κατά τις διαδικασίες εξαγωγής"
 
-#: gui\ConfigDialog.cpp:629
+#: gui\ConfigDialog.cpp:634
 msgid "Available plugins"
 msgstr "Διαθέσιμα πρόσθετα"
 
-#: gui\ConfigDialog.cpp:630
+#: gui\ConfigDialog.cpp:635
 msgid "Enable"
 msgstr "Ενεργοποίηση"
 
-#: gui\ConfigDialog.cpp:631
+#: gui\ConfigDialog.cpp:636
 msgid "Disable"
 msgstr "Απενεργοποίηση"
 
-#: gui\ConfigDialog.cpp:632
+#: gui\ConfigDialog.cpp:637
 msgid "Install..."
 msgstr "Εγκατάστση..."
 
-#: gui\ConfigDialog.cpp:633
+#: gui\ConfigDialog.cpp:638
 msgid "Download more plugins"
-msgstr ""
+msgstr "Κατέβασμα περισσότερων πρόσθετων"
 
-#: gui\ConfigDialog.cpp:635
+#: gui\ConfigDialog.cpp:640
 #, c-format
 msgid ""
 "The changes made to the plugins will only be active the next time %s is "
@@ -751,7 +760,7 @@ msgid ""
 msgstr ""
 "Οι αλλαγές θα εφαρμοστούν στο πρόσθετο κατά την επόμενη εκκίνηση του %s ."
 
-#: gui\ConfigDialog.cpp:698
+#: gui\ConfigDialog.cpp:703
 #, c-format
 msgid ""
 "By installing the autorun file on your removable drive, %s will start "
@@ -764,38 +773,39 @@ msgstr ""
 "\n"
 "Θέλετε να συνεχίσετε;"
 
-#: gui\ConfigDialog.cpp:701
+#: gui\ConfigDialog.cpp:706
 msgid "Could not install autorun file. Please try again."
 msgstr ""
 "Δεν μπόρεσε να εγκατασταθεί το αρχείο αυτόματης εκτέλεσης. Παρακαλώ "
 "δοκιμάστε ξανά."
 
-#: gui\ConfigDialog.cpp:703
+#: gui\ConfigDialog.cpp:708
 msgid "The autorun file has been installed successfully"
 msgstr "Το αρχείο αυτόματης εκτέλεσης εγκαταστάθηκε επιτυχώς"
 
-#: gui\ConfigDialog.cpp:734
+#: gui\ConfigDialog.cpp:739
 msgid "Please enable the plugin in order to change its options."
 msgstr ""
+"Παρακαλώ ενεργοποιήστε πρώτα το plugin για να αλλάξετε τις επιλογές του."
 
-#: gui\ConfigDialog.cpp:752
+#: gui\ConfigDialog.cpp:757
 #, c-format
 msgid "%s Plugin Packages"
 msgstr "%s πακέτα πρόσθετων"
 
-#: gui\ConfigDialog.cpp:753 gui\IconDialog.cpp:175
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
-#: gui\ConfigDialog.cpp:755
+#: gui\ConfigDialog.cpp:760
 msgid "Select a plugin package"
 msgstr "Επιλέξτε ένα πακέτο πρόσθετου"
 
-#: gui\ConfigDialog.cpp:784
+#: gui\ConfigDialog.cpp:789
 msgid "Please wait..."
 msgstr "Παρακαλώ περιμένετε..."
 
-#: gui\ConfigDialog.cpp:1055
+#: gui\ConfigDialog.cpp:1070
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."
@@ -884,7 +894,7 @@ msgstr ""
 
 #: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
-msgstr ""
+msgstr "Προτιμήσεις"
 
 #: gui\ShortcutEditorDialog.cpp:39
 msgid "Group Properties"
@@ -920,7 +930,7 @@ msgstr "Χρήση προεπιλεγμένου"
 
 #: gui\ShortcutEditorDialog.cpp:48
 msgid "The location may be a file, a folder or a URL."
-msgstr ""
+msgstr "Η τοποθεσία μπορεί να είναι αρχείο, φάκελος ή διεύθυνση URL."
 
 #: gui\ShortcutEditorDialog.cpp:180
 msgid "The shortcut location doesn't exist. Do you wish to continue?"

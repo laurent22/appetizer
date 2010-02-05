@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-03 15:09+0000\n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
 "PO-Revision-Date: 2009-05-05 16:19+0800\n"
 "Last-Translator: twuser <twuser@gmail.com>\n"
 "Language-Team: Appetizer Project\n"
@@ -25,11 +25,11 @@ msgstr "隱藏"
 msgid "Show"
 msgstr "顯示"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
 msgid "Eject drive"
 msgstr "彈出光碟機"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "設定"
@@ -42,76 +42,76 @@ msgstr "關閉"
 msgid "Organize shortcuts"
 msgstr "管理 軟體捷徑"
 
-#: FolderItem.cpp:615 FolderItem.cpp:637 FolderItem.cpp:660
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "這個文件不存在或者已經被刪除 (錯誤 %s)"
 
-#: FolderItem.cpp:994
+#: FolderItem.cpp:996
 msgid "Group"
 msgstr "程序組"
 
-#: FolderItem.cpp:995
+#: FolderItem.cpp:997
 msgid "Unnamed"
 msgstr "未命名"
 
-#: FolderItem.cpp:1229
+#: FolderItem.cpp:1231
 msgid "Control Panel"
 msgstr "控制台"
 
-#: FolderItem.cpp:1231
+#: FolderItem.cpp:1233
 msgid "My Computer"
 msgstr "我的電腦"
 
-#: FolderItem.cpp:1233
+#: FolderItem.cpp:1235
 msgid "My Network Places"
 msgstr "網路芳鄰"
 
-#: FolderItem.cpp:1235
+#: FolderItem.cpp:1237
 msgid "Recycle Bin"
 msgstr "資源回收筒"
 
-#: FolderItem.cpp:1237
+#: FolderItem.cpp:1239
 msgid "Show Desktop"
 msgstr "顯示桌面"
 
-#: FolderItem.cpp:1239
+#: FolderItem.cpp:1241
 msgid "Windows Explorer"
 msgstr "資源管理器"
 
-#: FolderItem.cpp:1241
+#: FolderItem.cpp:1243
 msgid "Search"
 msgstr "搜尋"
 
-#: FolderItem.cpp:1243
+#: FolderItem.cpp:1245
 msgid "Current Drive"
 msgstr "當前磁碟機"
 
-#: FolderItem.cpp:1245
+#: FolderItem.cpp:1247
 msgid "Printers and Faxes"
 msgstr "印表機和傳真"
 
-#: FolderItem.cpp:1247
+#: FolderItem.cpp:1249
 msgid "Network Connections"
 msgstr "網絡連結"
 
-#: FolderItem.cpp:1249
+#: FolderItem.cpp:1251
 msgid "Calculator"
 msgstr ""
 
-#: FolderItem.cpp:1251
+#: FolderItem.cpp:1253
 msgid "Paint Brush"
 msgstr ""
 
-#: FolderItem.cpp:1253
+#: FolderItem.cpp:1255
 msgid "Notepad"
 msgstr ""
 
-#: FolderItem.cpp:1255
+#: FolderItem.cpp:1257
 msgid "WordPad"
 msgstr ""
 
-#: FolderItem.cpp:1257
+#: FolderItem.cpp:1259
 msgid "Command Prompt"
 msgstr ""
 
@@ -131,67 +131,72 @@ msgstr "管理 程序組捷徑"
 msgid "Properties"
 msgstr "屬性"
 
-#: IconPanel.cpp:151 OptionPanel.cpp:164
+#: IconPanel.cpp:152 OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "新建 捷徑..."
 
-#: IconPanel.cpp:155
+#: IconPanel.cpp:156
 msgid "New group..."
 msgstr "新建 程序組..."
 
-#: IconPanel.cpp:190
+#: IconPanel.cpp:191
 msgid "Add special item"
 msgstr "添加 其他項目"
 
-#: main.cpp:66
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "導入 快捷方式"
+
+#: main.cpp:68
 msgid "Uses user data directory to save settings."
 msgstr "請使用用戶數據目錄保存設置。"
 
-#: main.cpp:67
+#: main.cpp:69
 msgid "Sets user data path (-u will be ignored)"
 msgstr "設置用戶數據路徑 (-u 將被忽略)"
 
-#: main.cpp:68
+#: main.cpp:70
 msgid "Displays the log window (useful for debugging)"
 msgstr "顯示日誌窗口 (用於調試)"
 
-#: main.cpp:69
+#: main.cpp:71
 msgid "Displays this help message"
 msgstr "顯示這條幫助信息"
 
-#: main.cpp:156
+#: main.cpp:158
 msgid "Could not initialize locale."
 msgstr "無法初始化域。"
 
-#: main.cpp:314
+#: main.cpp:316
 msgid "Large"
 msgstr "中等"
 
-#: main.cpp:315
+#: main.cpp:317
 msgid "Medium"
 msgstr ""
 
-#: main.cpp:316
+#: main.cpp:318
 msgid "Extra Large (XP and above)"
 msgstr "較大 (XP及以上版本)"
 
-#: main.cpp:317
+#: main.cpp:319
 msgid "Jumbo (Vista and above)"
 msgstr "最大 (Vista及以上版本)"
 
-#: main.cpp:321
+#: main.cpp:323
 msgid "Small"
 msgstr "較小"
 
-#: main.cpp:413
+#: main.cpp:415
 msgid "Could not get update information"
 msgstr "無法獲取更新信息"
 
-#: main.cpp:427
+#: main.cpp:429
 msgid "You have the latest version."
 msgstr "您已經安裝了最新版本。"
 
-#: main.cpp:434
+#: main.cpp:436
 #, fuzzy, c-format
 msgid ""
 "A new version of Appetizer is available!\n"
@@ -209,25 +214,25 @@ msgstr ""
 "\n"
 "您希望現在就下載新版本嗎?"
 
-#: main.cpp:436
+#: main.cpp:438
 msgid "New version of Appetizer"
 msgstr ""
 
-#: main.cpp:440
+#: main.cpp:442
 msgid "Error launching web browser"
 msgstr "啟動網頁瀏覽器時出錯"
 
-#: MainFrame.cpp:235
+#: MainFrame.cpp:236
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
 msgstr "註冊快捷鍵時出錯。可能是由於另一個應用程序已經註冊過它。"
 
-#: MainFrame.cpp:599
+#: MainFrame.cpp:597
 msgid "Minimize to tray"
 msgstr "最小化到托盤"
 
-#: MainFrame.cpp:1071
+#: MainFrame.cpp:1072
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -238,11 +243,11 @@ msgstr ""
 "\n"
 "你可以在 '%s' 窗口 ('%s' 標籤頁)中更改這種顯示方式。"
 
-#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "操作"
 
-#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "不再顯示該消息"
 
@@ -521,7 +526,7 @@ msgstr "前端顯示"
 msgid "Allow only one instance of %s at a time"
 msgstr "同一時間只允許一個 %s 運行。"
 
-#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:789
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
 msgid "Check for update"
 msgstr "檢查更新"
 
@@ -557,183 +562,191 @@ msgstr ""
 msgid "Label position:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:343
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
 #, fuzzy
 msgid "Hidden"
 msgstr "隱藏"
 
-#: gui\ConfigDialog.cpp:344
+#: gui\ConfigDialog.cpp:349
 msgid "Bottom"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:345 gui\ConfigDialog.cpp:538
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
 msgid "Right"
 msgstr "→"
 
-#: gui\ConfigDialog.cpp:384
+#: gui\ConfigDialog.cpp:389
 msgid "Horizontal"
 msgstr "水平"
 
-#: gui\ConfigDialog.cpp:385
+#: gui\ConfigDialog.cpp:390
 msgid "Vertical"
 msgstr "垂直"
 
-#: gui\ConfigDialog.cpp:411
+#: gui\ConfigDialog.cpp:416
 msgid "Default"
 msgstr "預設"
 
-#: gui\ConfigDialog.cpp:456
+#: gui\ConfigDialog.cpp:461
 msgid "Auto-hide after launching an application"
 msgstr "運行應用程序後自動隱藏"
 
-#: gui\ConfigDialog.cpp:457
+#: gui\ConfigDialog.cpp:462
 msgid "Run multi-launch group on startup"
 msgstr "啟動時運行快捷組"
 
-#: gui\ConfigDialog.cpp:458
+#: gui\ConfigDialog.cpp:463
 msgid "Hot key to hide / show the bar"
 msgstr "快捷鍵 隱藏/顯示 工具欄"
 
-#: gui\ConfigDialog.cpp:459
+#: gui\ConfigDialog.cpp:464
 msgid "Control +"
 msgstr "Ctrl +"
 
-#: gui\ConfigDialog.cpp:460
+#: gui\ConfigDialog.cpp:465
 msgid "Alt +"
 msgstr "Alt +"
 
-#: gui\ConfigDialog.cpp:461
+#: gui\ConfigDialog.cpp:466
 msgid "Shift +"
 msgstr "Shift +"
 
-#: gui\ConfigDialog.cpp:462
+#: gui\ConfigDialog.cpp:467
 msgid "When ejecting the drive, close the apps that are locking it"
 msgstr "彈出驅動器時，關閉鎖定它的應用程序。"
 
-#: gui\ConfigDialog.cpp:463
+#: gui\ConfigDialog.cpp:468
 msgid "Close button minimizes to System Tray"
 msgstr "點擊關閉按鈕時最小化到系統托盤"
 
-#: gui\ConfigDialog.cpp:474
+#: gui\ConfigDialog.cpp:479
 msgid "<None>"
 msgstr "<無>"
 
-#: gui\ConfigDialog.cpp:516
+#: gui\ConfigDialog.cpp:521
 msgid "Numpad 0"
 msgstr "數字鍵 0"
 
-#: gui\ConfigDialog.cpp:517
+#: gui\ConfigDialog.cpp:522
 msgid "Numpad 1"
 msgstr "數字鍵 1"
 
-#: gui\ConfigDialog.cpp:518
+#: gui\ConfigDialog.cpp:523
 msgid "Numpad 2"
 msgstr "數字鍵 2"
 
-#: gui\ConfigDialog.cpp:519
+#: gui\ConfigDialog.cpp:524
 msgid "Numpad 3"
 msgstr "數字鍵 3"
 
-#: gui\ConfigDialog.cpp:520
+#: gui\ConfigDialog.cpp:525
 msgid "Numpad 4"
 msgstr "數字鍵 4"
 
-#: gui\ConfigDialog.cpp:521
+#: gui\ConfigDialog.cpp:526
 msgid "Numpad 5"
 msgstr "數字鍵 5"
 
-#: gui\ConfigDialog.cpp:522
+#: gui\ConfigDialog.cpp:527
 msgid "Numpad 6"
 msgstr "數字鍵 6"
 
-#: gui\ConfigDialog.cpp:523
+#: gui\ConfigDialog.cpp:528
 msgid "Numpad 7"
 msgstr "數字鍵 7"
 
-#: gui\ConfigDialog.cpp:524
+#: gui\ConfigDialog.cpp:529
 msgid "Numpad 8"
 msgstr "數字鍵 8"
 
-#: gui\ConfigDialog.cpp:525
+#: gui\ConfigDialog.cpp:530
 msgid "Numpad 9"
 msgstr "數字鍵 9"
 
-#: gui\ConfigDialog.cpp:527
+#: gui\ConfigDialog.cpp:532
 msgid "Backspace"
 msgstr "Backspace"
 
-#: gui\ConfigDialog.cpp:528
+#: gui\ConfigDialog.cpp:533
 msgid "Tab"
 msgstr "Tab"
 
-#: gui\ConfigDialog.cpp:529
+#: gui\ConfigDialog.cpp:534
 msgid "Return"
 msgstr "Enter"
 
-#: gui\ConfigDialog.cpp:530
+#: gui\ConfigDialog.cpp:535
 msgid "Escape"
 msgstr "Esc"
 
-#: gui\ConfigDialog.cpp:531
+#: gui\ConfigDialog.cpp:536
 msgid "Space"
 msgstr "Space"
 
-#: gui\ConfigDialog.cpp:532
+#: gui\ConfigDialog.cpp:537
 msgid "Delete"
 msgstr "Delete"
 
-#: gui\ConfigDialog.cpp:534
+#: gui\ConfigDialog.cpp:539
 msgid "End"
 msgstr "End"
 
-#: gui\ConfigDialog.cpp:535
+#: gui\ConfigDialog.cpp:540
 msgid "Home"
 msgstr "Home"
 
-#: gui\ConfigDialog.cpp:536
+#: gui\ConfigDialog.cpp:541
 msgid "Left"
 msgstr "←"
 
-#: gui\ConfigDialog.cpp:537
+#: gui\ConfigDialog.cpp:542
 msgid "Up"
 msgstr "↑"
 
-#: gui\ConfigDialog.cpp:539
+#: gui\ConfigDialog.cpp:544
 msgid "Down"
 msgstr "↓"
 
-#: gui\ConfigDialog.cpp:597
+#: gui\ConfigDialog.cpp:602
 msgid "Exclude these items from import operations"
 msgstr "將這些項目從導入操作中排除"
 
-#: gui\ConfigDialog.cpp:629
+#: gui\ConfigDialog.cpp:634
 msgid "Available plugins"
 msgstr "啟用的插件"
 
-#: gui\ConfigDialog.cpp:630
+#: gui\ConfigDialog.cpp:635
 msgid "Enable"
 msgstr "啟用"
 
-#: gui\ConfigDialog.cpp:631
+#: gui\ConfigDialog.cpp:636
 msgid "Disable"
 msgstr "禁用"
 
-#: gui\ConfigDialog.cpp:632
+#: gui\ConfigDialog.cpp:637
 msgid "Install..."
 msgstr "安裝..."
 
-#: gui\ConfigDialog.cpp:633
+#: gui\ConfigDialog.cpp:638
 msgid "Download more plugins"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:635
+#: gui\ConfigDialog.cpp:640
 #, c-format
 msgid ""
 "The changes made to the plugins will only be active the next time %s is "
 "started."
 msgstr "這些更改將在 %s 下次啟動時生效。"
 
-#: gui\ConfigDialog.cpp:698
+#: gui\ConfigDialog.cpp:703
 #, c-format
 msgid ""
 "By installing the autorun file on your removable drive, %s will start "
@@ -746,36 +759,36 @@ msgstr ""
 "\n"
 "你希望繼續嗎？"
 
-#: gui\ConfigDialog.cpp:701
+#: gui\ConfigDialog.cpp:706
 msgid "Could not install autorun file. Please try again."
 msgstr "無法安裝自動運行文件。請重試。"
 
-#: gui\ConfigDialog.cpp:703
+#: gui\ConfigDialog.cpp:708
 msgid "The autorun file has been installed successfully"
 msgstr "自動運行文件已被成功安裝"
 
-#: gui\ConfigDialog.cpp:734
+#: gui\ConfigDialog.cpp:739
 msgid "Please enable the plugin in order to change its options."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:752
+#: gui\ConfigDialog.cpp:757
 #, c-format
 msgid "%s Plugin Packages"
 msgstr "%s 插件包"
 
-#: gui\ConfigDialog.cpp:753 gui\IconDialog.cpp:175
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
 msgid "All files"
 msgstr "所有文件"
 
-#: gui\ConfigDialog.cpp:755
+#: gui\ConfigDialog.cpp:760
 msgid "Select a plugin package"
 msgstr "選擇一個插件包"
 
-#: gui\ConfigDialog.cpp:784
+#: gui\ConfigDialog.cpp:789
 msgid "Please wait..."
 msgstr "請稍後..."
 
-#: gui\ConfigDialog.cpp:1055
+#: gui\ConfigDialog.cpp:1070
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."

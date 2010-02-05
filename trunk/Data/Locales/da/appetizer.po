@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-03 15:09+0000\n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
 "PO-Revision-Date: 2009-04-26 17:52-0000\n"
 "Last-Translator: Laurent Cozic\n"
 "Language-Team: Appetizer Project\n"
@@ -26,11 +26,11 @@ msgstr "Minimer"
 msgid "Show"
 msgstr "Maksimer"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:600
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
 msgid "Eject drive"
 msgstr "Afbryd/skub ud"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1071 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Indstillinger"
@@ -43,76 +43,76 @@ msgstr "Afslut"
 msgid "Organize shortcuts"
 msgstr "Organiser genveje"
 
-#: FolderItem.cpp:615 FolderItem.cpp:637 FolderItem.cpp:660
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Filen eksisterer ikke eller er blevet slettet (Fejl %s)"
 
-#: FolderItem.cpp:994
+#: FolderItem.cpp:996
 msgid "Group"
 msgstr "Gruppe"
 
-#: FolderItem.cpp:995
+#: FolderItem.cpp:997
 msgid "Unnamed"
 msgstr "Unavngivet"
 
-#: FolderItem.cpp:1229
+#: FolderItem.cpp:1231
 msgid "Control Panel"
 msgstr "KontrolPanel"
 
-#: FolderItem.cpp:1231
+#: FolderItem.cpp:1233
 msgid "My Computer"
 msgstr "Denne computer"
 
-#: FolderItem.cpp:1233
+#: FolderItem.cpp:1235
 msgid "My Network Places"
 msgstr "Netværkssteder"
 
-#: FolderItem.cpp:1235
+#: FolderItem.cpp:1237
 msgid "Recycle Bin"
 msgstr "Papirkurv"
 
-#: FolderItem.cpp:1237
+#: FolderItem.cpp:1239
 msgid "Show Desktop"
 msgstr "Vis Skrivebord"
 
-#: FolderItem.cpp:1239
+#: FolderItem.cpp:1241
 msgid "Windows Explorer"
 msgstr "Windows Stifinder"
 
-#: FolderItem.cpp:1241
+#: FolderItem.cpp:1243
 msgid "Search"
 msgstr "Søg"
 
-#: FolderItem.cpp:1243
+#: FolderItem.cpp:1245
 msgid "Current Drive"
 msgstr "Aktuelt drev"
 
-#: FolderItem.cpp:1245
+#: FolderItem.cpp:1247
 msgid "Printers and Faxes"
 msgstr "Printere og faxenheder"
 
-#: FolderItem.cpp:1247
+#: FolderItem.cpp:1249
 msgid "Network Connections"
 msgstr "Netværksforbindelser"
 
-#: FolderItem.cpp:1249
+#: FolderItem.cpp:1251
 msgid "Calculator"
 msgstr ""
 
-#: FolderItem.cpp:1251
+#: FolderItem.cpp:1253
 msgid "Paint Brush"
 msgstr ""
 
-#: FolderItem.cpp:1253
+#: FolderItem.cpp:1255
 msgid "Notepad"
 msgstr ""
 
-#: FolderItem.cpp:1255
+#: FolderItem.cpp:1257
 msgid "WordPad"
 msgstr ""
 
-#: FolderItem.cpp:1257
+#: FolderItem.cpp:1259
 msgid "Command Prompt"
 msgstr ""
 
@@ -132,67 +132,72 @@ msgstr "Organiser grupper"
 msgid "Properties"
 msgstr "Egenskaber"
 
-#: IconPanel.cpp:151 OptionPanel.cpp:164
+#: IconPanel.cpp:152 OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "Ny genvej"
 
-#: IconPanel.cpp:155
+#: IconPanel.cpp:156
 msgid "New group..."
 msgstr "Ny gruppe"
 
-#: IconPanel.cpp:190
+#: IconPanel.cpp:191
 msgid "Add special item"
 msgstr "Tilføj..."
 
-#: main.cpp:66
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "AutoOpret genveje"
+
+#: main.cpp:68
 msgid "Uses user data directory to save settings."
 msgstr "Gem indstillinger i mappe til brugerdata"
 
-#: main.cpp:67
+#: main.cpp:69
 msgid "Sets user data path (-u will be ignored)"
 msgstr "Angiv mappe til brugerdata (-u ignoreres)"
 
-#: main.cpp:68
+#: main.cpp:70
 msgid "Displays the log window (useful for debugging)"
 msgstr "Vis log vindue (hjælp til fejlfinding)"
 
-#: main.cpp:69
+#: main.cpp:71
 msgid "Displays this help message"
 msgstr "Viser denne besked"
 
-#: main.cpp:156
+#: main.cpp:158
 msgid "Could not initialize locale."
 msgstr "Kunne ikke initialisere"
 
-#: main.cpp:314
+#: main.cpp:316
 msgid "Large"
 msgstr "Stor"
 
-#: main.cpp:315
+#: main.cpp:317
 msgid "Medium"
 msgstr ""
 
-#: main.cpp:316
+#: main.cpp:318
 msgid "Extra Large (XP and above)"
 msgstr "Ekstra Stor(XP/Vista)"
 
-#: main.cpp:317
+#: main.cpp:319
 msgid "Jumbo (Vista and above)"
 msgstr "Jumbo (Vista)"
 
-#: main.cpp:321
+#: main.cpp:323
 msgid "Small"
 msgstr "Lille"
 
-#: main.cpp:413
+#: main.cpp:415
 msgid "Could not get update information"
 msgstr "Versionsoplysninger er ikke tilgængelige"
 
-#: main.cpp:427
+#: main.cpp:429
 msgid "You have the latest version."
 msgstr "Du har den seneste version af Appetizer"
 
-#: main.cpp:434
+#: main.cpp:436
 #, fuzzy, c-format
 msgid ""
 "A new version of Appetizer is available!\n"
@@ -210,25 +215,25 @@ msgstr ""
 "\n"
 "Hent nu?"
 
-#: main.cpp:436
+#: main.cpp:438
 msgid "New version of Appetizer"
 msgstr ""
 
-#: main.cpp:440
+#: main.cpp:442
 msgid "Error launching web browser"
 msgstr "Fejl under opstart af internet browser"
 
-#: MainFrame.cpp:235
+#: MainFrame.cpp:236
 msgid ""
 "There was an error registering the hot key. Another application may already "
 "have registered it."
 msgstr "Fejl! Kan ikke definere genvejstast. Måske er den allerede i brug."
 
-#: MainFrame.cpp:599
+#: MainFrame.cpp:597
 msgid "Minimize to tray"
 msgstr "Minimer"
 
-#: MainFrame.cpp:1071
+#: MainFrame.cpp:1072
 #, c-format
 msgid ""
 "%s is now going to be minimized to the System Tray.\n"
@@ -239,11 +244,11 @@ msgstr ""
 "\n"
 "Bemærk: handlingen kan ændres i '%s/%s'"
 
-#: MainFrame.cpp:1071 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Handlinger"
 
-#: MainFrame.cpp:1071 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "Vis ikke denne besked igen"
 
@@ -528,7 +533,7 @@ msgstr "Altid øverst"
 msgid "Allow only one instance of %s at a time"
 msgstr "Tillad kun én aktivt udgave af %s ad gangen"
 
-#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:789
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
 msgid "Check for update"
 msgstr "Kontroller version"
 
@@ -564,183 +569,191 @@ msgstr ""
 msgid "Label position:"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:343
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
 #, fuzzy
 msgid "Hidden"
 msgstr "Minimer"
 
-#: gui\ConfigDialog.cpp:344
+#: gui\ConfigDialog.cpp:349
 msgid "Bottom"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:345 gui\ConfigDialog.cpp:538
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
 msgid "Right"
 msgstr "Højre"
 
-#: gui\ConfigDialog.cpp:384
+#: gui\ConfigDialog.cpp:389
 msgid "Horizontal"
 msgstr "Vandret"
 
-#: gui\ConfigDialog.cpp:385
+#: gui\ConfigDialog.cpp:390
 msgid "Vertical"
 msgstr "Lodret"
 
-#: gui\ConfigDialog.cpp:411
+#: gui\ConfigDialog.cpp:416
 msgid "Default"
 msgstr "Standard"
 
-#: gui\ConfigDialog.cpp:456
+#: gui\ConfigDialog.cpp:461
 msgid "Auto-hide after launching an application"
 msgstr "Minimer Appetizer når program startes"
 
-#: gui\ConfigDialog.cpp:457
+#: gui\ConfigDialog.cpp:462
 msgid "Run multi-launch group on startup"
 msgstr "Multistart valgte programmer når Appetizer startes"
 
-#: gui\ConfigDialog.cpp:458
+#: gui\ConfigDialog.cpp:463
 msgid "Hot key to hide / show the bar"
 msgstr "Genvejstast for minimer/maksimer Appetizer"
 
-#: gui\ConfigDialog.cpp:459
+#: gui\ConfigDialog.cpp:464
 msgid "Control +"
 msgstr "Control +"
 
-#: gui\ConfigDialog.cpp:460
+#: gui\ConfigDialog.cpp:465
 msgid "Alt +"
 msgstr "Alt +"
 
-#: gui\ConfigDialog.cpp:461
+#: gui\ConfigDialog.cpp:466
 msgid "Shift +"
 msgstr "Shift +"
 
-#: gui\ConfigDialog.cpp:462
+#: gui\ConfigDialog.cpp:467
 msgid "When ejecting the drive, close the apps that are locking it"
 msgstr "Afslut kørende programmer, når enhed afbrydes/skubbes ud"
 
-#: gui\ConfigDialog.cpp:463
+#: gui\ConfigDialog.cpp:468
 msgid "Close button minimizes to System Tray"
 msgstr "Knappen Afslut minimerer Appetizer til systembakken"
 
-#: gui\ConfigDialog.cpp:474
+#: gui\ConfigDialog.cpp:479
 msgid "<None>"
 msgstr "<ingen>"
 
-#: gui\ConfigDialog.cpp:516
+#: gui\ConfigDialog.cpp:521
 msgid "Numpad 0"
 msgstr "Numerisk tast 0"
 
-#: gui\ConfigDialog.cpp:517
+#: gui\ConfigDialog.cpp:522
 msgid "Numpad 1"
 msgstr "Numerisk tast 1"
 
-#: gui\ConfigDialog.cpp:518
+#: gui\ConfigDialog.cpp:523
 msgid "Numpad 2"
 msgstr "Numerisk tast 2"
 
-#: gui\ConfigDialog.cpp:519
+#: gui\ConfigDialog.cpp:524
 msgid "Numpad 3"
 msgstr "Numerisk tast 3"
 
-#: gui\ConfigDialog.cpp:520
+#: gui\ConfigDialog.cpp:525
 msgid "Numpad 4"
 msgstr "Numerisk tast 4"
 
-#: gui\ConfigDialog.cpp:521
+#: gui\ConfigDialog.cpp:526
 msgid "Numpad 5"
 msgstr "Numerisk tast 5"
 
-#: gui\ConfigDialog.cpp:522
+#: gui\ConfigDialog.cpp:527
 msgid "Numpad 6"
 msgstr "Numerisk tast 6"
 
-#: gui\ConfigDialog.cpp:523
+#: gui\ConfigDialog.cpp:528
 msgid "Numpad 7"
 msgstr "Numerisk tast 7"
 
-#: gui\ConfigDialog.cpp:524
+#: gui\ConfigDialog.cpp:529
 msgid "Numpad 8"
 msgstr "Numerisk tast 8"
 
-#: gui\ConfigDialog.cpp:525
+#: gui\ConfigDialog.cpp:530
 msgid "Numpad 9"
 msgstr "Numerisk tast 9"
 
-#: gui\ConfigDialog.cpp:527
+#: gui\ConfigDialog.cpp:532
 msgid "Backspace"
 msgstr "Backspace"
 
-#: gui\ConfigDialog.cpp:528
+#: gui\ConfigDialog.cpp:533
 msgid "Tab"
 msgstr "Tab"
 
-#: gui\ConfigDialog.cpp:529
+#: gui\ConfigDialog.cpp:534
 msgid "Return"
 msgstr "Retur"
 
-#: gui\ConfigDialog.cpp:530
+#: gui\ConfigDialog.cpp:535
 msgid "Escape"
 msgstr "Escape"
 
-#: gui\ConfigDialog.cpp:531
+#: gui\ConfigDialog.cpp:536
 msgid "Space"
 msgstr "Mellemrum"
 
-#: gui\ConfigDialog.cpp:532
+#: gui\ConfigDialog.cpp:537
 msgid "Delete"
 msgstr "Slet"
 
-#: gui\ConfigDialog.cpp:534
+#: gui\ConfigDialog.cpp:539
 msgid "End"
 msgstr "End"
 
-#: gui\ConfigDialog.cpp:535
+#: gui\ConfigDialog.cpp:540
 msgid "Home"
 msgstr "Home"
 
-#: gui\ConfigDialog.cpp:536
+#: gui\ConfigDialog.cpp:541
 msgid "Left"
 msgstr "Venstre"
 
-#: gui\ConfigDialog.cpp:537
+#: gui\ConfigDialog.cpp:542
 msgid "Up"
 msgstr "Op"
 
-#: gui\ConfigDialog.cpp:539
+#: gui\ConfigDialog.cpp:544
 msgid "Down"
 msgstr "Ned"
 
-#: gui\ConfigDialog.cpp:597
+#: gui\ConfigDialog.cpp:602
 msgid "Exclude these items from import operations"
 msgstr "AutoOpret ikke genveje til følgende filer og mapper"
 
-#: gui\ConfigDialog.cpp:629
+#: gui\ConfigDialog.cpp:634
 msgid "Available plugins"
 msgstr "Tilgængelige plugins"
 
-#: gui\ConfigDialog.cpp:630
+#: gui\ConfigDialog.cpp:635
 msgid "Enable"
 msgstr "Aktiver"
 
-#: gui\ConfigDialog.cpp:631
+#: gui\ConfigDialog.cpp:636
 msgid "Disable"
 msgstr "Deaktiver"
 
-#: gui\ConfigDialog.cpp:632
+#: gui\ConfigDialog.cpp:637
 msgid "Install..."
 msgstr "Installer..."
 
-#: gui\ConfigDialog.cpp:633
+#: gui\ConfigDialog.cpp:638
 msgid "Download more plugins"
 msgstr ""
 
-#: gui\ConfigDialog.cpp:635
+#: gui\ConfigDialog.cpp:640
 #, c-format
 msgid ""
 "The changes made to the plugins will only be active the next time %s is "
 "started."
 msgstr "Ændringer i plugins træder først i kraft, næste gang %s startes."
 
-#: gui\ConfigDialog.cpp:698
+#: gui\ConfigDialog.cpp:703
 #, c-format
 msgid ""
 "By installing the autorun file on your removable drive, %s will start "
@@ -753,36 +766,36 @@ msgstr ""
 "\n"
 "Fortsæt?"
 
-#: gui\ConfigDialog.cpp:701
+#: gui\ConfigDialog.cpp:706
 msgid "Could not install autorun file. Please try again."
 msgstr "Autorun.inf kunne ikke oprettes. Prøv venligst igen"
 
-#: gui\ConfigDialog.cpp:703
+#: gui\ConfigDialog.cpp:708
 msgid "The autorun file has been installed successfully"
 msgstr "autorun.inf er oprettet"
 
-#: gui\ConfigDialog.cpp:734
+#: gui\ConfigDialog.cpp:739
 msgid "Please enable the plugin in order to change its options."
 msgstr ""
 
-#: gui\ConfigDialog.cpp:752
+#: gui\ConfigDialog.cpp:757
 #, c-format
 msgid "%s Plugin Packages"
 msgstr "%s Plugin Pakker"
 
-#: gui\ConfigDialog.cpp:753 gui\IconDialog.cpp:175
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
 msgid "All files"
 msgstr "Alle filer"
 
-#: gui\ConfigDialog.cpp:755
+#: gui\ConfigDialog.cpp:760
 msgid "Select a plugin package"
 msgstr "Vælge en plugin pakke"
 
-#: gui\ConfigDialog.cpp:784
+#: gui\ConfigDialog.cpp:789
 msgid "Please wait..."
 msgstr "Vent venligst..."
 
-#: gui\ConfigDialog.cpp:1055
+#: gui\ConfigDialog.cpp:1070
 msgid ""
 "Some of these changes will only be applied until after you restart the "
 "application."

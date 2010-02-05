@@ -690,7 +690,7 @@ void MainFrame::UpdateMask() {
 void MainFrame::UpdateLayout(int width, int height) {
   if (!mainBackgroundBitmap_) return;
 
-  int sideButtonGap = 0;
+  int sideButtonGap = 3;
 
   if (rotated_) { // VERTICAL ORIENTATION
 
