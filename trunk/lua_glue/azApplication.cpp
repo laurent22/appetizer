@@ -153,7 +153,7 @@ int azApplication::addEventListener(lua_State *L) {
  * 
  */	
 int azApplication::getDockItemsRoot(lua_State *L) {
-  FolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
+  appFolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
   Lunar<azDockItem>::push(L, new azDockItem(rootFolderItem), true);
 
   return 1;
@@ -168,7 +168,7 @@ int azApplication::getDockItemsRoot(lua_State *L) {
  */	
 int azApplication::getDockItemById(lua_State *L) {
   int folderItemId = luaL_checkinteger(L, 1);
-  FolderItem* folderItem = FolderItem::GetFolderItemById(folderItemId);
+  appFolderItem* folderItem = appFolderItem::GetFolderItemById(folderItemId);
   Lunar<azDockItem>::push(L, new azDockItem(folderItem), true);
   
   return 1;

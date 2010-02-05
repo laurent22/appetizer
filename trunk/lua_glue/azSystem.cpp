@@ -235,7 +235,7 @@ int azSystem::open(lua_State *L) {
   wxString filePath = LuaUtil::ToString(L, 1, false);
   wxString arguments = LuaUtil::ToString(L, 2, true);
 
-  FolderItem::Launch(filePath, arguments, false);
+  appFolderItem::Launch(filePath, arguments, false);
 
   return 0;
 }
@@ -329,7 +329,7 @@ int azSystem::resolvePath(lua_State *L) {
   wxString inputFilePath = LuaUtil::ToString(L, 1);
   bool normalize = LuaUtil::ToBoolean(L, 2, true, false);
 
-  wxString output = FolderItem::ResolvePath(inputFilePath, normalize);
+  wxString output = appFolderItem::ResolvePath(inputFilePath, normalize);
 
   LuaUtil::PushString(L, output);
 

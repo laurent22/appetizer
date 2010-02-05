@@ -18,7 +18,7 @@ class azDockItem : public azWrapper {
 
 public:
 
-  azDockItem(FolderItem* folderItem);
+  azDockItem(appFolderItem* folderItem);
   azDockItem(lua_State *L);
 
   int getAllGroups(lua_State *L);
@@ -48,12 +48,12 @@ public:
   static const char className[];
   static Lunar<azDockItem>::RegType methods[];
 
-  FolderItem* Get() const;
+  appFolderItem* Get() const;
 
 private:
 
   int folderItemId_;
-  //FolderItem* folderItem_;  
+  //appFolderItem* folderItem_;  
 
 };
 

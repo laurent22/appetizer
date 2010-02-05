@@ -338,7 +338,7 @@ void PluginPreferencesDialog::OnButtonClicked(wxCommandEvent& evt) {
         wxString newValue = d->GetPath();
         
         if (wxGetApp().GetUtilities().IsApplicationOnPortableDrive()) {
-          newValue = FolderItem::ConvertToRelativePath(newValue);
+          newValue = appFolderItem::ConvertToRelativePath(newValue);
         }
 
         wxTextCtrl* textBox = browseButtonToTextBoxMap_[button];

@@ -57,13 +57,13 @@ bool LuaUtil::DetectTypeAndPushAsWrapper(lua_State* L, wxObject* value) {
   done = luaConvertAndPushAsWrapper<wxMenu, azMenu>(L, value);
   if (done) return true;
 
-  done = luaConvertAndPushAsWrapper<FolderItem, azDockItem>(L, value);
+  done = luaConvertAndPushAsWrapper<appFolderItem, azDockItem>(L, value);
   if (done) return true;
 
   done = luaConvertAndPushAsWrapper<OptionButton, azOptionButton>(L, value);
   if (done) return true;
 
-  done = luaConvertAndPushAsWrapper<FolderItem, azDockItem>(L, value);
+  done = luaConvertAndPushAsWrapper<appFolderItem, azDockItem>(L, value);
   if (done) return true;
 
   if (dynamic_cast<Plugin*>(value)) {

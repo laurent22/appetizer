@@ -18,16 +18,16 @@
 #include "MiniLaunchBar.h"
 
 
-int FolderItem::uniqueID_ = 1000;
+int appFolderItem::uniqueID_ = 1000;
 
-FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
+FolderItemIdHashMap appFolderItem::folderItemIdHashMap_;
 
-std::map<std::pair<wxString, int>, wxIcon*> FolderItem::defaultIcons_;
+std::map<std::pair<wxString, int>, wxIcon*> appFolderItem::defaultIcons_;
 
 
-FolderItem::FolderItem(bool isGroup) {
-  FolderItem::uniqueID_++;
-  id_ = FolderItem::uniqueID_;
+appFolderItem::appFolderItem(bool isGroup) {
+  appFolderItem::uniqueID_++;
+  id_ = appFolderItem::uniqueID_;
 
   resolvedPath_ = _T("*"); // It means that it hasn't been resolved yet
 
@@ -42,15 +42,15 @@ FolderItem::FolderItem(bool isGroup) {
 }
 
 
-FolderItem* FolderItem::CreateFolderItem(bool isGroup) {
-  FolderItem* f = new FolderItem(isGroup);
+appFolderItem* appFolderItem::CreateFolderItem(bool isGroup) {
+  appFolderItem* f = new appFolderItem(isGroup);
   folderItemIdHashMap_[f->GetId()] = f;
   return f;
 }
 
 
-FolderItem* FolderItem::GetFolderItemById(int id) {
-  FolderItem* sp = folderItemIdHashMap_[id];
+appFolderItem* appFolderItem::GetFolderItemById(int id) {
+  appFolderItem* sp = folderItemIdHashMap_[id];
   
   // The folder item is not (or no longer) in the hash map
   if (!sp) return NULL;
@@ -69,17 +69,17 @@ FolderItem* FolderItem::GetFolderItemById(int id) {
 }
 
 
-void FolderItem::Dispose() {
+void appFolderItem::Dispose() {
   if (isDisposed_) return;
   
-  FolderItem* parent = GetParent();
+  appFolderItem* parent = GetParent();
   if (parent) parent->RemoveChild(this);
   
   isDisposed_ = true;
 }
 
 
-bool FolderItem::IsDisposed() {
+bool appFolderItem::IsDisposed() {
   return isDisposed_;
 }
 
@@ -88,12 +88,12 @@ bool FolderItem::IsDisposed() {
 // tag them for deletion using Dispose(). The
 // garbage collector in DestroyStaticData()
 // will do the rest.
-FolderItem::~FolderItem() {
+appFolderItem::~appFolderItem() {
   ClearCachedIcons();
 }
 
 
-void FolderItem::DestroyStaticData() {
+void appFolderItem::DestroyStaticData() {
   int s = folderItemIdHashMap_.size();
 
   FolderItemIdHashMap::iterator i;
@@ -108,46 +108,46 @@ void FolderItem::DestroyStaticData() {
 }
 
 
-void FolderItem::SetCustomIcon(const wxString& filePath, int index) {
+void appFolderItem::SetCustomIcon(const wxString& filePath, int index) {
   if (filePath == customIconPath_ && index == customIconIndex_) return;
 
-  customIconPath_ = FolderItem::ConvertToRelativePath(filePath);
+  customIconPath_ = appFolderItem::ConvertToRelativePath(filePath);
   customIconIndex_ = index;
   ClearCachedIcons();
 }
 
 
-wxString FolderItem::GetCustomIconPath() {
+wxString appFolderItem::GetCustomIconPath() {
   return customIconPath_;
 }
 
 
-int FolderItem::GetCustomIconIndex() {
+int appFolderItem::GetCustomIconIndex() {
   return customIconIndex_;
 }
 
 
-void FolderItem::SetParameters(const wxString& parameters) {
+void appFolderItem::SetParameters(const wxString& parameters) {
   if (parameters_ == parameters) return;
   parameters_ = wxString(parameters);
   parameters_.Trim(true).Trim(false);
 }
 
 
-wxString FolderItem::GetParameters() {
+wxString appFolderItem::GetParameters() {
   return parameters_;
 }
 
 
-wxString FolderItem::GetUUID() {
+wxString appFolderItem::GetUUID() {
   if (uuid_ == wxEmptyString) uuid_ = wxGetApp().GetUtilities().CreateUUID();
   return uuid_;
 }
 
 
-void FolderItem::InsertChildBefore(FolderItem* toAdd, FolderItem* previousFolderItem) {
+void appFolderItem::InsertChildBefore(appFolderItem* toAdd, appFolderItem* previousFolderItem) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* child = children_.at(i);
+    appFolderItem* child = children_.at(i);
     if (child->GetId() == previousFolderItem->GetId()) {
       MoveChild(toAdd, i);
       break;
@@ -156,9 +156,9 @@ void FolderItem::InsertChildBefore(FolderItem* toAdd, FolderItem* previousFolder
 }
 
 
-void FolderItem::InsertChildAfter(FolderItem* toAdd, FolderItem* previousFolderItem) {  
+void appFolderItem::InsertChildAfter(appFolderItem* toAdd, appFolderItem* previousFolderItem) {  
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* child = children_.at(i);
+    appFolderItem* child = children_.at(i);
     if (child->GetId() == previousFolderItem->GetId()) {
       MoveChild(toAdd, i + 1);
       break;
@@ -167,25 +167,25 @@ void FolderItem::InsertChildAfter(FolderItem* toAdd, FolderItem* previousFolderI
 }
 
 
-void FolderItem::PrependChild(FolderItem* toAdd) {
+void appFolderItem::PrependChild(appFolderItem* toAdd) {
   MoveChild(toAdd, 0);
 }
 
 
-bool FolderItem::IsGroup() {
+bool appFolderItem::IsGroup() {
   return isGroup_;
 }
 
 
-FolderItem* FolderItem::GetChildByResolvedPath(const wxString& filePath) {
+appFolderItem* appFolderItem::GetChildByResolvedPath(const wxString& filePath) {
   int childrenCount = children_.size();
 
   for (int i = 0; i < childrenCount; i++) {
-    FolderItem* child = children_.at(i);
+    appFolderItem* child = children_.at(i);
     if (child->GetResolvedPath() == filePath) {
       return child;
     } else {
-      FolderItem* found = child->GetChildByResolvedPath(filePath);
+      appFolderItem* found = child->GetChildByResolvedPath(filePath);
       if (found) return found;
     }
   }
@@ -194,7 +194,7 @@ FolderItem* FolderItem::GetChildByResolvedPath(const wxString& filePath) {
 }
 
 
-bool FolderItem::DoMultiLaunch() {
+bool appFolderItem::DoMultiLaunch() {
   bool output = false;
 
   if (!IsGroup()) {
@@ -204,7 +204,7 @@ bool FolderItem::DoMultiLaunch() {
     }
   } else {
     for (int i = 0; i < children_.size(); i++) {
-      FolderItem* folderItem = children_.at(i);
+      appFolderItem* folderItem = children_.at(i);
       if (folderItem->DoMultiLaunch()) output = true;
     }
   }
@@ -213,7 +213,7 @@ bool FolderItem::DoMultiLaunch() {
 }
 
 
-void FolderItem::MoveChild(FolderItem* folderItemToMove, int insertionIndex) {
+void appFolderItem::MoveChild(appFolderItem* folderItemToMove, int insertionIndex) {
   // Create the new vector of folder items that
   // is going to replace the old one
   FolderItemVector newFolderItems;
@@ -226,7 +226,7 @@ void FolderItem::MoveChild(FolderItem* folderItemToMove, int insertionIndex) {
   }
 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* folderItem = children_.at(i);
+    appFolderItem* folderItem = children_.at(i);
 
     // If the current folder item is the one
     // we want to move, skip it
@@ -256,25 +256,25 @@ void FolderItem::MoveChild(FolderItem* folderItemToMove, int insertionIndex) {
 }
 
 
-FolderItemVector FolderItem::GetChildren() {
+FolderItemVector appFolderItem::GetChildren() {
   return children_;
 }
 
 
-bool FolderItem::ContainsGroups() {
+bool appFolderItem::ContainsGroups() {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* child = children_.at(i);
+    appFolderItem* child = children_.at(i);
     if (child->IsGroup()) return true;
   }  
   return false;
 }
 
 
-FolderItemVector FolderItem::GetAllGroups(bool recursively) {
+FolderItemVector appFolderItem::GetAllGroups(bool recursively) {
   FolderItemVector output;
 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* child = children_.at(i);
+    appFolderItem* child = children_.at(i);
     if (child->IsGroup()) {
       output.push_back(child);    
       if (!recursively) continue;
@@ -288,14 +288,14 @@ FolderItemVector FolderItem::GetAllGroups(bool recursively) {
 }
 
 
-void FolderItem::AddChild(FolderItem* folderItem) {
+void appFolderItem::AddChild(appFolderItem* folderItem) {
   if (folderItem->GetId() == GetId()) return;
   if (folderItem->IsGroup()) {
-    FolderItem* f = folderItem->GetChildById(GetId());
+    appFolderItem* f = folderItem->GetChildById(GetId());
     if (f) return;
   }
 
-  FolderItem* p = folderItem->GetParent();
+  appFolderItem* p = folderItem->GetParent();
   if (p) p->RemoveChild(folderItem);
 
   folderItem->SetParent(this);
@@ -303,9 +303,9 @@ void FolderItem::AddChild(FolderItem* folderItem) {
 }
 
 
-void FolderItem::RemoveChild(FolderItem* folderItem) {
+void appFolderItem::RemoveChild(appFolderItem* folderItem) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* child = children_.at(i);
+    appFolderItem* child = children_.at(i);
 
     if (child->GetId() == folderItem->GetId()) {
 
@@ -324,19 +324,19 @@ void FolderItem::RemoveChild(FolderItem* folderItem) {
 }
 
 
-FolderItem* FolderItem::GetChildAt(int index) {
+appFolderItem* appFolderItem::GetChildAt(int index) {
   return children_.at(index);
 }
 
 
-FolderItem* FolderItem::GetChildByUUID(const wxString& uuid, bool recurse) {
+appFolderItem* appFolderItem::GetChildByUUID(const wxString& uuid, bool recurse) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* folderItem = children_.at(i);
+    appFolderItem* folderItem = children_.at(i);
 
     if (folderItem->GetUUID() == uuid) return folderItem;
 
     if (recurse && folderItem->IsGroup()) {
-      FolderItem* temp = folderItem->GetChildByUUID(uuid, recurse);
+      appFolderItem* temp = folderItem->GetChildByUUID(uuid, recurse);
       if (temp) return temp;
     }
   }
@@ -345,14 +345,14 @@ FolderItem* FolderItem::GetChildByUUID(const wxString& uuid, bool recurse) {
 }
 
 
-FolderItem* FolderItem::GetChildById(int folderItemId, bool recurse) {
+appFolderItem* appFolderItem::GetChildById(int folderItemId, bool recurse) {
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* folderItem = children_.at(i);
+    appFolderItem* folderItem = children_.at(i);
 
     if (folderItem->GetId() == folderItemId) return folderItem;
 
     if (recurse && folderItem->IsGroup()) {
-      FolderItem* temp = folderItem->GetChildById(folderItemId, recurse);
+      appFolderItem* temp = folderItem->GetChildById(folderItemId, recurse);
       if (temp) return temp;
     }
   }
@@ -361,42 +361,42 @@ FolderItem* FolderItem::GetChildById(int folderItemId, bool recurse) {
 }
 
 
-int FolderItem::ChildrenCount() {
+int appFolderItem::ChildrenCount() {
   return children_.size();
 }
 
 
-void FolderItem::SetParent(FolderItem* folderItem) {
+void appFolderItem::SetParent(appFolderItem* folderItem) {
   parent_ = folderItem;
 }
 
 
-FolderItem* FolderItem::GetParent() {
+appFolderItem* appFolderItem::GetParent() {
   return parent_;
 }
 
 
-int FolderItem::GetId() const {
+int appFolderItem::GetId() const {
   return id_;
 }
 
 
-void FolderItem::AddToMultiLaunchGroup() {
+void appFolderItem::AddToMultiLaunchGroup() {
   belongsToMultiLaunchGroup_ = true;
 }
 
 
-void FolderItem::RemoveFromMultiLaunchGroup() {
+void appFolderItem::RemoveFromMultiLaunchGroup() {
   belongsToMultiLaunchGroup_ = false;
 }
 
 
-bool FolderItem::BelongsToMultiLaunchGroup() {
+bool appFolderItem::BelongsToMultiLaunchGroup() {
   return belongsToMultiLaunchGroup_;
 }
 
 
-void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
+void appFolderItem::OnMenuItemClick(wxCommandEvent& evt) {
   ExtendedMenuItem* menuItem = GetClickedMenuItem(evt);
   wxString name = menuItem->GetMetadata(_T("name"));
 
@@ -408,7 +408,7 @@ void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
   } else if (name == _T("folderItem")) {
 
     int folderItemId = menuItem->GetMetadataInt(_T("folderItemId"));
-    FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(folderItemId);
+    appFolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(folderItemId);
     if (!folderItem) {
       evt.Skip();
       return;
@@ -429,7 +429,7 @@ void FolderItem::OnMenuItemClick(wxCommandEvent& evt) {
 }
 
 
-void FolderItem::AppendAsMenuItem(wxMenu* parentMenu, int iconSize, const wxString& menuItemName) {
+void appFolderItem::AppendAsMenuItem(wxMenu* parentMenu, int iconSize, const wxString& menuItemName) {
   if (IsGroup()) {
     wxMenu* menu = ToMenu(iconSize, menuItemName);
     parentMenu->AppendSubMenu(menu, GetName(true));
@@ -441,13 +441,13 @@ void FolderItem::AppendAsMenuItem(wxMenu* parentMenu, int iconSize, const wxStri
   parentMenu->Connect(
     wxID_ANY,
     wxEVT_COMMAND_MENU_SELECTED,
-    wxCommandEventHandler(FolderItem::OnMenuItemClick),
+    wxCommandEventHandler(appFolderItem::OnMenuItemClick),
     NULL,
     this);
 }
 
 
-wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
+wxMenu* appFolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
   if (!IsGroup()) {
     ELOG(_T("A non-group folder item cannot be converted to a menu. Call ToMenuItem() instead"));
     return NULL;
@@ -457,7 +457,7 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
   ExtendedMenuItem* menuItem = NULL;
 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* child = children_.at(i);
+    appFolderItem* child = children_.at(i);
     if (!child) continue;
     child->AppendAsMenuItem(menu, iconSize, menuItemName);
   } 
@@ -473,7 +473,7 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
   menu->Connect(
     wxID_ANY,
     wxEVT_COMMAND_MENU_SELECTED,
-    wxCommandEventHandler(FolderItem::OnMenuItemClick),
+    wxCommandEventHandler(appFolderItem::OnMenuItemClick),
     NULL,
     this);
 
@@ -481,7 +481,7 @@ wxMenu* FolderItem::ToMenu(int iconSize, const wxString& menuItemName) {
 }
 
 
-ExtendedMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, const wxString& menuItemName) {
+ExtendedMenuItem* appFolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, const wxString& menuItemName) {
   ExtendedMenuItem* menuItem = new ExtendedMenuItem(parentMenu, wxGetApp().GetUniqueInt(), GetName(true));
   menuItem->SetMetadata(_T("name"), menuItemName);
   menuItem->SetMetadata(_T("folderItemId"), GetId());
@@ -507,13 +507,13 @@ ExtendedMenuItem* FolderItem::ToMenuItem(wxMenu* parentMenu, int iconSize, const
  * @param filename The filename to search for.
  * @param matchMode The matching behavior
  */
-FolderItem* FolderItem::SearchChildByFilename(const wxString& filename, int matchMode) { 
+appFolderItem* appFolderItem::SearchChildByFilename(const wxString& filename, int matchMode) { 
   for (int i = 0; i < children_.size(); i++) {
-    FolderItem* folderItem = children_.at(i);
+    appFolderItem* folderItem = children_.at(i);
     if (!folderItem) continue;
     
     if (folderItem->IsGroup()) {
-      FolderItem* foundFolderItem = folderItem->SearchChildByFilename(filename, matchMode);
+      appFolderItem* foundFolderItem = folderItem->SearchChildByFilename(filename, matchMode);
       if (foundFolderItem) return foundFolderItem;
     } else {
       wxString folderItemFilename = folderItem->GetFileName().Lower();
@@ -525,7 +525,7 @@ FolderItem* FolderItem::SearchChildByFilename(const wxString& filename, int matc
 }
 
 
-void FolderItem::Launch(const wxString& filePath, const wxString& arguments, bool notifyPlugins) {
+void appFolderItem::Launch(const wxString& filePath, const wxString& arguments, bool notifyPlugins) {
 
   if (notifyPlugins) {
     wxString* filePathP = new wxString(filePath);
@@ -589,7 +589,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments, boo
         wxString tArguments(arguments); 
         // If the argument is a file path, then check that it has double quotes        
         if (wxFileName::FileExists(tArguments)) {
-          tArguments = FolderItem::ResolvePath(tArguments);
+          tArguments = appFolderItem::ResolvePath(tArguments);
           if (tArguments[0] != _T('"') && tArguments[arguments.Len() - 1] != _T('"')) {
             tArguments = _T('"') + tArguments + _T('"');
           }          
@@ -664,7 +664,7 @@ void FolderItem::Launch(const wxString& filePath, const wxString& arguments, boo
 }
 
 
-wxString FolderItem::GetSpecialItemFilePath(const wxString& specialItem) {
+wxString appFolderItem::GetSpecialItemFilePath(const wxString& specialItem) {
 
   wxString filePath;
 
@@ -701,7 +701,7 @@ wxString FolderItem::GetSpecialItemFilePath(const wxString& specialItem) {
 
     } else if (specialItem == _T("$(Write)")) {
 
-      filePath = FolderItem::ResolvePath(_T("%ProgramFiles%\\Windows NT\\Accessories\\wordpad.exe")); // Windows 7 (and maybe Vista)
+      filePath = appFolderItem::ResolvePath(_T("%ProgramFiles%\\Windows NT\\Accessories\\wordpad.exe")); // Windows 7 (and maybe Vista)
       if (!wxFileName::FileExists(filePath)) filePath = FilePaths::GetSystem32Directory() + _T("\\write.exe");
 
 
@@ -797,7 +797,7 @@ wxString FolderItem::GetSpecialItemFilePath(const wxString& specialItem) {
 }
 
 
-void FolderItem::Launch() {
+void appFolderItem::Launch() {
 
   wxString parameters;
   wxString filePath;
@@ -810,7 +810,7 @@ void FolderItem::Launch() {
 
     OSVERSIONINFO osInfo = wxGetApp().GetOsInfo();
 
-    filePath = FolderItem::GetSpecialItemFilePath(filePath_);
+    filePath = appFolderItem::GetSpecialItemFilePath(filePath_);
     
     if (filePath_ == _T("$(MyComputer)")) {
 
@@ -873,25 +873,25 @@ void FolderItem::Launch() {
 
   if (filePath == wxEmptyString) {
     parameters = parameters_;
-    filePath = FolderItem::ResolvePath(filePath_, false);
+    filePath = appFolderItem::ResolvePath(filePath_, false);
   }
 
     
   if (parameters != wxEmptyString) {
-    FolderItem::Launch(filePath, parameters);
+    appFolderItem::Launch(filePath, parameters);
   } else {
-    FolderItem::Launch(filePath);
+    appFolderItem::Launch(filePath);
   }
 }
 
 
-void FolderItem::LaunchWithArguments(const wxString& arguments) {
-  FolderItem::Launch(FolderItem::ResolvePath(filePath_, false), arguments);
+void appFolderItem::LaunchWithArguments(const wxString& arguments) {
+  appFolderItem::Launch(appFolderItem::ResolvePath(filePath_, false), arguments);
 }
 
 
-TiXmlElement* FolderItem::ToXml() {
-  TiXmlElement* xml = new TiXmlElement("FolderItem");
+TiXmlElement* appFolderItem::ToXml() {
+  TiXmlElement* xml = new TiXmlElement("appFolderItem");
 
   XmlUtil::AppendTextElement(xml, "FilePath", GetFilePath());
   XmlUtil::AppendTextElement(xml, "Name", GetName());
@@ -907,7 +907,7 @@ TiXmlElement* FolderItem::ToXml() {
     xml->LinkEndChild(childrenXml);
 
     for (int i = 0; i < children_.size(); i++) {
-      FolderItem* folderItem = children_.at(i);
+      appFolderItem* folderItem = children_.at(i);
       if (!folderItem) continue;
       childrenXml->LinkEndChild(folderItem->ToXml());
     }    
@@ -917,7 +917,7 @@ TiXmlElement* FolderItem::ToXml() {
 }
 
 
-void FolderItem::FromXml(TiXmlElement* xml) {
+void appFolderItem::FromXml(TiXmlElement* xml) {
   TiXmlHandle handle(xml);
 
   SetName(XmlUtil::ReadElementText(handle, "Name"));
@@ -944,9 +944,9 @@ void FolderItem::FromXml(TiXmlElement* xml) {
   if (childrenXml) {
     for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
       wxString elementName = wxString(element->Value(), wxConvUTF8);
-      if (elementName != _T("FolderItem")) continue;
+      if (elementName != _T("appFolderItem")) continue;
       
-      FolderItem* folderItem = FolderItem::CreateFolderItem();
+      appFolderItem* folderItem = appFolderItem::CreateFolderItem();
       folderItem->FromXml(element);
       AddChild(folderItem);
     }
@@ -960,7 +960,7 @@ void FolderItem::FromXml(TiXmlElement* xml) {
 }
 
 
-void FolderItem::ConvertOldVariablesToNew(wxString& s) {
+void appFolderItem::ConvertOldVariablesToNew(wxString& s) {
   if (s.Index(_T("%")) == wxNOT_FOUND) return;
 
   s.Replace(_T("%AZ_CONTROL_PANEL%"), _T("$(ControlPanel)"));
@@ -978,19 +978,19 @@ void FolderItem::ConvertOldVariablesToNew(wxString& s) {
 }
 
 
-bool FolderItem::GetAutomaticallyAdded() {
+bool appFolderItem::GetAutomaticallyAdded() {
   return automaticallyAdded_;
 }
 
 
-void FolderItem::SetAutomaticallyAdded(bool automaticallyAdded) {
+void appFolderItem::SetAutomaticallyAdded(bool automaticallyAdded) {
   automaticallyAdded_ = automaticallyAdded;
 }
 
 
 
 
-wxString FolderItem::GetName(bool returnUnnamedIfEmpty) {
+wxString appFolderItem::GetName(bool returnUnnamedIfEmpty) {
   if (returnUnnamedIfEmpty) {
     if (name_ == wxEmptyString) {
       if (isGroup_) return _("Group");
@@ -1001,13 +1001,13 @@ wxString FolderItem::GetName(bool returnUnnamedIfEmpty) {
 }
 
 
-void FolderItem::SetName(const wxString& name) {
+void appFolderItem::SetName(const wxString& name) {
   name_ = wxString(name);
   name_.Trim(true).Trim(false);
 }
 
 
-void FolderItem::ClearCachedIcons() {
+void appFolderItem::ClearCachedIcons() {
   for (IconHashMap::iterator i = icons_.begin(); i != icons_.end(); ++i) wxDELETE(i->second);
   icons_.clear();
 }
@@ -1015,7 +1015,7 @@ void FolderItem::ClearCachedIcons() {
 
 #ifdef __MLB_USE_ICON_DISK_CACHE__
 
-void FolderItem::CacheIconToDisk(const wxString& hash, wxIcon* icon, int iconSize) {
+void appFolderItem::CacheIconToDisk(const wxString& hash, wxIcon* icon, int iconSize) {
   wxASSERT_MSG(icon, _T("Couldn't cache icon: null pointer"));
   wxASSERT_MSG(icon->IsOk(), _T("Couldn't cache icon: is not ok"));
   wxASSERT_MSG(hash != wxEmptyString, _T("Couldn't cache icon: empty hash"));
@@ -1027,7 +1027,7 @@ void FolderItem::CacheIconToDisk(const wxString& hash, wxIcon* icon, int iconSiz
 }
 
 
-wxString FolderItem::GetIconDiskCacheHash() {
+wxString appFolderItem::GetIconDiskCacheHash() {
   if (IsGroup()) return wxEmptyString;
   if (iconCacheHash_ != wxEmptyString) return iconCacheHash_;
 
@@ -1057,7 +1057,7 @@ wxString FolderItem::GetIconDiskCacheHash() {
 }
 
 
-wxIcon* FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
+wxIcon* appFolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
   wxString cacheDirectory = FilePaths::GetIconCacheDirectory();
   wxIcon* output;
 
@@ -1077,7 +1077,7 @@ wxIcon* FolderItem::GetIconFromDiskCache(const wxString& hash, int iconSize) {
 #endif // __MLB_USE_ICON_DISK_CACHE__
 
 
-wxIcon* FolderItem::CreateDefaultGroupIcon(int iconSize) {
+wxIcon* appFolderItem::CreateDefaultGroupIcon(int iconSize) {
   std::pair<wxString, int> p(_T("group"), iconSize);
 
   if (defaultIcons_.find(p) != defaultIcons_.end()) {
@@ -1092,12 +1092,12 @@ wxIcon* FolderItem::CreateDefaultGroupIcon(int iconSize) {
 }
 
 
-bool FolderItem::IsWebLink() {
+bool appFolderItem::IsWebLink() {
   return StringUtil::IsWebLink(GetFilePath());
 }
 
 
-wxIcon* FolderItem::GetIcon(int iconSize) {
+wxIcon* appFolderItem::GetIcon(int iconSize) {
 
   iconSize = wxGetApp().GetOSValidIconSize(iconSize);
 
@@ -1112,14 +1112,14 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
 
     if (fn.GetExt().Lower() == _T("png")) {
 
-      output = Imaging::CreateIconFromPng(FolderItem::ResolvePath(customIconPath_), iconSize);
+      output = Imaging::CreateIconFromPng(appFolderItem::ResolvePath(customIconPath_), iconSize);
 
     } else {
 
       if (customIconIndex_ > 0) {
-        output = IconGetter::GetExecutableIcon(FolderItem::ResolvePath(customIconPath_), iconSize, customIconIndex_);
+        output = IconGetter::GetExecutableIcon(appFolderItem::ResolvePath(customIconPath_), iconSize, customIconIndex_);
       } else {
-        output = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(customIconPath_), iconSize, true);
+        output = IconGetter::GetFolderItemIcon(appFolderItem::ResolvePath(customIconPath_), iconSize, true);
       }
 
     }
@@ -1132,7 +1132,7 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
   #ifdef __MLB_USE_ICON_DISK_CACHE__
   wxString cacheHash;
   cacheHash = GetIconDiskCacheHash();
-  wxIcon* cachedIcon = FolderItem::GetIconFromDiskCache(cacheHash, iconSize);
+  wxIcon* cachedIcon = appFolderItem::GetIconFromDiskCache(cacheHash, iconSize);
   if (cachedIcon) {
     icons_[iconSize] = cachedIcon;
     return cachedIcon;
@@ -1141,16 +1141,16 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
 
   if (!output) {
     if (IsGroup()) {
-      output = FolderItem::CreateDefaultGroupIcon(iconSize);
+      output = appFolderItem::CreateDefaultGroupIcon(iconSize);
     } else {
-      output = FolderItem::CreateSpecialItemIcon(GetFilePath(), iconSize);
+      output = appFolderItem::CreateSpecialItemIcon(GetFilePath(), iconSize);
     }
   }
 
   if (!output) {
     output = IconGetter::GetFolderItemIcon(GetResolvedPath(), iconSize);
     #ifdef __MLB_USE_ICON_DISK_CACHE__
-    if (output) FolderItem::CacheIconToDisk(cacheHash, output, iconSize);
+    if (output) appFolderItem::CacheIconToDisk(cacheHash, output, iconSize);
     #endif // __MLB_USE_ICON_DISK_CACHE__
   }
 
@@ -1165,7 +1165,7 @@ wxIcon* FolderItem::GetIcon(int iconSize) {
 }
 
 
-wxIcon* FolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize) {
+wxIcon* appFolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize) {
   wxIcon* output = NULL;
 
   if (path.Index(_T("$(")) == wxNOT_FOUND) return output;
@@ -1210,7 +1210,7 @@ wxIcon* FolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize) {
   } else if (path == _T("$(NetworkConnections)")) {
     output = IconGetter::GetExecutableIcon(dllPath, iconSize, SHELL32_ICON_INDEX_NETWORK_CONNECTIONS + inc);
   } else {
-    output = IconGetter::GetExecutableIcon(FolderItem::GetSpecialItemFilePath(path), iconSize);
+    output = IconGetter::GetExecutableIcon(appFolderItem::GetSpecialItemFilePath(path), iconSize);
   }
 
   if (output) {
@@ -1223,7 +1223,7 @@ wxIcon* FolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize) {
 }
 
 
-wxString FolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
+wxString appFolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
   wxString theName;
 
   if (unresolvedFilePath.Index(_T("$(")) != wxNOT_FOUND) {
@@ -1263,7 +1263,7 @@ wxString FolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
   if (theName != wxEmptyString) {
     return theName;    
   } else {
-    wxString s = VersionInfo::GetFileDescription(FolderItem::ResolvePath(unresolvedFilePath));
+    wxString s = VersionInfo::GetFileDescription(appFolderItem::ResolvePath(unresolvedFilePath));
     if (s != wxEmptyString) return s;
   }
 
@@ -1271,13 +1271,13 @@ wxString FolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
 }
 
 
-void FolderItem::AutoSetName() {
-  SetName(FolderItem::GetDisplayName(filePath_));
+void appFolderItem::AutoSetName() {
+  SetName(appFolderItem::GetDisplayName(filePath_));
 }
 
 
 
-void FolderItem::SetFilePath(const wxString& filePath) {
+void appFolderItem::SetFilePath(const wxString& filePath) {
   if (filePath == filePath_) return;
 
   resolvedPath_ = _T("*");
@@ -1287,26 +1287,26 @@ void FolderItem::SetFilePath(const wxString& filePath) {
 }
 
 
-wxString FolderItem::GetFileName(bool includeExtension) {
+wxString appFolderItem::GetFileName(bool includeExtension) {
   wxFileName f(GetResolvedPath());
   if (includeExtension) return f.GetFullName();
   return f.GetName();
 }
 
 
-wxString FolderItem::GetFilePath() {
+wxString appFolderItem::GetFilePath() {
   return filePath_;
 }
 
 
-wxString FolderItem::GetResolvedPath() {
+wxString appFolderItem::GetResolvedPath() {
   if (resolvedPath_ != _T("*")) return resolvedPath_;
-  resolvedPath_ = FolderItem::ResolvePath(filePath_);
+  resolvedPath_ = appFolderItem::ResolvePath(filePath_);
   return resolvedPath_;
 }
 
 
-wxString FolderItem::ResolvePath(const wxString& filePath, bool normalizeToo) {
+wxString appFolderItem::ResolvePath(const wxString& filePath, bool normalizeToo) {
   wxString result(filePath);
 
   if (result.Index(_T("$(")) != wxNOT_FOUND) {
@@ -1335,7 +1335,7 @@ wxString FolderItem::ResolvePath(const wxString& filePath, bool normalizeToo) {
 }
 
 
-wxString FolderItem::ConvertToRelativePath(const wxString& filePath) {
+wxString appFolderItem::ConvertToRelativePath(const wxString& filePath) {
   wxString result(filePath);
 
   wxString test1 = result.Mid(0, 2).Upper();

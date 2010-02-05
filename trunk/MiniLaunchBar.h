@@ -36,7 +36,7 @@ public:
   long GetTimer();
   bool IsFirstLaunch();
   void SetDraggedFolderItem(int folderItemId);
-  FolderItem* GetDraggedFolderItem();
+  appFolderItem* GetDraggedFolderItem();
   User* GetUser();
   void CheckForNewVersion(bool silent = false);
   bool ChangeLocale(const wxString& localeCode);
@@ -55,7 +55,7 @@ public:
   const bool GetCommandLineFound(const wxString& name);
 
   void FolderItems_CollectionChange();
-  void FolderItems_FolderItemChange(FolderItem* folderItem);
+  void FolderItems_FolderItemChange(appFolderItem* folderItem);
   void User_LocaleChange();
   void User_IconSizeChange();
 

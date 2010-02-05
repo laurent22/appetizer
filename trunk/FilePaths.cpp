@@ -207,7 +207,7 @@ void FilePaths::CreateDirectoryIfNotExists(const wxString& path) {
 
 void FilePaths::InitializePaths() {
   wxFileName executablePath = wxFileName(wxStandardPaths().GetExecutablePath());
-  wxString applicationDirectory = FolderItem::ResolvePath(executablePath.GetPath(), true);
+  wxString applicationDirectory = appFolderItem::ResolvePath(executablePath.GetPath(), true);
   wxString applicationDrive;
   wxFileName::SplitPath(executablePath.GetPath(), &applicationDrive, NULL, NULL, NULL, false, wxPATH_NATIVE);
 

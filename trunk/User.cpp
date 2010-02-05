@@ -23,7 +23,7 @@ User::User() {
   scheduledSaveTimer_ = NULL;
   settings_ = NULL;
   shortcutEditorDialog_ = NULL;
-  rootFolderItem_ = FolderItem::CreateFolderItem(true);
+  rootFolderItem_ = appFolderItem::CreateFolderItem(true);
   rootFolderItem_->SetName(_T("<root>"));
   settings_ = new UserSettings();
 }
@@ -46,7 +46,7 @@ User::~User() {
 }
 
 
-FolderItem* User::GetRootFolderItem() {
+appFolderItem* User::GetRootFolderItem() {
   return rootFolderItem_;
 }
 
@@ -89,7 +89,7 @@ void User::Save(bool force) {
 
   FolderItemVector folderItems = rootFolderItem_->GetChildren();
   for (int i = 0; i < folderItems.size(); i++) {
-    FolderItem* folderItem = folderItems.at(i);
+    appFolderItem* folderItem = folderItems.at(i);
     xmlRoot->LinkEndChild(folderItem->ToXml());   
   }
 
@@ -113,13 +113,13 @@ void User::Load() {
     return;
   }
 
-  rootFolderItem_ = FolderItem::CreateFolderItem(true);
+  rootFolderItem_ = appFolderItem::CreateFolderItem(true);
   
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
-    if (elementName == _T("FolderItem")) {
-      FolderItem* folderItem = FolderItem::CreateFolderItem();
+    if (elementName == _T("appFolderItem")) {
+      appFolderItem* folderItem = appFolderItem::CreateFolderItem();
       folderItem->FromXml(element);
 
       rootFolderItem_->AddChild(folderItem);
@@ -129,7 +129,7 @@ void User::Load() {
       wxString path = wxString::FromUTF8(cString);
       path.Trim(true).Trim(false);
       if (path == wxEmptyString) continue;
-      autoAddExclusions_.Add(FolderItem::ConvertToRelativePath(path));
+      autoAddExclusions_.Add(appFolderItem::ConvertToRelativePath(path));
     } else {
       WLOG(wxString::Format(_T("User::Load: Unknown element: %s"), elementName));
     }
@@ -137,9 +137,9 @@ void User::Load() {
 }
 
 
-FolderItem* User::AddNewFolderItemFromPath(FolderItem* parent, wxString folderItemPath) {
-  FolderItem* folderItem = FolderItem::CreateFolderItem();
-  folderItem->SetFilePath(FolderItem::ConvertToRelativePath(folderItemPath));
+appFolderItem* User::AddNewFolderItemFromPath(appFolderItem* parent, wxString folderItemPath) {
+  appFolderItem* folderItem = appFolderItem::CreateFolderItem();
+  folderItem->SetFilePath(appFolderItem::ConvertToRelativePath(folderItemPath));
   folderItem->AutoSetName();
 
   parent->AddChild(folderItem);
@@ -149,8 +149,25 @@ FolderItem* User::AddNewFolderItemFromPath(FolderItem* parent, wxString folderIt
 }
 
 
-FolderItem* User::EditNewFolderItem(FolderItem* parent, bool isGroup) {
-  FolderItem* folderItem = FolderItem::CreateFolderItem(isGroup);
+appFolderItem* User::AddNewFolderItemFromShortcut(appFolderItem* parent, wxString shortcutPath) {
+  ShortcutInfo info(shortcutPath, (HWND)(wxGetApp().GetMainFrame()->GetHandle()));
+  if (!info.IsOk()) return NULL;
+
+  appFolderItem* folderItem = appFolderItem::CreateFolderItem();
+  folderItem->SetFilePath(appFolderItem::ConvertToRelativePath(info.GetPath()));
+  folderItem->AutoSetName();
+  folderItem->SetCustomIcon(info.GetIconLocation(), info.GetIconIndex());
+  folderItem->SetParameters(info.GetArguments());
+
+  parent->AddChild(folderItem);
+  wxGetApp().FolderItems_CollectionChange();
+
+  return folderItem;
+}
+
+
+appFolderItem* User::EditNewFolderItem(appFolderItem* parent, bool isGroup) {
+  appFolderItem* folderItem = appFolderItem::CreateFolderItem(isGroup);
 
   int result = EditFolderItem(folderItem);
 
@@ -166,7 +183,7 @@ FolderItem* User::EditNewFolderItem(FolderItem* parent, bool isGroup) {
 }
 
 
-int User::EditFolderItem(FolderItem* folderItem) {
+int User::EditFolderItem(appFolderItem* folderItem) {
   int result;
 
   if (!shortcutEditorDialog_) shortcutEditorDialog_ = new ShortcutEditorDialog();
@@ -186,10 +203,10 @@ void User::AddAutoAddExclusion(const wxString& filePath) {
 
 
 bool User::IsAutoAddExclusion(const wxString& filePath) {
-  wxString resolvedPath = FolderItem::ResolvePath(filePath);
+  wxString resolvedPath = appFolderItem::ResolvePath(filePath);
 
   for (int i = 0; i < autoAddExclusions_.size(); i++) {
-    wxString exResolvedPath = FolderItem::ResolvePath(autoAddExclusions_[i], false);    
+    wxString exResolvedPath = appFolderItem::ResolvePath(autoAddExclusions_[i], false);    
     if (exResolvedPath == resolvedPath) return true;
     if (StringUtil::FileMatchesPattern(exResolvedPath, resolvedPath)) return true;
   }
@@ -204,7 +221,7 @@ UserSettings* User::GetSettings() {
 
 
 void User::PortableAppsFormatSynchronization() {
-  wxString portableAppsFolderPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("PortableAppsPath")));
+  wxString portableAppsFolderPath = appFolderItem::ResolvePath(GetSettings()->GetString(_T("PortableAppsPath")));
 
   wxArrayString foundFilePaths;
   wxDir portableAppsFolder;  
@@ -231,10 +248,10 @@ void User::PortableAppsFormatSynchronization() {
   //***************************************************************************
   // Add special folders to the list of files to process
   //***************************************************************************
-  wxString documentsPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("DocumentsPath")));
-  wxString musicPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("MusicPath")));
-  wxString picturesPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("PicturesPath")));
-  wxString videosPath = FolderItem::ResolvePath(GetSettings()->GetString(_T("VideosPath")));
+  wxString documentsPath = appFolderItem::ResolvePath(GetSettings()->GetString(_T("DocumentsPath")));
+  wxString musicPath = appFolderItem::ResolvePath(GetSettings()->GetString(_T("MusicPath")));
+  wxString picturesPath = appFolderItem::ResolvePath(GetSettings()->GetString(_T("PicturesPath")));
+  wxString videosPath = appFolderItem::ResolvePath(GetSettings()->GetString(_T("VideosPath")));
 
   if (wxFileName::DirExists(documentsPath)) foundFilePaths.Add(documentsPath);
   if (wxFileName::DirExists(musicPath)) foundFilePaths.Add(musicPath);
@@ -318,8 +335,8 @@ void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddEx
 
   for (int i = 0; i < filePaths.GetCount(); i++) {   
     wxString filePath = filePaths[i];
-    wxString resolvedPath = FolderItem::ResolvePath(filePath);
-    wxString relativePath = FolderItem::ConvertToRelativePath(filePath);
+    wxString resolvedPath = appFolderItem::ResolvePath(filePath);
+    wxString relativePath = appFolderItem::ConvertToRelativePath(filePath);
 
     // This path has previously been deleted by the user
     // so don't automatically add it again.
@@ -327,10 +344,10 @@ void User::BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddEx
 
     // Check if there is already a folder item
     // for this file path. If so: skip it.
-    FolderItem* foundFolderItem = rootFolderItem_->GetChildByResolvedPath(resolvedPath);
+    appFolderItem* foundFolderItem = rootFolderItem_->GetChildByResolvedPath(resolvedPath);
     if (foundFolderItem) continue;
 
-    FolderItem* folderItem = FolderItem::CreateFolderItem();
+    appFolderItem* folderItem = appFolderItem::CreateFolderItem();
     folderItem->SetFilePath(relativePath);
     folderItem->AutoSetName();
     folderItem->SetAutomaticallyAdded(true);

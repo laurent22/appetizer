@@ -68,14 +68,14 @@ Lunar<azDockItem>::RegType azDockItem::methods[] = {
 //*****************************************************************
 
 
-azDockItem::azDockItem(FolderItem* folderItem) {
+azDockItem::azDockItem(appFolderItem* folderItem) {
   folderItemId_ = folderItem->GetId();
 }
 
 
-FolderItem* azDockItem::Get() const {
+appFolderItem* azDockItem::Get() const {
   // This is very fast (50 milliseconds for 1000000 iterations) so no need to optimize
-  return FolderItem::GetFolderItemById(folderItemId_);
+  return appFolderItem::GetFolderItemById(folderItemId_);
 }
 
 
@@ -93,7 +93,7 @@ FolderItem* azDockItem::Get() const {
  * 
  */	
 azDockItem::azDockItem(lua_State *L) {
-  FolderItem* folderItem = FolderItem::CreateFolderItem(LuaUtil::ToBoolean(L, 1, true, false));
+  appFolderItem* folderItem = appFolderItem::CreateFolderItem(LuaUtil::ToBoolean(L, 1, true, false));
   folderItemId_ = folderItem->GetId();
 }
 
@@ -117,7 +117,7 @@ int azDockItem::getAllGroups(lua_State *L) {
   int tableIndex = lua_gettop(L);
 
   for (int i = 0; i < allGroups.size(); i++) {
-    FolderItem* f = allGroups.at(i);
+    appFolderItem* f = allGroups.at(i);
 
     lua_pushinteger(L, i + 1);
     Lunar<azDockItem>::push(L, new azDockItem(f), true);
@@ -336,10 +336,10 @@ int azDockItem::getChildAt(lua_State *L) {
 int azDockItem::getParent(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
-  FolderItem* p = Get()->GetParent();
+  appFolderItem* p = Get()->GetParent();
   if (!p) return 0; // No error - just return nil
 
-  FolderItem* sp = FolderItem::GetFolderItemById(p->GetId());
+  appFolderItem* sp = appFolderItem::GetFolderItemById(p->GetId());
   Lunar<azDockItem>::push(L, new azDockItem(sp), true);
   return 1;
 }
@@ -352,7 +352,7 @@ int azDockItem::getParent(lua_State *L) {
 int azDockItem::removeFromParent(lua_State *L) {
   CheckWrappedObject(L, Get()); 
 
-  FolderItem* p = Get()->GetParent();
+  appFolderItem* p = Get()->GetParent();
   if (!p) return 0; // No error - just exit
   
   p->RemoveChild(Get());

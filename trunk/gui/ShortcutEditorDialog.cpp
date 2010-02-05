@@ -62,7 +62,7 @@ void ShortcutEditorDialog::EnableDisableFields() {
 }
 
 
-void ShortcutEditorDialog::LoadFolderItem(FolderItem* folderItem) {
+void ShortcutEditorDialog::LoadFolderItem(appFolderItem* folderItem) {
   folderItem_ = folderItem;
   selectedIconPath_ = folderItem_->GetCustomIconPath();
   selectedIconIndex_ = folderItem_->GetCustomIconIndex();
@@ -87,7 +87,7 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
 
     if (fn.GetExt().Lower() == _T("png")) {
 
-      icon = Imaging::CreateIconFromPng(FolderItem::ResolvePath(selectedIconPath_), LARGE_ICON_SIZE);
+      icon = Imaging::CreateIconFromPng(appFolderItem::ResolvePath(selectedIconPath_), LARGE_ICON_SIZE);
 
     } else {
 
@@ -113,18 +113,18 @@ void ShortcutEditorDialog::UpdateFolderItemIconFields() {
     } else {
 
       if (folderItem_->IsGroup()) {
-        icon = FolderItem::CreateDefaultGroupIcon(LARGE_ICON_SIZE);
+        icon = appFolderItem::CreateDefaultGroupIcon(LARGE_ICON_SIZE);
         if (icon) {
           iconStaticBitmap->SetBitmap(*icon);
           wxDELETE(icon);
         }
       } else {
 
-        icon = FolderItem::CreateSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
+        icon = appFolderItem::CreateSpecialItemIcon(locationTextBox->GetValue(), LARGE_ICON_SIZE);
         if (icon) {
           iconStaticBitmap->SetBitmap(*icon);
         } else {
-          icon = IconGetter::GetFolderItemIcon(FolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);
+          icon = IconGetter::GetFolderItemIcon(appFolderItem::ResolvePath(locationTextBox->GetValue()), LARGE_ICON_SIZE, true);
           if (icon) iconStaticBitmap->SetBitmap(*icon);
         }
 
@@ -168,7 +168,7 @@ void ShortcutEditorDialog::OnSaveButtonClick(wxCommandEvent& evt) {
 
   if (!StringUtil::IsWebLink(folderItemFilePath)) {
 
-    wxFileName filename(FolderItem::ResolvePath(folderItemFilePath));
+    wxFileName filename(appFolderItem::ResolvePath(folderItemFilePath));
     filename.Normalize();
 
     wxString f = filename.GetFullPath();
@@ -206,12 +206,12 @@ void ShortcutEditorDialog::OnBrowseButtonClick(wxCommandEvent& evt) {
   int result = d->ShowModal();
 
   if (result == wxID_OK) {
-    wxString newValue = FolderItem::ConvertToRelativePath(d->GetPath());
+    wxString newValue = appFolderItem::ConvertToRelativePath(d->GetPath());
     if (locationTextBox->GetValue() == newValue) return;
 
     locationTextBox->SetValue(newValue); 
     
-    nameTextBox->SetValue(FolderItem::GetDisplayName(newValue));
+    nameTextBox->SetValue(appFolderItem::GetDisplayName(newValue));
 
     UpdateFolderItemIconFields();
   }  

@@ -377,23 +377,6 @@
 			<File
 				RelativePath=".\FolderItem.cpp"
 				>
-				<FileConfiguration
-					Name="Unicode Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Unicode Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-						PrecompiledHeaderThrough="stdafx.h"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\FolderItemRenderer.cpp"
@@ -843,6 +826,18 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\utilities\ShortcutInfo.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -1912,6 +1907,10 @@
 				</File>
 				<File
 					RelativePath=".\utilities\MathUtil.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utilities\ShortcutInfo.h"
 					>
 				</File>
 				<File

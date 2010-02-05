@@ -385,7 +385,7 @@ void MiniLaunchBar::SetDraggedFolderItem(int folderItemId) {
 /**
  * Gets the folder items that is currently being dragged
  */
-FolderItem* MiniLaunchBar::GetDraggedFolderItem() {
+appFolderItem* MiniLaunchBar::GetDraggedFolderItem() {
   if (draggedFolderItemId_ < 0 || !user_) return NULL;
 
   return user_->GetRootFolderItem()->GetChildById(draggedFolderItemId_);
@@ -526,7 +526,7 @@ void MiniLaunchBar::FolderItems_CollectionChange() {
  * "FolderItemChange" event handler. Everything that happens when the properties of a folder item 
  * are changed should be in this method.
  */
-void MiniLaunchBar::FolderItems_FolderItemChange(FolderItem* folderItem) {
+void MiniLaunchBar::FolderItems_FolderItemChange(appFolderItem* folderItem) {
   FolderItemRenderer* renderer = GetMainFrame()->GetIconPanel()->GetRendererFromFolderItem(*folderItem);
   if (!renderer) {
     // The folder item is not on the icon panel. It
@@ -586,7 +586,7 @@ void MiniLaunchBar::CloseApplication() {
   Localization::Destroy();
   utilities_.~Utilities();
   IconGetter::Destroy();
-  FolderItem::DestroyStaticData();
+  appFolderItem::DestroyStaticData();
 }
 
 

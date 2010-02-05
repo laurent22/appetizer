@@ -13,6 +13,7 @@
 #include "Enumerations.h"
 #include "UserSettings.h"
 #include "gui/ShortcutEditorDialog.h"
+#include "utilities/ShortcutInfo.h"
 
 
 class User : public wxEvtHandler {
@@ -33,9 +34,10 @@ public:
   void QuickLaunchSynchronization();
   void CustomFolderSynchronization(const wxString& folderPath);
 
-  int EditFolderItem(FolderItem* folderItem);
-  FolderItem* EditNewFolderItem(FolderItem* parent, bool isGroup = false);
-  FolderItem* AddNewFolderItemFromPath(FolderItem* parent, wxString folderItemPath);
+  int EditFolderItem(appFolderItem* folderItem);
+  appFolderItem* EditNewFolderItem(appFolderItem* parent, bool isGroup = false);
+  appFolderItem* AddNewFolderItemFromPath(appFolderItem* parent, wxString folderItemPath);
+  appFolderItem* AddNewFolderItemFromShortcut(appFolderItem* parent, wxString shortcutPath);
 
   void AddAutoAddExclusion(const wxString& filePath);
   bool IsAutoAddExclusion(const wxString& filePath);
@@ -44,13 +46,13 @@ public:
 
   void BatchAddFolderItems(const wxArrayString& filePaths, bool useAutoAddExclusions = false);
 
-  FolderItem* GetRootFolderItem();
+  appFolderItem* GetRootFolderItem();
 
   void OnTimer(wxTimerEvent& evt);
 
 private:
 
-  FolderItem* rootFolderItem_;
+  appFolderItem* rootFolderItem_;
   wxTimer* scheduledSaveTimer_;
   wxStringList folderItemExclusions_;
   UserSettings* settings_;

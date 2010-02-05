@@ -118,7 +118,7 @@ void Utilities::Localize() {
 }
 
 
-bool Utilities::RemoveFolderItemWithConfirmation(FolderItem* folderItem) {
+bool Utilities::RemoveFolderItemWithConfirmation(appFolderItem* folderItem) {
   if (!folderItem) return false;
 
   if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("ShowDeleteIconMessage"))) {
@@ -309,7 +309,7 @@ void Utilities::CreateAndRunVBScript(const wxString& filePath, const wxString& s
     file.Close();        
   }
 
-  FolderItem::Launch(_T("wscript.exe"), filePath);
+  appFolderItem::Launch(_T("wscript.exe"), filePath);
 }
 
 
@@ -506,14 +506,14 @@ void Utilities::ShowHelpFile(const wxString& anchor) {
 
   // Built-in support for SumatraPDF and Foxit Reader. If any of these applications is on the
   // dock, use it to open the PDF file
-  FolderItem* pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
+  appFolderItem* pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("SumatraPDF"));
   if (!pdfReaderFolderItem) pdfReaderFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->SearchChildByFilename(_T("Foxit Reader"));
   
   if (pdfReaderFolderItem) {
     pdfReaderFolderItem->LaunchWithArguments(_T("\"") + helpFile + _T("\""));
     return;
   } else {
-    FolderItem::Launch(helpFile);
+    appFolderItem::Launch(helpFile);
   }
 }
 
@@ -531,7 +531,7 @@ void Utilities::ShowTreeViewDialog(int selectedFolderItemId) {
     treeViewDialog_->SetSize(300,500);
   }
 
-  FolderItem* selectedFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
+  appFolderItem* selectedFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
   
   treeViewDialog_->LoadFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
   treeViewDialog_->SelectAndExpandFolderItem(selectedFolderItem);

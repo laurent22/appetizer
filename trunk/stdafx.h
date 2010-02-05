@@ -18,6 +18,8 @@
 #include <process.h>
 #include <psapi.h>
 #include <wx/msw/registry.h>
+#include "ShObjIdl.h" // Needed by ShortcutInfo
+#include "ShlGuid.h" // Needed by ShortcutInfo
 #ifdef __WXDEBUG__
 // To find memory leaks, add _CrtSetBreakAlloc(int memoryBlock)
 // just at the beginning of MiniLaunchBar::OnInit

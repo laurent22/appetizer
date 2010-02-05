@@ -55,7 +55,7 @@ public:
 
   void SetRotated(bool rotated);
 
-  FolderItemRenderer* GetRendererFromFolderItem(const FolderItem& folderItem);
+  FolderItemRenderer* GetRendererFromFolderItem(const appFolderItem& folderItem);
 
   wxMenu* GetContextMenu();
   void ApplySkin(wxBitmap* mainBackgroundBitmap);

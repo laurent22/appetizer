@@ -36,7 +36,7 @@ ImportWizardDialog::ImportWizardDialog(wxWindow* parent, wxWindowID id, const wx
 
   y += infoSize.GetHeight() + gap * 2;
 
-  bool hasPortableAppsFolder = wxFileName::DirExists(FolderItem::ResolvePath(wxGetApp().GetUser()->GetSettings()->GetString(_T("PortableAppsPath"))));
+  bool hasPortableAppsFolder = wxFileName::DirExists(appFolderItem::ResolvePath(wxGetApp().GetUser()->GetSettings()->GetString(_T("PortableAppsPath"))));
 
   wxArrayString sourceNames;
   wxArrayString sourceLabels;

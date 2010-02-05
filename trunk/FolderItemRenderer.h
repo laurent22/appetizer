@@ -30,7 +30,7 @@ public:
   void LoadData(int folderItemId);
   void UpdateControlBitmap();
   void FitToContent();
-  FolderItem* GetFolderItem();
+  appFolderItem* GetFolderItem();
   void ApplySkin();  
   wxMenu* GetPopupMenu();  
 

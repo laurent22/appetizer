@@ -17,23 +17,23 @@
 
 
 // Forward declaration so that we can create the typedef below
-class FolderItem;
+class appFolderItem;
 
-typedef std::vector<FolderItem*> FolderItemVector;
+typedef std::vector<appFolderItem*> FolderItemVector;
 
 
 WX_DECLARE_HASH_MAP(int, wxIcon*, wxIntegerHash, wxIntegerEqual, IconHashMap);
-WX_DECLARE_HASH_MAP(int, FolderItem*, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
+WX_DECLARE_HASH_MAP(int, appFolderItem*, wxIntegerHash, wxIntegerEqual, FolderItemIdHashMap);
 
 
-class FolderItem : public wxEvtHandler {
+class appFolderItem : public wxEvtHandler {
 
 public:
 
-  FolderItem(bool isGroup = false);
-  ~FolderItem();
-  static FolderItem* CreateFolderItem(bool isGroup = false);
-  static FolderItem* GetFolderItemById(int id);
+  appFolderItem(bool isGroup = false);
+  ~appFolderItem();
+  static appFolderItem* CreateFolderItem(bool isGroup = false);
+  static appFolderItem* GetFolderItemById(int id);
   void Dispose();
   bool IsDisposed();
 
@@ -86,7 +86,6 @@ public:
   static wxString ResolvePath(const wxString& filePath, bool normalizeToo = true);
   static wxString ConvertToRelativePath(const wxString& filePath);
   static wxString GetDisplayName(const wxString& unresolvedFilePath);
-
   static void DestroyStaticData();
   
   bool DoMultiLaunch();
@@ -99,25 +98,25 @@ public:
 
   bool IsGroup();
   FolderItemVector GetChildren();  
-  FolderItem* GetParent();
-  void SetParent(FolderItem* folderItem);
-  void RemoveChild(FolderItem* folderItem);
-  void MoveChild(FolderItem* folderItemToMove, int insertionIndex);
-  FolderItem* SearchChildByFilename(const wxString& filename, int matchMode = 2);
+  appFolderItem* GetParent();
+  void SetParent(appFolderItem* folderItem);
+  void RemoveChild(appFolderItem* folderItem);
+  void MoveChild(appFolderItem* folderItemToMove, int insertionIndex);
+  appFolderItem* SearchChildByFilename(const wxString& filename, int matchMode = 2);
 
   int ChildrenCount();
 
-  FolderItem* GetChildAt(int index);
-  FolderItem* GetChildById(int folderItemId, bool recurse = true);
-  FolderItem* GetChildByUUID(const wxString& uuid, bool recurse = true);
-  FolderItem* GetChildByResolvedPath(const wxString& filePath);
+  appFolderItem* GetChildAt(int index);
+  appFolderItem* GetChildById(int folderItemId, bool recurse = true);
+  appFolderItem* GetChildByUUID(const wxString& uuid, bool recurse = true);
+  appFolderItem* GetChildByResolvedPath(const wxString& filePath);
 
-  void InsertChildBefore(FolderItem* toAdd, FolderItem* previousFolderItem);
-  void InsertChildAfter(FolderItem* toAdd, FolderItem* previousFolderItem);
-  void PrependChild(FolderItem* toAdd);
-  void AddChild(FolderItem* folderItem);
+  void InsertChildBefore(appFolderItem* toAdd, appFolderItem* previousFolderItem);
+  void InsertChildAfter(appFolderItem* toAdd, appFolderItem* previousFolderItem);
+  void PrependChild(appFolderItem* toAdd);
+  void AddChild(appFolderItem* folderItem);
 
-  void OnMenuItemClick(wxCommandEvent& evt);   
+  void OnMenuItemClick(wxCommandEvent& evt);  
 
 private:
 
@@ -127,7 +126,7 @@ private:
 
   wxString parameters_;
   bool isGroup_;
-  FolderItem* parent_;
+  appFolderItem* parent_;
   int id_;
   FolderItemVector children_;
   bool belongsToMultiLaunchGroup_;

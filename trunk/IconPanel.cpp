@@ -16,6 +16,7 @@
 #include "Enumerations.h"
 #include "gui/FileOrFolderDialog.h"
 #include "MiniLaunchBar.h"
+#include "MessageBoxes.h"
 
 
 BEGIN_EVENT_TABLE(IconPanel, NineSlicesPanel)
@@ -115,7 +116,7 @@ void IconPanel::AddFolderItem(int folderItemId) {
 
 
 void IconPanel::OnBrowseButtonMenu(wxCommandEvent& evt) {
-  FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
+  appFolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
   if (!folderItem) {
     evt.Skip();
   } else {
@@ -135,7 +136,7 @@ void IconPanel::OnBrowseButtonClick(wxCommandEvent& evt) {
   
   for (int i = firstOffScreenIconIndex_; i < folderItemRenderers_.size(); i++) {
     FolderItemRenderer* renderer = folderItemRenderers_.at(i);
-    FolderItem* folderItem = renderer->GetFolderItem();
+    appFolderItem* folderItem = renderer->GetFolderItem();
 
     folderItem->AppendAsMenuItem(&menu, SMALL_ICON_SIZE, _T("browseButtonFolderItem"));
   }
@@ -160,10 +161,10 @@ wxMenu* IconPanel::GetContextMenu() {
   wxIcon* specialIcon = NULL;
 
   #define ADD_SPECIAL_ITEM_TO_MENU(specialItemMacro) \
-    menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), FolderItem::GetDisplayName(specialItemMacro)); \
+    menuItem = new ExtendedMenuItem(specialMenu, wxGetApp().GetUniqueInt(), appFolderItem::GetDisplayName(specialItemMacro)); \
     menuItem->SetMetadata(_T("name"), _T("addSpecialItem")); \
     menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
-    specialIcon = FolderItem::CreateSpecialItemIcon(specialItemMacro, 16); \
+    specialIcon = appFolderItem::CreateSpecialItemIcon(specialItemMacro, 16); \
     menuItem->SetBitmap(*specialIcon); \
     wxDELETE(specialIcon); \
     specialMenu->Append(menuItem);
@@ -198,7 +199,7 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
   wxString name = menuItem->GetMetadata(_T("name"));
 
   User* user = wxGetApp().GetUser();
-  FolderItem* rootFolderItem = user->GetRootFolderItem();
+  appFolderItem* rootFolderItem = user->GetRootFolderItem();
 
   if (name == _T("addSpecialItem")) {
 
@@ -214,7 +215,7 @@ void IconPanel::OnMenuItemClick(wxCommandEvent& evt) {
 
   } else if (name == _T("browseButtonFolderItem")) {
 
-    FolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(menuItem->GetMetadataInt(_T("folderItemId")));
+    appFolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(menuItem->GetMetadataInt(_T("folderItemId")));
     if (!folderItem) {
       evt.Skip();
     } else {
@@ -313,7 +314,7 @@ int IconPanel::GetRendererIndexAtPoint(const wxPoint& point) {
 }
 
 
-FolderItemRenderer* IconPanel::GetRendererFromFolderItem(const FolderItem& folderItem) {
+FolderItemRenderer* IconPanel::GetRendererFromFolderItem(const appFolderItem& folderItem) {
   for (int i = 0; i < folderItemRenderers_.size(); i++) {
     FolderItemRenderer* renderer = folderItemRenderers_.at(i);
     if (renderer->GetFolderItem()->GetId() == folderItem.GetId()) return renderer;
@@ -324,7 +325,7 @@ FolderItemRenderer* IconPanel::GetRendererFromFolderItem(const FolderItem& folde
 
 
 bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames) {
-  FolderItem* folderItem = wxGetApp().GetDraggedFolderItem();  
+  appFolderItem* folderItem = wxGetApp().GetDraggedFolderItem();  
 
   int screenX = x;
   int screenY = y;
@@ -334,7 +335,7 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
     // If a folder item is being dragged, and the panel receives a drop
     // event, it means that a folder item has been dragged from the app to the app.
     // In that case, we just change the position of the folder item.
-    ILOG(_T("A FolderItem has been dropped: ") + folderItem->GetResolvedPath());
+    ILOG(_T("A appFolderItem has been dropped: ") + folderItem->GetResolvedPath());
 
     int index = GetInsertionIndexAtPoint(wxPoint(screenX, screenY));
 
@@ -355,7 +356,7 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
       // The files have been dropped on an icon    
       // Launch the icon and give the files as parameters
       
-      FolderItem* folderItem = folderItemRenderers_.at(index)->GetFolderItem();
+      appFolderItem* folderItem = folderItemRenderers_.at(index)->GetFolderItem();
       if (!folderItem) return false;
 
       if (folderItem->GetFilePath().Index(_T("$(")) != wxNOT_FOUND) {
@@ -403,12 +404,24 @@ bool IconPanel::OnDropFiles(wxCoord x, wxCoord y, const wxArrayString& filenames
 
       for (int i = 0; i < filenames.Count(); i++) {
         wxFileName filename(filenames[i]);
-        filename.Normalize();
-        wxString fullPath = filename.GetFullPath();
+        wxString extension = filename.GetExt().Lower();
 
-        wxGetApp().GetUser()->AddNewFolderItemFromPath(
-          wxGetApp().GetUser()->GetRootFolderItem(),
-          fullPath);
+        if (extension == _T("lnk")) {
+          appFolderItem* folderItem = wxGetApp().GetUser()->AddNewFolderItemFromShortcut(
+            wxGetApp().GetUser()->GetRootFolderItem(),
+            filename.GetFullPath());
+
+          if (!folderItem) MessageBoxes::ShowError(wxString::Format(_("Could not import this shortcut: %s"), filename.GetFullPath()));
+
+        } else {
+          filename.Normalize();
+          wxString fullPath = filename.GetFullPath();
+
+          wxGetApp().GetUser()->AddNewFolderItemFromPath(
+            wxGetApp().GetUser()->GetRootFolderItem(),
+            fullPath);
+        }
+
         didSomething = true;
       }
     }
@@ -525,7 +538,7 @@ void IconPanel::RefreshIcons() {
   iconsInvalidated_ = false;
 
   FolderItemVector folderItems;
-  FolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
+  appFolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
 
   if (folderItemSource_ == ICON_PANEL_SOURCE_USER) {      
 
@@ -534,7 +547,7 @@ void IconPanel::RefreshIcons() {
   } else {
     
     for (int i = 0; i < folderItemIds_.size(); i++) {
-      FolderItem* folderItem = rootFolderItem->GetChildById(folderItemIds_.at(i));
+      appFolderItem* folderItem = rootFolderItem->GetChildById(folderItemIds_.at(i));
       if (!folderItem) {
         folderItemIds_.erase(folderItemIds_.begin() + i);
         i--;
@@ -555,7 +568,7 @@ void IconPanel::RefreshIcons() {
     FolderItemRenderer* renderer = folderItemRenderers_.at(i);
 
     bool removeIt = false;
-    FolderItem* folderItem = renderer->GetFolderItem();
+    appFolderItem* folderItem = renderer->GetFolderItem();
 
     if (!folderItem) {
       removeIt = true;
@@ -582,14 +595,14 @@ void IconPanel::RefreshIcons() {
   int folderItemCount = folderItems.size();
 
   for (int i = 0; i < folderItemCount; i++) {
-    FolderItem* folderItem = folderItems.at(i);
+    appFolderItem* folderItem = folderItems.at(i);
 
     // Check if the folder item is already loaded in a renderer
     bool found = false;
     int folderItemRendererCount = folderItemRenderers_.size();
 
     for (int j = 0; j < folderItemRendererCount; j++) {
-      FolderItem* rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
+      appFolderItem* rFolderItem = folderItemRenderers_.at(j)->GetFolderItem();
       
       if (!rFolderItem) {
         ELOG(_T("Folder item shouldn't be null"));
@@ -621,7 +634,7 @@ void IconPanel::RefreshIcons() {
   std::vector<FolderItemRenderer*> newRenderers;
 
   for (int i = 0; i < folderItems.size(); i++) {
-    FolderItem* folderItem = folderItems.at(i);
+    appFolderItem* folderItem = folderItems.at(i);
 
     for (int j = 0; j < folderItemRenderers_.size(); j++) {
       FolderItemRenderer* renderer = folderItemRenderers_.at(j);

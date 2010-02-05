@@ -64,7 +64,7 @@ BitmapControl(owner, id, point, size) {
 void FolderItemRenderer::UpdateInnerLabel() {
   if (!label_) return;
 
-  FolderItem* folderItem = GetFolderItem();
+  appFolderItem* folderItem = GetFolderItem();
 
   if (!labelFont_) {
     labelFont_ = wxFont::New(Styles::Font.Size, wxFONTFAMILY_DEFAULT, Styles::Font.Weight == wxBOLD ? wxFONTFLAG_BOLD : wxFONTFLAG_DEFAULT, Styles::Font.Face, wxFONTENCODING_DEFAULT);
@@ -129,8 +129,8 @@ void FolderItemRenderer::ApplySkin() {
 }
 
 
-FolderItem* FolderItemRenderer::GetFolderItem() {
-  FolderItem* output = FolderItem::GetFolderItemById(folderItemId_);
+appFolderItem* FolderItemRenderer::GetFolderItem() {
+  appFolderItem* output = appFolderItem::GetFolderItemById(folderItemId_);
   if (!output) return NULL;
   if (!output->GetParent()) return NULL;
   return output;
@@ -162,7 +162,7 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
 
   } else if (name == _T("multiLaunch")) {
 
-    FolderItem* folderItem = GetFolderItem();
+    appFolderItem* folderItem = GetFolderItem();
     if (!folderItem) return;
     
     if (folderItem->BelongsToMultiLaunchGroup()) {
@@ -187,7 +187,7 @@ void FolderItemRenderer::OnMenuItemClick(wxCommandEvent& evt) {
 
 
 void FolderItemRenderer::OnRightDown(wxMouseEvent& evt) {
-  FolderItem* folderItem = GetFolderItem();
+  appFolderItem* folderItem = GetFolderItem();
   if (!folderItem) return;
 
   wxMenu* menu = wxGetApp().GetMainFrame()->GetIconPanel()->GetContextMenu();
@@ -269,7 +269,7 @@ void FolderItemRenderer::OnLeftUp(wxMouseEvent& evt) {
   if (HasCapture()) ReleaseMouse();  
 
   if (mouseInside_ && mousePressed_) {    
-    FolderItem* folderItem = GetFolderItem();
+    appFolderItem* folderItem = GetFolderItem();
 
     if (folderItem) {
 
@@ -308,7 +308,7 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
       if (HasCapture()) ReleaseMouse(); 
       draggingStarted_ = true;
 
-      FolderItem* folderItem = GetFolderItem();
+      appFolderItem* folderItem = GetFolderItem();
       if (!folderItem) return;
 
       // Tell the main controller that we've started dragging
@@ -413,7 +413,7 @@ void FolderItemRenderer::FT_DrawTextToImage(wxImage& image, FT_Bitmap &fontBitma
 void FolderItemRenderer::UpdateControlBitmap() {
   BitmapControl::UpdateControlBitmap();  
 
-  FolderItem* folderItem = GetFolderItem();
+  appFolderItem* folderItem = GetFolderItem();
 
   if (!folderItem) {
     ELOG(_T("FolderItemRenderer::UpdateControlBitmap: Folder item is null"));

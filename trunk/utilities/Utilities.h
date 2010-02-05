@@ -31,7 +31,7 @@ public:
   void ShowTreeViewDialog(int selectedFolderItemId = -1);
   void ShowImportDialog();
   void CreateNewShortcut();
-  bool RemoveFolderItemWithConfirmation(FolderItem* folderItem);
+  bool RemoveFolderItemWithConfirmation(appFolderItem* folderItem);
   bool IsApplicationOnPortableDrive();
   bool InstallAutorunFile();
   void KillLockingProcesses(const wxString& drive, bool painless = true);
