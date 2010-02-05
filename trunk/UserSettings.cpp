@@ -34,6 +34,8 @@ UserSettings::UserSettings() {
   SetInt(_T("HotKeyKey"), 0);
   SetInt(_T("WindowTransparency"), 235);
   SetBool(_T("OptionPanelOpen"), true);
+  SetBool(_T("TaskBarIcon"), false);
+  SetBool(_T("TrayIcon"), true);
   SetBool(_T("IconLabelPosition"), _T("bottom"));
 
   SetBool(_T("ShowDeleteIconMessage"), true);

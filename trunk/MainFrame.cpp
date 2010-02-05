@@ -43,7 +43,7 @@ MainFrame::MainFrame()
   wxEmptyString,
   wxDefaultPosition,
   wxDefaultSize,
-  0 | wxFRAME_SHAPED | wxNO_BORDER | wxFRAME_NO_TASKBAR | (wxGetApp().GetUser()->GetSettings()->GetBool(_T("AlwaysOnTop")) ? wxSTAY_ON_TOP : 0)
+  0 | wxFRAME_SHAPED | wxNO_BORDER | (wxGetApp().GetUser()->GetSettings()->GetBool(_T("TaskBarIcon")) ? 0 : wxFRAME_NO_TASKBAR) | (wxGetApp().GetUser()->GetSettings()->GetBool(_T("AlwaysOnTop")) ? wxSTAY_ON_TOP : 0)
   )
 {  
   logWindow_ = NULL;
@@ -128,7 +128,7 @@ MainFrame::MainFrame()
   frameIcon_.LoadFile(FilePaths::GetBaseSkinDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   SetIcon(frameIcon_);
   SetTitle(APPLICATION_NAME);
-  ShowTrayIcon();
+  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("TrayIcon"))) ShowTrayIcon();
   ApplySkin();
   RegisterHideShowHotKey();
 
@@ -1036,24 +1036,21 @@ bool MainFrame::IsClosing() {
 
 
 void MainFrame::OnClose(wxCloseEvent& evt) {
-  if (IsClosing()) {
-    ILOG(_T("'Close' action vetoed because the frame is already being closed."));
-    evt.Veto();
-    return;
-  }
-
   if (!initialized_) {    
     ILOG(_T("'Close' action vetoed because the frame is not yet initialized."));
     evt.Veto();
     return;
   }
 
-  // Start the closing process (see OnIdle() event)
-  ILOG(_T("Starting close operation (Step 0)"));
-  Disable();
-  isClosing_ = true;
-  closeStep_ = 0;
-  while (!DoCloseStep());
+  if (!IsClosing()) {
+    // Start the closing process
+    ILOG(_T("Starting close operation (Step 0)"));
+
+    Disable();
+    isClosing_ = true;
+    closeStep_ = 0;
+    while (!DoCloseStep());
+  }
 }
 
 

@@ -324,9 +324,14 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       transparencyLabel->SetLabel(_("Opacity:"));
       downloadMoreSkinLink->SetLabel(_("Download more skins"));
       labelPositionLabel->SetLabel(_("Label position:"));
+      showTaskBarIconCheckBox->SetLabel(_("Show taskbar icon"));
+      showTrayIconCheckbox->SetLabel(_("Show tray icon"));
 
       wxGetApp().GetUtilities().ConvertStaticTextToLink(downloadMoreSkinLink);
       downloadMoreSkinLink->Connect(wxID_ANY, wxEVT_LEFT_DOWN, wxMouseEventHandler(ConfigDialog::OnDownloadMoreSkinLinkMouseDown), NULL, this);
+
+      showTaskBarIconCheckBox->SetValue(userSettings->GetBool(_T("TaskBarIcon")));
+      showTrayIconCheckbox->SetValue(userSettings->GetBool(_T("TrayIcon")));
 
       //---------------------------------------------------------------------------
       // Set transparency slider
@@ -872,6 +877,14 @@ void ConfigDialog::OnSaveButtonClick(wxCommandEvent& evt) {
     if (userSettings->GetString(_T("IconLabelPosition")) != newLabelPosition) {
       userSettings->SetString(_T("IconLabelPosition"), newLabelPosition);
       wxGetApp().User_IconSizeChange();
+    }
+
+    if (userSettings->GetBool(_T("TrayIcon")) != showTrayIconCheckbox->GetValue()) {
+      userSettings->SetBool(_T("TrayIcon"), showTrayIconCheckbox->GetValue());
+    }
+
+    if (userSettings->GetBool(_T("TaskBarIcon")) != showTaskBarIconCheckBox->GetValue()) {
+      userSettings->SetBool(_T("TaskBarIcon"), showTaskBarIconCheckBox->GetValue());
     }
 
     //---------------------------------------------------------------------------

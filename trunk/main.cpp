@@ -44,6 +44,8 @@ bool MiniLaunchBar::OnInit() {
   }  
   #endif // __WINDOWS__
 
+  TiXmlBase::SetCondenseWhiteSpace(false);
+
   singleInstanceChecker_ = NULL;
   mainFrame_ = NULL;
   locale_ = NULL;
