@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-05 23:13+0000\n"
-"PO-Revision-Date: 2009-04-28 10:06+0200\n"
+"PO-Revision-Date: 2010-02-05 17:35+0200\n"
 "Last-Translator: Olav <olav.magi@hotmail.com>\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -97,23 +97,23 @@ msgstr "Võrgu ühendused"
 
 #: FolderItem.cpp:1251
 msgid "Calculator"
-msgstr ""
+msgstr "Kalkulaator"
 
 #: FolderItem.cpp:1253
 msgid "Paint Brush"
-msgstr ""
+msgstr "Pintsliga värvimine"
 
 #: FolderItem.cpp:1255
 msgid "Notepad"
-msgstr ""
+msgstr "Märkmik"
 
 #: FolderItem.cpp:1257
 msgid "WordPad"
-msgstr ""
+msgstr "WordPad"
 
 #: FolderItem.cpp:1259
 msgid "Command Prompt"
-msgstr ""
+msgstr "Tekstiredaktor"
 
 #: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
 msgid "Remove..."
@@ -166,7 +166,7 @@ msgstr "Kuvab seda abiteadet"
 
 #: main.cpp:158
 msgid "Could not initialize locale."
-msgstr ""
+msgstr "Ei saanud initsialiseerida asukohta."
 
 #: main.cpp:316
 msgid "Large"
@@ -174,7 +174,7 @@ msgstr "Suur"
 
 #: main.cpp:317
 msgid "Medium"
-msgstr ""
+msgstr "Keskmine"
 
 #: main.cpp:318
 msgid "Extra Large (XP and above)"
@@ -197,7 +197,7 @@ msgid "You have the latest version."
 msgstr "Sul on uusim versioon."
 
 #: main.cpp:436
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "A new version of Appetizer is available!\n"
 "\n"
@@ -216,7 +216,7 @@ msgstr ""
 
 #: main.cpp:438
 msgid "New version of Appetizer"
-msgstr ""
+msgstr "Uus Appetizeri versioon"
 
 #: main.cpp:442
 msgid "Error launching web browser"
@@ -344,7 +344,6 @@ msgid "Do you wish to remove this icon?"
 msgstr "Kas sa sooviksid eemaldada selle ikooni?"
 
 #: utilities\Utilities.cpp:141
-#, fuzzy
 msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
 msgstr "Otsetee asukoht ei eksisteeri. Kas sa sooviksid jätkata?"
 
@@ -368,6 +367,7 @@ msgstr "Tõlkijad: %s"
 #: gui\AboutDialog.cpp:57
 msgid "This software uses a number of open source libraries including:"
 msgstr ""
+"See tarkvara kasutab mitmeid avatud lähtekoodiga raamatukogusi, sealhulgas:"
 
 #: gui\AboutDialog.cpp:59
 msgid "- Simpleini by Brodie Thiesfield"
@@ -391,10 +391,9 @@ msgstr ""
 
 #: gui\AboutDialog.cpp:67
 msgid "- ccrypt by Peter Selinger"
-msgstr ""
+msgstr "- ccrypt Peter Selinger´i poolt."
 
 #: gui\AboutDialog.cpp:69
-#, fuzzy
 msgid "- FreeType by its respective contributors"
 msgstr "Austatud autorite poolt wxWidgets"
 
@@ -502,7 +501,6 @@ msgid "Save"
 msgstr "Salvesta"
 
 #: gui\ConfigDialog.cpp:66
-#, fuzzy
 msgid "Options"
 msgstr "Operatsioonid"
 
@@ -545,7 +543,7 @@ msgstr "Installi autorun fail"
 
 #: gui\ConfigDialog.cpp:224
 msgid "Start Appetizer on system startup"
-msgstr ""
+msgstr "Käivita Appetizer koos süsteemiga"
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -561,15 +559,15 @@ msgstr "Oritentatsioon:"
 
 #: gui\ConfigDialog.cpp:324
 msgid "Opacity:"
-msgstr ""
+msgstr "Läbipaistmatus:"
 
 #: gui\ConfigDialog.cpp:325
 msgid "Download more skins"
-msgstr ""
+msgstr "Lae alla rohkem rüüsid"
 
 #: gui\ConfigDialog.cpp:326
 msgid "Label position:"
-msgstr ""
+msgstr "Etiketi seisukoht:"
 
 #: gui\ConfigDialog.cpp:327
 msgid "Show taskbar icon"
@@ -580,13 +578,12 @@ msgid "Show tray icon"
 msgstr ""
 
 #: gui\ConfigDialog.cpp:348
-#, fuzzy
 msgid "Hidden"
 msgstr "Peida"
 
 #: gui\ConfigDialog.cpp:349
 msgid "Bottom"
-msgstr ""
+msgstr "Alumine"
 
 #: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
 msgid "Right"
@@ -642,43 +639,43 @@ msgstr "<Tundmatu>"
 
 #: gui\ConfigDialog.cpp:521
 msgid "Numpad 0"
-msgstr ""
+msgstr "Numpad 0"
 
 #: gui\ConfigDialog.cpp:522
 msgid "Numpad 1"
-msgstr ""
+msgstr "Numpad 1"
 
 #: gui\ConfigDialog.cpp:523
 msgid "Numpad 2"
-msgstr ""
+msgstr "Numpad 2"
 
 #: gui\ConfigDialog.cpp:524
 msgid "Numpad 3"
-msgstr ""
+msgstr "Numpad 3"
 
 #: gui\ConfigDialog.cpp:525
 msgid "Numpad 4"
-msgstr ""
+msgstr "Numpad 4"
 
 #: gui\ConfigDialog.cpp:526
 msgid "Numpad 5"
-msgstr ""
+msgstr "Numpad 5"
 
 #: gui\ConfigDialog.cpp:527
 msgid "Numpad 6"
-msgstr ""
+msgstr "Numpad 6"
 
 #: gui\ConfigDialog.cpp:528
 msgid "Numpad 7"
-msgstr ""
+msgstr "Numpad 7"
 
 #: gui\ConfigDialog.cpp:529
 msgid "Numpad 8"
-msgstr ""
+msgstr "Numpad 8"
 
 #: gui\ConfigDialog.cpp:530
 msgid "Numpad 9"
-msgstr ""
+msgstr "Numpad 9"
 
 #: gui\ConfigDialog.cpp:532
 msgid "Backspace"
@@ -726,7 +723,7 @@ msgstr "Alla"
 
 #: gui\ConfigDialog.cpp:602
 msgid "Exclude these items from import operations"
-msgstr ""
+msgstr "Praagi välja need kirjed importimise operatsioonist"
 
 #: gui\ConfigDialog.cpp:634
 msgid "Available plugins"
@@ -746,7 +743,7 @@ msgstr "install..."
 
 #: gui\ConfigDialog.cpp:638
 msgid "Download more plugins"
-msgstr ""
+msgstr "Lae alla rohkem lisasid"
 
 #: gui\ConfigDialog.cpp:640
 #, c-format
@@ -778,7 +775,7 @@ msgstr "Autorun fail on edukalt installitud"
 
 #: gui\ConfigDialog.cpp:739
 msgid "Please enable the plugin in order to change its options."
-msgstr ""
+msgstr "Palun võimalda see lisa muuta selle valikuid."
 
 #: gui\ConfigDialog.cpp:757
 #, c-format
@@ -869,7 +866,7 @@ msgstr "Windosi Start-menüü programmid"
 
 #: gui\ImportWizardDialog.cpp:46
 msgid "Let me select a different location"
-msgstr ""
+msgstr "Las ma valin teise asukoha"
 
 #: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
@@ -881,11 +878,11 @@ msgstr "impordi otseteid... Palun oota."
 
 #: gui\ImportWizardDialog.cpp:135
 msgid "Please select the folder to import the shortcuts from."
-msgstr ""
+msgstr "Palun vali kaust kust otsetid importida."
 
 #: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
-msgstr ""
+msgstr "Atribuudid"
 
 #: gui\ShortcutEditorDialog.cpp:39
 msgid "Group Properties"
@@ -921,7 +918,7 @@ msgstr "Kasuta tavalist"
 
 #: gui\ShortcutEditorDialog.cpp:48
 msgid "The location may be a file, a folder or a URL."
-msgstr ""
+msgstr "Asukoht võib olla fail, kaust või URL."
 
 #: gui\ShortcutEditorDialog.cpp:180
 msgid "The shortcut location doesn't exist. Do you wish to continue?"
