@@ -17,6 +17,7 @@ Loop %releaseDirectory%\.svn, 2, 1
 }
 
 FileDelete %releaseDirectory%\Data\Plugins\_BuildPlugins.ahk
+FileDelete %releaseDirectory%\Data\Plugins\_gettext.bat
 FileDelete %releaseDirectory%\Data\Plugins\*.zpl
 FileRemoveDir %releaseDirectory%\Data\Plugins\TestUnit, 1
 FileRemoveDir %releaseDirectory%\Data\Plugins\Securizer, 1

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Securizer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-25 14:03-0000\n"
+"POT-Creation-Date: 2010-02-07 14:48+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Laurent Cozic\n"
+"Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,103 +16,107 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\\..\n"
 
-#: ..\../main.lua:122
+#: Securizer\main.lua:128
 msgid "Included files:"
 msgstr "Fichiers inclus :"
 
-#: ..\../main.lua:123
+#: Securizer\main.lua:129
 msgid "List of files to be encrypted. Put one item per line. Wildcard such as '*' or '?' are supported. Use the special variable $(Drive) to specify the drive Appetizer is installed on."
 msgstr "Liste des fichiers à crypter. Un fichier par ligne. Les caractères spéciaux tel que '*' ou '?' sont acceptés. Utilisez la variable $(Drive) pour spécifier le lecteur sur lequel Appetizer est installé."
 
-#: ..\../main.lua:130
+#: Securizer\main.lua:136
 msgid "Excluded files:"
 msgstr "Fichiers exclus :"
 
-#: ..\../main.lua:131
+#: Securizer\main.lua:137
 msgid "List of files to be excluded."
 msgstr "Liste des fichiers à exclure :"
 
-#: ..\../main.lua:138
+#: Securizer\main.lua:144
 msgid "Ask me to encrypt my files when I close Appetizer"
 msgstr "Crypte mes fichiers lorsque je ferme Appetizer"
 
-#: ..\../main.lua:145
+#: Securizer\main.lua:151
 msgid "Ask me to decrypt my files when I open Appetizer"
 msgstr "Décrypte mes fichiers lorsqu'Appetizer démarre"
 
-#: ..\../main.lua:240
+#: Securizer\main.lua:246
 msgid "Fatal i/o error (was the file already open?)"
 msgstr "Erreur E/S fatale (le fichier était peut-être déjà ouvert)"
 
-#: ..\../main.lua:241
+#: Securizer\main.lua:247
 msgid "Incorrect password (or wrong file format)"
 msgstr "Mot de passe incorrect (ou format de fichier incorrect)"
 
-#: ..\../main.lua:244
+#: Securizer\main.lua:250
 msgid "Non-fatal i/o error (file is missing, or not readable)"
 msgstr "Erreur E/S non-fatale (fichier est manquant, ou n'est pas lisible)"
 
-#: ..\../main.lua:315
+#: Securizer\main.lua:321
 msgid "The password must be between 4 and 20 characters."
 msgstr "Le mot de passe doit être entre 4 et 20 caractères"
 
-#: ..\../main.lua:323
+#: Securizer\main.lua:329
 msgid "The password must only contain letters and numbers."
 msgstr "Le mot de passe ne doit contenir que des lettres et des nombres."
 
-#: ..\../main.lua:346
+#: Securizer\main.lua:352
 msgid "Password:"
 msgstr "Mot de passe :"
 
-#: ..\../main.lua:347
+#: Securizer\main.lua:353
 msgid "Please type-in a password between 4 and 20 characters. Only letters and numbers are accepted."
 msgstr "Veuillez taper un mot de passe d'entre 4 et 20 caractères. Seuls les chiffres et lettres sont acceptés."
 
-#: ..\../main.lua:355
+#: Securizer\main.lua:361
 msgid "Confirm:"
 msgstr "Confirmer :"
 
-#: ..\../main.lua:356
+#: Securizer\main.lua:362
 msgid "Please confirm the password"
 msgstr "Veuillez confirmer votre mot de passe"
 
-#: ..\../main.lua:378
+#: Securizer\main.lua:384
 msgid "Passwords do not match."
 msgstr "Les mots de passe ne correspondent pas."
 
-#: ..\../main.lua:397
+#: Securizer\main.lua:403
 msgid "Encryption"
 msgstr "Démarrer le cryptage"
 
-#: ..\../main.lua:399
+#: Securizer\main.lua:405
 msgid "Decryption"
 msgstr "Démarrer le décryptage"
 
-#: ..\../main.lua:411
+#: Securizer\main.lua:417
 msgid "Encryption in progress. Please wait..."
 msgstr "Cryptage en cours. Veuillez patienter..."
 
-#: ..\../main.lua:413
+#: Securizer\main.lua:419
 msgid "Decryption in progress. Please wait..."
 msgstr "Décryptage en cours. Veuillez patienter..."
 
-#: ..\../main.lua:416
+#: Securizer\main.lua:422
 msgid "Please wait..."
 msgstr "Veuillez patienter..."
 
-#: ..\../main.lua:428
+#: Securizer\main.lua:434
 msgid "Some errors occured during the operation:"
 msgstr "Quelques erreurs se sont produites durant l'opération :"
 
-#: ..\../main.lua:460
+#: Securizer\main.lua:471
 msgid "Start encryption"
 msgstr "Démarrer le cryptage"
 
-#: ..\../main.lua:464
+#: Securizer\main.lua:475
 msgid "Start decryption"
 msgstr "Démarrer le décryptage"
 
-#: ..\../main.lua:468
+#: Securizer\main.lua:481
+msgid "Help"
+msgstr "Aide"
+
+#: Securizer\main.lua:485
 msgid "Configuration"
 msgstr "Configuration"
 

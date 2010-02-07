@@ -27,7 +27,16 @@ FileDelete %targetFilePath%
 cmd = 7z.exe a -tzip "%targetFilePath%" "%sourcePath%"
 RunWait %cmd%,, Hide
 
-cmd = 7z d "%targetFilePath%" .svn -r
+cmd = 7z d -tzip "%targetFilePath%" .svn -r
+RunWait %cmd%,, Hide
+
+cmd = 7z d -tzip "%targetFilePath%" plugin.po -r
+RunWait %cmd%,, Hide
+
+cmd = 7z d -tzip "%targetFilePath%" *.po~ -r
+RunWait %cmd%,, Hide
+
+cmd = 7z d -tzip "%targetFilePath%" plugin.pot -r
 RunWait %cmd%,, Hide
 
 return
