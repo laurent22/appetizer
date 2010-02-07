@@ -40,7 +40,10 @@ void User::SetAutoAddExclusions(wxArrayString& arrayString) {
 
 
 User::~User() {
-  if (shortcutEditorDialog_) shortcutEditorDialog_->Destroy();
+  if (shortcutEditorDialog_) {
+    shortcutEditorDialog_->Destroy();
+    shortcutEditorDialog_ = NULL;
+  }
   wxDELETE(scheduledSaveTimer_);
   wxDELETE(settings_);
 }

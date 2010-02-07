@@ -41,7 +41,6 @@ void AboutDialog::OnLinkLabelMouseDown(wxMouseEvent& evt) {
 
 void AboutDialog::OnContactLabelMouseDown(wxMouseEvent& evt) {
   ::wxLaunchDefaultBrowser(_T("http://app.etizer.org/node/add/forum/1"), wxBROWSER_NEW_WINDOW);
-  //::wxLaunchDefaultBrowser(_T("mailto:") + wxGetApp().GetContactEmail(), wxBROWSER_NEW_WINDOW);
 }
 
 
@@ -79,8 +78,8 @@ void AboutDialog::Localize() {
   creditLabel->SetLabel(_("Credits"));
   creditTextBox->SetValue(wxString::Format(
     creditText,
-    _T("Simeon, Werner Künkel, Pieter Kerstens, Michał Trzebiatowski, Tilt, Wewe68, Manuel Gutierrez Borras (Piojo Lopez), Henrik Agersted, Some Random User, Massimo Lauria, Metin Selçuk, Leif Larsson, Marcus Malzer, Petros Kiladitis, Cris, 李明, Brian, Tam Vo Le")));
-  copyrightLabel->SetLabel(wxString::Format(_("Copyright © %s"), _T("2008 Laurent Cozic")));
+    _T("Simeon, Werner Künkel, Pieter Kerstens, Michał Trzebiatowski, Tilt, Wewe68, Manuel Gutierrez Borras (Piojo Lopez), Henrik Agersted, Some Random User, Massimo Lauria, Metin Selçuk, Leif Larsson, Marcus Malzer, Petros Kiladitis, Cris, 李明, Brian, Tam Vo Le, Dark Preacher, Saori, Sepp, Olav Mägi")));
+  copyrightLabel->SetLabel(wxString::Format(_("Copyright © %s"), _T("2008-2010 Laurent Cozic")));
   licenseTextBox->SetValue(_("This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."));
   webLabel->SetLabel(_("Web:"));
   contactLabel->SetLabel(_("Contact:"));

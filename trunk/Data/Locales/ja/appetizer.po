@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-05 23:13+0000\n"
 "PO-Revision-Date: \n"
-"Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
+"Last-Translator: Tilt <tiltstr@gmail.com>\n"
 "Language-Team: Tilt <tiltstr@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,24 +21,31 @@ msgstr "隠す"
 msgid "Show"
 msgstr "表示"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:598
 msgid "Eject drive"
 msgstr "ドライブをイジェクト"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:1072
+#: OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "設定"
 
-#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
 msgid "Close"
 msgstr "閉じる"
 
-#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+#: FolderItem.cpp:467
+#: gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
 msgstr "ショートカットの分類"
 
-#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
+#: FolderItem.cpp:617
+#: FolderItem.cpp:639
+#: FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "このファイルは存在しないか、または削除されています(エラー%s)"
@@ -93,25 +100,26 @@ msgstr "ネットワーク接続"
 
 #: FolderItem.cpp:1251
 msgid "Calculator"
-msgstr ""
+msgstr "電卓"
 
 #: FolderItem.cpp:1253
 msgid "Paint Brush"
-msgstr ""
+msgstr "ペイント"
 
 #: FolderItem.cpp:1255
 msgid "Notepad"
-msgstr ""
+msgstr "メモ帳"
 
 #: FolderItem.cpp:1257
 msgid "WordPad"
-msgstr ""
+msgstr "ワードパッド"
 
 #: FolderItem.cpp:1259
 msgid "Command Prompt"
-msgstr ""
+msgstr "コマンドプロンプト"
 
-#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+#: FolderItemRenderer.cpp:200
+#: gui\TreeViewDialog.cpp:106
 msgid "Remove..."
 msgstr "除去..."
 
@@ -123,11 +131,13 @@ msgstr "複数起動グループに追加"
 msgid "Organize group shortcuts"
 msgstr "ショートカットグループの分類"
 
-#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+#: FolderItemRenderer.cpp:219
+#: gui\TreeViewDialog.cpp:111
 msgid "Properties"
 msgstr "プロパティ"
 
-#: IconPanel.cpp:152 OptionPanel.cpp:164
+#: IconPanel.cpp:152
+#: OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "新規ショートカット"
 
@@ -140,9 +150,9 @@ msgid "Add special item"
 msgstr "特殊アイテムを追加"
 
 #: IconPanel.cpp:414
-#, fuzzy, c-format
+#, c-format
 msgid "Could not import this shortcut: %s"
-msgstr "ショートカットのインポート"
+msgstr "次のショートカットのインポートに失敗: %s"
 
 #: main.cpp:68
 msgid "Uses user data directory to save settings."
@@ -170,7 +180,7 @@ msgstr "大"
 
 #: main.cpp:317
 msgid "Medium"
-msgstr "中間"
+msgstr "中"
 
 #: main.cpp:318
 msgid "Extra Large (XP and above)"
@@ -218,12 +228,8 @@ msgid "Error launching web browser"
 msgstr "ウェブブラウザの起動に失敗"
 
 #: MainFrame.cpp:236
-msgid ""
-"There was an error registering the hot key. Another application may already "
-"have registered it."
-msgstr ""
-"ホットキーの登録に失敗しました。別のアプリケーションによって使用されている可"
-"能性があります。"
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "ホットキーの登録に失敗しました。別のアプリケーションによって使用されている可能性があります。"
 
 #: MainFrame.cpp:597
 msgid "Minimize to tray"
@@ -240,15 +246,19 @@ msgstr ""
 "\n"
 "'%s' ウィンドウ('%s' タブ)から、この動作を変更することが出来ます。"
 
-#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1072
+#: gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "操作"
 
-#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1072
+#: utilities\Utilities.cpp:125
+#: utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "次回から表示しない"
 
-#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+#: MessageBoxes.cpp:15
+#: gui\ConfigDialog.cpp:101
 msgid "Error"
 msgstr "エラー"
 
@@ -264,7 +274,8 @@ msgstr "警告"
 msgid "Confirmation"
 msgstr "確認"
 
-#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+#: OptionPanel.cpp:163
+#: gui\ConfigDialog.cpp:65
 msgid "Help"
 msgstr "ヘルプ"
 
@@ -272,7 +283,8 @@ msgstr "ヘルプ"
 msgid "Multi-launch"
 msgstr "複数起動"
 
-#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+#: OptionPanel.cpp:167
+#: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
 msgstr "ショートカットのインポート"
 
@@ -284,26 +296,19 @@ msgstr "ヘルプ - トピック"
 msgid "Get Support"
 msgstr "サポート"
 
-#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#: OptionPanel.cpp:331
+#: gui\AboutDialog.cpp:75
 #, c-format
 msgid "About %s..."
 msgstr " %s について..."
 
 #: OptionPanel.cpp:341
-msgid ""
-"The multilaunch group is currently empty. Do you wish to show the help topic "
-"about this feature?"
-msgstr ""
-"現在、複数起動グループにはアイテムがありません。この機能に関するヘルプを表示"
-"しますか?"
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "現在、複数起動グループにはアイテムがありません。この機能に関するヘルプを表示しますか?"
 
 #: Plugin.cpp:217
-msgid ""
-"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
-"or ASCII. Applies to:"
-msgstr ""
-"プラグインスクリプトの書式に誤りがあります。エンコードが UTF-8(BOMなし) また"
-"は ASCII であるか確認してください。"
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "プラグインスクリプトの書式に誤りがあります。エンコードが UTF-8(BOMなし) または ASCII であるか確認してください。"
 
 #: PluginManager.cpp:50
 #, c-format
@@ -322,14 +327,11 @@ msgstr "ファイル '%s' を作成できません"
 
 #: PluginManager.cpp:96
 #, c-format
-msgid ""
-"The plugin has been installed successfully. It will be activated the next "
-"time %s is started"
-msgstr ""
-"プラグインのインストールに成功しました。　%s を次回起動した時から有効になりま"
-"す。"
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "プラグインのインストールに成功しました。　%s を次回起動した時から有効になります。"
 
-#: Styles.cpp:72 utilities\Utilities.cpp:81
+#: Styles.cpp:72
+#: utilities\Utilities.cpp:81
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
 msgstr "現在のバージョン %s に対応していないスキンです。"
@@ -361,8 +363,7 @@ msgstr "翻訳者: %s"
 
 #: gui\AboutDialog.cpp:57
 msgid "This software uses a number of open source libraries including:"
-msgstr ""
-"このソフトウェアには、以下のオープンソースライブラリが使用されています:"
+msgstr "このソフトウェアには、以下のオープンソースライブラリが使用されています:"
 
 #: gui\AboutDialog.cpp:59
 msgid "- Simpleini by Brodie Thiesfield"
@@ -377,12 +378,8 @@ msgid "- CStdString by Joe O'Leary"
 msgstr "- CStdString by Joe O'Leary"
 
 #: gui\AboutDialog.cpp:65
-msgid ""
-"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
-"Celes"
-msgstr ""
-"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
-"Celes"
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
 
 #: gui\AboutDialog.cpp:67
 msgid "- ccrypt by Peter Selinger"
@@ -408,8 +405,10 @@ msgstr "バージョン情報"
 msgid "License"
 msgstr "ライセンス"
 
-#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
-#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+#: gui\AboutDialog.cpp:78
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
 msgid "OK"
 msgstr "OK"
 
@@ -424,29 +423,17 @@ msgstr "著作権© %s"
 
 #: gui\AboutDialog.cpp:84
 msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"このプログラムはフリーソフトウェアです: あなたは、GNU 一般公有使用許諾(バー"
-"ジョン 3 または以降のバージョン) によって定められた各条項に基づいて本プログラ"
-"ムを再頒布または変更することができます。\n"
+"このプログラムはフリーソフトウェアです: あなたは、GNU 一般公有使用許諾(バージョン 3 または以降のバージョン) によって定められた各条項に基づいて本プログラムを再頒布または変更することができます。\n"
 "\n"
-"本プログラムは有用とは思いますが、市場性及び特定目的適合性についての暗黙の保"
-"証を含め、いかなる保証も行ないません。詳細については、GNU一般共有使用許諾書の"
-"該当項目をご覧ください\n"
+"本プログラムは有用とは思いますが、市場性及び特定目的適合性についての暗黙の保証を含め、いかなる保証も行ないません。詳細については、GNU一般共有使用許諾書の該当項目をご覧ください\n"
 "\n"
-"あなたは、本プログラムと一緒にGNU 一般公有使用許諾のコピーを受け取っているは"
-"ずです。もし見つからない場合はこちらを参照してください<http://www.gnu.org/"
-"licenses/>."
+"あなたは、本プログラムと一緒にGNU 一般公有使用許諾のコピーを受け取っているはずです。もし見つからない場合はこちらを参照してください<http://www.gnu.org/licenses/>."
 
 #: gui\AboutDialog.cpp:85
 msgid "Web:"
@@ -469,14 +456,18 @@ msgstr "はい"
 msgid "No"
 msgstr "いいえ"
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
-#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81
+#: gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
+#: gui\ConfigDialog.cpp:58
+#: gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "一般"
 
@@ -492,7 +483,8 @@ msgstr "インポート"
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+#: gui\ConfigDialog.cpp:63
+#: gui\ShortcutEditorDialog.cpp:43
 msgid "Save"
 msgstr "保存"
 
@@ -529,7 +521,8 @@ msgstr "常に手前表示"
 msgid "Allow only one instance of %s at a time"
 msgstr "%s のインスタンスをひとつだけ許可"
 
-#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
+#: gui\ConfigDialog.cpp:222
+#: gui\ConfigDialog.cpp:794
 msgid "Check for update"
 msgstr "アップデートを確認"
 
@@ -539,7 +532,7 @@ msgstr "オートランファイルをインストール"
 
 #: gui\ConfigDialog.cpp:224
 msgid "Start Appetizer on system startup"
-msgstr ""
+msgstr "Appetizer をスタートアップに登録"
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -567,11 +560,11 @@ msgstr "ラベル位置:"
 
 #: gui\ConfigDialog.cpp:327
 msgid "Show taskbar icon"
-msgstr ""
+msgstr "タスクバーアイコンを表示"
 
 #: gui\ConfigDialog.cpp:328
 msgid "Show tray icon"
-msgstr ""
+msgstr "トレイアイコンを表示"
 
 #: gui\ConfigDialog.cpp:348
 msgid "Hidden"
@@ -581,17 +574,18 @@ msgstr "非表示"
 msgid "Bottom"
 msgstr "下部"
 
-#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
+#: gui\ConfigDialog.cpp:350
+#: gui\ConfigDialog.cpp:543
 msgid "Right"
-msgstr "Right"
+msgstr "右側"
 
 #: gui\ConfigDialog.cpp:389
 msgid "Horizontal"
-msgstr "左右"
+msgstr "水平方向"
 
 #: gui\ConfigDialog.cpp:390
 msgid "Vertical"
-msgstr "上下"
+msgstr "垂直方向"
 
 #: gui\ConfigDialog.cpp:416
 msgid "Default"
@@ -623,8 +617,7 @@ msgstr "Shift +"
 
 #: gui\ConfigDialog.cpp:467
 msgid "When ejecting the drive, close the apps that are locking it"
-msgstr ""
-"ドライブをイジェクトするときは、ロックしているアプリケーションを終了する"
+msgstr "ドライブをイジェクトするときは、ロックしているアプリケーションを終了する"
 
 #: gui\ConfigDialog.cpp:468
 msgid "Close button minimizes to System Tray"
@@ -744,21 +737,17 @@ msgstr "更にプラグインをダウンロード"
 
 #: gui\ConfigDialog.cpp:640
 #, c-format
-msgid ""
-"The changes made to the plugins will only be active the next time %s is "
-"started."
+msgid "The changes made to the plugins will only be active the next time %s is started."
 msgstr "プラグインの変更は、%s を次回起動した時から有効になります。"
 
 #: gui\ConfigDialog.cpp:703
 #, c-format
 msgid ""
-"By installing the autorun file on your removable drive, %s will start "
-"automatically when you insert your drive.\n"
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"オートランファイルをリムーバブルドライブにインストールすると、%s を起動した時"
-"に自動的に開始されます。 \n"
+"オートランファイルをリムーバブルドライブにインストールすると、%s を起動した時に自動的に開始されます。 \n"
 "\n"
 "本当に続行しますか? "
 
@@ -779,7 +768,8 @@ msgstr "設定を変更するために、プラグインを有効にしてくだ
 msgid "%s Plugin Packages"
 msgstr "プラグインパッケージ %s "
 
-#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
+#: gui\ConfigDialog.cpp:758
+#: gui\IconDialog.cpp:175
 msgid "All files"
 msgstr "すべてのファイル"
 
@@ -792,9 +782,7 @@ msgid "Please wait..."
 msgstr "お待ちください..."
 
 #: gui\ConfigDialog.cpp:1070
-msgid ""
-"Some of these changes will only be applied until after you restart the "
-"application."
+msgid "Some of these changes will only be applied until after you restart the application."
 msgstr "いくつかの変更は、アプリケーションの再起動後に有効になります。"
 
 #: gui\FileOrFolderDialog.cpp:76
@@ -817,7 +805,8 @@ msgstr "アイコンまたはライブラリ:"
 msgid "All supported files"
 msgstr "すべての対応するファイル"
 
-#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+#: gui\IconDialog.cpp:170
+#: gui\IconDialog.cpp:171
 msgid "Icons"
 msgstr "アイコン"
 
@@ -862,7 +851,7 @@ msgstr "Windows - スタートメニュープログラム"
 
 #: gui\ImportWizardDialog.cpp:46
 msgid "Let me select a different location"
-msgstr ""
+msgstr "別の場所を選択してください"
 
 #: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
@@ -874,7 +863,7 @@ msgstr "ショートカットのインポート中... お待ちください"
 
 #: gui\ImportWizardDialog.cpp:135
 msgid "Please select the folder to import the shortcuts from."
-msgstr ""
+msgstr "ショートカットをインポートするフォルダを選択してください。"
 
 #: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"

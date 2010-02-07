@@ -255,21 +255,43 @@ void MainFrame::OnActivate(wxActivateEvent& evt) {
 
 
 void MainFrame::OnHotKey(wxKeyEvent& evt) {
-  if (!IsVisible()) {
-    Show();
-    Raise();
-  } else {
-    if (!activated_) {
+  UserSettings* s = wxGetApp().GetUser()->GetSettings();
+
+  if (s->GetBool(_T("TrayIcon"))) {
+    if (!IsVisible()) {
+      Show();
       Raise();
     } else {
-      Hide();
+      if (!activated_) {
+        Raise();
+      } else {
+        Hide();
+      }
+    }
+  } else {
+    if (IsIconized()) {
+      Maximize(false);
+      Raise();
+    } else {
+      if (!activated_) {
+        Raise();
+      } else {
+        Iconize();
+      }
     }
   }
 }
 
 
 void MainFrame::DoAutoHide() {
-  if (wxGetApp().GetUser()->GetSettings()->GetBool(_T("AutoHideApplication"))) Hide();
+  UserSettings* s = wxGetApp().GetUser()->GetSettings();
+  if (s->GetBool(_T("AutoHideApplication"))) {
+    if (s->GetBool(_T("TrayIcon"))) {
+      Hide();
+    } else {
+      Iconize();
+    }
+  }
 }
 
 
@@ -1077,7 +1099,11 @@ void MainFrame::OnImageButtonClick(wxCommandEvent& evt) {
       }      
 
       if (settings->GetBool(_T("MinimizeOnClose"))) {
-        Hide();
+        if (settings->GetBool(_T("TrayIcon"))) {
+          Hide();
+        } else {
+          Iconize();
+        }
       } else {
         Close();
       }

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-05 23:13+0000\n"
-"PO-Revision-Date: 2010-02-05 23:12-0000\n"
+"PO-Revision-Date: 2010-02-07 14:27-0000\n"
 "Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -25,24 +25,31 @@ msgstr "Απόκρυψη"
 msgid "Show"
 msgstr "Εμφάνιση"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:598
 msgid "Eject drive"
 msgstr "Εξαγωγή μέσου"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:1072
+#: OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Ρυθμίσεις"
 
-#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+#: FolderItem.cpp:467
+#: gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
 msgstr "Οργάνωση συντομεύσεων"
 
-#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
+#: FolderItem.cpp:617
+#: FolderItem.cpp:639
+#: FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Το αρχείο αυτό δεν υπάρχει ή έχει διαγραφεί (Σφάλμαr %s)"
@@ -97,25 +104,26 @@ msgstr "Συνδέσεις δικτύου"
 
 #: FolderItem.cpp:1251
 msgid "Calculator"
-msgstr ""
+msgstr "Αριθμομηχανή"
 
 #: FolderItem.cpp:1253
 msgid "Paint Brush"
-msgstr ""
+msgstr "Ζωγραφική"
 
 #: FolderItem.cpp:1255
 msgid "Notepad"
-msgstr ""
+msgstr "Σημειωματάριο"
 
 #: FolderItem.cpp:1257
 msgid "WordPad"
-msgstr ""
+msgstr "Κειμενογράφος WordPad"
 
 #: FolderItem.cpp:1259
 msgid "Command Prompt"
-msgstr ""
+msgstr "Γραμμή εντολών"
 
-#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+#: FolderItemRenderer.cpp:200
+#: gui\TreeViewDialog.cpp:106
 msgid "Remove..."
 msgstr "Αφαίρεση..."
 
@@ -127,11 +135,13 @@ msgstr "Προσθήκη στην ομάδα Multi Launch"
 msgid "Organize group shortcuts"
 msgstr "Οργάνωση ομάδας συντομεύσεων"
 
-#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+#: FolderItemRenderer.cpp:219
+#: gui\TreeViewDialog.cpp:111
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: IconPanel.cpp:152 OptionPanel.cpp:164
+#: IconPanel.cpp:152
+#: OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "Νέα συντόμευση..."
 
@@ -144,9 +154,9 @@ msgid "Add special item"
 msgstr "Προσθήκη ειδικού αντικειμένου"
 
 #: IconPanel.cpp:414
-#, fuzzy, c-format
+#, c-format
 msgid "Could not import this shortcut: %s"
-msgstr "Εισαγωγή συντομεύσεων"
+msgstr "Δεν ήταν δυνατό να εισαχθεί η συντόμευση: %s"
 
 #: main.cpp:68
 msgid "Uses user data directory to save settings."
@@ -223,12 +233,8 @@ msgid "Error launching web browser"
 msgstr "Σφάλμα κατά το άνοιγμα του φυλλομετρητή"
 
 #: MainFrame.cpp:236
-msgid ""
-"There was an error registering the hot key. Another application may already "
-"have registered it."
-msgstr ""
-"Σφάλμα κατά την κατοχύρωση της συνόμευση πλήκτρων. Κάποια άλλη εφαρμογή την "
-"χρησιμοποιεί."
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Σφάλμα κατά την κατοχύρωση της συνόμευση πλήκτρων. Κάποια άλλη εφαρμογή την χρησιμοποιεί."
 
 #: MainFrame.cpp:597
 msgid "Minimize to tray"
@@ -243,18 +249,21 @@ msgid ""
 msgstr ""
 "Το %s θα ελαχιστοποιηθεί τώρα στη μπάρα ειδοποιήσεων.\n"
 "\n"
-"Σημειώστε ότι μπορείτε να αλλάξετε αυτή τη συμπεριφορά από το παράθυρο '%"
-"s' (καρτέλα '%s')"
+"Σημειώστε ότι μπορείτε να αλλάξετε αυτή τη συμπεριφορά από το παράθυρο '%s' (καρτέλα '%s')"
 
-#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1072
+#: gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Χειρισμοί"
 
-#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1072
+#: utilities\Utilities.cpp:125
+#: utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "Να μην εμφανιστεί αυτό το μήνυμα ξανά"
 
-#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+#: MessageBoxes.cpp:15
+#: gui\ConfigDialog.cpp:101
 msgid "Error"
 msgstr "Σφάλμα"
 
@@ -270,7 +279,8 @@ msgstr "Προειδοποίηση"
 msgid "Confirmation"
 msgstr "Επικύρωση"
 
-#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+#: OptionPanel.cpp:163
+#: gui\ConfigDialog.cpp:65
 msgid "Help"
 msgstr "Βοήθεια"
 
@@ -278,7 +288,8 @@ msgstr "Βοήθεια"
 msgid "Multi-launch"
 msgstr "Multi-launch"
 
-#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+#: OptionPanel.cpp:167
+#: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
 msgstr "Εισαγωγή συντομεύσεων"
 
@@ -290,26 +301,19 @@ msgstr "Κεφάλαια βοήθειας"
 msgid "Get Support"
 msgstr "Λήψη Υποστήριξης"
 
-#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#: OptionPanel.cpp:331
+#: gui\AboutDialog.cpp:75
 #, c-format
 msgid "About %s..."
 msgstr "Περί %s..."
 
 #: OptionPanel.cpp:341
-msgid ""
-"The multilaunch group is currently empty. Do you wish to show the help topic "
-"about this feature?"
-msgstr ""
-"Η ομάδα multilaunch είναι άδεια. Θέλετε να δείτε το θέμα βοήθειας για αυτό "
-"το χαρακτηριστικό;"
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "Η ομάδα multilaunch είναι άδεια. Θέλετε να δείτε το θέμα βοήθειας για αυτό το χαρακτηριστικό;"
 
 #: Plugin.cpp:217
-msgid ""
-"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
-"or ASCII. Applies to:"
-msgstr ""
-"Το σενάριο του πρόσθετου δεν είναι στην σωστή μορφή. Παρακαλώ κωδικοποιήστε "
-"το ως UTF-8 NO BOM ή ASCII. Ισχύει για:"
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "Το σενάριο του πρόσθετου δεν είναι στην σωστή μορφή. Παρακαλώ κωδικοποιήστε το ως UTF-8 NO BOM ή ASCII. Ισχύει για:"
 
 #: PluginManager.cpp:50
 #, c-format
@@ -328,14 +332,11 @@ msgstr "Αδυναμία δημιουργίας του αρχείου '%s'"
 
 #: PluginManager.cpp:96
 #, c-format
-msgid ""
-"The plugin has been installed successfully. It will be activated the next "
-"time %s is started"
-msgstr ""
-"Το πρόσθετο εγκαταστάθηκε επιτυχώς. Θα ενεργοποηθεί την επόμενη φορά που θα "
-"ανοίξετε το %s"
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "Το πρόσθετο εγκαταστάθηκε επιτυχώς. Θα ενεργοποηθεί την επόμενη φορά που θα ανοίξετε το %s"
 
-#: Styles.cpp:72 utilities\Utilities.cpp:81
+#: Styles.cpp:72
+#: utilities\Utilities.cpp:81
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
 msgstr "Το θέμα δεν είναι συμβατό με την τρέχουσα έκδοση του %s."
@@ -367,9 +368,7 @@ msgstr "Μεταφραστές: %s"
 
 #: gui\AboutDialog.cpp:57
 msgid "This software uses a number of open source libraries including:"
-msgstr ""
-"Αυτό το λογισμικό χρησιμοποιεί έναν αριθμό από βιβλιοθήκες ανοιχτού κώδικα "
-"συμπεριλαμβανομένων των:"
+msgstr "Αυτό το λογισμικό χρησιμοποιεί έναν αριθμό από βιβλιοθήκες ανοιχτού κώδικα συμπεριλαμβανομένων των:"
 
 #: gui\AboutDialog.cpp:59
 msgid "- Simpleini by Brodie Thiesfield"
@@ -384,12 +383,8 @@ msgid "- CStdString by Joe O'Leary"
 msgstr "- CStdString του Joe O'Leary"
 
 #: gui\AboutDialog.cpp:65
-msgid ""
-"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
-"Celes"
-msgstr ""
-"- Lua των Roberto Ierusalimschy, Luiz Henrique de Figueiredo, και Waldemar "
-"Celes"
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua των Roberto Ierusalimschy, Luiz Henrique de Figueiredo, και Waldemar Celes"
 
 #: gui\AboutDialog.cpp:67
 msgid "- ccrypt by Peter Selinger"
@@ -405,8 +400,7 @@ msgstr "- wxWidgets από τους συγγραφείς του"
 
 #: gui\AboutDialog.cpp:73
 msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
-msgstr ""
-"Τα πλαίσια κειμένου φτάχτηκαν με τη χρήση του wxGlade του Alberto Griggio."
+msgstr "Τα πλαίσια κειμένου φτάχτηκαν με τη χρήση του wxGlade του Alberto Griggio."
 
 #: gui\AboutDialog.cpp:76
 msgid "About"
@@ -416,8 +410,10 @@ msgstr "Περί"
 msgid "License"
 msgstr "Άδεια χρήσης"
 
-#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
-#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+#: gui\AboutDialog.cpp:78
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
 msgid "OK"
 msgstr "ΟΚ"
 
@@ -432,31 +428,17 @@ msgstr "Πνευματικά δικαιώματα © %s"
 
 #: gui\AboutDialog.cpp:84
 msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Αυτό το πρόγραμμα είναι ελεύθερο λογισμικό: Μπορείτε να τα αναδιανείμει ή/"
-"και να το τροποποιήσετε σύμφωνα με τους όρους της άδειας χρήσης GNU General "
-"Public License όπως αυτή δημοσιεύεται από το Ίδρυμα Ελεύθερου Λογισμικού, "
-"είτε από την έκδοση 3 της άδειας, ή οποιαδήποτε μεταγενέστερη έκδοση.\n"
+"Αυτό το πρόγραμμα είναι ελεύθερο λογισμικό: Μπορείτε να τα αναδιανείμει ή/και να το τροποποιήσετε σύμφωνα με τους όρους της άδειας χρήσης GNU General Public License όπως αυτή δημοσιεύεται από το Ίδρυμα Ελεύθερου Λογισμικού, είτε από την έκδοση 3 της άδειας, ή οποιαδήποτε μεταγενέστερη έκδοση.\n"
 "\n"
-"Αυτό το πρόγραμμα διανέμεται με την ελπίδα ότι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ "
-"ΟΠΟΙΑΔΗΠΟΤΕ ΕΓΓΥΗΣΗ, χωρίς ακόμη και την σιωπηρή εγγύηση ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή "
-"ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ. Δείτε την GNU General Public License "
-"για περισσότερες λεπτομέρειες.\n"
+"Αυτό το πρόγραμμα διανέμεται με την ελπίδα ότι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΟΠΟΙΑΔΗΠΟΤΕ ΕΓΓΥΗΣΗ, χωρίς ακόμη και την σιωπηρή εγγύηση ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ. Δείτε την GNU General Public License για περισσότερες λεπτομέρειες.\n"
 "\n"
-"Θα έπρεπε να έχετε λάβει ένα αντίγραφο της GNU General Public License μαζί "
-"με αυτό το πρόγραμμα. Αν όχι μπορείτε να βρείτε στο <http://www.gnu.org/"
-"licenses/>."
+"Θα έπρεπε να έχετε λάβει ένα αντίγραφο της GNU General Public License μαζί με αυτό το πρόγραμμα. Αν όχι μπορείτε να βρείτε στο <http://www.gnu.org/licenses/>."
 
 #: gui\AboutDialog.cpp:85
 msgid "Web:"
@@ -479,14 +461,18 @@ msgstr "Ναι"
 msgid "No"
 msgstr "Όχι"
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
-#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81
+#: gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "Άκυρο"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
+#: gui\ConfigDialog.cpp:58
+#: gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "Γενικές"
 
@@ -502,7 +488,8 @@ msgstr "Εισαγωγή"
 msgid "Plugins"
 msgstr "Πρόσθετα"
 
-#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+#: gui\ConfigDialog.cpp:63
+#: gui\ShortcutEditorDialog.cpp:43
 msgid "Save"
 msgstr "Αποθήκευση"
 
@@ -539,7 +526,8 @@ msgstr "Πάντα σε πρώτο πλάνο"
 msgid "Allow only one instance of %s at a time"
 msgstr "Επιτρέπετε να τρέχει μόνο ένα %s τη φορά"
 
-#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
+#: gui\ConfigDialog.cpp:222
+#: gui\ConfigDialog.cpp:794
 msgid "Check for update"
 msgstr "Έλεγχος για ενημερώσεις"
 
@@ -549,7 +537,7 @@ msgstr "Εγκατάσταση αρχείου αυτόματης εκτέλεσ�
 
 #: gui\ConfigDialog.cpp:224
 msgid "Start Appetizer on system startup"
-msgstr ""
+msgstr "Εκτέλεση του Appetizer κατά την εκκίνηση του συστήματος"
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -577,11 +565,11 @@ msgstr "Θέση ετικέτας:"
 
 #: gui\ConfigDialog.cpp:327
 msgid "Show taskbar icon"
-msgstr ""
+msgstr "Εμφάνιση εικονιδίου στη γραμμή εργασιών"
 
 #: gui\ConfigDialog.cpp:328
 msgid "Show tray icon"
-msgstr ""
+msgstr "Εμφάνιση εικονιδίου στη γραμμή ειδοποιήσεων"
 
 #: gui\ConfigDialog.cpp:348
 msgid "Hidden"
@@ -591,7 +579,8 @@ msgstr "Κρυφό"
 msgid "Bottom"
 msgstr "Κάτω μέρος"
 
-#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
+#: gui\ConfigDialog.cpp:350
+#: gui\ConfigDialog.cpp:543
 msgid "Right"
 msgstr "Δεξιό βέλος"
 
@@ -633,8 +622,7 @@ msgstr "Shift +"
 
 #: gui\ConfigDialog.cpp:467
 msgid "When ejecting the drive, close the apps that are locking it"
-msgstr ""
-"Κατά την εξαγωγή του δίκσου, κλείσιμο των εφαρμογών που τέχουν απ' αυτών"
+msgstr "Κατά την εξαγωγή του δίκσου, κλείσιμο των εφαρμογών που τέχουν απ' αυτών"
 
 #: gui\ConfigDialog.cpp:468
 msgid "Close button minimizes to System Tray"
@@ -754,30 +742,23 @@ msgstr "Κατέβασμα περισσότερων πρόσθετων"
 
 #: gui\ConfigDialog.cpp:640
 #, c-format
-msgid ""
-"The changes made to the plugins will only be active the next time %s is "
-"started."
-msgstr ""
-"Οι αλλαγές θα εφαρμοστούν στο πρόσθετο κατά την επόμενη εκκίνηση του %s ."
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "Οι αλλαγές θα εφαρμοστούν στο πρόσθετο κατά την επόμενη εκκίνηση του %s ."
 
 #: gui\ConfigDialog.cpp:703
 #, c-format
 msgid ""
-"By installing the autorun file on your removable drive, %s will start "
-"automatically when you insert your drive.\n"
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"Με την εγκατάσταση του αρχείου αυτόματης εκτέλεσης στο δίσκο, το %s θα "
-"ξεκινάει αυτόματα με την κάθε εισαγωγή του δίσκου.\n"
+"Με την εγκατάσταση του αρχείου αυτόματης εκτέλεσης στο δίσκο, το %s θα ξεκινάει αυτόματα με την κάθε εισαγωγή του δίσκου.\n"
 "\n"
 "Θέλετε να συνεχίσετε;"
 
 #: gui\ConfigDialog.cpp:706
 msgid "Could not install autorun file. Please try again."
-msgstr ""
-"Δεν μπόρεσε να εγκατασταθεί το αρχείο αυτόματης εκτέλεσης. Παρακαλώ "
-"δοκιμάστε ξανά."
+msgstr "Δεν μπόρεσε να εγκατασταθεί το αρχείο αυτόματης εκτέλεσης. Παρακαλώ δοκιμάστε ξανά."
 
 #: gui\ConfigDialog.cpp:708
 msgid "The autorun file has been installed successfully"
@@ -785,15 +766,15 @@ msgstr "Το αρχείο αυτόματης εκτέλεσης εγκαταστ
 
 #: gui\ConfigDialog.cpp:739
 msgid "Please enable the plugin in order to change its options."
-msgstr ""
-"Παρακαλώ ενεργοποιήστε πρώτα το plugin για να αλλάξετε τις επιλογές του."
+msgstr "Παρακαλώ ενεργοποιήστε πρώτα το plugin για να αλλάξετε τις επιλογές του."
 
 #: gui\ConfigDialog.cpp:757
 #, c-format
 msgid "%s Plugin Packages"
 msgstr "%s πακέτα πρόσθετων"
 
-#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
+#: gui\ConfigDialog.cpp:758
+#: gui\IconDialog.cpp:175
 msgid "All files"
 msgstr "Όλα τα αρχεία"
 
@@ -806,12 +787,8 @@ msgid "Please wait..."
 msgstr "Παρακαλώ περιμένετε..."
 
 #: gui\ConfigDialog.cpp:1070
-msgid ""
-"Some of these changes will only be applied until after you restart the "
-"application."
-msgstr ""
-"Μερικές απ' αυτές τις αλλαγές θα εφαρμοστούν μόνο μετά από την επόμενη "
-"εκκίνηση της εφαρμογής."
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Μερικές απ' αυτές τις αλλαγές θα εφαρμοστούν μόνο μετά από την επόμενη εκκίνηση της εφαρμογής."
 
 #: gui\FileOrFolderDialog.cpp:76
 msgid "Loading tree..."
@@ -833,7 +810,8 @@ msgstr "Αρχείο εικονιδίου ή βιβλιοθήκη:"
 msgid "All supported files"
 msgstr "Όλα τα υποστηριζόμενα αρχεία"
 
-#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+#: gui\IconDialog.cpp:170
+#: gui\IconDialog.cpp:171
 msgid "Icons"
 msgstr "Εικονίδια"
 
@@ -878,7 +856,7 @@ msgstr "Προγράμματα του μενού Έναρξης των Windows"
 
 #: gui\ImportWizardDialog.cpp:46
 msgid "Let me select a different location"
-msgstr ""
+msgstr "Επιλογή διαφορετικής τοποθεσίας"
 
 #: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
@@ -890,7 +868,7 @@ msgstr "Εισαγωγή συντομεύσεων... Παρακαλώ περιμ
 
 #: gui\ImportWizardDialog.cpp:135
 msgid "Please select the folder to import the shortcuts from."
-msgstr ""
+msgstr "Παρακαλώ επιλέξτε το φάκελο απ' όπου θα εισαχθούν οι συντομεύσεις."
 
 #: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
@@ -938,3 +916,4 @@ msgstr "Η τοποθεσία της συντόμευσης δεν υπάρχε�
 
 #~ msgid "Transparency:"
 #~ msgstr "Διαφάνεια:"
+

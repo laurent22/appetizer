@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-05 23:13+0000\n"
-"PO-Revision-Date: 2010-02-05 23:09-0000\n"
+"PO-Revision-Date: 2010-02-07 14:30-0000\n"
 "Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
 "Language-Team: Appetizer Project <Leif.Larsson@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -20,24 +20,31 @@ msgstr "Dölj huvudfönstret"
 msgid "Show"
 msgstr "Visa huvudfönstet"
 
-#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:598
 msgid "Eject drive"
 msgstr "Mata ut enhet"
 
-#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:1072
+#: OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
 msgstr "Konfiguration"
 
-#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
 msgid "Close"
 msgstr "Stäng"
 
-#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+#: FolderItem.cpp:467
+#: gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
 msgstr "Organisera genvägar"
 
-#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
+#: FolderItem.cpp:617
+#: FolderItem.cpp:639
+#: FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
 msgstr "Denna fil finns inte eller har tagits bort (Fel %s)"
@@ -92,25 +99,26 @@ msgstr "Nätverksanslutningar"
 
 #: FolderItem.cpp:1251
 msgid "Calculator"
-msgstr ""
+msgstr "Kalkylatorn"
 
 #: FolderItem.cpp:1253
 msgid "Paint Brush"
-msgstr ""
+msgstr "Paint"
 
 #: FolderItem.cpp:1255
 msgid "Notepad"
-msgstr ""
+msgstr "Anteckningar"
 
 #: FolderItem.cpp:1257
 msgid "WordPad"
-msgstr ""
+msgstr "WordPad"
 
 #: FolderItem.cpp:1259
 msgid "Command Prompt"
-msgstr ""
+msgstr "Kommandotolk"
 
-#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+#: FolderItemRenderer.cpp:200
+#: gui\TreeViewDialog.cpp:106
 msgid "Remove..."
 msgstr "Ta bort ..."
 
@@ -122,11 +130,13 @@ msgstr "Lägg till i gruppen Multistart"
 msgid "Organize group shortcuts"
 msgstr "Organisera genvägar för grupper"
 
-#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+#: FolderItemRenderer.cpp:219
+#: gui\TreeViewDialog.cpp:111
 msgid "Properties"
 msgstr "Egenskaper"
 
-#: IconPanel.cpp:152 OptionPanel.cpp:164
+#: IconPanel.cpp:152
+#: OptionPanel.cpp:164
 msgid "New shortcut..."
 msgstr "Ny genväg ..."
 
@@ -139,9 +149,9 @@ msgid "Add special item"
 msgstr "Lägg till specialpost"
 
 #: IconPanel.cpp:414
-#, fuzzy, c-format
+#, c-format
 msgid "Could not import this shortcut: %s"
-msgstr "Importera genvägar"
+msgstr "Kan inte importera denna genväg: %s"
 
 #: main.cpp:68
 msgid "Uses user data directory to save settings."
@@ -217,12 +227,8 @@ msgid "Error launching web browser"
 msgstr "Fel när webbläsaren skulle startas"
 
 #: MainFrame.cpp:236
-msgid ""
-"There was an error registering the hot key. Another application may already "
-"have registered it."
-msgstr ""
-"Ett fel uppträdde för detta kortkommando. Det används kanske redan av ett "
-"annat program."
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Ett fel uppträdde för detta kortkommando. Det används kanske redan av ett annat program."
 
 #: MainFrame.cpp:597
 msgid "Minimize to tray"
@@ -240,15 +246,19 @@ msgstr ""
 "Observera att du kan ändra detta beteende under\n"
 "'%s', fliken  '%s'!"
 
-#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
+#: MainFrame.cpp:1072
+#: gui\ConfigDialog.cpp:60
 msgid "Operations"
 msgstr "Funktioner"
 
-#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+#: MainFrame.cpp:1072
+#: utilities\Utilities.cpp:125
+#: utilities\Utilities.cpp:452
 msgid "Don't show this message again"
 msgstr "&Visa inte detta meddelande nästa gång"
 
-#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+#: MessageBoxes.cpp:15
+#: gui\ConfigDialog.cpp:101
 msgid "Error"
 msgstr "Fel"
 
@@ -264,7 +274,8 @@ msgstr "Varning"
 msgid "Confirmation"
 msgstr "Bekräfta"
 
-#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+#: OptionPanel.cpp:163
+#: gui\ConfigDialog.cpp:65
 msgid "Help"
 msgstr "Hjälp"
 
@@ -272,7 +283,8 @@ msgstr "Hjälp"
 msgid "Multi-launch"
 msgstr "Multistart"
 
-#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+#: OptionPanel.cpp:167
+#: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
 msgstr "Importera genvägar"
 
@@ -284,26 +296,21 @@ msgstr "Hjälpindex ..."
 msgid "Get Support"
 msgstr "Support ..."
 
-#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#: OptionPanel.cpp:331
+#: gui\AboutDialog.cpp:75
 #, c-format
 msgid "About %s..."
 msgstr "Om %s ..."
 
 #: OptionPanel.cpp:341
-msgid ""
-"The multilaunch group is currently empty. Do you wish to show the help topic "
-"about this feature?"
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
 msgstr ""
 "Gruppen Multistart är för tillfället tom.\n"
 "Vill du se hjälpavsnittet för denna funktion?"
 
 #: Plugin.cpp:217
-msgid ""
-"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
-"or ASCII. Applies to:"
-msgstr ""
-"Plugin-skriptet har ett felaktigt format. Koda det som UTF-8 NO BOM eller "
-"ASCII. Gäller:"
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "Plugin-skriptet har ett felaktigt format. Koda det som UTF-8 NO BOM eller ASCII. Gäller:"
 
 #: PluginManager.cpp:50
 #, c-format
@@ -322,14 +329,11 @@ msgstr "Kan inte skapa filen '%s'"
 
 #: PluginManager.cpp:96
 #, c-format
-msgid ""
-"The plugin has been installed successfully. It will be activated the next "
-"time %s is started"
-msgstr ""
-"Denna plugin har installerats utan problem. Den kommer att aktiveras nästa "
-"gång %s startas"
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "Denna plugin har installerats utan problem. Den kommer att aktiveras nästa gång %s startas"
 
-#: Styles.cpp:72 utilities\Utilities.cpp:81
+#: Styles.cpp:72
+#: utilities\Utilities.cpp:81
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
 msgstr "Detta skal är inte kompatibelt med denna version av %s."
@@ -376,12 +380,8 @@ msgid "- CStdString by Joe O'Leary"
 msgstr "- CStdString av Joe O'Leary"
 
 #: gui\AboutDialog.cpp:65
-msgid ""
-"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
-"Celes"
-msgstr ""
-"- Lua av Roberto Ierusalimschy, Luiz Henrique de Figueiredo, och Waldemar "
-"Celes"
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua av Roberto Ierusalimschy, Luiz Henrique de Figueiredo, och Waldemar Celes"
 
 #: gui\AboutDialog.cpp:67
 msgid "- ccrypt by Peter Selinger"
@@ -407,8 +407,10 @@ msgstr "Om"
 msgid "License"
 msgstr "Licens"
 
-#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
-#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+#: gui\AboutDialog.cpp:78
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
 msgid "OK"
 msgstr "OK"
 
@@ -423,30 +425,17 @@ msgstr "Copyright © %s"
 
 #: gui\AboutDialog.cpp:84
 msgid ""
-"This program is free software: you can redistribute it and/or modify it "
-"under the terms of the GNU General Public License as published by the Free "
-"Software Foundation, either version 3 of the License, or any later version.\n"
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
 "\n"
-"This program is distributed in the hope that it will be useful, but WITHOUT "
-"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
-"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
-"more details.\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU General Public License along with "
-"this program.  If not, see <http://www.gnu.org/licenses/>."
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
 msgstr ""
-"Detta program är fri programvara. Du kan distribuera det och/eller modifiera "
-"det under villkoren i GNU General Public License, publicerad av Free "
-"Software Foundation, antingen version 3 eller (om du så vill) någon senare "
-"version.\n"
+"Detta program är fri programvara. Du kan distribuera det och/eller modifiera det under villkoren i GNU General Public License, publicerad av Free Software Foundation, antingen version 3 eller (om du så vill) någon senare version.\n"
 "\n"
-"Detta program distribueras i hopp om att det ska vara användbart, men UTAN "
-"NÅGON SOM HELST GARANTI, även utan underförstådd garanti om SÄLJBARHET eller "
-"LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General Public License för "
-"ytterligare information.\n"
+"Detta program distribueras i hopp om att det ska vara användbart, men UTAN NÅGON SOM HELST GARANTI, även utan underförstådd garanti om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL. Se GNU General Public License för ytterligare information.\n"
 "\n"
-"Du bör ha fått en kopia av GNU General Public License tillsammans med detta "
-"program. Om inte, se http://www.gnu.org/licenses/"
+"Du bör ha fått en kopia av GNU General Public License tillsammans med detta program. Om inte, se http://www.gnu.org/licenses/"
 
 #: gui\AboutDialog.cpp:85
 msgid "Web:"
@@ -469,14 +458,18 @@ msgstr "&Ja"
 msgid "No"
 msgstr "&Nej"
 
-#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
-#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
-#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81
+#: gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
+#: gui\ConfigDialog.cpp:58
+#: gui\PluginPreferencesDialog.cpp:73
 msgid "General"
 msgstr "Allmänt"
 
@@ -492,7 +485,8 @@ msgstr "Import"
 msgid "Plugins"
 msgstr "Plugins"
 
-#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+#: gui\ConfigDialog.cpp:63
+#: gui\ShortcutEditorDialog.cpp:43
 msgid "Save"
 msgstr "&Spara"
 
@@ -529,7 +523,8 @@ msgstr "&Alltid överst"
 msgid "Allow only one instance of %s at a time"
 msgstr "&Tillåt bara en instans av %s åt gången"
 
-#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
+#: gui\ConfigDialog.cpp:222
+#: gui\ConfigDialog.cpp:794
 msgid "Check for update"
 msgstr "Sök efter &uppdateringar ..."
 
@@ -539,7 +534,7 @@ msgstr "&Installera autostartfil (på USB-minne) ..."
 
 #: gui\ConfigDialog.cpp:224
 msgid "Start Appetizer on system startup"
-msgstr ""
+msgstr "Starta Appetizer samtidigt som Windows"
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
@@ -567,11 +562,11 @@ msgstr "Etikettplats:"
 
 #: gui\ConfigDialog.cpp:327
 msgid "Show taskbar icon"
-msgstr ""
+msgstr "Visa ikon i Aktivitetsfältet"
 
 #: gui\ConfigDialog.cpp:328
 msgid "Show tray icon"
-msgstr ""
+msgstr "Visa ikon i Meddelandefältet"
 
 #: gui\ConfigDialog.cpp:348
 msgid "Hidden"
@@ -581,7 +576,8 @@ msgstr "Dold"
 msgid "Bottom"
 msgstr "Nere"
 
-#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
+#: gui\ConfigDialog.cpp:350
+#: gui\ConfigDialog.cpp:543
 msgid "Right"
 msgstr "Högerpil"
 
@@ -743,21 +739,17 @@ msgstr "Hämta fler plugins"
 
 #: gui\ConfigDialog.cpp:640
 #, c-format
-msgid ""
-"The changes made to the plugins will only be active the next time %s is "
-"started."
+msgid "The changes made to the plugins will only be active the next time %s is started."
 msgstr "Alla förändringar som rör plugins aktiveras först efter omstart av %s."
 
 #: gui\ConfigDialog.cpp:703
 #, c-format
 msgid ""
-"By installing the autorun file on your removable drive, %s will start "
-"automatically when you insert your drive.\n"
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"Genom att installera en autostartfil på den flyttbara enhet så kommer %s att "
-"starta automatiskt när du sätter in den enheten.\n"
+"Genom att installera en autostartfil på den flyttbara enhet så kommer %s att starta automatiskt när du sätter in den enheten.\n"
 "\n"
 "Vill du fortsätta?"
 
@@ -778,7 +770,8 @@ msgstr "Aktivera denna plugin för att kunna ändra inställningarna."
 msgid "%s Plugin Packages"
 msgstr "%s pluginpaket"
 
-#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
+#: gui\ConfigDialog.cpp:758
+#: gui\IconDialog.cpp:175
 msgid "All files"
 msgstr "Alla filer"
 
@@ -791,11 +784,8 @@ msgid "Please wait..."
 msgstr "Vänta ..."
 
 #: gui\ConfigDialog.cpp:1070
-msgid ""
-"Some of these changes will only be applied until after you restart the "
-"application."
-msgstr ""
-"Vissa av dessa förändringar kräver omstart av programmet för att aktiveras."
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Vissa av dessa förändringar kräver omstart av programmet för att aktiveras."
 
 #: gui\FileOrFolderDialog.cpp:76
 msgid "Loading tree..."
@@ -817,7 +807,8 @@ msgstr "Ikonfil eller -bibliotek:"
 msgid "All supported files"
 msgstr "Alla understödda filer"
 
-#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+#: gui\IconDialog.cpp:170
+#: gui\IconDialog.cpp:171
 msgid "Icons"
 msgstr "Ikoner"
 
@@ -862,7 +853,7 @@ msgstr "Program i &Windows startmeny"
 
 #: gui\ImportWizardDialog.cpp:46
 msgid "Let me select a different location"
-msgstr ""
+msgstr "Låt mig välja en annan plats"
 
 #: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
@@ -874,7 +865,7 @@ msgstr "Importerar genvägar ... Vänta!"
 
 #: gui\ImportWizardDialog.cpp:135
 msgid "Please select the folder to import the shortcuts from."
-msgstr ""
+msgstr "Välj mapp att importera genvägarna från."
 
 #: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
@@ -922,3 +913,4 @@ msgstr "Denna genväg har inget mål. Vill du fortsätta?"
 
 #~ msgid "Transparency:"
 #~ msgstr "&Transparens:"
+
