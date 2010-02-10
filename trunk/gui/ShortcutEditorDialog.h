@@ -18,7 +18,7 @@ class ShortcutEditorDialog: public ShortcutEditorDialogBase {
 
 public:
 
-  ShortcutEditorDialog();
+  ShortcutEditorDialog(wxWindow* parent);
   void LoadFolderItem(appFolderItem* folderItem);
   void Localize();
 

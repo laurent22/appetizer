@@ -22,7 +22,6 @@ END_EVENT_TABLE()
 User::User() {
   scheduledSaveTimer_ = NULL;
   settings_ = NULL;
-  shortcutEditorDialog_ = NULL;
   rootFolderItem_ = appFolderItem::CreateFolderItem(true);
   rootFolderItem_->SetName(_T("<root>"));
   settings_ = new UserSettings();
@@ -40,10 +39,6 @@ void User::SetAutoAddExclusions(wxArrayString& arrayString) {
 
 
 User::~User() {
-  if (shortcutEditorDialog_) {
-    shortcutEditorDialog_->Destroy();
-    shortcutEditorDialog_ = NULL;
-  }
   wxDELETE(scheduledSaveTimer_);
   wxDELETE(settings_);
 }
@@ -197,9 +192,10 @@ appFolderItem* User::EditNewFolderItem(appFolderItem* parent, bool isGroup) {
 int User::EditFolderItem(appFolderItem* folderItem) {
   int result;
 
-  if (!shortcutEditorDialog_) shortcutEditorDialog_ = new ShortcutEditorDialog();
-  shortcutEditorDialog_->LoadFolderItem(folderItem);
-  result = shortcutEditorDialog_->ShowModal();
+  ShortcutEditorDialog* dialog = new ShortcutEditorDialog(wxGetApp().GetMainFrame());
+  dialog->LoadFolderItem(folderItem);
+  result = dialog->ShowModal();
+  dialog->Destroy();
 
   if (result == wxID_OK) wxGetApp().FolderItems_FolderItemChange(folderItem);
 

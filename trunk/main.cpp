@@ -26,6 +26,20 @@ IMPLEMENT_APP(MiniLaunchBar)
 int MiniLaunchBar::uniqueInt_ = 0;
 
 
+#define SETWINLANG(info,lang,sublang) \
+info.WinLang = lang, info.WinSublang = sublang;
+
+
+
+#define LNG(wxlang, canonical, winlang, winsublang, layout, desc) \
+info.Language = wxlang;                               \
+info.CanonicalName = wxT(canonical);                  \
+info.LayoutDirection = layout;                        \
+info.Description = wxT(desc);                         \
+SETWINLANG(info, winlang, winsublang)                 \
+  wxLocale::AddLanguage(info);
+
+
 /**
  * Initialize the application
  */
@@ -133,6 +147,10 @@ bool MiniLaunchBar::OnInit() {
   // ***********************************************************************************
 
   bool localeSet = false;
+
+  wxLanguageInfo info;
+  LNG(wxLANGUAGE_USER_DEFINED + 1, "an", LANG_SPANISH, SUBLANG_SPANISH, wxLayout_LeftToRight, "Aragonese");
+
 
   if (IsFirstLaunch()) {
     // If it is the first launch, try to detect the language

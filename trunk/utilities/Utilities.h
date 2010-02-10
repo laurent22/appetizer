@@ -45,10 +45,6 @@ public:
 
 private:
 
-  AboutDialog* aboutDialog_;
-  ConfigDialog* configDialog_;
-  TreeViewDialog* treeViewDialog_;
-
 };
 
 #endif // __Utilities_H

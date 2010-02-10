@@ -32,8 +32,8 @@ END_EVENT_TABLE()
 
 
 
-ConfigDialog::ConfigDialog()
-: ConfigDialogBase(NULL, wxID_ANY, wxEmptyString) {
+ConfigDialog::ConfigDialog(wxWindow* parent)
+: ConfigDialogBase(parent, wxID_ANY, wxEmptyString) {
 
   languageComboBox->SetMinSize(wxSize(0, languageComboBox->GetMinSize().GetHeight()));
   iconSizeComboBox->SetMinSize(wxSize(0, iconSizeComboBox->GetMinSize().GetHeight()));

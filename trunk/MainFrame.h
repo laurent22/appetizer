@@ -136,6 +136,7 @@ class MainFrame: public wxFrame {
     bool IsTopOfDisplay();
 
     void RecurseCleanUp(wxWindow* window);
+    bool CheckForModalWindow(wxWindow* window);
     void ShowTrayIcon(bool doShow = true);
 
     void OnPaint(wxPaintEvent& evt);

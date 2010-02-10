@@ -19,9 +19,7 @@
 
 
 Utilities::Utilities() {
-  configDialog_ = NULL;
-  aboutDialog_ = NULL;
-  treeViewDialog_ = NULL;
+
 }
 
 
@@ -112,9 +110,7 @@ wxArrayString Utilities::GetSkinNames() {
 
 
 void Utilities::Localize() {
-  if (configDialog_) configDialog_->Localize();
-  if (aboutDialog_) aboutDialog_->Localize();
-  if (treeViewDialog_) treeViewDialog_->Localize();
+
 }
 
 
@@ -189,12 +185,7 @@ wxString Utilities::CreateUUID() {
 
 
 Utilities::~Utilities() {
-  if (configDialog_) configDialog_->Destroy();
-  if (aboutDialog_) aboutDialog_->Destroy();
-  if (treeViewDialog_) treeViewDialog_->Destroy();
-  configDialog_ = NULL;
-  aboutDialog_ = NULL;
-  treeViewDialog_ = NULL;
+
 }
 
 
@@ -475,9 +466,10 @@ bool Utilities::DoMultiLaunch() {
 
 
 void Utilities::ShowConfigDialog() {
-  if (!configDialog_) configDialog_ = new ConfigDialog();
-  configDialog_->LoadSettings();
-  configDialog_->ShowModal();
+  ConfigDialog* dialog = new ConfigDialog(wxGetApp().GetMainFrame());
+  dialog->LoadSettings();
+  dialog->ShowModal();
+  dialog->Destroy();
 }
 
 
@@ -519,23 +511,23 @@ void Utilities::ShowHelpFile(const wxString& anchor) {
 
 
 void Utilities::ShowAboutDialog() {
-  if (!aboutDialog_) aboutDialog_ = new AboutDialog();
-  aboutDialog_->LoadContent();
-  aboutDialog_->ShowModal();
+  AboutDialog* dialog = new AboutDialog(wxGetApp().GetMainFrame());
+  dialog->LoadContent();
+  dialog->ShowModal();
+  dialog->Destroy();
 }
 
 
 void Utilities::ShowTreeViewDialog(int selectedFolderItemId) {
-  if (!treeViewDialog_) {
-    treeViewDialog_ = new TreeViewDialog();
-    treeViewDialog_->SetSize(300,500);
-  }
+  TreeViewDialog* dialog = new TreeViewDialog(wxGetApp().GetMainFrame());
+  dialog->SetSize(300,500);
 
   appFolderItem* selectedFolderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(selectedFolderItemId);
   
-  treeViewDialog_->LoadFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
-  treeViewDialog_->SelectAndExpandFolderItem(selectedFolderItem);
-  treeViewDialog_->ShowModal();
+  dialog->LoadFolderItem(wxGetApp().GetUser()->GetRootFolderItem());
+  dialog->SelectAndExpandFolderItem(selectedFolderItem);
+  dialog->ShowModal();
+  dialog->Destroy();
 }
 
 

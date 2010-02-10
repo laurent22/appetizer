@@ -32,7 +32,7 @@ class TreeViewDialog: public TreeViewDialogBase {
 
 public:
 
-  TreeViewDialog();
+  TreeViewDialog(wxWindow* parent);
   ~TreeViewDialog();
   void Localize();
   void LoadFolderItem(appFolderItem* folderItem);

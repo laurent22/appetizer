@@ -26,7 +26,7 @@ class ConfigDialog: public ConfigDialogBase {
 
 public:
 
-  ConfigDialog();
+  ConfigDialog(wxWindow* parent);
   ~ConfigDialog();
   void Localize();
   void LoadSettings();

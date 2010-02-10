@@ -57,7 +57,6 @@ private:
   wxTimer* scheduledSaveTimer_;
   wxStringList folderItemExclusions_;
   UserSettings* settings_;
-  ShortcutEditorDialog* shortcutEditorDialog_;
   wxArrayString autoAddExclusions_;
 
   DECLARE_EVENT_TABLE()

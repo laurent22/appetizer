@@ -336,6 +336,7 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
     // ***********************************************************************************
 
     #ifdef __WINDOWS__
+    #ifndef __WXDEBUG__ 
     ILOG(_T("Update check..."));
 
     wxDateTime now = wxDateTime::Now();
@@ -352,6 +353,7 @@ void MainFrame::OnIdle(wxIdleEvent& evt) {
       wxGetApp().GetUser()->GetSettings()->SetDateTime(_T("NextUpdateCheckTime"), now);
       wxGetApp().GetUser()->ScheduleSave();
     }
+    #endif // __WXDEBUG__
     #endif //__WINDOWS__        
 
     initialized_ = true;
@@ -1052,6 +1054,29 @@ void MainFrame::RecurseCleanUp(wxWindow* window) {
 }
 
 
+bool MainFrame::CheckForModalWindow(wxWindow* window) {
+  wxWindowList& children = window->GetChildren();
+  for (int i = children.size() - 1; i >= 0; i--) {
+    wxWindow* child = children[i];
+
+    wxString n = child->GetName();
+    
+    wxDialog* childAsDialog = wxDynamicCast(child, wxDialog);
+    if (childAsDialog) {
+      if (childAsDialog->IsModal()) {
+        childAsDialog->RequestUserAttention();
+        return true;
+      }
+    }
+
+    bool has = CheckForModalWindow(child);
+    if (has) return true;
+  }
+
+  return false;
+}
+
+
 bool MainFrame::IsClosing() {
   return isClosing_;
 }
@@ -1060,6 +1085,12 @@ bool MainFrame::IsClosing() {
 void MainFrame::OnClose(wxCloseEvent& evt) {
   if (!initialized_) {    
     ILOG(_T("'Close' action vetoed because the frame is not yet initialized."));
+    evt.Veto();
+    return;
+  }
+
+  if (CheckForModalWindow(this)) {
+    ILOG(_T("'Close' action vetoed because a modal window is opened."));
     evt.Veto();
     return;
   }

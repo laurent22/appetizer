@@ -26,8 +26,8 @@ BEGIN_EVENT_TABLE(ShortcutEditorDialog, wxDialog)
 END_EVENT_TABLE()
 
 
-ShortcutEditorDialog::ShortcutEditorDialog()
-: ShortcutEditorDialogBase(NULL, wxID_ANY, wxEmptyString) {
+ShortcutEditorDialog::ShortcutEditorDialog(wxWindow* parent)
+: ShortcutEditorDialogBase(parent, wxID_ANY, wxEmptyString) {
 
   folderItem_ = NULL;
 

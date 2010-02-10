@@ -17,6 +17,7 @@ Localization::Localization() {
   languageCodeHashMap_[_T("ab")] = _T("Abkhazian");
   languageCodeHashMap_[_T("af")] = _T("Afrikaans");
   languageCodeHashMap_[_T("am")] = _T("Amharic");
+  languageCodeHashMap_[_T("an")] = _T("Aragonese");
   languageCodeHashMap_[_T("ar")] = _T("Arabic");
   languageCodeHashMap_[_T("as")] = _T("Assamese");
   languageCodeHashMap_[_T("ay")] = _T("Aymara");
@@ -153,6 +154,7 @@ Localization::Localization() {
   languageCodeHashMap_[_T("zh")] = _T("Chinese");
   languageCodeHashMap_[_T("zu")] = _T("Zulu");
 
+  languageCodeHashMapS_[_T("an")] = _T("Aragonés");
   languageCodeHashMapS_[_T("da")] = _T("Dansk");
   languageCodeHashMapS_[_T("de")] = _T("Deutsch");
   languageCodeHashMapS_[_T("en")] = _T("English");

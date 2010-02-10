@@ -31,8 +31,8 @@ appFolderItem* FolderItemTreeItemData::GetFolderItem() {
 }
 
 
-TreeViewDialog::TreeViewDialog()
-: TreeViewDialogBase(NULL, wxID_ANY, wxEmptyString) {
+TreeViewDialog::TreeViewDialog(wxWindow* parent)
+: TreeViewDialogBase(parent, wxID_ANY, wxEmptyString) {
   
   imageList_ = NULL;  
 }

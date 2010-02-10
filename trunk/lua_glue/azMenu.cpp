@@ -123,7 +123,12 @@ azMenu::~azMenu() {
 azMenu::azMenu(lua_State *L) {
   wxString text = LuaUtil::ToString(L, 1, true);
 
-  menu_ = new wxMenu(text);
+  if (text == wxEmptyString) {
+    menu_ = new wxMenu();
+  } else {
+    menu_ = new wxMenu(text);
+  }
+    
   ownContent_ = true;
 
   createdObjects_.push_back(this);
@@ -186,7 +191,10 @@ int azMenu::appendSubMenu(lua_State *L) {
   azMenu* subMenu = Lunar<azMenu>::check(L, -1); 
 	if (subMenu->Get()->GetTitle() == wxEmptyString) luaL_error(L, "Submenu must have a title");
 
-  Get()->AppendSubMenu(subMenu->Get(), subMenu->Get()->GetTitle());
+  wxString menuTitle = subMenu->Get()->GetTitle();
+  subMenu->Get()->SetTitle(wxEmptyString);
+
+  Get()->AppendSubMenu(subMenu->Get(), menuTitle);
   subMenu->ReleaseContent(); // this menu now owns the submenu
 
   return 0;
