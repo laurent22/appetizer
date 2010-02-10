@@ -1,205 +1,211 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-05 23:13+0000\n"
-"PO-Revision-Date: 2010-02-09 00:58+0300\n"
-"Last-Translator: Dark Preacher <dark@darklab.ru>\n"
+"PO-Revision-Date: 2010-02-10 18:35-0000\n"
+"Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Poedit-Language: Aragonese\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,88\n"
 
 #: ApplicationTrayIcon.cpp:29
 msgid "Hide"
-msgstr "Спрятать"
+msgstr "Amagar"
 
 #: ApplicationTrayIcon.cpp:29
 msgid "Show"
-msgstr "Показать"
+msgstr "Amostrar"
 
 #: ApplicationTrayIcon.cpp:41
 #: MainFrame.cpp:598
 msgid "Eject drive"
-msgstr "Извлечь устройство"
+msgstr "Espulsar unidá"
 
 #: ApplicationTrayIcon.cpp:46
 #: MainFrame.cpp:1072
 #: OptionPanel.cpp:165
 #: gui\ConfigDialog.cpp:55
 msgid "Configuration"
-msgstr "Конфигурация"
+msgstr "Confegurazión"
 
 #: ApplicationTrayIcon.cpp:60
 #: gui\TreeViewDialog.cpp:130
 msgid "Close"
-msgstr "Закрыть"
+msgstr "Tancar"
 
 #: FolderItem.cpp:467
 #: gui\TreeViewDialog.cpp:129
 msgid "Organize shortcuts"
-msgstr "Упорядочить ярлыки"
+msgstr "Organizar aczesos dreitos"
 
 #: FolderItem.cpp:617
 #: FolderItem.cpp:639
 #: FolderItem.cpp:662
 #, c-format
 msgid "This file doesn't exist or has been deleted (Error %s)"
-msgstr "Этот файл несуществует или был удалён (Ошибка %s)"
+msgstr "Iste archibo no esiste u ye estato borrato (Error %s)"
 
 #: FolderItem.cpp:996
 msgid "Group"
-msgstr "Группа"
+msgstr "Grupo"
 
 #: FolderItem.cpp:997
 msgid "Unnamed"
-msgstr "Без имени"
+msgstr "Esconoxito"
 
 #: FolderItem.cpp:1231
 msgid "Control Panel"
-msgstr "Панель управления"
+msgstr "Panel de control"
 
 #: FolderItem.cpp:1233
 msgid "My Computer"
-msgstr "Мой компьютер"
+msgstr "O mío ordinador"
 
 #: FolderItem.cpp:1235
 msgid "My Network Places"
-msgstr "Сетевое окружение"
+msgstr "Os míos puestos de rete"
 
 #: FolderItem.cpp:1237
 msgid "Recycle Bin"
-msgstr "Корзина"
+msgstr "Pozal de reciclache"
 
 #: FolderItem.cpp:1239
 msgid "Show Desktop"
-msgstr "Свернуть все окна"
+msgstr "Amostrar escritorio"
 
 #: FolderItem.cpp:1241
 msgid "Windows Explorer"
-msgstr "Проводник"
+msgstr "Esplorador de Windows"
 
 #: FolderItem.cpp:1243
 msgid "Search"
-msgstr "Поиск"
+msgstr "Buscar"
 
 #: FolderItem.cpp:1245
 msgid "Current Drive"
-msgstr "Текущий привод"
+msgstr "Unidá autual"
 
 #: FolderItem.cpp:1247
 msgid "Printers and Faxes"
-msgstr "Принтеры и факсы"
+msgstr "Imprentaderas e facses"
 
 #: FolderItem.cpp:1249
 msgid "Network Connections"
-msgstr "Сетевые подключения"
+msgstr "Conisions de rete"
 
 #: FolderItem.cpp:1251
 msgid "Calculator"
-msgstr "Калькулятор"
+msgstr "Calculadera"
 
 #: FolderItem.cpp:1253
 msgid "Paint Brush"
-msgstr "Paint Brush"
+msgstr "Pinzel"
 
 #: FolderItem.cpp:1255
 msgid "Notepad"
-msgstr "Блокнот"
+msgstr "Bloc de notas"
 
 #: FolderItem.cpp:1257
 msgid "WordPad"
-msgstr "WordPad"
+msgstr "Prozesador de testo"
 
 #: FolderItem.cpp:1259
 msgid "Command Prompt"
-msgstr "Коммандная строка"
+msgstr "Comando Listo"
 
 #: FolderItemRenderer.cpp:200
 #: gui\TreeViewDialog.cpp:106
 msgid "Remove..."
-msgstr "Удалить..."
+msgstr "Eliminar"
 
 #: FolderItemRenderer.cpp:205
 msgid "Add to Multi Launch group"
-msgstr "Добавить в группу Мульти запуска"
+msgstr "Adibir ta grupo multienchegamiento"
 
 #: FolderItemRenderer.cpp:214
 msgid "Organize group shortcuts"
-msgstr "Упорядочить ярлыки группы"
+msgstr "Organizar grupo d'aczesos dreitos"
 
 #: FolderItemRenderer.cpp:219
 #: gui\TreeViewDialog.cpp:111
 msgid "Properties"
-msgstr "Свойства"
+msgstr "Propiedaz"
 
 #: IconPanel.cpp:152
 #: OptionPanel.cpp:164
 msgid "New shortcut..."
-msgstr "Новый ярлык..."
+msgstr "Nuebo aczeso dreito"
 
 #: IconPanel.cpp:156
 msgid "New group..."
-msgstr "Новая группа..."
+msgstr "Nuebo grupo..."
 
 #: IconPanel.cpp:191
 msgid "Add special item"
-msgstr "Добавить специальный ярлык"
+msgstr "Adibir item espezial"
 
 #: IconPanel.cpp:414
 #, c-format
 msgid "Could not import this shortcut: %s"
-msgstr "Невозможно импортировать ярлык: %s"
+msgstr "Talmén no pueda importar-se iste aczeso dreito: %s"
 
 #: main.cpp:68
 msgid "Uses user data directory to save settings."
-msgstr "Использовать папку профиля пользователя для сохранения настроек."
+msgstr "Emplegar os datos d'o direutorio d'usuario ta alzar a confegurazión"
 
 #: main.cpp:69
 msgid "Sets user data path (-u will be ignored)"
-msgstr "Указать путь к данным пользователя (-u будет проигнорированно)"
+msgstr "Ruta d'os datos de confegurazión d'o usuario (busté será inorato)"
 
 #: main.cpp:70
 msgid "Displays the log window (useful for debugging)"
-msgstr "Отображать журнал сообщений (полезно для отладки)"
+msgstr "Amuestra ra finestra de rechistro (fa onra ta depurar)"
 
 #: main.cpp:71
 msgid "Displays this help message"
-msgstr "Отображает это сообщение"
+msgstr "Amuestra iste mensache d'aduya"
 
 #: main.cpp:158
 msgid "Could not initialize locale."
-msgstr "Невозможно инициализировать локаль."
+msgstr "Talmén no s'inizie local"
 
 #: main.cpp:316
 msgid "Large"
-msgstr "Большие"
+msgstr "Amplo"
 
 #: main.cpp:317
 msgid "Medium"
-msgstr "Средние"
+msgstr "Meyano"
 
 #: main.cpp:318
 msgid "Extra Large (XP and above)"
-msgstr "Очень большие (XP и выше)"
+msgstr "Amplismo (XP e superior)"
 
 #: main.cpp:319
 msgid "Jumbo (Vista and above)"
-msgstr "Джумбо (Vista и выше)"
+msgstr "Jumbo (Vista e superior)"
 
 #: main.cpp:323
 msgid "Small"
-msgstr "Маленькие"
+msgstr "Chiquet"
 
 #: main.cpp:415
 msgid "Could not get update information"
-msgstr "Невозможно получить информацию об обновлениях"
+msgstr "Talmén no s'autualize a informazión"
 
 #: main.cpp:429
 msgid "You have the latest version."
-msgstr "У вас самая последняя версия."
+msgstr "Busté tien a zaguera bersión"
 
 #: main.cpp:436
 #, c-format
@@ -211,28 +217,28 @@ msgid ""
 "Release notes: %s\n"
 "Do you wish to download it now?"
 msgstr ""
-"Новая версия доступна для скачивания!\n"
+"Una nueba bersión d'Appetizer ye disponible!\n"
 "\n"
-"Ваша версия: %s\n"
-"Новая версия: %s\n"
-"Примечания к выпуску: %s\n"
-"Желаете скачать обновление сейчас?"
+"A suya bersión: %s\n"
+"Nueba bersión: %s\n"
+"Notas d'a bersión: %s\n"
+"Deseya escargar-la agora?"
 
 #: main.cpp:438
 msgid "New version of Appetizer"
-msgstr "Новая версия Appetizer'а"
+msgstr "Nueba bersión d'Appetizer"
 
 #: main.cpp:442
 msgid "Error launching web browser"
-msgstr "Ошибка запуска веб-браузера"
+msgstr "Error en ubrir o nabatiador web"
 
 #: MainFrame.cpp:236
 msgid "There was an error registering the hot key. Another application may already have registered it."
-msgstr "Во время регистрации горячей клавиши произошла ошибка. Возможно это сочетание уже используется другой программой"
+msgstr "Ye estata una error de rechistro en a tecla d'aczeso rapedo"
 
 #: MainFrame.cpp:597
 msgid "Minimize to tray"
-msgstr "Свернуть в системный трей"
+msgstr "Achiquir en a serbilla"
 
 #: MainFrame.cpp:1072
 #, c-format
@@ -241,184 +247,184 @@ msgid ""
 "\n"
 "Note that you may change this behavior in the '%s' windows ('%s' tab)"
 msgstr ""
-"%s будет свёрнуто в системный трей.\n"
+"%s ba á estar achiquito en a Serbilla d'o Sistema.\n"
 "\n"
-"Вы можете изменить эти настройки в '%s' окне ('%s' вкладка)"
+"Pare cuenta que puede cambear ista conduta en o '%s' windows ('%s' tab)"
 
 #: MainFrame.cpp:1072
 #: gui\ConfigDialog.cpp:60
 msgid "Operations"
-msgstr "Операции"
+msgstr "Operazions"
 
 #: MainFrame.cpp:1072
 #: utilities\Utilities.cpp:125
 #: utilities\Utilities.cpp:452
 msgid "Don't show this message again"
-msgstr "Больше не отображать это сообщение"
+msgstr "No tornar á amostrar iste mensache"
 
 #: MessageBoxes.cpp:15
 #: gui\ConfigDialog.cpp:101
 msgid "Error"
-msgstr "Ошибка"
+msgstr "Error"
 
 #: MessageBoxes.cpp:20
 msgid "Information"
-msgstr "Информация"
+msgstr "Informazión"
 
 #: MessageBoxes.cpp:25
 msgid "Warning"
-msgstr "Предупреждение"
+msgstr "Abiso"
 
 #: MessageBoxes.cpp:30
 msgid "Confirmation"
-msgstr "Подтверждение"
+msgstr "Emologazión"
 
 #: OptionPanel.cpp:163
 #: gui\ConfigDialog.cpp:65
 msgid "Help"
-msgstr "Помощь"
+msgstr "Aduya"
 
 #: OptionPanel.cpp:166
 msgid "Multi-launch"
-msgstr "Мульти-запуск"
+msgstr "Multienchegamiento"
 
 #: OptionPanel.cpp:167
 #: gui\ImportWizardDialog.cpp:24
 msgid "Import shortcuts"
-msgstr "Импортировать ярлыки"
+msgstr "Importar aczesos dreitos"
 
 #: OptionPanel.cpp:328
 msgid "Help Topics"
-msgstr "Справка"
+msgstr "Temas d'aduya"
 
 #: OptionPanel.cpp:329
 msgid "Get Support"
-msgstr "Получить помощь"
+msgstr "Otener Aduya"
 
 #: OptionPanel.cpp:331
 #: gui\AboutDialog.cpp:75
 #, c-format
 msgid "About %s..."
-msgstr "О программе %s..."
+msgstr "Sobre %s..."
 
 #: OptionPanel.cpp:341
 msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
-msgstr "Группа мульти-запуска пуста. Вы  желаете просмотреть соответствующий раздел справки?"
+msgstr "Autualmén o grupo multienchegamiento ye bueito. Deseya que li s'amuestre o tema d'aduya sobre ista carauteristica?"
 
 #: Plugin.cpp:217
 msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
-msgstr "Неправильный формат сценария плагина. Пожалуйста, перекодируйте его в UTF-8 без BOM или в ASCII. Применимо к:"
+msgstr "O coneutor script no en tien o formato correuto. Faiga a fabor de codificar-lo como UTF-8 NO BOM u ASCII. Aplicar ta:"
 
 #: PluginManager.cpp:50
 #, c-format
 msgid "Could not open %s"
-msgstr "Невозможно открыть %s"
+msgstr "Talmén no s'ubra %s"
 
 #: PluginManager.cpp:74
 #, c-format
 msgid "Can not read zip entry '%s'"
-msgstr "Невозможно прочитать zip '%s'"
+msgstr "No puede leyer-se a dentrata zip '%s'"
 
 #: PluginManager.cpp:81
 #, c-format
 msgid "Can not create file '%s'"
-msgstr "Невозможно создать '%s' файл"
+msgstr "No puede creyar-se l'archibo '%s'"
 
 #: PluginManager.cpp:96
 #, c-format
 msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
-msgstr "Плагин был успешно установлен. Он будет активирован после перезапуска %s"
+msgstr "O coneutor s'ah instalato satisfatoriamén. S'autibará ra benién begata que %s s'encomienze"
 
 #: Styles.cpp:72
 #: utilities\Utilities.cpp:81
 #, c-format
 msgid "This skin is not compatible with the current version of %s."
-msgstr "Эта шкурка не совместима с текущей версией %s."
+msgstr "Ista piel u tema no ye compatible con a bersión autual de %s."
 
 #: utilities\Utilities.cpp:125
 msgid "Do you wish to remove this icon?"
-msgstr "Вы хотите удалить эту иконку?"
+msgstr "Deseya eliminar iste icono?"
 
 #: utilities\Utilities.cpp:141
 msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
-msgstr "Ярлык с таким именем уже существует. Вы желаете перезаписать его?"
+msgstr "Ya bi ha un aczeso dreito con iste nombre. Deseya sobrescribir-lo?"
 
 #: utilities\Utilities.cpp:322
 msgid "Please wait while your applications are being closed."
-msgstr "Пожалуйста подождите пока ваши приложения закроются."
+msgstr "Faiga a fabor d'asperar entre que se tancan as aplicazions."
 
 #: utilities\Utilities.cpp:341
 msgid "You do not have sufficient privileges for this operation."
-msgstr "У вас недостаточно прав для этой операции."
+msgstr "Busté no en tien os pribilechios que cal ta ista operazión."
 
 #: utilities\Utilities.cpp:452
 msgid "Do you wish to eject the drive?"
-msgstr "Вы хотите извлечь устройство?"
+msgstr "Deseya sacar a unidá?"
 
 #: gui\AboutDialog.cpp:55
 #, c-format
 msgid "Translators: %s"
-msgstr "Переводчики: %s"
+msgstr "Tradutors: %s"
 
 #: gui\AboutDialog.cpp:57
 msgid "This software uses a number of open source libraries including:"
-msgstr "Это программное обеспечение использует некоторые открытые библиотеки, включая:"
+msgstr "Iste sofware emplega una serie de bibliotecas de codigo ubierto incluyindo:"
 
 #: gui\AboutDialog.cpp:59
 msgid "- Simpleini by Brodie Thiesfield"
-msgstr "- Simpleini, автор: Brodie Thiesfield"
+msgstr "- Simpleini de  Brodie Thiesfield"
 
 #: gui\AboutDialog.cpp:61
 msgid "- TinyXml by Yves Berquin"
-msgstr "- TinyXml, автор: Yves Berquin"
+msgstr "- TinyXml de Yves Berquin"
 
 #: gui\AboutDialog.cpp:63
 msgid "- CStdString by Joe O'Leary"
-msgstr "- CStdString, автор: Joe O'Leary"
+msgstr "- CStdString de Joe O'Leary"
 
 #: gui\AboutDialog.cpp:65
 msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
-msgstr "- Lua, авторы: Roberto Ierusalimschy, Luiz Henrique de Figueiredo и Waldemar Celes"
+msgstr "- Lua de Roberto Ierusalimschy, Luiz Henrique de Figueiredo e Waldemar Celes"
 
 #: gui\AboutDialog.cpp:67
 msgid "- ccrypt by Peter Selinger"
-msgstr "- ccrypt, автор: Peter Selinger"
+msgstr "- ccrypt de Peter Selinger"
 
 #: gui\AboutDialog.cpp:69
 msgid "- FreeType by its respective contributors"
-msgstr "- FreeType от разных авторов"
+msgstr "- FreeType d'os suyos respeutibos contrebuyens"
 
 #: gui\AboutDialog.cpp:71
 msgid "- wxWidgets by their respective authors"
-msgstr "- wxWidgets от разных авторов"
+msgstr "- wxWidgets d'os suyos respeutibos autors"
 
 #: gui\AboutDialog.cpp:73
 msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
-msgstr "Диалоговые окна сделаны с помощью wxGlade, автор: Alberto Griggio."
+msgstr "As caxas de dialogo son feitas emplegando wxGlade d'Alberto Griggio."
 
 #: gui\AboutDialog.cpp:76
 msgid "About"
-msgstr "О программе"
+msgstr "Sobre"
 
 #: gui\AboutDialog.cpp:77
 msgid "License"
-msgstr "Лицензия"
+msgstr "Lizenzia"
 
 #: gui\AboutDialog.cpp:78
 #: gui\BetterMessageDialog.cpp:111
 #: gui\FileOrFolderDialog.cpp:111
 #: gui\IconDialog.cpp:104
 msgid "OK"
-msgstr "ОК"
+msgstr "D'alcuerdo"
 
 #: gui\AboutDialog.cpp:79
 msgid "Credits"
-msgstr "Разработчики"
+msgstr "Creditos"
 
 #: gui\AboutDialog.cpp:83
 #, c-format
 msgid "Copyright © %s"
-msgstr "Копирайт © %s"
+msgstr "Copyright © %s"
 
 #: gui\AboutDialog.cpp:84
 msgid ""
@@ -427,33 +433,28 @@ msgid ""
 "This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
 "\n"
 "You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
-msgstr ""
-"Эта программа является свободным программным обеспечением, вы можете распространять её и/или модифицировать её в соответствии с условиями GNU General Public License, опубликованной Free Software Foundation, либо лицензии 3-ей версии, либо любой более поздней версии.\n"
-"\n"
-"Эта программа распространяется в надежде, что она будет полезной, но БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ, даже без подразумеваемых гарантий КОММЕРЧЕСКОЙ ЦЕННОСТИ или ПРИГОДНОСТИ ДЛЯ ОПРЕДЕЛЕННОЙ ЦЕЛИ. См. GNU General Public License для более подробной информации.\n"
-"\n"
-"Вы должны были получить копию GNU General Public License вместе с этой программой. Если нет, см. <http://www.gnu.org/licenses/>."
+msgstr "Iste programa ye software libre: busté puede redistribuyir-lo e/u modificar-lo baxo os terminos "
 
 #: gui\AboutDialog.cpp:85
 msgid "Web:"
-msgstr "Сайт:"
+msgstr "Fuella elutronica u web:"
 
 #: gui\AboutDialog.cpp:86
 msgid "Contact:"
-msgstr "Контакты:"
+msgstr "Contauto"
 
 #: gui\AboutDialog.cpp:94
 #, c-format
 msgid "%s, Version %s.%s.%s (Build #%s)"
-msgstr "%s, Версия %s.%s.%s (билд #%s)"
+msgstr "%s, Bersión %s.%s.%s (Build #%s)"
 
 #: gui\BetterMessageDialog.cpp:112
 msgid "Yes"
-msgstr "Да"
+msgstr "Sí"
 
 #: gui\BetterMessageDialog.cpp:113
 msgid "No"
-msgstr "Нет"
+msgstr "No"
 
 #: gui\BetterMessageDialog.cpp:114
 #: gui\ConfigDialog.cpp:64
@@ -463,144 +464,144 @@ msgstr "Нет"
 #: gui\PluginPreferencesDialog.cpp:251
 #: gui\ShortcutEditorDialog.cpp:44
 msgid "Cancel"
-msgstr "Отмена"
+msgstr "Canzelar"
 
 #: gui\ConfigDialog.cpp:58
 #: gui\PluginPreferencesDialog.cpp:73
 msgid "General"
-msgstr "Основные"
+msgstr "Cheneral"
 
 #: gui\ConfigDialog.cpp:59
 msgid "Appearance"
-msgstr "Внешний вид"
+msgstr "Aspeuto"
 
 #: gui\ConfigDialog.cpp:61
 msgid "Import"
-msgstr "Импорт"
+msgstr "Importar"
 
 #: gui\ConfigDialog.cpp:62
 msgid "Plugins"
-msgstr "Плагины"
+msgstr "Coneutors"
 
 #: gui\ConfigDialog.cpp:63
 #: gui\ShortcutEditorDialog.cpp:43
 msgid "Save"
-msgstr "Сохранить"
+msgstr "Alzar"
 
 #: gui\ConfigDialog.cpp:66
 msgid "Options"
-msgstr "Опции"
+msgstr "Ozions"
 
 #: gui\ConfigDialog.cpp:103
 msgid "Enabled"
-msgstr "Включен"
+msgstr "Premitir"
 
 #: gui\ConfigDialog.cpp:103
 msgid "Disabled"
-msgstr "Отключен"
+msgstr "No premitir"
 
 #: gui\ConfigDialog.cpp:138
 msgid "Plugin"
-msgstr "Плагин"
+msgstr "Coneutor"
 
 #: gui\ConfigDialog.cpp:139
 msgid "Status"
-msgstr "Статус"
+msgstr "Situazión"
 
 #: gui\ConfigDialog.cpp:219
 msgid "Language:"
-msgstr "Язык:"
+msgstr "Luenga"
 
 #: gui\ConfigDialog.cpp:220
 msgid "Always on top"
-msgstr "Поверх других окон"
+msgstr "Siempre alto"
 
 #: gui\ConfigDialog.cpp:221
 #, c-format
 msgid "Allow only one instance of %s at a time"
-msgstr "Разрешить только одну копию программы"
+msgstr "Premitir sólo que un exemplo de%s de bez"
 
 #: gui\ConfigDialog.cpp:222
 #: gui\ConfigDialog.cpp:794
 msgid "Check for update"
-msgstr "Проверить обновление"
+msgstr "Mirar si bi ha autualizazions"
 
 #: gui\ConfigDialog.cpp:223
 msgid "Install autorun file"
-msgstr "Установить файл автозапуска"
+msgstr "Instalar archibo autoexecutable"
 
 #: gui\ConfigDialog.cpp:224
 msgid "Start Appetizer on system startup"
-msgstr "Запускать Appetizer при загрузке системы"
+msgstr "Prenzipiar Appetizer en iniziar o sistema"
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
-msgstr "Размер иконки:"
+msgstr "Amplaria d'o icono"
 
 #: gui\ConfigDialog.cpp:322
 msgid "Skin:"
-msgstr "Шкурка:"
+msgstr "Piel u aspeuto:"
 
 #: gui\ConfigDialog.cpp:323
 msgid "Orientation:"
-msgstr "Ориентация:"
+msgstr "Orientazion:"
 
 #: gui\ConfigDialog.cpp:324
 msgid "Opacity:"
-msgstr "Прозрачность:"
+msgstr "Opazidá:"
 
 #: gui\ConfigDialog.cpp:325
 msgid "Download more skins"
-msgstr "Скачать ещё шкурок"
+msgstr "Escargar más piels"
 
 #: gui\ConfigDialog.cpp:326
 msgid "Label position:"
-msgstr "Позиция подписи:"
+msgstr "Posizión d'a etiqueta"
 
 #: gui\ConfigDialog.cpp:327
 msgid "Show taskbar icon"
-msgstr "Показывать иконку в панели задач"
+msgstr "Amostrar icono d'a barra de quefers"
 
 #: gui\ConfigDialog.cpp:328
 msgid "Show tray icon"
-msgstr "Показывать иконку в системном лотке"
+msgstr "Amostrar icono d'a serbilla"
 
 #: gui\ConfigDialog.cpp:348
 msgid "Hidden"
-msgstr "Спрятать"
+msgstr "Amagato"
 
 #: gui\ConfigDialog.cpp:349
 msgid "Bottom"
-msgstr "Снизу"
+msgstr "Botón"
 
 #: gui\ConfigDialog.cpp:350
 #: gui\ConfigDialog.cpp:543
 msgid "Right"
-msgstr "Вправо"
+msgstr "Dreito"
 
 #: gui\ConfigDialog.cpp:389
 msgid "Horizontal"
-msgstr "Горизонтальная"
+msgstr "Orizontal"
 
 #: gui\ConfigDialog.cpp:390
 msgid "Vertical"
-msgstr "Вертикальная"
+msgstr "Bertical"
 
 #: gui\ConfigDialog.cpp:416
 msgid "Default"
-msgstr "По-умолчанию"
+msgstr "Defeuto"
 
 #: gui\ConfigDialog.cpp:461
 msgid "Auto-hide after launching an application"
-msgstr "Скрывать после запуска программы"
+msgstr "Autoamagar dimpués d'ubrir una aplicazión"
 
 #: gui\ConfigDialog.cpp:462
 msgid "Run multi-launch group on startup"
-msgstr "Запускать группу мульти-запуска при старте"
+msgstr "Fer funzionar o grupo multienchegamiento en iniziar"
 
 #: gui\ConfigDialog.cpp:463
 msgid "Hot key to hide / show the bar"
-msgstr "Горячая клавиша для скрытия/показа панели запуска"
+msgstr "Tecla d'aczeso rapedo ta amagar / amostrar a barra"
 
 #: gui\ConfigDialog.cpp:464
 msgid "Control +"
@@ -616,15 +617,15 @@ msgstr "Shift +"
 
 #: gui\ConfigDialog.cpp:467
 msgid "When ejecting the drive, close the apps that are locking it"
-msgstr "Закрывать программы блокирующие устройство при извлечении"
+msgstr "En espulsar a unidá, tancar as apps que sigan bloqueyatas"
 
 #: gui\ConfigDialog.cpp:468
 msgid "Close button minimizes to System Tray"
-msgstr "Кнопка закрытия минимизирует в системный трей"
+msgstr "Achiquir o botón tancar en a serbilla d'o sistema"
 
 #: gui\ConfigDialog.cpp:479
 msgid "<None>"
-msgstr "<Нет>"
+msgstr "<Denguno>"
 
 #: gui\ConfigDialog.cpp:521
 msgid "Numpad 0"
@@ -668,7 +669,7 @@ msgstr "Numpad 9"
 
 #: gui\ConfigDialog.cpp:532
 msgid "Backspace"
-msgstr "Backspace"
+msgstr "Recular"
 
 #: gui\ConfigDialog.cpp:533
 msgid "Tab"
@@ -676,68 +677,68 @@ msgstr "Tab"
 
 #: gui\ConfigDialog.cpp:534
 msgid "Return"
-msgstr "Return"
+msgstr "Tornar"
 
 #: gui\ConfigDialog.cpp:535
 msgid "Escape"
-msgstr "Escape"
+msgstr "Escapar"
 
 #: gui\ConfigDialog.cpp:536
 msgid "Space"
-msgstr "Пробел"
+msgstr "Espazio"
 
 #: gui\ConfigDialog.cpp:537
 msgid "Delete"
-msgstr "Delete"
+msgstr "Borrar"
 
 #: gui\ConfigDialog.cpp:539
 msgid "End"
-msgstr "End"
+msgstr "Fin"
 
 #: gui\ConfigDialog.cpp:540
 msgid "Home"
-msgstr "Home"
+msgstr "Inizio"
 
 #: gui\ConfigDialog.cpp:541
 msgid "Left"
-msgstr "Влево"
+msgstr "Cucha"
 
 #: gui\ConfigDialog.cpp:542
 msgid "Up"
-msgstr "Вверх"
+msgstr "Alto"
 
 #: gui\ConfigDialog.cpp:544
 msgid "Down"
-msgstr "Вниз"
+msgstr "Baxo"
 
 #: gui\ConfigDialog.cpp:602
 msgid "Exclude these items from import operations"
-msgstr "Исключить эти элементы из импорта"
+msgstr "Escluyir istos items d'as operazions d'importazión"
 
 #: gui\ConfigDialog.cpp:634
 msgid "Available plugins"
-msgstr "Доступные плагины"
+msgstr "Coneutors disponibles"
 
 #: gui\ConfigDialog.cpp:635
 msgid "Enable"
-msgstr "Включить"
+msgstr "Premitir"
 
 #: gui\ConfigDialog.cpp:636
 msgid "Disable"
-msgstr "Отключить"
+msgstr "No premitir"
 
 #: gui\ConfigDialog.cpp:637
 msgid "Install..."
-msgstr "Установить..."
+msgstr "Instalar..."
 
 #: gui\ConfigDialog.cpp:638
 msgid "Download more plugins"
-msgstr "Скачать другие плагины"
+msgstr "Escargar más coneutors"
 
 #: gui\ConfigDialog.cpp:640
 #, c-format
 msgid "The changes made to the plugins will only be active the next time %s is started."
-msgstr "Изменения в плагинах вступят в силу после перезапуска %s."
+msgstr "Os cambios feitos á os coneutors s'autibarán cuan se torne a %s iniziar"
 
 #: gui\ConfigDialog.cpp:703
 #, c-format
@@ -746,84 +747,84 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"После установки файла автозапуска программа %s будет автоматически запускаться при подключении устройства.\n"
+"En instalar l'archibo autoexecutable en a unidá estrayible, %s prenzipiará cuan coneute a unidá.\n"
 "\n"
-"Вы хотите продолжить?"
+"Deseya continar?"
 
 #: gui\ConfigDialog.cpp:706
 msgid "Could not install autorun file. Please try again."
-msgstr "Невозможно установить файл автозапуска. Попробуйте ещё раз."
+msgstr "Talmén no s'instale l'archibo autoexecutable. Faiga a fabor de tornar á prebar"
 
 #: gui\ConfigDialog.cpp:708
 msgid "The autorun file has been installed successfully"
-msgstr "Файл автозапуска успешно установлен"
+msgstr "L'archibo autoexecutable s'ha instalato satisfatoriamén"
 
 #: gui\ConfigDialog.cpp:739
 msgid "Please enable the plugin in order to change its options."
-msgstr "Пожалуйста, подключите плагин для изменения его настроек."
+msgstr "Faiga a fabor de premitir o coneutor si quiere alzar os cambios d'ozions"
 
 #: gui\ConfigDialog.cpp:757
 #, c-format
 msgid "%s Plugin Packages"
-msgstr "%s архивы плагинов"
+msgstr "%s Paquez de coneutors"
 
 #: gui\ConfigDialog.cpp:758
 #: gui\IconDialog.cpp:175
 msgid "All files"
-msgstr "Все файлы"
+msgstr "Toz os archibos"
 
 #: gui\ConfigDialog.cpp:760
 msgid "Select a plugin package"
-msgstr "Выберите архив плагина"
+msgstr "Trigar un paquet de coneutors"
 
 #: gui\ConfigDialog.cpp:789
 msgid "Please wait..."
-msgstr "Пожалуйста подождите..."
+msgstr "Faiga a fabor d'asperar"
 
 #: gui\ConfigDialog.cpp:1070
 msgid "Some of these changes will only be applied until after you restart the application."
-msgstr "Некоторые из сделанных изменений вступят в силу после перезапуска программы."
+msgstr "Beluns d'istos cambios sólo serán efeutibos en reiniziar l'aplicazión"
 
 #: gui\FileOrFolderDialog.cpp:76
 msgid "Loading tree..."
-msgstr "Загрузка дерева..."
+msgstr "Cargando..."
 
 #: gui\FileOrFolderDialog.cpp:110
 msgid "Select a file or a folder"
-msgstr "Выберите файл или папку"
+msgstr "Trigar un archibo u carpeta"
 
 #: gui\IconDialog.cpp:102
 msgid "Select an icon"
-msgstr "Выберите иконку"
+msgstr "Trigar un icono"
 
 #: gui\IconDialog.cpp:103
 msgid "Icon file or library:"
-msgstr "Файл иконки или библиотеки:"
+msgstr "Archibo d'icono u biblioteca:"
 
 #: gui\IconDialog.cpp:169
 msgid "All supported files"
-msgstr "Все поддерживаемые файлы"
+msgstr "Toz os archibos soportatos"
 
 #: gui\IconDialog.cpp:170
 #: gui\IconDialog.cpp:171
 msgid "Icons"
-msgstr "Иконки"
+msgstr "Iconos"
 
 #: gui\IconDialog.cpp:172
 msgid "Executables"
-msgstr "Программы"
+msgstr "Executables"
 
 #: gui\IconDialog.cpp:173
 msgid "Dynamic libraries"
-msgstr "Динамические библиотеки"
+msgstr "Bibliotecas dinamicas"
 
 #: gui\IconDialog.cpp:174
 msgid "Icon libraries"
-msgstr "Библиотеки иконок"
+msgstr "Bibliotecas d'iconos"
 
 #: gui\IconDialog.cpp:177
 msgid "Select an icon file or library"
-msgstr "Выберите файл иконки или библиотеку"
+msgstr "Trigar un archibo d'icono u biblioteca"
 
 #: gui\ImportWizardDialog.cpp:32
 #, c-format
@@ -832,81 +833,79 @@ msgid ""
 "\n"
 "Please select below where you would like to import your shortcuts from:"
 msgstr ""
-"Этот инструмент поможет вам импортировать ярлыки в %s.\n"
+"Ista ferramienta li aduyará á importar os suyos aczesos dreitos ta %s.\n"
 "\n"
-"Пожалуйста, выберите откуда вы хотите импортировать ярлыки:"
+"Faiga a fabor de trigar dende do deseya importar os aczesos rapedos:"
 
 #: gui\ImportWizardDialog.cpp:43
 msgid "PortableApps.com applications"
-msgstr "Приложения PortableApps.com"
+msgstr "Aplicazions PortableApps.com "
 
 #: gui\ImportWizardDialog.cpp:44
 msgid "Windows Quick Launch toolbar"
-msgstr "Быстрый запуск Windows"
+msgstr "Barra d'inizio rapedo de Wwindows"
 
 #: gui\ImportWizardDialog.cpp:45
 msgid "Windows Start Menu programs"
-msgstr "Программы меню из Пуск"
+msgstr "Programas d'o menú inizio de Windows"
 
 #: gui\ImportWizardDialog.cpp:46
 msgid "Let me select a different location"
-msgstr "Дайте мне выбрать другое расположение"
+msgstr "Dixen-me trigar una ubicazión diferén"
 
 #: gui\ImportWizardDialog.cpp:78
 msgid "Start >>"
-msgstr "Пуск >>"
+msgstr "Iniziiar>>"
 
 #: gui\ImportWizardDialog.cpp:119
 msgid "Importing shortcuts... Please wait."
-msgstr "Импорт ярлыков.. Пожалуйста подождите."
+msgstr "Importando aczesos rapedos... Aspere, por fabor"
 
 #: gui\ImportWizardDialog.cpp:135
 msgid "Please select the folder to import the shortcuts from."
-msgstr "Пожалуйста, выберите папку, из которой надо импортировать ярлыки."
+msgstr "Faiga a fabor de trigar a carpeta dende do importar os aczesos rapedos"
 
 #: gui\PluginPreferencesDialog.cpp:46
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "Preferenzias"
 
 #: gui\ShortcutEditorDialog.cpp:39
 msgid "Group Properties"
-msgstr "Параметры группы"
+msgstr "Propiedaz d'o Grupo"
 
 #: gui\ShortcutEditorDialog.cpp:39
 msgid "Shorcut Properties"
-msgstr "Параметры ярлыка"
+msgstr "Propiedaz de l'aczeso rapedo"
 
 #: gui\ShortcutEditorDialog.cpp:40
 msgid "Name:"
-msgstr "Наименование:"
+msgstr "Nombre:"
 
 #: gui\ShortcutEditorDialog.cpp:41
 msgid "Location:"
-msgstr "Расположение:"
+msgstr "Ubicazión"
 
 #: gui\ShortcutEditorDialog.cpp:42
 msgid "Parameters:"
-msgstr "Параметры:"
+msgstr "Parametros"
 
 #: gui\ShortcutEditorDialog.cpp:45
 msgid "Icon:"
-msgstr "Иконка:"
+msgstr "Icono:"
 
 #: gui\ShortcutEditorDialog.cpp:46
 msgid "Change icon..."
-msgstr "Изменить иконку..."
+msgstr "Cambiar icono"
 
 #: gui\ShortcutEditorDialog.cpp:47
 msgid "Use default"
-msgstr "По-умолчанию"
+msgstr "Emplegar por defeuto"
 
 #: gui\ShortcutEditorDialog.cpp:48
 msgid "The location may be a file, a folder or a URL."
-msgstr "Расположение может быть файлом, папкой или URLом."
+msgstr "A ubicazión puede estar un archibo, una carpeta u una URL."
 
 #: gui\ShortcutEditorDialog.cpp:180
 msgid "The shortcut location doesn't exist. Do you wish to continue?"
-msgstr "Расположение ярлыка не существует. Вы хотите продолжить?"
+msgstr "L'aczeso rapedo no esiste. deseya continar?"
 
-#~ msgid "Transparency:"
-#~ msgstr "Прозрачность:"
