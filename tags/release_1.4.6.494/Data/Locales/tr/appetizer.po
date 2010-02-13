@@ -1,0 +1,933 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
+"PO-Revision-Date: 2009-04-26 17:54-0000\n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Gizle"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Göster"
+
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
+msgid "Eject drive"
+msgstr "Sürücüyü çıkar"
+
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Ayarlar"
+
+#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Kapat"
+
+#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Kısayolları Düzenle"
+
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Dosya bulunamıyor veya silinmiş (Hata %s)"
+
+#: FolderItem.cpp:996
+msgid "Group"
+msgstr "Grup"
+
+#: FolderItem.cpp:997
+msgid "Unnamed"
+msgstr "Adlandırılmamış"
+
+#: FolderItem.cpp:1231
+msgid "Control Panel"
+msgstr "Denetim Masası"
+
+#: FolderItem.cpp:1233
+msgid "My Computer"
+msgstr "Bilgisayarım"
+
+#: FolderItem.cpp:1235
+msgid "My Network Places"
+msgstr "Ağ Bağlantılarım"
+
+#: FolderItem.cpp:1237
+msgid "Recycle Bin"
+msgstr "Çöp Kutusu"
+
+#: FolderItem.cpp:1239
+msgid "Show Desktop"
+msgstr "Masaüstünü Göster"
+
+#: FolderItem.cpp:1241
+msgid "Windows Explorer"
+msgstr "Windows Gezgini"
+
+#: FolderItem.cpp:1243
+msgid "Search"
+msgstr "Ara"
+
+#: FolderItem.cpp:1245
+msgid "Current Drive"
+msgstr "Geçerli Sürücü"
+
+#: FolderItem.cpp:1247
+msgid "Printers and Faxes"
+msgstr "Yazıcılar ve Fakslar"
+
+#: FolderItem.cpp:1249
+msgid "Network Connections"
+msgstr "Ağ Bağlantıları"
+
+#: FolderItem.cpp:1251
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1259
+msgid "Command Prompt"
+msgstr ""
+
+#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "Kaldır..."
+
+#: FolderItemRenderer.cpp:205
+msgid "Add to Multi Launch group"
+msgstr "Çoklu başlama grubuna ekle"
+
+#: FolderItemRenderer.cpp:214
+msgid "Organize group shortcuts"
+msgstr "Grup kısayollarını düzenle"
+
+#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Özellikler"
+
+#: IconPanel.cpp:152 OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "Yeni Kısayol"
+
+#: IconPanel.cpp:156
+msgid "New group..."
+msgstr "Yeni grup..."
+
+#: IconPanel.cpp:191
+msgid "Add special item"
+msgstr "Özel işlem ekleyin"
+
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "Kısayolları içeri aktar"
+
+#: main.cpp:68
+msgid "Uses user data directory to save settings."
+msgstr "Ayarları kaydetmek için kullanıcı veri dizinini kullanır"
+
+#: main.cpp:69
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Kullanıcı veri yolunu belirler (-u yok sayılacaktır)"
+
+#: main.cpp:70
+msgid "Displays the log window (useful for debugging)"
+msgstr "Kayıt penceresini gösterir (hata ayıklamak için kullanışlıdır)"
+
+#: main.cpp:71
+msgid "Displays this help message"
+msgstr "Yardım mesajını gösterir"
+
+#: main.cpp:158
+msgid "Could not initialize locale."
+msgstr "Yerelleştirme başlatılamıyor."
+
+#: main.cpp:316
+msgid "Large"
+msgstr "Büyük"
+
+#: main.cpp:317
+msgid "Medium"
+msgstr ""
+
+#: main.cpp:318
+msgid "Extra Large (XP and above)"
+msgstr "Çok Büyük (XP ve üstü)"
+
+#: main.cpp:319
+msgid "Jumbo (Vista and above)"
+msgstr "Jumbo (Vista ve üstü)"
+
+#: main.cpp:323
+msgid "Small"
+msgstr "Küçük"
+
+#: main.cpp:415
+msgid "Could not get update information"
+msgstr "Güncelleme bilgilerine ulaşılamıyor"
+
+#: main.cpp:429
+msgid "You have the latest version."
+msgstr "Son sürümü kullanıyorsunuz."
+
+#: main.cpp:436
+#, fuzzy, c-format
+msgid ""
+"A new version of Appetizer is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"Do you wish to download it now?"
+msgstr ""
+"Yeni bir sürüm mevcut!\n"
+"\n"
+"Kullandığınız sürüm: %s\n"
+"Yeni sürüm: %s\n"
+"Sürüm notları: %s\n"
+"\n"
+"Şimdi indirmek istiyormusunuz?"
+
+#: main.cpp:438
+msgid "New version of Appetizer"
+msgstr ""
+
+#: main.cpp:442
+msgid "Error launching web browser"
+msgstr "Internet taraycıısının başlatılmasında hata"
+
+#: MainFrame.cpp:236
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr ""
+"Kısayol tuşunu kaydederken hata oluştu. Başka bir uygulama bu tuşu "
+"kullanıyor olabilir."
+
+#: MainFrame.cpp:597
+msgid "Minimize to tray"
+msgstr "Görev çubuğuna küçült"
+
+#: MainFrame.cpp:1072
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s şimdi Sistem Çubuğuna küçültülecek.\n"
+"\n"
+"Bu davranışı  '%s' penceresinden değiştirebilirsiniz ('%s' tab)"
+
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "İşlemler"
+
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+msgid "Don't show this message again"
+msgstr "Bu mesajı bir daha gösterme"
+
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+msgid "Error"
+msgstr "Hata"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Bilgi"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Uyarı"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Onay"
+
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "Yardım"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "Çoklu başlatım"
+
+#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Kısayolları içeri aktar"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "Yardım Konuları"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "Destek Al"
+
+#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#, c-format
+msgid "About %s..."
+msgstr "%s hakkında..."
+
+#: OptionPanel.cpp:341
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr ""
+"Çoklu başlatma grubu şu anda boş. Bu işlem hakkındaki yardım konusunu görmek "
+"istermisiniz?"
+
+#: Plugin.cpp:217
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
+msgstr ""
+"Eklenti kodo doğru formatta değil. Lütfen UTF-8 NO BOM veya ASCII olarak "
+"yeniden kodlayın. Geçerli olanlar:"
+
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr " %s açılamyor"
+
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "'%s' zip girişini okuyamıyor."
+
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "'%s' dosyası yaratılamıyor"
+
+#: PluginManager.cpp:96
+#, c-format
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
+msgstr ""
+"Eklenti başarıyla yüklendi. Yüklediğiniz eklenti,%s'ın bir dahaki "
+"çalıştırılmasında geçerli olacaktır."
+
+#: Styles.cpp:72 utilities\Utilities.cpp:81
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Bu kabuk %s'ın geçerli sürümü ile uyumlu değildir."
+
+#: utilities\Utilities.cpp:125
+msgid "Do you wish to remove this icon?"
+msgstr "Bu simgeyi kaldırmak istiyormusunuz?"
+
+#: utilities\Utilities.cpp:141
+#, fuzzy
+msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
+msgstr "Kısayol yeri mevcut değil. Devam etmek istiyormusunuz?"
+
+#: utilities\Utilities.cpp:322
+msgid "Please wait while your applications are being closed."
+msgstr "Uygulamalarınız kapatılırken lütfen bekleyin."
+
+#: utilities\Utilities.cpp:341
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Bu işlemi yürütmek için yeterli yetkiniz yok."
+
+#: utilities\Utilities.cpp:452
+msgid "Do you wish to eject the drive?"
+msgstr "Sürücüyü çıkartmak istiyormusunuz?"
+
+#: gui\AboutDialog.cpp:55
+#, c-format
+msgid "Translators: %s"
+msgstr "Çevirmenler: %s"
+
+#: gui\AboutDialog.cpp:57
+msgid "This software uses a number of open source libraries including:"
+msgstr "Bu yazılım aşağıdaki açık kaynak kütüphanelerini kullanmaktadır:"
+
+#: gui\AboutDialog.cpp:59
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini - Brodie Thiesfield"
+
+#: gui\AboutDialog.cpp:61
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml - Yves Berquin"
+
+#: gui\AboutDialog.cpp:63
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString - Joe O'Leary"
+
+#: gui\AboutDialog.cpp:65
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
+msgstr ""
+"- Lua - Roberto Ierusalimschy, Luiz Henrique de Figueiredo, ve Waldemar Celes"
+
+#: gui\AboutDialog.cpp:67
+msgid "- ccrypt by Peter Selinger"
+msgstr ""
+
+#: gui\AboutDialog.cpp:69
+#, fuzzy
+msgid "- FreeType by its respective contributors"
+msgstr "- wxWidgets - ilgili yayıncıları"
+
+#: gui\AboutDialog.cpp:71
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets - ilgili yayıncıları"
+
+#: gui\AboutDialog.cpp:73
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr ""
+"Konuşma kutuları Alberto Griggio'nun wxGlade'i kullanılarak yapılmıştır."
+
+#: gui\AboutDialog.cpp:76
+msgid "About"
+msgstr "Hakkında"
+
+#: gui\AboutDialog.cpp:77
+msgid "License"
+msgstr "Lisans"
+
+#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "Tamam"
+
+#: gui\AboutDialog.cpp:79
+msgid "Credits"
+msgstr "Krediler"
+
+#: gui\AboutDialog.cpp:83
+#, c-format
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+#: gui\AboutDialog.cpp:84
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"Bu yazılım ücretsizdir: Free Software Foundation'nın Lisans 3 veya sonraki "
+"sürümlerinde yayınladığı  GNU General Public License doğrultusunda yeniden "
+"dağıtabilir ve/veya değiştirebilirsiniz.\n"
+"\n"
+"Bu yazılım size yardımcı olma ümidi ile dağıtılmıştır ve HİÇBİR GARANTİ "
+"İÇERMEMEKTEDİR. Daha fazla detay için GNU General Public Lisansına "
+"başvurun.\n"
+"\n"
+"Yazılım ile birlikte GNU General Public Lisansı verilmektedir. Eğer sizde "
+"yoksa, <http://www.gnu.org/licenses/> adresinde bulabilirsiniz."
+
+#: gui\AboutDialog.cpp:85
+msgid "Web:"
+msgstr "Web:"
+
+#: gui\AboutDialog.cpp:86
+msgid "Contact:"
+msgstr "İletişim:"
+
+#: gui\AboutDialog.cpp:94
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Sürüm %s.%s.%s (Build #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Evet"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "Hayır"
+
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Cancel"
+msgstr "İptal"
+
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
+msgid "General"
+msgstr "Genel"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Appearance"
+msgstr "Görünüm"
+
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "İçeri Aktar"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "Eklentiler"
+
+#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+msgid "Save"
+msgstr "Kaydet"
+
+#: gui\ConfigDialog.cpp:66
+#, fuzzy
+msgid "Options"
+msgstr "İşlemler"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Enabled"
+msgstr "Etkinleştirildi"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Disabled"
+msgstr "Etkisiz"
+
+#: gui\ConfigDialog.cpp:138
+msgid "Plugin"
+msgstr "Eklenti"
+
+#: gui\ConfigDialog.cpp:139
+msgid "Status"
+msgstr "Durum"
+
+#: gui\ConfigDialog.cpp:219
+msgid "Language:"
+msgstr "Dil:"
+
+#: gui\ConfigDialog.cpp:220
+msgid "Always on top"
+msgstr "Her zaman üstte"
+
+#: gui\ConfigDialog.cpp:221
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "%s Sadece bir sefer çalışsın"
+
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
+msgid "Check for update"
+msgstr "Güncellemeleri kontrol et"
+
+#: gui\ConfigDialog.cpp:223
+msgid "Install autorun file"
+msgstr "Otomatik başlatma dosyasını yükle"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:321
+msgid "Icon size:"
+msgstr "Simge büyüklüğü:"
+
+#: gui\ConfigDialog.cpp:322
+msgid "Skin:"
+msgstr "Kabuk:"
+
+#: gui\ConfigDialog.cpp:323
+msgid "Orientation:"
+msgstr "Yön:"
+
+#: gui\ConfigDialog.cpp:324
+msgid "Opacity:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:325
+msgid "Download more skins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:326
+msgid "Label position:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
+#, fuzzy
+msgid "Hidden"
+msgstr "Gizle"
+
+#: gui\ConfigDialog.cpp:349
+msgid "Bottom"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
+msgid "Right"
+msgstr "Sağ"
+
+#: gui\ConfigDialog.cpp:389
+msgid "Horizontal"
+msgstr "Yatay"
+
+#: gui\ConfigDialog.cpp:390
+msgid "Vertical"
+msgstr "Dikey"
+
+#: gui\ConfigDialog.cpp:416
+msgid "Default"
+msgstr "Varsayılan"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Auto-hide after launching an application"
+msgstr "Uygulamayı başlattıktan sonra otomatik gizle"
+
+#: gui\ConfigDialog.cpp:462
+msgid "Run multi-launch group on startup"
+msgstr "Başlangıçta çoklu başlama grubunu çalıştır"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Hot key to hide / show the bar"
+msgstr "Pencereyi gizlemek/göstermek için kısayol tuşu"
+
+#: gui\ConfigDialog.cpp:464
+msgid "Control +"
+msgstr "Control +"
+
+#: gui\ConfigDialog.cpp:465
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:466
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:467
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Sürücüyü çıkartırken, sürücüyü kullanan uygulamaları kapat."
+
+#: gui\ConfigDialog.cpp:468
+msgid "Close button minimizes to System Tray"
+msgstr "Kapat tuşu Sistem Çubuğuna küçültsün"
+
+#: gui\ConfigDialog.cpp:479
+msgid "<None>"
+msgstr "<Hiçbiri>"
+
+#: gui\ConfigDialog.cpp:521
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+#: gui\ConfigDialog.cpp:522
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+#: gui\ConfigDialog.cpp:523
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+#: gui\ConfigDialog.cpp:524
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+#: gui\ConfigDialog.cpp:525
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+#: gui\ConfigDialog.cpp:526
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+#: gui\ConfigDialog.cpp:527
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+#: gui\ConfigDialog.cpp:528
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+#: gui\ConfigDialog.cpp:529
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+#: gui\ConfigDialog.cpp:530
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+#: gui\ConfigDialog.cpp:532
+msgid "Backspace"
+msgstr "Geri tuşu"
+
+#: gui\ConfigDialog.cpp:533
+msgid "Tab"
+msgstr "Tab"
+
+#: gui\ConfigDialog.cpp:534
+msgid "Return"
+msgstr "Return"
+
+#: gui\ConfigDialog.cpp:535
+msgid "Escape"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:536
+msgid "Space"
+msgstr "Boşluk Tuşu"
+
+#: gui\ConfigDialog.cpp:537
+msgid "Delete"
+msgstr "Sil"
+
+#: gui\ConfigDialog.cpp:539
+msgid "End"
+msgstr "End"
+
+#: gui\ConfigDialog.cpp:540
+msgid "Home"
+msgstr "Home"
+
+#: gui\ConfigDialog.cpp:541
+msgid "Left"
+msgstr "Sol"
+
+#: gui\ConfigDialog.cpp:542
+msgid "Up"
+msgstr "Yukarı"
+
+#: gui\ConfigDialog.cpp:544
+msgid "Down"
+msgstr "Aşağı"
+
+#: gui\ConfigDialog.cpp:602
+msgid "Exclude these items from import operations"
+msgstr "Bu dosyaları içeri aktarma işlemine dahil etme"
+
+#: gui\ConfigDialog.cpp:634
+msgid "Available plugins"
+msgstr "Bulunan eklentiler"
+
+#: gui\ConfigDialog.cpp:635
+msgid "Enable"
+msgstr "Etkinleştir"
+
+#: gui\ConfigDialog.cpp:636
+msgid "Disable"
+msgstr "Etkisiz"
+
+#: gui\ConfigDialog.cpp:637
+msgid "Install..."
+msgstr "Kur..."
+
+#: gui\ConfigDialog.cpp:638
+msgid "Download more plugins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:640
+#, c-format
+msgid ""
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr ""
+"Eklentilerde yaptığınız değişiklikler, %s'ın yeniden çalıştırılmasında "
+"geçerli olacaktır."
+
+#: gui\ConfigDialog.cpp:703
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start "
+"automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Taşınabilir sürücünüze otomatik başlatma dosyasını yükleyerek, sürücünüzü "
+"her taktığınızda %s'in otomatik olarak çalışması sağlanacaktır.\n"
+"\n"
+"Devam etmek istiyormusunuz?"
+
+#: gui\ConfigDialog.cpp:706
+msgid "Could not install autorun file. Please try again."
+msgstr "Otomatik başlat dosyası yüklenemedi. Lütfen tekrar deneyin."
+
+#: gui\ConfigDialog.cpp:708
+msgid "The autorun file has been installed successfully"
+msgstr "Otomatik başlat dosyası başarıyla yüklendi"
+
+#: gui\ConfigDialog.cpp:739
+msgid "Please enable the plugin in order to change its options."
+msgstr ""
+
+#: gui\ConfigDialog.cpp:757
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s Eklenti Paketleri"
+
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
+msgid "All files"
+msgstr "Bütün Dosyalar"
+
+#: gui\ConfigDialog.cpp:760
+msgid "Select a plugin package"
+msgstr "Eklenti paketi seçin"
+
+#: gui\ConfigDialog.cpp:789
+msgid "Please wait..."
+msgstr "Lütfen bekleyin..."
+
+#: gui\ConfigDialog.cpp:1070
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
+msgstr ""
+"Bazı değişiklikler uygulama yeniden başlatıldıktan sonra geçerli olacaktır."
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Dizin yükleniyor..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "Dosya veya dizin seçin"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Simge seçin"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Simge dosyası veya kütüphane:"
+
+#: gui\IconDialog.cpp:169
+msgid "All supported files"
+msgstr "Desteklenen bütün dosyalar"
+
+#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+msgid "Icons"
+msgstr "Simgeler"
+
+#: gui\IconDialog.cpp:172
+msgid "Executables"
+msgstr "Uygulamalar"
+
+#: gui\IconDialog.cpp:173
+msgid "Dynamic libraries"
+msgstr "Dinamik kütüphaneler"
+
+#: gui\IconDialog.cpp:174
+msgid "Icon libraries"
+msgstr "Simge kütüphaneleri"
+
+#: gui\IconDialog.cpp:177
+msgid "Select an icon file or library"
+msgstr "Simge dosyası veya kütüphanesi seçin"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Bu araç kısayolları %s'a aktarmak için yardımcı olacaktır.\n"
+"\n"
+"Lütfen kısayollarınızın alınacağı yeri seçin:"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com uygulamaları"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "Windows Quick Launch araç çubuğu"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "Windows Start Menü programları"
+
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
+msgid "Start >>"
+msgstr "Başla >>"
+
+#: gui\ImportWizardDialog.cpp:119
+msgid "Importing shortcuts... Please wait."
+msgstr "Kısayollar içeri aktarılıyor... Lütfen bekleyin."
+
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
+msgid "Preferences"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Group Properties"
+msgstr "Grup Özellikleri"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Shorcut Properties"
+msgstr "Kısayol Özellikleri"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Name:"
+msgstr "Ad:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Location:"
+msgstr "Yer:"
+
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Parameters:"
+msgstr "Parametreler:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Icon:"
+msgstr "Simge:"
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Change icon..."
+msgstr "Simge değiştir..."
+
+#: gui\ShortcutEditorDialog.cpp:47
+msgid "Use default"
+msgstr "Varsayılanı kullan"
+
+#: gui\ShortcutEditorDialog.cpp:48
+msgid "The location may be a file, a folder or a URL."
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:180
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Kısayol yeri mevcut değil. Devam etmek istiyormusunuz?"
+
+#~ msgid "Transparency:"
+#~ msgstr "Şeffaflık:"

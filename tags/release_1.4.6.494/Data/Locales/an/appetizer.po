@@ -1,0 +1,911 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
+"PO-Revision-Date: 2010-02-10 18:35-0000\n"
+"Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Aragonese\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,-1,-1,-1,88\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Amagar"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Amostrar"
+
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:598
+msgid "Eject drive"
+msgstr "Espulsar unidá"
+
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:1072
+#: OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Confegurazión"
+
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Tancar"
+
+#: FolderItem.cpp:467
+#: gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Organizar aczesos dreitos"
+
+#: FolderItem.cpp:617
+#: FolderItem.cpp:639
+#: FolderItem.cpp:662
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Iste archibo no esiste u ye estato borrato (Error %s)"
+
+#: FolderItem.cpp:996
+msgid "Group"
+msgstr "Grupo"
+
+#: FolderItem.cpp:997
+msgid "Unnamed"
+msgstr "Esconoxito"
+
+#: FolderItem.cpp:1231
+msgid "Control Panel"
+msgstr "Panel de control"
+
+#: FolderItem.cpp:1233
+msgid "My Computer"
+msgstr "O mío ordinador"
+
+#: FolderItem.cpp:1235
+msgid "My Network Places"
+msgstr "Os míos puestos de rete"
+
+#: FolderItem.cpp:1237
+msgid "Recycle Bin"
+msgstr "Pozal de reciclache"
+
+#: FolderItem.cpp:1239
+msgid "Show Desktop"
+msgstr "Amostrar escritorio"
+
+#: FolderItem.cpp:1241
+msgid "Windows Explorer"
+msgstr "Esplorador de Windows"
+
+#: FolderItem.cpp:1243
+msgid "Search"
+msgstr "Buscar"
+
+#: FolderItem.cpp:1245
+msgid "Current Drive"
+msgstr "Unidá autual"
+
+#: FolderItem.cpp:1247
+msgid "Printers and Faxes"
+msgstr "Imprentaderas e facses"
+
+#: FolderItem.cpp:1249
+msgid "Network Connections"
+msgstr "Conisions de rete"
+
+#: FolderItem.cpp:1251
+msgid "Calculator"
+msgstr "Calculadera"
+
+#: FolderItem.cpp:1253
+msgid "Paint Brush"
+msgstr "Pinzel"
+
+#: FolderItem.cpp:1255
+msgid "Notepad"
+msgstr "Bloc de notas"
+
+#: FolderItem.cpp:1257
+msgid "WordPad"
+msgstr "Prozesador de testo"
+
+#: FolderItem.cpp:1259
+msgid "Command Prompt"
+msgstr "Comando Listo"
+
+#: FolderItemRenderer.cpp:200
+#: gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "Eliminar"
+
+#: FolderItemRenderer.cpp:205
+msgid "Add to Multi Launch group"
+msgstr "Adibir ta grupo multienchegamiento"
+
+#: FolderItemRenderer.cpp:214
+msgid "Organize group shortcuts"
+msgstr "Organizar grupo d'aczesos dreitos"
+
+#: FolderItemRenderer.cpp:219
+#: gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Propiedaz"
+
+#: IconPanel.cpp:152
+#: OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "Nuebo aczeso dreito"
+
+#: IconPanel.cpp:156
+msgid "New group..."
+msgstr "Nuebo grupo..."
+
+#: IconPanel.cpp:191
+msgid "Add special item"
+msgstr "Adibir item espezial"
+
+#: IconPanel.cpp:414
+#, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "Talmén no pueda importar-se iste aczeso dreito: %s"
+
+#: main.cpp:68
+msgid "Uses user data directory to save settings."
+msgstr "Emplegar os datos d'o direutorio d'usuario ta alzar a confegurazión"
+
+#: main.cpp:69
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Ruta d'os datos de confegurazión d'o usuario (busté será inorato)"
+
+#: main.cpp:70
+msgid "Displays the log window (useful for debugging)"
+msgstr "Amuestra ra finestra de rechistro (fa onra ta depurar)"
+
+#: main.cpp:71
+msgid "Displays this help message"
+msgstr "Amuestra iste mensache d'aduya"
+
+#: main.cpp:158
+msgid "Could not initialize locale."
+msgstr "Talmén no s'inizie local"
+
+#: main.cpp:316
+msgid "Large"
+msgstr "Amplo"
+
+#: main.cpp:317
+msgid "Medium"
+msgstr "Meyano"
+
+#: main.cpp:318
+msgid "Extra Large (XP and above)"
+msgstr "Amplismo (XP e superior)"
+
+#: main.cpp:319
+msgid "Jumbo (Vista and above)"
+msgstr "Jumbo (Vista e superior)"
+
+#: main.cpp:323
+msgid "Small"
+msgstr "Chiquet"
+
+#: main.cpp:415
+msgid "Could not get update information"
+msgstr "Talmén no s'autualize a informazión"
+
+#: main.cpp:429
+msgid "You have the latest version."
+msgstr "Busté tien a zaguera bersión"
+
+#: main.cpp:436
+#, c-format
+msgid ""
+"A new version of Appetizer is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"Do you wish to download it now?"
+msgstr ""
+"Una nueba bersión d'Appetizer ye disponible!\n"
+"\n"
+"A suya bersión: %s\n"
+"Nueba bersión: %s\n"
+"Notas d'a bersión: %s\n"
+"Deseya escargar-la agora?"
+
+#: main.cpp:438
+msgid "New version of Appetizer"
+msgstr "Nueba bersión d'Appetizer"
+
+#: main.cpp:442
+msgid "Error launching web browser"
+msgstr "Error en ubrir o nabatiador web"
+
+#: MainFrame.cpp:236
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Ye estata una error de rechistro en a tecla d'aczeso rapedo"
+
+#: MainFrame.cpp:597
+msgid "Minimize to tray"
+msgstr "Achiquir en a serbilla"
+
+#: MainFrame.cpp:1072
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s ba á estar achiquito en a Serbilla d'o Sistema.\n"
+"\n"
+"Pare cuenta que puede cambear ista conduta en o '%s' windows ('%s' tab)"
+
+#: MainFrame.cpp:1072
+#: gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "Operazions"
+
+#: MainFrame.cpp:1072
+#: utilities\Utilities.cpp:125
+#: utilities\Utilities.cpp:452
+msgid "Don't show this message again"
+msgstr "No tornar á amostrar iste mensache"
+
+#: MessageBoxes.cpp:15
+#: gui\ConfigDialog.cpp:101
+msgid "Error"
+msgstr "Error"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Informazión"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Abiso"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Emologazión"
+
+#: OptionPanel.cpp:163
+#: gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "Aduya"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "Multienchegamiento"
+
+#: OptionPanel.cpp:167
+#: gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Importar aczesos dreitos"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "Temas d'aduya"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "Otener Aduya"
+
+#: OptionPanel.cpp:331
+#: gui\AboutDialog.cpp:75
+#, c-format
+msgid "About %s..."
+msgstr "Sobre %s..."
+
+#: OptionPanel.cpp:341
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "Autualmén o grupo multienchegamiento ye bueito. Deseya que li s'amuestre o tema d'aduya sobre ista carauteristica?"
+
+#: Plugin.cpp:217
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "O coneutor script no en tien o formato correuto. Faiga a fabor de codificar-lo como UTF-8 NO BOM u ASCII. Aplicar ta:"
+
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr "Talmén no s'ubra %s"
+
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "No puede leyer-se a dentrata zip '%s'"
+
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "No puede creyar-se l'archibo '%s'"
+
+#: PluginManager.cpp:96
+#, c-format
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "O coneutor s'ah instalato satisfatoriamén. S'autibará ra benién begata que %s s'encomienze"
+
+#: Styles.cpp:72
+#: utilities\Utilities.cpp:81
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Ista piel u tema no ye compatible con a bersión autual de %s."
+
+#: utilities\Utilities.cpp:125
+msgid "Do you wish to remove this icon?"
+msgstr "Deseya eliminar iste icono?"
+
+#: utilities\Utilities.cpp:141
+msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
+msgstr "Ya bi ha un aczeso dreito con iste nombre. Deseya sobrescribir-lo?"
+
+#: utilities\Utilities.cpp:322
+msgid "Please wait while your applications are being closed."
+msgstr "Faiga a fabor d'asperar entre que se tancan as aplicazions."
+
+#: utilities\Utilities.cpp:341
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Busté no en tien os pribilechios que cal ta ista operazión."
+
+#: utilities\Utilities.cpp:452
+msgid "Do you wish to eject the drive?"
+msgstr "Deseya sacar a unidá?"
+
+#: gui\AboutDialog.cpp:55
+#, c-format
+msgid "Translators: %s"
+msgstr "Tradutors: %s"
+
+#: gui\AboutDialog.cpp:57
+msgid "This software uses a number of open source libraries including:"
+msgstr "Iste sofware emplega una serie de bibliotecas de codigo ubierto incluyindo:"
+
+#: gui\AboutDialog.cpp:59
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini de  Brodie Thiesfield"
+
+#: gui\AboutDialog.cpp:61
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml de Yves Berquin"
+
+#: gui\AboutDialog.cpp:63
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString de Joe O'Leary"
+
+#: gui\AboutDialog.cpp:65
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "- Lua de Roberto Ierusalimschy, Luiz Henrique de Figueiredo e Waldemar Celes"
+
+#: gui\AboutDialog.cpp:67
+msgid "- ccrypt by Peter Selinger"
+msgstr "- ccrypt de Peter Selinger"
+
+#: gui\AboutDialog.cpp:69
+msgid "- FreeType by its respective contributors"
+msgstr "- FreeType d'os suyos respeutibos contrebuyens"
+
+#: gui\AboutDialog.cpp:71
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets d'os suyos respeutibos autors"
+
+#: gui\AboutDialog.cpp:73
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "As caxas de dialogo son feitas emplegando wxGlade d'Alberto Griggio."
+
+#: gui\AboutDialog.cpp:76
+msgid "About"
+msgstr "Sobre"
+
+#: gui\AboutDialog.cpp:77
+msgid "License"
+msgstr "Lizenzia"
+
+#: gui\AboutDialog.cpp:78
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "D'alcuerdo"
+
+#: gui\AboutDialog.cpp:79
+msgid "Credits"
+msgstr "Creditos"
+
+#: gui\AboutDialog.cpp:83
+#, c-format
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+#: gui\AboutDialog.cpp:84
+msgid ""
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr "Iste programa ye software libre: busté puede redistribuyir-lo e/u modificar-lo baxo os terminos "
+
+#: gui\AboutDialog.cpp:85
+msgid "Web:"
+msgstr "Fuella elutronica u web:"
+
+#: gui\AboutDialog.cpp:86
+msgid "Contact:"
+msgstr "Contauto"
+
+#: gui\AboutDialog.cpp:94
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Bersión %s.%s.%s (Build #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Sí"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "No"
+
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81
+#: gui\PluginPreferencesDialog.cpp:251
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Cancel"
+msgstr "Canzelar"
+
+#: gui\ConfigDialog.cpp:58
+#: gui\PluginPreferencesDialog.cpp:73
+msgid "General"
+msgstr "Cheneral"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Appearance"
+msgstr "Aspeuto"
+
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "Importar"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "Coneutors"
+
+#: gui\ConfigDialog.cpp:63
+#: gui\ShortcutEditorDialog.cpp:43
+msgid "Save"
+msgstr "Alzar"
+
+#: gui\ConfigDialog.cpp:66
+msgid "Options"
+msgstr "Ozions"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Enabled"
+msgstr "Premitir"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Disabled"
+msgstr "No premitir"
+
+#: gui\ConfigDialog.cpp:138
+msgid "Plugin"
+msgstr "Coneutor"
+
+#: gui\ConfigDialog.cpp:139
+msgid "Status"
+msgstr "Situazión"
+
+#: gui\ConfigDialog.cpp:219
+msgid "Language:"
+msgstr "Luenga"
+
+#: gui\ConfigDialog.cpp:220
+msgid "Always on top"
+msgstr "Siempre alto"
+
+#: gui\ConfigDialog.cpp:221
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "Premitir sólo que un exemplo de%s de bez"
+
+#: gui\ConfigDialog.cpp:222
+#: gui\ConfigDialog.cpp:794
+msgid "Check for update"
+msgstr "Mirar si bi ha autualizazions"
+
+#: gui\ConfigDialog.cpp:223
+msgid "Install autorun file"
+msgstr "Instalar archibo autoexecutable"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr "Prenzipiar Appetizer en iniziar o sistema"
+
+#: gui\ConfigDialog.cpp:321
+msgid "Icon size:"
+msgstr "Amplaria d'o icono"
+
+#: gui\ConfigDialog.cpp:322
+msgid "Skin:"
+msgstr "Piel u aspeuto:"
+
+#: gui\ConfigDialog.cpp:323
+msgid "Orientation:"
+msgstr "Orientazion:"
+
+#: gui\ConfigDialog.cpp:324
+msgid "Opacity:"
+msgstr "Opazidá:"
+
+#: gui\ConfigDialog.cpp:325
+msgid "Download more skins"
+msgstr "Escargar más piels"
+
+#: gui\ConfigDialog.cpp:326
+msgid "Label position:"
+msgstr "Posizión d'a etiqueta"
+
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr "Amostrar icono d'a barra de quefers"
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr "Amostrar icono d'a serbilla"
+
+#: gui\ConfigDialog.cpp:348
+msgid "Hidden"
+msgstr "Amagato"
+
+#: gui\ConfigDialog.cpp:349
+msgid "Bottom"
+msgstr "Botón"
+
+#: gui\ConfigDialog.cpp:350
+#: gui\ConfigDialog.cpp:543
+msgid "Right"
+msgstr "Dreito"
+
+#: gui\ConfigDialog.cpp:389
+msgid "Horizontal"
+msgstr "Orizontal"
+
+#: gui\ConfigDialog.cpp:390
+msgid "Vertical"
+msgstr "Bertical"
+
+#: gui\ConfigDialog.cpp:416
+msgid "Default"
+msgstr "Defeuto"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Auto-hide after launching an application"
+msgstr "Autoamagar dimpués d'ubrir una aplicazión"
+
+#: gui\ConfigDialog.cpp:462
+msgid "Run multi-launch group on startup"
+msgstr "Fer funzionar o grupo multienchegamiento en iniziar"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Hot key to hide / show the bar"
+msgstr "Tecla d'aczeso rapedo ta amagar / amostrar a barra"
+
+#: gui\ConfigDialog.cpp:464
+msgid "Control +"
+msgstr "Control +"
+
+#: gui\ConfigDialog.cpp:465
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:466
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:467
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "En espulsar a unidá, tancar as apps que sigan bloqueyatas"
+
+#: gui\ConfigDialog.cpp:468
+msgid "Close button minimizes to System Tray"
+msgstr "Achiquir o botón tancar en a serbilla d'o sistema"
+
+#: gui\ConfigDialog.cpp:479
+msgid "<None>"
+msgstr "<Denguno>"
+
+#: gui\ConfigDialog.cpp:521
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+#: gui\ConfigDialog.cpp:522
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+#: gui\ConfigDialog.cpp:523
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+#: gui\ConfigDialog.cpp:524
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+#: gui\ConfigDialog.cpp:525
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+#: gui\ConfigDialog.cpp:526
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+#: gui\ConfigDialog.cpp:527
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+#: gui\ConfigDialog.cpp:528
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+#: gui\ConfigDialog.cpp:529
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+#: gui\ConfigDialog.cpp:530
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+#: gui\ConfigDialog.cpp:532
+msgid "Backspace"
+msgstr "Recular"
+
+#: gui\ConfigDialog.cpp:533
+msgid "Tab"
+msgstr "Tab"
+
+#: gui\ConfigDialog.cpp:534
+msgid "Return"
+msgstr "Tornar"
+
+#: gui\ConfigDialog.cpp:535
+msgid "Escape"
+msgstr "Escapar"
+
+#: gui\ConfigDialog.cpp:536
+msgid "Space"
+msgstr "Espazio"
+
+#: gui\ConfigDialog.cpp:537
+msgid "Delete"
+msgstr "Borrar"
+
+#: gui\ConfigDialog.cpp:539
+msgid "End"
+msgstr "Fin"
+
+#: gui\ConfigDialog.cpp:540
+msgid "Home"
+msgstr "Inizio"
+
+#: gui\ConfigDialog.cpp:541
+msgid "Left"
+msgstr "Cucha"
+
+#: gui\ConfigDialog.cpp:542
+msgid "Up"
+msgstr "Alto"
+
+#: gui\ConfigDialog.cpp:544
+msgid "Down"
+msgstr "Baxo"
+
+#: gui\ConfigDialog.cpp:602
+msgid "Exclude these items from import operations"
+msgstr "Escluyir istos items d'as operazions d'importazión"
+
+#: gui\ConfigDialog.cpp:634
+msgid "Available plugins"
+msgstr "Coneutors disponibles"
+
+#: gui\ConfigDialog.cpp:635
+msgid "Enable"
+msgstr "Premitir"
+
+#: gui\ConfigDialog.cpp:636
+msgid "Disable"
+msgstr "No premitir"
+
+#: gui\ConfigDialog.cpp:637
+msgid "Install..."
+msgstr "Instalar..."
+
+#: gui\ConfigDialog.cpp:638
+msgid "Download more plugins"
+msgstr "Escargar más coneutors"
+
+#: gui\ConfigDialog.cpp:640
+#, c-format
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "Os cambios feitos á os coneutors s'autibarán cuan se torne a %s iniziar"
+
+#: gui\ConfigDialog.cpp:703
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"En instalar l'archibo autoexecutable en a unidá estrayible, %s prenzipiará cuan coneute a unidá.\n"
+"\n"
+"Deseya continar?"
+
+#: gui\ConfigDialog.cpp:706
+msgid "Could not install autorun file. Please try again."
+msgstr "Talmén no s'instale l'archibo autoexecutable. Faiga a fabor de tornar á prebar"
+
+#: gui\ConfigDialog.cpp:708
+msgid "The autorun file has been installed successfully"
+msgstr "L'archibo autoexecutable s'ha instalato satisfatoriamén"
+
+#: gui\ConfigDialog.cpp:739
+msgid "Please enable the plugin in order to change its options."
+msgstr "Faiga a fabor de premitir o coneutor si quiere alzar os cambios d'ozions"
+
+#: gui\ConfigDialog.cpp:757
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s Paquez de coneutors"
+
+#: gui\ConfigDialog.cpp:758
+#: gui\IconDialog.cpp:175
+msgid "All files"
+msgstr "Toz os archibos"
+
+#: gui\ConfigDialog.cpp:760
+msgid "Select a plugin package"
+msgstr "Trigar un paquet de coneutors"
+
+#: gui\ConfigDialog.cpp:789
+msgid "Please wait..."
+msgstr "Faiga a fabor d'asperar"
+
+#: gui\ConfigDialog.cpp:1070
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Beluns d'istos cambios sólo serán efeutibos en reiniziar l'aplicazión"
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Cargando..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "Trigar un archibo u carpeta"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Trigar un icono"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Archibo d'icono u biblioteca:"
+
+#: gui\IconDialog.cpp:169
+msgid "All supported files"
+msgstr "Toz os archibos soportatos"
+
+#: gui\IconDialog.cpp:170
+#: gui\IconDialog.cpp:171
+msgid "Icons"
+msgstr "Iconos"
+
+#: gui\IconDialog.cpp:172
+msgid "Executables"
+msgstr "Executables"
+
+#: gui\IconDialog.cpp:173
+msgid "Dynamic libraries"
+msgstr "Bibliotecas dinamicas"
+
+#: gui\IconDialog.cpp:174
+msgid "Icon libraries"
+msgstr "Bibliotecas d'iconos"
+
+#: gui\IconDialog.cpp:177
+msgid "Select an icon file or library"
+msgstr "Trigar un archibo d'icono u biblioteca"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Ista ferramienta li aduyará á importar os suyos aczesos dreitos ta %s.\n"
+"\n"
+"Faiga a fabor de trigar dende do deseya importar os aczesos rapedos:"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "Aplicazions PortableApps.com "
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "Barra d'inizio rapedo de Wwindows"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "Programas d'o menú inizio de Windows"
+
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr "Dixen-me trigar una ubicazión diferén"
+
+#: gui\ImportWizardDialog.cpp:78
+msgid "Start >>"
+msgstr "Iniziiar>>"
+
+#: gui\ImportWizardDialog.cpp:119
+msgid "Importing shortcuts... Please wait."
+msgstr "Importando aczesos rapedos... Aspere, por fabor"
+
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr "Faiga a fabor de trigar a carpeta dende do importar os aczesos rapedos"
+
+#: gui\PluginPreferencesDialog.cpp:46
+msgid "Preferences"
+msgstr "Preferenzias"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Group Properties"
+msgstr "Propiedaz d'o Grupo"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Shorcut Properties"
+msgstr "Propiedaz de l'aczeso rapedo"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Name:"
+msgstr "Nombre:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Location:"
+msgstr "Ubicazión"
+
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Parameters:"
+msgstr "Parametros"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Icon:"
+msgstr "Icono:"
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Change icon..."
+msgstr "Cambiar icono"
+
+#: gui\ShortcutEditorDialog.cpp:47
+msgid "Use default"
+msgstr "Emplegar por defeuto"
+
+#: gui\ShortcutEditorDialog.cpp:48
+msgid "The location may be a file, a folder or a URL."
+msgstr "A ubicazión puede estar un archibo, una carpeta u una URL."
+
+#: gui\ShortcutEditorDialog.cpp:180
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "L'aczeso rapedo no esiste. deseya continar?"
+

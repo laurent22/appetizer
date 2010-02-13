@@ -1,0 +1,934 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
+"PO-Revision-Date: 2009-04-30 19:40-0000\n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Ascunde"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Arata"
+
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
+msgid "Eject drive"
+msgstr "Elimina discul"
+
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Configurare"
+
+#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Inchide"
+
+#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Organizeaza scurtaturi"
+
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Acest fisier nu exista sau a fost sters (Eroare %s)"
+
+#: FolderItem.cpp:996
+msgid "Group"
+msgstr "Grup"
+
+#: FolderItem.cpp:997
+msgid "Unnamed"
+msgstr "Fara nume"
+
+#: FolderItem.cpp:1231
+msgid "Control Panel"
+msgstr "Panoul de control"
+
+#: FolderItem.cpp:1233
+msgid "My Computer"
+msgstr "Calculatorul meu"
+
+#: FolderItem.cpp:1235
+msgid "My Network Places"
+msgstr "Locurile mele din retea"
+
+#: FolderItem.cpp:1237
+msgid "Recycle Bin"
+msgstr "Cosul de gunoi"
+
+#: FolderItem.cpp:1239
+msgid "Show Desktop"
+msgstr "Arata spatiul de lucru"
+
+#: FolderItem.cpp:1241
+msgid "Windows Explorer"
+msgstr "Windows Explorer"
+
+#: FolderItem.cpp:1243
+msgid "Search"
+msgstr "Cauta"
+
+#: FolderItem.cpp:1245
+msgid "Current Drive"
+msgstr "Discul actual"
+
+#: FolderItem.cpp:1247
+msgid "Printers and Faxes"
+msgstr "Imprimante si faxuri"
+
+#: FolderItem.cpp:1249
+msgid "Network Connections"
+msgstr "Conexiuni de retea"
+
+#: FolderItem.cpp:1251
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1259
+msgid "Command Prompt"
+msgstr ""
+
+#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "Elimina..."
+
+#: FolderItemRenderer.cpp:205
+msgid "Add to Multi Launch group"
+msgstr "Adauga grupului Multi Launch"
+
+#: FolderItemRenderer.cpp:214
+msgid "Organize group shortcuts"
+msgstr "Organizeaza scurtaturile de grup"
+
+#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Caracteristici"
+
+#: IconPanel.cpp:152 OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "Scurtatura noua..."
+
+#: IconPanel.cpp:156
+msgid "New group..."
+msgstr "Grup nou..."
+
+#: IconPanel.cpp:191
+msgid "Add special item"
+msgstr "Adauga element special"
+
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "Importare scurtaturi"
+
+#: main.cpp:68
+msgid "Uses user data directory to save settings."
+msgstr "Foloseste directorul de date al utilizatorului pentru a salva setarile"
+
+#: main.cpp:69
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Selectioneaza calea datelor utilizatorului (-u va fi ignorat)"
+
+#: main.cpp:70
+msgid "Displays the log window (useful for debugging)"
+msgstr "Afiseaza fereastra de autentificare (folositoare la reparatii)"
+
+#: main.cpp:71
+msgid "Displays this help message"
+msgstr "Afiseaza acest mesaj pentru ajutor"
+
+#: main.cpp:158
+msgid "Could not initialize locale."
+msgstr "Nu am putut initializa. "
+
+#: main.cpp:316
+msgid "Large"
+msgstr "Mare"
+
+#: main.cpp:317
+msgid "Medium"
+msgstr ""
+
+#: main.cpp:318
+msgid "Extra Large (XP and above)"
+msgstr "Mai mare (Xp si urmatoarele)"
+
+#: main.cpp:319
+msgid "Jumbo (Vista and above)"
+msgstr "Gigant (Vista si urmatoarele)"
+
+#: main.cpp:323
+msgid "Small"
+msgstr "Mic"
+
+#: main.cpp:415
+msgid "Could not get update information"
+msgstr "Nu am gasit informatii pentru actualizare"
+
+#: main.cpp:429
+msgid "You have the latest version."
+msgstr "Aveti cea mai recenta versiune."
+
+#: main.cpp:436
+#, fuzzy, c-format
+msgid ""
+"A new version of Appetizer is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"Do you wish to download it now?"
+msgstr ""
+"O noua versiune este disponibila!\n"
+"Versiunea dumneavoastra: %s\n"
+"Versiune noua: %s\n"
+"Note ale versiunii: %s\n"
+"\n"
+"Doriti"
+
+#: main.cpp:438
+msgid "New version of Appetizer"
+msgstr ""
+
+#: main.cpp:442
+msgid "Error launching web browser"
+msgstr "Eroare in lansarea exploratorului web"
+
+#: MainFrame.cpp:236
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr ""
+"Eroare in inregistrarea tastei pentru scurtatura. Este posibil sa fie "
+"inregistrata de o alta aplicatie."
+
+#: MainFrame.cpp:597
+msgid "Minimize to tray"
+msgstr "Micsoareaza in bara"
+
+#: MainFrame.cpp:1072
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s va fi minimizat in bara de sistem.\n"
+"\n"
+"Notati ca aceasta se poate schimba ('%s' windows / '%s' tab)"
+
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "Operatii"
+
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+msgid "Don't show this message again"
+msgstr "Nu mai arata acest mesaj"
+
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+msgid "Error"
+msgstr "Eroare"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Informatii"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Atentie"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Confirmare"
+
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "Ajutor"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "Multi-lansare"
+
+#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Importare scurtaturi"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "Ajutor specific"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "Cere ajutor"
+
+#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#, c-format
+msgid "About %s..."
+msgstr "Despre %s..."
+
+#: OptionPanel.cpp:341
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr ""
+"Grupul de multilansare este deocamdata gol. Doriti sa afisez ajutorul "
+"specific despre acest subiect?"
+
+#: Plugin.cpp:217
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
+msgstr ""
+"Scriptul pluginului nu este in formatul corespunzator. Va rugam folositi "
+"codarea UTF-8 NO BOM sau ASCII. Se aplica pentru:"
+
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr "Nu am putut deschide %s"
+
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "Nu am putut citi intrarea zip '%s'"
+
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "Nu am putut crea fisierul '%s'"
+
+#: PluginManager.cpp:96
+#, c-format
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
+msgstr ""
+"Pluginul a fost instalat cu succes. Va fi activat cand %s va porni data "
+"viitoare."
+
+#: Styles.cpp:72 utilities\Utilities.cpp:81
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Acest invelis nu este compatibil cu versiunea curenta a %s."
+
+#: utilities\Utilities.cpp:125
+msgid "Do you wish to remove this icon?"
+msgstr "Doriti sa stergeti aceasta imagine?"
+
+#: utilities\Utilities.cpp:141
+#, fuzzy
+msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
+msgstr "Scurtatura nu exista. Doriti sa continuati?"
+
+#: utilities\Utilities.cpp:322
+msgid "Please wait while your applications are being closed."
+msgstr "Va rog asteptati pana ce aplicatiile dumneavoastra sunt inchise."
+
+#: utilities\Utilities.cpp:341
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Nu aveti suficiente drepturi pentru acesta operatiune."
+
+#: utilities\Utilities.cpp:452
+msgid "Do you wish to eject the drive?"
+msgstr "Doriti sa eliminati discul?"
+
+#: gui\AboutDialog.cpp:55
+#, c-format
+msgid "Translators: %s"
+msgstr "Translator: %s"
+
+#: gui\AboutDialog.cpp:57
+msgid "This software uses a number of open source libraries including:"
+msgstr ""
+"Acest produs software foloseste un numar de librarii open source ce includ:"
+
+#: gui\AboutDialog.cpp:59
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini de Brodie Thiesfield"
+
+#: gui\AboutDialog.cpp:61
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml de Yves Berquin"
+
+#: gui\AboutDialog.cpp:63
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString de Joe O'Leary"
+
+#: gui\AboutDialog.cpp:65
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
+msgstr ""
+"- Lua de Roberto Ierusalimschy, Luiz Henrique de Figueiredo, asi Waldemar "
+"Celes"
+
+#: gui\AboutDialog.cpp:67
+msgid "- ccrypt by Peter Selinger"
+msgstr ""
+
+#: gui\AboutDialog.cpp:69
+#, fuzzy
+msgid "- FreeType by its respective contributors"
+msgstr "- wxWidgets de catre autorii lor repectivi"
+
+#: gui\AboutDialog.cpp:71
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets de catre autorii lor repectivi"
+
+#: gui\AboutDialog.cpp:73
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Casutele de dialog sunt contruite folosind wxGlade de Alberto Griggio."
+
+#: gui\AboutDialog.cpp:76
+msgid "About"
+msgstr "Despre"
+
+#: gui\AboutDialog.cpp:77
+msgid "License"
+msgstr "Licenta"
+
+#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "OK"
+
+#: gui\AboutDialog.cpp:79
+msgid "Credits"
+msgstr "Creditare"
+
+#: gui\AboutDialog.cpp:83
+#, c-format
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+#: gui\AboutDialog.cpp:84
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"Acest program este software gratis: il puteti redistribui si/sau modifica "
+"sub termenii GNU General Public Licence ca publicate de  Free Software "
+"Foundation, ori versiunea 3 a licentei, ori alta versiune mai recenta. \n"
+"\n"
+"Acest program este distribuit in speranta ca va fi folositor, dar FARA ORICE "
+"FEL DE GARANTIE; chiar si fara garantia implicita a MERCHANTABILITY sau "
+"FITNESS FOR A PARTICULAR PURPOSE. Vezi GNU General Public License pentru mai "
+"multe detalii.\n"
+"\n"
+"Ar fi trebuit sa primiti o copie a GNU General Public License impreuna cu "
+"acest program. Daca nu vedeti <http://www.gnu.org/licenses/>."
+
+#: gui\AboutDialog.cpp:85
+msgid "Web:"
+msgstr "Web:"
+
+#: gui\AboutDialog.cpp:86
+msgid "Contact:"
+msgstr "Contact:"
+
+#: gui\AboutDialog.cpp:94
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Version %s.%s.%s (Build #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Da"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "Nu"
+
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Cancel"
+msgstr "Anuleaza"
+
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
+msgid "General"
+msgstr "General"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Appearance"
+msgstr "Aspect"
+
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "import"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "Pluginuri"
+
+#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+msgid "Save"
+msgstr "Salveaza"
+
+#: gui\ConfigDialog.cpp:66
+#, fuzzy
+msgid "Options"
+msgstr "Operatii"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Enabled"
+msgstr "Activat"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Disabled"
+msgstr "Dezactivat"
+
+#: gui\ConfigDialog.cpp:138
+msgid "Plugin"
+msgstr "Plugin"
+
+#: gui\ConfigDialog.cpp:139
+msgid "Status"
+msgstr "Situatie"
+
+#: gui\ConfigDialog.cpp:219
+msgid "Language:"
+msgstr "Limba:"
+
+#: gui\ConfigDialog.cpp:220
+msgid "Always on top"
+msgstr "Intotdeauna deasupra"
+
+#: gui\ConfigDialog.cpp:221
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "Permite numai o singura aparitie a %s"
+
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
+msgid "Check for update"
+msgstr "Verifica actualizari disponibile"
+
+#: gui\ConfigDialog.cpp:223
+msgid "Install autorun file"
+msgstr "Instaleaza fisierul de autorulare"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:321
+msgid "Icon size:"
+msgstr "Marimea imaginilor"
+
+#: gui\ConfigDialog.cpp:322
+msgid "Skin:"
+msgstr "Invelis:"
+
+#: gui\ConfigDialog.cpp:323
+msgid "Orientation:"
+msgstr "Orientare:"
+
+#: gui\ConfigDialog.cpp:324
+msgid "Opacity:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:325
+msgid "Download more skins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:326
+msgid "Label position:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
+#, fuzzy
+msgid "Hidden"
+msgstr "Ascunde"
+
+#: gui\ConfigDialog.cpp:349
+msgid "Bottom"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
+msgid "Right"
+msgstr "Right"
+
+#: gui\ConfigDialog.cpp:389
+msgid "Horizontal"
+msgstr "Orizontal"
+
+#: gui\ConfigDialog.cpp:390
+msgid "Vertical"
+msgstr "Vertical"
+
+#: gui\ConfigDialog.cpp:416
+msgid "Default"
+msgstr "Implicit"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Auto-hide after launching an application"
+msgstr "Auto ascunde dupa lansarea unei aplicatii"
+
+#: gui\ConfigDialog.cpp:462
+msgid "Run multi-launch group on startup"
+msgstr "Executa grupul multilansare la pornirea programului"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Hot key to hide / show the bar"
+msgstr "Tasta pornire rapida pentru a ascunde/afisa bara"
+
+#: gui\ConfigDialog.cpp:464
+msgid "Control +"
+msgstr "Control +"
+
+#: gui\ConfigDialog.cpp:465
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:466
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:467
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "In timp ce se elimina discul inchide si aplicatiile care il tin blocat"
+
+#: gui\ConfigDialog.cpp:468
+msgid "Close button minimizes to System Tray"
+msgstr "Butonul de inchidere programul catre bara de sistem"
+
+#: gui\ConfigDialog.cpp:479
+msgid "<None>"
+msgstr "<Nimic>"
+
+#: gui\ConfigDialog.cpp:521
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+#: gui\ConfigDialog.cpp:522
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+#: gui\ConfigDialog.cpp:523
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+#: gui\ConfigDialog.cpp:524
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+#: gui\ConfigDialog.cpp:525
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+#: gui\ConfigDialog.cpp:526
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+#: gui\ConfigDialog.cpp:527
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+#: gui\ConfigDialog.cpp:528
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+#: gui\ConfigDialog.cpp:529
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+#: gui\ConfigDialog.cpp:530
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+#: gui\ConfigDialog.cpp:532
+msgid "Backspace"
+msgstr "Backspace"
+
+#: gui\ConfigDialog.cpp:533
+msgid "Tab"
+msgstr "Tab"
+
+#: gui\ConfigDialog.cpp:534
+msgid "Return"
+msgstr "Return"
+
+#: gui\ConfigDialog.cpp:535
+msgid "Escape"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:536
+msgid "Space"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:537
+msgid "Delete"
+msgstr "Delete"
+
+#: gui\ConfigDialog.cpp:539
+msgid "End"
+msgstr "End"
+
+#: gui\ConfigDialog.cpp:540
+msgid "Home"
+msgstr "Home"
+
+#: gui\ConfigDialog.cpp:541
+msgid "Left"
+msgstr "Left"
+
+#: gui\ConfigDialog.cpp:542
+msgid "Up"
+msgstr "Up"
+
+#: gui\ConfigDialog.cpp:544
+msgid "Down"
+msgstr "Down"
+
+#: gui\ConfigDialog.cpp:602
+msgid "Exclude these items from import operations"
+msgstr "Exclude aceste obiecte de la actiunile de import"
+
+#: gui\ConfigDialog.cpp:634
+msgid "Available plugins"
+msgstr "Pluginuri disponibile"
+
+#: gui\ConfigDialog.cpp:635
+msgid "Enable"
+msgstr "Activeaza"
+
+#: gui\ConfigDialog.cpp:636
+msgid "Disable"
+msgstr "Dezactiveaza"
+
+#: gui\ConfigDialog.cpp:637
+msgid "Install..."
+msgstr "Instaleaza..."
+
+#: gui\ConfigDialog.cpp:638
+msgid "Download more plugins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:640
+#, c-format
+msgid ""
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr ""
+"Schimbarile facute pluginului vor fi active numai dupa ce %s va fi pornit "
+"data viitoare"
+
+#: gui\ConfigDialog.cpp:703
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start "
+"automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Instaland fisierul autorun pe discul movibil, %s va porni automat cand "
+"introduceti discul.\n"
+"\n"
+"Doriti sa continuati?"
+
+#: gui\ConfigDialog.cpp:706
+msgid "Could not install autorun file. Please try again."
+msgstr "Nu a putut fi instalat fisierul autorun. Va rugam incercati din nou."
+
+#: gui\ConfigDialog.cpp:708
+msgid "The autorun file has been installed successfully"
+msgstr "Fisierul autorun a fost instalat cu succes"
+
+#: gui\ConfigDialog.cpp:739
+msgid "Please enable the plugin in order to change its options."
+msgstr ""
+
+#: gui\ConfigDialog.cpp:757
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s pachete cu pluginuri"
+
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
+msgid "All files"
+msgstr "Toate fisierele"
+
+#: gui\ConfigDialog.cpp:760
+msgid "Select a plugin package"
+msgstr "Selectati un pachet cu pluginuri"
+
+#: gui\ConfigDialog.cpp:789
+msgid "Please wait..."
+msgstr "Va rugam asteptati..."
+
+#: gui\ConfigDialog.cpp:1070
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
+msgstr ""
+"Anumite schimbari nu vor fi aplicate decat dupa restartarea aplicatiei."
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Incarca..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "Selectati un fisier sau un director"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Selectati o imagine"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Fisier imagine sau librarie:"
+
+#: gui\IconDialog.cpp:169
+msgid "All supported files"
+msgstr "Toate fisierele suportate"
+
+#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+msgid "Icons"
+msgstr "Imagini"
+
+#: gui\IconDialog.cpp:172
+msgid "Executables"
+msgstr "Executabile"
+
+#: gui\IconDialog.cpp:173
+msgid "Dynamic libraries"
+msgstr "Librarii dinamice"
+
+#: gui\IconDialog.cpp:174
+msgid "Icon libraries"
+msgstr "Librarii imagine"
+
+#: gui\IconDialog.cpp:177
+msgid "Select an icon file or library"
+msgstr "Alege un fisier imagine sau librarie"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Acesta unealta te va va ajuta sa importati scurtaturile  in %s.\n"
+"\n"
+"Va rugam selectati mai jos de unde doriti sa importati scurtaturile:"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "Aplicatii PortableApps.com"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "Windows Quick Launch toolbar"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "Windows Start Menu programs"
+
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
+msgid "Start >>"
+msgstr "Start >>"
+
+#: gui\ImportWizardDialog.cpp:119
+msgid "Importing shortcuts... Please wait."
+msgstr "Se importa scurtaturi...Va rugam asteptati."
+
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
+msgid "Preferences"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Group Properties"
+msgstr "Caracteristici de grupi"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Shorcut Properties"
+msgstr "Caracteristici de scurtaturi"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Name:"
+msgstr "Nume:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Location:"
+msgstr "Adresa:"
+
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Parameters:"
+msgstr "Parametri:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Icon:"
+msgstr "Imagine:"
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Change icon..."
+msgstr "Schimba imagine..."
+
+#: gui\ShortcutEditorDialog.cpp:47
+msgid "Use default"
+msgstr "Foloseste setarea implicita"
+
+#: gui\ShortcutEditorDialog.cpp:48
+msgid "The location may be a file, a folder or a URL."
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:180
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Scurtatura nu exista. Doriti sa continuati?"
+
+#~ msgid "Transparency:"
+#~ msgstr "Transparenta:"

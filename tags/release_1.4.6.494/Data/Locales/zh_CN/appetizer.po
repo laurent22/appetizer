@@ -1,0 +1,921 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
+"PO-Revision-Date: 2009-04-29 23:56-0000\n"
+"Last-Translator: Laurent Cozic\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "隐藏"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "显示"
+
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
+msgid "Eject drive"
+msgstr "弹出驱动器"
+
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "设置"
+
+#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "退出"
+
+#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "管理 快捷方式"
+
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "这个文件不存在或者已经被删除 (错误 %s)"
+
+#: FolderItem.cpp:996
+msgid "Group"
+msgstr "程序组"
+
+#: FolderItem.cpp:997
+msgid "Unnamed"
+msgstr "未命名"
+
+#: FolderItem.cpp:1231
+msgid "Control Panel"
+msgstr "控制面板"
+
+#: FolderItem.cpp:1233
+msgid "My Computer"
+msgstr "我的电脑"
+
+#: FolderItem.cpp:1235
+msgid "My Network Places"
+msgstr "网上邻居"
+
+#: FolderItem.cpp:1237
+msgid "Recycle Bin"
+msgstr "回收站"
+
+#: FolderItem.cpp:1239
+msgid "Show Desktop"
+msgstr "显示桌面"
+
+#: FolderItem.cpp:1241
+msgid "Windows Explorer"
+msgstr "资源管理器"
+
+#: FolderItem.cpp:1243
+msgid "Search"
+msgstr "搜索"
+
+#: FolderItem.cpp:1245
+msgid "Current Drive"
+msgstr "当前驱动器"
+
+#: FolderItem.cpp:1247
+msgid "Printers and Faxes"
+msgstr "打印机和传真"
+
+#: FolderItem.cpp:1249
+msgid "Network Connections"
+msgstr "网络连接"
+
+#: FolderItem.cpp:1251
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1259
+msgid "Command Prompt"
+msgstr ""
+
+#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "删除..."
+
+#: FolderItemRenderer.cpp:205
+msgid "Add to Multi Launch group"
+msgstr "添加到 快捷组"
+
+#: FolderItemRenderer.cpp:214
+msgid "Organize group shortcuts"
+msgstr "管理 程序组快捷方式"
+
+#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "属性"
+
+#: IconPanel.cpp:152 OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "新建 快捷方式..."
+
+#: IconPanel.cpp:156
+msgid "New group..."
+msgstr "新建 程序组..."
+
+#: IconPanel.cpp:191
+msgid "Add special item"
+msgstr "添加 其他项目"
+
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "导入 快捷方式"
+
+#: main.cpp:68
+msgid "Uses user data directory to save settings."
+msgstr "请使用用户数据目录保存设置。"
+
+#: main.cpp:69
+msgid "Sets user data path (-u will be ignored)"
+msgstr "设置用户数据路径 (-u 将被忽略)"
+
+#: main.cpp:70
+msgid "Displays the log window (useful for debugging)"
+msgstr "显示日志窗口 (用于调试)"
+
+#: main.cpp:71
+msgid "Displays this help message"
+msgstr "显示这条帮助信息"
+
+#: main.cpp:158
+msgid "Could not initialize locale."
+msgstr "无法初始化域。"
+
+#: main.cpp:316
+msgid "Large"
+msgstr "中等"
+
+#: main.cpp:317
+msgid "Medium"
+msgstr ""
+
+#: main.cpp:318
+msgid "Extra Large (XP and above)"
+msgstr "较大 (XP及以上版本)"
+
+#: main.cpp:319
+msgid "Jumbo (Vista and above)"
+msgstr "最大 (Vista及以上版本)"
+
+#: main.cpp:323
+msgid "Small"
+msgstr "较小"
+
+#: main.cpp:415
+msgid "Could not get update information"
+msgstr "无法获取更新信息"
+
+#: main.cpp:429
+msgid "You have the latest version."
+msgstr "您已经安装了最新版本。"
+
+#: main.cpp:436
+#, fuzzy, c-format
+msgid ""
+"A new version of Appetizer is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"Do you wish to download it now?"
+msgstr ""
+"有新版本可用!\n"
+"\n"
+"已安装版本: %s\n"
+"最新版本: %s\n"
+"更新说明: %s\n"
+"\n"
+"您希望现在就下载新版本吗?"
+
+#: main.cpp:438
+msgid "New version of Appetizer"
+msgstr ""
+
+#: main.cpp:442
+msgid "Error launching web browser"
+msgstr "启动网页浏览器时出错"
+
+#: MainFrame.cpp:236
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr "注册快捷键时出错。可能是由于另一个应用程序已经注册过它。"
+
+#: MainFrame.cpp:597
+msgid "Minimize to tray"
+msgstr "最小化到托盘"
+
+#: MainFrame.cpp:1072
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s 将最小化到系统托盘。\n"
+"\n"
+"你可以在 '%s' 窗口 ('%s' 标签页)中更改这种显示方式。"
+
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "操作"
+
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+msgid "Don't show this message again"
+msgstr "不再显示该消息"
+
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+msgid "Error"
+msgstr "错误"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "信息"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "警告"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "确认"
+
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "帮助"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "快捷组"
+
+#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "导入 快捷方式"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "帮助文档"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "获得支持"
+
+#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#, c-format
+msgid "About %s..."
+msgstr "关于 %s..."
+
+#: OptionPanel.cpp:341
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr "目前快捷组中还没有任何项目。您希望查看关于该功能的帮助文档吗？"
+
+#: Plugin.cpp:217
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
+msgstr ""
+"插件脚本为不正确的格式。请使用 UTF-8 NO BOM 或者 ASCII 进行编码。适用于:"
+
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr "无法打开 %s"
+
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "无法读取 zip entry '%s'"
+
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "无法创建文件 '%s'"
+
+#: PluginManager.cpp:96
+#, c-format
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
+msgstr "插件已成功安装。它将在 %s 下次启动时生效。"
+
+#: Styles.cpp:72 utilities\Utilities.cpp:81
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "该皮肤无法用于当前版本的%s。"
+
+#: utilities\Utilities.cpp:125
+msgid "Do you wish to remove this icon?"
+msgstr "您希望删除这个图标吗？"
+
+#: utilities\Utilities.cpp:141
+#, fuzzy
+msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
+msgstr "快捷方式的路径不存在。您希望继续吗？"
+
+#: utilities\Utilities.cpp:322
+msgid "Please wait while your applications are being closed."
+msgstr "正在关闭应用程序，请稍后。"
+
+#: utilities\Utilities.cpp:341
+msgid "You do not have sufficient privileges for this operation."
+msgstr "您没有足够的权限来执行此操作。"
+
+#: utilities\Utilities.cpp:452
+msgid "Do you wish to eject the drive?"
+msgstr "您希望弹出驱动器吗？"
+
+#: gui\AboutDialog.cpp:55
+#, c-format
+msgid "Translators: %s"
+msgstr "译者: %s"
+
+#: gui\AboutDialog.cpp:57
+msgid "This software uses a number of open source libraries including:"
+msgstr "该软件使用了一些开源软件库，包括："
+
+#: gui\AboutDialog.cpp:59
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini by Brodie Thiesfield"
+
+#: gui\AboutDialog.cpp:61
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml by Yves Berquin"
+
+#: gui\AboutDialog.cpp:63
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString by Joe O'Leary"
+
+#: gui\AboutDialog.cpp:65
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
+msgstr ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, 以及 Waldemar "
+"Celes"
+
+#: gui\AboutDialog.cpp:67
+msgid "- ccrypt by Peter Selinger"
+msgstr ""
+
+#: gui\AboutDialog.cpp:69
+#, fuzzy
+msgid "- FreeType by its respective contributors"
+msgstr "- wxWidgets by 其各自的作者"
+
+#: gui\AboutDialog.cpp:71
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets by 其各自的作者"
+
+#: gui\AboutDialog.cpp:73
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "编写对话框使用 wxGlade by Alberto Griggio."
+
+#: gui\AboutDialog.cpp:76
+msgid "About"
+msgstr "关于"
+
+#: gui\AboutDialog.cpp:77
+msgid "License"
+msgstr "许可"
+
+#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "确定"
+
+#: gui\AboutDialog.cpp:79
+msgid "Credits"
+msgstr "制作群"
+
+#: gui\AboutDialog.cpp:83
+#, c-format
+msgid "Copyright © %s"
+msgstr "版权所有 © %s"
+
+#: gui\AboutDialog.cpp:84
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"本程序是一款自由软件：在免费软件基金会发布的第三版或更新的《GNU通用公共许可》"
+"协议下，您可以自由发布或修改本程序。\n"
+"\n"
+"本程序发布的目的是希望它能够对您有用，但是不提供任何担保；也没有适合销售或适"
+"用于特殊目的的隐含担保。  更多细节请查看《GNU通用公共许可》。\n"
+"\n"
+"您在获得本程序的同时，应该也得到一份《GNU通用公共许可》的副本。  如果没有，请"
+"查看 <http://www.gnu.org/licenses/>。"
+
+#: gui\AboutDialog.cpp:85
+msgid "Web:"
+msgstr "网址:"
+
+#: gui\AboutDialog.cpp:86
+msgid "Contact:"
+msgstr "联系:"
+
+#: gui\AboutDialog.cpp:94
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, 版本 %s.%s.%s (开发 #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "是"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "否"
+
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Cancel"
+msgstr "取消"
+
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
+msgid "General"
+msgstr "常规"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Appearance"
+msgstr "外观"
+
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "导入"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "插件"
+
+#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+msgid "Save"
+msgstr "保存"
+
+#: gui\ConfigDialog.cpp:66
+#, fuzzy
+msgid "Options"
+msgstr "操作"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Enabled"
+msgstr "启用"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Disabled"
+msgstr "禁用"
+
+#: gui\ConfigDialog.cpp:138
+msgid "Plugin"
+msgstr "插件"
+
+#: gui\ConfigDialog.cpp:139
+msgid "Status"
+msgstr "状态"
+
+#: gui\ConfigDialog.cpp:219
+msgid "Language:"
+msgstr "语言:"
+
+#: gui\ConfigDialog.cpp:220
+msgid "Always on top"
+msgstr "前端显示"
+
+#: gui\ConfigDialog.cpp:221
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "同一时间只允许一个 %s 运行。"
+
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
+msgid "Check for update"
+msgstr "检查更新"
+
+#: gui\ConfigDialog.cpp:223
+msgid "Install autorun file"
+msgstr "安装自动运行文件"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:321
+msgid "Icon size:"
+msgstr "图标大小:"
+
+#: gui\ConfigDialog.cpp:322
+msgid "Skin:"
+msgstr "皮肤:"
+
+#: gui\ConfigDialog.cpp:323
+msgid "Orientation:"
+msgstr "方向:"
+
+#: gui\ConfigDialog.cpp:324
+msgid "Opacity:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:325
+msgid "Download more skins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:326
+msgid "Label position:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
+#, fuzzy
+msgid "Hidden"
+msgstr "隐藏"
+
+#: gui\ConfigDialog.cpp:349
+msgid "Bottom"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
+msgid "Right"
+msgstr "→"
+
+#: gui\ConfigDialog.cpp:389
+msgid "Horizontal"
+msgstr "水平"
+
+#: gui\ConfigDialog.cpp:390
+msgid "Vertical"
+msgstr "垂直"
+
+#: gui\ConfigDialog.cpp:416
+msgid "Default"
+msgstr "默认"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Auto-hide after launching an application"
+msgstr "运行应用程序后自动隐藏"
+
+#: gui\ConfigDialog.cpp:462
+msgid "Run multi-launch group on startup"
+msgstr "启动时运行快捷组"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Hot key to hide / show the bar"
+msgstr "快捷键 隐藏/显示 工具栏"
+
+#: gui\ConfigDialog.cpp:464
+msgid "Control +"
+msgstr "Ctrl +"
+
+#: gui\ConfigDialog.cpp:465
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:466
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:467
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "弹出驱动器时，关闭锁定它的应用程序。"
+
+#: gui\ConfigDialog.cpp:468
+msgid "Close button minimizes to System Tray"
+msgstr "点击关闭按钮时最小化到系统托盘"
+
+#: gui\ConfigDialog.cpp:479
+msgid "<None>"
+msgstr "<无>"
+
+#: gui\ConfigDialog.cpp:521
+msgid "Numpad 0"
+msgstr "数字键 0"
+
+#: gui\ConfigDialog.cpp:522
+msgid "Numpad 1"
+msgstr "数字键 1"
+
+#: gui\ConfigDialog.cpp:523
+msgid "Numpad 2"
+msgstr "数字键 2"
+
+#: gui\ConfigDialog.cpp:524
+msgid "Numpad 3"
+msgstr "数字键 3"
+
+#: gui\ConfigDialog.cpp:525
+msgid "Numpad 4"
+msgstr "数字键 4"
+
+#: gui\ConfigDialog.cpp:526
+msgid "Numpad 5"
+msgstr "数字键 5"
+
+#: gui\ConfigDialog.cpp:527
+msgid "Numpad 6"
+msgstr "数字键 6"
+
+#: gui\ConfigDialog.cpp:528
+msgid "Numpad 7"
+msgstr "数字键 7"
+
+#: gui\ConfigDialog.cpp:529
+msgid "Numpad 8"
+msgstr "数字键 8"
+
+#: gui\ConfigDialog.cpp:530
+msgid "Numpad 9"
+msgstr "数字键 9"
+
+#: gui\ConfigDialog.cpp:532
+msgid "Backspace"
+msgstr "Backspace"
+
+#: gui\ConfigDialog.cpp:533
+msgid "Tab"
+msgstr "Tab"
+
+#: gui\ConfigDialog.cpp:534
+msgid "Return"
+msgstr "Enter"
+
+#: gui\ConfigDialog.cpp:535
+msgid "Escape"
+msgstr "Esc"
+
+#: gui\ConfigDialog.cpp:536
+msgid "Space"
+msgstr "Space"
+
+#: gui\ConfigDialog.cpp:537
+msgid "Delete"
+msgstr "Delete"
+
+#: gui\ConfigDialog.cpp:539
+msgid "End"
+msgstr "End"
+
+#: gui\ConfigDialog.cpp:540
+msgid "Home"
+msgstr "Home"
+
+#: gui\ConfigDialog.cpp:541
+msgid "Left"
+msgstr "←"
+
+#: gui\ConfigDialog.cpp:542
+msgid "Up"
+msgstr "↑"
+
+#: gui\ConfigDialog.cpp:544
+msgid "Down"
+msgstr "↓"
+
+#: gui\ConfigDialog.cpp:602
+msgid "Exclude these items from import operations"
+msgstr "将这些项目从导入操作中排除"
+
+#: gui\ConfigDialog.cpp:634
+msgid "Available plugins"
+msgstr "启用的插件"
+
+#: gui\ConfigDialog.cpp:635
+msgid "Enable"
+msgstr "启用"
+
+#: gui\ConfigDialog.cpp:636
+msgid "Disable"
+msgstr "禁用"
+
+#: gui\ConfigDialog.cpp:637
+msgid "Install..."
+msgstr "安装..."
+
+#: gui\ConfigDialog.cpp:638
+msgid "Download more plugins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:640
+#, c-format
+msgid ""
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr "这些更改将在 %s 下次启动时生效。"
+
+#: gui\ConfigDialog.cpp:703
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start "
+"automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"通过在您的可移动驱动器上安装自动运行文件， %s 将会在您插入该驱动器时自动运"
+"行。\n"
+"\n"
+"你希望继续吗？"
+
+#: gui\ConfigDialog.cpp:706
+msgid "Could not install autorun file. Please try again."
+msgstr "无法安装自动运行文件。请重试。"
+
+#: gui\ConfigDialog.cpp:708
+msgid "The autorun file has been installed successfully"
+msgstr "自动运行文件已被成功安装"
+
+#: gui\ConfigDialog.cpp:739
+msgid "Please enable the plugin in order to change its options."
+msgstr ""
+
+#: gui\ConfigDialog.cpp:757
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s 插件包"
+
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
+msgid "All files"
+msgstr "所有文件"
+
+#: gui\ConfigDialog.cpp:760
+msgid "Select a plugin package"
+msgstr "选择一个插件包"
+
+#: gui\ConfigDialog.cpp:789
+msgid "Please wait..."
+msgstr "请稍后..."
+
+#: gui\ConfigDialog.cpp:1070
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
+msgstr "一些更改将在您重启应用程序后生效。"
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "载入树状目录..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "选择一个文件或文件夹"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "选择一个图标"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "图标文件或库:"
+
+#: gui\IconDialog.cpp:169
+msgid "All supported files"
+msgstr "所有支持的文件"
+
+#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+msgid "Icons"
+msgstr "图标"
+
+#: gui\IconDialog.cpp:172
+msgid "Executables"
+msgstr "可执行程序"
+
+#: gui\IconDialog.cpp:173
+msgid "Dynamic libraries"
+msgstr "动态库"
+
+#: gui\IconDialog.cpp:174
+msgid "Icon libraries"
+msgstr "图标库"
+
+#: gui\IconDialog.cpp:177
+msgid "Select an icon file or library"
+msgstr "选择一个图标文件或库"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"本工具能够帮助您将您的快捷方式导入到 %s。\n"
+"\n"
+"请选择您想要导入的快捷方式："
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com 应用程序"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "Windows 快速启动"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "Windows 开始菜单"
+
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
+msgid "Start >>"
+msgstr "开始 >>"
+
+#: gui\ImportWizardDialog.cpp:119
+msgid "Importing shortcuts... Please wait."
+msgstr "正在导入快捷方式... 请稍后."
+
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
+msgid "Preferences"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Group Properties"
+msgstr "程序组属性"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Shorcut Properties"
+msgstr "快捷方式属性"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Name:"
+msgstr "名称:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Location:"
+msgstr "路径:"
+
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Parameters:"
+msgstr "参数:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Icon:"
+msgstr "图标:"
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Change icon..."
+msgstr "更改图标..."
+
+#: gui\ShortcutEditorDialog.cpp:47
+msgid "Use default"
+msgstr "使用默认"
+
+#: gui\ShortcutEditorDialog.cpp:48
+msgid "The location may be a file, a folder or a URL."
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:180
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "快捷方式的路径不存在。您希望继续吗？"
+
+#~ msgid "Transparency:"
+#~ msgstr "透明度:"
