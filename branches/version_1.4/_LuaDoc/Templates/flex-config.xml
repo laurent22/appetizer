@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!--
+
+	ADOBE SYSTEMS INCORPORATED
+	Copyright 2005-2007 Adobe Systems Incorporated
+	All Rights Reserved.
+
+	NOTICE: Adobe permits you to use, modify, and distribute this file
+	in accordance with the terms of the license agreement accompanying it.
+
+-->
+
+<flex-config>
+
+   <compiler>
+
+      <!-- Non-Boolean value used where a Boolean value was expected. -->
+      <warn-bad-bool-assignment>false</warn-bad-bool-assignment>
+
+   </compiler>
+
+</flex-config>

@@ -1,0 +1,926 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
+"PO-Revision-Date: 2009-08-28 10:51+0100\n"
+"Last-Translator: Sepp Winkler <sepp.winkler@gmail.com>\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Skryť"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Zobraziť"
+
+#: ApplicationTrayIcon.cpp:41 MainFrame.cpp:598
+msgid "Eject drive"
+msgstr "Odpojiť disk"
+
+#: ApplicationTrayIcon.cpp:46 MainFrame.cpp:1072 OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Nastavenie"
+
+#: ApplicationTrayIcon.cpp:60 gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Zatvoriť"
+
+#: FolderItem.cpp:467 gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Organizovať zástupcov"
+
+#: FolderItem.cpp:617 FolderItem.cpp:639 FolderItem.cpp:662
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Tento súbor neexistuje alebo bol odstránený (Chyba %s)"
+
+#: FolderItem.cpp:996
+msgid "Group"
+msgstr "Skupina"
+
+#: FolderItem.cpp:997
+msgid "Unnamed"
+msgstr "Nepomenovaný"
+
+#: FolderItem.cpp:1231
+msgid "Control Panel"
+msgstr "Ovládací panel"
+
+#: FolderItem.cpp:1233
+msgid "My Computer"
+msgstr "Tento počítač"
+
+#: FolderItem.cpp:1235
+msgid "My Network Places"
+msgstr "Moje miesta v sieti"
+
+#: FolderItem.cpp:1237
+msgid "Recycle Bin"
+msgstr "Kôš"
+
+#: FolderItem.cpp:1239
+msgid "Show Desktop"
+msgstr "Zobraziť plochu"
+
+#: FolderItem.cpp:1241
+msgid "Windows Explorer"
+msgstr "Prieskumník Windows"
+
+#: FolderItem.cpp:1243
+msgid "Search"
+msgstr "Hľadať"
+
+#: FolderItem.cpp:1245
+msgid "Current Drive"
+msgstr "Aktuálny disk"
+
+#: FolderItem.cpp:1247
+msgid "Printers and Faxes"
+msgstr "Tlačiarne a faxy"
+
+#: FolderItem.cpp:1249
+msgid "Network Connections"
+msgstr "Sieťové pripojenia"
+
+#: FolderItem.cpp:1251
+msgid "Calculator"
+msgstr ""
+
+#: FolderItem.cpp:1253
+msgid "Paint Brush"
+msgstr ""
+
+#: FolderItem.cpp:1255
+msgid "Notepad"
+msgstr ""
+
+#: FolderItem.cpp:1257
+msgid "WordPad"
+msgstr ""
+
+#: FolderItem.cpp:1259
+msgid "Command Prompt"
+msgstr ""
+
+#: FolderItemRenderer.cpp:200 gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "Odstrániť..."
+
+#: FolderItemRenderer.cpp:205
+msgid "Add to Multi Launch group"
+msgstr "Pridať skupinu Viacnásobného spustenia"
+
+#: FolderItemRenderer.cpp:214
+msgid "Organize group shortcuts"
+msgstr "Organizovať skupinu zástupcov"
+
+#: FolderItemRenderer.cpp:219 gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Vlastnosti"
+
+#: IconPanel.cpp:152 OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "Nový zástupca"
+
+#: IconPanel.cpp:156
+msgid "New group..."
+msgstr "Nová skupina"
+
+#: IconPanel.cpp:191
+msgid "Add special item"
+msgstr "Pridať špeciálnu položku"
+
+#: IconPanel.cpp:414
+#, fuzzy, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "Importovať zástupcov"
+
+#: main.cpp:68
+msgid "Uses user data directory to save settings."
+msgstr "Použije zložku používateľa pre uloženie nastvení"
+
+#: main.cpp:69
+msgid "Sets user data path (-u will be ignored)"
+msgstr "Nastaví cestu používateľských údajov (-u bude ignorované)"
+
+#: main.cpp:70
+msgid "Displays the log window (useful for debugging)"
+msgstr "Zobrazí okno denníka (užitočné pri ladení)"
+
+#: main.cpp:71
+msgid "Displays this help message"
+msgstr "Zobrazí túto správu pomocníka"
+
+#: main.cpp:158
+msgid "Could not initialize locale."
+msgstr "Nedá sa inicilizovať lokalita."
+
+#: main.cpp:316
+msgid "Large"
+msgstr "Veľké"
+
+#: main.cpp:317
+msgid "Medium"
+msgstr ""
+
+#: main.cpp:318
+msgid "Extra Large (XP and above)"
+msgstr "Extra veľké (XP a vyššie)"
+
+#: main.cpp:319
+msgid "Jumbo (Vista and above)"
+msgstr "Obrovské (Vista a vyššie)"
+
+#: main.cpp:323
+msgid "Small"
+msgstr "Malé"
+
+#: main.cpp:415
+msgid "Could not get update information"
+msgstr "Nedá sa získať informácia o aktualizácii"
+
+#: main.cpp:429
+msgid "You have the latest version."
+msgstr "Máte poslednú verziu."
+
+#: main.cpp:436
+#, fuzzy, c-format
+msgid ""
+"A new version of Appetizer is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"Do you wish to download it now?"
+msgstr ""
+"Nová verzia je dostupná! \n"
+"\n"
+"Vaša verzia: %s\n"
+"Nová verzia: %s\n"
+"Poznámky vydania: %s\n"
+"\n"
+"Chcete ju stiahnuť teraz? "
+
+#: main.cpp:438
+msgid "New version of Appetizer"
+msgstr ""
+
+#: main.cpp:442
+msgid "Error launching web browser"
+msgstr "Chyba pri spustení prehliadača internetu"
+
+#: MainFrame.cpp:236
+msgid ""
+"There was an error registering the hot key. Another application may already "
+"have registered it."
+msgstr ""
+"Nastala chyba pri registrovaní klávesovej skratky. Môže už byť registrovaná "
+"inou aplikáciou."
+
+#: MainFrame.cpp:597
+msgid "Minimize to tray"
+msgstr "Minimalizovať do oblasti oznámení"
+
+#: MainFrame.cpp:1072
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s bude minimalizovaný do oblasti oznámení. \n"
+"\n"
+"Možete zmeniť toto správanie v '%s' windows ('%s' tab)"
+
+#: MainFrame.cpp:1072 gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "Operácie"
+
+#: MainFrame.cpp:1072 utilities\Utilities.cpp:125 utilities\Utilities.cpp:452
+msgid "Don't show this message again"
+msgstr "Nezobrazovať toto upozornenie znovu"
+
+#: MessageBoxes.cpp:15 gui\ConfigDialog.cpp:101
+msgid "Error"
+msgstr "Chyba"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Informácia"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Upozornenie"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Potvrdenie"
+
+#: OptionPanel.cpp:163 gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "Pomocník"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "Viacnásobné spustenie"
+
+#: OptionPanel.cpp:167 gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Importovať zástupcov"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "Témy pomocníka"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "Získať podporu"
+
+#: OptionPanel.cpp:331 gui\AboutDialog.cpp:75
+#, c-format
+msgid "About %s..."
+msgstr "O %s..."
+
+#: OptionPanel.cpp:341
+msgid ""
+"The multilaunch group is currently empty. Do you wish to show the help topic "
+"about this feature?"
+msgstr ""
+"Skupina viacnásobného spustenia je prázdna. Chcete zobraziť pomocníka k "
+"tejto funkcii?"
+
+#: Plugin.cpp:217
+msgid ""
+"Plugin script is not in the right format. Please encode it as UTF-8 NO BOM "
+"or ASCII. Applies to:"
+msgstr ""
+"Skript zásuvného modulu nie je v správnom formáte. Kódujte ho ako UTF-8 NO "
+"BOM alebo ASCII. Aplikuje sa na:"
+
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr "Nedá sa otvoriť %s"
+
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "Nedá sa čítať vstup zip '%s'"
+
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "Nedá sa čítať súbor '%s'"
+
+#: PluginManager.cpp:96
+#, c-format
+msgid ""
+"The plugin has been installed successfully. It will be activated the next "
+"time %s is started"
+msgstr ""
+"Zásuvný modul bol úspešne nainštalovaný. Bude zapnutý pri ďalšom spustení %s"
+
+#: Styles.cpp:72 utilities\Utilities.cpp:81
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "Táto téma nie je kompatibilná so súčasnou verziou %s."
+
+#: utilities\Utilities.cpp:125
+msgid "Do you wish to remove this icon?"
+msgstr "Prajete si odstrániť túto ikonu?"
+
+#: utilities\Utilities.cpp:141
+#, fuzzy
+msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
+msgstr "Umiestnenie zástupcov neexistuje. Želáte si pokračovať?"
+
+#: utilities\Utilities.cpp:322
+msgid "Please wait while your applications are being closed."
+msgstr "Počkajte kým nebudú aplikácie ukončené."
+
+#: utilities\Utilities.cpp:341
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Nemáte dostatočné oprávnenia pre túto operáciu."
+
+#: utilities\Utilities.cpp:452
+msgid "Do you wish to eject the drive?"
+msgstr "Prajete si odpojiť disk?"
+
+#: gui\AboutDialog.cpp:55
+#, c-format
+msgid "Translators: %s"
+msgstr "Prekladatelia: %s"
+
+#: gui\AboutDialog.cpp:57
+msgid "This software uses a number of open source libraries including:"
+msgstr "Tento program využiva nasledujúce open source knižnice:"
+
+#: gui\AboutDialog.cpp:59
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Simpleini od Brodieho Thiesfielda"
+
+#: gui\AboutDialog.cpp:61
+msgid "- TinyXml by Yves Berquin"
+msgstr "- TinyXml od Yvesa Berquina"
+
+#: gui\AboutDialog.cpp:63
+msgid "- CStdString by Joe O'Leary"
+msgstr "- CStdString od Joe O'Learyho"
+
+#: gui\AboutDialog.cpp:65
+msgid ""
+"- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar "
+"Celes"
+msgstr ""
+"- Lua od Roberta Ierusalimschyho, Luiza Henrique de Figueiredo, and "
+"Waldemara Celesa"
+
+#: gui\AboutDialog.cpp:67
+msgid "- ccrypt by Peter Selinger"
+msgstr ""
+
+#: gui\AboutDialog.cpp:69
+#, fuzzy
+msgid "- FreeType by its respective contributors"
+msgstr "- wxWidgets od ich autorov"
+
+#: gui\AboutDialog.cpp:71
+msgid "- wxWidgets by their respective authors"
+msgstr "- wxWidgets od ich autorov"
+
+#: gui\AboutDialog.cpp:73
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Dialógové okná sú vytvorené pomocou wxGlade od Alberta Griggia."
+
+#: gui\AboutDialog.cpp:76
+msgid "About"
+msgstr "O programe"
+
+#: gui\AboutDialog.cpp:77
+msgid "License"
+msgstr "Licencia"
+
+#: gui\AboutDialog.cpp:78 gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111 gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "OK"
+
+#: gui\AboutDialog.cpp:79
+msgid "Credits"
+msgstr "Poďakovanie"
+
+#: gui\AboutDialog.cpp:83
+#, c-format
+msgid "Copyright © %s"
+msgstr "Copyright © %s"
+
+#: gui\AboutDialog.cpp:84
+msgid ""
+"This program is free software: you can redistribute it and/or modify it "
+"under the terms of the GNU General Public License as published by the Free "
+"Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT "
+"ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
+"FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for "
+"more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with "
+"this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"Tento program je voľný software: môžete ho redistribuovať a/alebo "
+"modifikovať podľa ustanovení GNU General Public License publikovanej Free "
+"Software Foundation vo verzii 3, alebo akejkoľvek neskoršej verzii. \n"
+"\n"
+"Tento progrm je distribuovaný v očakávaní jeho užitočnosti, ale BEZ "
+"AKEJKOĽVEK ZÁRUKY, bez akejkoľvek obsiahnutej záruky PREDAJNOSTI alebo "
+"VHODNOSTI NA INÉ ÚČELY. Pre viac podrobností si prečítajte GNU General "
+"Public License. \n"
+"\n"
+"Mali by ste dostať kópiu GNU General Public License spolu s týmto programom. "
+"Ak nie, pozrite sa na <http://www.gnu.org/licenses/>."
+
+#: gui\AboutDialog.cpp:85
+msgid "Web:"
+msgstr "Web:"
+
+#: gui\AboutDialog.cpp:86
+msgid "Contact:"
+msgstr "Kontakt:"
+
+#: gui\AboutDialog.cpp:94
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Verzia %s.%s.%s (Build #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Áno"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "Nie"
+
+#: gui\BetterMessageDialog.cpp:114 gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112 gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81 gui\PluginPreferencesDialog.cpp:251
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: gui\ConfigDialog.cpp:58 gui\PluginPreferencesDialog.cpp:73
+msgid "General"
+msgstr "Všeobecné"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Appearance"
+msgstr "Vzhľad"
+
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "Importovať"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "Zásuvné moduly"
+
+#: gui\ConfigDialog.cpp:63 gui\ShortcutEditorDialog.cpp:43
+msgid "Save"
+msgstr "Uložiť"
+
+#: gui\ConfigDialog.cpp:66
+#, fuzzy
+msgid "Options"
+msgstr "Operácie"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Enabled"
+msgstr "Zapnuté"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Disabled"
+msgstr "Vypnuté"
+
+#: gui\ConfigDialog.cpp:138
+msgid "Plugin"
+msgstr "Zásuvný modul"
+
+#: gui\ConfigDialog.cpp:139
+msgid "Status"
+msgstr "Stav"
+
+#: gui\ConfigDialog.cpp:219
+msgid "Language:"
+msgstr "Jazyk:"
+
+#: gui\ConfigDialog.cpp:220
+msgid "Always on top"
+msgstr "Vždy na vrchu"
+
+#: gui\ConfigDialog.cpp:221
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "Povoliť len jednu inštanciu %s"
+
+#: gui\ConfigDialog.cpp:222 gui\ConfigDialog.cpp:794
+msgid "Check for update"
+msgstr "Skontrolovať aktualizácie"
+
+#: gui\ConfigDialog.cpp:223
+msgid "Install autorun file"
+msgstr "Inštalovať súbor autorun"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:321
+msgid "Icon size:"
+msgstr "Veľkosť ikony:"
+
+#: gui\ConfigDialog.cpp:322
+msgid "Skin:"
+msgstr "Téma:"
+
+#: gui\ConfigDialog.cpp:323
+msgid "Orientation:"
+msgstr "Orientácia:"
+
+#: gui\ConfigDialog.cpp:324
+msgid "Opacity:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:325
+msgid "Download more skins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:326
+msgid "Label position:"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:348
+#, fuzzy
+msgid "Hidden"
+msgstr "Skryť"
+
+#: gui\ConfigDialog.cpp:349
+msgid "Bottom"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:350 gui\ConfigDialog.cpp:543
+msgid "Right"
+msgstr "Šípka hore"
+
+#: gui\ConfigDialog.cpp:389
+msgid "Horizontal"
+msgstr "Horizontálne"
+
+#: gui\ConfigDialog.cpp:390
+msgid "Vertical"
+msgstr "Zvislo"
+
+#: gui\ConfigDialog.cpp:416
+msgid "Default"
+msgstr "Predvolené"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Auto-hide after launching an application"
+msgstr "Automaticky skryť po spustení aplikácie"
+
+#: gui\ConfigDialog.cpp:462
+msgid "Run multi-launch group on startup"
+msgstr "Spustiť skupinu viacnásobného spustenia pri štarte"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Hot key to hide / show the bar"
+msgstr "Klávesová skratka pre skrytie / zobrazenie panelu"
+
+#: gui\ConfigDialog.cpp:464
+msgid "Control +"
+msgstr "Control +"
+
+#: gui\ConfigDialog.cpp:465
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:466
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:467
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Pri odpojení disku zatvoriť aplikácie, ktoré ho uzamkýnajú"
+
+#: gui\ConfigDialog.cpp:468
+msgid "Close button minimizes to System Tray"
+msgstr "Tlačidlo atvorenia minimalizuje program do oblasti oznámení"
+
+#: gui\ConfigDialog.cpp:479
+msgid "<None>"
+msgstr "<None>"
+
+#: gui\ConfigDialog.cpp:521
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+#: gui\ConfigDialog.cpp:522
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+#: gui\ConfigDialog.cpp:523
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+#: gui\ConfigDialog.cpp:524
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+#: gui\ConfigDialog.cpp:525
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+#: gui\ConfigDialog.cpp:526
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+#: gui\ConfigDialog.cpp:527
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+#: gui\ConfigDialog.cpp:528
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+#: gui\ConfigDialog.cpp:529
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+#: gui\ConfigDialog.cpp:530
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+#: gui\ConfigDialog.cpp:532
+msgid "Backspace"
+msgstr "Backspace"
+
+#: gui\ConfigDialog.cpp:533
+msgid "Tab"
+msgstr "Tab"
+
+#: gui\ConfigDialog.cpp:534
+msgid "Return"
+msgstr "Enter"
+
+#: gui\ConfigDialog.cpp:535
+msgid "Escape"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:536
+msgid "Space"
+msgstr "Medzerník"
+
+#: gui\ConfigDialog.cpp:537
+msgid "Delete"
+msgstr "Delete"
+
+#: gui\ConfigDialog.cpp:539
+msgid "End"
+msgstr "End"
+
+#: gui\ConfigDialog.cpp:540
+msgid "Home"
+msgstr "Home"
+
+#: gui\ConfigDialog.cpp:541
+msgid "Left"
+msgstr "Šípka vľavo"
+
+#: gui\ConfigDialog.cpp:542
+msgid "Up"
+msgstr "Šípka vpravo"
+
+#: gui\ConfigDialog.cpp:544
+msgid "Down"
+msgstr "Šípka dole"
+
+#: gui\ConfigDialog.cpp:602
+msgid "Exclude these items from import operations"
+msgstr "Vylúčiť tieto položky z importovania"
+
+#: gui\ConfigDialog.cpp:634
+msgid "Available plugins"
+msgstr "Dostupné zásuvné moduly"
+
+#: gui\ConfigDialog.cpp:635
+msgid "Enable"
+msgstr "Zapnúť"
+
+#: gui\ConfigDialog.cpp:636
+msgid "Disable"
+msgstr "Vypnúť"
+
+#: gui\ConfigDialog.cpp:637
+msgid "Install..."
+msgstr "Inštalovať..."
+
+#: gui\ConfigDialog.cpp:638
+msgid "Download more plugins"
+msgstr ""
+
+#: gui\ConfigDialog.cpp:640
+#, c-format
+msgid ""
+"The changes made to the plugins will only be active the next time %s is "
+"started."
+msgstr "Zmeny v zásuvných moduloch budú aktívne po nasledujúcom spustení %s."
+
+#: gui\ConfigDialog.cpp:703
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start "
+"automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Nainštalovaním súboru autorun na vymeniteľný disk sa %s automaticky spustí "
+"pri pripojení disku. \n"
+"\n"
+"Želáte si pokračovať?"
+
+#: gui\ConfigDialog.cpp:706
+msgid "Could not install autorun file. Please try again."
+msgstr ""
+"Nie je možné nainštalovať súbor autorun. Skúste vykonať operáciu znova."
+
+#: gui\ConfigDialog.cpp:708
+msgid "The autorun file has been installed successfully"
+msgstr "Súbor autorun bol uspešne nainštlovaný."
+
+#: gui\ConfigDialog.cpp:739
+msgid "Please enable the plugin in order to change its options."
+msgstr ""
+
+#: gui\ConfigDialog.cpp:757
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s balíčky zásuvných modulov"
+
+#: gui\ConfigDialog.cpp:758 gui\IconDialog.cpp:175
+msgid "All files"
+msgstr "Všetky súbory"
+
+#: gui\ConfigDialog.cpp:760
+msgid "Select a plugin package"
+msgstr "Vybrať balíček zásuvného modulu"
+
+#: gui\ConfigDialog.cpp:789
+msgid "Please wait..."
+msgstr "Prosím čakajte..."
+
+#: gui\ConfigDialog.cpp:1070
+msgid ""
+"Some of these changes will only be applied until after you restart the "
+"application."
+msgstr "Niektoré z týchto zmien sa prejavia až po reštarte programu."
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Načítavanie stromu..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "Vybrať súbor alebo zložku"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Vybrať ikonu"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Súbor ikony alebo knižnica:"
+
+#: gui\IconDialog.cpp:169
+msgid "All supported files"
+msgstr "Všetky podporované súbory"
+
+#: gui\IconDialog.cpp:170 gui\IconDialog.cpp:171
+msgid "Icons"
+msgstr "Ikony"
+
+#: gui\IconDialog.cpp:172
+msgid "Executables"
+msgstr "Spustiteľné súbory"
+
+#: gui\IconDialog.cpp:173
+msgid "Dynamic libraries"
+msgstr "Dynamické knižnice"
+
+#: gui\IconDialog.cpp:174
+msgid "Icon libraries"
+msgstr "Knižnice s ikonami"
+
+#: gui\IconDialog.cpp:177
+msgid "Select an icon file or library"
+msgstr "Vybrať súbor ikony alebo knižnicu"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"Tento nástroj vám pomôže naimportovať zástupcov do %s. \n"
+"\n"
+"Vyberte možnosti odkiaľ si želáte naimportovať zástupcov:"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com aplikácie"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "Panel rýchleho spustenia Windows"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "Menu štart Windows"
+
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr ""
+
+#: gui\ImportWizardDialog.cpp:78
+msgid "Start >>"
+msgstr "Štart >>"
+
+#: gui\ImportWizardDialog.cpp:119
+msgid "Importing shortcuts... Please wait."
+msgstr "Importovanie zástupcov... Prosím čakajte."
+
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr ""
+
+#: gui\PluginPreferencesDialog.cpp:46
+msgid "Preferences"
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Group Properties"
+msgstr "Vlastnosti skupiny"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Shorcut Properties"
+msgstr "Vlastnosti zástupcu"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Name:"
+msgstr "Názov:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Location:"
+msgstr "Umiestnenie:"
+
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Parameters:"
+msgstr "Parametre:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Icon:"
+msgstr "Ikona:"
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Change icon..."
+msgstr "Zmeniť ikonu..."
+
+#: gui\ShortcutEditorDialog.cpp:47
+msgid "Use default"
+msgstr "Použiť predvolené"
+
+#: gui\ShortcutEditorDialog.cpp:48
+msgid "The location may be a file, a folder or a URL."
+msgstr ""
+
+#: gui\ShortcutEditorDialog.cpp:180
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Umiestnenie zástupcov neexistuje. Želáte si pokračovať?"
+
+#~ msgid "Transparency:"
+#~ msgstr "Priehľadnosť:"
