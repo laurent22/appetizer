@@ -1,4 +1,16 @@
-﻿Version 1.4.4.148 Beta (2010-01-23)
+﻿Version 1.4.6.494 (2010-02-13)
+
+- New: Added four special items: Calculator, Notepad, WordPad and Command Prompt
+- New: added ability to recursively import a custom folder from Import Dialog
+- New: Added option to hide or show the task bar icon or tray icon
+- Drag & dropped and imported shortcuts are now correctly imported (including the arguments and icon)
+- Minor improvements on Securizer plugin
+- Optimized loading of settings which should speeds up starting time of Appetizer in some cases
+- Changed window management so as to make Appetizer use less RAM
+- Fixed: Issue with plugins' preference window where the window didn't show the right preferences
+- Fixed: closing procedure on XP (hopefully)
+
+Version 1.4.4.148 Beta (2010-01-23)
 
 - Fixed bug with "Start on system startup" option when app was installed using PortableApps installer
 - Fixed bug where app was always starting on system startup even after the option had been unticked
