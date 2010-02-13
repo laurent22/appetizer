@@ -36,6 +36,10 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 END_EVENT_TABLE()
 
 
+//#include "launchapp/Launchapp.h"
+//Launchapp* launchapp_;
+
+
 MainFrame::MainFrame()
 : wxFrame(
   (wxFrame *)NULL,
@@ -52,6 +56,7 @@ MainFrame::MainFrame()
   arrowButtonCloseIcon_ = NULL;
   nullPanel_ = NULL;
   mainBackgroundBitmap_ = NULL;
+  //launchapp_ = NULL;
   rotated_ = false;
   activated_ = false;  
   closeOperationScheduled_ = false;
@@ -124,6 +129,10 @@ MainFrame::MainFrame()
   } else {
     ejectSideButton_ = NULL;
   }
+
+  //launchapp_ = new Launchapp(this);
+  //launchapp_->SetSize(200,200,240,180);
+  //launchapp_->Show();
 
   frameIcon_.LoadFile(FilePaths::GetBaseSkinDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   SetIcon(frameIcon_);
@@ -561,6 +570,8 @@ void MainFrame::ApplySkin(const wxString& skinName) {
 
   iconPanel_->ApplySkin(mainBackgroundBitmap_);
   optionPanel_->ApplySkin(mainBackgroundBitmap_);
+
+  //if (launchapp_) launchapp_->ApplySkin(mainBackgroundBitmap_);
 
   InvalidateMask();
   InvalidateLayout();

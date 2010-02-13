@@ -1776,6 +1776,30 @@
 					</FileConfiguration>
 				</File>
 			</Filter>
+			<Filter
+				Name="launchapp"
+				>
+				<File
+					RelativePath=".\launchapp\Launchapp.cpp"
+					>
+					<FileConfiguration
+						Name="Unicode Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Unicode Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="../stdafx.h"
+						/>
+					</FileConfiguration>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -2123,6 +2147,14 @@
 				</File>
 				<File
 					RelativePath=".\lua_glue\LuaUtil.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="launchapp"
+				>
+				<File
+					RelativePath=".\launchapp\Launchapp.h"
 					>
 				</File>
 			</Filter>

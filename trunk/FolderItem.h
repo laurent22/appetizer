@@ -97,7 +97,7 @@ public:
   FolderItemVector GetAllGroups(bool recursively = true);
 
   bool IsGroup();
-  FolderItemVector GetChildren();  
+  FolderItemVector GetChildren(bool recursively = false);  
   appFolderItem* GetParent();
   void SetParent(appFolderItem* folderItem);
   void RemoveChild(appFolderItem* folderItem);

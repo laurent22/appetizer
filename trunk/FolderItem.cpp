@@ -256,8 +256,22 @@ void appFolderItem::MoveChild(appFolderItem* folderItemToMove, int insertionInde
 }
 
 
-FolderItemVector appFolderItem::GetChildren() {
-  return children_;
+FolderItemVector appFolderItem::GetChildren(bool recursively) {
+  if (!recursively) return children_;
+
+  FolderItemVector output;
+
+  for (int i = 0; i < children_.size(); i++) {
+    appFolderItem* child = children_.at(i);
+    output.push_back(child);
+
+    if (child->IsGroup()) {
+      FolderItemVector temp = child->GetChildren(true);
+      for (int j = 0; j < temp.size(); j++) output.push_back(temp.at(j));
+    }
+  }  
+
+  return output;
 }
 
 

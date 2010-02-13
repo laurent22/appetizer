@@ -62,6 +62,7 @@ public:
 
   void AddFolderItem(int folderItemId);
   void SetFolderItemSource(int source);
+  void ClearFolderItems();
 
   FolderItemRenderer* GetFolderItemRendererById(int id);
 

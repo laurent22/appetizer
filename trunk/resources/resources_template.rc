@@ -24,7 +24,7 @@ BEGIN
             VALUE "FileDescription", "Appetizer\0"
             VALUE "FileVersion", "____VERSION____"
             VALUE "InternalName", "MiniLaunchBar\0"
-            VALUE "LegalCopyright", "Copyright (C) 2008 Laurent Cozic\0"
+            VALUE "LegalCopyright", "Copyright (C) 2008-2010 Laurent Cozic\0"
             VALUE "OriginalFilename", "Appetizer.exe\0"
             VALUE "ProductName", "Appetizer\0"
             VALUE "ProductVersion", "____VERSION____"

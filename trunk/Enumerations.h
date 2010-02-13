@@ -40,6 +40,7 @@ enum {
   ID_TIMER_User_ScheduleSave,
   ID_TIMER_PluginPreferences_ScheduleSave,
   ID_TIMER_MainFrame_ClosingProgress,
+  ID_TEXTCTRL_Launchapp_TextInput,
   ID_BUTTON_IconPanel_BrowseButton,
   ID_BUTTON_MainFrame_CloseButton,
   ID_BUTTON_MainFrame_EjectButton,

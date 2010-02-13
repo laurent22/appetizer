@@ -115,6 +115,12 @@ void IconPanel::AddFolderItem(int folderItemId) {
 }
 
 
+void IconPanel::ClearFolderItems() {
+  folderItemIds_.clear();
+  ClearIcons();
+}
+
+
 void IconPanel::OnBrowseButtonMenu(wxCommandEvent& evt) {
   appFolderItem* folderItem = wxGetApp().GetUser()->GetRootFolderItem()->GetChildById(evt.GetId());
   if (!folderItem) {
@@ -462,10 +468,17 @@ int IconPanel::GetMinWidth() {
 
 
 int IconPanel::GetMinHeight() {
-  return 
-    wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() +
-    Styles::Icon.Padding.Height +
-    Styles::InnerPanel.Padding.Height;
+  wxString labelPosition = wxGetApp().GetUser()->GetSettings()->GetString(_T("IconLabelPosition"));
+
+  int output = wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize() +
+               Styles::Icon.Padding.Height +
+               Styles::InnerPanel.Padding.Height;
+
+  if (labelPosition == _T("bottom")) {
+    output += Styles::Font.Size + 6 + Styles::Icon.LabelGap;
+  }
+
+  return output;
 }
 
 
