@@ -5,6 +5,10 @@ Securizer protects your sensitive documents by encrypting them.
 - When Appetizer closes, Securizer asks you for the password you'd like to use to encrypt your documents. Choose a password long enought - between 4 to 20 characters.
 - Then the next time Appetizer is opened, you will be asked for your password again. Input it and your documents will be decrypted.
 
+== SECURIZER ICON ==
+
+- The plugin adds an icon to your option panel. Click on it to configure the plugin, to manually encrypt or decrypt your drive, or to view this help file.
+
 == TECHNICAL DETAILS ==
 
 - Securizer uses ccrypt for the encryption and uses the safest encryption method so there is no risk of losing files, even if ccrypt or Appetizer crashes.
