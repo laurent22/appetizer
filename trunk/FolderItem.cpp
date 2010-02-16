@@ -648,7 +648,7 @@ void appFolderItem::Launch(const wxString& filePath, const wxString& arguments, 
     }
 
     wxString command; 
-    bool ok = fileType && fileType->GetOpenCommand(&command, wxFileType::MessageParameters(filePath, wxEmptyString)); 
+    bool ok = fileType && fileType->GetOpenCommand(&command, wxFileType::MessageParameters(filename.GetFullPath(), wxEmptyString)); 
     if (!ok) {
       MessageBoxes::ShowError(wxString::Format(_("This file doesn't exist or has been deleted (Error %s)"), _T("CannotBuildCommand")));
     } else {

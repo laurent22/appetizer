@@ -461,7 +461,7 @@ end
 
 
 function popupMenu_help()
-	system:open(plugin:getDirectory() .. "\\Resources\\Help.txt")
+	system:open(plugin:getDirectory() .. "\\Resources\\Help.html")
 end
 
 

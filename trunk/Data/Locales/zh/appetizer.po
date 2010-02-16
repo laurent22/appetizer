@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Appetizer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-02-05 23:13+0000\n"
-"PO-Revision-Date: 2010-02-10 18:36-0000\n"
+"PO-Revision-Date: 2010-02-15 19:06-0000\n"
 "Last-Translator: Laurent Cozic <nospam@nospam.com>\n"
 "Language-Team: Appetizer Project\n"
 "MIME-Version: 1.0\n"
@@ -188,11 +188,11 @@ msgstr "中"
 
 #: main.cpp:318
 msgid "Extra Large (XP and above)"
-msgstr "特大"
+msgstr "特大 (需 XP 以上)"
 
 #: main.cpp:319
 msgid "Jumbo (Vista and above)"
-msgstr "巨大"
+msgstr "巨大 (需 Vista 以上)"
 
 #: main.cpp:323
 msgid "Small"
@@ -305,7 +305,7 @@ msgstr "取得協助"
 #: gui\AboutDialog.cpp:75
 #, c-format
 msgid "About %s..."
-msgstr "關於 %s"
+msgstr "關於 %s ..."
 
 #: OptionPanel.cpp:341
 msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
@@ -442,11 +442,11 @@ msgstr ""
 
 #: gui\AboutDialog.cpp:85
 msgid "Web:"
-msgstr "網址"
+msgstr "網址:"
 
 #: gui\AboutDialog.cpp:86
 msgid "Contact:"
-msgstr "聯絡人"
+msgstr "聯絡人:"
 
 #: gui\AboutDialog.cpp:94
 #, c-format
@@ -541,7 +541,7 @@ msgstr "系統啟動時啟動 Appetizer"
 
 #: gui\ConfigDialog.cpp:321
 msgid "Icon size:"
-msgstr "圖示大小"
+msgstr "圖示大小:"
 
 #: gui\ConfigDialog.cpp:322
 msgid "Skin:"
@@ -549,11 +549,11 @@ msgstr "主題:"
 
 #: gui\ConfigDialog.cpp:323
 msgid "Orientation:"
-msgstr "方向"
+msgstr "方向:"
 
 #: gui\ConfigDialog.cpp:324
 msgid "Opacity:"
-msgstr "不透明度"
+msgstr "不透明度:"
 
 #: gui\ConfigDialog.cpp:325
 msgid "Download more skins"
@@ -804,7 +804,7 @@ msgstr "選擇圖示"
 
 #: gui\IconDialog.cpp:103
 msgid "Icon file or library:"
-msgstr "圖示檔或圖示庫"
+msgstr "圖示檔或圖示庫:"
 
 #: gui\IconDialog.cpp:169
 msgid "All supported files"
@@ -900,7 +900,7 @@ msgstr "圖示:"
 
 #: gui\ShortcutEditorDialog.cpp:46
 msgid "Change icon..."
-msgstr "改變圖示:"
+msgstr "改變圖示..."
 
 #: gui\ShortcutEditorDialog.cpp:47
 msgid "Use default"
