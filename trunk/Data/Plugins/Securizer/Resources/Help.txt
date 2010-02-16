@@ -2,17 +2,22 @@ Securizer protects your sensitive documents by encrypting them.
 
 == USAGE ==
 
-- When Appetizer closes, Securizer asks you for the password you'd like to use to encrypt your documents. Choose a password long enought - between 4 to 20 characters.
-- Then the next time Appetizer is opened, you will be asked for your password again. Input it and your documents will be decrypted.
+- When Appetizer closes, Securizer asks for the password you'd like to use to encrypt your documents. Typed it in and click OK to encrypt your documents. By default, Securizer is going to encrypt documents such as Word, Excel or OpenOffice files. It will skip larger files such as video or music files. You can however change this behavior in the Configuration window by specifying which files should be encrypted and which ones should be skipped.
 
-== SECURIZER ICON ==
+- The next time Appetizer is opened, you will be asked for your password again. Input it and your documents will be decrypted.
 
-- The plugin adds an icon to your option panel. Click on it to configure the plugin, to manually encrypt or decrypt your drive, or to view this help file.
+== CONFIGURATION ==
+
+- The plugin adds an button to your option panel (identified with a "Key" icon). Click on it to configure the plugin, to manually encrypt or decrypt your drive, or to view this help file.
 
 == TECHNICAL DETAILS ==
 
-- Securizer uses ccrypt for the encryption and uses the safest encryption method so there is no risk of losing files, even if ccrypt or Appetizer crashes.
+- Securizer uses the safest encryption method of Peter Selinger's ccrypt so there is no risk of losing files, even if ccrypt or Appetizer crashes.
 - Encrypted files are given a unique extension (.ccrypt1_7). This ensure that a file will not be accidentally encrypted twice (or decrypted when it's not encrypted).
+
+== LOST OR FORGOTTEN PASSWORDS ==
+
+- Make sure you do not forget your password as, without it, it will be impossible to decrypt your files. See ccrypt FAQ for more information - http://ccrypt.sourceforge.net/faq.html#lost
 
 == LICENSE ==
 
