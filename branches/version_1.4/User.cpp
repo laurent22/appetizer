@@ -116,7 +116,7 @@ void User::Load() {
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     wxString elementName = wxString(element->Value(), wxConvUTF8);
 
-    if (elementName == _T("appFolderItem")) {
+    if (elementName == _T("FolderItem") || elementName == _T("appFolderItem")) {
       appFolderItem* folderItem = appFolderItem::CreateFolderItem();
       folderItem->FromXml(element);
 

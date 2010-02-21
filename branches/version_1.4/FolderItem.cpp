@@ -905,7 +905,7 @@ void appFolderItem::LaunchWithArguments(const wxString& arguments) {
 
 
 TiXmlElement* appFolderItem::ToXml() {
-  TiXmlElement* xml = new TiXmlElement("appFolderItem");
+  TiXmlElement* xml = new TiXmlElement("FolderItem");
 
   XmlUtil::AppendTextElement(xml, "FilePath", GetFilePath());
   XmlUtil::AppendTextElement(xml, "Name", GetName());
@@ -958,15 +958,13 @@ void appFolderItem::FromXml(TiXmlElement* xml) {
   if (childrenXml) {
     for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
       wxString elementName = wxString(element->Value(), wxConvUTF8);
-      if (elementName != _T("appFolderItem")) continue;
+      if ((elementName != _T("FolderItem")) && (elementName != _T("appFolderItem"))) continue;
       
       appFolderItem* folderItem = appFolderItem::CreateFolderItem();
       folderItem->FromXml(element);
       AddChild(folderItem);
     }
   }
-
-
 
   ConvertOldVariablesToNew(filePath_);
   ConvertOldVariablesToNew(parameters_);
