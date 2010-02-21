@@ -1,2 +1,2 @@
-"c:\Program Files\Adobe\Flex Builder 3\sdks\3.0.0\bin\asdoc.exe" -main-title "Appetizer Plugin API Documentation" -window-title "Appetizer Plugin API Documentation" -load-config+="./Templates/flex-config.xml" -footer "Copyright (c) 2008 Laurent Cozic" -source-path ./DummyClasses -doc-sources ./DummyClasses -templates-path ./Templates -output ./doc
+"c:\flex_sdk_3.5\bin\asdoc.exe" -main-title "Appetizer Plugin API Documentation" -window-title "Appetizer Plugin API Documentation" -load-config+="./Templates/flex-config.xml" -footer "Copyright (c) 2008-2010 Laurent Cozic" -source-path ./DummyClasses -doc-sources ./DummyClasses -templates-path ./Templates -output ./doc
 pause

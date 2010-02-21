@@ -905,7 +905,7 @@ void appFolderItem::LaunchWithArguments(const wxString& arguments) {
 
 
 TiXmlElement* appFolderItem::ToXml() {
-  TiXmlElement* xml = new TiXmlElement("appFolderItem");
+  TiXmlElement* xml = new TiXmlElement("FolderItem");
 
   XmlUtil::AppendTextElement(xml, "FilePath", GetFilePath());
   XmlUtil::AppendTextElement(xml, "Name", GetName());
@@ -958,15 +958,13 @@ void appFolderItem::FromXml(TiXmlElement* xml) {
   if (childrenXml) {
     for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
       wxString elementName = wxString(element->Value(), wxConvUTF8);
-      if (elementName != _T("appFolderItem")) continue;
+      if ((elementName != _T("FolderItem")) && (elementName != _T("appFolderItem"))) continue;
       
       appFolderItem* folderItem = appFolderItem::CreateFolderItem();
       folderItem->FromXml(element);
       AddChild(folderItem);
     }
   }
-
-
 
   ConvertOldVariablesToNew(filePath_);
   ConvertOldVariablesToNew(parameters_);
@@ -1184,6 +1182,7 @@ wxIcon* appFolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize)
 
   if (path.Index(_T("$(")) == wxNOT_FOUND) return output;
   if (path.Index(_T("$(Drive)")) != wxNOT_FOUND) return output;
+  if (path.Index(_T("$(AppetizerPath)")) != wxNOT_FOUND) return output;
 
   std::pair<wxString, int> nameSizePair(path, iconSize);
 
@@ -1257,6 +1256,8 @@ wxString appFolderItem::GetDisplayName(const wxString& unresolvedFilePath) {
       theName = _("Search");
     } else if (unresolvedFilePath == _T("$(Drive)")) {
       theName = _("Current Drive");
+    } else if (unresolvedFilePath == _T("$(AppetizerPath)")) {
+      theName = _("Appetizer Folder");
     } else if (unresolvedFilePath == _T("$(Printers)")) {
       theName = _("Printers and Faxes");
     } else if (unresolvedFilePath == _T("$(NetworkConnections)")) {
@@ -1324,6 +1325,7 @@ wxString appFolderItem::ResolvePath(const wxString& filePath, bool normalizeToo)
   wxString result(filePath);
 
   if (result.Index(_T("$(")) != wxNOT_FOUND) {
+    result.Replace(_T("$(AppetizerPath"), FilePaths::GetApplicationDirectory());
     result.Replace(_T("$(Drive)"), FilePaths::GetApplicationDrive());
     result.Replace(_T("$(System32)"), FilePaths::GetSystem32Directory());
     result.Replace(_T("$(Windows)"), FilePaths::GetWindowsDirectory());
