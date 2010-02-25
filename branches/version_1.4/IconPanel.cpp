@@ -171,7 +171,7 @@ wxMenu* IconPanel::GetContextMenu() {
     menuItem->SetMetadata(_T("name"), _T("addSpecialItem")); \
     menuItem->SetMetadata(_T("specialItemMacro"), specialItemMacro); \
     specialIcon = appFolderItem::CreateSpecialItemIcon(specialItemMacro, 16); \
-    menuItem->SetBitmap(*specialIcon); \
+    if (specialIcon) menuItem->SetBitmap(*specialIcon); \
     wxDELETE(specialIcon); \
     specialMenu->Append(menuItem);
 
