@@ -27,7 +27,7 @@ public:
   void Save(bool force = false);
   void Load();
 
-  void GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* result);
+  void GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* result, bool recurse = false);
   
   void PortableAppsFormatSynchronization();
   void StartMenuSynchronization();

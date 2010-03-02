@@ -133,8 +133,8 @@ TiXmlElement* UserSettings::ToXml() {
 }
 
 
-int UserSettings::GetValidatedIconSize() {
-  return wxGetApp().GetOSValidIconSize(GetInt(_T("IconSize")));
+int UserSettings::GetValidatedIconSize(int iconSize) {
+  return wxGetApp().GetOSValidIconSize(iconSize > 0 ? iconSize : GetInt(_T("IconSize")));
 }
 
 

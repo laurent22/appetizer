@@ -51,6 +51,7 @@ public:
   wxLocale* GetLocale();
   bool IsLaunchedOnStartup();
   void SetLaunchOnStartup(bool launch);
+  wxSize GetIconAreaSize(int iconSize, const wxString& iconLabel);
 
   const bool GetCommandLineFound(const wxString& name);
 

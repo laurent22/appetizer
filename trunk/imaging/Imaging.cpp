@@ -162,12 +162,15 @@ wxImage Imaging::ResampleBicubic(wxImage& image, int width, int height)
 wxIcon* Imaging::CreateIconFromPng(const wxString& filePath, int iconSize) {
   wxImage img(filePath, wxBITMAP_TYPE_PNG);
   if (!img.HasAlpha()) img.InitAlpha();
-  img = Imaging::ResampleBicubic(img, iconSize, iconSize);
+  // Note: wxImage.Rescale actually looks much better than ResampleBicubic on large images
+  // On small images, both functions are visually equivalent but wxImage.Rescale is faster
+  img = img.Rescale(iconSize, iconSize, wxIMAGE_QUALITY_HIGH);
+  //img = Imaging::ResampleBicubic(img, iconSize, iconSize);
   
-  wxIcon* output = new wxIcon();
-  output->CopyFromBitmap(wxBitmap(img));
-  
-  return output;
+  wxIcon* icon = new wxIcon();
+  icon->CopyFromBitmap(wxBitmap(img));
+
+  return icon;
 }
 
 

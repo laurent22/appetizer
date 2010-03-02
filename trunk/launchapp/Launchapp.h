@@ -39,6 +39,7 @@ class Launchapp: public wxFrame {
     wxTextCtrl* textInput_;
     IconPanel* iconPanel_;
     void UpdateFolderItemsFromText();
+    int iconPanelWidth_;
 
     void OnPaint(wxPaintEvent& evt);
     void OnTextChange(wxCommandEvent& evt);

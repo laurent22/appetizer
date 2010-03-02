@@ -1093,8 +1093,11 @@ wxIcon* appFolderItem::CreateDefaultGroupIcon(int iconSize) {
   std::pair<wxString, int> p(_T("group"), iconSize);
 
   if (defaultIcons_.find(p) != defaultIcons_.end()) {
-    wxIcon* output = new wxIcon(*defaultIcons_[p]);
-    return output;
+    wxIcon* cachedIcon = defaultIcons_[p];
+    if (cachedIcon) {
+      wxIcon* output = new wxIcon(*cachedIcon);
+      return output;
+    }
   }
 
   wxIcon* output = new wxIcon(FilePaths::GetSkinFile(wxString::Format(_T("FolderIcon%d.png"), iconSize)), wxBITMAP_TYPE_PNG);
@@ -1187,8 +1190,11 @@ wxIcon* appFolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize)
   std::pair<wxString, int> nameSizePair(path, iconSize);
 
   if (defaultIcons_.find(nameSizePair) != defaultIcons_.end()) {
-    wxIcon* output = new wxIcon(*defaultIcons_[nameSizePair]);
-    return output;
+    wxIcon* cachedIcon = defaultIcons_[nameSizePair];
+    if (cachedIcon) {
+      wxIcon* output = new wxIcon(*cachedIcon);
+      return output;
+    }
   }
 
   wxString dllPath = FilePaths::GetSystem32Directory() + _T("\\shell32.dll");
@@ -1226,11 +1232,7 @@ wxIcon* appFolderItem::CreateSpecialItemIcon(const wxString& path, int iconSize)
     output = IconGetter::GetExecutableIcon(appFolderItem::GetSpecialItemFilePath(path), iconSize);
   }
 
-  if (output) {
-    defaultIcons_[nameSizePair] = new wxIcon(*output);
-  } else {
-    defaultIcons_[nameSizePair] = NULL;
-  }
+  if (output) defaultIcons_[nameSizePair] = new wxIcon(*output);
 
   return output;
 }

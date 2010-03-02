@@ -63,4 +63,7 @@ const int JUMBO_ICON_SIZE = 256;
 const int MIN_BOTTOM_ICON_LABEL_WIDTH = 64;
 const int RIGHT_ICON_LABEL_WIDTH = 128;
 
+const int LAUNCHPAD_TEXTBOX_HEIGHT = 24;
+const int LAUNCHPAD_TEXTBOX_GAP = 6;
+
 #endif // __Constants_H

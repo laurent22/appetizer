@@ -16,6 +16,7 @@
 #include "Enumerations.h"
 #include "MessageBoxes.h"
 #include "ExtendedMenuItem.h"
+#include "IconPanel.h"
 #include "gui/TreeViewDialog.h"
 
 
@@ -61,6 +62,18 @@ BitmapControl(owner, id, point, size) {
 }
 
 
+int FolderItemRenderer::GetIconSize() {
+  IconPanel* parent = dynamic_cast<IconPanel*>(GetParent());
+  return parent->GetIconSize();
+}
+
+
+wxString FolderItemRenderer::GetLabelPosition() {
+  IconPanel* parent = dynamic_cast<IconPanel*>(GetParent());
+  return parent->GetLabelPosition();
+}
+
+
 void FolderItemRenderer::UpdateInnerLabel() {
   if (!label_) return;
 
@@ -77,7 +90,7 @@ void FolderItemRenderer::UpdateInnerLabel() {
 
   int maxWidth = GetSize().GetWidth() - Styles::Icon.Padding.Width;
 
-  if (wxGetApp().GetUser()->GetSettings()->GetString(_T("IconLabelPosition")) == _T("right")) {
+  if (GetLabelPosition() == _T("right")) {
     maxWidth = RIGHT_ICON_LABEL_WIDTH;
   }
 
@@ -338,28 +351,12 @@ void FolderItemRenderer::OnMotion(wxMouseEvent& evt) {
 
 
 void FolderItemRenderer::FitToContent() {
-  int iconSize = wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize();
-  int w = iconSize;
-  int h = iconSize;
+  int iconSize = GetIconSize();
+  wxString labelPosition = GetLabelPosition();
 
-  wxString labelPosition = wxGetApp().GetUser()->GetSettings()->GetString(_T("IconLabelPosition"));
+  wxSize s = wxGetApp().GetIconAreaSize(iconSize, labelPosition);
 
-  if (labelPosition != _T("hidden")) {
-
-    wxStaticText* label = GetLabel();   
-
-    if (labelPosition == _T("bottom")) {
-      h += Styles::Icon.LabelGap;
-      h += label->GetBestSize().GetHeight();
-      if (w < MIN_BOTTOM_ICON_LABEL_WIDTH) w = MIN_BOTTOM_ICON_LABEL_WIDTH;
-    } else if (labelPosition == _T("right")) {
-      w += RIGHT_ICON_LABEL_WIDTH + Styles::Icon.LabelGap;
-    }
-
-  }
-
-  SetSize(w + Styles::Icon.Padding.Width,
-          h + Styles::Icon.Padding.Height);
+  SetSize(s.GetWidth(), s.GetHeight());
 }
 
 
@@ -421,12 +418,12 @@ void FolderItemRenderer::UpdateControlBitmap() {
   }
 
   UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();
-  int userSettingsIconSize = userSettings->GetValidatedIconSize();
+  int userSettingsIconSize = GetIconSize();
 
   wxMemoryDC destDC;
   destDC.SelectObject(*controlBitmap_);
 
-  wxString labelPosition = wxGetApp().GetUser()->GetSettings()->GetString(_T("IconLabelPosition"));
+  wxString labelPosition = GetLabelPosition();
 
 
   if (mouseInside_) {

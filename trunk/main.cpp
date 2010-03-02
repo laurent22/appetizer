@@ -217,6 +217,7 @@ bool MiniLaunchBar::OnInit() {
     user_->AddAutoAddExclusion(_T("*unwise.exe"));
     user_->AddAutoAddExclusion(_T("*uninst.exe"));
     user_->AddAutoAddExclusion(_T("*setup*.exe"));
+    user_->AddAutoAddExclusion(_T("msiexec.exe"));
   } 
 
   if (userSettings->GetBool(_T("OptionPanelOpen"))) {
@@ -575,6 +576,25 @@ void MiniLaunchBar::User_IconSizeChange() {
   GetMainFrame()->GetIconPanel()->ClearIcons();
   GetMainFrame()->GetIconPanel()->InvalidateIcons();
   GetMainFrame()->GetIconPanel()->InvalidateLayout();
+}
+
+
+wxSize MiniLaunchBar::GetIconAreaSize(int iconSize, const wxString& labelPosition) {
+  int w = iconSize;
+  int h = iconSize;
+
+  if (labelPosition == _T("bottom")) {
+    h += Styles::Icon.LabelGap;
+    h += Styles::Font.Size;
+    if (w < MIN_BOTTOM_ICON_LABEL_WIDTH) w = MIN_BOTTOM_ICON_LABEL_WIDTH;
+  } else if (labelPosition == _T("right")) {
+    w += RIGHT_ICON_LABEL_WIDTH + Styles::Icon.LabelGap;
+  }
+
+  w += Styles::Icon.Padding.Width;
+  h += Styles::Icon.Padding.Height;
+
+  return wxSize(w, h);
 }
 
 

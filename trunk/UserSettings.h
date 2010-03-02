@@ -28,7 +28,7 @@ public:
   TiXmlElement* ToXml();
   void FromXml(TiXmlElement* xml);
 
-  int GetValidatedIconSize();
+  int GetValidatedIconSize(int iconSize = -1);
 
   wxString GetString(const wxString& name);
   int GetInt(const wxString& name);

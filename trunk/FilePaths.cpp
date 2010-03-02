@@ -173,7 +173,6 @@ wxString FilePaths::GetAllUsersShellDirectory(const wxString& itemName) {
   }
 
   return _T("");
-
 }
 
 

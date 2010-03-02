@@ -35,8 +35,13 @@ public:
 
   wxBitmap* GetControlBitmap();
 
-  void SetWidthInIcons(int numberOfIcons);
-  void SetHeightInIcons(int numberOfIcons);
+  void OverrideIconSize(int iconSize);
+  void OverrideLabelPosition(const wxString& labelPosition);
+  void ShowBrowseButton(bool showIt);
+  void CenterIcons(bool doCenter);
+
+  int GetIconSize();
+  wxString GetLabelPosition();
 
   int GetMinWidth();
   int GetMinHeight();
@@ -79,6 +84,10 @@ public:
   
 private:
 
+  bool centerIcons_;
+  bool showBrowseButton_;
+  int overridedIconSize_;
+  wxString overridedLabelPosition_;
   wxRect lastRect_;
   bool rotated_;
   int folderItemSource_;

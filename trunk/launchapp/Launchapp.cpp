@@ -43,8 +43,31 @@ Launchapp::Launchapp(wxWindow* parent)
   textInput_ = new wxTextCtrl(backgroundPanel_, ID_TEXTCTRL_Launchapp_TextInput, _T("test"));
   textInput_->SetEditable(true);
 
+  int iconSize = wxGetApp().GetOSValidIconSize(EXTRA_LARGE_ICON_SIZE);
+  wxString labelPosition = _T("bottom");
+
   iconPanel_ = new IconPanel(backgroundPanel_, wxID_ANY, wxPoint(0, 0), wxSize(200, 200));
   iconPanel_->SetFolderItemSource(ICON_PANEL_SOURCE_CUSTOM);
+  iconPanel_->OverrideIconSize(iconSize);
+  iconPanel_->OverrideLabelPosition(labelPosition);
+  iconPanel_->ShowBrowseButton(false);
+  iconPanel_->CenterIcons(true);
+
+  int iconCount = 8;
+  wxSize iconAreaSize = wxGetApp().GetIconAreaSize(iconSize, labelPosition);
+
+  int width = iconAreaSize.GetWidth() * iconCount + Styles::InnerPanel.Padding.Width;
+  iconPanelWidth_ = width;
+  width += (Styles::MainPanel.SourceRectangle.GetRight() - Styles::InnerPanel.SourceRectangle.GetRight());
+  width += (Styles::InnerPanel.SourceRectangle.GetLeft() - Styles::OptionPanel.SourceRectangle.GetWidth());
+  width += Styles::MainPanel.Padding.Width;
+
+  int height = iconAreaSize.GetHeight() + Styles::InnerPanel.Padding.Height;
+  height += (Styles::MainPanel.SourceRectangle.GetHeight() - Styles::InnerPanel.SourceRectangle.GetHeight());
+  height += Styles::MainPanel.Padding.Height;
+  height += LAUNCHPAD_TEXTBOX_HEIGHT + LAUNCHPAD_TEXTBOX_GAP;
+
+  SetSize(width, height);
 }
 
 
@@ -111,14 +134,14 @@ void Launchapp::UpdateLayout(int width, int height) {
   int rectX = Styles::InnerPanel.SourceRectangle.GetLeft() - Styles::MainPanel.SourceRectangle.GetLeft() + Styles::InnerPanel.Padding.Left;
   int rectY = Styles::InnerPanel.SourceRectangle.GetTop() - Styles::MainPanel.SourceRectangle.GetTop() + Styles::InnerPanel.Padding.Top;
   int rectWidth = bgPanelWidth - rectX - (Styles::MainPanel.SourceRectangle.GetRight() - Styles::InnerPanel.SourceRectangle.GetRight()) - Styles::InnerPanel.Padding.Right;
-  int rectHeight = 24;
+  int rectHeight = LAUNCHPAD_TEXTBOX_HEIGHT;
   textInput_->SetSize(
     rectX,
     rectY,
     rectWidth,
     rectHeight);
 
-  iconPanel_->SetSize(rectX, rectY + rectHeight + 6, rectWidth, 100);
+  iconPanel_->SetSize(Styles::MainPanel.Padding.Left, Styles::MainPanel.Padding.Top + rectHeight + LAUNCHPAD_TEXTBOX_GAP, iconPanelWidth_, 100);
 
   needLayoutUpdate_ = false;
 }

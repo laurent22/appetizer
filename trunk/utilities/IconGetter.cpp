@@ -340,7 +340,6 @@ wxIcon* IconGetter::GetFolderItemIcon(const wxString& filePath, int iconSize, bo
         // To get the 48x48 icons, use SHIL_EXTRALARGE
         // To get the 256x256 icons (Vista only), use SHIL_JUMBO
         HIMAGELIST* imageList;
-        //HRESULT hResult = SHGetImageList(iconSize == 48 ? SHIL_EXTRALARGE : SHIL_JUMBO, IID_IImageList, (void**)&imageList);
         HRESULT hResult = SHGetImageListFunction_(iconSize == 48 ? SHIL_EXTRALARGE : SHIL_JUMBO, IID_IImageList, (void**)&imageList);
 
         if (hResult == S_OK) {

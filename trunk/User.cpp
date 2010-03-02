@@ -269,9 +269,11 @@ void User::PortableAppsFormatSynchronization() {
 }
 
 
-void User::GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* result) {
+void User::GetShortcutsFromFolder(const wxString& folderPath, wxArrayString* result, bool recurse) {
   wxArrayString shortcutPaths;
-  wxDir::GetAllFiles(folderPath, &shortcutPaths, _T("*.lnk"), wxDIR_FILES);
+  int flags = wxDIR_FILES;
+  if (recurse) flags |= wxDIR_DIRS;
+  wxDir::GetAllFiles(folderPath, &shortcutPaths, _T("*.lnk"), flags);
 
   for (int i = 0; i < shortcutPaths.GetCount(); i++) {
     wxString shortcutPath = shortcutPaths[i];
@@ -301,14 +303,14 @@ void User::StartMenuSynchronization() {
    
     wxDir startMenuFolder;  
 
-    GetShortcutsFromFolder(startMenuPath, &foundFilePaths);
+    GetShortcutsFromFolder(startMenuPath, &foundFilePaths, true);
 
     if (wxFileName::DirExists(startMenuPath) && startMenuFolder.Open(startMenuPath)) {
       wxString folderName;
       bool success = startMenuFolder.GetFirst(&folderName, wxALL_FILES_PATTERN, wxDIR_DIRS | wxDIR_HIDDEN);
       
       while (success) {
-        GetShortcutsFromFolder(startMenuFolder.GetName() + _T("/") + folderName, &foundFilePaths);
+        GetShortcutsFromFolder(startMenuFolder.GetName() + _T("/") + folderName, &foundFilePaths, true);
 
         success = startMenuFolder.GetNext(&folderName);
       }

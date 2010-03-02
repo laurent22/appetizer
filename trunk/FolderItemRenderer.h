@@ -33,6 +33,8 @@ public:
   appFolderItem* GetFolderItem();
   void ApplySkin();  
   wxMenu* GetPopupMenu();  
+  int GetIconSize();
+  wxString GetLabelPosition();
 
 private:
 
