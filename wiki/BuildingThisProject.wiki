@@ -1,3 +1,3 @@
-#Some information on how to build Appetizer
+#summary Some information on how to build Appetizer
 
 Follow [http://app.etizer.org/wiki/building-appetizer these instructions] for help on how to build Appetizer.
