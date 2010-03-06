@@ -2,7 +2,7 @@
 
 = Introduction =
 
-MiniLaunchBar was initially developed under Delphi and that version is still available in the "branches" folder of the SVN. Although it was only a Beta version, it is very stable and can be used without any risks.
+Appetizer, then called MiniLaunchBar, was initially developed using Delphi and that version is still available in the "branches" folder of the SVN. Although it was only a Beta version, it is very stable and can be used without any risks.
 
 = Details =
 
