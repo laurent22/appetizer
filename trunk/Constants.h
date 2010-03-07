@@ -65,5 +65,6 @@ const int RIGHT_ICON_LABEL_WIDTH = 128;
 
 const int LAUNCHPAD_TEXTBOX_HEIGHT = 24;
 const int LAUNCHPAD_TEXTBOX_GAP = 6;
+const int LAUNCHPAD_VISIBLE_ICONS = 4;
 
 #endif // __Constants_H

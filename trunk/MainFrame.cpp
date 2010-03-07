@@ -36,10 +36,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 END_EVENT_TABLE()
 
 
-#include "launchapp/Launchapp.h"
-Launchapp* launchapp_;
-
-
 MainFrame::MainFrame()
 : wxFrame(
   (wxFrame *)NULL,
@@ -130,9 +126,6 @@ MainFrame::MainFrame()
     ejectSideButton_ = NULL;
   }
 
-  //launchapp_ = new Launchapp(this);
-  //launchapp_->Show();
-
   frameIcon_.LoadFile(FilePaths::GetBaseSkinDirectory() + _T("/Application.ico"), wxBITMAP_TYPE_ICO);
   SetIcon(frameIcon_);
   SetTitle(APPLICATION_NAME);
@@ -187,13 +180,30 @@ MainFrame::MainFrame()
 }
 
 
+void MainFrame::ShowLaunchApp() {
+  if (!launchapp_) {
+    launchapp_ = new Launchapp(this);
+    launchapp_->ApplySkin(mainBackgroundBitmap_);
+  }
+
+  int screenWidth = wxSystemSettings::GetMetric(wxSYS_SCREEN_X);
+  int screenHeight = wxSystemSettings::GetMetric(wxSYS_SCREEN_Y);
+
+  launchapp_->MakeModal();
+  launchapp_->Show();
+  launchapp_->UpdateLayout();
+  launchapp_->SetPosition(wxPoint((screenWidth - launchapp_->GetSize().GetWidth()) / 2, (screenHeight - launchapp_->GetSize().GetHeight()) / 2));
+}
+
+
 void MainFrame::ShowTrayIcon(bool doShow) {
   if (doShow == taskBarIcon_.IsIconInstalled()) return;
   
   if (doShow) {
     // We need to provide a .ico file that only contains a 16x16 icon. If we give a .ico with
     // multiple sizes (16, 32, 48), Windows is going to use the 32x32 size and resize it to 16x16 O_o
-    wxIcon trayIcon(FilePaths::GetBaseSkinDirectory() + _T("/Application16.ico"), wxBITMAP_TYPE_ICO);
+    wxString iconFile = FilePaths::GetBaseSkinDirectory() + _T("/Application16.ico");
+    wxIcon trayIcon(iconFile, wxBITMAP_TYPE_ICO);
     taskBarIcon_.SetIcon(trayIcon);
   } else {
     taskBarIcon_.RemoveIcon();

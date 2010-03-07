@@ -35,6 +35,7 @@ class Launchapp: public wxFrame {
     NineSlicesPanel* backgroundLeftImage_;
     bool needLayoutUpdate_;
     bool needMaskUpdate_;
+    int numberOfVisibleIcons_;
     NineSlicesPainter maskNineSlices_;
     wxTextCtrl* textInput_;
     IconPanel* iconPanel_;
@@ -43,6 +44,7 @@ class Launchapp: public wxFrame {
 
     void OnPaint(wxPaintEvent& evt);
     void OnTextChange(wxCommandEvent& evt);
+    void textInput_keyDown(wxKeyEvent& event);
 
   DECLARE_EVENT_TABLE()
 

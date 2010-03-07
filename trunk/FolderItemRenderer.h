@@ -35,6 +35,8 @@ public:
   wxMenu* GetPopupMenu();  
   int GetIconSize();
   wxString GetLabelPosition();
+  bool GetSelected();
+  void SetSelected(bool selected);
 
 private:
 
@@ -45,6 +47,7 @@ private:
   bool mouseInside_;
   bool mousePressed_;
   bool draggingStarted_;
+  bool selected_;
   int folderItemId_;
   NineSlicesPainter* iconOverlayPainterUp_;
   NineSlicesPainter* iconOverlayPainterDown_;

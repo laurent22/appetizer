@@ -48,6 +48,8 @@ public:
   int GetMaxWidth();
   int GetMaxHeight();
 
+  std::vector<int> GetFolderItemIds();
+
   /**
    * Get the insertion index under the given point. Useful for drag & drop
    * operations, in order to know between which icons the object should
@@ -70,6 +72,14 @@ public:
   void ClearFolderItems();
 
   FolderItemRenderer* GetFolderItemRendererById(int id);
+
+  int GetSelectedIndex();
+  void SetSelectedIndex(int index);
+  void SelectNext();
+  void SelectPrevious();
+  void UnselectAll();
+  void LaunchSelected();
+  appFolderItem* GetSelectedFolderItem();
 
   void OnRightDown(wxMouseEvent& evt);
   void OnMenuNewShortcut(wxCommandEvent& evt);

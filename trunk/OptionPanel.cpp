@@ -37,6 +37,7 @@ NineSlicesPanel(owner, id, point, size) {
   buttonNames.Add(_T("Config"));
   buttonNames.Add(_T("MultiLaunch"));
   buttonNames.Add(_T("Import"));
+  buttonNames.Add(_T("LaunchApp"));
 
   for (int i = 0; i < buttonNames.size(); i++) { 
     wxString n = buttonNames[i];
@@ -318,6 +319,10 @@ void OptionPanel::OnImageButtonClick(wxCommandEvent& evt) {
     // CLOSE
     //***************************************************************************
     wxGetApp().GetMainFrame()->Close();
+
+  } else if (buttonName == _T("LaunchApp")) {
+
+    wxGetApp().GetMainFrame()->ShowLaunchApp();
 
   } else if (buttonName == _T("Help")) {
     //***************************************************************************

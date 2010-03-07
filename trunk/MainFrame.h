@@ -20,6 +20,7 @@
 #include "MiniLaunchBar.h"
 #include "ApplicationTrayIcon.h"
 #include "gui/AboutDialog.h"
+#include "launchapp/Launchapp.h"
 
 
 enum {
@@ -75,7 +76,7 @@ class MainFrame: public wxFrame {
     wxBitmap* mainBackgroundBitmap_;
     bool initialized_;
     int closeStep_;
-
+    Launchapp* launchapp_;
 
     bool DoCloseStep();
 
@@ -138,6 +139,7 @@ class MainFrame: public wxFrame {
     void RecurseCleanUp(wxWindow* window);
     bool CheckForModalWindow(wxWindow* window);
     void ShowTrayIcon(bool doShow = true);
+    void ShowLaunchApp();
 
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);

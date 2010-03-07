@@ -58,6 +58,81 @@ NineSlicesPanel(owner, id, point, size) {
 }
 
 
+void IconPanel::SetSelectedIndex(int index) {
+  for (int i = 0; i < folderItemRenderers_.size(); i++) {
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    renderer->SetSelected(index == i);
+  }  
+}
+
+
+int IconPanel::GetSelectedIndex() {
+  for (int i = 0; i < folderItemRenderers_.size(); i++) {
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    if (renderer->GetSelected()) return i;
+  }  
+  return -1;
+}
+
+
+void IconPanel::SelectNext() {
+  int selectedIndex = GetSelectedIndex();
+  if (selectedIndex < 0) {
+    selectedIndex = 0;
+  } else {
+    selectedIndex++;
+  }
+
+  int maxIndex = firstOffScreenIconIndex_ >= 0 ? firstOffScreenIconIndex_ - 1 : folderItemRenderers_.size() - 1;
+  if (selectedIndex > maxIndex) selectedIndex = 0;
+
+  SetSelectedIndex(selectedIndex);
+}
+
+
+void IconPanel::SelectPrevious() {
+  int selectedIndex = GetSelectedIndex();
+  if (selectedIndex < 0) {
+    selectedIndex = 0;
+  } else {
+    selectedIndex--;
+  }
+
+  if (selectedIndex < 0) {
+    if (firstOffScreenIconIndex_ >= 0) {
+      selectedIndex = firstOffScreenIconIndex_ - 1;
+    } else {
+      selectedIndex = folderItemRenderers_.size() - 1;
+    }
+  }
+
+  SetSelectedIndex(selectedIndex);
+}
+
+
+void IconPanel::UnselectAll() {
+  for (int i = 0; i < folderItemRenderers_.size(); i++) {
+    FolderItemRenderer* renderer = folderItemRenderers_.at(i);
+    renderer->SetSelected(false);
+  } 
+}
+
+
+appFolderItem* IconPanel::GetSelectedFolderItem() {
+  int selectedIndex = GetSelectedIndex();
+  if (selectedIndex < 0) return NULL;
+  return folderItemRenderers_.at(selectedIndex)->GetFolderItem();
+}
+
+
+void IconPanel::LaunchSelected() {
+  appFolderItem* folderItem = GetSelectedFolderItem();
+  if (!folderItem) return;
+
+  folderItem->Launch();
+}
+
+
 int IconPanel::GetIconSize() {
   return wxGetApp().GetUser()->GetSettings()->GetValidatedIconSize(overridedIconSize_);
 }
@@ -137,6 +212,11 @@ void IconPanel::ApplySkin(wxBitmap* mainBackgroundBitmap) {
 
 void IconPanel::AddFolderItem(int folderItemId) {
   folderItemIds_.push_back(folderItemId);
+}
+
+
+std::vector<int> IconPanel::GetFolderItemIds() {
+  return folderItemIds_;
 }
 
 

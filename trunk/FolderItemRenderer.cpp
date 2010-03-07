@@ -59,6 +59,18 @@ BitmapControl(owner, id, point, size) {
   mouseInside_ = false;
   mousePressed_ = false;
   draggingStarted_ = false;
+  selected_ = false;
+}
+
+
+bool FolderItemRenderer::GetSelected() {
+  return selected_;
+}
+
+
+void FolderItemRenderer::SetSelected(bool selected) {
+  selected_ = selected;
+  InvalidateControlBitmap();
 }
 
 
@@ -426,7 +438,7 @@ void FolderItemRenderer::UpdateControlBitmap() {
   wxString labelPosition = GetLabelPosition();
 
 
-  if (mouseInside_) {
+  if (mouseInside_ || selected_) {
     // If the mouse is inside the control,
     // draw the icon overlay
 

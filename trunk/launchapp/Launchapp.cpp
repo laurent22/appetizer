@@ -19,6 +19,7 @@
 BEGIN_EVENT_TABLE(Launchapp, wxFrame)
   EVT_PAINT(Launchapp::OnPaint)
   EVT_TEXT(ID_TEXTCTRL_Launchapp_TextInput, Launchapp::OnTextChange)  
+  EVT_KEY_DOWN(Launchapp::textInput_keyDown)
 END_EVENT_TABLE()
 
 
@@ -33,6 +34,7 @@ Launchapp::Launchapp(wxWindow* parent)
   )
 {  
   textInput_ = NULL;
+  numberOfVisibleIcons_ = LAUNCHPAD_VISIBLE_ICONS;
 
   backgroundPanel_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
   backgroundPanel_->SetName(_T("BackgroundPanel"));
@@ -40,7 +42,8 @@ Launchapp::Launchapp(wxWindow* parent)
   backgroundLeftImage_ = new NineSlicesPanel(this, wxID_ANY, wxPoint(0,0), wxSize(50,50));
   backgroundLeftImage_->SetName(_T("BackgroundPanelLeft"));
 
-  textInput_ = new wxTextCtrl(backgroundPanel_, ID_TEXTCTRL_Launchapp_TextInput, _T("test"));
+  textInput_ = new wxTextCtrl(backgroundPanel_, ID_TEXTCTRL_Launchapp_TextInput, _T(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+  textInput_->Connect(wxID_ANY, wxEVT_KEY_DOWN, wxKeyEventHandler(Launchapp::textInput_keyDown), NULL, this);
   textInput_->SetEditable(true);
 
   int iconSize = wxGetApp().GetOSValidIconSize(EXTRA_LARGE_ICON_SIZE);
@@ -52,28 +55,25 @@ Launchapp::Launchapp(wxWindow* parent)
   iconPanel_->OverrideLabelPosition(labelPosition);
   iconPanel_->ShowBrowseButton(false);
   iconPanel_->CenterIcons(true);
-
-  int iconCount = 8;
-  wxSize iconAreaSize = wxGetApp().GetIconAreaSize(iconSize, labelPosition);
-
-  int width = iconAreaSize.GetWidth() * iconCount + Styles::InnerPanel.Padding.Width;
-  iconPanelWidth_ = width;
-  width += (Styles::MainPanel.SourceRectangle.GetRight() - Styles::InnerPanel.SourceRectangle.GetRight());
-  width += (Styles::InnerPanel.SourceRectangle.GetLeft() - Styles::OptionPanel.SourceRectangle.GetWidth());
-  width += Styles::MainPanel.Padding.Width;
-
-  int height = iconAreaSize.GetHeight() + Styles::InnerPanel.Padding.Height;
-  height += (Styles::MainPanel.SourceRectangle.GetHeight() - Styles::InnerPanel.SourceRectangle.GetHeight());
-  height += Styles::MainPanel.Padding.Height;
-  height += LAUNCHPAD_TEXTBOX_HEIGHT + LAUNCHPAD_TEXTBOX_GAP;
-
-  SetSize(width, height);
 }
-
 
 
 Launchapp::~Launchapp() {
 
+}
+
+
+void Launchapp::textInput_keyDown(wxKeyEvent& event) {
+  int keyCode = event.GetKeyCode();
+  if (keyCode == VK_LEFT || keyCode == 314) {
+    iconPanel_->SelectPrevious();
+  } else if (keyCode == VK_RIGHT || keyCode == 316) {
+    iconPanel_->SelectNext();
+  } else if (keyCode == VK_RETURN) {
+    iconPanel_->LaunchSelected();
+  } else {
+    event.Skip();
+  }
 }
 
 
@@ -135,11 +135,7 @@ void Launchapp::UpdateLayout(int width, int height) {
   int rectY = Styles::InnerPanel.SourceRectangle.GetTop() - Styles::MainPanel.SourceRectangle.GetTop() + Styles::InnerPanel.Padding.Top;
   int rectWidth = bgPanelWidth - rectX - (Styles::MainPanel.SourceRectangle.GetRight() - Styles::InnerPanel.SourceRectangle.GetRight()) - Styles::InnerPanel.Padding.Right;
   int rectHeight = LAUNCHPAD_TEXTBOX_HEIGHT;
-  textInput_->SetSize(
-    rectX,
-    rectY,
-    rectWidth,
-    rectHeight);
+  textInput_->SetSize(rectX, rectY, rectWidth, rectHeight);
 
   iconPanel_->SetSize(Styles::MainPanel.Padding.Left, Styles::MainPanel.Padding.Top + rectHeight + LAUNCHPAD_TEXTBOX_GAP, iconPanelWidth_, 100);
 
@@ -153,6 +149,30 @@ void Launchapp::UpdateLayout() {
 
 
 void Launchapp::ApplySkin(wxBitmap* mainBackgroundBitmap) {
+  //***************************************************************************
+  // Update the size of the window according to the skin and
+  // the number of icons to be displayed (LAUNCHPAD_VISIBLE_ICONS)
+  //***************************************************************************
+  int iconSize = wxGetApp().GetOSValidIconSize(EXTRA_LARGE_ICON_SIZE);
+  wxString labelPosition = _T("bottom");
+
+  int iconCount = numberOfVisibleIcons_;
+  wxSize iconAreaSize = wxGetApp().GetIconAreaSize(iconSize, labelPosition);
+
+  int width = iconAreaSize.GetWidth() * iconCount + Styles::InnerPanel.Padding.Width;
+  iconPanelWidth_ = width;
+  width += (Styles::MainPanel.SourceRectangle.GetRight() - Styles::InnerPanel.SourceRectangle.GetRight());
+  width += (Styles::InnerPanel.SourceRectangle.GetLeft() - Styles::OptionPanel.SourceRectangle.GetWidth());
+
+  int height = iconAreaSize.GetHeight() + Styles::InnerPanel.Padding.Height;
+  height += (Styles::MainPanel.SourceRectangle.GetHeight() - Styles::InnerPanel.SourceRectangle.GetHeight());
+  height += LAUNCHPAD_TEXTBOX_HEIGHT + LAUNCHPAD_TEXTBOX_GAP;
+
+  SetSize(width, height);
+
+  //***************************************************************************
+  // Assign the skin files to the various window components
+  //***************************************************************************
   wxMemoryDC targetDC;
   wxMemoryDC mainBackgroundDC;
   mainBackgroundDC.SelectObject(*mainBackgroundBitmap);  
@@ -161,7 +181,6 @@ void Launchapp::ApplySkin(wxBitmap* mainBackgroundBitmap) {
   targetDC.Blit(0, 0, barBackgroundBitmap->GetWidth(), barBackgroundBitmap->GetHeight(), &mainBackgroundDC, Styles::MainPanel.SourceRectangle.GetX(), Styles::MainPanel.SourceRectangle.GetY());  
   targetDC.SelectObject(wxNullBitmap);
   backgroundPanel_->LoadImage(barBackgroundBitmap);
-
 
   wxBitmap* arrowBitmapUp = new wxBitmap(Styles::ArrowButton.SourceRectangle.GetWidth(), Styles::ArrowButton.SourceRectangle.GetHeight());  
   targetDC.SelectObject(*arrowBitmapUp);
@@ -179,19 +198,46 @@ void Launchapp::UpdateFolderItemsFromText() {
 
   wxString text = textInput_->GetValue().Lower();
 
+  if (text == wxEmptyString) {
+    iconPanel_->ClearFolderItems();
+    return;
+  }
+
+  std::vector<int> currentFolderItemIds = iconPanel_->GetFolderItemIds();
+  FolderItemVector newFolderItems;
+
   appFolderItem* rootFolderItem = wxGetApp().GetUser()->GetRootFolderItem();
   FolderItemVector folderItemVector = rootFolderItem->GetChildren(true);
-  
-  iconPanel_->ClearFolderItems();
 
+  int addedCount = 0;
   for (int i = 0; i < folderItemVector.size(); i++) {
     appFolderItem* folderItem = folderItemVector.at(i);
     if (folderItem->GetName().Lower().Find(text) != wxNOT_FOUND) {
-      iconPanel_->AddFolderItem(folderItem->GetId());
+      newFolderItems.push_back(folderItem);
+      addedCount++;
+      if (addedCount >= numberOfVisibleIcons_) break;
     }
   }
 
+  bool areEqual = false;
+  if (currentFolderItemIds.size() == newFolderItems.size()) {
+    areEqual = true;
+    for (int i = 0; i < newFolderItems.size(); i++) {
+      appFolderItem* folderItem = newFolderItems.at(i);
+      if (folderItem->GetId() != currentFolderItemIds.at(i)) {
+        areEqual = false;
+        break;
+      }
+    }
+  }
+  
+  if (areEqual) return;
+
+  iconPanel_->ClearFolderItems();
+  for (int i = 0; i < newFolderItems.size(); i++) iconPanel_->AddFolderItem(newFolderItems.at(i)->GetId());
   iconPanel_->RefreshIcons();
+
+  if (folderItemVector.size() > 0) iconPanel_->SetSelectedIndex(0);
 }
 
 
