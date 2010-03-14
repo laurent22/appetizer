@@ -781,7 +781,7 @@ void IconPanel::UpdateLayout() {
     int totalIconWidth = s.GetWidth() * folderItemRenderers_.size();
     int totalAvailableWidth = width - Styles::InnerPanel.Padding.Width;
     if (totalIconWidth <= totalAvailableWidth) {
-      x = (int)((totalAvailableWidth - totalIconWidth) / 2);
+      x = (int)((totalAvailableWidth - totalIconWidth) / 2) + Styles::InnerPanel.Padding.Left;
     }
   }
 

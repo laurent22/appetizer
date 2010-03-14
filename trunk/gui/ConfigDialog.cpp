@@ -177,6 +177,104 @@ void ConfigDialog::OnDownloadMorePluginLinkMouseDown(wxMouseEvent& evt) {
 }
 
 
+void ConfigDialog::InitializeHotKeyFields(const wxString& keyPrefix, wxCheckBox* ctrlCheckbox, wxCheckBox* altCheckBox, wxCheckBox* shiftCheckBox, wxComboBox* keyComboBox) {
+  wxArrayString keyStrings;
+  std::vector<int> keyCodes;
+  UserSettings* userSettings = wxGetApp().GetUser()->GetSettings();  
+
+  ctrlCheckbox->SetLabel(_("Control +"));
+  altCheckBox->SetLabel(_("Alt +"));
+  shiftCheckBox->SetLabel(_("Shift +"));
+
+  // NOTE: all the WXK_<code> constants are completely inaccurate, at least on Windows,
+  // so we have to use VK_<code>, which may not be cross-platform.
+
+  keyStrings.Add(_("<None>")); keyCodes.push_back(0);
+
+  keyStrings.Add(_T("A")); keyCodes.push_back(0x41);
+  keyStrings.Add(_T("B")); keyCodes.push_back(0x42);
+  keyStrings.Add(_T("C")); keyCodes.push_back(0x43);
+  keyStrings.Add(_T("D")); keyCodes.push_back(0x44);
+  keyStrings.Add(_T("E")); keyCodes.push_back(0x45);
+  keyStrings.Add(_T("F")); keyCodes.push_back(0x46);
+  keyStrings.Add(_T("G")); keyCodes.push_back(0x47);
+  keyStrings.Add(_T("H")); keyCodes.push_back(0x48);
+  keyStrings.Add(_T("I")); keyCodes.push_back(0x49);
+  keyStrings.Add(_T("J")); keyCodes.push_back(0x4A);
+  keyStrings.Add(_T("K")); keyCodes.push_back(0x4B);
+  keyStrings.Add(_T("L")); keyCodes.push_back(0x4C);
+  keyStrings.Add(_T("M")); keyCodes.push_back(0x4D);
+  keyStrings.Add(_T("N")); keyCodes.push_back(0x4E);
+  keyStrings.Add(_T("O")); keyCodes.push_back(0x4F);
+  keyStrings.Add(_T("P")); keyCodes.push_back(0x50);
+  keyStrings.Add(_T("Q")); keyCodes.push_back(0x51);
+  keyStrings.Add(_T("R")); keyCodes.push_back(0x52);
+  keyStrings.Add(_T("S")); keyCodes.push_back(0x53);
+  keyStrings.Add(_T("T")); keyCodes.push_back(0x54);
+  keyStrings.Add(_T("U")); keyCodes.push_back(0x55);
+  keyStrings.Add(_T("V")); keyCodes.push_back(0x56);
+  keyStrings.Add(_T("W")); keyCodes.push_back(0x57);
+  keyStrings.Add(_T("X")); keyCodes.push_back(0x58);
+  keyStrings.Add(_T("Y")); keyCodes.push_back(0x59);
+  keyStrings.Add(_T("Z")); keyCodes.push_back(0x5A);
+
+  keyStrings.Add(_T("F1")); keyCodes.push_back(VK_F1);
+  keyStrings.Add(_T("F2")); keyCodes.push_back(VK_F2);
+  keyStrings.Add(_T("F3")); keyCodes.push_back(VK_F3);
+  keyStrings.Add(_T("F4")); keyCodes.push_back(VK_F4);
+  keyStrings.Add(_T("F5")); keyCodes.push_back(VK_F5);
+  keyStrings.Add(_T("F6")); keyCodes.push_back(VK_F6);
+  keyStrings.Add(_T("F7")); keyCodes.push_back(VK_F7);
+  keyStrings.Add(_T("F8")); keyCodes.push_back(VK_F8);
+  keyStrings.Add(_T("F9")); keyCodes.push_back(VK_F9);
+  keyStrings.Add(_T("F10")); keyCodes.push_back(VK_F10);
+  keyStrings.Add(_T("F11")); keyCodes.push_back(VK_F11);
+  keyStrings.Add(_T("F12")); keyCodes.push_back(VK_F12);
+
+  keyStrings.Add(_("Numpad 0")); keyCodes.push_back(VK_NUMPAD0);
+  keyStrings.Add(_("Numpad 1")); keyCodes.push_back(VK_NUMPAD1);
+  keyStrings.Add(_("Numpad 2")); keyCodes.push_back(VK_NUMPAD2);
+  keyStrings.Add(_("Numpad 3")); keyCodes.push_back(VK_NUMPAD3);
+  keyStrings.Add(_("Numpad 4")); keyCodes.push_back(VK_NUMPAD4);
+  keyStrings.Add(_("Numpad 5")); keyCodes.push_back(VK_NUMPAD5);
+  keyStrings.Add(_("Numpad 6")); keyCodes.push_back(VK_NUMPAD6);
+  keyStrings.Add(_("Numpad 7")); keyCodes.push_back(VK_NUMPAD7);
+  keyStrings.Add(_("Numpad 8")); keyCodes.push_back(VK_NUMPAD8);
+  keyStrings.Add(_("Numpad 9")); keyCodes.push_back(VK_NUMPAD9);
+
+  keyStrings.Add(_("Backspace")); keyCodes.push_back(VK_BACK);
+  keyStrings.Add(_("Tab")); keyCodes.push_back(VK_TAB);
+  keyStrings.Add(_("Return")); keyCodes.push_back(VK_RETURN);
+  keyStrings.Add(_("Escape")); keyCodes.push_back(VK_ESCAPE);
+  keyStrings.Add(_("Space")); keyCodes.push_back(VK_SPACE);
+  keyStrings.Add(_("Delete")); keyCodes.push_back(VK_DELETE);
+
+  keyStrings.Add(_("End")); keyCodes.push_back(VK_END);
+  keyStrings.Add(_("Home")); keyCodes.push_back(VK_HOME);
+  keyStrings.Add(_("Left")); keyCodes.push_back(VK_LEFT);
+  keyStrings.Add(_("Up")); keyCodes.push_back(VK_UP);
+  keyStrings.Add(_("Right")); keyCodes.push_back(VK_RIGHT);
+  keyStrings.Add(_("Down")); keyCodes.push_back(VK_DOWN);
+
+  keyComboBox->Clear();
+  int selectedHotKey = userSettings->GetInt(keyPrefix + _T("Key"));
+  int selectedIndex = 0;
+
+  for (int i = 0; i < keyStrings.Count(); i++) {
+    wxString keyString = keyStrings[i];
+    int keyCode = keyCodes.at(i);
+    keyComboBox->Append(keyString, new wxStringClientData(wxString::Format(_T("%d"), keyCode)));
+
+    if (keyCode == selectedHotKey) selectedIndex = i;
+  }
+
+  keyComboBox->Select(selectedIndex);
+  ctrlCheckbox->SetValue(userSettings->GetBool(keyPrefix + _T("Control")));
+  altCheckBox->SetValue(userSettings->GetBool(keyPrefix + _T("Alt")));
+  shiftCheckBox->SetValue(userSettings->GetBool(keyPrefix + _T("Shift")));
+}
+
+
 void ConfigDialog::UpdatePage(int pageIndex) {
   if (updatedPages_[pageIndex]) return;
 
@@ -461,104 +559,17 @@ void ConfigDialog::UpdatePage(int pageIndex) {
       autohideCheckBox->SetLabel(_("Auto-hide after launching an application"));      
       multiLaunchAutoRunCheckBox->SetLabel(_("Run multi-launch group on startup"));
       hotKeyGroupSizer_staticbox->SetLabel(_("Hot key to hide / show the bar"));
-      hotKeyCtrlCheckBox->SetLabel(_("Control +"));
-      hotKeyAltCheckBox->SetLabel(_("Alt +"));
-      hotKeyShiftCheckBox->SetLabel(_("Shift +"));
       closeAppOnEjectCheckBox->SetLabel(_("When ejecting the drive, close the apps that are locking it"));      
       minimizeOnCloseCheckBox->SetLabel(_("Close button minimizes to System Tray"));
+      hotkeyLabel->SetLabel(_("Show dock:"));
+      launchappHotKeyLabel->SetLabel(_("Show key launcher:"));
 
       //---------------------------------------------------------------------------
       // Populate "Hot key" dropdown list
       //---------------------------------------------------------------------------
-      wxArrayString keyStrings;
-      std::vector<int> keyCodes;
 
-      // NOTE: all the WXK_<code> constants are completely inaccurate, at least on Windows,
-      // so we have to use VK_<code>, which may not be cross-platform.
-
-      keyStrings.Add(_("<None>")); keyCodes.push_back(0);
-
-      keyStrings.Add(_T("A")); keyCodes.push_back(0x41);
-      keyStrings.Add(_T("B")); keyCodes.push_back(0x42);
-      keyStrings.Add(_T("C")); keyCodes.push_back(0x43);
-      keyStrings.Add(_T("D")); keyCodes.push_back(0x44);
-      keyStrings.Add(_T("E")); keyCodes.push_back(0x45);
-      keyStrings.Add(_T("F")); keyCodes.push_back(0x46);
-      keyStrings.Add(_T("G")); keyCodes.push_back(0x47);
-      keyStrings.Add(_T("H")); keyCodes.push_back(0x48);
-      keyStrings.Add(_T("I")); keyCodes.push_back(0x49);
-      keyStrings.Add(_T("J")); keyCodes.push_back(0x4A);
-      keyStrings.Add(_T("K")); keyCodes.push_back(0x4B);
-      keyStrings.Add(_T("L")); keyCodes.push_back(0x4C);
-      keyStrings.Add(_T("M")); keyCodes.push_back(0x4D);
-      keyStrings.Add(_T("N")); keyCodes.push_back(0x4E);
-      keyStrings.Add(_T("O")); keyCodes.push_back(0x4F);
-      keyStrings.Add(_T("P")); keyCodes.push_back(0x50);
-      keyStrings.Add(_T("Q")); keyCodes.push_back(0x51);
-      keyStrings.Add(_T("R")); keyCodes.push_back(0x52);
-      keyStrings.Add(_T("S")); keyCodes.push_back(0x53);
-      keyStrings.Add(_T("T")); keyCodes.push_back(0x54);
-      keyStrings.Add(_T("U")); keyCodes.push_back(0x55);
-      keyStrings.Add(_T("V")); keyCodes.push_back(0x56);
-      keyStrings.Add(_T("W")); keyCodes.push_back(0x57);
-      keyStrings.Add(_T("X")); keyCodes.push_back(0x58);
-      keyStrings.Add(_T("Y")); keyCodes.push_back(0x59);
-      keyStrings.Add(_T("Z")); keyCodes.push_back(0x5A);
-
-      keyStrings.Add(_T("F1")); keyCodes.push_back(VK_F1);
-      keyStrings.Add(_T("F2")); keyCodes.push_back(VK_F2);
-      keyStrings.Add(_T("F3")); keyCodes.push_back(VK_F3);
-      keyStrings.Add(_T("F4")); keyCodes.push_back(VK_F4);
-      keyStrings.Add(_T("F5")); keyCodes.push_back(VK_F5);
-      keyStrings.Add(_T("F6")); keyCodes.push_back(VK_F6);
-      keyStrings.Add(_T("F7")); keyCodes.push_back(VK_F7);
-      keyStrings.Add(_T("F8")); keyCodes.push_back(VK_F8);
-      keyStrings.Add(_T("F9")); keyCodes.push_back(VK_F9);
-      keyStrings.Add(_T("F10")); keyCodes.push_back(VK_F10);
-      keyStrings.Add(_T("F11")); keyCodes.push_back(VK_F11);
-      keyStrings.Add(_T("F12")); keyCodes.push_back(VK_F12);
-
-      keyStrings.Add(_("Numpad 0")); keyCodes.push_back(VK_NUMPAD0);
-      keyStrings.Add(_("Numpad 1")); keyCodes.push_back(VK_NUMPAD1);
-      keyStrings.Add(_("Numpad 2")); keyCodes.push_back(VK_NUMPAD2);
-      keyStrings.Add(_("Numpad 3")); keyCodes.push_back(VK_NUMPAD3);
-      keyStrings.Add(_("Numpad 4")); keyCodes.push_back(VK_NUMPAD4);
-      keyStrings.Add(_("Numpad 5")); keyCodes.push_back(VK_NUMPAD5);
-      keyStrings.Add(_("Numpad 6")); keyCodes.push_back(VK_NUMPAD6);
-      keyStrings.Add(_("Numpad 7")); keyCodes.push_back(VK_NUMPAD7);
-      keyStrings.Add(_("Numpad 8")); keyCodes.push_back(VK_NUMPAD8);
-      keyStrings.Add(_("Numpad 9")); keyCodes.push_back(VK_NUMPAD9);
-
-      keyStrings.Add(_("Backspace")); keyCodes.push_back(VK_BACK);
-      keyStrings.Add(_("Tab")); keyCodes.push_back(VK_TAB);
-      keyStrings.Add(_("Return")); keyCodes.push_back(VK_RETURN);
-      keyStrings.Add(_("Escape")); keyCodes.push_back(VK_ESCAPE);
-      keyStrings.Add(_("Space")); keyCodes.push_back(VK_SPACE);
-      keyStrings.Add(_("Delete")); keyCodes.push_back(VK_DELETE);
-
-      keyStrings.Add(_("End")); keyCodes.push_back(VK_END);
-      keyStrings.Add(_("Home")); keyCodes.push_back(VK_HOME);
-      keyStrings.Add(_("Left")); keyCodes.push_back(VK_LEFT);
-      keyStrings.Add(_("Up")); keyCodes.push_back(VK_UP);
-      keyStrings.Add(_("Right")); keyCodes.push_back(VK_RIGHT);
-      keyStrings.Add(_("Down")); keyCodes.push_back(VK_DOWN);
-
-      hotKeyComboBox->Clear();
-      int selectedHotKey = userSettings->GetInt(_T("HotKeyKey"));
-      int selectedIndex = 0;
-
-      for (int i = 0; i < keyStrings.Count(); i++) {
-        wxString keyString = keyStrings[i];
-        int keyCode = keyCodes.at(i);
-        hotKeyComboBox->Append(keyString, new wxStringClientData(wxString::Format(_T("%d"), keyCode)));
-
-        if (keyCode == selectedHotKey) selectedIndex = i;
-      }
-
-      hotKeyComboBox->Select(selectedIndex);
-      hotKeyCtrlCheckBox->SetValue(userSettings->GetBool(_T("HotKeyControl")));
-      hotKeyAltCheckBox->SetValue(userSettings->GetBool(_T("HotKeyAlt")));
-      hotKeyShiftCheckBox->SetValue(userSettings->GetBool(_T("HotKeyShift")));
+      InitializeHotKeyFields(_T("HotKey"), hotKeyCtrlCheckBox, hotKeyAltCheckBox, hotKeyShiftCheckBox, hotKeyComboBox);
+      InitializeHotKeyFields(_T("LaunchAppHotKey"), launchappHotKeyCtrlCheckBox, launchappHotKeyAltCheckBox, launchappHotKeyShiftCheckBox, launchappHotKeyComboBox);
 
       //---------------------------------------------------------------------------
       // Miscelaneous flags

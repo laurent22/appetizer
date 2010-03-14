@@ -46,6 +46,7 @@ private:
 
   long GetPluginListSelectedIndex();
   void ReloadPluginList();
+  void InitializeHotKeyFields(const wxString& keyPrefix, wxCheckBox* ctrlCheckbox, wxCheckBox* altCheckBox, wxCheckBox* shiftCheckBox, wxComboBox* keyComboBox);
   void UpdatePluginControlsFromSelection();
   void UpdatePluginListRow(long index);
 

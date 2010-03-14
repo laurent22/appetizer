@@ -71,6 +71,8 @@ void Launchapp::textInput_keyDown(wxKeyEvent& event) {
     iconPanel_->SelectNext();
   } else if (keyCode == VK_RETURN) {
     iconPanel_->LaunchSelected();
+  } else if (keyCode == VK_ESCAPE) {
+    wxGetApp().GetMainFrame()->HideLaunchApp();
   } else {
     event.Skip();
   }
@@ -120,11 +122,7 @@ void Launchapp::UpdateMask() {
 
 
 void Launchapp::UpdateLayout(int width, int height) {
-  backgroundLeftImage_->SetSize(
-    0,
-    0,
-    Styles::ArrowButton.SourceRectangle.GetWidth(),
-    height);
+  backgroundLeftImage_->SetSize(0, 0, Styles::ArrowButton.SourceRectangle.GetWidth(), height);
   
   int bgPanelX = Styles::ArrowButton.SourceRectangle.GetWidth();
   int bgPanelWidth = width - bgPanelX;
@@ -190,6 +188,9 @@ void Launchapp::ApplySkin(wxBitmap* mainBackgroundBitmap) {
   backgroundLeftImage_->LoadImage(arrowBitmapUp);
 
   maskNineSlices_.LoadImage(FilePaths::GetSkinDirectory() + _T("/MainBackground.png"), false);
+
+  InvalidateLayout();
+  InvalidateMask();
 }
 
 
@@ -236,6 +237,7 @@ void Launchapp::UpdateFolderItemsFromText() {
   iconPanel_->ClearFolderItems();
   for (int i = 0; i < newFolderItems.size(); i++) iconPanel_->AddFolderItem(newFolderItems.at(i)->GetId());
   iconPanel_->RefreshIcons();
+  iconPanel_->InvalidateLayout();
 
   if (folderItemVector.size() > 0) iconPanel_->SetSelectedIndex(0);
 }

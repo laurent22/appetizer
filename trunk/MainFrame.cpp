@@ -180,19 +180,30 @@ MainFrame::MainFrame()
 }
 
 
-void MainFrame::ShowLaunchApp() {
-  if (!launchapp_) {
-    launchapp_ = new Launchapp(this);
-    launchapp_->ApplySkin(mainBackgroundBitmap_);
+void MainFrame::ShowLaunchApp(bool doShow) {
+  if (!doShow && !launchapp_) return;
+
+  if (!doShow && launchapp_) {
+    launchapp_->MakeModal(false);
+    launchapp_->Destroy();
+    launchapp_ = NULL;
+    return;
   }
 
   int screenWidth = wxSystemSettings::GetMetric(wxSYS_SCREEN_X);
   int screenHeight = wxSystemSettings::GetMetric(wxSYS_SCREEN_Y);
 
+  launchapp_ = new Launchapp(this);
+  launchapp_->ApplySkin(mainBackgroundBitmap_);
   launchapp_->MakeModal();
   launchapp_->Show();
   launchapp_->UpdateLayout();
   launchapp_->SetPosition(wxPoint((screenWidth - launchapp_->GetSize().GetWidth()) / 2, (screenHeight - launchapp_->GetSize().GetHeight()) / 2));
+}
+
+
+void MainFrame::HideLaunchApp() {
+  ShowLaunchApp(false);
 }
 
 
@@ -898,7 +909,7 @@ void MainFrame::OnMouseCaptureLost(wxMouseCaptureLostEvent& evt) {
   wxWindow* w = static_cast<wxWindow*>(evt.GetEventObject());
   if (w->HasCapture()) {
     w->ReleaseMouse();
-    // Stupid mouse capture hack to make wxWidgets happy
+    // Mouse capture hack to make wxWidgets happy
     w->Disconnect(wxID_ANY, wxEVT_MOUSE_CAPTURE_LOST, wxMouseCaptureLostEventHandler(MainFrame::OnMouseCaptureLost), NULL, this);
   }
 }
@@ -910,7 +921,7 @@ void MainFrame::OnMouseDown(wxMouseEvent& evt) {
   w->CaptureMouse();
 
   if (w->HasCapture()) {
-    // Stupid mouse capture hack to make wxWidgets happy
+    // Mouse capture hack to make wxWidgets happy
     w->Connect(wxID_ANY, wxEVT_MOUSE_CAPTURE_LOST, wxMouseCaptureLostEventHandler(MainFrame::OnMouseCaptureLost), NULL, this);
   }
 

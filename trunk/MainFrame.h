@@ -139,7 +139,8 @@ class MainFrame: public wxFrame {
     void RecurseCleanUp(wxWindow* window);
     bool CheckForModalWindow(wxWindow* window);
     void ShowTrayIcon(bool doShow = true);
-    void ShowLaunchApp();
+    void ShowLaunchApp(bool doShow = true);
+    void HideLaunchApp();
 
     void OnPaint(wxPaintEvent& evt);
     void OnMouseDown(wxMouseEvent& evt);
