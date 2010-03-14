@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
+#include <stable.h>
 
 #ifndef NINESLICEPAINTER_H
 #define NINESLICEPAINTER_H
@@ -18,6 +18,7 @@ public:
     void loadImage(QString filePath);
     void setGrid(int x, int y, int width, int height);
     void drawImage(QPainter* painter, int x, int y, int width, int height);
+    bool isNull();
     ~azNineSlicePainter();
 
 private:

@@ -4,8 +4,8 @@
   found in the LICENSE file.
 */
 
-#include "stable.h"
-#include "azApplication.h"
+#include <stable.h>
+#include <azApplication.h>
 
 azApplication::azApplication(int argc, char *argv[]) : QApplication(argc, argv) {
 

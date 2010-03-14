@@ -4,12 +4,12 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
+#include <stable.h>
 
 #ifndef AZICONUTIL_H
 #define AZICONUTIL_H
 
-#include "azIconData.h"
+#include <azIconData.h>
 
 
 // library function is: HRESULT SHGetImageList(int iImageList, REFIID riid, void **ppv)
@@ -19,7 +19,7 @@ class azIconUtil {
 
 public:
 
-  static azIconData getFolderItemIcon(std::wstring filePath, int iconSize);
+  static azIconData getFolderItemIcon(QString filePath, int iconSize);
 
 };
 

@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
+#include <stable.h>
 
 #ifndef AZICONDATA_H
 #define AZICONDATA_H
@@ -14,7 +14,7 @@ class azIconData {
 public:
 
     azIconData();
-    std::wstring filePath;
+    QString filePath;
     int index;
     HICON hIcon;
     bool isNull() const;

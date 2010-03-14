@@ -4,8 +4,8 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
-#include "azIconData.h"
+#include <stable.h>
+#include <azIconData.h>
 
 azIconData::azIconData() {
   hIcon = 0;
@@ -14,5 +14,5 @@ azIconData::azIconData() {
 
 
 bool azIconData::isNull() const {
-  return filePath.empty() && !hIcon;
+  return filePath.isEmpty() && !hIcon;
 }

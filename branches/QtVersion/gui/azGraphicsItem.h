@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
+#include <stable.h>
 
 #ifndef AZGRAPHICSITEM_H
 #define AZGRAPHICSITEM_H
@@ -18,6 +18,7 @@ public:
     int height() const;
     void setWidth(int width);
     void setHeight(int height);
+    QRectF boundingRect() const;
     void invalidate();
 
 private:

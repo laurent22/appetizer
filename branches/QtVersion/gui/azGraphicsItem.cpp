@@ -4,8 +4,8 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
-#include "azGraphicsItem.h"
+#include <stable.h>
+#include <azGraphicsItem.h>
 
 azGraphicsItem::azGraphicsItem() {
     width_ = 100;
@@ -30,6 +30,10 @@ void azGraphicsItem::setHeight(int height) {
     if (height == height_) return;
     height_ = height;
     invalidate();
+}
+
+QRectF azGraphicsItem::boundingRect() const {
+    return QRectF(0, 0, width(), height());
 }
 
 void azGraphicsItem::invalidate() {

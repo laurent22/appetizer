@@ -4,12 +4,16 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
-#include "azNineSlicePainter.h"
+#include <stable.h>
+#include <azNineSlicePainter.h>
 
 azNineSlicePainter::azNineSlicePainter() {
     image_ = NULL;
     gridIsExplicitelySet_ = false;
+}
+
+bool azNineSlicePainter::isNull() {
+  return !image_;
 }
 
 void azNineSlicePainter::loadImage(QImage* image) {
@@ -138,5 +142,8 @@ void azNineSlicePainter::drawImage(QPainter* painter, int x, int y, int width, i
 
 
 azNineSlicePainter::~azNineSlicePainter() {
-    if (image_) delete image_;
+  if (image_) {
+    delete image_;
+    image_ = NULL;
+  }
 }

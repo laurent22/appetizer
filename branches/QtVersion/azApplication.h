@@ -4,7 +4,7 @@
   found in the LICENSE file.
 */
 
-#include "stable.h"
+#include <stable.h>
 
 #ifndef AZAPPLICATION_H
 #define AZAPPLICATION_H

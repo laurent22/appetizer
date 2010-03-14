@@ -4,16 +4,26 @@
   found in the LICENSE file.
 */
 
-#include "../stable.h"
+#include <stable.h>
 
 #ifndef AZMAINWINDOW_H
 #define AZMAINWINDOW_H
+
+#include <azMainScene.h>
 
 class azMainWindow : public QGraphicsView {
 
 public:
 
-    azMainWindow();
+  azMainWindow();
+
+private:
+
+  azMainScene* scene_;
+
+protected:
+
+  void resizeEvent(QResizeEvent* event);
 
 };
 

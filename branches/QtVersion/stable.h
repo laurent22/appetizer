@@ -7,10 +7,6 @@
 #ifndef STABLE_H
 #define STABLE_H
 
-#ifndef CALLBACK
-#define CALLBACK __stdcall
-#endif // CALLBACK
-
 #define _T(x)      L ## x
 
 
@@ -24,6 +20,7 @@
 #include <cmath>
 
 #include <QApplication>
+#include <QDebug>
 #include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QIcon>
@@ -31,5 +28,6 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QRect>
+#include <QResizeEvent>
 
 #endif // STABLE_H

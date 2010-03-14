@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="4"
-				AdditionalIncludeDirectories="&quot;c:\Qt\2010.02.1\qt\include\QtCore&quot;,&quot;c:\Qt\2010.02.1\qt\include\QtGui&quot;,&quot;c:\Qt\2010.02.1\qt\include&quot;,&quot;c:\Qt\2010.02.1\qt\include\ActiveQt&quot;,&quot;tmp\moc\debug_static&quot;,c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="c:\Qt\2010.02.1\qt\include\QtCore;c:\Qt\2010.02.1\qt\include\QtGui;c:\Qt\2010.02.1\qt\include;c:\Qt\2010.02.1\qt\include\ActiveQt;tmp\moc\debug_static;&quot;c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008&quot;;.;./gui;./utils"
 				PreprocessorDefinitions="_WINDOWS;UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;__WINDOWS__"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="1"
@@ -260,9 +260,13 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stable.h"
+							PrecompiledHeaderThrough="stable.h"
 						/>
 					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\gui\azMainScene.cpp"
+					>
 				</File>
 				<File
 					RelativePath=".\gui\azMainWindow.cpp"
@@ -273,7 +277,19 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="../stable.h"
+							PrecompiledHeaderThrough="stable.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\gui\azNineSliceItem.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="stable.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -289,7 +305,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="../stable.h"
+							PrecompiledHeaderThrough="stable.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -301,7 +317,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="../stable.h"
+							PrecompiledHeaderThrough="stable.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -313,7 +329,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="../stable.h"
+							PrecompiledHeaderThrough="stable.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -340,7 +356,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\gui\azMainScene.h"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\azMainWindow.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\azNineSliceItem.h"
 					>
 				</File>
 			</Filter>
