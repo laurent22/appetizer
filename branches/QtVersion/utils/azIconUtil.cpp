@@ -9,7 +9,7 @@
 #include "azIconUtil.h"
 
 
-azIconData azIconUtil::getFolderItemIcon(QString filePath, int iconSize) {
+azIconData azIconUtil::getFolderItemIcon(std::wstring filePath, int iconSize) {
   azIconData output;
 
   // Note: certain functions, like SHGetImageList don't exist in Windows 2000,
@@ -24,7 +24,7 @@ azIconData azIconUtil::getFolderItemIcon(QString filePath, int iconSize) {
     // Get the icon index using SHGetFileInfo
     SHFILEINFOW sfi = {0};
 
-    SHGetFileInfo(filePath.toStdWString().c_str(), -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
+    SHGetFileInfo(filePath.c_str(), -1, &sfi, sizeof(sfi), SHGFI_SYSICONINDEX);
 
     // If iIcon is 0, we get a weird default icon representing a hand,
     // so don't continue.
@@ -60,10 +60,6 @@ azIconData azIconUtil::getFolderItemIcon(QString filePath, int iconSize) {
 
     }
 
-  }
-
-  if (output.hIcon) {
-    output.pixmap = QPixmap::fromWinHICON(output.hIcon);
   }
 
   return output;

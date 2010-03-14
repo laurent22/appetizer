@@ -14,5 +14,5 @@ azIconData::azIconData() {
 
 
 bool azIconData::isNull() const {
-  return pixmap.isNull();
+  return filePath.empty() && !hIcon;
 }

@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="application"
+	Name="Appetizer"
 	ProjectGUID="{4D6F89CE-0FBF-374B-B534-B1725AD8AF3F}"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"

@@ -14,10 +14,9 @@ class azIconData {
 public:
 
     azIconData();
-    QString filePath;
+    std::wstring filePath;
     int index;
     HICON hIcon;
-    QPixmap pixmap;
     bool isNull() const;
 
 };

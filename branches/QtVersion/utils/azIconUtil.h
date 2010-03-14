@@ -19,7 +19,7 @@ class azIconUtil {
 
 public:
 
-    static azIconData getFolderItemIcon(QString filePath, int iconSize);
+  static azIconData getFolderItemIcon(std::wstring filePath, int iconSize);
 
 };
 
