@@ -9,7 +9,6 @@
 
 #define _T(x)      L ## x
 
-
 #ifdef __WINDOWS__
 #include <windows.h>
 #include <CommCtrl.h>
@@ -21,6 +20,8 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QDir>
+#include <QFileInfo>
 #include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QIcon>
@@ -29,5 +30,9 @@
 #include <QPixmap>
 #include <QRect>
 #include <QResizeEvent>
+#include <QSettings>
+#include <QWidget>
+
+#include <tinyxml/tinyxml.h>
 
 #endif // STABLE_H

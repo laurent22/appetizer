@@ -6,14 +6,15 @@
 
 #include <stable.h>
 
-#ifndef AZICONDATA_H
-#define AZICONDATA_H
+#ifndef IconData_H
+#define IconData_H
+namespace appetizer {
 
-class azIconData {
+class IconData {
 
 public:
 
-    azIconData();
+    IconData();
     QString filePath;
     int index;
     HICON hIcon;
@@ -21,4 +22,5 @@ public:
 
 };
 
-#endif // AZICONDATA_H
+}
+#endif // IconData_H

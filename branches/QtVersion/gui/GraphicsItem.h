@@ -6,14 +6,15 @@
 
 #include <stable.h>
 
-#ifndef AZGRAPHICSITEM_H
-#define AZGRAPHICSITEM_H
+#ifndef GraphicsItem_H
+#define GraphicsItem_H
+namespace appetizer {
 
-class azGraphicsItem : public QGraphicsItem {
+class GraphicsItem : public QGraphicsItem {
 
 public:
 
-    azGraphicsItem();
+    GraphicsItem();
     int width() const;
     int height() const;
     void setWidth(int width);
@@ -28,4 +29,5 @@ private:
 
 };
 
-#endif // AZGRAPHICSITEM_H
+}
+#endif // GraphicsItem_H

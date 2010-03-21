@@ -5,16 +5,17 @@
 */
 
 #include <stable.h>
-#include <azMainScene.h>
+#include <MainScene.h>
+using namespace appetizer;
 
-azMainScene::azMainScene() {
-  backgroundItem_ = new azNineSliceItem();
+MainScene::MainScene() {
+  backgroundItem_ = new NineSliceItem();
   backgroundItem_->loadBackgroundImage("c:\\Users\\Laurent_2\\Desktop\\200.PNG");
   addItem(backgroundItem_);
 }
 
 
-void azMainScene::drawBackground(QPainter* painter, const QRectF& rect) {
+void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 
   backgroundItem_->setWidth(width());

@@ -5,10 +5,15 @@
 */
 
 #include <stable.h>
-#include <azMainWindow.h>
+#include <MainWindow.h>
+using namespace appetizer;
 
-azMainWindow::azMainWindow() {
-  scene_ = new azMainScene();
+MainWindow::MainWindow() {
+  //QWidget* widget = new QWidget(0, Qt::FramelessWindowHint);
+  //setViewport(widget);
+  //viewport()->setWindowFlags(Qt::FramelessWindowHint);
+
+  scene_ = new MainScene();
 
   scene_->addText("Hello, world!");
 
@@ -16,7 +21,7 @@ azMainWindow::azMainWindow() {
 }
 
 
-void azMainWindow::resizeEvent(QResizeEvent* event) {
+void MainWindow::resizeEvent(QResizeEvent* event) {
   QGraphicsView::resizeEvent(event);
 
   scene_->setSceneRect(0, 0, event->size().width(), event->size().height());

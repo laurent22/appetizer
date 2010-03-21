@@ -5,8 +5,18 @@
 */
 
 #include <stable.h>
-#include <azApplication.h>
 
-azApplication::azApplication(int argc, char *argv[]) : QApplication(argc, argv) {
+#ifndef Application_H
+#define Application_H
+namespace appetizer {
+
+class Application : public QApplication {
+
+public:
+
+    Application(int argc, char *argv[]);
+
+};
 
 }
+#endif // Application_H

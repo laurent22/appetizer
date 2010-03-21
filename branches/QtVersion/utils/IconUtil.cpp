@@ -5,11 +5,12 @@
 */
 
 #include <stable.h>
-#include <azIconUtil.h>
+#include <IconUtil.h>
+using namespace appetizer;
 
 
-azIconData azIconUtil::getFolderItemIcon(QString filePath, int iconSize) {
-  azIconData output;
+IconData IconUtil::getFolderItemIcon(QString filePath, int iconSize) {
+  IconData output;
 
   // Note: certain functions, like SHGetImageList don't exist in Windows 2000,
   // so we need to load them dynamically, otherwise we get this error and the app doesn't start:

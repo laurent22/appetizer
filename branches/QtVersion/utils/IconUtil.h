@@ -6,21 +6,24 @@
 
 #include <stable.h>
 
-#ifndef AZICONUTIL_H
-#define AZICONUTIL_H
+#ifndef IconUtil_H
+#define IconUtil_H
 
-#include <azIconData.h>
+#include <IconData.h>
+
+namespace appetizer {
 
 
 // library function is: HRESULT SHGetImageList(int iImageList, REFIID riid, void **ppv)
 typedef HRESULT (CALLBACK* SHGetImageListType)(int, const IID&, void*);
 
-class azIconUtil {
+class IconUtil {
 
 public:
 
-  static azIconData getFolderItemIcon(QString filePath, int iconSize);
+  static IconData getFolderItemIcon(QString filePath, int iconSize);
 
 };
 
-#endif // AZICONUTIL_H
+}
+#endif // IconUtil_H

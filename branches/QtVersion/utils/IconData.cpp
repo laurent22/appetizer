@@ -5,14 +5,15 @@
 */
 
 #include <stable.h>
-#include <azIconData.h>
+#include <IconData.h>
+using namespace appetizer;
 
-azIconData::azIconData() {
+IconData::IconData() {
   hIcon = 0;
   index = 0;
 }
 
 
-bool azIconData::isNull() const {
+bool IconData::isNull() const {
   return filePath.isEmpty() && !hIcon;
 }

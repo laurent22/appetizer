@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="4"
-				AdditionalIncludeDirectories="c:\Qt\2010.02.1\qt\include\QtCore;c:\Qt\2010.02.1\qt\include\QtGui;c:\Qt\2010.02.1\qt\include;c:\Qt\2010.02.1\qt\include\ActiveQt;tmp\moc\debug_static;&quot;c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008&quot;;.;./gui;./utils"
+				AdditionalIncludeDirectories="c:\Qt\2010.02.1\qt\include\QtCore;c:\Qt\2010.02.1\qt\include\QtGui;c:\Qt\2010.02.1\qt\include;c:\Qt\2010.02.1\qt\include\ActiveQt;tmp\moc\debug_static;&quot;c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008&quot;;.;./gui;./utils;./third_party"
 				PreprocessorDefinitions="_WINDOWS;UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;__WINDOWS__"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="1"
@@ -210,17 +210,16 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\azApplication.cpp"
+				RelativePath=".\Application.cpp"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="2"
-						PrecompiledHeaderThrough="stable.h"
-					/>
-				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\FilePaths.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FolderItem.cpp"
+				>
 			</File>
 			<File
 				RelativePath="main.cpp"
@@ -248,91 +247,105 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\User.cpp"
+				>
+			</File>
 			<Filter
 				Name="gui"
 				>
 				<File
-					RelativePath=".\gui\azGraphicsItem.cpp"
-					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stable.h"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\gui\azMainScene.cpp"
+					RelativePath=".\gui\GraphicsItem.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\gui\azMainWindow.cpp"
+					RelativePath=".\gui\MainScene.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stable.h"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\gui\azNineSliceItem.cpp"
+					RelativePath=".\gui\MainWindow.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="stable.h"
-						/>
-					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\gui\NineSliceItem.cpp"
+					>
 				</File>
 			</Filter>
 			<Filter
 				Name="utils"
 				>
 				<File
-					RelativePath=".\utils\azIconData.cpp"
+					RelativePath=".\utils\IconData.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="stable.h"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\utils\azIconUtil.cpp"
+					RelativePath=".\utils\IconUtil.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="stable.h"
-						/>
-					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\utils\azNineSlicePainter.cpp"
+					RelativePath=".\utils\NineSlicePainter.cpp"
 					>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							PrecompiledHeaderThrough="stable.h"
-						/>
-					</FileConfiguration>
 				</File>
+				<File
+					RelativePath=".\utils\XmlUtil.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="third_party"
+				>
+				<Filter
+					Name="tinyxml"
+					>
+					<File
+						RelativePath=".\third_party\tinyxml\tinystr.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\third_party\tinyxml\tinyxml.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\third_party\tinyxml\tinyxmlerror.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+					<File
+						RelativePath=".\third_party\tinyxml\tinyxmlparser.cpp"
+						>
+						<FileConfiguration
+							Name="Debug|Win32"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+								UsePrecompiledHeader="0"
+							/>
+						</FileConfiguration>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -341,30 +354,46 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\azApplication.h"
+				RelativePath=".\Application.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Constants.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FilePaths.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FolderItem.h"
 				>
 			</File>
 			<File
 				RelativePath=".\stable.h"
 				>
 			</File>
+			<File
+				RelativePath=".\User.h"
+				>
+			</File>
 			<Filter
 				Name="gui"
 				>
 				<File
-					RelativePath=".\gui\azGraphicsItem.h"
+					RelativePath=".\gui\GraphicsItem.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gui\azMainScene.h"
+					RelativePath=".\gui\MainScene.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gui\azMainWindow.h"
+					RelativePath=".\gui\MainWindow.h"
 					>
 				</File>
 				<File
-					RelativePath=".\gui\azNineSliceItem.h"
+					RelativePath=".\gui\NineSliceItem.h"
 					>
 				</File>
 			</Filter>
@@ -372,17 +401,37 @@
 				Name="utils"
 				>
 				<File
-					RelativePath=".\utils\azIconData.h"
+					RelativePath=".\utils\IconData.h"
 					>
 				</File>
 				<File
-					RelativePath=".\utils\azIconUtil.h"
+					RelativePath=".\utils\IconUtil.h"
 					>
 				</File>
 				<File
-					RelativePath=".\utils\azNineSlicePainter.h"
+					RelativePath=".\utils\NineSlicePainter.h"
 					>
 				</File>
+				<File
+					RelativePath=".\utils\XmlUtil.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="third_party"
+				>
+				<Filter
+					Name="tinyxml"
+					>
+					<File
+						RelativePath=".\third_party\tinyxml\tinystr.h"
+						>
+					</File>
+					<File
+						RelativePath=".\third_party\tinyxml\tinyxml.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

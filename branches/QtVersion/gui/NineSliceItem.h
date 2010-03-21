@@ -6,25 +6,28 @@
 
 #include <stable.h>
 
-#ifndef AZNINESLICEITEM_H
-#define AZNINESLICEITEM_H
+#ifndef NineSliceItem_H
+#define NineSliceItem_H
 
-#include <azGraphicsItem.h>
-#include <azNineSlicePainter.h>
+#include <GraphicsItem.h>
+#include <NineSlicePainter.h>
 
-class azNineSliceItem : public azGraphicsItem {
+namespace appetizer {
+
+class NineSliceItem : public GraphicsItem {
 
 public:
 
-  azNineSliceItem();
+  NineSliceItem();
   void loadBackgroundImage(QString backgroundFilePath);
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
 
-  azNineSlicePainter nineSlicePainter_;
+  NineSlicePainter nineSlicePainter_;
   QString backgroundFilePath_;
 
 };
 
-#endif // AZNINESLICEITEM_H
+}
+#endif // NineSliceItem_H

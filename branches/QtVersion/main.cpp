@@ -1,32 +1,52 @@
 #include <stable.h>
-#include <azApplication.h>
-#include <azIconData.h>
-#include <azIconUtil.h>
-#include <azNineSliceItem.h>
-#include <azMainWindow.h>
+#include <Application.h>
+#include <IconData.h>
+#include <IconUtil.h>
+#include <FilePaths.h>
+#include <NineSliceItem.h>
+#include <MainWindow.h>
+#include <XmlUtil.h>
+#include <User.h>
+using namespace appetizer;
 
 
 int main(int argc, char *argv[]) {
-  azApplication app(argc, argv);
+  Application app(argc, argv);
   app.setOrganizationName("Trolltech");
   app.setApplicationName("Application Example");
 
-  azMainWindow mainWindow;
+  MainWindow mainWindow;
   mainWindow.show();
+
+  User user;
+  user.load();
+
+  //QString t = FilePaths::GetUserShellDirectory("Programs");
+
+  FilePaths::InitializePaths();
+  FilePaths::CreateSettingsDirectory();
+
+
+//  QFileInfo f("%APPDATA%\\Microsoft\\Internet Explorer\\Quick Launch");
+//  QString d = f.canonicalFilePath();
+//
+  int test = 0;
+test++;
+  //appetizer::XmlUtil::test(1);
 
   //QGraphicsScene scene;
 
-  //azNineSliceItem item;
+  //NineSliceItem item;
   //item.loadBackgroundImage("c:\\Users\\Laurent_2\\Desktop\\200.PNG");
 
   //scene.addItem(&item);
 
   //scene.addText("Hello, world!");
 
-  //azIconData iconData = azIconUtil::getFolderItemIcon("C:\\Program Files\\Adobe\\Adobe Photoshop CS4\\Photoshop.exe", 256);
+  //IconData iconData = IconUtil::getFolderItemIcon("C:\\Program Files\\Adobe\\Adobe Photoshop CS4\\Photoshop.exe", 256);
   //scene.addPixmap(QPixmap::fromWinHICON(iconData.hIcon));
 
-  //iconData = azIconUtil::getFolderItemIcon("C:\\Program Files\\Adobe\\Adobe Illustrator CS4\\Support Files\\Contents\\Windows\\AI_Application_Icon.ico", 48);
+  //iconData = IconUtil::getFolderItemIcon("C:\\Program Files\\Adobe\\Adobe Illustrator CS4\\Support Files\\Contents\\Windows\\AI_Application_Icon.ico", 48);
   //scene.addPixmap(QPixmap::fromWinHICON(iconData.hIcon));
 
   //QGraphicsView view(&scene); 

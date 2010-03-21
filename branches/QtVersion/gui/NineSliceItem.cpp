@@ -5,21 +5,22 @@
 */
 
 #include <stable.h>
-#include <azNineSliceItem.h>
+#include <NineSliceItem.h>
+using namespace appetizer;
 
 
-azNineSliceItem::azNineSliceItem() {
+NineSliceItem::NineSliceItem() {
   
 }
 
 
-void azNineSliceItem::loadBackgroundImage(QString backgroundFilePath) {
+void NineSliceItem::loadBackgroundImage(QString backgroundFilePath) {
   backgroundFilePath_ = backgroundFilePath;
   nineSlicePainter_.loadImage(backgroundFilePath);
   invalidate();
 }
 
 
-void azNineSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+void NineSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   nineSlicePainter_.drawImage(painter, 0, 0, width(), height());
 }

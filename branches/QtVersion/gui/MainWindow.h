@@ -6,20 +6,22 @@
 
 #include <stable.h>
 
-#ifndef AZMAINWINDOW_H
-#define AZMAINWINDOW_H
+#ifndef MainWindow_H
+#define MainWindow_H
 
-#include <azMainScene.h>
+#include <MainScene.h>
 
-class azMainWindow : public QGraphicsView {
+namespace appetizer {
+
+class MainWindow : public QGraphicsView {
 
 public:
 
-  azMainWindow();
+  MainWindow();
 
 private:
 
-  azMainScene* scene_;
+  MainScene* scene_;
 
 protected:
 
@@ -27,4 +29,5 @@ protected:
 
 };
 
-#endif // AZMAINWINDOW_H
+}
+#endif // MainWindow_H

@@ -6,22 +6,25 @@
 
 #include <stable.h>
 
-#ifndef AZMAINSCENE_H
-#define AZMAINSCENE_H
+#ifndef MainScene_H
+#define MainScene_H
 
-#include <azNineSliceItem.h>
+#include <NineSliceItem.h>
 
-class azMainScene : public QGraphicsScene {
+namespace appetizer {
+
+class MainScene : public QGraphicsScene {
 
 public:
 
-  azMainScene();
+  MainScene();
 
 private:
 
-  azNineSliceItem* backgroundItem_;
+  NineSliceItem* backgroundItem_;
   void drawBackground(QPainter* painter, const QRectF& rect);
 
 };
 
-#endif // AZMAINSCENE_H
+}
+#endif // MainScene_H

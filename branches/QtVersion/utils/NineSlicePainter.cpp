@@ -5,28 +5,29 @@
 */
 
 #include <stable.h>
-#include <azNineSlicePainter.h>
+#include <NineSlicePainter.h>
+using namespace appetizer;
 
-azNineSlicePainter::azNineSlicePainter() {
+NineSlicePainter::NineSlicePainter() {
     image_ = NULL;
     gridIsExplicitelySet_ = false;
 }
 
-bool azNineSlicePainter::isNull() {
+bool NineSlicePainter::isNull() {
   return !image_;
 }
 
-void azNineSlicePainter::loadImage(QImage* image) {
+void NineSlicePainter::loadImage(QImage* image) {
     if (image_) delete image_;
     image_ = image;
 }
 
-void azNineSlicePainter::loadImage(QString filePath) {
+void NineSlicePainter::loadImage(QString filePath) {
     if (image_) delete image_;
     image_ = new QImage(filePath);
 }
 
-void azNineSlicePainter::setGrid(int x, int y, int width, int height) {
+void NineSlicePainter::setGrid(int x, int y, int width, int height) {
     grid_.setLeft(x);
     grid_.setTop(y);
     grid_.setWidth(width);
@@ -34,7 +35,7 @@ void azNineSlicePainter::setGrid(int x, int y, int width, int height) {
     gridIsExplicitelySet_ = true;
 }
 
-void azNineSlicePainter::drawImage(QPainter* painter, int x, int y, int width, int height) {
+void NineSlicePainter::drawImage(QPainter* painter, int x, int y, int width, int height) {
     if (width == 0 || height == 0) return;
 
     QImage* workImage = image_;
@@ -141,7 +142,7 @@ void azNineSlicePainter::drawImage(QPainter* painter, int x, int y, int width, i
 }
 
 
-azNineSlicePainter::~azNineSlicePainter() {
+NineSlicePainter::~NineSlicePainter() {
   if (image_) {
     delete image_;
     image_ = NULL;

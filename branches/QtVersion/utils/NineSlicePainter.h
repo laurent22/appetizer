@@ -8,18 +8,19 @@
 
 #ifndef NINESLICEPAINTER_H
 #define NINESLICEPAINTER_H
+namespace appetizer {
 
-class azNineSlicePainter {
+class NineSlicePainter {
 
 public:
 
-    azNineSlicePainter();
+    NineSlicePainter();
     void loadImage(QImage* image);
     void loadImage(QString filePath);
     void setGrid(int x, int y, int width, int height);
     void drawImage(QPainter* painter, int x, int y, int width, int height);
     bool isNull();
-    ~azNineSlicePainter();
+    ~NineSlicePainter();
 
 private:
 
@@ -29,4 +30,5 @@ private:
 
 };
 
+}
 #endif // NINESLICEPAINTER_H

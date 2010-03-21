@@ -5,37 +5,38 @@
 */
 
 #include <stable.h>
-#include <azGraphicsItem.h>
+#include <GraphicsItem.h>
+using namespace appetizer;
 
-azGraphicsItem::azGraphicsItem() {
+GraphicsItem::GraphicsItem() {
     width_ = 100;
     height_ = 100;
 }
 
-int azGraphicsItem::width() const {
+int GraphicsItem::width() const {
     return width_;
 }
 
-int azGraphicsItem::height() const {
+int GraphicsItem::height() const {
     return height_;
 }
 
-void azGraphicsItem::setWidth(int width) {
+void GraphicsItem::setWidth(int width) {
     if (width == width_) return;
     width_ = width;
     invalidate();
 }
 
-void azGraphicsItem::setHeight(int height) {
+void GraphicsItem::setHeight(int height) {
     if (height == height_) return;
     height_ = height;
     invalidate();
 }
 
-QRectF azGraphicsItem::boundingRect() const {
+QRectF GraphicsItem::boundingRect() const {
     return QRectF(0, 0, width(), height());
 }
 
-void azGraphicsItem::invalidate() {
+void GraphicsItem::invalidate() {
     update(0, 0, width_, height_);
 }
