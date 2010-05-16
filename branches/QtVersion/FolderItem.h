@@ -33,6 +33,7 @@ private:
     QString uuid_;
     QString parameters_;
     bool autoRun_;
+    bool belongsToMultiLaunchGroup_;
 
 };
 

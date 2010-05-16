@@ -9,14 +9,7 @@
 using namespace appetizer;
 
 MainWindow::MainWindow() {
-  //QWidget* widget = new QWidget(0, Qt::FramelessWindowHint);
-  //setViewport(widget);
-  //viewport()->setWindowFlags(Qt::FramelessWindowHint);
-
   scene_ = new MainScene();
-
-  scene_->addText("Hello, world!");
-
   setScene(scene_);
 }
 

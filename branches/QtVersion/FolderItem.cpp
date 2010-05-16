@@ -17,6 +17,7 @@ FolderItem::FolderItem(bool isGroup) {
   name_ = "";
   filePath_ = "";
   automaticallyAdded_ = false;
+  belongsToMultiLaunchGroup_ = false;
 }
 
 
@@ -86,7 +87,7 @@ void FolderItem::fromXml(TiXmlElement* xml) {
   setName(XmlUtil::readElementText(handle, "Name"));
   setFilePath(XmlUtil::readElementText(handle, "FilePath"));
   setAutomaticallyAdded(XmlUtil::readElementTextAsBool(handle, "AutomaticallyAdded"));
-  //belongsToMultiLaunchGroup_ = XmlUtil::readElementTextAsBool(handle, "MultiLaunchGroup");
+  belongsToMultiLaunchGroup_ = XmlUtil::readElementTextAsBool(handle, "MultiLaunchGroup");
   isGroup_ = XmlUtil::readElementTextAsBool(handle, "IsGroup");
   //uuid_ = XmlUtil::readElementText(handle, "UUID");
   parameters_ = XmlUtil::readElementText(handle, "Parameters");
