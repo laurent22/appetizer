@@ -10,7 +10,12 @@
 using namespace appetizer;
 
 User::User() {
-  rootFolderItem_ = NULL;
+  rootFolderItem_ = FolderItem::createFolderItem(true);
+}
+
+
+FolderItem* User::rootFolderItem() const {
+  return rootFolderItem_;
 }
 
 
@@ -38,7 +43,7 @@ void User::load() {
       FolderItem* folderItem = FolderItem::createFolderItem();
       folderItem->fromXml(element);
 
-      //rootFolderItem_->AddChild(folderItem);
+      rootFolderItem_->addChild(folderItem);
     } else if (elementName == "ExcludedPath") {
       //const char* cString = element->GetText();
       //if (!cString) continue;

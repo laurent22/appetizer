@@ -12,6 +12,10 @@ MainScene::MainScene() {
   backgroundItem_ = new NineSliceItem();
   backgroundItem_->loadBackgroundImage("c:\\Users\\Laurent_2\\Desktop\\200.PNG");
   addItem(backgroundItem_);
+
+  iconPanel_ = new IconPanel();
+  iconPanel_->loadFolderItems(user.rootFolderItem->id());
+  addItem(iconPanel_);
 }
 
 
@@ -20,4 +24,7 @@ void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
 
   backgroundItem_->setWidth(width());
   backgroundItem_->setHeight(height());
+
+  iconPanel_->setWidth(width());
+  iconPanel_->setHeight(height());
 }

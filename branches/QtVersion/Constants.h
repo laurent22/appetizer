@@ -68,6 +68,10 @@ const int LAUNCHPAD_TEXTBOX_HEIGHT = 24;
 const int LAUNCHPAD_TEXTBOX_GAP = 6;
 const int LAUNCHPAD_VISIBLE_ICONS = 4;
 
+const int FOLDER_ITEM_TYPE_FILE = 0;
+const int FOLDER_ITEM_TYPE_GROUP = 1;
+const int FOLDER_ITEM_TYPE_TAB = 2;
+
 }
 
 #endif // __Constants_H

@@ -6,8 +6,17 @@
 
 #include <stable.h>
 #include <Application.h>
+#include <FilePaths.h>
+
 using namespace appetizer;
 
 Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
+  FilePaths::InitializePaths();
+  FilePaths::CreateSettingsDirectory();
+
+  user_.load();
+
+  mainWindow_.show();
+
 
 }

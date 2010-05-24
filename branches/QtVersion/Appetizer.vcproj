@@ -255,8 +255,32 @@
 				Name="gui"
 				>
 				<File
+					RelativePath=".\gui\FolderItemRenderer.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="stable.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath=".\gui\GraphicsItem.cpp"
 					>
+				</File>
+				<File
+					RelativePath=".\gui\IconPanel.cpp"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="stable.h"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath=".\gui\MainScene.cpp"
@@ -381,7 +405,15 @@
 				Name="gui"
 				>
 				<File
+					RelativePath=".\gui\FolderItemRenderer.h"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\GraphicsItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\IconPanel.h"
 					>
 				</File>
 				<File

@@ -10,6 +10,7 @@
 #define MainScene_H
 
 #include <NineSliceItem.h>
+#include <IconPanel.h>
 
 namespace appetizer {
 
@@ -23,6 +24,7 @@ private:
 
   NineSliceItem* backgroundItem_;
   void drawBackground(QPainter* painter, const QRectF& rect);
+  IconPanel* iconPanel_;
 
 };
 

@@ -11,13 +11,82 @@
 using namespace appetizer;
 
 
-FolderItem::FolderItem(bool isGroup) {
-  isGroup_ = isGroup;
+int FolderItem::uniqueID_ = 1;
+FolderItemIdHashMap FolderItem::folderItemIdHashMap_;
+
+
+FolderItem::FolderItem(int type) {
+  FolderItem::uniqueID_++;
+  id_ = FolderItem::uniqueID_;
+  type_ = type;
+
   autoRun_ = false;
   name_ = "";
   filePath_ = "";
   automaticallyAdded_ = false;
-  belongsToMultiLaunchGroup_ = false;
+  parent_ = NULL;
+  disposed_ = false;
+}
+
+
+void FolderItem::dispose() {
+  disposed_ = true;
+}
+
+
+bool FolderItem::disposed() const {
+  return disposed_;
+}
+
+
+void FolderItem::setParent(FolderItem* folderItem) {
+  parent_ = folderItem;
+}
+
+
+void FolderItem::addChild(FolderItem* folderItem) {
+  if (folderItem->id() == id()) return;
+
+  //if (folderItem->IsGroup()) {
+  //  appFolderItem* f = folderItem->GetChildById(GetId());
+  //  if (f) return;
+  //}
+
+  FolderItem* p = folderItem->parent();
+  if (p) p->removeChild(folderItem);
+
+  folderItem->setParent(this);
+  children_.push_back(folderItem);
+}
+
+
+void FolderItem::removeChild(FolderItem* folderItem) {
+  for (int i = 0; i < children_.size(); i++) {
+    FolderItem* child = children_.at(i);
+
+    if (child->id() == folderItem->id()) {
+
+      //if (folderItem->GetAutomaticallyAdded()) {
+      //  wxGetApp().GetUser()->AddAutoAddExclusion(folderItem->GetResolvedPath());
+      //}
+      
+      child->setParent(NULL);
+      children_.erase(children_.begin() + i);
+
+      //wxGetApp().FolderItems_CollectionChange();
+      return;
+    }
+  }
+}
+
+
+int FolderItem::id() const {
+  return id_;
+}
+
+
+FolderItem* FolderItem::parent() const {
+  return parent_;
 }
 
 
@@ -27,10 +96,29 @@ QString FolderItem::resolvePath(const QString& path) {
 }
 
 
-FolderItem* FolderItem::createFolderItem(bool isGroup) {
-  FolderItem* f = new FolderItem(isGroup);
-  //folderItemIdHashMap_[f->GetId()] = f;
+FolderItem* FolderItem::createFolderItem(int type) {
+  FolderItem* f = new FolderItem(type);
+  folderItemIdHashMap_[f->id()] = f;
   return f;
+}
+
+
+FolderItem* FolderItem::getFolderItemById(int id) {
+  FolderItem* sp = folderItemIdHashMap_[id];
+  
+  // The folder item is not (or no longer) in the hash map
+  if (!sp) return NULL;
+
+  if (sp->disposed()) {
+    // The folder item has been disposed, so remove it
+    // from the hash map now and return NULL
+    delete sp;
+    folderItemIdHashMap_.erase(id);
+    return NULL;
+  }
+
+  // Otherwise return the pointer
+  return sp;
 }
 
 
@@ -87,8 +175,7 @@ void FolderItem::fromXml(TiXmlElement* xml) {
   setName(XmlUtil::readElementText(handle, "Name"));
   setFilePath(XmlUtil::readElementText(handle, "FilePath"));
   setAutomaticallyAdded(XmlUtil::readElementTextAsBool(handle, "AutomaticallyAdded"));
-  belongsToMultiLaunchGroup_ = XmlUtil::readElementTextAsBool(handle, "MultiLaunchGroup");
-  isGroup_ = XmlUtil::readElementTextAsBool(handle, "IsGroup");
+  type_ = XmlUtil::readElementTextAsBool(handle, "IsGroup") ? FOLDER_ITEM_TYPE_GROUP : FOLDER_ITEM_TYPE_FILE;
   //uuid_ = XmlUtil::readElementText(handle, "UUID");
   parameters_ = XmlUtil::readElementText(handle, "Parameters");
 

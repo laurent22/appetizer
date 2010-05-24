@@ -5,6 +5,8 @@
 */
 
 #include <stable.h>
+#include <MainWindow.h>
+#include <User.h>
 
 #ifndef Application_H
 #define Application_H
@@ -14,7 +16,14 @@ class Application : public QApplication {
 
 public:
 
-    Application(int argc, char *argv[]);
+  Application(int argc, char *argv[]);
+  MainWindow mainWindow();
+  User user();
+
+private:
+
+  MainWindow mainWindow_;
+  User user_;
 
 };
 

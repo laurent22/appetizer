@@ -4,34 +4,26 @@
 #include <IconUtil.h>
 #include <FilePaths.h>
 #include <NineSliceItem.h>
-#include <MainWindow.h>
 #include <XmlUtil.h>
 #include <User.h>
+#include <IconPanel.h>
 using namespace appetizer;
 
 
 int main(int argc, char *argv[]) {
   Application app(argc, argv);
-  app.setOrganizationName("Trolltech");
-  app.setApplicationName("Application Example");
-
-  MainWindow mainWindow;
-  mainWindow.show();
-
-  User user;
-  user.load();
+  app.setOrganizationName("Appetizer Project");
+  app.setApplicationName("Appetizer");
 
   //QString t = FilePaths::GetUserShellDirectory("Programs");
 
-  FilePaths::InitializePaths();
-  FilePaths::CreateSettingsDirectory();
+  
 
 
 //  QFileInfo f("%APPDATA%\\Microsoft\\Internet Explorer\\Quick Launch");
 //  QString d = f.canonicalFilePath();
 //
-  int test = 0;
-test++;
+
   //appetizer::XmlUtil::test(1);
 
   //QGraphicsScene scene;

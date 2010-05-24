@@ -20,6 +20,7 @@ public:
     User();
     void load();
     void synchronizeWithFolder(const QString& path);
+    FolderItem* rootFolderItem() const;
 
 private:
 
