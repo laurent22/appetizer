@@ -7,6 +7,7 @@
 #include <stable.h>
 #include <Application.h>
 #include <FilePaths.h>
+#include <Style.h>
 
 using namespace appetizer;
 
@@ -14,9 +15,23 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
   FilePaths::InitializePaths();
   FilePaths::CreateSettingsDirectory();
 
+  Style::loadSkinFile("s:\\Docs\\PROGS\\C++\\Appetizer\\branches\\QtVersion\\Data\\Skin\\Default\\Skin.xml");
+
   user_.load();
 
-  mainWindow_.show();
+  mainWindow_ = new MainWindow();
+  mainWindow_->show();
 
 
+}
+
+
+User Application::user() const {
+  return user_;
+}
+
+
+Application* Application::instance() {
+  Application* a = static_cast<Application*>(QApplication::instance());
+  return a;
 }

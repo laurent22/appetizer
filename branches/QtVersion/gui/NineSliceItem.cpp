@@ -22,5 +22,7 @@ void NineSliceItem::loadBackgroundImage(QString backgroundFilePath) {
 
 
 void NineSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+  GraphicsItem::paint(painter, option, widget);
+
   nineSlicePainter_.drawImage(painter, 0, 0, width(), height());
 }

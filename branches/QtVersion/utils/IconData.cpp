@@ -12,8 +12,3 @@ IconData::IconData() {
   hIcon = 0;
   index = 0;
 }
-
-
-bool IconData::isNull() const {
-  return filePath.isEmpty() && !hIcon;
-}

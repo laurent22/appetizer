@@ -9,8 +9,8 @@
 using namespace appetizer;
 
 
-IconData IconUtil::getFolderItemIcon(QString filePath, int iconSize) {
-  IconData output;
+IconData* IconUtil::getFolderItemIcon(QString filePath, int iconSize) {
+  IconData* output = NULL;
 
   // Note: certain functions, like SHGetImageList don't exist in Windows 2000,
   // so we need to load them dynamically, otherwise we get this error and the app doesn't start:
@@ -52,9 +52,10 @@ IconData IconUtil::getFolderItemIcon(QString filePath, int iconSize) {
         hResult = ((IImageList*)imageList)->GetIcon(sfi.iIcon, ILD_TRANSPARENT, &hIcon);
 
         if (hResult == S_OK) {
-          output.hIcon = hIcon;
-          output.filePath = filePath;
-          output.index = 0;
+          output = new IconData();
+          output->hIcon = hIcon;
+          output->filePath = filePath;
+          output->index = 0;
         }
       }
 

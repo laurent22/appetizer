@@ -21,7 +21,7 @@ class IconUtil {
 
 public:
 
-  static IconData getFolderItemIcon(QString filePath, int iconSize);
+  static IconData* getFolderItemIcon(QString filePath, int iconSize);
 
 };
 

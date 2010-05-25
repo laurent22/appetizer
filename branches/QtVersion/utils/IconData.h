@@ -18,7 +18,6 @@ public:
     QString filePath;
     int index;
     HICON hIcon;
-    bool isNull() const;
 
 };
 

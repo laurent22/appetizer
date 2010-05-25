@@ -14,18 +14,31 @@ class GraphicsItem : public QGraphicsItem {
 
 public:
 
-    GraphicsItem();
-    int width() const;
-    int height() const;
-    void setWidth(int width);
-    void setHeight(int height);
-    QRectF boundingRect() const;
-    void invalidate();
+  GraphicsItem();
+  int width() const;
+  int height() const;
+  void setWidth(int width);
+  void setHeight(int height);
+  QRectF boundingRect() const;
+  void addItem(QGraphicsItem* item);
+  void removeItem(QGraphicsItem* item);
+  int numChildren() const;
+  QGraphicsItem* getChildAt(int index) const;
+  void showDebugRectangle(bool doShow = true);
+  void invalidate();
+
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+protected:
+
+  virtual void onResize();
 
 private:
 
-    int width_;
-    int height_;
+  int width_;
+  int height_;
+  bool showDebugRectangle_;
+  bool dispatchResizeEvent_;
 
 };
 

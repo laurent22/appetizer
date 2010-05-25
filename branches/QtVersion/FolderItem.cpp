@@ -22,10 +22,49 @@ FolderItem::FolderItem(int type) {
 
   autoRun_ = false;
   name_ = "";
-  filePath_ = "";
+  path_ = "";
   automaticallyAdded_ = false;
   parent_ = NULL;
   disposed_ = false;
+}
+
+
+FolderItem::~FolderItem() {
+  clearIconCache();
+}
+
+
+void FolderItem::clearIconCache() {
+  for (std::map<int, IconData*>::iterator i = iconData_.begin(); i != iconData_.end(); ++i) {
+    if (i->second) delete i->second;
+  }
+  for (std::map<int, QPixmap*>::iterator i = iconPixmaps_.begin(); i != iconPixmaps_.end(); ++i) {
+    if (i->second) delete i->second;
+  }
+  iconData_.clear();
+  iconPixmaps_.clear();
+}
+
+
+IconData* FolderItem::getIconData(int iconSize) {
+  if (iconData_.find(iconSize) != iconData_.end()) return iconData_[iconSize];
+
+  IconData* d = IconUtil::getFolderItemIcon(resolvedPath(), iconSize);
+  iconData_[iconSize] = d;
+  return d;
+}
+
+
+QPixmap* FolderItem::getIconPixmap(int iconSize) {
+  if (iconPixmaps_.find(iconSize) != iconPixmaps_.end()) return iconPixmaps_[iconSize];
+
+  IconData* d = getIconData(iconSize);
+  QPixmap* pixmap = NULL;
+
+  if (d) pixmap = new QPixmap(QPixmap::fromWinHICON(d->hIcon));
+  iconPixmaps_[iconSize] = pixmap;
+  
+  return pixmap;
 }
 
 
@@ -36,6 +75,16 @@ void FolderItem::dispose() {
 
 bool FolderItem::disposed() const {
   return disposed_;
+}
+
+
+int FolderItem::numChildren() const {
+  return children_.size();
+}
+
+
+FolderItem* FolderItem::getChildAt(int index) const {
+  return children_.at(index);
 }
 
 
@@ -61,7 +110,7 @@ void FolderItem::addChild(FolderItem* folderItem) {
 
 
 void FolderItem::removeChild(FolderItem* folderItem) {
-  for (int i = 0; i < children_.size(); i++) {
+  for (int i = 0; i < (int)children_.size(); i++) {
     FolderItem* child = children_.at(i);
 
     if (child->id() == folderItem->id()) {
@@ -127,8 +176,22 @@ void FolderItem::setName(const QString& name) {
 }
 
 
-void FolderItem::setFilePath(const QString& filePath) {
-  filePath_ = filePath;
+void FolderItem::setPath(const QString& filePath) {
+  path_ = filePath;
+  resolvedPath_ = "";
+  clearIconCache();
+}
+
+
+QString FolderItem::path() const {
+  return path_;
+}
+
+
+QString FolderItem::resolvedPath() {
+  if (resolvedPath_ != "") return resolvedPath_;
+  resolvedPath_ = FolderItem::resolvePath(path());
+  return resolvedPath_;
 }
 
 
@@ -173,7 +236,7 @@ void FolderItem::fromXml(TiXmlElement* xml) {
   TiXmlHandle handle(xml);
 
   setName(XmlUtil::readElementText(handle, "Name"));
-  setFilePath(XmlUtil::readElementText(handle, "FilePath"));
+  setPath(XmlUtil::readElementText(handle, "FilePath"));
   setAutomaticallyAdded(XmlUtil::readElementTextAsBool(handle, "AutomaticallyAdded"));
   type_ = XmlUtil::readElementTextAsBool(handle, "IsGroup") ? FOLDER_ITEM_TYPE_GROUP : FOLDER_ITEM_TYPE_FILE;
   //uuid_ = XmlUtil::readElementText(handle, "UUID");
@@ -188,20 +251,20 @@ void FolderItem::fromXml(TiXmlElement* xml) {
   //  if (customIconData[1].ToLong(&t)) customIconIndex_ = (int)t;
   //}
 
-  //for (int i = 0; i < children_.size(); i++) children_[i]->Dispose();
-  //children_.clear();
-  //
-  //TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();
-  //if (childrenXml) {
-  //  for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
-  //    wxString elementName = wxString(element->Value(), wxConvUTF8);
-  //    if ((elementName != _T("FolderItem")) && (elementName != _T("appFolderItem"))) continue;
-  //    
-  //    appFolderItem* folderItem = appFolderItem::CreateFolderItem();
-  //    folderItem->FromXml(element);
-  //    AddChild(folderItem);
-  //  }
-  //}
+  for (int i = 0; i < (int)children_.size(); i++) children_[i]->dispose();
+  children_.clear();
+  
+  TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();
+  if (childrenXml) {
+    for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
+      QString elementName = QString::fromUtf8(element->GetText());
+      if ((elementName != "FolderItem") && (elementName != "appFolderItem")) continue;
+      
+      FolderItem* folderItem = FolderItem::createFolderItem();
+      folderItem->fromXml(element);
+      addChild(folderItem);
+    }
+  }
 
   //ConvertOldVariablesToNew(filePath_);
   //ConvertOldVariablesToNew(parameters_);

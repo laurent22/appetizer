@@ -6,6 +6,8 @@
 
 #include <stable.h>
 #include <MainScene.h>
+#include <Application.h>
+
 using namespace appetizer;
 
 MainScene::MainScene() {
@@ -14,7 +16,7 @@ MainScene::MainScene() {
   addItem(backgroundItem_);
 
   iconPanel_ = new IconPanel();
-  iconPanel_->loadFolderItems(user.rootFolderItem->id());
+  iconPanel_->loadFolderItems(Application::instance()->user().rootFolderItem()->id());
   addItem(iconPanel_);
 }
 

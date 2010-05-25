@@ -11,6 +11,7 @@
 
 #include <GraphicsItem.h>
 #include <NineSlicePainter.h>
+#include <FolderItem.h>
 
 namespace appetizer {
 
@@ -20,8 +21,17 @@ public:
 
   FolderItemRenderer();
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  void setFolderItem(int folderItemId);
+  FolderItem* folderItem() const;
+  void setIconSize(int size);
+  int iconSize() const;
+  int validIconSize() const;
 
 private:
+
+  int folderItemId_;
+  int iconSize_;
+
 };
 
 }

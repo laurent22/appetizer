@@ -17,12 +17,14 @@ class Application : public QApplication {
 public:
 
   Application(int argc, char *argv[]);
-  MainWindow mainWindow();
-  User user();
+  MainWindow mainWindow() const;
+  User user() const;
+
+  static Application* instance();
 
 private:
 
-  MainWindow mainWindow_;
+  MainWindow* mainWindow_;
   User user_;
 
 };

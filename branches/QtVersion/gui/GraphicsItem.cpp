@@ -9,34 +9,96 @@
 using namespace appetizer;
 
 GraphicsItem::GraphicsItem() {
-    width_ = 100;
-    height_ = 100;
+  width_ = 100;
+  height_ = 100;
+  dispatchResizeEvent_ = false;
 }
+
+
+void GraphicsItem::showDebugRectangle(bool doShow) {
+  showDebugRectangle_ = doShow;
+  invalidate();
+}
+
 
 int GraphicsItem::width() const {
-    return width_;
+  return width_;
 }
+
 
 int GraphicsItem::height() const {
-    return height_;
+  return height_;
 }
+
 
 void GraphicsItem::setWidth(int width) {
-    if (width == width_) return;
-    width_ = width;
-    invalidate();
+  if (width == width_) return;
+  width_ = width;
+  dispatchResizeEvent_ = true;
+  invalidate();
 }
+
 
 void GraphicsItem::setHeight(int height) {
-    if (height == height_) return;
-    height_ = height;
-    invalidate();
+  if (height == height_) return;
+  height_ = height;
+  dispatchResizeEvent_ = true;
+  invalidate();
 }
+
 
 QRectF GraphicsItem::boundingRect() const {
-    return QRectF(0, 0, width(), height());
+  return QRectF(0, 0, width(), height());
 }
 
+
+void GraphicsItem::addItem(QGraphicsItem* item) {
+  item->setParentItem(this);
+}
+
+
+void GraphicsItem::removeItem(QGraphicsItem* item){
+  childItems().removeOne(item);
+}
+
+
+int GraphicsItem::numChildren() const {
+  return children().size();
+}
+
+
+QGraphicsItem* GraphicsItem::getChildAt(int index) const {
+  return childItems().at(index);
+}
+
+
 void GraphicsItem::invalidate() {
-    update(0, 0, width_, height_);
+  update(0, 0, width(), height());
+}
+
+
+void GraphicsItem::onResize() {
+
+}
+
+
+void GraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+  painter; option; widget; // Using variables to disable the annoying warnings
+
+  if (showDebugRectangle_) {
+    QPen pen;
+    pen.setWidth(1);
+    pen.setColor(Qt::red);
+
+    QBrush brush(QColor(255,0,0,20));
+
+    painter->setPen(pen);
+    painter->setBrush(brush);
+    painter->drawRect(0, 0,width()-1, height()-1);
+  }
+
+  if (dispatchResizeEvent_) {
+    onResize();
+    dispatchResizeEvent_ = false;
+  }
 }

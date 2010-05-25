@@ -6,6 +6,8 @@
 
 #include <stable.h>
 #include <Constants.h>
+#include <IconUtil.h>
+#include <IconData.h>
 
 #ifndef FolderItem_H
 #define FolderItem_H
@@ -21,28 +23,43 @@ class FolderItem {
 public:
 
     FolderItem(int type = FOLDER_ITEM_TYPE_FILE);
+    ~FolderItem();
+
     static FolderItem* createFolderItem(int type = FOLDER_ITEM_TYPE_FILE);
-    static FolderItem* getFolderItemById(int id);
+    static FolderItem* getFolderItemById(int id);    
     static QString resolvePath(const QString& path);
+
     TiXmlElement* toXml();
     void fromXml(TiXmlElement* xml);
+    
     void setName(const QString& name);
-    void setFilePath(const QString& filePath);
+    void setPath(const QString& filePath);
     void setAutomaticallyAdded(bool automaticallyAdded);
     void setAutoRun(bool autoRun);
-    void addChild(FolderItem* folderItem);
     int type() const;
     int id() const;
-    FolderItem* parent() const;
-    void setParent(FolderItem* folderItem);
-    void removeChild(FolderItem* folderItem);
+    QString path() const;
+    QString resolvedPath();
+
     bool disposed() const;
     void dispose();
+
+    IconData* getIconData(int iconSize);
+    QPixmap* getIconPixmap(int iconSize);
+    void clearIconCache();
+
+    FolderItem* parent() const;
+    void setParent(FolderItem* folderItem);
+    void addChild(FolderItem* folderItem);
+    void removeChild(FolderItem* folderItem);
+    int numChildren() const;
+    FolderItem* getChildAt(int index) const;
 
 private:
 
     QString name_;
-    QString filePath_;
+    QString path_;
+    QString resolvedPath_;
     bool automaticallyAdded_;
     int type_;
     QString uuid_;
@@ -52,6 +69,8 @@ private:
     FolderItemVector children_;
     FolderItem* parent_;
     bool disposed_;
+    std::map<int, IconData*> iconData_;
+    std::map<int, QPixmap*> iconPixmaps_;
 
     static int uniqueID_;
     static FolderItemIdHashMap folderItemIdHashMap_;

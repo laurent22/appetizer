@@ -20,7 +20,7 @@ FolderItem* User::rootFolderItem() const {
 
 
 void User::synchronizeWithFolder(const QString& path) {
-  
+  path;
 }
 
 

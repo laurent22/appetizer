@@ -248,6 +248,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Style.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\User.cpp"
 				>
 			</File>
@@ -395,6 +399,10 @@
 			</File>
 			<File
 				RelativePath=".\stable.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Style.h"
 				>
 			</File>
 			<File

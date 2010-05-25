@@ -7,6 +7,8 @@
 #ifndef STABLE_H
 #define STABLE_H
 
+// Disable warning for using unsafe functions
+#define _CRT_SECURE_NO_DEPRECATE 1
 #define _T(x)      L ## x
 
 #ifdef __WINDOWS__
@@ -19,14 +21,17 @@
 #include <cmath>
 
 #include <QApplication>
+#include <QBrush>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QGraphicsItem>
+#include <QGraphicsRectItem>
 #include <QGraphicsView>
 #include <QIcon>
 #include <QImage>
 #include <QPainter>
+#include <QPen>
 #include <QPixmap>
 #include <QRect>
 #include <QResizeEvent>

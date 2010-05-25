@@ -12,6 +12,7 @@
 #include <GraphicsItem.h>
 #include <NineSlicePainter.h>
 #include <FolderItem.h>
+#include <FolderItemRenderer.h>
 
 namespace appetizer {
 
@@ -24,9 +25,16 @@ public:
   FolderItem* rootFolderItem();
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+protected:
+
+  void onResize();
+
 private:
 
   int rootFolderItemId_;
+  bool rebuildFolderItems_;
+  std::vector<FolderItemRenderer*> folderItemRenderers_;
+  bool updateLayout_;
 
 };
 
