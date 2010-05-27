@@ -3,3 +3,6 @@
 *.pdb
 *.idb
 *.pdb
+_Debug
+debug
+tmp
