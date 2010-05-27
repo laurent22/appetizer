@@ -1,1 +1,0 @@
-"c:\Qt\2010.02.1\qt\bin\moc.exe" gui\GraphicsItem.h -o "gui\moc_GraphicsItem.cpp"

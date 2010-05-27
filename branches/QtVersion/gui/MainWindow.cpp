@@ -8,15 +8,31 @@
 #include <MainWindow.h>
 using namespace appetizer;
 
-MainWindow::MainWindow() {
+MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint) {
+  view_ = new QGraphicsView(this);
+  
   scene_ = new MainScene();
-  setScene(scene_);
+  view_->setScene(scene_);
+  view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+  
+  //QPixmap p("c:\\Users\\Laurent_2\\Desktop\\MaskTest.png");
+  //QPainter painter(&p);
+  //QBitmap b = p.mask();
+  //setMask(b);
+
+  view_->show();
 }
 
 
 void MainWindow::resizeEvent(QResizeEvent* event) {
-  QGraphicsView::resizeEvent(event);
+  QWidget::resizeEvent(event);
+
+  view_->resize(width(), height());
 
   scene_->setSceneRect(0, 0, event->size().width(), event->size().height());
   scene_->invalidate();
+
+
 }

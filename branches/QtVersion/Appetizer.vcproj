@@ -288,6 +288,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\gui\MainPanel.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\MainScene.cpp"
 					>
 				</File>
@@ -439,6 +443,10 @@
 				</File>
 				<File
 					RelativePath=".\gui\IconSprite.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\MainPanel.h"
 					>
 				</File>
 				<File

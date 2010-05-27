@@ -9,8 +9,7 @@
 #ifndef MainScene_H
 #define MainScene_H
 
-#include <NineSliceItem.h>
-#include <IconPanel.h>
+#include <MainPanel.h>
 
 namespace appetizer {
 
@@ -20,11 +19,15 @@ public:
 
   MainScene();
 
+protected:
+
+  void drawBackground(QPainter* painter, const QRectF& rect);
+  QBitmap* composedMask();
+
 private:
 
-  NineSliceItem* backgroundItem_;
-  void drawBackground(QPainter* painter, const QRectF& rect);
-  IconPanel* iconPanel_;
+  MainPanel* mainPanel_;
+  QBitmap* composedMask_;
 
 };
 

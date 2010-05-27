@@ -21,6 +21,7 @@
 #include <cmath>
 
 #include <QApplication>
+#include <QBitmap>
 #include <QBrush>
 #include <QDate>
 #include <QDebug>

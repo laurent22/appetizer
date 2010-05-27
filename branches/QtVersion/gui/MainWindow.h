@@ -13,7 +13,7 @@
 
 namespace appetizer {
 
-class MainWindow : public QGraphicsView {
+class MainWindow : public QWidget {
 
 public:
 
@@ -21,6 +21,7 @@ public:
 
 private:
 
+  QGraphicsView* view_;
   MainScene* scene_;
 
 protected:
