@@ -34,6 +34,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QPixmap>
+#include <QPropertyAnimation>
 #include <QRect>
 #include <QResizeEvent>
 #include <QSettings>

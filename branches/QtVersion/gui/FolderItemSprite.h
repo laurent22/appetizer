@@ -21,11 +21,17 @@ class FolderItemSprite : public GraphicsItem {
 public:
 
   FolderItemSprite();
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
   void setFolderItem(int folderItemId);
   FolderItem* folderItem() const;
   void setIconSize(int size);
   int iconSize() const;
+
+protected:
+
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  void hoverEnterEvent(QGraphicsSceneHoverEvent* event); 
+  void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
 
 private:
 
@@ -33,6 +39,8 @@ private:
   int iconSize_;
   NineSliceItem* selectionSprite_;
   IconSprite* iconSprite_;
+  bool mouseInside_;
+  QPropertyAnimation* selectionSpriteAnimation_;
 
 };
 

@@ -61,6 +61,7 @@
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="stable.h"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -374,6 +375,14 @@
 						</FileConfiguration>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="_moc"
+				>
+				<File
+					RelativePath=".\gui\moc_GraphicsItem.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

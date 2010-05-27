@@ -17,15 +17,15 @@ using namespace appetizer;
 FolderItemSprite::FolderItemSprite() {
   folderItemId_ = -1;
   iconSize_ = -1;
-
-  selectionSprite_ = new NineSliceItem();
-  selectionSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Base\\IconOverlayUp.png");
-  addItem(selectionSprite_);
+  mouseInside_ = false;
+  selectionSprite_ = NULL;
 
   iconSprite_ = new IconSprite();
   addItem(iconSprite_);
 
   setIconSize(SMALL_ICON_SIZE);
+  
+  setAcceptHoverEvents(true);
 }
 
 
@@ -55,11 +55,50 @@ FolderItem* FolderItemSprite::folderItem() const {
 }
 
 
+void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* event) {
+  mouseInside_ = true;
+
+  if (!selectionSprite_) {
+    selectionSprite_ = new NineSliceItem();  
+    selectionSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Base\\IconOverlayUp.png");
+    addItemAt(selectionSprite_, 0);
+
+    selectionSpriteAnimation_ = new QPropertyAnimation(selectionSprite_, "opacity");
+  }
+
+  selectionSpriteAnimation_->stop();
+  selectionSpriteAnimation_->setDuration(100);
+  selectionSpriteAnimation_->setStartValue(0);
+  selectionSpriteAnimation_->setEndValue(1);
+  selectionSpriteAnimation_->start();
+
+  invalidate();
+}
+
+
+void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
+  mouseInside_ = false;
+
+  if (selectionSprite_) {
+    selectionSpriteAnimation_->stop();
+    selectionSpriteAnimation_->setDuration(400);
+    selectionSpriteAnimation_->setStartValue(1);
+    selectionSpriteAnimation_->setEndValue(0);
+    selectionSpriteAnimation_->start();
+  }
+
+  invalidate();
+}
+
+
 void FolderItemSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   GraphicsItem::paint(painter, option, widget);  
 
-  selectionSprite_->setWidth(width());
-  selectionSprite_->setHeight(height());
+  if (mouseInside_ && selectionSprite_) {
+    selectionSprite_->setWidth(width());
+    selectionSprite_->setHeight(height());
+  }
+
   iconSprite_->setX(Style::icon.padding.left);
   iconSprite_->setY(Style::icon.padding.top);
 }

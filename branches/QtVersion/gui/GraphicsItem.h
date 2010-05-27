@@ -10,7 +10,10 @@
 #define GraphicsItem_H
 namespace appetizer {
 
-class GraphicsItem : public QGraphicsItem {
+class GraphicsItem : public QObject, public QGraphicsItem {
+
+  Q_OBJECT
+  Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
 
 public:
 
@@ -21,6 +24,7 @@ public:
   void setHeight(int height);
   QRectF boundingRect() const;
   void addItem(QGraphicsItem* item);
+  void addItemAt(QGraphicsItem* item, int index);
   void removeItem(QGraphicsItem* item);
   int numChildren() const;
   QGraphicsItem* getChildAt(int index) const;

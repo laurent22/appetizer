@@ -58,13 +58,24 @@ void GraphicsItem::addItem(QGraphicsItem* item) {
 }
 
 
+void GraphicsItem::addItemAt(QGraphicsItem* item, int index) {
+  item->setParentItem(this);
+  
+  if (childItems().size() == 0) return;
+  if (index >= childItems().size()) return;
+
+  QGraphicsItem* sibling = childItems().at(index);
+  item->stackBefore(sibling);
+}
+
+
 void GraphicsItem::removeItem(QGraphicsItem* item){
   childItems().removeOne(item);
 }
 
 
 int GraphicsItem::numChildren() const {
-  return children().size();
+  return QGraphicsItem::children().size();
 }
 
 

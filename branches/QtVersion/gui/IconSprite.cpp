@@ -51,7 +51,5 @@ void IconSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
   if (!icon) return;
 
   painter->setRenderHint(QPainter::SmoothPixmapTransform);
-  painter->drawPixmap(
-    QRect(0, 0, width(), height()),
-    *icon);
+  painter->drawPixmap(QRect(0, 0, width(), height()), *icon);
 }
