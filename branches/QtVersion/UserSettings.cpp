@@ -124,8 +124,7 @@ TiXmlElement* UserSettings::ToXml() {
 
 
 int UserSettings::GetValidatedIconSize(int iconSize) {
-  return iconSize;
-  //return wxGetApp().GetOSValidIconSize(iconSize > 0 ? iconSize : GetInt("IconSize"));
+  return Application::instance()->getValidIconSize(iconSize > 0 ? iconSize : GetInt("IconSize"));
 }
 
 
@@ -159,7 +158,6 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     SetString(n, v);
 
   }
-
 }
 
 
@@ -214,7 +212,8 @@ void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, b
 
 
 void UserSettings::Load() {
-  TiXmlDocument doc(FilePaths::GetSettingsFile().toUtf8());
+  QString filePath = FilePaths::GetSettingsFile();
+  TiXmlDocument doc(filePath.toUtf8());
   doc.LoadFile(TIXML_ENCODING_UTF8);
 
   TiXmlElement* root = doc.FirstChildElement("Settings");
@@ -234,8 +233,7 @@ void UserSettings::Save() {
   xmlRoot->SetAttribute("version", "1.0");
   doc.LinkEndChild(xmlRoot);
 
-  //QString filePath = FilePaths::GetSettingsFile();
-
-  //FilePaths::CreateSettingsDirectory();
-  //doc.SaveFile(filePath.mb_str());
+  QString filePath = FilePaths::GetSettingsFile();
+  FilePaths::CreateSettingsDirectory();
+  doc.SaveFile(filePath.toUtf8());
 }

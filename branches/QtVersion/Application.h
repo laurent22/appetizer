@@ -7,6 +7,7 @@
 #include <stable.h>
 #include <MainWindow.h>
 #include <User.h>
+#include <UserSettings.h>
 
 #ifndef Application_H
 #define Application_H
@@ -19,6 +20,7 @@ public:
   Application(int argc, char *argv[]);
   MainWindow mainWindow() const;
   User user() const;
+  UserSettings settings() const;
   int getValidIconSize(int requiredIconSize) const;
   int getNextValidIconSize(int requiredIconSize) const;
   #ifdef __WINDOWS__
@@ -31,6 +33,7 @@ private:
 
   MainWindow* mainWindow_;
   User user_;
+  UserSettings settings_;
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;
   #endif // __WINDOWS__

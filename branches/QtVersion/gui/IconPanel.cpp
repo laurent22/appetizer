@@ -42,7 +42,7 @@ void IconPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
   if (rebuildFolderItems_) {
     for (int i = 0; i < (int)folderItemRenderers_.size(); i++) {
-      FolderItemRenderer* r = folderItemRenderers_.at(i);
+      FolderItemSprite* r = folderItemRenderers_.at(i);
       removeItem(r);
       delete r;
     }
@@ -53,12 +53,11 @@ void IconPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     if (source) {
       for (int i = 0; i < source->numChildren(); i++) {
         FolderItem* folderItem = source->getChildAt(i);
-        FolderItemRenderer* r = new FolderItemRenderer();
+        FolderItemSprite* r = new FolderItemSprite();
         r->setFolderItem(folderItem->id());
         folderItemRenderers_.push_back(r);
 
         r->setIconSize(16);
-        r->showDebugRectangle();
 
         addItem(r);
       }
@@ -73,7 +72,7 @@ void IconPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     int gap = 4;
 
     for (int i = 0; i < (int)folderItemRenderers_.size(); i++) {
-      FolderItemRenderer* r = folderItemRenderers_.at(i);
+      FolderItemSprite* r = folderItemRenderers_.at(i);
 
       if (itemX + r->width() > width()) {
         itemX = 0;

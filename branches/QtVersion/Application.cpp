@@ -26,12 +26,19 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
   FilePaths::InitializePaths();
   FilePaths::CreateSettingsDirectory();
 
+  settings_.Load();
+
   Style::loadSkinFile("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Skin.xml");
 
   user_.load();
 
   mainWindow_ = new MainWindow();
   mainWindow_->show();
+}
+
+
+UserSettings Application::settings() const {
+  return settings_;
 }
 
 

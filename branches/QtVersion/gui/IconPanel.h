@@ -12,7 +12,7 @@
 #include <GraphicsItem.h>
 #include <NineSlicePainter.h>
 #include <FolderItem.h>
-#include <FolderItemRenderer.h>
+#include <FolderItemSprite.h>
 
 namespace appetizer {
 
@@ -33,7 +33,7 @@ private:
 
   int rootFolderItemId_;
   bool rebuildFolderItems_;
-  std::vector<FolderItemRenderer*> folderItemRenderers_;
+  std::vector<FolderItemSprite*> folderItemRenderers_;
   bool updateLayout_;
 
 };
