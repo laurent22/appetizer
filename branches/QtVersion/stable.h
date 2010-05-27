@@ -22,6 +22,7 @@
 
 #include <QApplication>
 #include <QBrush>
+#include <QDate>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>

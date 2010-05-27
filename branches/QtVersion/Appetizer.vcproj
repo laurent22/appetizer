@@ -255,6 +255,10 @@
 				RelativePath=".\User.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\UserSettings.cpp"
+				>
+			</File>
 			<Filter
 				Name="gui"
 				>
@@ -407,6 +411,10 @@
 			</File>
 			<File
 				RelativePath=".\User.h"
+				>
+			</File>
+			<File
+				RelativePath=".\UserSettings.h"
 				>
 			</File>
 			<Filter
