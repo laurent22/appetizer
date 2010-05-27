@@ -31,12 +31,17 @@ class IconStyle { public:
   int labelGap;
 };
 
+class BackgroundStyle { public:
+  PaddingStyle padding;
+};
+
 
 class Style {
 
 public:
 
   static IconStyle icon;
+  static BackgroundStyle background;
 
   static void loadSkinFile(const QString& filePath);
 

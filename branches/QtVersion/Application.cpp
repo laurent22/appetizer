@@ -15,14 +15,12 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
   FilePaths::InitializePaths();
   FilePaths::CreateSettingsDirectory();
 
-  Style::loadSkinFile("s:\\Docs\\PROGS\\C++\\Appetizer\\branches\\QtVersion\\Data\\Skin\\Default\\Skin.xml");
+  Style::loadSkinFile("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Skin.xml");
 
   user_.load();
 
   mainWindow_ = new MainWindow();
   mainWindow_->show();
-
-
 }
 
 

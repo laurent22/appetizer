@@ -11,6 +11,7 @@ using namespace appetizer;
 GraphicsItem::GraphicsItem() {
   width_ = 100;
   height_ = 100;
+  showDebugRectangle_ = false;
   dispatchResizeEvent_ = false;
 }
 

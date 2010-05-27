@@ -10,6 +10,7 @@
 using namespace appetizer;
 
 IconStyle Style::icon;
+BackgroundStyle Style::background;
 
 
 void PaddingStyle::fromRect(const QRect& rect) {
@@ -56,6 +57,11 @@ void Style::loadSkinFile(const QString& filePath) {
     if (elementName == "Icon") {
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::icon.padding.fromRect(resultRect);
+    }
+
+    if (elementName == "Background") {
+      XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
+      Style::background.padding.fromRect(resultRect);
     }
 
   }

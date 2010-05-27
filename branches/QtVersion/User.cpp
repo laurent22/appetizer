@@ -25,7 +25,7 @@ void User::synchronizeWithFolder(const QString& path) {
 
 
 void User::load() {
-  TiXmlDocument doc("s:\\Docs\\PROGS\\C++\\Appetizer\\branches\\QtVersion\\Data\\Settings\\FolderItems.xml");
+  TiXmlDocument doc("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Settings\\FolderItems.xml");
   doc.LoadFile(TIXML_ENCODING_UTF8);
 
   TiXmlElement* root = doc.FirstChildElement("FolderItems");

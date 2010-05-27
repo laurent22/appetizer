@@ -7,12 +7,13 @@
 #include <stable.h>
 #include <MainScene.h>
 #include <Application.h>
+#include <Style.h>
 
 using namespace appetizer;
 
 MainScene::MainScene() {
   backgroundItem_ = new NineSliceItem();
-  backgroundItem_->loadBackgroundImage("c:\\Users\\Laurent_2\\Desktop\\200.PNG");
+  backgroundItem_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
   addItem(backgroundItem_);
 
   iconPanel_ = new IconPanel();
@@ -27,6 +28,8 @@ void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   backgroundItem_->setWidth(width());
   backgroundItem_->setHeight(height());
 
-  iconPanel_->setWidth(width());
-  iconPanel_->setHeight(height());
+  iconPanel_->setX(Style::background.padding.left);
+  iconPanel_->setY(Style::background.padding.top);
+  iconPanel_->setWidth(width() - Style::background.padding.width);
+  iconPanel_->setHeight(height() - Style::background.padding.height);
 }
