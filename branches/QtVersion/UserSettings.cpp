@@ -5,6 +5,7 @@
 */
 
 #include <stable.h>
+#include <Application.h>
 #include <XmlUtil.h>
 #include <UserSettings.h>
 #include <Constants.h>
@@ -14,7 +15,7 @@ using namespace appetizer;
 
 
 UserSettings::UserSettings() {
-  SetInt("IconSize", LARGE_ICON_SIZE);
+  SetInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
   SetString("Locale", "en");
   SetString("PortableAppsPath", "$(Drive/PortableApps");
   SetString("DocumentsPath", "$(Drive/Documents");

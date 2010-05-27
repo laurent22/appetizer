@@ -25,7 +25,6 @@ public:
   FolderItem* folderItem() const;
   void setIconSize(int size);
   int iconSize() const;
-  int validIconSize() const;
 
 private:
 

@@ -5,6 +5,7 @@
 */
 
 #include <stable.h>
+#include <Application.h>
 #include <FolderItemRenderer.h>
 #include <Style.h>
 #include <Constants.h>
@@ -33,19 +34,6 @@ int FolderItemRenderer::iconSize() const {
 }
 
 
-int FolderItemRenderer::validIconSize() const {
-  int s = iconSize();
-
-  if (s <= SMALL_ICON_SIZE) return SMALL_ICON_SIZE;
-  if (s <= MEDIUM_ICON_SIZE) return MEDIUM_ICON_SIZE;
-  if (s <= LARGE_ICON_SIZE) return LARGE_ICON_SIZE;
-  if (s <= EXTRA_LARGE_ICON_SIZE) return EXTRA_LARGE_ICON_SIZE;
-  if (s <= JUMBO_ICON_SIZE) return JUMBO_ICON_SIZE;
-
-  return JUMBO_ICON_SIZE;
-}
-
-
 void FolderItemRenderer::setFolderItem(int folderItemId) {
   folderItemId_ = folderItemId;
 }
@@ -62,7 +50,7 @@ void FolderItemRenderer::paint(QPainter *painter, const QStyleOptionGraphicsItem
   FolderItem* f = folderItem();
   if (!f) return;
 
-  QPixmap* icon = f->getIconPixmap(validIconSize());
+  QPixmap* icon = f->getIconPixmap(Application::instance()->getNextValidIconSize(iconSize()));
   if (!icon) return;
 
   painter->setRenderHint(QPainter::SmoothPixmapTransform);

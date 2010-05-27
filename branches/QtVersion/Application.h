@@ -19,6 +19,11 @@ public:
   Application(int argc, char *argv[]);
   MainWindow mainWindow() const;
   User user() const;
+  int getValidIconSize(int requiredIconSize) const;
+  int getNextValidIconSize(int requiredIconSize) const;
+  #ifdef __WINDOWS__
+  OSVERSIONINFO osInfo();
+  #endif // __WINDOWS__
 
   static Application* instance();
 
@@ -26,6 +31,9 @@ private:
 
   MainWindow* mainWindow_;
   User user_;
+  #ifdef __WINDOWS__
+  OSVERSIONINFO osInfo_;
+  #endif // __WINDOWS__
 
 };
 
