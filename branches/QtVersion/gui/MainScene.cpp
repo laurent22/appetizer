@@ -17,6 +17,11 @@ MainScene::MainScene() {
 }
 
 
+QBitmap* MainScene::composedMask() {
+  return mainPanel_->composedMask();
+}
+
+
 void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 

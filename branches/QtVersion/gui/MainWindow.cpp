@@ -8,7 +8,7 @@
 #include <MainWindow.h>
 using namespace appetizer;
 
-MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint) {
+MainWindow::MainWindow()/*: QWidget(NULL, Qt::FramelessWindowHint)*/ {
   view_ = new QGraphicsView(this);
   
   scene_ = new MainScene();
@@ -34,5 +34,8 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
   scene_->setSceneRect(0, 0, event->size().width(), event->size().height());
   scene_->invalidate();
 
-
+  //QBitmap* sceneMask = scene_->composedMask();
+  //QPainter painter(this);
+  //painter.drawImage(QRect(0,0,width(),height()), sceneMask->toImage(), QRect(0,0,sceneMask->width(), sceneMask->height()));
+  //setMask(*sceneMask);
 }

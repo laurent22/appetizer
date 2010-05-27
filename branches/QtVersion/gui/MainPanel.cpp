@@ -15,11 +15,23 @@ using namespace appetizer;
 MainPanel::MainPanel() {
   backgroundItem_ = new NineSliceItem();
   backgroundItem_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
-  addItem(backgroundItem_);
+  //addItem(backgroundItem_);
 
   iconPanel_ = new IconPanel();
   iconPanel_->loadFolderItems(Application::instance()->user().rootFolderItem()->id());
   addItem(iconPanel_);
+}
+
+
+QBitmap* MainPanel::composedMask() {
+  QPixmap image(backgroundItem_->width(), backgroundItem_->height());
+  image.fill(QColor(0,0,0));
+
+  QPainter painter(&image);
+  backgroundItem_->nineSlicePainter().drawImage(&painter, 0, 0, image.width(), image.height());
+  int w = image.width();
+  QBitmap* output = new QBitmap(image.createMaskFromColor(QColor(255,0,255).rgb()));
+  return output;
 }
 
 

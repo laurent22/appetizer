@@ -18,11 +18,11 @@ class MainScene : public QGraphicsScene {
 public:
 
   MainScene();
+  QBitmap* composedMask();
 
 protected:
 
   void drawBackground(QPainter* painter, const QRectF& rect);
-  QBitmap* composedMask();
 
 private:
 

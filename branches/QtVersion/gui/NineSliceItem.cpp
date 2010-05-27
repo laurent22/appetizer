@@ -14,6 +14,11 @@ NineSliceItem::NineSliceItem() {
 }
 
 
+NineSlicePainter NineSliceItem::nineSlicePainter() {
+  return nineSlicePainter_;
+}
+
+
 void NineSliceItem::loadBackgroundImage(QString backgroundFilePath) {
   backgroundFilePath_ = backgroundFilePath;
   nineSlicePainter_.loadImage(backgroundFilePath);
