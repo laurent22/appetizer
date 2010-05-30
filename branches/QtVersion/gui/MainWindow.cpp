@@ -12,14 +12,21 @@
 using namespace appetizer;
 
 MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint) {
-  view_ = new QGraphicsView(this);
-  
   scene_ = new MainScene();
+
+  view_ = new QGraphicsView(this);
   view_->setScene(scene_);
   view_->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
   view_->show();
+
+  QObject::connect(scene_, SIGNAL(sceneRectChanged(const QRectF&)),
+                   this, SLOT(scene_sceneRectChanged(const QRectF&)));
+}
+
+
+void MainWindow::scene_sceneRectChanged(const QRectF& rect) {
+  resize(rect.width(), rect.height());
 }
 
 

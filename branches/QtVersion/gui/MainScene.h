@@ -13,12 +13,13 @@
 
 namespace appetizer {
 
+
 class MainScene : public QGraphicsScene {
 
 public:
 
   MainScene();
-  void drawMask(QPainter* painter, int x, int y, int width, int height);
+  void drawMask(QPainter* painter, int x, int y, int width, int height);  
 
 protected:
 
@@ -26,7 +27,20 @@ protected:
 
 private:
 
+  struct ResizeDragData {
+    QPoint startMouse;
+    QSize startSize;
+  };
+
+  class ResizeSprite : public GraphicsItem {
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    ResizeDragData resizeDragData_;
+  };
+
   MainPanel* mainPanel_;
+  ResizeSprite* resizeSprite_;
 
 };
 

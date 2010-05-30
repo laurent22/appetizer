@@ -35,6 +35,7 @@ protected:
 
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
   virtual void onResize();
+  virtual bool eventFilter(QObject *object, QEvent *event);
 
 private:
 

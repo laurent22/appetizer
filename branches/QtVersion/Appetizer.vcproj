@@ -387,6 +387,10 @@
 					RelativePath=".\moc\moc_GraphicsItem.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\moc\moc_MainWindow.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

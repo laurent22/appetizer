@@ -13,9 +13,9 @@
 using namespace appetizer;
 
 MainPanel::MainPanel() {
-  backgroundItem_ = new NineSliceItem();
-  backgroundItem_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
-  addItem(backgroundItem_);
+  backgroundSprite_ = new NineSliceItem();
+  backgroundSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
+  addItem(backgroundSprite_);
 
   iconPanel_ = new IconPanel();
   iconPanel_->loadFolderItems(Application::instance()->user().rootFolderItem()->id());
@@ -39,8 +39,8 @@ void MainPanel::drawMask(QPainter* painter, int x, int y, int width, int height)
 void MainPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   GraphicsItem::paint(painter, option, widget);
 
-  backgroundItem_->setWidth(width());
-  backgroundItem_->setHeight(height());
+  backgroundSprite_->setWidth(width());
+  backgroundSprite_->setHeight(height());
 
   iconPanel_->setX(Style::background.padding.left);
   iconPanel_->setY(Style::background.padding.top);

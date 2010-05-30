@@ -15,9 +15,15 @@ namespace appetizer {
 
 class MainWindow : public QWidget {
 
+  Q_OBJECT
+
 public:
 
   MainWindow();
+
+public slots:
+
+  void scene_sceneRectChanged(const QRectF& rect);
 
 private:
 

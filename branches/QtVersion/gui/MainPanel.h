@@ -22,13 +22,16 @@ public:
   MainPanel();
   void drawMask(QPainter* painter, int x, int y, int width, int height);
 
+protected:
+
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
 private:
 
   QSize lastDrawnMaskSize_;
-  NineSliceItem* backgroundItem_;
+  NineSliceItem* backgroundSprite_;
   NineSlicePainter maskNineSlicePainter_;
   QPixmap maskPixmap_;
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
   IconPanel* iconPanel_;
 
 };

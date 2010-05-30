@@ -16,6 +16,11 @@ GraphicsItem::GraphicsItem() {
 }
 
 
+bool GraphicsItem::eventFilter(QObject *object, QEvent *event) {
+  return QObject::eventFilter(object, event);
+}
+
+
 void GraphicsItem::showDebugRectangle(bool doShow) {
   showDebugRectangle_ = doShow;
   invalidate();
