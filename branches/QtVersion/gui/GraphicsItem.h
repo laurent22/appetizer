@@ -31,10 +31,9 @@ public:
   void showDebugRectangle(bool doShow = true);
   void invalidate();
 
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
 protected:
 
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
   virtual void onResize();
 
 private:

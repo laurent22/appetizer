@@ -24,7 +24,10 @@ public:
 
 private:
 
+  QSize lastDrawnMaskSize_;
   NineSliceItem* backgroundItem_;
+  NineSlicePainter maskNineSlicePainter_;
+  QPixmap maskPixmap_;
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
   IconPanel* iconPanel_;
 

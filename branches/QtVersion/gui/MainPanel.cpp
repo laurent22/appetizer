@@ -20,20 +20,24 @@ MainPanel::MainPanel() {
   iconPanel_ = new IconPanel();
   iconPanel_->loadFolderItems(Application::instance()->user().rootFolderItem()->id());
   addItem(iconPanel_);
+
+  lastDrawnMaskSize_ = QSize(0, 0);
 }
 
 
 void MainPanel::drawMask(QPainter* painter, int x, int y, int width, int height) {
-  NineSlicePainter nineSlicePainter;
-  nineSlicePainter.loadImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
+  if (lastDrawnMaskSize_.width() != width || lastDrawnMaskSize_.height() != height) {
+    maskNineSlicePainter_.loadImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
+    maskPixmap_ = QPixmap(width, height);
+    lastDrawnMaskSize_ = QSize(width, height);
+  }
   
-  QPixmap pixmap(width, height);
-  nineSlicePainter.drawImage(painter, x, y, width, height);
+  maskNineSlicePainter_.drawImage(painter, x, y, width, height);
 }
 
 
 void MainPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-  GraphicsItem::paint(painter, option, widget);  
+  GraphicsItem::paint(painter, option, widget);
 
   backgroundItem_->setWidth(width());
   backgroundItem_->setHeight(height());
