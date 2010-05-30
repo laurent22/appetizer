@@ -28,6 +28,11 @@ MainScene::MainScene() {
 }
 
 
+MainPanel* MainScene::mainPanel() const {
+  return mainPanel_;
+}
+
+
 void MainScene::resizeSprite_mousePressed() {
   resizeDragData_.startMouse = QCursor::pos();
   resizeDragData_.startSize = QSize(this->width(), this->height());

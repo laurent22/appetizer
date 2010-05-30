@@ -22,6 +22,26 @@ MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSyst
 
   QObject::connect(scene_, SIGNAL(sceneRectChanged(const QRectF&)),
                    this, SLOT(scene_sceneRectChanged(const QRectF&)));
+  QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mousePressed()),
+                   this, SLOT(backgroundSprite_mousePressed()));
+  QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mouseMoved()),
+                   this, SLOT(backgroundSprite_mouseMoved()));
+}
+
+
+void MainWindow::backgroundSprite_mousePressed() {
+  moveDragData_.startMouse = QCursor::pos();
+  moveDragData_.startPos = QPoint(x(), y());
+}
+
+
+void MainWindow::backgroundSprite_mouseMoved() {
+  QPoint p = QCursor::pos();
+  int dx = p.x() - moveDragData_.startMouse.x();
+  int dy = p.y() - moveDragData_.startMouse.y();
+  int newX = moveDragData_.startPos.x() + dx;
+  int newY = moveDragData_.startPos.y() + dy;
+  move(newX, newY);
 }
 
 

@@ -25,6 +25,11 @@ MainPanel::MainPanel() {
 }
 
 
+NineSliceItem* MainPanel::backgroundSprite() const {
+  return backgroundSprite_;
+}
+
+
 void MainPanel::drawMask(QPainter* painter, int x, int y, int width, int height) {
   if (lastDrawnMaskSize_.width() != width || lastDrawnMaskSize_.height() != height) {
     maskNineSlicePainter_.loadImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");

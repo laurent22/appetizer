@@ -24,11 +24,19 @@ public:
 public slots:
 
   void scene_sceneRectChanged(const QRectF& rect);
+  void backgroundSprite_mousePressed();
+  void backgroundSprite_mouseMoved();
 
 private:
 
+  struct MoveDragData {
+    QPoint startMouse;
+    QPoint startPos;
+  };
+
   QGraphicsView* view_;
   MainScene* scene_;
+  MoveDragData moveDragData_;
 
 protected:
 

@@ -22,6 +22,7 @@ public:
 
   MainScene();
   void drawMask(QPainter* painter, int x, int y, int width, int height);  
+  MainPanel* mainPanel() const;
 
 protected:
 

@@ -21,6 +21,7 @@ public:
 
   MainPanel();
   void drawMask(QPainter* painter, int x, int y, int width, int height);
+  NineSliceItem* backgroundSprite() const;
 
 protected:
 
