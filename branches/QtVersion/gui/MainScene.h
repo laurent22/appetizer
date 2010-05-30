@@ -18,7 +18,7 @@ class MainScene : public QGraphicsScene {
 public:
 
   MainScene();
-  QBitmap* composedMask();
+  void drawMask(QPainter* painter, int x, int y, int width, int height);
 
 protected:
 
@@ -27,7 +27,6 @@ protected:
 private:
 
   MainPanel* mainPanel_;
-  QBitmap* composedMask_;
 
 };
 

@@ -34,6 +34,7 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
 
   mainWindow_ = new MainWindow();
   mainWindow_->show();
+  mainWindow_->resize(320, 240);
 }
 
 

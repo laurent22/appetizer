@@ -20,7 +20,7 @@ class MainPanel : public GraphicsItem {
 public:
 
   MainPanel();
-  QBitmap* composedMask();
+  void drawMask(QPainter* painter, int x, int y, int width, int height);
 
 private:
 

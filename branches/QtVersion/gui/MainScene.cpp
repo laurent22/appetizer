@@ -17,8 +17,8 @@ MainScene::MainScene() {
 }
 
 
-QBitmap* MainScene::composedMask() {
-  return mainPanel_->composedMask();
+void MainScene::drawMask(QPainter* painter, int x, int y, int width, int height) {
+  mainPanel_->drawMask(painter, x, y, width, height);
 }
 
 
