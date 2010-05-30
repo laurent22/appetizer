@@ -72,7 +72,7 @@ void Application::loadFolderItems() {
 
   TiXmlElement* root = doc.FirstChildElement("FolderItems");
   if (!root) {
-    qWarning() << "User::load: Could not load XML. No FolderItems element found.";
+    qWarning() << "Application::loadFolderItems: Could not load XML. No FolderItems element found.";
     return;
   }
 
