@@ -15,38 +15,34 @@ MainScene::MainScene() {
   mainPanel_ = new MainPanel();
   addItem(mainPanel_);
 
-  resizeSprite_ = new ResizeSprite();
+  resizeSprite_ = new GraphicsItem();
   resizeSprite_->setCursor(Qt::SizeFDiagCursor);
   resizeSprite_->setWidth(16);
   resizeSprite_->setHeight(16);
-  resizeSprite_->showDebugRectangle();
   addItem(resizeSprite_);
+
+  QObject::connect(resizeSprite_, SIGNAL(mousePressed()),
+                   this, SLOT(resizeSprite_mousePressed()));
+  QObject::connect(resizeSprite_, SIGNAL(mouseMoved()),
+                   this, SLOT(resizeSprite_mouseMoved()));
 }
 
 
-void MainScene::ResizeSprite::mousePressEvent(QGraphicsSceneMouseEvent* event) {
-  MainScene* thisScene = (MainScene*)(this->scene());
+void MainScene::resizeSprite_mousePressed() {
   resizeDragData_.startMouse = QCursor::pos();
-  resizeDragData_.startSize = QSize(thisScene->width(), thisScene->height());
+  resizeDragData_.startSize = QSize(this->width(), this->height());
 }
 
 
-void MainScene::ResizeSprite::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
-  
-}
-
-
-void MainScene::ResizeSprite::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
-  MainScene* thisScene = (MainScene*)(this->scene());
-
+void MainScene::resizeSprite_mouseMoved() {
   QPoint p = QCursor::pos();
   int dx = p.x() - resizeDragData_.startMouse.x();
   int dy = p.y() - resizeDragData_.startMouse.y();
   int newWidth = resizeDragData_.startSize.width() + dx;
   int newHeight = resizeDragData_.startSize.height() + dy;
 
-  QRectF r = thisScene->sceneRect();
-  thisScene->setSceneRect(r.x(), r.y(), newWidth, newHeight);
+  QRectF r = this->sceneRect();
+  this->setSceneRect(r.x(), r.y(), newWidth, newHeight);
 }
 
 

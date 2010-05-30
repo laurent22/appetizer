@@ -18,24 +18,33 @@ class GraphicsItem : public QObject, public QGraphicsItem {
 public:
 
   GraphicsItem();
-  int width() const;
-  int height() const;
+  inline int width() const;
+  inline int height() const;
   void setWidth(int width);
   void setHeight(int height);
   QRectF boundingRect() const;
   void addItem(QGraphicsItem* item);
   void addItemAt(QGraphicsItem* item, int index);
   void removeItem(QGraphicsItem* item);
-  int numChildren() const;
+  inline int numChildren() const;
   QGraphicsItem* getChildAt(int index) const;
   void showDebugRectangle(bool doShow = true);
-  void invalidate();
+  inline void invalidate();
+
+signals:
+
+  void resized();
+  void mousePressed();
+  void mouseReleased();
+  void mouseMoved();
 
 protected:
 
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-  virtual void onResize();
-  virtual bool eventFilter(QObject *object, QEvent *event);
+  virtual void resizeEvent();
+  void mousePressEvent(QGraphicsSceneMouseEvent* event);
+  void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+  void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
 
 private:
 

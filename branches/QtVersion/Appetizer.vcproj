@@ -388,6 +388,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\moc\moc_MainScene.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\moc\moc_MainWindow.cpp"
 					>
 				</File>

@@ -30,8 +30,9 @@ void IconPanel::loadFolderItems(int rootFolderItemId) {
 }
 
 
-void IconPanel::onResize() {
-  GraphicsItem::onResize();
+void IconPanel::resizeEvent() {
+  GraphicsItem::resizeEvent();
+
   updateLayout_ = true;
   invalidate();
 }

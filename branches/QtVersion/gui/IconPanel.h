@@ -27,7 +27,7 @@ public:
 
 protected:
 
-  void onResize();
+  void resizeEvent();
 
 private:
 

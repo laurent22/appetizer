@@ -16,11 +16,6 @@ GraphicsItem::GraphicsItem() {
 }
 
 
-bool GraphicsItem::eventFilter(QObject *object, QEvent *event) {
-  return QObject::eventFilter(object, event);
-}
-
-
 void GraphicsItem::showDebugRectangle(bool doShow) {
   showDebugRectangle_ = doShow;
   invalidate();
@@ -94,8 +89,23 @@ void GraphicsItem::invalidate() {
 }
 
 
-void GraphicsItem::onResize() {
+void GraphicsItem::resizeEvent() {
+  emit resized();
+}
 
+
+void GraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+  emit mousePressed();
+}
+
+
+void GraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+  emit mouseReleased();
+}
+
+
+void GraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+  emit mouseMoved();
 }
 
 
@@ -115,7 +125,7 @@ void GraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
   }
 
   if (dispatchResizeEvent_) {
-    onResize();
+    resizeEvent();
     dispatchResizeEvent_ = false;
   }
 }

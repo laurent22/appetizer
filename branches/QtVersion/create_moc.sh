@@ -1,13 +1,14 @@
 #!/bin/bash
 
 mocPath=/cygdrive/c/Qt/2010.02.1/qt/bin/moc.exe
-filePaths="gui/GraphicsItem.h,gui/MainWindow.h"
+filePaths="gui/GraphicsItem.h,gui/MainWindow.h,gui/MainScene.h"
 
 filePathsArray=$(echo $filePaths | tr "," "\n")
 
 for filePath in $filePathsArray
 do
-	echo Converting "$filePath"
+	echo Converting "$filePath"...
+	
 	filename=$(basename $filePath)
 	filenameNoExt=${filename%.*}
 	outputFilePath=moc/moc_$filenameNoExt.cpp

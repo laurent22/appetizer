@@ -16,6 +16,8 @@ namespace appetizer {
 
 class MainScene : public QGraphicsScene {
 
+  Q_OBJECT
+
 public:
 
   MainScene();
@@ -32,15 +34,14 @@ private:
     QSize startSize;
   };
 
-  class ResizeSprite : public GraphicsItem {
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-    ResizeDragData resizeDragData_;
-  };
-
   MainPanel* mainPanel_;
-  ResizeSprite* resizeSprite_;
+  GraphicsItem* resizeSprite_;
+  ResizeDragData resizeDragData_;
+
+public slots:
+
+  void resizeSprite_mousePressed();
+  void resizeSprite_mouseMoved();
 
 };
 
