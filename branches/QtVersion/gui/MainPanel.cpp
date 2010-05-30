@@ -18,7 +18,7 @@ MainPanel::MainPanel() {
   addItem(backgroundSprite_);
 
   iconPanel_ = new IconPanel();
-  iconPanel_->loadFolderItems(Application::instance()->user().rootFolderItem()->id());
+  iconPanel_->loadFolderItems(Application::instance()->rootFolderItem()->id());
   addItem(iconPanel_);
 
   lastDrawnMaskSize_ = QSize(0, 0);

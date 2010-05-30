@@ -5,6 +5,8 @@
 */
 
 #include <stable.h>
+
+#include <FolderItem.h>
 #include <MainWindow.h>
 #include <User.h>
 #include <UserSettings.h>
@@ -23,6 +25,8 @@ public:
   UserSettings settings() const;
   int getValidIconSize(int requiredIconSize) const;
   int getNextValidIconSize(int requiredIconSize) const;
+  FolderItem* rootFolderItem() const;
+
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo();
   #endif // __WINDOWS__
@@ -34,6 +38,9 @@ private:
   MainWindow* mainWindow_;
   User user_;
   UserSettings settings_;
+  FolderItem* rootFolderItem_;
+  void loadFolderItems();
+
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;
   #endif // __WINDOWS__
