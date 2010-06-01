@@ -21,7 +21,8 @@ class IconUtil {
 
 public:
 
-  static IconData* getFolderItemIcon(QString filePath, int iconSize);
+  static IconData* getFolderItemIcon(const QString& filePath, int iconSize);
+  static IconData* getExecutableIcon(const QString& filePath, int iconSize, int iconIndex = 0);
 
 };
 

@@ -11,6 +11,8 @@
 #include <Style.h>
 #include <XmlUtil.h>
 
+#include <PathVariables.h>
+
 using namespace appetizer;
 
 Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {

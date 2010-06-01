@@ -5,9 +5,12 @@
 */
 
 #include <stable.h>
-#include <FolderItem.h>
-#include <XmlUtil.h>
+
 #include <FilePaths.h>
+#include <FolderItem.h>
+#include <PathVariables.h>
+#include <XmlUtil.h>
+
 using namespace appetizer;
 
 
@@ -225,7 +228,8 @@ QString FolderItem::path() const {
 
 QString FolderItem::resolvedPath() {
   if (resolvedPath_ != "") return resolvedPath_;
-  resolvedPath_ = FolderItem::resolvePath(path());
+  resolvedPath_ = PathVariables::resolveVariables(path());
+  resolvedPath_ = FolderItem::resolvePath(resolvedPath_);
   return resolvedPath_;
 }
 

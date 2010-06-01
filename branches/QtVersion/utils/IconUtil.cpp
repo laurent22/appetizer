@@ -10,7 +10,7 @@ using namespace appetizer;
 
 QMutex getFolderItemIcon_mutex;
 
-IconData* IconUtil::getFolderItemIcon(QString filePath, int iconSize) {
+IconData* IconUtil::getFolderItemIcon(const QString& filePath, int iconSize) {
   QMutexLocker locker(&getFolderItemIcon_mutex);
 
   IconData* output = NULL;
@@ -66,5 +66,71 @@ IconData* IconUtil::getFolderItemIcon(QString filePath, int iconSize) {
 
   }
 
+  if (!output) {
+    QFileInfo fileInfo(filePath);
+    QString extension = fileInfo.suffix().toLower();
+    if (extension == "exe" || extension == "ico") {
+      return IconUtil::getExecutableIcon(filePath, iconSize);
+    } else {
+
+    }
+  }
+
   return output;
+}
+
+
+IconData* IconUtil::getExecutableIcon(const QString& filePath, int iconSize, int iconIndex) {  
+  #ifdef __WINDOWS__
+
+  wchar_t filePathPtr[MAX_PATH];
+  filePath.toWCharArray(filePathPtr);
+  filePathPtr[filePath.length()] = 0;
+  //std::auto_ptr<wchar_t> filePathW(filePathPtr);
+
+  if (iconSize <= 32) {
+    HICON smallIcon;
+    HICON largeIcon;
+    int result;
+
+    if (iconSize == 16) {
+      result = ExtractIconEx(filePathPtr, iconIndex, NULL, &smallIcon, 1);	
+    } else {
+      result = ExtractIconEx(filePathPtr, iconIndex, &largeIcon, NULL, 1);	
+    }
+
+    // If the function succeeds, the return value is the handle to an icon.
+    // If the file specified was not an executable file, DLL, or icon file,
+    // the return value is 1. If no icons were found in the file, the return 
+    // value is NULL. If the file didn't exist, the return value is < 0
+    if (result > 0) {
+      IconData* iconData = new IconData();
+      iconData->hIcon = smallIcon ? smallIcon : largeIcon;
+      iconData->filePath = filePath;
+      iconData->index = iconIndex;
+
+      return iconData;
+    }
+
+  } else {
+
+    HINSTANCE hDll = ::LoadLibrary(filePathPtr);
+    if (hDll) {
+      HANDLE handle = ::LoadImage(hDll, MAKEINTRESOURCE(iconIndex), IMAGE_ICON, iconSize, iconSize, LR_LOADTRANSPARENT);
+      if (handle) {
+        IconData* iconData = new IconData();
+        iconData->hIcon = (HICON)handle;
+        iconData->filePath = filePath;
+        iconData->index = iconIndex;
+        // TODO: Check that the index is valid
+        return iconData;
+      }
+    }
+
+    return IconUtil::getExecutableIcon(filePath, 32, iconIndex);
+  }
+
+  #endif // __WINDOWS__
+
+  return NULL;
 }

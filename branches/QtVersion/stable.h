@@ -39,6 +39,7 @@
 #include <QPixmap>
 #include <QPropertyAnimation>
 #include <QRect>
+#include <QRegExp>
 #include <QResizeEvent>
 #include <QSettings>
 #include <QThread>

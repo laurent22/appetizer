@@ -211,9 +211,12 @@ void FilePaths::InitializePaths() {
   FilePaths::ApplicationDrive_ = "";
   #ifdef __WINDOWS__
   QStringList stringList = executablePath.split(":");
-  if (stringList.size() > 0) FilePaths::ApplicationDrive_ = stringList.at(0) + ":";
+  if (stringList.size() > 0) {
+    applicationDrive = stringList.at(0) + ":";
+  }
   #endif
 
+  FilePaths::ApplicationDrive_ = applicationDrive;
   FilePaths::DataDirectory_ = applicationDirectory + "/" + DATA_FOLDER_NAME; 
 
 

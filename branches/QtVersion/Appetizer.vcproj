@@ -240,6 +240,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\PathVariables.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stable.cpp"
 				>
 				<FileConfiguration
@@ -428,6 +432,10 @@
 			</File>
 			<File
 				RelativePath=".\GetIconThread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PathVariables.h"
 				>
 			</File>
 			<File
