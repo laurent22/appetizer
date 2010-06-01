@@ -32,6 +32,8 @@
 #include <QGraphicsView>
 #include <QIcon>
 #include <QImage>
+#include <QMutex>
+#include <QMutexLocker>
 #include <QPainter>
 #include <QPen>
 #include <QPixmap>
@@ -39,6 +41,7 @@
 #include <QRect>
 #include <QResizeEvent>
 #include <QSettings>
+#include <QThread>
 #include <QWidget>
 
 #include <tinyxml/tinyxml.h>

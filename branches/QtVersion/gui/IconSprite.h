@@ -16,6 +16,8 @@ namespace appetizer {
 
 class IconSprite : public GraphicsItem {
 
+  Q_OBJECT
+
 public:
 
   IconSprite();
@@ -24,6 +26,10 @@ public:
   int size() const;
   void setSize(int size);
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+public slots:
+
+  void folderItem_iconLoaded(int iconSize);
 
 private:
 

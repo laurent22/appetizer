@@ -73,6 +73,14 @@ const int FOLDER_ITEM_TYPE_FILE = 0;
 const int FOLDER_ITEM_TYPE_GROUP = 1;
 const int FOLDER_ITEM_TYPE_TAB = 2;
 
+const int MAIN_WINDOW_MIN_WIDTH = 32;
+const int MAIN_WINDOW_MIN_HEIGHT = 32;
+
+const int ICON_LOADING_STATE_UNLOADED = 0;
+const int ICON_LOADING_STATE_LOADING = 1;
+const int ICON_LOADING_STATE_LOADED = 2;
+const int ICON_LOADING_STATE_ERROR = -1;
+
 }
 
 #endif // __Constants_H

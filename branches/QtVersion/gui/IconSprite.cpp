@@ -41,15 +41,41 @@ void IconSprite::setSize(int size) {
 }
 
 
+void IconSprite::folderItem_iconLoaded(int iconSize) {
+  FolderItem* f = folderItem();
+  if (f) {
+    QObject::disconnect(f, SIGNAL(iconLoaded(int)), this, SLOT(folderItem_iconLoaded(int)));
+  }
+
+  invalidate();
+}
+
+
 void IconSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   GraphicsItem::paint(painter, option, widget);
 
   FolderItem* f = folderItem();
   if (!f) return;
 
-  QPixmap* icon = f->getIconPixmap(Application::instance()->getNextValidIconSize(size()));
-  if (!icon) return;
+  int iconSize = Application::instance()->getNextValidIconSize(size());
+  int loadingState = f->iconDataLoadingState(iconSize);
 
-  painter->setRenderHint(QPainter::SmoothPixmapTransform);
-  painter->drawPixmap(QRect(0, 0, width(), height()), *icon);
+  if (loadingState == ICON_LOADING_STATE_LOADED) {
+
+    QPixmap* icon = f->getIconPixmap(iconSize);
+    if (!icon) return;
+    painter->setRenderHint(QPainter::SmoothPixmapTransform);
+    painter->drawPixmap(QRect(0, 0, width(), height()), *icon);
+
+  } else if (loadingState == ICON_LOADING_STATE_UNLOADED) {
+
+    QObject::connect(f, SIGNAL(iconLoaded(int)), this, SLOT(folderItem_iconLoaded(int)));
+    f->loadIconData(iconSize);
+
+  } else if (loadingState == ICON_LOADING_STATE_ERROR) {
+
+    qDebug() << "Error loading icon";
+
+  }
+
 }

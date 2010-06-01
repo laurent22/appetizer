@@ -36,8 +36,6 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
 
   Style::loadSkinFile("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Skin.xml");
 
-  user_.load();
-
   mainWindow_ = new MainWindow();
   mainWindow_->show();
   mainWindow_->resize(200, 200);
@@ -56,11 +54,6 @@ UserSettings Application::settings() const {
 
 OSVERSIONINFO Application::osInfo() {
   return osInfo_;
-}
-
-
-User Application::user() const {
-  return user_;
 }
 
 
@@ -103,8 +96,8 @@ void Application::loadFolderItems() {
 
 
 Application* Application::instance() {
-  Application* a = static_cast<Application*>(QApplication::instance());
-  return a;
+  Application* application = static_cast<Application*>(QApplication::instance());
+  return application;
 }
 
 

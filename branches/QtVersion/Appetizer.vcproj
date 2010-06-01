@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GetIconThread.cpp"
+				>
+			</File>
+			<File
 				RelativePath="main.cpp"
 				>
 				<FileConfiguration
@@ -380,7 +384,15 @@
 				Name="_moc"
 				>
 				<File
+					RelativePath=".\moc\moc_FolderItem.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\moc\moc_GraphicsItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\moc\moc_IconSprite.cpp"
 					>
 				</File>
 				<File
@@ -412,6 +424,10 @@
 			</File>
 			<File
 				RelativePath=".\FolderItem.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GetIconThread.h"
 				>
 			</File>
 			<File

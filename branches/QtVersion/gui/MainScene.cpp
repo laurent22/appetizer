@@ -46,6 +46,9 @@ void MainScene::resizeSprite_mouseMoved() {
   int newWidth = resizeDragData_.startSize.width() + dx;
   int newHeight = resizeDragData_.startSize.height() + dy;
 
+  if (newWidth < MAIN_WINDOW_MIN_WIDTH) newWidth = MAIN_WINDOW_MIN_WIDTH;
+  if (newHeight < MAIN_WINDOW_MIN_HEIGHT) newHeight = MAIN_WINDOW_MIN_HEIGHT;
+
   QRectF r = this->sceneRect();
   this->setSceneRect(r.x(), r.y(), newWidth, newHeight);
 }

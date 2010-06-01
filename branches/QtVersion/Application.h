@@ -8,7 +8,6 @@
 
 #include <FolderItem.h>
 #include <MainWindow.h>
-#include <User.h>
 #include <UserSettings.h>
 
 #ifndef Application_H
@@ -21,7 +20,6 @@ public:
 
   Application(int argc, char *argv[]);
   MainWindow mainWindow() const;
-  User user() const;
   UserSettings settings() const;
   int getValidIconSize(int requiredIconSize) const;
   int getNextValidIconSize(int requiredIconSize) const;
@@ -36,7 +34,6 @@ public:
 private:
 
   MainWindow* mainWindow_;
-  User user_;
   UserSettings settings_;
   FolderItem* rootFolderItem_;
   void loadFolderItems();

@@ -8,8 +8,11 @@
 #include <IconUtil.h>
 using namespace appetizer;
 
+QMutex getFolderItemIcon_mutex;
 
 IconData* IconUtil::getFolderItemIcon(QString filePath, int iconSize) {
+  QMutexLocker locker(&getFolderItemIcon_mutex);
+
   IconData* output = NULL;
 
   // Note: certain functions, like SHGetImageList don't exist in Windows 2000,
