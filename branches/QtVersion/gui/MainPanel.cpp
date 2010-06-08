@@ -78,22 +78,30 @@ void MainPanel::loadFolderItems(int rootFolderItemId) {
 
   for (int i = 0; i < rootFolderItem->numChildren(); i++) {
     FolderItem* sectionFolderItem = rootFolderItem->getChildAt(i);
-    //if (sectionFolderItem->type() != FOLDER_ITEM_TYPE_SECTION) {
-    //  qCritical() << "Folder item structure is wrong - section expected:" << rootFolderItemId;
-    //  return;
-    //}
+    
+    if (sectionFolderItem->type() != FolderItem::Type_Section) {
+      qCritical() << "Folder item structure is wrong - section expected:" << rootFolderItemId;
+      return;
+    }
+
+    TabSprite* tab = new TabSprite();
+    connect(tab, SIGNAL(mouseReleased()), this, SLOT(tab_clicked()));
+    tab->loadFolderItem(sectionFolderItem->id());
+    addItem(tab);
 
     PageData* page = new PageData();
-    TabSprite* tab = new TabSprite();
-    tab->loadFolderItem(sectionFolderItem->id());
     page->setTab(tab);
-    addItem(tab);
     pages_.push_back(page);
   }
 
   pageIndex_ = 0;
   showPage(0);
   invalidate();
+}
+
+
+void MainPanel::tab_clicked() {
+  qDebug() << "CLICK";
 }
 
 
@@ -160,7 +168,7 @@ void MainPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     tabWidth = (width() - Style::background.padding.width - Style::tab.margin.width * pages_.size() + Style::tab.margin.right) / pages_.size();
   }
 
-  for (int i = 0; i < pages_.size(); i++) {
+  for (int i = 0; i < (int)(pages_.size()); i++) {
     PageData* page = pages_[i];
     TabSprite* tab = page->tab();
     tab->move(tabX, tabY);

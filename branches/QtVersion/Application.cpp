@@ -76,7 +76,7 @@ void Application::loadFolderItems() {
   rootFolderItem_ = FolderItem::createFolderItem(true);
   FolderItem* currentSection = NULL;
   if (fileVersion == "1.0") {
-    currentSection = FolderItem::createFolderItem(FOLDER_ITEM_TYPE_SECTION);
+    currentSection = FolderItem::createFolderItem(FolderItem::Type_Section);
     currentSection->setName(_("General"));
     rootFolderItem_->addChild(currentSection);
   }
@@ -97,7 +97,7 @@ void Application::loadFolderItems() {
 
 
   qWarning() << "REMOVE CODE BELOW";
-  currentSection = FolderItem::createFolderItem(FOLDER_ITEM_TYPE_SECTION);
+  currentSection = FolderItem::createFolderItem(FolderItem::Type_Section);
   currentSection->setName("Test");
   rootFolderItem_->addChild(currentSection);
 }

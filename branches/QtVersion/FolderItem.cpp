@@ -172,6 +172,11 @@ int FolderItem::id() const {
 }
 
 
+int FolderItem::type() const {
+  return type_;
+}
+
+
 QString FolderItem::name() const {
   return name_;
 }
@@ -282,7 +287,7 @@ void FolderItem::fromXml(TiXmlElement* xml) {
   setName(XmlUtil::readElementText(handle, "Name"));
   setPath(XmlUtil::readElementText(handle, "FilePath"));
   setAutomaticallyAdded(XmlUtil::readElementTextAsBool(handle, "AutomaticallyAdded"));
-  type_ = XmlUtil::readElementTextAsBool(handle, "IsGroup") ? FOLDER_ITEM_TYPE_GROUP : FOLDER_ITEM_TYPE_FILE;
+  type_ = XmlUtil::readElementTextAsBool(handle, "IsGroup") ? FolderItem::Type_Group : FolderItem::Type_File;
   //uuid_ = XmlUtil::readElementText(handle, "UUID");
   parameters_ = XmlUtil::readElementText(handle, "Parameters");
 

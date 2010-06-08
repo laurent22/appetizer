@@ -404,11 +404,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\moc\moc_MainPanel.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\moc\moc_MainScene.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\moc\moc_MainWindow.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\moc\moc_TabSprite.cpp"
 					>
 				</File>
 			</Filter>

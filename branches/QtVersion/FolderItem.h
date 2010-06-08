@@ -25,10 +25,16 @@ class FolderItem : public QObject {
 
 public:
 
-  FolderItem(int type = FOLDER_ITEM_TYPE_FILE);
+  enum {
+    Type_File,
+    Type_Group,
+    Type_Section
+  };
+
+  FolderItem(int type = Type_File);
   ~FolderItem();
 
-  static FolderItem* createFolderItem(int type = FOLDER_ITEM_TYPE_FILE);
+  static FolderItem* createFolderItem(int type = Type_File);
   static FolderItem* getFolderItemById(int id);    
   static QString resolvePath(const QString& path);
 

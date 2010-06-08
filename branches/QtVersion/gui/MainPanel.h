@@ -41,6 +41,8 @@ typedef std::vector<PageData*> PageDataVector;
 
 class MainPanel : public GraphicsItem {
 
+  Q_OBJECT
+
 public:
 
   MainPanel();
@@ -65,6 +67,10 @@ private:
   PageDataVector pages_;
   int rootFolderItemId_;
   int pageIndex_;
+
+public slots:
+
+  void tab_clicked();
 
 };
 
