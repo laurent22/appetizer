@@ -16,6 +16,7 @@ using namespace appetizer;
 PageData::PageData() {
   tab_ = NULL;
   iconPanel_ = NULL;
+  folderItemId_ = -1;
 }
 
 
@@ -23,6 +24,17 @@ PageData::~PageData() {
   SAFE_DELETE(tab_);
   SAFE_DELETE(iconPanel_);
 }
+
+
+FolderItem* PageData::folderItem() {
+  return FolderItem::getFolderItemById(folderItemId_);
+}
+
+
+void PageData::setFolderItem(int folderItemId) {
+  folderItemId_ = folderItemId;
+}
+
 
 
 TabSprite* PageData::tab() const {
@@ -47,13 +59,21 @@ void PageData::setIconPanel(IconPanel* iconPanel) {
 
 MainPanel::MainPanel() {
   rootFolderItemId_ = -1;
-  pageIndex_ = 0;
+  pageIndex_ = -1;
 
   backgroundSprite_ = new NineSliceItem();
   backgroundSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
   addItem(backgroundSprite_);
 
   lastDrawnMaskSize_ = QSize(0, 0);
+
+  maskNineSlicePainter_.loadImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
+}
+
+
+PageData* MainPanel::page() {
+  if (pageIndex_ < 0) return NULL;
+  return getPage(pageIndex_);
 }
 
 
@@ -88,6 +108,7 @@ void MainPanel::loadFolderItems(int rootFolderItemId) {
 
     PageData* page = new PageData();
     page->setTab(tab);
+    page->setFolderItem(sectionFolderItem->id());
     pages_.push_back(page);
   }
 
@@ -120,30 +141,30 @@ void MainPanel::tab_clicked() {
 
 PageData* MainPanel::getPage(int index) {
   return pages_[index];
-
-  //if (index < pages_.size() && pages_[index]) return pages_[index];
-
-  //while (pages_.size() < index) pages_.push_back(NULL);
-
-  //PageData* page = new PageData();
-  //TabSprite* tab = new TabSprite();
-  //IconPanel* iconPanel = new IconPanel();
-
-  //FolderItem* pageFolderItem = rootFolderItem()->getChildAt(index);
-
-  //page->setTab(tab);
-  //page->setIconPanel(iconPanel);
-
-  //iconPanel->loadFolderItems(pageFolderItem->id());
-
-  //pages_.push_back(page);
-
-  //return page;
 }
 
 
 PageData* MainPanel::showPage(int index) {
   PageData* page = getPage(index);
+  pageIndex_ = index;
+
+  if (!page->iconPanel()) {
+    FolderItem* folderItem = page->folderItem();
+    IconPanel* iconPanel = new IconPanel();
+    iconPanel->loadFolderItems(folderItem->id());
+    page->setIconPanel(iconPanel);
+  }
+
+  for (int i = 0; i < (int)pages_.size(); i++) {
+    PageData* page = pages_[i];
+    IconPanel* iconPanel = page->iconPanel();
+    if (!iconPanel || !iconPanel->parentItem()) continue;
+    ((GraphicsItem*)(iconPanel->parentItem()))->removeItem(iconPanel);
+  }
+
+  addItem(page->iconPanel());
+
+  invalidate();
 
   return page;
 }
@@ -156,7 +177,6 @@ NineSliceItem* MainPanel::backgroundSprite() const {
 
 void MainPanel::drawMask(QPainter* painter, int x, int y, int width, int height) {
   if (lastDrawnMaskSize_.width() != width || lastDrawnMaskSize_.height() != height) {
-    maskNineSlicePainter_.loadImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
     maskPixmap_ = QPixmap(width, height);
     lastDrawnMaskSize_ = QSize(width, height);
   }
@@ -170,17 +190,14 @@ void MainPanel::updateDisplay() {
 
   backgroundSprite_->resize(width(), height());
 
-  //iconPanel_->setX(Style::background.padding.left);
-  //iconPanel_->setY(Style::background.padding.top + 30);
-  //iconPanel_->resize(width() - Style::background.padding.width, height() - Style::background.padding.height);
-
   int tabX = Style::background.padding.left + Style::tab.margin.left;
   int tabY = Style::background.padding.top + Style::tab.margin.top;
+  int panelY = tabY;
   int tabWidth = 0;
   if (pages_.size() > 0) {
     tabWidth = (width() - Style::background.padding.width - Style::tab.margin.width * pages_.size() + Style::tab.margin.right) / pages_.size();
   }
-
+  
   for (int i = 0; i < (int)(pages_.size()); i++) {
     PageData* page = pages_[i];
     TabSprite* tab = page->tab();
@@ -188,5 +205,16 @@ void MainPanel::updateDisplay() {
     tab->setWidth(tabWidth);
 
     tabX += tab->width() + Style::tab.margin.right;
+    panelY = tab->y() + tab->height();
+  }
+
+  panelY = panelY + Style::background.padding.top;
+  PageData* page = this->page();
+
+  if (page) {
+    IconPanel* iconPanel = page->iconPanel();
+    iconPanel->setX(Style::background.padding.left);
+    iconPanel->setY(panelY);
+    iconPanel->resize(width() - Style::background.padding.width, height() - panelY - Style::background.padding.bottom);
   }
 }

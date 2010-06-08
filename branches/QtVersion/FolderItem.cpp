@@ -78,18 +78,13 @@ int FolderItem::iconDataLoadingState(int iconSize) {
 void FolderItem::getIconThread_finished() {
   GetIconThread* thread = (GetIconThread*)(this->sender());
   iconData_[thread->iconSize()] = thread->iconData();
-  qDebug() << "Icon loaded:" << (thread->iconData() ? thread->iconData()->filePath : "NO DATA");
   emit iconLoaded(thread->iconSize());
 }
 
 
 IconData* FolderItem::getIconData(int iconSize) {
   if (iconData_.find(iconSize) != iconData_.end()) return iconData_[iconSize];
-
   return NULL;
-  //IconData* d = IconUtil::getFolderItemIcon(resolvedPath(), iconSize);
-  //iconData_[iconSize] = d;
-  //return d;
 }
 
 

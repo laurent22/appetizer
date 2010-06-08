@@ -122,6 +122,8 @@ void GraphicsItem::addItemAt(QGraphicsItem* item, int index) {
 
 void GraphicsItem::removeItem(QGraphicsItem* item){
   childItems().removeOne(item);
+  item->setParentItem(NULL);
+  item->scene()->removeItem(item);
 }
 
 

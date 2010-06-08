@@ -27,11 +27,14 @@ public :
   inline IconPanel* iconPanel() const;
   void setTab(TabSprite* tab);
   void setIconPanel(IconPanel* iconPanel);
+  FolderItem* folderItem();
+  void setFolderItem(int folderItemId);
 
 private:
 
   TabSprite* tab_;
   IconPanel* iconPanel_;
+  int folderItemId_;
 
 };
 
@@ -52,6 +55,7 @@ public:
   FolderItem* rootFolderItem();
   PageData* showPage(int index);
   PageData* getPage(int index);
+  PageData* page();
   void updateDisplay();
 
 private:

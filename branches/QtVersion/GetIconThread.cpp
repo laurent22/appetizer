@@ -38,5 +38,4 @@ void GetIconThread::setIconData(const QString& path, int iconSize) {
 
 void GetIconThread::run() {
   iconData_ = IconUtil::getFolderItemIcon(iconPath_, iconSize_);
-  qDebug() << "GetIconThread::run:" << (iconData_ ? "OUI" : "NON");
 }
