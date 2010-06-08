@@ -23,7 +23,7 @@ public:
   ScrollBar();
   void updateDisplay();
   int defaultWidth() const;
-  inline float value() const { return value_; }
+  inline float value() { if (!scrollable()) return 0; return value_; }
   void setValue(float value);
   bool scrollable();
   int contentHeight();

@@ -312,6 +312,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\gui\ScrollPane.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\TabSprite.cpp"
 					>
 				</File>
@@ -423,6 +427,10 @@
 					RelativePath=".\moc\moc_ScrollBar.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\moc\moc_ScrollPane.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -503,6 +511,10 @@
 				</File>
 				<File
 					RelativePath=".\gui\ScrollBar.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\ScrollPane.h"
 					>
 				</File>
 				<File

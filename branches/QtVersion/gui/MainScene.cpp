@@ -29,10 +29,6 @@ MainScene::MainScene() {
                    this, SLOT(resizeSprite_mouseMoved()));
 
   mainPanel_->loadFolderItems(Application::instance()->rootFolderItem()->id());
-
-  ScrollBar* t = new ScrollBar();
-  t->setHeight(200);
-  addItem(t);
 }
 
 

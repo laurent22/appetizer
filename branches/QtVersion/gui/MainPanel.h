@@ -12,6 +12,7 @@
 #include <GraphicsItem.h>
 #include <IconPanel.h>
 #include <NineSliceItem.h>
+#include <ScrollPane.h>
 #include <TabSprite.h>
 
 namespace appetizer {
@@ -67,6 +68,7 @@ private:
   PageDataVector pages_;
   int rootFolderItemId_;
   int pageIndex_;
+  ScrollPane* scrollPane_;
 
 public slots:
 

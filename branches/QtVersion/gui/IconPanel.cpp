@@ -12,8 +12,14 @@ using namespace appetizer;
 
 IconPanel::IconPanel() {
   rootFolderItemId_ = -1;
+  contentHeight_ = 0;
   rebuildFolderItems_ = false;
   updateLayout_ = false;
+}
+
+
+int IconPanel::defaultHeight() const {
+  return contentHeight_;
 }
 
 
@@ -84,6 +90,8 @@ void IconPanel::updateDisplay() {
       r->setY(itemY);
 
       itemX += r->width() + gap;
+
+      contentHeight_ = r->y() + r->height();
     }
 
     updateLayout_ = false;

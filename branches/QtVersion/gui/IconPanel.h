@@ -24,6 +24,7 @@ public:
   void loadFolderItems(int rootFolderItemId);
   FolderItem* rootFolderItem();
   void updateDisplay();
+  int defaultHeight() const;
 
 protected:
 
@@ -35,6 +36,7 @@ private:
   bool rebuildFolderItems_;
   std::vector<FolderItemSprite*> folderItemRenderers_;
   bool updateLayout_;
+  int contentHeight_;
 
 };
 

@@ -68,6 +68,9 @@ MainPanel::MainPanel() {
   backgroundSprite_->loadBackgroundImage(backgroundFile);
   addItem(backgroundSprite_);
 
+  scrollPane_ = new ScrollPane();
+  addItem(scrollPane_);
+
   lastDrawnMaskSize_ = QSize(0, 0);
 
   maskNineSlicePainter_.loadImage(backgroundFile);
@@ -214,10 +217,15 @@ void MainPanel::updateDisplay() {
   panelY = panelY + Style::background.padding.top;
   PageData* page = this->page();
 
+  scrollPane_->setX(Style::background.padding.left);
+  scrollPane_->setY(panelY);
+  scrollPane_->resize(width() - Style::background.padding.width, height() - panelY - Style::background.padding.bottom);
+
   if (page) {
     IconPanel* iconPanel = page->iconPanel();
-    iconPanel->setX(Style::background.padding.left);
-    iconPanel->setY(panelY);
-    iconPanel->resize(width() - Style::background.padding.width, height() - panelY - Style::background.padding.bottom);
+    iconPanel->setWidth(scrollPane_->contentWidth());
+    scrollPane_->setContent(iconPanel);
+  } else {
+    scrollPane_->setContent(NULL);
   }
 }

@@ -77,7 +77,7 @@ int ScrollBar::defaultWidth() const {
 
 int ScrollBar::knobHeight() {
   if (!scrollable()) return 0;
-  int output = (height() / contentHeight_) * height();
+  int output = (int)(((float)height() / (float)contentHeight_) * (float)height());
   if (output < 20) output = 20;
 	return output;
 }
