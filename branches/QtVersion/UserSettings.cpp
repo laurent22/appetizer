@@ -52,7 +52,6 @@ UserSettings::UserSettings() {
   SetBool("TaskBarIcon", false);
   SetBool("TrayIcon", true);
   SetBool("IconLabelPosition", "bottom");
-
   SetBool("ShowDeleteIconMessage", true);
   SetBool("ShowEjectDriveMessage", true);
   SetBool("ShowMinimizeMessage", true);
@@ -64,8 +63,17 @@ UserSettings::UserSettings() {
 }
 
 
+UserSettings::~UserSettings() {
+  UserSettingsMap::iterator i;
+  for (i = values_.begin(); i != values_.end(); ++i) {
+    SAFE_DELETE(i->second);
+  }
+  values_.clear();
+}
+
+
 QString UserSettings::GetString(const QString& name) {
-  return values_[name];
+  return values_[name]->value;
 }
 
 
@@ -100,23 +108,38 @@ QDate UserSettings::GetDateTime(const QString& name) {
 }
 
 
+void UserSettings::SetValue(const QString& name, const QString& value, int type) {
+  UserSetting* s;
+  
+  if (values_.find(name) == values_.end()) {
+    s = new UserSetting();
+  } else {
+    s = values_[name];
+  }
+  
+  s->value = value;
+  s->type = type;
+  values_[name] = s;
+}
+
+
 void UserSettings::SetString(const QString& name, const QString& value) {
-  values_[name] = QString(value);
+  SetValue(name, value, Type_String);
 }
 
 
 void UserSettings::SetInt(const QString& name, int value) {
-  SetString(name, QString::number(value));
+  SetValue(name, QString::number(value), Type_Int);
 }
 
 
 void UserSettings::SetBool(const QString& name, bool value) {
-  SetString(name, value ? "1" : "0");
+  SetValue(name, value ? "1" : "0", Type_Bool);
 }
 
 
 void UserSettings::SetDateTime(const QString& name, const QDate& dateTime) {
-  SetString(name, dateTime.toString(Qt::ISODate));
+  SetValue(name, dateTime.toString(Qt::ISODate), Type_Date);
 }
 
 
@@ -125,7 +148,7 @@ TiXmlElement* UserSettings::ToXml() {
 
   UserSettingsMap::iterator i;
   for (i = values_.begin(); i != values_.end(); ++i) {
-    AppendSettingToXml(xml, i->first.toUtf8(), i->second);
+    AppendSettingToXml_(xml, i->first.toUtf8(), i->second->value.toUtf8(), i->second->type);
   }
 
   return xml;
@@ -147,6 +170,7 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     }
 
     const char* cSettingName = element->Attribute("name");
+    const char* cSettingType = element->Attribute("type");
     if (!cSettingName) {
       qWarning() << "UserSettings::FromXml: setting doesn't have a name";
       continue;
@@ -155,6 +179,19 @@ void UserSettings::FromXml(TiXmlElement* xml) {
     const char* cSettingValue = element->GetText();
     
     QString n = QString::fromUtf8(cSettingName);
+    QString t = QString::fromUtf8(cSettingType);
+    int typeInt = 0;
+    if (t == "String") {
+      typeInt = Type_String;
+    } else if (t == "Int") {
+      typeInt = Type_Int;
+    } else if (t == "Bool") {
+      typeInt = Type_Bool;
+    } else if (t == "Date") {
+      typeInt = Type_Date;
+    } else if (t == "Color") {
+      typeInt = Type_Color;
+    }
     QString v;
     if (!cSettingValue) {
       v = "";
@@ -164,60 +201,42 @@ void UserSettings::FromXml(TiXmlElement* xml) {
 
     v = v.trimmed();
 
-    SetString(n, v);
+    SetValue(n, v, typeInt);
 
   }
 }
 
 
-bool UserSettings::ParseBoolean(const QString& toParse) {
-  QString t = toParse.toLower();
-  return t == "true" || t == "1";
-}
+void UserSettings::AppendSettingToXml_(TiXmlElement* element, const char* name, const char* value, int type) {
+  char* typeString = new char[256];
+  if (type == Type_String) { typeString = "String\0"; }
+  else if (type == Type_Int) { typeString = "Int\0"; }
+  else if (type == Type_Bool) { typeString = "Bool\0"; }
+  else if (type == Type_Date) { typeString = "Date\0"; }
+  else if (type == Type_Color) { typeString = "Color\0"; }
 
-
-void UserSettings::AssignSettingValue(int& setting, QString value, int defaultValue) {
-  bool ok = false;
-  int tempValue = value.toInt(&ok);
-
-  if(!ok) {
-    setting = defaultValue;
-  } else {
-    setting = tempValue;
-  }
-}
-
-
-void UserSettings::AssignSettingValue(int& setting, QString value) {
-  bool ok = false;
-  int tempValue = value.toInt(&ok);
-  if(!ok) return;
-  setting = tempValue;
-}
-
-
-void UserSettings::AppendSettingToXml_(TiXmlElement* element, const char* name, const char* value) {
   TiXmlElement* e = new TiXmlElement("Setting");
   e->SetAttribute("name", name);
+  e->SetAttribute("type", type);
   TiXmlText* t = new TiXmlText(value);
   e->LinkEndChild(t);
   element->LinkEndChild(e);
 }
 
 
-void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, int value) {
-  AppendSettingToXml(element, name, QString::number(value));
-}
-
-
-void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, QString value) {
-  AppendSettingToXml_(element, name, value.toUtf8());
-}
-
-
-void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, bool value) {
-  AppendSettingToXml_(element, name, value ? "1" : "0");
-}
+//void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, int value) {
+//  AppendSettingToXml(element, name, QString::number(value), Type_Int);
+//}
+//
+//
+//void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, QString value) {
+//  AppendSettingToXml_(element, name, value.toUtf8(), Type_String);
+//}
+//
+//
+//void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, bool value) {
+//  AppendSettingToXml_(element, name, value ? "1" : "0", Type_Bool);
+//}
 
 
 void UserSettings::Load() {

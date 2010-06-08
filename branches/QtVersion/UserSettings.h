@@ -13,15 +13,30 @@
 namespace appetizer {
 
 
-typedef std::map<QString, QString> UserSettingsMap;
+struct UserSetting {
+  int type;
+  QString value;
+};
+
+
+typedef std::map<QString, UserSetting*> UserSettingsMap;
 
 class UserSettings {
 
 public:
 
+  enum {
+    Type_Int,
+    Type_String,
+    Type_Bool,
+    Type_Date,
+    Type_Color
+  };
+
   static UserSettings* instance();
 
   UserSettings();
+  ~UserSettings();
 
   void Save();
   void Load();
@@ -41,17 +56,14 @@ public:
   void SetInt(const QString& name, int value);
   void SetBool(const QString& name, bool value);
   void SetDateTime(const QString& name, const QDate& dateTime);
+  void SetValue(const QString& name, const QString& value, int type);
 
 private:
 
-  void AppendSettingToXml_(TiXmlElement* element, const char* name, const char* value);
-  void AppendSettingToXml(TiXmlElement* element, const char* name, int value);
-  void AppendSettingToXml(TiXmlElement* element, const char* name, QString value);
-  void AppendSettingToXml(TiXmlElement* element, const char* name, bool value);
-  void AssignSettingValue(int& setting, QString value, int defaultValue);
-  void AssignSettingValue(int& setting, QString value);
-
-  bool ParseBoolean(const QString& toParse);
+  void AppendSettingToXml_(TiXmlElement* element, const char* name, const char* value, int type);
+  //void AppendSettingToXml(TiXmlElement* element, const char* name, int value);
+  //void AppendSettingToXml(TiXmlElement* element, const char* name, QString value);
+  //void AppendSettingToXml(TiXmlElement* element, const char* name, bool value);
 
   UserSettingsMap values_;
 
