@@ -170,6 +170,13 @@ PageData* MainPanel::showPage(int index) {
 
   addItem(page->iconPanel());
 
+  if (page) {
+    IconPanel* iconPanel = page->iconPanel();
+    scrollPane_->setContent(iconPanel);
+  } else {
+    scrollPane_->setContent(NULL);
+  }
+
   invalidate();
 
   return page;
@@ -225,10 +232,10 @@ void MainPanel::updateDisplay() {
 
   if (page) {
     IconPanel* iconPanel = page->iconPanel();
-    iconPanel->setWidth(scrollPane_->contentWidth());
-    scrollPane_->setContent(iconPanel);
-  } else {
-    scrollPane_->setContent(NULL);
+    if (iconPanel->width() != scrollPane_->contentWidth()) {
+      iconPanel->setWidth(scrollPane_->contentWidth());
+      iconPanel->updateDisplay();
+    }    
   }
 
   scrollPane_->setVisible(scrollPaneWidth > 0 && scrollPaneHeight > 0);

@@ -37,7 +37,7 @@ void ScrollPane::setContent(GraphicsItem* content) {
 
 
 int ScrollPane::contentWidth() {
-  if (scrollBar_->scrollable()) return width() - scrollBar_->width();
+  if (scrollBar_->scrollable()) return width() - scrollBar_->width() - 6;
   return width();
 }
 
