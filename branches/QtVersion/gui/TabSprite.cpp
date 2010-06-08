@@ -16,9 +16,11 @@ TabSprite::TabSprite() {
 
   backgroundSprite_ = new NineSliceItem();
   backgroundSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Base\\IconOverlayUp.png");
+  backgroundSprite_->setAcceptedMouseButtons(Qt::NoButton);
   addItem(backgroundSprite_);
 
   textSprite_ = new QGraphicsSimpleTextItem();
+  textSprite_->setAcceptedMouseButtons(Qt::NoButton);
   addItem(textSprite_);
 
   setMaxWidth(100);

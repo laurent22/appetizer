@@ -60,7 +60,6 @@ private:
   NineSliceItem* backgroundSprite_;
   NineSlicePainter maskNineSlicePainter_;
   QPixmap maskPixmap_;
-  IconPanel* iconPanel_;
   PageDataVector pages_;
   int rootFolderItemId_;
   int pageIndex_;

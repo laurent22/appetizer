@@ -53,9 +53,6 @@ MainPanel::MainPanel() {
   backgroundSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
   addItem(backgroundSprite_);
 
-  iconPanel_ = new IconPanel();
-  addItem(iconPanel_);
-
   lastDrawnMaskSize_ = QSize(0, 0);
 }
 
@@ -88,7 +85,6 @@ void MainPanel::loadFolderItems(int rootFolderItemId) {
     addItem(tab);
     connect(tab, SIGNAL(mouseReleased()), this, SLOT(tab_clicked()));
     tab->loadFolderItem(sectionFolderItem->id());
-    
 
     PageData* page = new PageData();
     page->setTab(tab);
@@ -102,7 +98,23 @@ void MainPanel::loadFolderItems(int rootFolderItemId) {
 
 
 void MainPanel::tab_clicked() {
-  qDebug() << "CLICK";
+  TabSprite* sender = static_cast<TabSprite*>(QObject::sender());
+  
+  int pageIndex = -1;
+  for (int i = 0; i < (int)pages_.size(); i++) {
+    PageData* d = pages_[i];
+    if (d->tab() == sender) {
+      pageIndex = i;
+      break;
+    }
+  }
+
+  if (pageIndex < 0) {
+    qCritical() << "No page associated with this tab";
+    return;
+  }
+
+  showPage(pageIndex);
 }
 
 
@@ -158,9 +170,9 @@ void MainPanel::updateDisplay() {
 
   backgroundSprite_->resize(width(), height());
 
-  iconPanel_->setX(Style::background.padding.left);
-  iconPanel_->setY(Style::background.padding.top + 30);
-  iconPanel_->resize(width() - Style::background.padding.width, height() - Style::background.padding.height);
+  //iconPanel_->setX(Style::background.padding.left);
+  //iconPanel_->setY(Style::background.padding.top + 30);
+  //iconPanel_->resize(width() - Style::background.padding.width, height() - Style::background.padding.height);
 
   int tabX = Style::background.padding.left + Style::tab.margin.left;
   int tabY = Style::background.padding.top + Style::tab.margin.top;
