@@ -18,6 +18,7 @@ class GraphicsItem : public QObject, public QGraphicsItem {
 public:
 
   GraphicsItem();
+  ~GraphicsItem();
   inline int width() const;
   inline int height() const;
   virtual int defaultWidth() const;

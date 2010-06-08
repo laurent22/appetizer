@@ -89,7 +89,12 @@ FolderItem* MainPanel::rootFolderItem() {
 
 
 void MainPanel::loadFolderItems(int rootFolderItemId) {
-  // TODO: delete existing pages
+  for (int i = 0; i < (int)pages_.size(); i++) {
+    PageData* page = pages_.at(i);
+    SAFE_DELETE(page);
+  }
+  pages_.clear();
+
 
   rootFolderItemId_ = rootFolderItemId;
 

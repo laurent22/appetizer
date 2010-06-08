@@ -64,7 +64,7 @@ void IconPanel::updateDisplay() {
         r->setFolderItem(folderItem->id());
         folderItemRenderers_.push_back(r);
 
-        r->setIconSize(40);
+        r->setIconSize(20);
 
         addItem(r);
       }

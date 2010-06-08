@@ -24,6 +24,12 @@ GraphicsItem::GraphicsItem() {
 }
 
 
+GraphicsItem::~GraphicsItem() {
+  GraphicsItem* parent = static_cast<GraphicsItem*>(parentItem());
+  if (parent) parent->removeItem(this);
+}
+
+
 int GraphicsItem::minWidth() const { return minWidth_; }
 int GraphicsItem::maxWidth() const { return maxWidth_; }
 int GraphicsItem::minHeight() const { return minHeight_; }
