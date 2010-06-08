@@ -5,9 +5,12 @@
 */
 
 #include <stable.h>
-#include <MainScene.h>
+
 #include <Application.h>
+#include <MainScene.h>
 #include <Style.h>
+
+#include <ScrollBar.h>
 
 using namespace appetizer;
 
@@ -26,6 +29,10 @@ MainScene::MainScene() {
                    this, SLOT(resizeSprite_mouseMoved()));
 
   mainPanel_->loadFolderItems(Application::instance()->rootFolderItem()->id());
+
+  ScrollBar* t = new ScrollBar();
+  t->setHeight(200);
+  addItem(t);
 }
 
 

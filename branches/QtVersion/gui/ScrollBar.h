@@ -20,6 +20,7 @@ public:
 
   ScrollBar();
   void updateDisplay();
+  int defaultWidth() const;
 
 protected:
 

@@ -23,6 +23,13 @@ ScrollBar::ScrollBar() {
 }
 
 
+int ScrollBar::defaultWidth() const {
+  QImage* image = background_->nineSlicePainter().image();
+  if (!image || image->isNull()) return 20;
+  return image->width();
+}
+
+
 int ScrollBar::knobHeight() {
   return 50;
 }

@@ -224,21 +224,6 @@ void UserSettings::AppendSettingToXml_(TiXmlElement* element, const char* name, 
 }
 
 
-//void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, int value) {
-//  AppendSettingToXml(element, name, QString::number(value), Type_Int);
-//}
-//
-//
-//void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, QString value) {
-//  AppendSettingToXml_(element, name, value.toUtf8(), Type_String);
-//}
-//
-//
-//void UserSettings::AppendSettingToXml(TiXmlElement* element, const char* name, bool value) {
-//  AppendSettingToXml_(element, name, value ? "1" : "0", Type_Bool);
-//}
-
-
 void UserSettings::Load() {
   QString filePath = FilePaths::GetSettingsFile();
   TiXmlDocument doc(filePath.toUtf8());

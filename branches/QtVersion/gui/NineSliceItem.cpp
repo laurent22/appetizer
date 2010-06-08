@@ -14,7 +14,7 @@ NineSliceItem::NineSliceItem() {
 }
 
 
-NineSlicePainter NineSliceItem::nineSlicePainter() {
+NineSlicePainter& NineSliceItem::nineSlicePainter() {
   return nineSlicePainter_;
 }
 

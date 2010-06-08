@@ -20,7 +20,7 @@ public:
 
   NineSliceItem();
   void loadBackgroundImage(QString backgroundFilePath);
-  NineSlicePainter nineSlicePainter();
+  NineSlicePainter& nineSlicePainter();
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 private:
