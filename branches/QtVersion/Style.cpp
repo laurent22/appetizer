@@ -12,6 +12,7 @@ using namespace appetizer;
 IconStyle Style::icon;
 BackgroundStyle Style::background;
 TabStyle Style::tab;
+IconPanelStyle Style::iconPanel;
 
 
 void RectangleStyle::fromRect(const QRect& rect) {
@@ -90,6 +91,11 @@ void Style::loadSkinFile(const QString& filePath) {
       
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::background.padding.fromRect(resultRect);
+
+    } else if (elementName == "IconPanel") {
+      
+      XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
+      Style::iconPanel.padding.fromRect(resultRect);
     
     } else if (elementName == "Tab") {
 

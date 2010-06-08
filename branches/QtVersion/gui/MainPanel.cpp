@@ -227,7 +227,7 @@ void MainPanel::updateDisplay() {
     panelY = tab->y() + tab->height();
   }
 
-  panelY = panelY + Style::background.padding.top;
+  panelY = panelY + Style::iconPanel.padding.top;
   PageData* page = this->page();
 
   int scrollPaneWidth = width() - Style::background.padding.width;

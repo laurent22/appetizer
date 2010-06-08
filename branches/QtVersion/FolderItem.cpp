@@ -139,8 +139,8 @@ void FolderItem::setParent(FolderItem* folderItem) {
 void FolderItem::addChild(FolderItem* folderItem) {
   if (folderItem->id() == id()) return;
 
-  //if (folderItem->IsGroup()) {
-  //  appFolderItem* f = folderItem->GetChildById(GetId());
+  //if (folderItem->type() == Type_Group) {
+  //  FolderItem* f = folderItem->getChildById(id());
   //  if (f) return;
   //}
 

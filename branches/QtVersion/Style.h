@@ -47,6 +47,10 @@ class BackgroundStyle { public:
   RectangleStyle padding;
 };
 
+class IconPanelStyle { public:
+  RectangleStyle padding;
+};
+
 class TabStyle { public:
   RectangleStyle padding;
   RectangleStyle margin;
@@ -61,6 +65,7 @@ public:
   static IconStyle icon;
   static BackgroundStyle background;
   static TabStyle tab;
+  static IconPanelStyle iconPanel;
 
   static void loadSkinFile(const QString& filePath);
 
