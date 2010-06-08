@@ -155,11 +155,16 @@ void MainPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 
   int tabX = Style::background.padding.left + Style::tab.margin.left;
   int tabY = Style::background.padding.top + Style::tab.margin.top;
+  int tabWidth = 0;
+  if (pages_.size() > 0) {
+    tabWidth = (width() - Style::background.padding.width - Style::tab.margin.width * pages_.size() + Style::tab.margin.right) / pages_.size();
+  }
 
   for (int i = 0; i < pages_.size(); i++) {
     PageData* page = pages_[i];
     TabSprite* tab = page->tab();
     tab->move(tabX, tabY);
+    tab->setWidth(tabWidth);
 
     tabX += tab->width() + Style::tab.margin.right;
   }

@@ -34,6 +34,14 @@ public:
   QGraphicsItem* getChildAt(int index) const;
   void showDebugRectangle(bool doShow = true);
   inline void invalidate();
+  inline int minWidth() const;
+  inline int maxWidth() const;
+  inline int minHeight() const;
+  inline int maxHeight() const;
+  void setMinWidth(int v);
+  void setMaxWidth(int v);
+  void setMinHeight(int v);
+  void setMaxHeight(int v);
 
 signals:
 
@@ -56,6 +64,10 @@ private:
   mutable int height_;
   mutable int defaultWidth_;
   mutable int defaultHeight_;
+  mutable int minWidth_;
+  mutable int maxWidth_;
+  mutable int minHeight_;
+  mutable int maxHeight_;
   bool showDebugRectangle_;
 
 };

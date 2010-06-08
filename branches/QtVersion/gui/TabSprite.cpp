@@ -21,6 +21,8 @@ TabSprite::TabSprite() {
   textSprite_ = new QGraphicsSimpleTextItem();
   addItem(textSprite_);
 
+  setMaxWidth(100);
+
   applySkin();
 }
 

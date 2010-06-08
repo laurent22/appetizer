@@ -9,12 +9,26 @@
 using namespace appetizer;
 
 GraphicsItem::GraphicsItem() {
+  minWidth_ = INT_MIN;
+  minHeight_ = INT_MIN;
+  maxWidth_ = INT_MAX;
+  maxHeight_ = INT_MAX;
   width_ = -1;
   height_ = -1;
   defaultWidth_ = 100;
   defaultHeight_ = 20;
   showDebugRectangle_ = false;
 }
+
+
+int GraphicsItem::minWidth() const { return minWidth_; }
+int GraphicsItem::maxWidth() const { return maxWidth_; }
+int GraphicsItem::minHeight() const { return minHeight_; }
+int GraphicsItem::maxHeight() const { return maxHeight_; }
+void GraphicsItem::setMinWidth(int v) { if (minWidth_ == v) return; minWidth_ = v; invalidate(); }
+void GraphicsItem::setMaxWidth(int v) { if (maxWidth_ == v) return; maxWidth_ = v; invalidate(); }
+void GraphicsItem::setMinHeight(int v) { if (minHeight_ == v) return; minHeight_ = v; invalidate(); }
+void GraphicsItem::setMaxHeight(int v) { if (maxHeight_ == v) return; maxHeight_ = v; invalidate(); }
 
 
 void GraphicsItem::showDebugRectangle(bool doShow) {
@@ -34,14 +48,20 @@ int GraphicsItem::defaultHeight() const {
 
 
 int GraphicsItem::width() const {
-  if (width_ < 0) return defaultWidth();
-  return width_;
+  int output = width_;
+  if (output < 0) output = defaultWidth();
+  if (output < minWidth()) return minWidth();
+  if (output > maxWidth()) return maxWidth();
+  return output;
 }
 
 
 int GraphicsItem::height() const {
-  if (height_ < 0) return defaultHeight();
-  return height_;
+  int output = height_;
+  if (output < 0) output = defaultHeight();
+  if (output < minHeight()) return minHeight();
+  if (output > maxHeight()) return maxHeight();
+  return output;
 }
 
 
