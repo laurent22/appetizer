@@ -16,21 +16,48 @@ namespace appetizer {
 
 class ScrollBar : public GraphicsItem {
 
+  Q_OBJECT
+
 public:
 
   ScrollBar();
   void updateDisplay();
   int defaultWidth() const;
+  inline float value() const { return value_; }
+  void setValue(float value);
+  bool scrollable();
+  int contentHeight();
+  void setContentHeight(int v);
 
 protected:
 
   void resizeEvent();
 
+protected slots:
+
+  void knob_mousePressed();
+  void knob_mouseMoved();
+  void knob_mouseReleased();
+
+signals:
+
+  void valueChanged();
+
 private:
+
+  struct DragData {
+    QPoint startMouse;
+    QPoint startPosition;
+  };
 
   NineSliceItem* background_;
   NineSliceItem* knob_;
+  int contentHeight_;
   int knobHeight();
+  int maxKnobY();
+  int knobY();
+  float value_;
+  DragData* dragData_;
 
 };
 

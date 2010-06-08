@@ -419,6 +419,10 @@
 					RelativePath=".\moc\moc_MainWindow.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\moc\moc_ScrollBar.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
