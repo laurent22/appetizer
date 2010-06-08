@@ -21,6 +21,7 @@ public:
     void drawImage(QPainter* painter, int x, int y, int width, int height);
     bool isNull();
     ~NineSlicePainter();
+    inline QImage* image() const;
 
 private:
 

@@ -17,13 +17,19 @@ bool NineSlicePainter::isNull() {
   return !image_;
 }
 
+
+QImage* NineSlicePainter::image() const {
+  return image_;
+}
+
+
 void NineSlicePainter::loadImage(QImage* image) {
-    if (image_) delete image_;
+    SAFE_DELETE(image_);
     image_ = image;
 }
 
 void NineSlicePainter::loadImage(QString filePath) {
-    if (image_) delete image_;
+    SAFE_DELETE(image_)
     image_ = new QImage(filePath);
 }
 
