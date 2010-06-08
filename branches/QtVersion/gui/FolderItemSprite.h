@@ -26,10 +26,10 @@ public:
   FolderItem* folderItem() const;
   void setIconSize(int size);
   int iconSize() const;
+  void updateDisplay();
 
 protected:
 
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
   void hoverEnterEvent(QGraphicsSceneHoverEvent* event); 
   void hoverLeaveEvent(QGraphicsSceneHoverEvent* event);
 

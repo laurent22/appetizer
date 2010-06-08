@@ -23,10 +23,7 @@ public:
   void applySkin();
   void loadFolderItem(int folderItemId);
   FolderItem* folderItem();
-
-protected:
-
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  void updateDisplay();
 
 private:
 

@@ -23,7 +23,7 @@ public:
   IconPanel();
   void loadFolderItems(int rootFolderItemId);
   FolderItem* rootFolderItem();
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  void updateDisplay();
 
 protected:
 

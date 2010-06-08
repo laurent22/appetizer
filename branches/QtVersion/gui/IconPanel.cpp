@@ -38,8 +38,8 @@ void IconPanel::resizeEvent() {
 }
 
 
-void IconPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-  GraphicsItem::paint(painter, option, widget);  
+void IconPanel::updateDisplay() {
+  GraphicsItem::updateDisplay();  
 
   if (rebuildFolderItems_) {
     for (int i = 0; i < (int)folderItemRenderers_.size(); i++) {

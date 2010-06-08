@@ -415,10 +415,6 @@
 					RelativePath=".\moc\moc_MainWindow.cpp"
 					>
 				</File>
-				<File
-					RelativePath=".\moc\moc_TabSprite.cpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter

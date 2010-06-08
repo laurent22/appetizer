@@ -42,6 +42,7 @@ public:
   void setMaxWidth(int v);
   void setMinHeight(int v);
   void setMaxHeight(int v);
+  virtual void updateDisplay();
 
 signals:
 
@@ -69,6 +70,7 @@ private:
   mutable int minHeight_;
   mutable int maxHeight_;
   bool showDebugRectangle_;
+  bool invalidated_;
 
 };
 

@@ -46,8 +46,8 @@ FolderItem* TabSprite::folderItem() {
 }
 
 
-void TabSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-  GraphicsItem::paint(painter, option, widget);
+void TabSprite::updateDisplay() {
+  GraphicsItem::updateDisplay();
 
   FolderItem* folderItem = this->folderItem();
 

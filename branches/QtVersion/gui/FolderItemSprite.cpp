@@ -90,8 +90,8 @@ void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* /* event */) {
 }
 
 
-void FolderItemSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-  GraphicsItem::paint(painter, option, widget);  
+void FolderItemSprite::updateDisplay() {
+  GraphicsItem::updateDisplay();  
 
   if (mouseInside_ && selectionSprite_) {
     selectionSprite_->resize(width(), height());

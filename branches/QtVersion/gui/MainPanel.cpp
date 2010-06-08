@@ -85,9 +85,10 @@ void MainPanel::loadFolderItems(int rootFolderItemId) {
     }
 
     TabSprite* tab = new TabSprite();
+    addItem(tab);
     connect(tab, SIGNAL(mouseReleased()), this, SLOT(tab_clicked()));
     tab->loadFolderItem(sectionFolderItem->id());
-    addItem(tab);
+    
 
     PageData* page = new PageData();
     page->setTab(tab);
@@ -152,8 +153,8 @@ void MainPanel::drawMask(QPainter* painter, int x, int y, int width, int height)
 }
 
 
-void MainPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-  GraphicsItem::paint(painter, option, widget);
+void MainPanel::updateDisplay() {
+  GraphicsItem::updateDisplay();
 
   backgroundSprite_->resize(width(), height());
 

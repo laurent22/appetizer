@@ -18,6 +18,9 @@ GraphicsItem::GraphicsItem() {
   defaultWidth_ = 100;
   defaultHeight_ = 20;
   showDebugRectangle_ = false;
+  invalidated_ = false;
+
+  invalidate();
 }
 
 
@@ -133,6 +136,7 @@ QGraphicsItem* GraphicsItem::getChildAt(int index) const {
 
 
 void GraphicsItem::invalidate() {
+  invalidated_ = true;
   update(0, 0, width(), height());
 }
 
@@ -157,6 +161,11 @@ void GraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* /* event */) {
 }
 
 
+void GraphicsItem::updateDisplay() {
+
+}
+
+
 void GraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem* /* option */, QWidget* /* widget */) {
   if (showDebugRectangle_) {
     QPen pen;
@@ -168,5 +177,10 @@ void GraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem* /* o
     painter->setPen(pen);
     painter->setBrush(brush);
     painter->drawRect(0, 0,width()-1, height()-1);
+  }
+
+  if (invalidated_) {
+    invalidated_ = false;
+    updateDisplay();
   }
 }

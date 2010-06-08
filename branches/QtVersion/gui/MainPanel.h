@@ -52,10 +52,7 @@ public:
   FolderItem* rootFolderItem();
   PageData* showPage(int index);
   PageData* getPage(int index);
-
-protected:
-
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  void updateDisplay();
 
 private:
 
