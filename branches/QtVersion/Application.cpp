@@ -9,6 +9,7 @@
 #include <Application.h>
 #include <FilePaths.h>
 #include <Style.h>
+#include <UserSettings.h>
 #include <XmlUtil.h>
 
 #include <PathVariables.h>
@@ -31,12 +32,13 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
   FilePaths::InitializePaths();
   FilePaths::CreateSettingsDirectory();
 
-  settings_.Load();
-
+  UserSettings::instance()->Load();
+  
   
   loadFolderItems();
 
-  Style::loadSkinFile("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Skin.xml");
+  QString xmlFile = FilePaths::GetSkinFile("Skin.xml");
+  Style::loadSkinFile(xmlFile);
 
   mainWindow_ = new MainWindow();
   mainWindow_->show();
@@ -49,11 +51,6 @@ FolderItem* Application::rootFolderItem() const {
 }
 
 
-UserSettings Application::settings() const {
-  return settings_;
-}
-
-
 OSVERSIONINFO Application::osInfo() {
   return osInfo_;
 }
@@ -62,7 +59,7 @@ OSVERSIONINFO Application::osInfo() {
 void Application::loadFolderItems() {
   rootFolderItem_ = FolderItem::createFolderItem(true);
 
-  TiXmlDocument doc("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Settings\\FolderItems.xml");
+  TiXmlDocument doc(FilePaths::GetFolderItemsFile().toUtf8());
   doc.LoadFile(TIXML_ENCODING_UTF8);
 
   TiXmlElement* root = doc.FirstChildElement("FolderItems");

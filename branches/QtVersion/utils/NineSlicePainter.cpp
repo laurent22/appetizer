@@ -24,13 +24,16 @@ QImage* NineSlicePainter::image() const {
 
 
 void NineSlicePainter::loadImage(QImage* image) {
-    SAFE_DELETE(image_);
-    image_ = image;
+  SAFE_DELETE(image_);
+  image_ = image;
 }
 
 void NineSlicePainter::loadImage(QString filePath) {
-    SAFE_DELETE(image_)
-    image_ = new QImage(filePath);
+  SAFE_DELETE(image_)
+  image_ = new QImage(filePath);
+  if (image_->isNull()) {
+    qWarning() << "Could not load image:" << filePath;
+  }
 }
 
 void NineSlicePainter::setGrid(int x, int y, int width, int height) {

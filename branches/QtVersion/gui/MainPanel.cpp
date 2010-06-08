@@ -7,6 +7,7 @@
 #include <stable.h>
 
 #include <Application.h>
+#include <FilePaths.h>
 #include <MainPanel.h>
 #include <Style.h>
 
@@ -61,13 +62,15 @@ MainPanel::MainPanel() {
   rootFolderItemId_ = -1;
   pageIndex_ = -1;
 
+  QString backgroundFile = FilePaths::GetSkinFile("Background.png");
+
   backgroundSprite_ = new NineSliceItem();
-  backgroundSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
+  backgroundSprite_->loadBackgroundImage(backgroundFile);
   addItem(backgroundSprite_);
 
   lastDrawnMaskSize_ = QSize(0, 0);
 
-  maskNineSlicePainter_.loadImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\Background.png");
+  maskNineSlicePainter_.loadImage(backgroundFile);
 }
 
 

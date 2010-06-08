@@ -6,6 +6,7 @@
 
 #include <stable.h>
 
+#include <FilePaths.h>
 #include <TabSprite.h>
 #include <Style.h>
 
@@ -15,7 +16,7 @@ TabSprite::TabSprite() {
   folderItemId_ = -1;
 
   backgroundSprite_ = new NineSliceItem();
-  backgroundSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Base\\IconOverlayUp.png");
+  backgroundSprite_->loadBackgroundImage(FilePaths::GetSkinFile("IconOverlayUp.png"));
   backgroundSprite_->setAcceptedMouseButtons(Qt::NoButton);
   addItem(backgroundSprite_);
 

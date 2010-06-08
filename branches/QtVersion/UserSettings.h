@@ -19,6 +19,8 @@ class UserSettings {
 
 public:
 
+  static UserSettings* instance();
+
   UserSettings();
 
   void Save();
@@ -52,6 +54,8 @@ private:
   bool ParseBoolean(const QString& toParse);
 
   UserSettingsMap values_;
+
+  static UserSettings* instance_;
 
 };
 

@@ -5,8 +5,11 @@
 */
 
 #include <stable.h>
-#include <FilePaths.h>
+
 #include <Constants.h>
+#include <FilePaths.h>
+#include <UserSettings.h>
+
 using namespace appetizer;
 
 QString FilePaths::ApplicationDrive_ = "";
@@ -36,7 +39,7 @@ QString FilePaths::GetApplicationDirectory() { return FilePaths::ApplicationDire
 QString FilePaths::GetDataDirectory() { return FilePaths::DataDirectory_; }
 QString FilePaths::GetSettingsDirectory() { return FilePaths::SettingsDirectory_; }
 QString FilePaths::GetBaseSkinDirectory() { return FilePaths::BaseSkinDirectory_; }
-QString FilePaths::GetSkinDirectory() { return "TODO"; /*FilePaths::BaseSkinDirectory_ + "/" + wxGetApp().GetUser()->GetSettings()->GetString("Skin");*/ }
+QString FilePaths::GetSkinDirectory() { return FilePaths::BaseSkinDirectory_ + "/" + UserSettings::instance()->GetString("Skin"); }
 QString FilePaths::GetDefaultSkinDirectory() { return FilePaths::DefaultSkinDirectory_; }
 QString FilePaths::GetLocalesDirectory() { return FilePaths::LocalesDirectory_; }
 QString FilePaths::GetHelpDirectory() { return FilePaths::HelpDirectory_; }

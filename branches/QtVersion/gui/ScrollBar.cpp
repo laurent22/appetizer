@@ -5,6 +5,8 @@
 */
 
 #include <stable.h>
+
+#include <FilePaths.h>
 #include <ScrollBar.h>
 
 using namespace appetizer;
@@ -12,11 +14,11 @@ using namespace appetizer;
 
 ScrollBar::ScrollBar() {
   background_ = new NineSliceItem();
-  background_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\ScrollBarBackground.png");
+  background_->loadBackgroundImage(FilePaths::GetSkinFile("ScrollBarBackground.png"));
   addItem(background_);
 
   knob_ = new NineSliceItem();
-  knob_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Default\\ScrollBarKnob.png");
+  knob_->loadBackgroundImage(FilePaths::GetSkinFile("ScrollBarKnob.png"));
   addItem(knob_);
 }
 

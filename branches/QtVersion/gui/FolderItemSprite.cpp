@@ -59,7 +59,7 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
 
   if (!selectionSprite_) {
     selectionSprite_ = new NineSliceItem();  
-    selectionSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Base\\IconOverlayUp.png");
+    selectionSprite_->loadBackgroundImage(FilePaths::GetSkinFile("IconOverlayUp.png"));
     addItemAt(selectionSprite_, 0);
 
     selectionSpriteAnimation_ = new QPropertyAnimation(selectionSprite_, "opacity");

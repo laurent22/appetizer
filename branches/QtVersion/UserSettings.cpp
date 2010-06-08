@@ -14,6 +14,15 @@
 using namespace appetizer;
 
 
+UserSettings* UserSettings::instance_ = NULL;
+
+
+UserSettings* UserSettings::instance() {
+  if (!instance_) instance_ = new UserSettings();
+  return instance_;
+}
+
+
 UserSettings::UserSettings() {
   SetInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
   SetString("Locale", "en");
