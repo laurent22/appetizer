@@ -41,7 +41,7 @@ void IconSprite::setSize(int size) {
 }
 
 
-void IconSprite::folderItem_iconLoaded(int iconSize) {
+void IconSprite::folderItem_iconLoaded(int /* iconSize */) {
   FolderItem* f = folderItem();
   if (f) {
     QObject::disconnect(f, SIGNAL(iconLoaded(int)), this, SLOT(folderItem_iconLoaded(int)));

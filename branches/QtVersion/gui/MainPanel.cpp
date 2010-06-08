@@ -18,10 +18,15 @@ MainPanel::MainPanel() {
   addItem(backgroundSprite_);
 
   iconPanel_ = new IconPanel();
-  iconPanel_->loadFolderItems(Application::instance()->rootFolderItem()->id());
+  iconPanel_->loadFolderItems(Application::instance()->rootFolderItem()->getChildAt(0)->id());
   addItem(iconPanel_);
 
   lastDrawnMaskSize_ = QSize(0, 0);
+
+  TabSprite* tab = new TabSprite();
+  tab->move(15,15);
+  tab->resize(100, 20);
+  addItem(tab);
 }
 
 
@@ -44,11 +49,9 @@ void MainPanel::drawMask(QPainter* painter, int x, int y, int width, int height)
 void MainPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   GraphicsItem::paint(painter, option, widget);
 
-  backgroundSprite_->setWidth(width());
-  backgroundSprite_->setHeight(height());
+  backgroundSprite_->resize(width(), height());
 
   iconPanel_->setX(Style::background.padding.left);
-  iconPanel_->setY(Style::background.padding.top);
-  iconPanel_->setWidth(width() - Style::background.padding.width);
-  iconPanel_->setHeight(height() - Style::background.padding.height);
+  iconPanel_->setY(Style::background.padding.top + 30);
+  iconPanel_->resize(width() - Style::background.padding.width, height() - Style::background.padding.height);
 }

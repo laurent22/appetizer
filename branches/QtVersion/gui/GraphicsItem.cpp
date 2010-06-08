@@ -12,7 +12,6 @@ GraphicsItem::GraphicsItem() {
   width_ = 100;
   height_ = 100;
   showDebugRectangle_ = false;
-  dispatchResizeEvent_ = false;
 }
 
 
@@ -32,10 +31,19 @@ int GraphicsItem::height() const {
 }
 
 
+void GraphicsItem::resize(int width, int height) {
+  if (width == width_ && height == height_) return;
+  width_ = width;
+  height_ = height;
+  resizeEvent();
+  invalidate();
+}
+
+
 void GraphicsItem::setWidth(int width) {
   if (width == width_) return;
   width_ = width;
-  dispatchResizeEvent_ = true;
+  resizeEvent();
   invalidate();
 }
 
@@ -43,8 +51,14 @@ void GraphicsItem::setWidth(int width) {
 void GraphicsItem::setHeight(int height) {
   if (height == height_) return;
   height_ = height;
-  dispatchResizeEvent_ = true;
+  resizeEvent();
   invalidate();
+}
+
+
+void GraphicsItem::move(int x, int y) {
+  setX(x);
+  setY(y);
 }
 
 
@@ -94,24 +108,22 @@ void GraphicsItem::resizeEvent() {
 }
 
 
-void GraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+void GraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* /* event */) {
   emit mousePressed();
 }
 
 
-void GraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+void GraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* /* event */) {
   emit mouseReleased();
 }
 
 
-void GraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event) {
+void GraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* /* event */) {
   emit mouseMoved();
 }
 
 
-void GraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
-  painter; option; widget; // Using variables to disable the annoying warnings
-
+void GraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem* /* option */, QWidget* /* widget */) {
   if (showDebugRectangle_) {
     QPen pen;
     pen.setWidth(1);
@@ -122,10 +134,5 @@ void GraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     painter->setPen(pen);
     painter->setBrush(brush);
     painter->drawRect(0, 0,width()-1, height()-1);
-  }
-
-  if (dispatchResizeEvent_) {
-    resizeEvent();
-    dispatchResizeEvent_ = false;
   }
 }

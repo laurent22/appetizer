@@ -6,23 +6,19 @@
 
 #include <stable.h>
 
-#ifndef Appetizer_MainPanel_H
-#define Appetizer_MainPanel_H
+#ifndef Appetizer_TabSprite_H
+#define Appetizer_TabSprite_H
 
 #include <GraphicsItem.h>
-#include <IconPanel.h>
 #include <NineSliceItem.h>
-#include <TabSprite.h>
 
 namespace appetizer {
 
-class MainPanel : public GraphicsItem {
+class TabSprite : public GraphicsItem {
 
 public:
 
-  MainPanel();
-  void drawMask(QPainter* painter, int x, int y, int width, int height);
-  NineSliceItem* backgroundSprite() const;
+  TabSprite();
 
 protected:
 
@@ -30,13 +26,10 @@ protected:
 
 private:
 
-  QSize lastDrawnMaskSize_;
   NineSliceItem* backgroundSprite_;
-  NineSlicePainter maskNineSlicePainter_;
-  QPixmap maskPixmap_;
-  IconPanel* iconPanel_;
+  QGraphicsSimpleTextItem* textSprite_;
 
 };
 
 }
-#endif // Appetizer_MainPanel_H
+#endif // Appetizer_TabSprite_H

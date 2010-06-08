@@ -7,7 +7,7 @@
 	
 	- The paddings are expressed as (Left, Top, Right, Bottom)
 			
-	- The colors are expressed as (Red, Green, Blue, Alpha). The Alpha is optional.
+	- The colors are expressed as (Red, Green, Blue, Alpha), each value being between 0 and 255. The Alpha value is optional.
 	
 	- Many skin files are optional - see the BlueGlass skin for the files that are actually required.
 	
@@ -21,14 +21,12 @@
 		<Padding>10,10,10,10</Padding>
 	</Background>
 	
-	<IconLabelFont>
-		<Color>0,0,0</Color>
-		<Size>8</Size>
-		<Face>Arial</Face>
-		<Weight>Bold</Weight>		
-		<ShadowColor>255,255,255</ShadowColor>
-		<ShadowAlpha>100</ShadowAlpha>
-		<ShadowOffset>1</ShadowOffset>
-	</IconLabelFont>
+	<Tab>
+		<TextFormat>
+			<Size>16</Size>
+			<Color>222, 111, 0</Color>
+			<Bold>true</Bold>
+		</TextFormat>
+	</Tab>
 	
 </Skin>

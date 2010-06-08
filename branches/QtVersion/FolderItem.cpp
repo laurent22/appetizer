@@ -304,8 +304,4 @@ void FolderItem::fromXml(TiXmlElement* xml) {
       addChild(folderItem);
     }
   }
-
-  //ConvertOldVariablesToNew(filePath_);
-  //ConvertOldVariablesToNew(parameters_);
-  //ConvertOldVariablesToNew(customIconPath_);
 }

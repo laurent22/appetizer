@@ -58,7 +58,7 @@ void IconPanel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         r->setFolderItem(folderItem->id());
         folderItemRenderers_.push_back(r);
 
-        r->setIconSize(48);
+        r->setIconSize(16);
 
         addItem(r);
       }

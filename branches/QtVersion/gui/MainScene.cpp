@@ -17,8 +17,7 @@ MainScene::MainScene() {
 
   resizeSprite_ = new GraphicsItem();
   resizeSprite_->setCursor(Qt::SizeFDiagCursor);
-  resizeSprite_->setWidth(16);
-  resizeSprite_->setHeight(16);
+  resizeSprite_->resize(16, 16);
   addItem(resizeSprite_);
 
   QObject::connect(resizeSprite_, SIGNAL(mousePressed()),
@@ -62,8 +61,7 @@ void MainScene::drawMask(QPainter* painter, int x, int y, int width, int height)
 void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 
-  mainPanel_->setWidth(width());
-  mainPanel_->setHeight(height());
+  mainPanel_->resize(width(), height());
 
   resizeSprite_->setX(width() - resizeSprite_->width());
   resizeSprite_->setY(height() - resizeSprite_->height());

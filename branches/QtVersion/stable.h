@@ -27,8 +27,10 @@
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QFont>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
+#include <QGraphicsSimpleTextItem>
 #include <QGraphicsView>
 #include <QIcon>
 #include <QImage>

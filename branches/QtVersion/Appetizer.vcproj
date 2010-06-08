@@ -307,6 +307,10 @@
 					RelativePath=".\gui\NineSliceItem.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\gui\TabSprite.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="utils"
@@ -483,6 +487,10 @@
 				</File>
 				<File
 					RelativePath=".\gui\NineSliceItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\TabSprite.h"
 					>
 				</File>
 			</Filter>

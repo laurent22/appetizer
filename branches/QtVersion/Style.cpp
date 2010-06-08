@@ -11,15 +11,42 @@ using namespace appetizer;
 
 IconStyle Style::icon;
 BackgroundStyle Style::background;
+TabStyle Style::tab;
 
 
-void PaddingStyle::fromRect(const QRect& rect) {
+void RectangleStyle::fromRect(const QRect& rect) {
   left = rect.left();
   top = rect.top();
   bottom = rect.height();
   right = rect.width();
   width = left + right;
   height = top + bottom;
+}
+
+
+TextFormat::TextFormat() {
+  family = "Arial";
+  bold = false;
+  size = 10;
+  fontInitialized_ = false;
+}
+
+
+void TextFormat::fromXml(TiXmlHandle handle) {
+  XmlUtil::readElementText(handle, "Family", "Arial");
+  XmlUtil::readElementTextAsColor(handle, "Color", color);
+  size = XmlUtil::readElementTextAsInt(handle, "Size", 10);
+  bold = XmlUtil::readElementTextAsBool(handle, "Bold", false);
+  fontInitialized_ = false;
+}
+
+
+QFont TextFormat::font() {
+  if (fontInitialized_) return font_;
+
+  font_ = QFont(family, size, bold ? QFont::Bold : QFont::Normal);
+  fontInitialized_ = true;
+  return font_;
 }
 
 
@@ -55,13 +82,24 @@ void Style::loadSkinFile(const QString& filePath) {
     QRect resultRect;
 
     if (elementName == "Icon") {
+
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::icon.padding.fromRect(resultRect);
-    }
-
-    if (elementName == "Background") {
+    
+    } else if (elementName == "Background") {
+      
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::background.padding.fromRect(resultRect);
+    
+    } else if (elementName == "Tab") {
+
+      XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
+      Style::tab.padding.fromRect(resultRect);
+      resultRect = QRect(0,0,0,0);
+      XmlUtil::readElementTextAsRect(handle, "Margin", resultRect);
+      Style::tab.margin.fromRect(resultRect);
+      if (handle.Child("TextFormat", 0).ToElement()) Style::tab.textFormat.fromXml(handle.Child("TextFormat", 0));
+
     }
 
   }

@@ -71,7 +71,14 @@ void Application::loadFolderItems() {
     return;
   }
 
+  QString fileVersion = QString::fromUtf8(root->Attribute("version"));
+
   rootFolderItem_ = FolderItem::createFolderItem(true);
+  FolderItem* currentSection = NULL;
+  if (fileVersion == "1.0") {
+    currentSection = FolderItem::createFolderItem(FOLDER_ITEM_TYPE_SECTION);
+    rootFolderItem_->addChild(currentSection);
+  }
   
   for (TiXmlElement* element = root->FirstChildElement(); element; element = element->NextSiblingElement()) {
     QString elementName = QString::fromUtf8(element->Value());
@@ -79,21 +86,13 @@ void Application::loadFolderItems() {
     if (elementName == "FolderItem" || elementName == "appFolderItem") {
       FolderItem* folderItem = FolderItem::createFolderItem();
       folderItem->fromXml(element);
-
-      rootFolderItem_->addChild(folderItem);
+      currentSection->addChild(folderItem);
     } else if (elementName == "ExcludedPath") {
-      //const char* cString = element->GetText();
-      //if (!cString) continue;
-      //wxString path = wxString::FromUTF8(cString);
-      //path.Trim(true).Trim(false);
-      //if (path == wxEmptyString) continue;
-      //autoAddExclusions_.Add(appFolderItem::ConvertToRelativePath(path));
+
     } else {
       qWarning() << QString("User::Load: Unknown element: %s").arg(elementName);
     }
   }
-
-  qDebug() << "done";
 }
 
 

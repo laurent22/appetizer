@@ -12,10 +12,7 @@
 namespace appetizer {
 
 
-class PaddingStyle {
- 
-public:
-
+class RectangleStyle { public:
   int left;
   int right;
   int bottom;
@@ -23,16 +20,37 @@ public:
   int width;
   int height;
   void fromRect(const QRect& rect);
+};
 
+class TextFormat { public:
+  TextFormat();
+  void fromXml(TiXmlHandle handle);
+
+  QColor color;
+  int size;
+  bool bold;
+  QString family;
+  QFont font();
+
+  private:
+
+    bool fontInitialized_;
+    QFont font_;
 };
 
 class IconStyle { public:
-  PaddingStyle padding;
+  RectangleStyle padding;
   int labelGap;
 };
 
 class BackgroundStyle { public:
-  PaddingStyle padding;
+  RectangleStyle padding;
+};
+
+class TabStyle { public:
+  RectangleStyle padding;
+  RectangleStyle margin;
+  TextFormat textFormat;
 };
 
 
@@ -42,6 +60,7 @@ public:
 
   static IconStyle icon;
   static BackgroundStyle background;
+  static TabStyle tab;
 
   static void loadSkinFile(const QString& filePath);
 

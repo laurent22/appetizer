@@ -22,6 +22,8 @@ public:
   inline int height() const;
   void setWidth(int width);
   void setHeight(int height);
+  void resize(int width, int height);
+  void move(int x, int y);
   QRectF boundingRect() const;
   void addItem(QGraphicsItem* item);
   void addItemAt(QGraphicsItem* item, int index);
@@ -51,7 +53,6 @@ private:
   int width_;
   int height_;
   bool showDebugRectangle_;
-  bool dispatchResizeEvent_;
 
 };
 

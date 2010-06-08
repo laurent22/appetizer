@@ -32,8 +32,7 @@ FolderItemSprite::FolderItemSprite() {
 void FolderItemSprite::setIconSize(int size) {
   if (iconSize_ == size) return;
   iconSize_ = size;
-  setWidth(size + Style::icon.padding.width);
-  setHeight(size + Style::icon.padding.height);
+  resize(size + Style::icon.padding.width, size + Style::icon.padding.height);
   iconSprite_->setSize(size);
   invalidate();
 }
@@ -55,7 +54,7 @@ FolderItem* FolderItemSprite::folderItem() const {
 }
 
 
-void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* event) {
+void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
   mouseInside_ = true;
 
   if (!selectionSprite_) {
@@ -76,7 +75,7 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* event) {
 }
 
 
-void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
+void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* /* event */) {
   mouseInside_ = false;
 
   if (selectionSprite_) {
@@ -95,8 +94,7 @@ void FolderItemSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *
   GraphicsItem::paint(painter, option, widget);  
 
   if (mouseInside_ && selectionSprite_) {
-    selectionSprite_->setWidth(width());
-    selectionSprite_->setHeight(height());
+    selectionSprite_->resize(width(), height());
   }
 
   iconSprite_->setX(Style::icon.padding.left);
