@@ -9,8 +9,10 @@
 using namespace appetizer;
 
 GraphicsItem::GraphicsItem() {
-  width_ = 100;
-  height_ = 100;
+  width_ = -1;
+  height_ = -1;
+  defaultWidth_ = 100;
+  defaultHeight_ = 20;
   showDebugRectangle_ = false;
 }
 
@@ -21,12 +23,24 @@ void GraphicsItem::showDebugRectangle(bool doShow) {
 }
 
 
+int GraphicsItem::defaultWidth() const {
+  return defaultWidth_;
+}
+
+
+int GraphicsItem::defaultHeight() const {
+  return defaultHeight_;
+}
+
+
 int GraphicsItem::width() const {
+  if (width_ < 0) return defaultWidth();
   return width_;
 }
 
 
 int GraphicsItem::height() const {
+  if (height_ < 0) return defaultHeight();
   return height_;
 }
 

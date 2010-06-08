@@ -16,6 +16,29 @@
 
 namespace appetizer {
 
+
+class PageData {
+
+public :
+
+  PageData();
+  ~PageData();
+  inline TabSprite* tab() const;
+  inline IconPanel* iconPanel() const;
+  void setTab(TabSprite* tab);
+  void setIconPanel(IconPanel* iconPanel);
+
+private:
+
+  TabSprite* tab_;
+  IconPanel* iconPanel_;
+
+};
+
+typedef std::vector<PageData*> PageDataVector;
+
+
+
 class MainPanel : public GraphicsItem {
 
 public:
@@ -23,6 +46,10 @@ public:
   MainPanel();
   void drawMask(QPainter* painter, int x, int y, int width, int height);
   NineSliceItem* backgroundSprite() const;
+  void loadFolderItems(int rootFolderItemId);
+  FolderItem* rootFolderItem();
+  PageData* showPage(int index);
+  PageData* getPage(int index);
 
 protected:
 
@@ -35,6 +62,9 @@ private:
   NineSlicePainter maskNineSlicePainter_;
   QPixmap maskPixmap_;
   IconPanel* iconPanel_;
+  PageDataVector pages_;
+  int rootFolderItemId_;
+  int pageIndex_;
 
 };
 

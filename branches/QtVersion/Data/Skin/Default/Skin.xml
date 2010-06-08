@@ -18,15 +18,16 @@
 	</Icon>
 	
 	<Background>
-		<Padding>10,10,10,10</Padding>
+		<Padding>15,15,15,15</Padding>
 	</Background>
 	
 	<Tab>
 		<TextFormat>
-			<Size>16</Size>
-			<Color>222, 111, 0</Color>
+			<Size>10</Size>
+			<Color>0, 0, 0</Color>
 			<Bold>true</Bold>
 		</TextFormat>
+		<Margin>0,0,5,0</Margin>
 	</Tab>
 	
 </Skin>

@@ -10,6 +10,8 @@
 // Disable warning for using unsafe functions
 #define _CRT_SECURE_NO_DEPRECATE 1
 #define _T(x)      L ## x
+#define _(x)       x
+#define SAFE_DELETE(x)   if (x) { delete x; x = NULL; }
 
 #ifdef __WINDOWS__
 #include <windows.h>

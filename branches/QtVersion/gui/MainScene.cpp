@@ -24,6 +24,8 @@ MainScene::MainScene() {
                    this, SLOT(resizeSprite_mousePressed()));
   QObject::connect(resizeSprite_, SIGNAL(mouseMoved()),
                    this, SLOT(resizeSprite_mouseMoved()));
+
+  mainPanel_->loadFolderItems(Application::instance()->rootFolderItem()->id());
 }
 
 

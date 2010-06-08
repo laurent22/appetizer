@@ -12,6 +12,8 @@
 using namespace appetizer;
 
 TabSprite::TabSprite() {
+  folderItemId_ = -1;
+
   backgroundSprite_ = new NineSliceItem();
   backgroundSprite_->loadBackgroundImage("s:\\Docs\\PROGS\\C++\\Appetizer\\source\\branches\\QtVersion\\Data\\Skin\\Base\\IconOverlayUp.png");
   addItem(backgroundSprite_);
@@ -31,12 +33,25 @@ void TabSprite::applySkin() {
 }
 
 
+void TabSprite::loadFolderItem(int folderItemId) {
+  folderItemId_  = folderItemId;
+  invalidate();
+}
+
+
+FolderItem* TabSprite::folderItem() {
+  return FolderItem::getFolderItemById(folderItemId_);
+}
+
+
 void TabSprite::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   GraphicsItem::paint(painter, option, widget);
 
+  FolderItem* folderItem = this->folderItem();
+
   backgroundSprite_->resize(width(), height());
 
-  textSprite_->setText("First tab");
+  textSprite_->setText(folderItem ? folderItem->name() : "");
 
   QRectF r = textSprite_->boundingRect();
   int y = floor((height() - r.height()) / 2);

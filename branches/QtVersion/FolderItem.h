@@ -41,6 +41,7 @@ public:
   void setAutoRun(bool autoRun);
   int type() const;
   int id() const;
+  QString name() const;
   QString path() const;
   QString resolvedPath();
 

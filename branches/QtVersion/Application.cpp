@@ -40,7 +40,7 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
 
   mainWindow_ = new MainWindow();
   mainWindow_->show();
-  mainWindow_->resize(200, 200);
+  mainWindow_->resize(320, 200);
 }
 
 
@@ -77,6 +77,7 @@ void Application::loadFolderItems() {
   FolderItem* currentSection = NULL;
   if (fileVersion == "1.0") {
     currentSection = FolderItem::createFolderItem(FOLDER_ITEM_TYPE_SECTION);
+    currentSection->setName(_("General"));
     rootFolderItem_->addChild(currentSection);
   }
   
@@ -93,6 +94,12 @@ void Application::loadFolderItems() {
       qWarning() << QString("User::Load: Unknown element: %s").arg(elementName);
     }
   }
+
+
+  qWarning() << "REMOVE CODE BELOW";
+  currentSection = FolderItem::createFolderItem(FOLDER_ITEM_TYPE_SECTION);
+  currentSection->setName("Test");
+  rootFolderItem_->addChild(currentSection);
 }
 
 

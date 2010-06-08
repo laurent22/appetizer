@@ -9,6 +9,7 @@
 #ifndef Appetizer_TabSprite_H
 #define Appetizer_TabSprite_H
 
+#include <FolderItem.h>
 #include <GraphicsItem.h>
 #include <NineSliceItem.h>
 
@@ -19,6 +20,9 @@ class TabSprite : public GraphicsItem {
 public:
 
   TabSprite();
+  void applySkin();
+  void loadFolderItem(int folderItemId);
+  FolderItem* folderItem();
 
 protected:
 
@@ -28,6 +32,7 @@ private:
 
   NineSliceItem* backgroundSprite_;
   QGraphicsSimpleTextItem* textSprite_;
+  int folderItemId_;
 
 };
 

@@ -172,6 +172,11 @@ int FolderItem::id() const {
 }
 
 
+QString FolderItem::name() const {
+  return name_;
+}
+
+
 FolderItem* FolderItem::parent() const {
   return parent_;
 }

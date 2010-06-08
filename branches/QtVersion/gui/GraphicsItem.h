@@ -20,6 +20,8 @@ public:
   GraphicsItem();
   inline int width() const;
   inline int height() const;
+  virtual int defaultWidth() const;
+  virtual int defaultHeight() const;
   void setWidth(int width);
   void setHeight(int height);
   void resize(int width, int height);
@@ -50,8 +52,10 @@ protected:
 
 private:
 
-  int width_;
-  int height_;
+  mutable int width_;
+  mutable int height_;
+  mutable int defaultWidth_;
+  mutable int defaultHeight_;
   bool showDebugRectangle_;
 
 };
