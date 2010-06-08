@@ -50,6 +50,8 @@ public:
   QString name() const;
   QString path() const;
   QString resolvedPath();
+  int displayIconSize() const;
+  void setDisplayIconSize(int v);
 
   bool disposed() const;
   void dispose();
@@ -90,6 +92,7 @@ private:
   FolderItemVector children_;
   FolderItem* parent_;
   bool disposed_;
+  int displayIconSize_;
   std::map<int, IconData*> iconData_;
   std::map<int, QPixmap*> iconPixmaps_;
   std::map<int, GetIconThread*> getIconThreads_;

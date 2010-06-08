@@ -5,7 +5,10 @@
 */
 
 #include <stable.h>
+
+#include <Constants.h>
 #include <IconPanel.h>
+#include <UserSettings.h>
 
 using namespace appetizer;
 
@@ -15,6 +18,14 @@ IconPanel::IconPanel() {
   contentHeight_ = 0;
   rebuildFolderItems_ = false;
   updateLayout_ = false;
+  iconSize_ = SMALL_ICON_SIZE;
+}
+
+
+void IconPanel::setIconSize(int iconSize) {
+  if (iconSize == iconSize_) return;
+  iconSize_ = iconSize;
+  invalidate();
 }
 
 
@@ -64,7 +75,7 @@ void IconPanel::updateDisplay() {
         r->setFolderItem(folderItem->id());
         folderItemRenderers_.push_back(r);
 
-        r->setIconSize(20);
+        r->setIconSize(iconSize());
 
         addItem(r);
       }

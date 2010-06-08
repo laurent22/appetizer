@@ -9,6 +9,7 @@
 #include <FilePaths.h>
 #include <FolderItem.h>
 #include <PathVariables.h>
+#include <UserSettings.h>
 #include <XmlUtil.h>
 
 using namespace appetizer;
@@ -29,11 +30,18 @@ FolderItem::FolderItem(int type) {
   automaticallyAdded_ = false;
   parent_ = NULL;
   disposed_ = false;
+  displayIconSize_ = -1;
 }
 
 
 FolderItem::~FolderItem() {
   clearIconCache();
+}
+
+
+int FolderItem::displayIconSize() const {
+  if (displayIconSize_ > 0) return displayIconSize_;
+  return UserSettings::instance()->GetInt("IconSize");
 }
 
 
@@ -52,7 +60,7 @@ void FolderItem::clearIconCache() {
 IconData* FolderItem::loadIconData(int iconSize) {
   if (iconData_.find(iconSize) != iconData_.end()) return iconData_[iconSize];
   if (getIconThreads_.find(iconSize) != getIconThreads_.end()) return NULL;
-  
+
   GetIconThread* thread = new GetIconThread();
   thread->setIconData(resolvedPath(), iconSize);
   getIconThreads_[iconSize] = thread;
@@ -69,7 +77,7 @@ int FolderItem::iconDataLoadingState(int iconSize) {
   if (iconData_.find(iconSize) != iconData_.end()) return ICON_LOADING_STATE_LOADED;
   if (getIconThreads_.find(iconSize) != getIconThreads_.end()) {
     GetIconThread* thread = getIconThreads_[iconSize];
-    return thread->isRunning() ? ICON_LOADING_STATE_LOADING : ICON_LOADING_STATE_ERROR;
+    return thread->isRunning() ? ICON_LOADING_STATE_LOADING : ICON_LOADING_STATE_UNLOADED;
   }
   return ICON_LOADING_STATE_UNLOADED;
 }
@@ -94,9 +102,11 @@ QPixmap* FolderItem::getIconPixmap(int iconSize) {
   IconData* d = getIconData(iconSize);
   QPixmap* pixmap = NULL;
 
-  if (d) pixmap = new QPixmap(QPixmap::fromWinHICON(d->hIcon));
-  iconPixmaps_[iconSize] = pixmap;
-  
+  if (d) {
+    pixmap = IconUtil::iconDataToPixmap(d);
+    iconPixmaps_[iconSize] = pixmap;
+  }
+
   return pixmap;
 }
 
@@ -219,6 +229,11 @@ void FolderItem::setName(const QString& name) {
 }
 
 
+void FolderItem::setDisplayIconSize(int v) {
+  displayIconSize_ = v;
+}
+
+
 void FolderItem::setPath(const QString& filePath) {
   path_ = filePath;
   resolvedPath_ = "";
@@ -283,7 +298,7 @@ void FolderItem::fromXml(TiXmlElement* xml) {
   setPath(XmlUtil::readElementText(handle, "FilePath"));
   setAutomaticallyAdded(XmlUtil::readElementTextAsBool(handle, "AutomaticallyAdded"));
   type_ = XmlUtil::readElementTextAsBool(handle, "IsGroup") ? FolderItem::Type_Group : FolderItem::Type_File;
-  //uuid_ = XmlUtil::readElementText(handle, "UUID");
+  displayIconSize_ = XmlUtil::readElementTextAsInt(handle, "IconSize", -1);
   parameters_ = XmlUtil::readElementText(handle, "Parameters");
 
   //wxArrayString customIconData;

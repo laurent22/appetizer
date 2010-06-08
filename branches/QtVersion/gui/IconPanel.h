@@ -25,6 +25,8 @@ public:
   FolderItem* rootFolderItem();
   void updateDisplay();
   int defaultHeight() const;
+  inline int iconSize() const { return iconSize_; }
+  void setIconSize(int iconSize);
 
 protected:
 
@@ -37,6 +39,7 @@ private:
   std::vector<FolderItemSprite*> folderItemRenderers_;
   bool updateLayout_;
   int contentHeight_;
+  int iconSize_;
 
 };
 

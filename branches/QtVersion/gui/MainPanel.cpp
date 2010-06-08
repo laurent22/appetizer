@@ -163,6 +163,7 @@ PageData* MainPanel::showPage(int index) {
     FolderItem* folderItem = page->folderItem();
     IconPanel* iconPanel = new IconPanel();
     iconPanel->loadFolderItems(folderItem->id());
+    iconPanel->setIconSize(folderItem->displayIconSize());
     page->setIconPanel(iconPanel);
   }
 

@@ -10,6 +10,7 @@ using namespace appetizer;
 
 QMutex getFolderItemIcon_mutex;
 
+
 IconData* IconUtil::getFolderItemIcon(const QString& filePath, int iconSize) {
   QMutexLocker locker(&getFolderItemIcon_mutex);
 
@@ -133,4 +134,44 @@ IconData* IconUtil::getExecutableIcon(const QString& filePath, int iconSize, int
   #endif // __WINDOWS__
 
   return NULL;
+}
+
+
+QPixmap* IconUtil::iconDataToPixmap(IconData* iconData) {
+  QPixmap* output = NULL;
+  QPixmap tempPixmap = QPixmap::fromWinHICON(iconData->hIcon);
+
+  if (tempPixmap.width() > 48) {
+    const QImage image = tempPixmap.toImage();
+
+    bool isBadIcon = true;
+    for (int i = 0; i < 100; i++) {
+      int pixelX = rand() % image.width();
+      int pixelY;
+      if (pixelX < 48) {
+        pixelY = rand() % (image.height() - 48) + 48;
+      } else {
+        pixelY = rand() % image.height();
+      }
+
+      QRgb rgb = image.pixel(pixelX, pixelY);
+      int alpha = qAlpha(rgb);
+
+      if (alpha > 0) {
+        isBadIcon = false;
+        break;
+      }
+    }
+
+    if (isBadIcon) {
+      output = new QPixmap(tempPixmap.copy(0,0,48,48));
+    } else {
+      output = new QPixmap(tempPixmap);
+    }
+
+  } else {
+    output = new QPixmap(tempPixmap);
+  }
+
+  return output;
 }
