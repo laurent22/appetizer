@@ -37,7 +37,8 @@ void ScrollPane::setContent(GraphicsItem* content) {
 
 
 int ScrollPane::contentWidth() {
-  return width() - scrollBar_->width();
+  if (scrollBar_->scrollable()) return width() - scrollBar_->width();
+  return width();
 }
 
 
@@ -52,19 +53,13 @@ void ScrollPane::scrollBar_valueChanged() {
 }
 
 
-//QPainterPath ScrollPane::shape() const {
-//QPainterPath path;
-//path.addEllipse(boundingRect());
-//return path;
-//}
-
-
 void ScrollPane::updateDisplay() {
   GraphicsItem::updateDisplay();
   
   scrollBar_->move(width() - scrollBar_->width(), 0);
   scrollBar_->setHeight(height());
   scrollBar_->setContentHeight(contentHeight());
+  scrollBar_->setVisible(scrollBar_->scrollable());
 
   if (content_) content_->setY(scrollBar_->value() * (height() - contentHeight()));
 }
