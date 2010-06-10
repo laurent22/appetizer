@@ -36,6 +36,7 @@
 #include <QGraphicsView>
 #include <QIcon>
 #include <QImage>
+#include <QMenu>
 #include <QMutex>
 #include <QMutexLocker>
 #include <QPainter>

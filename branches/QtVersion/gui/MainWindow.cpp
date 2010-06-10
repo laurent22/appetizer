@@ -12,9 +12,6 @@
 using namespace appetizer;
 
 MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint) {
-  alphaWidget_ = new CustomAlphaWidget();
-  alphaWidget_->show();
-
   scene_ = new MainScene();
 
   view_ = new QGraphicsView(this);
@@ -29,16 +26,55 @@ MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSyst
                    this, SLOT(backgroundSprite_mousePressed()));
   QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mouseMoved()),
                    this, SLOT(backgroundSprite_mouseMoved()));
+
+ setWindowFlags(Qt::FramelessWindowHint | Qt::Widget);
+ resize(500,500);
+ SetWindowLong(winId(), 
+               GWL_EXSTYLE, 
+               GetWindowLong(winId(), GWL_EXSTYLE) | WS_EX_LAYERED);	
+}
+
+
+void MainWindow::updateAlpha(QPixmap& widgetMask)
+{	
+ HBITMAP oldBitmap;
+ HBITMAP hBitmap;	
+ SIZE size;
+ size.cx = widgetMask.width();
+ size.cy = widgetMask.height();
+ HDC screenDc = GetDC(NULL);
+ POINT pointSource;
+ pointSource.x = 0;
+ pointSource.y = 0; 
+ POINT topPos;
+ topPos.x = x();
+ topPos.y = y();	
+ HDC memDc = CreateCompatibleDC(screenDc);
+ BLENDFUNCTION blend;
+ blend.BlendOp             = AC_SRC_OVER;
+ blend.BlendFlags          = 0;
+ blend.SourceConstantAlpha = 255;
+ blend.AlphaFormat         = AC_SRC_ALPHA;
+ hBitmap = widgetMask.toWinHBITMAP(QPixmap::PremultipliedAlpha); 
+ oldBitmap = (HBITMAP)SelectObject(memDc, hBitmap);
+ UpdateLayeredWindow(winId(), screenDc,  &topPos,  &size, memDc,  &pointSource, 0, &blend, ULW_ALPHA);
+ ReleaseDC( NULL, screenDc);
+ if (hBitmap!=NULL) {
+   SelectObject(memDc, oldBitmap);
+   DeleteObject(hBitmap); 
+   DeleteObject(hBitmap);
+ }
+ DeleteDC(memDc); 
 }
 
 
 void MainWindow::updateAlphaWidget() {
-  QPixmap pixmap(320, 200);
-  pixmap.fill(Qt::red);
+  QPixmap pixmap(scene_->width(), scene_->height());
+  pixmap.fill(QColor(0,0,0,0));
   QPainter painter(&pixmap);
   painter.begin(this);
   scene_->render(&painter);
-  alphaWidget_->updateAlpha(pixmap);
+  updateAlpha(pixmap);
 }
 
 

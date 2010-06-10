@@ -22,6 +22,7 @@ class MainWindow : public QWidget {
 public:
 
   MainWindow();
+  void updateAlpha(QPixmap& widgetMask);
 
 public slots:
 
@@ -41,8 +42,6 @@ private:
   QGraphicsView* view_;
   MainScene* scene_;
   MoveDragData moveDragData_;
-
-  CustomAlphaWidget* alphaWidget_;
 
 protected:
 
