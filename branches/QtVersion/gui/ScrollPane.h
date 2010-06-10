@@ -39,6 +39,8 @@ private:
 	ScrollBar* scrollBar_;
   GraphicsItem* content_;
 
+  static const int scrollBarGap_ = 2;
+
 };
 
 }

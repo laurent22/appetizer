@@ -228,21 +228,11 @@ void MainPanel::updateDisplay() {
   }
 
   panelY = panelY + Style::iconPanel.padding.top;
-  PageData* page = this->page();
 
   int scrollPaneWidth = width() - Style::background.padding.width;
   int scrollPaneHeight = height() - panelY - Style::background.padding.bottom;
   scrollPane_->setX(Style::background.padding.left);
   scrollPane_->setY(panelY);
   scrollPane_->resize(scrollPaneWidth, scrollPaneHeight);
-
-  if (page) {
-    IconPanel* iconPanel = page->iconPanel();
-    if (iconPanel->width() != scrollPane_->contentWidth()) {
-      iconPanel->setWidth(scrollPane_->contentWidth());
-      iconPanel->updateDisplay();
-    }    
-  }
-
   scrollPane_->setVisible(scrollPaneWidth > 0 && scrollPaneHeight > 0);
 }

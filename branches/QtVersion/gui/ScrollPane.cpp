@@ -37,7 +37,7 @@ void ScrollPane::setContent(GraphicsItem* content) {
 
 
 int ScrollPane::contentWidth() {
-  if (scrollBar_->scrollable()) return width() - scrollBar_->width() - 6;
+  if (scrollBar_->scrollable()) return width() - scrollBar_->width() - scrollBarGap_;
   return width();
 }
 
@@ -55,11 +55,21 @@ void ScrollPane::scrollBar_valueChanged() {
 
 void ScrollPane::updateDisplay() {
   GraphicsItem::updateDisplay();
+
+  if (content_) {
+    content_->setY(scrollBar_->value() * (height() - contentHeight()));
+    content_->setWidth(width() - scrollBar_->width() - scrollBarGap_);
+    content_->updateDisplay();
+  } 
   
   scrollBar_->move(width() - scrollBar_->width(), 0);
   scrollBar_->setHeight(height());
   scrollBar_->setContentHeight(contentHeight());
-  scrollBar_->setVisible(scrollBar_->scrollable());
 
-  if (content_) content_->setY(scrollBar_->value() * (height() - contentHeight()));
+  if (!scrollBar_->scrollable()) {
+    scrollBar_->setVisible(false);
+    content_->setWidth(width());
+  } else {
+    scrollBar_->setVisible(true);
+  }
 }
