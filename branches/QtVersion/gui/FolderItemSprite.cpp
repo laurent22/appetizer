@@ -5,6 +5,7 @@
 */
 
 #include <stable.h>
+
 #include <Application.h>
 #include <Constants.h>
 #include <FilePaths.h>
@@ -14,13 +15,13 @@
 using namespace appetizer;
 
 
-FolderItemSprite::FolderItemSprite() {
+FolderItemSprite::FolderItemSprite(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   folderItemId_ = -1;
   iconSize_ = -1;
   mouseInside_ = false;
   selectionSprite_ = NULL;
 
-  iconSprite_ = new IconSprite();
+  iconSprite_ = new IconSprite(this->parentWindow());
   addItem(iconSprite_);
 
   setIconSize(SMALL_ICON_SIZE);
@@ -58,7 +59,7 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
   mouseInside_ = true;
 
   if (!selectionSprite_) {
-    selectionSprite_ = new NineSliceItem();  
+    selectionSprite_ = new NineSliceItem(parentWindow());  
     selectionSprite_->loadBackgroundImage(FilePaths::GetSkinFile("IconOverlayUp.png"));
     addItemAt(selectionSprite_, 0);
 
@@ -71,9 +72,9 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
   selectionSpriteAnimation_->setEndValue(1);
   selectionSpriteAnimation_->start();
 
-  Application::instance()->mainWindow()->updateAlphaWidget();
+  Application::instance()->mainWindow()->invalidateDisplay();
 
-  invalidate();
+  updateDisplay();
 }
 
 
@@ -88,9 +89,9 @@ void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* /* event */) {
     selectionSpriteAnimation_->start();
   }
 
-  Application::instance()->mainWindow()->updateAlphaWidget();
+  Application::instance()->mainWindow()->invalidateDisplay();
 
-  invalidate();
+  updateDisplay();
 }
 
 

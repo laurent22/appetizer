@@ -49,8 +49,19 @@
 #include <QResizeEvent>
 #include <QSettings>
 #include <QThread>
+#include <QTime>
+#include <QTimer>
 #include <QWidget>
 
 #include <tinyxml/tinyxml.h>
+
+#ifdef __WINDOWS__
+#ifdef __DEBUG__
+// To find memory leaks, add _CrtSetBreakAlloc(int memoryBlock)
+// just at the beginning of MiniLaunchBar::OnInit
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#endif // __DEBUG__
+#endif // __WINDOWS__
 
 #endif // STABLE_H

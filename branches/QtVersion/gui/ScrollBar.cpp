@@ -12,16 +12,16 @@
 using namespace appetizer;
 
 
-ScrollBar::ScrollBar() {
+ScrollBar::ScrollBar(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   dragData_ = NULL;
   value_ = 0;
   contentHeight_ = 0;
 
-  background_ = new NineSliceItem();
+  background_ = new NineSliceItem(this->parentWindow());
   background_->loadBackgroundImage(FilePaths::GetSkinFile("ScrollBarBackground.png"));
   addItem(background_);
 
-  knob_ = new NineSliceItem();
+  knob_ = new NineSliceItem(this->parentWindow());
   knob_->loadBackgroundImage(FilePaths::GetSkinFile("ScrollBarKnob.png"));
   addItem(knob_);
 

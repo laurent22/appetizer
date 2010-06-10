@@ -10,6 +10,7 @@
 #define IconPanel_H
 
 #include <GraphicsItem.h>
+#include <GraphicsWindow.h>
 #include <NineSlicePainter.h>
 #include <FolderItem.h>
 #include <FolderItemSprite.h>
@@ -20,7 +21,7 @@ class IconPanel : public GraphicsItem {
 
 public:
 
-  IconPanel();
+  IconPanel(GraphicsWindow* parentWindow);
   void loadFolderItems(int rootFolderItemId);
   FolderItem* rootFolderItem();
   void updateDisplay();

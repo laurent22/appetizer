@@ -11,6 +11,7 @@
 
 #include <FolderItem.h>
 #include <GraphicsItem.h>
+#include <GraphicsWindow.h>
 #include <NineSliceItem.h>
 
 namespace appetizer {
@@ -19,7 +20,7 @@ class TabSprite : public GraphicsItem {
 
 public:
 
-  TabSprite();
+  TabSprite(GraphicsWindow* parentWindow);
   void applySkin();
   void loadFolderItem(int folderItemId);
   FolderItem* folderItem();

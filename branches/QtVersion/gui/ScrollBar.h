@@ -10,6 +10,7 @@
 #define Appetizer_ScrollBar_H
 
 #include <GraphicsItem.h>
+#include <GraphicsWindow.h>
 #include <NineSliceItem.h>
 
 namespace appetizer {
@@ -20,7 +21,7 @@ class ScrollBar : public GraphicsItem {
 
 public:
 
-  ScrollBar();
+  ScrollBar(GraphicsWindow* parentWindow);
   void updateDisplay();
   int defaultWidth() const;
   inline float value() { if (!scrollable()) return 0; return value_; }

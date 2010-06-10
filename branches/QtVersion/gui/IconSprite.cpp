@@ -5,13 +5,15 @@
 */
 
 #include <stable.h>
+
 #include <Application.h>
 #include <Constants.h>
 #include <IconSprite.h>
+
 using namespace appetizer;
 
 
-IconSprite::IconSprite() {
+IconSprite::IconSprite(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   folderItemId_ = -1;
   size_ = LARGE_ICON_SIZE;
 }

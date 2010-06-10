@@ -45,8 +45,8 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="4"
-				AdditionalIncludeDirectories="c:\Qt\2010.02.1\qt\include\QtCore;c:\Qt\2010.02.1\qt\include\QtGui;c:\Qt\2010.02.1\qt\include;c:\Qt\2010.02.1\qt\include\ActiveQt;tmp\moc\debug_static;&quot;c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008&quot;;.;./gui;./utils;./third_party"
-				PreprocessorDefinitions="_WINDOWS;UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;__WINDOWS__"
+				AdditionalIncludeDirectories="c:\Qt\2010.02.1\qt\include\QtCore;c:\Qt\2010.02.1\qt\include\QtGui;c:\Qt\2010.02.1\qt\include;c:\Qt\2010.02.1\qt\include\ActiveQt;tmp\moc\debug_static;&quot;c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008&quot;;.;./gui;./utils;./third_party;./guilib"
+				PreprocessorDefinitions="_WINDOWS;UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;__WINDOWS__;__DEBUG__"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="1"
 				RuntimeLibrary="3"
@@ -215,10 +215,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CustomAlphaWidget.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\FilePaths.cpp"
 				>
 			</File>
@@ -273,10 +269,6 @@
 				>
 				<File
 					RelativePath=".\gui\FolderItemSprite.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\gui\GraphicsItem.cpp"
 					>
 				</File>
 				<File
@@ -412,6 +404,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\moc\moc_GraphicsWindow.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\moc\moc_IconSprite.cpp"
 					>
 				</File>
@@ -436,6 +432,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="guilib"
+				>
+				<File
+					RelativePath=".\guilib\GraphicsItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\guilib\GraphicsScene.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\guilib\GraphicsWindow.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -448,10 +460,6 @@
 			</File>
 			<File
 				RelativePath=".\Constants.h"
-				>
-			</File>
-			<File
-				RelativePath=".\CustomAlphaWidget.h"
 				>
 			</File>
 			<File
@@ -487,10 +495,6 @@
 				>
 				<File
 					RelativePath=".\gui\FolderItemSprite.h"
-					>
-				</File>
-				<File
-					RelativePath=".\gui\GraphicsItem.h"
 					>
 				</File>
 				<File
@@ -565,6 +569,22 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="guilib"
+				>
+				<File
+					RelativePath=".\guilib\GraphicsItem.h"
+					>
+				</File>
+				<File
+					RelativePath=".\guilib\GraphicsScene.h"
+					>
+				</File>
+				<File
+					RelativePath=".\guilib\GraphicsWindow.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

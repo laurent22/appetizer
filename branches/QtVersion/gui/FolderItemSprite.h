@@ -10,6 +10,7 @@
 #define FolderItemRenderer_H
 
 #include <FolderItem.h>
+#include <GraphicsWindow.h>
 #include <IconSprite.h>
 #include <NineSliceItem.h>
 #include <NineSlicePainter.h>
@@ -20,7 +21,7 @@ class FolderItemSprite : public GraphicsItem {
 
 public:
 
-  FolderItemSprite();
+  FolderItemSprite(GraphicsWindow* parentWindow);
 
   void setFolderItem(int folderItemId);
   FolderItem* folderItem() const;

@@ -5,11 +5,12 @@
 */
 
 #include <stable.h>
+
 #include <NineSliceItem.h>
+
 using namespace appetizer;
 
-
-NineSliceItem::NineSliceItem() {
+NineSliceItem::NineSliceItem(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   
 }
 

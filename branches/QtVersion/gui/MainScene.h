@@ -9,18 +9,20 @@
 #ifndef MainScene_H
 #define MainScene_H
 
+#include <GraphicsScene.h>
+#include <GraphicsWindow.h>
 #include <MainPanel.h>
 
 namespace appetizer {
 
 
-class MainScene : public QGraphicsScene {
+class MainScene : public GraphicsScene {
 
   Q_OBJECT
 
 public:
 
-  MainScene();
+  MainScene(GraphicsWindow* parentWindow);
   void drawMask(QPainter* painter, int x, int y, int width, int height);  
   MainPanel* mainPanel() const;
 

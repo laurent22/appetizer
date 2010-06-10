@@ -10,27 +10,25 @@
 #define MainWindow_H
 
 #include <MainScene.h>
-
-#include <CustomAlphaWidget.h>
+#include <GraphicsWindow.h>
 
 namespace appetizer {
 
-class MainWindow : public QWidget {
+class MainWindow : public GraphicsWindow {
 
   Q_OBJECT
 
 public:
 
   MainWindow();
-  void updateAlpha(QPixmap& widgetMask);
+  ~MainWindow();
+  QPixmap* getWindowPixmap();
 
 public slots:
 
   void scene_sceneRectChanged(const QRectF& rect);
   void backgroundSprite_mousePressed();
   void backgroundSprite_mouseMoved();
-
-  void updateAlphaWidget();
 
 private:
 
@@ -42,6 +40,7 @@ private:
   QGraphicsView* view_;
   MainScene* scene_;
   MoveDragData moveDragData_;
+  QPixmap* windowPixmap_;
 
 protected:
 

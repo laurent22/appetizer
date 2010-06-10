@@ -10,6 +10,7 @@
 #define Appetizer_ScrollPane_H
 
 #include <GraphicsItem.h>
+#include <GraphicsWindow.h>
 #include <ScrollBar.h>
 
 namespace appetizer {
@@ -20,7 +21,7 @@ class ScrollPane : public GraphicsItem {
 
 public:
 
-  ScrollPane();
+  ScrollPane(GraphicsWindow* parentWindow);
   GraphicsItem* content();
   void setContent(GraphicsItem* content);
   int contentWidth();

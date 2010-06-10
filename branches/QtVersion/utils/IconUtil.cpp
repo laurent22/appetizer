@@ -87,7 +87,6 @@ IconData* IconUtil::getExecutableIcon(const QString& filePath, int iconSize, int
   wchar_t filePathPtr[MAX_PATH];
   filePath.toWCharArray(filePathPtr);
   filePathPtr[filePath.length()] = 0;
-  //std::auto_ptr<wchar_t> filePathW(filePathPtr);
 
   if (iconSize <= 32) {
     HICON smallIcon;

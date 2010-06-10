@@ -11,6 +11,7 @@
 
 #include <FolderItem.h>
 #include <GraphicsItem.h>
+#include <GraphicsWindow.h>
 
 namespace appetizer {
 
@@ -20,7 +21,7 @@ class IconSprite : public GraphicsItem {
 
 public:
 
-  IconSprite();
+  IconSprite(GraphicsWindow* parentWindow);
   FolderItem* folderItem() const;
   void setFolderItem(int folderItemId);
   int size() const;

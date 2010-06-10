@@ -13,7 +13,7 @@
 using namespace appetizer;
 
 
-IconPanel::IconPanel() {
+IconPanel::IconPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   rootFolderItemId_ = -1;
   contentHeight_ = 0;
   rebuildFolderItems_ = false;
@@ -71,7 +71,7 @@ void IconPanel::updateDisplay() {
     if (source) {
       for (int i = 0; i < source->numChildren(); i++) {
         FolderItem* folderItem = source->getChildAt(i);
-        FolderItemSprite* r = new FolderItemSprite();
+        FolderItemSprite* r = new FolderItemSprite(parentWindow());
         r->setFolderItem(folderItem->id());
         folderItemRenderers_.push_back(r);
 

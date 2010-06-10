@@ -10,6 +10,7 @@
 #define NineSliceItem_H
 
 #include <GraphicsItem.h>
+#include <GraphicsWindow.h>
 #include <NineSlicePainter.h>
 
 namespace appetizer {
@@ -18,7 +19,7 @@ class NineSliceItem : public GraphicsItem {
 
 public:
 
-  NineSliceItem();
+  NineSliceItem(GraphicsWindow* parentWindow);
   void loadBackgroundImage(QString backgroundFilePath);
   NineSlicePainter& nineSlicePainter();
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

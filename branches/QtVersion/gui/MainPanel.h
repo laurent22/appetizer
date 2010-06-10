@@ -10,6 +10,7 @@
 #define Appetizer_MainPanel_H
 
 #include <GraphicsItem.h>
+#include <GraphicsWindow.h>
 #include <IconPanel.h>
 #include <NineSliceItem.h>
 #include <ScrollPane.h>
@@ -49,7 +50,7 @@ class MainPanel : public GraphicsItem {
 
 public:
 
-  MainPanel();
+  MainPanel(GraphicsWindow* parentWindow);
   void drawMask(QPainter* painter, int x, int y, int width, int height);
   NineSliceItem* backgroundSprite() const;
   void loadFolderItems(int rootFolderItemId);

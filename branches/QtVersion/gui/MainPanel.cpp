@@ -58,17 +58,17 @@ void PageData::setIconPanel(IconPanel* iconPanel) {
 }
 
 
-MainPanel::MainPanel() {
+MainPanel::MainPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   rootFolderItemId_ = -1;
   pageIndex_ = -1;
 
   QString backgroundFile = FilePaths::GetSkinFile("Background.png");
 
-  backgroundSprite_ = new NineSliceItem();
+  backgroundSprite_ = new NineSliceItem(this->parentWindow());
   backgroundSprite_->loadBackgroundImage(backgroundFile);
   addItem(backgroundSprite_);
 
-  scrollPane_ = new ScrollPane();
+  scrollPane_ = new ScrollPane(this->parentWindow());
   addItem(scrollPane_);
 
   lastDrawnMaskSize_ = QSize(0, 0);
@@ -112,7 +112,7 @@ void MainPanel::loadFolderItems(int rootFolderItemId) {
       return;
     }
 
-    TabSprite* tab = new TabSprite();
+    TabSprite* tab = new TabSprite(this->parentWindow());
     addItem(tab);
     connect(tab, SIGNAL(mouseReleased()), this, SLOT(tab_clicked()));
     tab->loadFolderItem(sectionFolderItem->id());
@@ -161,7 +161,7 @@ PageData* MainPanel::showPage(int index) {
 
   if (!page->iconPanel()) {
     FolderItem* folderItem = page->folderItem();
-    IconPanel* iconPanel = new IconPanel();
+    IconPanel* iconPanel = new IconPanel(this->parentWindow());
     iconPanel->loadFolderItems(folderItem->id());
     iconPanel->setIconSize(folderItem->displayIconSize());
     page->setIconPanel(iconPanel);

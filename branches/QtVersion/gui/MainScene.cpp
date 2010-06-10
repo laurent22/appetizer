@@ -10,15 +10,13 @@
 #include <MainScene.h>
 #include <Style.h>
 
-#include <ScrollBar.h>
-
 using namespace appetizer;
 
-MainScene::MainScene() {
-  mainPanel_ = new MainPanel();
+MainScene::MainScene(GraphicsWindow* parentWindow): GraphicsScene(parentWindow) {
+  mainPanel_ = new MainPanel(this->parentWindow());
   addItem(mainPanel_);
 
-  resizeSprite_ = new GraphicsItem();
+  resizeSprite_ = new GraphicsItem(this->parentWindow());
   resizeSprite_->setCursor(Qt::SizeFDiagCursor);
   resizeSprite_->resize(16, 16);
   addItem(resizeSprite_);

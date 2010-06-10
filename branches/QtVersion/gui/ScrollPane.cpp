@@ -11,10 +11,10 @@
 using namespace appetizer;
 
 
-ScrollPane::ScrollPane() {
+ScrollPane::ScrollPane(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   content_ = NULL;
 
-  scrollBar_ = new ScrollBar();
+  scrollBar_ = new ScrollBar(this->parentWindow());
   addItem(scrollBar_);
 
   QObject::connect(scrollBar_, SIGNAL(valueChanged()), this, SLOT(scrollBar_valueChanged()));

@@ -12,10 +12,10 @@
 
 using namespace appetizer;
 
-TabSprite::TabSprite() {
+TabSprite::TabSprite(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   folderItemId_ = -1;
 
-  backgroundSprite_ = new NineSliceItem();
+  backgroundSprite_ = new NineSliceItem(this->parentWindow());
   backgroundSprite_->loadBackgroundImage(FilePaths::GetSkinFile("IconOverlayUp.png"));
   backgroundSprite_->setAcceptedMouseButtons(Qt::NoButton);
   addItem(backgroundSprite_);
