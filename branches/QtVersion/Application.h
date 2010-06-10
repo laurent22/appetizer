@@ -19,7 +19,7 @@ class Application : public QApplication {
 public:
 
   Application(int argc, char *argv[]);
-  MainWindow mainWindow() const;
+  inline MainWindow* mainWindow() { return mainWindow_; };
   int getValidIconSize(int requiredIconSize) const;
   int getNextValidIconSize(int requiredIconSize) const;
   FolderItem* rootFolderItem() const;

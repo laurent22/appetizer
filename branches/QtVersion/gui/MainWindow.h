@@ -11,6 +11,8 @@
 
 #include <MainScene.h>
 
+#include <CustomAlphaWidget.h>
+
 namespace appetizer {
 
 class MainWindow : public QWidget {
@@ -27,6 +29,8 @@ public slots:
   void backgroundSprite_mousePressed();
   void backgroundSprite_mouseMoved();
 
+  void updateAlphaWidget();
+
 private:
 
   struct MoveDragData {
@@ -37,6 +41,8 @@ private:
   QGraphicsView* view_;
   MainScene* scene_;
   MoveDragData moveDragData_;
+
+  CustomAlphaWidget* alphaWidget_;
 
 protected:
 

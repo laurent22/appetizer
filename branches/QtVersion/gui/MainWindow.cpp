@@ -12,6 +12,9 @@
 using namespace appetizer;
 
 MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSystemMenuHint) {
+  alphaWidget_ = new CustomAlphaWidget();
+  alphaWidget_->show();
+
   scene_ = new MainScene();
 
   view_ = new QGraphicsView(this);
@@ -26,6 +29,18 @@ MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSyst
                    this, SLOT(backgroundSprite_mousePressed()));
   QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mouseMoved()),
                    this, SLOT(backgroundSprite_mouseMoved()));
+
+  
+}
+
+
+void MainWindow::updateAlphaWidget() {
+  QPixmap pixmap(320, 200);
+  pixmap.fill(Qt::red);
+  QPainter painter(&pixmap);
+  painter.begin(this);
+  scene_->render(&painter);
+  alphaWidget_->updateAlpha(pixmap);
 }
 
 

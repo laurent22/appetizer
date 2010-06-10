@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CustomAlphaWidget.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FilePaths.cpp"
 				>
 			</File>
@@ -444,6 +448,10 @@
 			</File>
 			<File
 				RelativePath=".\Constants.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CustomAlphaWidget.h"
 				>
 			</File>
 			<File
