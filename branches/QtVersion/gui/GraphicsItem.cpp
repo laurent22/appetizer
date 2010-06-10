@@ -170,7 +170,7 @@ void GraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* /* event */) {
 
 
 void GraphicsItem::updateDisplay() {
-
+  
 }
 
 

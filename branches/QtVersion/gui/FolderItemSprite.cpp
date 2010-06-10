@@ -71,6 +71,8 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
   selectionSpriteAnimation_->setEndValue(1);
   selectionSpriteAnimation_->start();
 
+  Application::instance()->mainWindow()->updateAlphaWidget();
+
   invalidate();
 }
 
@@ -85,6 +87,8 @@ void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* /* event */) {
     selectionSpriteAnimation_->setEndValue(0);
     selectionSpriteAnimation_->start();
   }
+
+  Application::instance()->mainWindow()->updateAlphaWidget();
 
   invalidate();
 }

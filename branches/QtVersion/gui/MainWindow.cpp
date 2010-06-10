@@ -29,8 +29,6 @@ MainWindow::MainWindow(): QWidget(NULL, Qt::FramelessWindowHint | Qt::WindowSyst
                    this, SLOT(backgroundSprite_mousePressed()));
   QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mouseMoved()),
                    this, SLOT(backgroundSprite_mouseMoved()));
-
-  
 }
 
 

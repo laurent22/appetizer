@@ -15,18 +15,8 @@ class  CustomAlphaWidget : public QWidget
      
 public:
  CustomAlphaWidget(QWidget* wgtParent = 0);
- QSize sizeHint() const;
-
  void updateAlpha(QPixmap& widgetMask);
- void setLayered();
 
-protected:
- QRegion childRegion;
-
-private:
- QPoint dragPosition;
- QPixmap widgetMask;
- BYTE alpha;	
 };
 
 #endif
