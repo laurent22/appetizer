@@ -36,6 +36,9 @@ void LauGettext::destroyInstance() {
 
 LauGettext::LauGettext() {
   catalogueName_ = "locale";
+  languageCode_ = "en";
+  countryCode_ = "US";
+  locale_ = "en_US";
 }
 
 

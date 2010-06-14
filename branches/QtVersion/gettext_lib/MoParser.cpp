@@ -9,6 +9,7 @@
 #pragma warning(disable: 4345) // warning C4345: behavior change: an object of POD type constructed with an initializer of the form () will be default-initialized
 #pragma warning(disable: 4996) // warning C4996: 'std::basic_string<_Elem,_Traits,_Ax>::copy': Function call with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
 
+#include <ctype.h>
 #include <fstream>
 #include <sys/stat.h>
 
@@ -147,10 +148,13 @@ char* GettextMoParser::charset() const {
   
   charset_[charsetLength] = '\0';
 
-  if (strcmp(charset_, "CHARSET")) {
+  if (strcmp(charset_, "CHARSET") == 0) {
     delete[] charset_;
     charset_ = NULL;
   }
+
+  // To lowercase
+  for(int i = 0; i < (int)strlen(charset_); ++i) charset_[i] = tolower(charset_[i]);
 
   return charset_;
 }

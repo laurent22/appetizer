@@ -56,6 +56,8 @@
 
 #include <tinyxml/tinyxml.h>
 
+#include <gettext_lib/QtGettext.h>
+
 #if defined(__WINDOWS__) && defined(__DEBUG__)
 // Libraries and macros to detect memory leaks
 #define _CRTDBG_MAP_ALLOC

@@ -34,6 +34,10 @@ public:
 
   GettextMessage* getTranslation(const char* originalString, int originalLength) const; 
 
+protected:
+
+  mutable GettextMoParser moParser_;
+
 private:
 
   std::string catalogueLocation_;
@@ -41,7 +45,6 @@ private:
   std::string countryCode_;
   std::string locale_;
   std::string catalogueName_;
-  mutable GettextMoParser moParser_;
 
   static LauGettext* instance_;
 

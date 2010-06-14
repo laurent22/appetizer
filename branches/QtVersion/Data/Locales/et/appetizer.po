@@ -1,0 +1,919 @@
+# Appetizer application translation file
+# Copyright (C) 2008 Laurent Cozic
+# This file is distributed under the same license as Appetizer.
+# Laurent Cozic, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Appetizer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-05 23:13+0000\n"
+"PO-Revision-Date: 2010-02-08 18:40+0200\n"
+"Last-Translator: Olav <olav.magi@hotmail.com>\n"
+"Language-Team: Appetizer Project\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Hide"
+msgstr "Peida"
+
+#: ApplicationTrayIcon.cpp:29
+msgid "Show"
+msgstr "Näita"
+
+#: ApplicationTrayIcon.cpp:41
+#: MainFrame.cpp:598
+msgid "Eject drive"
+msgstr "viska CD-ROM´i st plaat välja"
+
+#: ApplicationTrayIcon.cpp:46
+#: MainFrame.cpp:1072
+#: OptionPanel.cpp:165
+#: gui\ConfigDialog.cpp:55
+msgid "Configuration"
+msgstr "Seaded"
+
+#: ApplicationTrayIcon.cpp:60
+#: gui\TreeViewDialog.cpp:130
+msgid "Close"
+msgstr "Sulge"
+
+#: FolderItem.cpp:467
+#: gui\TreeViewDialog.cpp:129
+msgid "Organize shortcuts"
+msgstr "Kohanda otseteid"
+
+#: FolderItem.cpp:617
+#: FolderItem.cpp:639
+#: FolderItem.cpp:662
+#, c-format
+msgid "This file doesn't exist or has been deleted (Error %s)"
+msgstr "Seda faili pole olemas või see on kustutatud (Viga %s)"
+
+#: FolderItem.cpp:996
+msgid "Group"
+msgstr "Grupp"
+
+#: FolderItem.cpp:997
+msgid "Unnamed"
+msgstr "Nimetu"
+
+#: FolderItem.cpp:1231
+msgid "Control Panel"
+msgstr "Kontrollpaneel"
+
+#: FolderItem.cpp:1233
+msgid "My Computer"
+msgstr "Minu arvuti"
+
+#: FolderItem.cpp:1235
+msgid "My Network Places"
+msgstr "Minu võrgud"
+
+#: FolderItem.cpp:1237
+msgid "Recycle Bin"
+msgstr "Prügikast"
+
+#: FolderItem.cpp:1239
+msgid "Show Desktop"
+msgstr "Näita töölauda"
+
+#: FolderItem.cpp:1241
+msgid "Windows Explorer"
+msgstr "Aknahaldur"
+
+#: FolderItem.cpp:1243
+msgid "Search"
+msgstr "Otsi"
+
+#: FolderItem.cpp:1245
+msgid "Current Drive"
+msgstr "Hetkel olev kõvaketas"
+
+#: FolderItem.cpp:1247
+msgid "Printers and Faxes"
+msgstr "Printerid ja faksid"
+
+#: FolderItem.cpp:1249
+msgid "Network Connections"
+msgstr "Võrgu ühendused"
+
+#: FolderItem.cpp:1251
+msgid "Calculator"
+msgstr "Kalkulaator"
+
+#: FolderItem.cpp:1253
+msgid "Paint Brush"
+msgstr "Pintsliga värvimine"
+
+#: FolderItem.cpp:1255
+msgid "Notepad"
+msgstr "Märkmik"
+
+#: FolderItem.cpp:1257
+msgid "WordPad"
+msgstr "WordPad"
+
+#: FolderItem.cpp:1259
+msgid "Command Prompt"
+msgstr "Tekstiredaktor"
+
+#: FolderItemRenderer.cpp:200
+#: gui\TreeViewDialog.cpp:106
+msgid "Remove..."
+msgstr "eemalda..."
+
+#: FolderItemRenderer.cpp:205
+msgid "Add to Multi Launch group"
+msgstr "Lisa mitme programmi avamise gruppi"
+
+#: FolderItemRenderer.cpp:214
+msgid "Organize group shortcuts"
+msgstr "Kohanda gruppide otseteid"
+
+#: FolderItemRenderer.cpp:219
+#: gui\TreeViewDialog.cpp:111
+msgid "Properties"
+msgstr "Seaded"
+
+#: IconPanel.cpp:152
+#: OptionPanel.cpp:164
+msgid "New shortcut..."
+msgstr "Uus otsetee..."
+
+#: IconPanel.cpp:156
+msgid "New group..."
+msgstr "Uus grupp..."
+
+#: IconPanel.cpp:191
+msgid "Add special item"
+msgstr "Lisa spetsiaalne ikoon"
+
+#: IconPanel.cpp:414
+#, c-format
+msgid "Could not import this shortcut: %s"
+msgstr "Ei saanud importida seda otseteed: %s"
+
+#: main.cpp:68
+msgid "Uses user data directory to save settings."
+msgstr "Kasutab kasutaja andmete järjekorda, et salvestada seadeid"
+
+#: main.cpp:69
+msgid "Sets user data path (-u will be ignored)"
+msgstr "valib kasutaja andmete pathi (-u ignoreeritakse)"
+
+#: main.cpp:70
+msgid "Displays the log window (useful for debugging)"
+msgstr "Näitab logi faili (kasulik debugginguks)"
+
+#: main.cpp:71
+msgid "Displays this help message"
+msgstr "Kuvab seda abiteadet"
+
+#: main.cpp:158
+msgid "Could not initialize locale."
+msgstr "Ei saanud initsialiseerida asukohta."
+
+#: main.cpp:316
+msgid "Large"
+msgstr "Suur"
+
+#: main.cpp:317
+msgid "Medium"
+msgstr "Keskmine"
+
+#: main.cpp:318
+msgid "Extra Large (XP and above)"
+msgstr "Ekstrasuur (XP ja kõrgemal)"
+
+#: main.cpp:319
+msgid "Jumbo (Vista and above)"
+msgstr "Jubmo (Vista ja kõrgemal)"
+
+#: main.cpp:323
+msgid "Small"
+msgstr "Väie"
+
+#: main.cpp:415
+msgid "Could not get update information"
+msgstr "Ei saanud uuenduse infot vastu võtta"
+
+#: main.cpp:429
+msgid "You have the latest version."
+msgstr "Sul on uusim versioon."
+
+#: main.cpp:436
+#, c-format
+msgid ""
+"A new version of Appetizer is available!\n"
+"\n"
+"Your version: %s\n"
+"New version: %s\n"
+"Release notes: %s\n"
+"Do you wish to download it now?"
+msgstr ""
+"Uus versioon on saadaval!\n"
+"\n"
+"Sinu versioon: %s\n"
+"Uus versioon: %s\n"
+"Väljalaske info: %s\n"
+"\n"
+"Kas sa sooviksid selle alla laadida?"
+
+#: main.cpp:438
+msgid "New version of Appetizer"
+msgstr "Uus Appetizeri versioon"
+
+#: main.cpp:442
+msgid "Error launching web browser"
+msgstr "Veebibrauseri avamise viga"
+
+#: MainFrame.cpp:236
+msgid "There was an error registering the hot key. Another application may already have registered it."
+msgstr "Viga ilmnes registreerimise hot key. Teine programm võib olla juba registreeritud sellega."
+
+#: MainFrame.cpp:597
+msgid "Minimize to tray"
+msgstr "Minimiseeri tööribale"
+
+#: MainFrame.cpp:1072
+#, c-format
+msgid ""
+"%s is now going to be minimized to the System Tray.\n"
+"\n"
+"Note that you may change this behavior in the '%s' windows ('%s' tab)"
+msgstr ""
+"%s minimiseeritakse nüüd tööribale. \n"
+"\n"
+"Sa saad muuta seda seadet '%s' ('%s' tab)"
+
+#: MainFrame.cpp:1072
+#: gui\ConfigDialog.cpp:60
+msgid "Operations"
+msgstr "Operatsioonid"
+
+#: MainFrame.cpp:1072
+#: utilities\Utilities.cpp:125
+#: utilities\Utilities.cpp:452
+msgid "Don't show this message again"
+msgstr "Ära näita seda teadet enam"
+
+#: MessageBoxes.cpp:15
+#: gui\ConfigDialog.cpp:101
+msgid "Error"
+msgstr "Viga"
+
+#: MessageBoxes.cpp:20
+msgid "Information"
+msgstr "Info"
+
+#: MessageBoxes.cpp:25
+msgid "Warning"
+msgstr "Hoiatus"
+
+#: MessageBoxes.cpp:30
+msgid "Confirmation"
+msgstr "Nõustumine"
+
+#: OptionPanel.cpp:163
+#: gui\ConfigDialog.cpp:65
+msgid "Help"
+msgstr "Abi"
+
+#: OptionPanel.cpp:166
+msgid "Multi-launch"
+msgstr "Mitme programmi käivitaja"
+
+#: OptionPanel.cpp:167
+#: gui\ImportWizardDialog.cpp:24
+msgid "Import shortcuts"
+msgstr "Impordi otseteid"
+
+#: OptionPanel.cpp:328
+msgid "Help Topics"
+msgstr "Abi kaustad"
+
+#: OptionPanel.cpp:329
+msgid "Get Support"
+msgstr "Saa abi"
+
+#: OptionPanel.cpp:331
+#: gui\AboutDialog.cpp:75
+#, c-format
+msgid "About %s..."
+msgstr "Info %s... kohta"
+
+#: OptionPanel.cpp:341
+msgid "The multilaunch group is currently empty. Do you wish to show the help topic about this feature?"
+msgstr "Mitmeprogrammikäivitaja grupp on hetkel tühi. Kas sa sooviksid näha abikaustast infot selle kohta?"
+
+#: Plugin.cpp:217
+msgid "Plugin script is not in the right format. Please encode it as UTF-8 NO BOM or ASCII. Applies to:"
+msgstr "Lisa skript ei ole õiges formaadis. Palun muuda see UTF-8 NO BOM või ASCII. Applies to:"
+
+#: PluginManager.cpp:50
+#, c-format
+msgid "Could not open %s"
+msgstr "Ei saa avada %s"
+
+#: PluginManager.cpp:74
+#, c-format
+msgid "Can not read zip entry '%s'"
+msgstr "Ei saa lugeda zip`i '%s'"
+
+#: PluginManager.cpp:81
+#, c-format
+msgid "Can not create file '%s'"
+msgstr "Ei saa luua faili '%s'"
+
+#: PluginManager.cpp:96
+#, c-format
+msgid "The plugin has been installed successfully. It will be activated the next time %s is started"
+msgstr "Lisa on edukalt installitud. See aktiveeritakse järgmine kord kui %s on alustatud"
+
+#: Styles.cpp:72
+#: utilities\Utilities.cpp:81
+#, c-format
+msgid "This skin is not compatible with the current version of %s."
+msgstr "See rüü pole toetatud hetkel oleva versiooniga %s."
+
+#: utilities\Utilities.cpp:125
+msgid "Do you wish to remove this icon?"
+msgstr "Kas sa sooviksid eemaldada selle ikooni?"
+
+#: utilities\Utilities.cpp:141
+msgid "A shortcut with this name already exists. Do you wish to overwrite it?"
+msgstr "Otsetee asukoht ei eksisteeri. Kas sa sooviksid jätkata?"
+
+#: utilities\Utilities.cpp:322
+msgid "Please wait while your applications are being closed."
+msgstr "Palun oota kui sinu programmid sulguvad."
+
+#: utilities\Utilities.cpp:341
+msgid "You do not have sufficient privileges for this operation."
+msgstr "Sul pole küllalt õigusi selleks operatsiooniks."
+
+#: utilities\Utilities.cpp:452
+msgid "Do you wish to eject the drive?"
+msgstr "Kas sa sooviksid eemaldada selle ketta?"
+
+#: gui\AboutDialog.cpp:55
+#, c-format
+msgid "Translators: %s"
+msgstr "Tõlkijad: %s"
+
+#: gui\AboutDialog.cpp:57
+msgid "This software uses a number of open source libraries including:"
+msgstr "See tarkvara kasutab mitmeid avatud lähtekoodiga raamatukogusi, sealhulgas:"
+
+#: gui\AboutDialog.cpp:59
+msgid "- Simpleini by Brodie Thiesfield"
+msgstr "- Brodie Thiesfieldi poolt Simpleini"
+
+#: gui\AboutDialog.cpp:61
+msgid "- TinyXml by Yves Berquin"
+msgstr "- Yves Berquini poolt TinyXml"
+
+#: gui\AboutDialog.cpp:63
+msgid "- CStdString by Joe O'Leary"
+msgstr "- Joe O´Leary poolt CStdString"
+
+#: gui\AboutDialog.cpp:65
+msgid "- Lua by Roberto Ierusalimschy, Luiz Henrique de Figueiredo, and Waldemar Celes"
+msgstr "Roberto Ierusalimschy, Luiz Henrique de Figueiredo ja Waldemar Celesi poolt Lua"
+
+#: gui\AboutDialog.cpp:67
+msgid "- ccrypt by Peter Selinger"
+msgstr "- ccrypt Peter Selinger´i poolt."
+
+#: gui\AboutDialog.cpp:69
+msgid "- FreeType by its respective contributors"
+msgstr "Austatud autorite poolt wxWidgets"
+
+#: gui\AboutDialog.cpp:71
+msgid "- wxWidgets by their respective authors"
+msgstr "Austatud autorite poolt wxWidgets"
+
+#: gui\AboutDialog.cpp:73
+msgid "Dialog boxes are built using wxGlade by Alberto Griggio."
+msgstr "Dialoogiaknad on ehitatud kasutades wxGlade Alberto Griggio poolt."
+
+#: gui\AboutDialog.cpp:76
+msgid "About"
+msgstr "Info "
+
+#: gui\AboutDialog.cpp:77
+msgid "License"
+msgstr "Litsents"
+
+#: gui\AboutDialog.cpp:78
+#: gui\BetterMessageDialog.cpp:111
+#: gui\FileOrFolderDialog.cpp:111
+#: gui\IconDialog.cpp:104
+msgid "OK"
+msgstr "OK"
+
+#: gui\AboutDialog.cpp:79
+msgid "Credits"
+msgstr "Krediidid"
+
+#: gui\AboutDialog.cpp:83
+#, c-format
+msgid "Copyright © %s"
+msgstr "Autoriõigus © %s"
+
+#: gui\AboutDialog.cpp:84
+msgid ""
+"This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.\n"
+"\n"
+"This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n"
+"\n"
+"You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>."
+msgstr ""
+"See programm on tasuta kättesaadav: Sa saad sellele annetada ja muuta GNU General Public License lepingu all mis on väljastatud Free Software Foundation või 3 versiooni lepingu all või mõne teise versiooni. \n"
+"\n"
+"See programm on väljastatud mõttel, et see oleks kasulik aga WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Vaata GNU General Public License rohkem infoks.\n"
+"\n"
+"Sul peaks olema GNU General Public License kopeering kaasas selle programmiga. Kui pole siis mine <http://www.gnu.org/licenses/>."
+
+#: gui\AboutDialog.cpp:85
+msgid "Web:"
+msgstr "Veeb:"
+
+#: gui\AboutDialog.cpp:86
+msgid "Contact:"
+msgstr "Kontakt"
+
+#: gui\AboutDialog.cpp:94
+#, c-format
+msgid "%s, Version %s.%s.%s (Build #%s)"
+msgstr "%s, Versioon %s.%s.%s (Build #%s)"
+
+#: gui\BetterMessageDialog.cpp:112
+msgid "Yes"
+msgstr "Jah"
+
+#: gui\BetterMessageDialog.cpp:113
+msgid "No"
+msgstr "Ei"
+
+#: gui\BetterMessageDialog.cpp:114
+#: gui\ConfigDialog.cpp:64
+#: gui\FileOrFolderDialog.cpp:112
+#: gui\IconDialog.cpp:105
+#: gui\ImportWizardDialog.cpp:81
+#: gui\PluginPreferencesDialog.cpp:251
+#: gui\ShortcutEditorDialog.cpp:44
+msgid "Cancel"
+msgstr "Peata"
+
+#: gui\ConfigDialog.cpp:58
+#: gui\PluginPreferencesDialog.cpp:73
+msgid "General"
+msgstr "põhiline"
+
+#: gui\ConfigDialog.cpp:59
+msgid "Appearance"
+msgstr "Välimus"
+
+#: gui\ConfigDialog.cpp:61
+msgid "Import"
+msgstr "Impordi"
+
+#: gui\ConfigDialog.cpp:62
+msgid "Plugins"
+msgstr "Lisad"
+
+#: gui\ConfigDialog.cpp:63
+#: gui\ShortcutEditorDialog.cpp:43
+msgid "Save"
+msgstr "Salvesta"
+
+#: gui\ConfigDialog.cpp:66
+msgid "Options"
+msgstr "Operatsioonid"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Enabled"
+msgstr "Võimalda"
+
+#: gui\ConfigDialog.cpp:103
+msgid "Disabled"
+msgstr "Ära võimalda"
+
+#: gui\ConfigDialog.cpp:138
+msgid "Plugin"
+msgstr "Lisa"
+
+#: gui\ConfigDialog.cpp:139
+msgid "Status"
+msgstr "Staatus"
+
+#: gui\ConfigDialog.cpp:219
+msgid "Language:"
+msgstr "Kee:"
+
+#: gui\ConfigDialog.cpp:220
+msgid "Always on top"
+msgstr "Alati pealmine"
+
+#: gui\ConfigDialog.cpp:221
+#, c-format
+msgid "Allow only one instance of %s at a time"
+msgstr "Luba ainult üks juhtum korraga %s"
+
+#: gui\ConfigDialog.cpp:222
+#: gui\ConfigDialog.cpp:794
+msgid "Check for update"
+msgstr "Otsi uuendusi"
+
+#: gui\ConfigDialog.cpp:223
+msgid "Install autorun file"
+msgstr "Installi autorun fail"
+
+#: gui\ConfigDialog.cpp:224
+msgid "Start Appetizer on system startup"
+msgstr "Käivita Appetizer koos süsteemiga"
+
+#: gui\ConfigDialog.cpp:321
+msgid "Icon size:"
+msgstr "Ikooni suurus:"
+
+#: gui\ConfigDialog.cpp:322
+msgid "Skin:"
+msgstr "Rüü:"
+
+#: gui\ConfigDialog.cpp:323
+msgid "Orientation:"
+msgstr "Oritentatsioon:"
+
+#: gui\ConfigDialog.cpp:324
+msgid "Opacity:"
+msgstr "Läbipaistmatus:"
+
+#: gui\ConfigDialog.cpp:325
+msgid "Download more skins"
+msgstr "Lae alla rohkem rüüsid"
+
+#: gui\ConfigDialog.cpp:326
+msgid "Label position:"
+msgstr "Etiketi seisukoht:"
+
+#: gui\ConfigDialog.cpp:327
+msgid "Show taskbar icon"
+msgstr "Näita tööriba ikooni"
+
+#: gui\ConfigDialog.cpp:328
+msgid "Show tray icon"
+msgstr "Näita süsteemisalve ikooni"
+
+#: gui\ConfigDialog.cpp:348
+msgid "Hidden"
+msgstr "Peida"
+
+#: gui\ConfigDialog.cpp:349
+msgid "Bottom"
+msgstr "Alumine"
+
+#: gui\ConfigDialog.cpp:350
+#: gui\ConfigDialog.cpp:543
+msgid "Right"
+msgstr "Paremale"
+
+#: gui\ConfigDialog.cpp:389
+msgid "Horizontal"
+msgstr "Horisontaalne"
+
+#: gui\ConfigDialog.cpp:390
+msgid "Vertical"
+msgstr "Vertikaalne"
+
+#: gui\ConfigDialog.cpp:416
+msgid "Default"
+msgstr "Tavaline"
+
+#: gui\ConfigDialog.cpp:461
+msgid "Auto-hide after launching an application"
+msgstr "Automaatselt peida kui programm käivitub"
+
+#: gui\ConfigDialog.cpp:462
+msgid "Run multi-launch group on startup"
+msgstr "Ava mitmeprogrammi ajava süsteemi laadimisel"
+
+#: gui\ConfigDialog.cpp:463
+msgid "Hot key to hide / show the bar"
+msgstr "Hot key peitmiseks / näitamiseks riba"
+
+#: gui\ConfigDialog.cpp:464
+msgid "Control +"
+msgstr "Controll +"
+
+#: gui\ConfigDialog.cpp:465
+msgid "Alt +"
+msgstr "Alt +"
+
+#: gui\ConfigDialog.cpp:466
+msgid "Shift +"
+msgstr "Shift +"
+
+#: gui\ConfigDialog.cpp:467
+msgid "When ejecting the drive, close the apps that are locking it"
+msgstr "Kui draivi eemaldad siis sulge lisad mis blokeerivad seda"
+
+#: gui\ConfigDialog.cpp:468
+msgid "Close button minimizes to System Tray"
+msgstr "Sulge nuppu minimiseerimine tööribale"
+
+#: gui\ConfigDialog.cpp:479
+msgid "<None>"
+msgstr "<Tundmatu>"
+
+#: gui\ConfigDialog.cpp:521
+msgid "Numpad 0"
+msgstr "Numpad 0"
+
+#: gui\ConfigDialog.cpp:522
+msgid "Numpad 1"
+msgstr "Numpad 1"
+
+#: gui\ConfigDialog.cpp:523
+msgid "Numpad 2"
+msgstr "Numpad 2"
+
+#: gui\ConfigDialog.cpp:524
+msgid "Numpad 3"
+msgstr "Numpad 3"
+
+#: gui\ConfigDialog.cpp:525
+msgid "Numpad 4"
+msgstr "Numpad 4"
+
+#: gui\ConfigDialog.cpp:526
+msgid "Numpad 5"
+msgstr "Numpad 5"
+
+#: gui\ConfigDialog.cpp:527
+msgid "Numpad 6"
+msgstr "Numpad 6"
+
+#: gui\ConfigDialog.cpp:528
+msgid "Numpad 7"
+msgstr "Numpad 7"
+
+#: gui\ConfigDialog.cpp:529
+msgid "Numpad 8"
+msgstr "Numpad 8"
+
+#: gui\ConfigDialog.cpp:530
+msgid "Numpad 9"
+msgstr "Numpad 9"
+
+#: gui\ConfigDialog.cpp:532
+msgid "Backspace"
+msgstr "Tagasi"
+
+#: gui\ConfigDialog.cpp:533
+msgid "Tab"
+msgstr "Kaart"
+
+#: gui\ConfigDialog.cpp:534
+msgid "Return"
+msgstr "Tagasi"
+
+#: gui\ConfigDialog.cpp:535
+msgid "Escape"
+msgstr "Escape"
+
+#: gui\ConfigDialog.cpp:536
+msgid "Space"
+msgstr "Tühik"
+
+#: gui\ConfigDialog.cpp:537
+msgid "Delete"
+msgstr "Kustuta"
+
+#: gui\ConfigDialog.cpp:539
+msgid "End"
+msgstr "Lõpp"
+
+#: gui\ConfigDialog.cpp:540
+msgid "Home"
+msgstr "Kodu"
+
+#: gui\ConfigDialog.cpp:541
+msgid "Left"
+msgstr "vasakule"
+
+#: gui\ConfigDialog.cpp:542
+msgid "Up"
+msgstr "üles"
+
+#: gui\ConfigDialog.cpp:544
+msgid "Down"
+msgstr "Alla"
+
+#: gui\ConfigDialog.cpp:602
+msgid "Exclude these items from import operations"
+msgstr "Praagi välja need kirjed importimise operatsioonist"
+
+#: gui\ConfigDialog.cpp:634
+msgid "Available plugins"
+msgstr "Saadaval olevad lisad"
+
+#: gui\ConfigDialog.cpp:635
+msgid "Enable"
+msgstr "Võimalda"
+
+#: gui\ConfigDialog.cpp:636
+msgid "Disable"
+msgstr "Ära võimalda"
+
+#: gui\ConfigDialog.cpp:637
+msgid "Install..."
+msgstr "install..."
+
+#: gui\ConfigDialog.cpp:638
+msgid "Download more plugins"
+msgstr "Lae alla rohkem lisasid"
+
+#: gui\ConfigDialog.cpp:640
+#, c-format
+msgid "The changes made to the plugins will only be active the next time %s is started."
+msgstr "Lisade muudatused aktiveeruvad järgmine kord kui %s on avatud."
+
+#: gui\ConfigDialog.cpp:703
+#, c-format
+msgid ""
+"By installing the autorun file on your removable drive, %s will start automatically when you insert your drive.\n"
+"\n"
+"Do you wish to continue?"
+msgstr ""
+"Installides autorun fail kettale, %s alhab automaatselt kui sa sisestad draivi. \n"
+"\n"
+"Kas sa soovid jätkata?"
+
+#: gui\ConfigDialog.cpp:706
+msgid "Could not install autorun file. Please try again."
+msgstr "Ei saa installida autorun faili. Palun proovi uuesti."
+
+#: gui\ConfigDialog.cpp:708
+msgid "The autorun file has been installed successfully"
+msgstr "Autorun fail on edukalt installitud"
+
+#: gui\ConfigDialog.cpp:739
+msgid "Please enable the plugin in order to change its options."
+msgstr "Palun võimalda see lisa muuta selle valikuid."
+
+#: gui\ConfigDialog.cpp:757
+#, c-format
+msgid "%s Plugin Packages"
+msgstr "%s lisa Packages"
+
+#: gui\ConfigDialog.cpp:758
+#: gui\IconDialog.cpp:175
+msgid "All files"
+msgstr "Kõik failid"
+
+#: gui\ConfigDialog.cpp:760
+msgid "Select a plugin package"
+msgstr "Vali lisa package"
+
+#: gui\ConfigDialog.cpp:789
+msgid "Please wait..."
+msgstr "Palun oota..."
+
+#: gui\ConfigDialog.cpp:1070
+msgid "Some of these changes will only be applied until after you restart the application."
+msgstr "Mõned muudatused aktiveeruvad siis kui sa oled taaskäivitanud programmi."
+
+#: gui\FileOrFolderDialog.cpp:76
+msgid "Loading tree..."
+msgstr "Laen listi..."
+
+#: gui\FileOrFolderDialog.cpp:110
+msgid "Select a file or a folder"
+msgstr "vali fail või kaust"
+
+#: gui\IconDialog.cpp:102
+msgid "Select an icon"
+msgstr "Vali ikoon"
+
+#: gui\IconDialog.cpp:103
+msgid "Icon file or library:"
+msgstr "Ikooni fail või kaust:"
+
+#: gui\IconDialog.cpp:169
+msgid "All supported files"
+msgstr "Kõik toetatud failid"
+
+#: gui\IconDialog.cpp:170
+#: gui\IconDialog.cpp:171
+msgid "Icons"
+msgstr "ikoonid"
+
+#: gui\IconDialog.cpp:172
+msgid "Executables"
+msgstr "Lahti pakitavad"
+
+#: gui\IconDialog.cpp:173
+msgid "Dynamic libraries"
+msgstr "Dünaamilised kogud"
+
+#: gui\IconDialog.cpp:174
+msgid "Icon libraries"
+msgstr "ikooni kogud"
+
+#: gui\IconDialog.cpp:177
+msgid "Select an icon file or library"
+msgstr "Vali ikoon või kogu"
+
+#: gui\ImportWizardDialog.cpp:32
+#, c-format
+msgid ""
+"This tool will help you import your shortcuts into %s.\n"
+"\n"
+"Please select below where you would like to import your shortcuts from:"
+msgstr ""
+"See tööriist aitab sind importida otseteid %s.\n"
+"\n"
+"Palun vali  kust sa tahaksid importida otseteid:"
+
+#: gui\ImportWizardDialog.cpp:43
+msgid "PortableApps.com applications"
+msgstr "PortableApps.com programmid"
+
+#: gui\ImportWizardDialog.cpp:44
+msgid "Windows Quick Launch toolbar"
+msgstr "Windowsi Quick Launh tööriist"
+
+#: gui\ImportWizardDialog.cpp:45
+msgid "Windows Start Menu programs"
+msgstr "Windosi Start-menüü programmid"
+
+#: gui\ImportWizardDialog.cpp:46
+msgid "Let me select a different location"
+msgstr "Las ma valin teise asukoha"
+
+#: gui\ImportWizardDialog.cpp:78
+msgid "Start >>"
+msgstr "Alusta >>"
+
+#: gui\ImportWizardDialog.cpp:119
+msgid "Importing shortcuts... Please wait."
+msgstr "impordi otseteid... Palun oota."
+
+#: gui\ImportWizardDialog.cpp:135
+msgid "Please select the folder to import the shortcuts from."
+msgstr "Palun vali kaust kust otsetid importida."
+
+#: gui\PluginPreferencesDialog.cpp:46
+msgid "Preferences"
+msgstr "Atribuudid"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Group Properties"
+msgstr "Grupi seaded"
+
+#: gui\ShortcutEditorDialog.cpp:39
+msgid "Shorcut Properties"
+msgstr "Otsetee seaded"
+
+#: gui\ShortcutEditorDialog.cpp:40
+msgid "Name:"
+msgstr "Nimi:"
+
+#: gui\ShortcutEditorDialog.cpp:41
+msgid "Location:"
+msgstr "Asukoht:"
+
+#: gui\ShortcutEditorDialog.cpp:42
+msgid "Parameters:"
+msgstr "parameetrid:"
+
+#: gui\ShortcutEditorDialog.cpp:45
+msgid "Icon:"
+msgstr "ikoon:"
+
+#: gui\ShortcutEditorDialog.cpp:46
+msgid "Change icon..."
+msgstr "Muuda ikooni:"
+
+#: gui\ShortcutEditorDialog.cpp:47
+msgid "Use default"
+msgstr "Kasuta tavalist"
+
+#: gui\ShortcutEditorDialog.cpp:48
+msgid "The location may be a file, a folder or a URL."
+msgstr "Asukoht võib olla fail, kaust või URL."
+
+#: gui\ShortcutEditorDialog.cpp:180
+msgid "The shortcut location doesn't exist. Do you wish to continue?"
+msgstr "Otsetee asukoht ei eksisteeri. Kas sa sooviksid jätkata?"
+
+#~ msgid "Transparency:"
+#~ msgstr "Läbipaistvus:"
+

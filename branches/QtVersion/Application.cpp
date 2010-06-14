@@ -32,8 +32,11 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
   FilePaths::InitializePaths();
   FilePaths::CreateSettingsDirectory();
 
+  QtGettext::instance()->setLocale("fr");
+  QtGettext::instance()->setCatalogueName("appetizer");
+  QtGettext::instance()->setCatalogueLocation(FilePaths::GetLocalesDirectory());
+
   UserSettings::instance()->Load();
-  
   
   loadFolderItems();
 
@@ -51,6 +54,7 @@ Application::~Application() {
   rootFolderItem_->dispose();
   FolderItem::destroyStaticData();
   UserSettings::destroyInstance();
+  QtGettext::destroyInstance();
 }
 
 

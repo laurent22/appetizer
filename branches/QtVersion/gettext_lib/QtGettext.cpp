@@ -35,6 +35,13 @@ QtGettext::~QtGettext() {
 }
 
 
+QString QtGettext::charset() const {
+  const char* temp = moParser_.charset();
+  if (!temp) return "";
+  return QString::fromAscii(temp);
+}
+
+
 QString QtGettext::moFilePath() const {
   return QString::fromStdString(LauGettext::moFilePath());
 }
@@ -42,11 +49,22 @@ QString QtGettext::moFilePath() const {
 
 QString QtGettext::getTranslation(const QString& originalString) const {
   GettextMessage* message = LauGettext::getTranslation(originalString.toAscii(), originalString.length());
-  if (!message) return "";
+  if (!message) return originalString;
 
-  // TODO: Handle charset
-  const QString output = QString::fromUtf8(message->string);
-  return output;
+  QString chars =charset();
+  if (charset() == "utf-8") {
+    return QString::fromUtf8(message->string);
+  } else if (charset() == "utf-16") {
+    const ushort* temp = (const ushort*)message->string;
+    return QString::fromUtf16(temp, message->length);
+  } else if (charset().indexOf("latin-1") >= 0) {
+    return QString::fromLatin1(message->string);
+  } else if (charset().indexOf("ucs-4") >= 0) {
+    const uint* temp = (const uint*)message->string;
+    return QString::fromUcs4(temp, message->length);
+  }
+
+  return QString::fromUtf8(message->string); 
 }
 
 

@@ -13,6 +13,10 @@
 #include "LauGettext.h"
 
 
+#undef _
+#define _(x) QtGettext::instance()->getTranslation(x)
+
+
 class QtGettext : public LauGettext {
 
 public:
@@ -33,6 +37,8 @@ public:
   inline QString catalogueLocation() const { return QString::fromStdString(LauGettext::catalogueLocation()); }
 
   QString getTranslation(const QString& originalString) const; 
+
+  QString charset() const;
 
 private:
 
