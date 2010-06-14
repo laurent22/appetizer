@@ -44,6 +44,7 @@ public:
   void clearData();
   GettextMessage* getTranslation(const char* originalString, int originalLength); 
   char* charset() const;
+  inline bool ready() const { return ready_; }
 
   static const int32_t GettextMoParser::HEADER_MAGIC_NUMBER;
   static const int32_t GettextMoParser::HEADER_MAGIC_NUMBER_SW;
@@ -73,6 +74,7 @@ private:
   TranslatedMessages messages_;
   mutable char* charset_;
   mutable bool charsetParsed_;
+  bool ready_;
 
 };
 

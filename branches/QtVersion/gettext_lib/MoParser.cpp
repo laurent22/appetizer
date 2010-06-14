@@ -11,7 +11,6 @@
 
 #include <fstream>
 #include <sys/stat.h>
-#include <memory>
 
 #include "MoParser.h"
 
@@ -29,6 +28,7 @@ GettextMoParser::GettextMoParser() {
   moData_ = NULL;
   charset_ = NULL;
   charsetParsed_ = false;
+  ready_ = false;
 }
 
 
@@ -58,6 +58,8 @@ void GettextMoParser::clearData() {
     delete message;
   }
   messages_.clear();
+
+  ready_ = false;
 }
 
 
@@ -106,6 +108,8 @@ bool GettextMoParser::parse(char* moData) {
   moFileHeader_->offsetTranslatedStrings = swap_(moFileHeader_->offsetTranslatedStrings);
   moFileHeader_->hashTableSize = swap_(moFileHeader_->hashTableSize);
   moFileHeader_->offsetHashTable = swap_(moFileHeader_->offsetHashTable);
+
+  ready_ = true;
 
   return true;
 }
