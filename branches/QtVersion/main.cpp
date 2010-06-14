@@ -24,7 +24,7 @@ using namespace appetizer;
 
 _CRT_REPORT_HOOK prevHook;
 
-int customReportHook(int reportType, char *message, int *returnValue) {
+int customReportHook(int /* reportType */, char* message, int* /* returnValue */) {
   // This function is called several times for each memory leak.
   // Each time a part of the error message is supplied.
   // This holds number of subsequent detail messages after
@@ -70,7 +70,7 @@ int customReportHook(int reportType, char *message, int *returnValue) {
 
 int main(int argc, char *argv[]) {
   #if defined(__WINDOWS__) && defined(__DEBUG__)
-  _CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+  _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
   prevHook = _CrtSetReportHook(customReportHook);
   #endif // __WINDOWS__ && __DEBUG__
 

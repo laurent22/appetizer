@@ -21,7 +21,6 @@ class MainWindow : public GraphicsWindow {
 public:
 
   MainWindow();
-  ~MainWindow();
   QPixmap* getWindowPixmap();
 
 public slots:
@@ -45,6 +44,7 @@ private:
 protected:
 
   void resizeEvent(QResizeEvent* event);
+  void closeEvent ( QCloseEvent * event ) ;
 
 };
 

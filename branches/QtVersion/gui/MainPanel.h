@@ -51,6 +51,7 @@ class MainPanel : public GraphicsItem {
 public:
 
   MainPanel(GraphicsWindow* parentWindow);
+  ~MainPanel();
   void drawMask(QPainter* painter, int x, int y, int width, int height);
   NineSliceItem* backgroundSprite() const;
   void loadFolderItems(int rootFolderItemId);
@@ -70,6 +71,7 @@ private:
   int rootFolderItemId_;
   int pageIndex_;
   ScrollPane* scrollPane_;
+  void clearPageData_();
 
 public slots:
 

@@ -18,6 +18,7 @@ class FolderItem;
 
 typedef std::vector<FolderItem*> FolderItemVector;
 typedef std::map<int, FolderItem*> FolderItemIdHashMap;
+typedef std::map<int, GetIconThread*> GetIconThreadMap;
 
 class FolderItem : public QObject {
 
@@ -70,6 +71,8 @@ public:
   IconData* loadIconData(int iconSize);
   int iconDataLoadingState(int iconSize);
 
+  static void destroyStaticData();
+
 public slots:
 
   void getIconThread_finished();
@@ -95,7 +98,7 @@ private:
   int displayIconSize_;
   std::map<int, IconData*> iconData_;
   std::map<int, QPixmap*> iconPixmaps_;
-  std::map<int, GetIconThread*> getIconThreads_;
+  GetIconThreadMap getIconThreads_;
 
   static int uniqueID_;
   static FolderItemIdHashMap folderItemIdHashMap_;

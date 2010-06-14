@@ -39,6 +39,15 @@ FolderItem::~FolderItem() {
 }
 
 
+void FolderItem::destroyStaticData() {
+  FolderItemIdHashMap::iterator i;
+  for(i = folderItemIdHashMap_.begin(); i != folderItemIdHashMap_.end(); ++i) {
+    SAFE_DELETE(i->second);
+  }
+  folderItemIdHashMap_.clear();
+}
+
+
 int FolderItem::displayIconSize() const {
   if (displayIconSize_ > 0) return displayIconSize_;
   return UserSettings::instance()->GetInt("IconSize");
@@ -46,13 +55,21 @@ int FolderItem::displayIconSize() const {
 
 
 void FolderItem::clearIconCache() {
-  for (std::map<int, IconData*>::iterator i = iconData_.begin(); i != iconData_.end(); ++i) {
-    if (i->second) delete i->second;
+  for (GetIconThreadMap::iterator i = getIconThreads_.begin(); i != getIconThreads_.end(); ++i) {
+    GetIconThread* thread = i->second;
+    if (thread->isRunning()) thread->quit();
+    SAFE_DELETE(i->second);
   }
-  for (std::map<int, QPixmap*>::iterator i = iconPixmaps_.begin(); i != iconPixmaps_.end(); ++i) {
-    if (i->second) delete i->second;
+  getIconThreads_.clear();
+
+  for (std::map<int, IconData*>::iterator i = iconData_.begin(); i != iconData_.end(); ++i) {
+    SAFE_DELETE(i->second);
   }
   iconData_.clear();
+
+  for (std::map<int, QPixmap*>::iterator i = iconPixmaps_.begin(); i != iconPixmaps_.end(); ++i) {
+    SAFE_DELETE(i->second);
+  }  
   iconPixmaps_.clear();
 }
 
@@ -84,6 +101,8 @@ int FolderItem::iconDataLoadingState(int iconSize) {
 
 
 void FolderItem::getIconThread_finished() {
+  if (disposed()) return;
+
   GetIconThread* thread = (GetIconThread*)(this->sender());
   iconData_[thread->iconSize()] = thread->iconData();
   emit iconLoaded(thread->iconSize());
@@ -112,6 +131,15 @@ QPixmap* FolderItem::getIconPixmap(int iconSize) {
 
 
 void FolderItem::dispose() {
+  if (disposed_) return;
+
+  for (int i = 0; i < (int)children_.size(); i++) {
+    FolderItem* child = children_.at(i);
+    child->dispose();
+  }
+  children_.clear();
+
+  if (parent()) parent()->removeChild(this);
   disposed_ = true;
 }
 

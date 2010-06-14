@@ -34,6 +34,7 @@ public:
   };
 
   static UserSettings* instance();
+  static void destroyInstance();
 
   UserSettings();
   ~UserSettings();

@@ -46,6 +46,14 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
 }
 
 
+Application::~Application() {
+  SAFE_DELETE(mainWindow_);
+  rootFolderItem_->dispose();
+  FolderItem::destroyStaticData();
+  UserSettings::destroyInstance();
+}
+
+
 FolderItem* Application::rootFolderItem() const {
   return rootFolderItem_;
 }

@@ -23,6 +23,12 @@ UserSettings* UserSettings::instance() {
 }
 
 
+void UserSettings::destroyInstance() {
+  if (!instance_) return;
+  SAFE_DELETE(instance_);
+}
+
+
 UserSettings::UserSettings() {
   SetInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
   SetString("Locale", "en");

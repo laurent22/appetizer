@@ -19,7 +19,9 @@ class GraphicsScene : public QGraphicsScene {
 public:
 
   GraphicsScene(GraphicsWindow* parentWindow);
+  ~GraphicsScene();
   inline GraphicsWindow* parentWindow() { return parentWindow_; }
+  QList<QGraphicsItem*> topLevelItems();
   
 private:
 	

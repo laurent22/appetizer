@@ -77,6 +77,20 @@ MainPanel::MainPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
 }
 
 
+MainPanel::~MainPanel() {
+  clearPageData_();
+}
+
+
+void MainPanel::clearPageData_() {
+  for (int i = 0; i < (int)pages_.size(); i++) {
+    PageData* page = pages_.at(i);
+    SAFE_DELETE(page);
+  }
+  pages_.clear();
+}
+
+
 PageData* MainPanel::page() {
   if (pageIndex_ < 0) return NULL;
   return getPage(pageIndex_);
@@ -89,12 +103,7 @@ FolderItem* MainPanel::rootFolderItem() {
 
 
 void MainPanel::loadFolderItems(int rootFolderItemId) {
-  for (int i = 0; i < (int)pages_.size(); i++) {
-    PageData* page = pages_.at(i);
-    SAFE_DELETE(page);
-  }
-  pages_.clear();
-
+  clearPageData_();
 
   rootFolderItemId_ = rootFolderItemId;
 

@@ -24,15 +24,21 @@ GraphicsItem::GraphicsItem(GraphicsWindow* parentWindow): QGraphicsItem() {
   invalidate();
 }
 
-#include <MainWindow.h>
+
 void GraphicsItem::setOpacity(qreal opacity) {
   QGraphicsItem::setOpacity(opacity);
-  GraphicsWindow* p = static_cast<GraphicsWindow*>(parentWindow());
-  p->invalidateDisplay();
+
+  parentWindow()->invalidateDisplay();
 }
 
 
 GraphicsItem::~GraphicsItem() {
+  for (int i = numChildren() - 1; i >= 0; i--) {
+    QGraphicsItem* item = getChildAt(i);
+    removeItem(item);
+    SAFE_DELETE(item);
+  }
+
   GraphicsItem* parent = static_cast<GraphicsItem*>(parentItem());
   if (parent) parent->removeItem(this);
 }
@@ -156,7 +162,7 @@ void GraphicsItem::addItemAt(QGraphicsItem* item, int index) {
 void GraphicsItem::removeItem(QGraphicsItem* item){
   childItems().removeOne(item);
   item->setParentItem(NULL);
-  item->scene()->removeItem(item);
+  if (item->scene()) item->scene()->removeItem(item);
 }
 
 

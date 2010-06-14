@@ -30,7 +30,12 @@ MainWindow::MainWindow(): GraphicsWindow() {
 }
 
 
-MainWindow::~MainWindow() {
+void MainWindow::closeEvent(QCloseEvent* event) {
+  GraphicsWindow::closeEvent(event);
+
+  view_->setScene(NULL);
+  SAFE_DELETE(view_);
+  SAFE_DELETE(scene_);
   SAFE_DELETE(windowPixmap_);
 }
 
