@@ -55,13 +55,13 @@
 
 #include <tinyxml/tinyxml.h>
 
-#ifdef __WINDOWS__
-#ifdef __DEBUG__
-// To find memory leaks, add _CrtSetBreakAlloc(int memoryBlock)
-// just at the beginning of MiniLaunchBar::OnInit
+#if defined(__WINDOWS__) && defined(__DEBUG__)
+// Libraries and macros to detect memory leaks
 #define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
 #include <crtdbg.h>
-#endif // __DEBUG__
-#endif // __WINDOWS__
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif // __WINDOWS__ && __DEBUG__
 
 #endif // STABLE_H
