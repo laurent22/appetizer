@@ -448,6 +448,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="gettext_lib"
+				>
+				<File
+					RelativePath=".\gettext_lib\LauGettext.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\gettext_lib\MoParser.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -583,6 +595,18 @@
 				</File>
 				<File
 					RelativePath=".\guilib\GraphicsWindow.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="gettext_lib"
+				>
+				<File
+					RelativePath=".\gettext_lib\LauGettext.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gettext_lib\MoParser.h"
 					>
 				</File>
 			</Filter>

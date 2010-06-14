@@ -103,7 +103,7 @@ void Application::loadFolderItems() {
 
   if (fileVersion == "1.0") {
     FolderItemVector groups = rootFolderItem_->detachAllGroups();
-    for (int i = 0; i < groups.size(); i++) {
+    for (int i = 0; i < (int)groups.size(); i++) {
       FolderItem* group = groups.at(i);
       group->convertGroupToSection();
       rootFolderItem_->addChild(group);

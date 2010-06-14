@@ -37,6 +37,7 @@
 #include <QIcon>
 #include <QImage>
 #include <QMenu>
+#include <QMessageBox>
 #include <QMutex>
 #include <QMutexLocker>
 #include <QPainter>

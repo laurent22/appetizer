@@ -104,6 +104,5 @@ void FolderItemSprite::updateDisplay() {
     selectionSprite_->resize(width(), height());
   }
 
-  iconSprite_->setX(Style::icon.padding.left);
-  iconSprite_->setY(Style::icon.padding.top);
+  iconSprite_->move(Style::icon.padding.left, Style::icon.padding.top);
 }

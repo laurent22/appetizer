@@ -48,7 +48,7 @@ FolderItemVector FolderItem::detachAllGroups() {
 
     if (folderItem->type() == Type_Group) output.push_back(folderItem);
     FolderItemVector temp = folderItem->detachAllGroups();
-    for (int j = 0; j < temp.size(); j++) {
+    for (int j = 0; j < (int)temp.size(); j++) {
       output.push_back(temp.at(j));
     }
     if (folderItem->type() == Type_Group) removeChild(folderItem);
