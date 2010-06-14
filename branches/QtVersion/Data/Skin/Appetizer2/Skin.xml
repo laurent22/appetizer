@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<Skin compatibleVersion="2.0" author="Laurent Cozic" name="Appetizer 2">
+
+	<!-- 
+	
+	Some general notes about the Skin.xml file:
+	
+	- The paddings are expressed as (Left, Top, Right, Bottom)
+			
+	- The colors are expressed as (Red, Green, Blue, Alpha), each value being between 0 and 255. The Alpha value is optional.
+	
+	- Many skin files are optional - see the BlueGlass skin for the files that are actually required.
+	
+	-->
+	
+	<Icon>
+		<Padding>4,4,4,4</Padding>
+	</Icon>
+	
+	<Background>
+		<Padding>24,21,24,26</Padding>
+	</Background>
+	
+	<IconPanel>
+		<Padding>0,5,0,0</Padding>
+	</IconPanel>
+	
+	<Tab>
+		<TextFormat>
+			<Size>10</Size>
+			<Color>0, 39, 79</Color>
+		</TextFormat>
+		<Margin>0,0,5,0</Margin>
+	</Tab>
+	
+</Skin>

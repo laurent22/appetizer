@@ -61,6 +61,5 @@ void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
 
   mainPanel_->resize(width(), height());
 
-  resizeSprite_->setX(width() - resizeSprite_->width());
-  resizeSprite_->setY(height() - resizeSprite_->height());
+  resizeSprite_->move(width() - Style::background.padding.right, height() - Style::background.padding.bottom);
 }
