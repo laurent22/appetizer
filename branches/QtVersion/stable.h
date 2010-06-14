@@ -52,6 +52,7 @@
 #include <QThread>
 #include <QTime>
 #include <QTimer>
+#include <QVariant>
 #include <QWidget>
 
 #include <tinyxml/tinyxml.h>

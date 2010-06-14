@@ -13,9 +13,20 @@
 namespace appetizer {
 
 
-struct UserSetting {
-  int type;
-  QString value;
+class UserSetting {
+  
+public:
+
+  UserSetting(const QString& name);
+  inline QString name() const { return name_; }
+  inline QVariant value() const { return value_; }
+  void setValue(const QVariant& variant);
+
+private:
+
+  QString name_;
+  QVariant value_;
+
 };
 
 
@@ -24,14 +35,6 @@ typedef std::map<QString, UserSetting*> UserSettingsMap;
 class UserSettings {
 
 public:
-
-  enum {
-    Type_Int,
-    Type_String,
-    Type_Bool,
-    Type_Date,
-    Type_Color
-  };
 
   static UserSettings* instance();
   static void destroyInstance();
@@ -47,27 +50,29 @@ public:
 
   int GetValidatedIconSize(int iconSize = -1);
 
-  QString GetString(const QString& name);
-  int GetInt(const QString& name);
-  bool GetBool(const QString& name);
-  QDate GetDateTime(const QString& name);
-  QColor GetColor(const QString& name);
+  UserSetting* getSetting(const QString& name) const;
+  void setSetting(const QString& name, const QVariant& variant);
+  
+  QVariant::Type getSettingType(const QString& name) const;
+  QString typeToString(QVariant::Type type) const;
 
-  void SetString(const QString& name, const QString& value);
-  void SetInt(const QString& name, int value);
-  void SetBool(const QString& name, bool value);
-  void SetDateTime(const QString& name, const QDate& dateTime);
-  void SetValue(const QString& name, const QString& value, int type);
+  int getInt(const QString& name) const;
+  QString getString(const QString& name) const;
+  bool getBool(const QString& name) const;
+  QDateTime getDateTime(const QString& name) const;
+  QColor getColor(const QString& name) const;
+
+  void setInt(const QString& name, int value);
+  void setString(const QString& name, const QString& value);
+  void setBool(const QString& name, bool value);
+  void setDateTime(const QString& name, const QDateTime& dateTime);
+  void setColor(const QString& name, const QColor& color);
 
 private:
 
   void AppendSettingToXml_(TiXmlElement* element, const char* name, const char* value, int type);
-  //void AppendSettingToXml(TiXmlElement* element, const char* name, int value);
-  //void AppendSettingToXml(TiXmlElement* element, const char* name, QString value);
-  //void AppendSettingToXml(TiXmlElement* element, const char* name, bool value);
 
-  UserSettingsMap values_;
-
+  mutable UserSettingsMap settings_;
   static UserSettings* instance_;
 
 };

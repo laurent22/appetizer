@@ -76,7 +76,7 @@ void FolderItem::destroyStaticData() {
 
 int FolderItem::displayIconSize() const {
   if (displayIconSize_ > 0) return displayIconSize_;
-  return UserSettings::instance()->GetInt("IconSize");
+  return UserSettings::instance()->getInt("IconSize");
 }
 
 
