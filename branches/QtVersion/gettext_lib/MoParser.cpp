@@ -190,8 +190,24 @@ GettextMessage* GettextMoParser::getTranslation(const char* originalString, int 
     originalTable->offset = swap_(originalTable->offset);
   }
 
+
+  TranslatedMessage* message = new TranslatedMessage();
+  
+
+  char* originalStringCopy = new char[originalLength + 1];
+  strcpy(originalStringCopy, originalString);
+  originalStringCopy[originalLength] = '\0';
+
+  GettextMessage* mOriginal = new GettextMessage();
+  mOriginal->length = originalTable->length;
+  mOriginal->string = originalStringCopy;
+
+  message->original = mOriginal;
+
   if (!found) {
     // Couldn't find orignal string
+    messages_.push_back(message);
+    message->translated = NULL;
     return NULL;
   }
 
@@ -211,20 +227,11 @@ GettextMessage* GettextMoParser::getTranslation(const char* originalString, int 
   strncpy(translatedString, tempString, translationTable->length);
   translatedString[translationTable->length] = '\0';
 
-  char* originalStringCopy = new char[originalLength + 1];
-  strcpy(originalStringCopy, originalString);
-  originalStringCopy[originalLength] = '\0';
-
-  GettextMessage* mOriginal = new GettextMessage();
-  mOriginal->length = originalTable->length;
-  mOriginal->string = originalStringCopy;
-
+  
   GettextMessage* mTranslated = new GettextMessage();
   mTranslated->length = translationTable->length;
   mTranslated->string = translatedString;
-
-  TranslatedMessage* message = new TranslatedMessage();
-  message->original = mOriginal;
+  
   message->translated = mTranslated;
 
   messages_.push_back(message);

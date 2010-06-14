@@ -459,6 +459,10 @@
 					RelativePath=".\gettext_lib\MoParser.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\gettext_lib\QtGettext.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -607,6 +611,10 @@
 				</File>
 				<File
 					RelativePath=".\gettext_lib\MoParser.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gettext_lib\QtGettext.h"
 					>
 				</File>
 			</Filter>

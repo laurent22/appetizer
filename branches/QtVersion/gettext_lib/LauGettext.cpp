@@ -58,7 +58,7 @@ std::string LauGettext::moFilePath() const {
 }
 
 
-GettextMessage* LauGettext::getTranslation(const char* originalString, int originalLength) {
+GettextMessage* LauGettext::getTranslation(const char* originalString, int originalLength) const {
   if (!moParser_.ready()) {
     std::string p = moFilePath();
     if (p == "") return NULL; // File doesn't exist or cannot be opened
