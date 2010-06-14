@@ -20,6 +20,7 @@ FolderItemSprite::FolderItemSprite(GraphicsWindow* parentWindow): GraphicsItem(p
   iconSize_ = -1;
   mouseInside_ = false;
   selectionSprite_ = NULL;
+  selectionSpriteAnimation_ = NULL;
 
   iconSprite_ = new IconSprite(this->parentWindow());
   addItem(iconSprite_);
@@ -27,6 +28,11 @@ FolderItemSprite::FolderItemSprite(GraphicsWindow* parentWindow): GraphicsItem(p
   setIconSize(SMALL_ICON_SIZE);
   
   setAcceptHoverEvents(true);
+}
+
+
+FolderItemSprite::~FolderItemSprite() {
+  SAFE_DELETE(selectionSpriteAnimation_);
 }
 
 
@@ -70,9 +76,7 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
   selectionSpriteAnimation_->setDuration(100);
   selectionSpriteAnimation_->setStartValue(0);
   selectionSpriteAnimation_->setEndValue(1);
-  selectionSpriteAnimation_->start();
-
-  Application::instance()->mainWindow()->invalidateDisplay();
+  selectionSpriteAnimation_->start(QAbstractAnimation::KeepWhenStopped);
 
   updateDisplay();
 }
@@ -81,15 +85,13 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
 void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* /* event */) {
   mouseInside_ = false;
 
-  if (selectionSprite_) {
+  if (selectionSprite_ && selectionSpriteAnimation_) {
     selectionSpriteAnimation_->stop();
     selectionSpriteAnimation_->setDuration(400);
     selectionSpriteAnimation_->setStartValue(1);
     selectionSpriteAnimation_->setEndValue(0);
-    selectionSpriteAnimation_->start();
+    selectionSpriteAnimation_->start(QAbstractAnimation::KeepWhenStopped);
   }
-
-  Application::instance()->mainWindow()->invalidateDisplay();
 
   updateDisplay();
 }

@@ -87,10 +87,4 @@ void MainWindow::resizeEvent(QResizeEvent* event) {
 
   scene_->setSceneRect(0, 0, newWidth, newHeight);
   scene_->invalidate();
-
-  QPixmap pixmap(newWidth, newHeight);
-  QPainter painter(&pixmap);
-  scene_->drawMask(&painter, 0, 0, newWidth, newHeight);
-  QBitmap b = pixmap.createMaskFromColor(QColor(255,0,255));
-  setMask(b);
 }

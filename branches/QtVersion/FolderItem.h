@@ -71,6 +71,9 @@ public:
   IconData* loadIconData(int iconSize);
   int iconDataLoadingState(int iconSize);
 
+  FolderItemVector detachAllGroups();
+  void convertGroupToSection();
+
   static void destroyStaticData();
 
 public slots:

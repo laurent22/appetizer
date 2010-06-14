@@ -14,12 +14,17 @@ do
 	
 	echo Generating "$outputFilePath"...
 	
+	# Generating the moc file...
 	$mocPath $filePath -o $tempFilePath
+	
+	# Adding the precompiled header on top of the file.
 	sed -e "1i#include <stable.h>" $tempFilePath > $outputFilePath
-	# Remove timestamp from the file as we don't want to mark it as
-	# changed for Git if nothing has actually changed
+	
+	# Removing timestamp from the file as we don't want to mark it as
+	# "changed" for Git if nothing has actually changed.
 	sed -i '6 d' $outputFilePath 
 	sed -i '5 d' $outputFilePath
 	sed -i '4 d' $outputFilePath
+	
 	rm $tempFilePath
 done

@@ -203,16 +203,6 @@ NineSliceItem* MainPanel::backgroundSprite() const {
 }
 
 
-void MainPanel::drawMask(QPainter* painter, int x, int y, int width, int height) {
-  if (lastDrawnMaskSize_.width() != width || lastDrawnMaskSize_.height() != height) {
-    maskPixmap_ = QPixmap(width, height);
-    lastDrawnMaskSize_ = QSize(width, height);
-  }
-  
-  maskNineSlicePainter_.drawImage(painter, x, y, width, height);
-}
-
-
 void MainPanel::updateDisplay() {
   GraphicsItem::updateDisplay();
 

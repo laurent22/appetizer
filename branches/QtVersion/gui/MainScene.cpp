@@ -56,11 +56,6 @@ void MainScene::resizeSprite_mouseMoved() {
 }
 
 
-void MainScene::drawMask(QPainter* painter, int x, int y, int width, int height) {
-  mainPanel_->drawMask(painter, x, y, width, height);
-}
-
-
 void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 

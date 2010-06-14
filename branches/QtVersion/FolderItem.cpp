@@ -39,6 +39,32 @@ FolderItem::~FolderItem() {
 }
 
 
+FolderItemVector FolderItem::detachAllGroups() {
+  FolderItemVector output;
+
+  for (int i = children_.size() - 1; i >= 0; i--) {
+    FolderItem* folderItem = children_.at(i);
+    if (folderItem->type() != Type_Group && folderItem->type() != Type_Section) continue;
+
+    if (folderItem->type() == Type_Group) output.push_back(folderItem);
+    FolderItemVector temp = folderItem->detachAllGroups();
+    for (int j = 0; j < temp.size(); j++) {
+      output.push_back(temp.at(j));
+    }
+    if (folderItem->type() == Type_Group) removeChild(folderItem);
+  }
+
+  return output;
+}
+
+
+void FolderItem::convertGroupToSection() {
+  if (type() != Type_Group) return;
+
+  type_ = Type_Section;
+}
+
+
 void FolderItem::destroyStaticData() {
   FolderItemIdHashMap::iterator i;
   for(i = folderItemIdHashMap_.begin(); i != folderItemIdHashMap_.end(); ++i) {
@@ -344,7 +370,7 @@ void FolderItem::fromXml(TiXmlElement* xml) {
   TiXmlElement* childrenXml = handle.Child("Children", 0).ToElement();
   if (childrenXml) {
     for (TiXmlElement* element = childrenXml->FirstChildElement(); element; element = element->NextSiblingElement()) {
-      QString elementName = QString::fromUtf8(element->GetText());
+      QString elementName = QString::fromUtf8(element->Value());
       if ((elementName != "FolderItem") && (elementName != "appFolderItem")) continue;
       
       FolderItem* folderItem = FolderItem::createFolderItem();

@@ -80,6 +80,7 @@ void Application::loadFolderItems() {
 
   rootFolderItem_ = FolderItem::createFolderItem(true);
   FolderItem* currentSection = NULL;
+
   if (fileVersion == "1.0") {
     currentSection = FolderItem::createFolderItem(FolderItem::Type_Section);
     currentSection->setName(_("General"));
@@ -96,15 +97,18 @@ void Application::loadFolderItems() {
     } else if (elementName == "ExcludedPath") {
 
     } else {
-      qWarning() << QString("User::Load: Unknown element: %s").arg(elementName);
+      qWarning() << QString("Unknown element: %s").arg(elementName);
     }
   }
 
-
-  qWarning() << "REMOVE CODE BELOW";
-  currentSection = FolderItem::createFolderItem(FolderItem::Type_Section);
-  currentSection->setName("Test");
-  rootFolderItem_->addChild(currentSection);
+  if (fileVersion == "1.0") {
+    FolderItemVector groups = rootFolderItem_->detachAllGroups();
+    for (int i = 0; i < groups.size(); i++) {
+      FolderItem* group = groups.at(i);
+      group->convertGroupToSection();
+      rootFolderItem_->addChild(group);
+    }
+  }
 }
 
 

@@ -23,7 +23,6 @@ class MainScene : public GraphicsScene {
 public:
 
   MainScene(GraphicsWindow* parentWindow);
-  void drawMask(QPainter* painter, int x, int y, int width, int height);  
   MainPanel* mainPanel() const;
 
 protected:

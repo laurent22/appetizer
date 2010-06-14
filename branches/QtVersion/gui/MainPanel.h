@@ -52,7 +52,6 @@ public:
 
   MainPanel(GraphicsWindow* parentWindow);
   ~MainPanel();
-  void drawMask(QPainter* painter, int x, int y, int width, int height);
   NineSliceItem* backgroundSprite() const;
   void loadFolderItems(int rootFolderItemId);
   FolderItem* rootFolderItem();

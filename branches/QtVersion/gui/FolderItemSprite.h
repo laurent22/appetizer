@@ -22,6 +22,7 @@ class FolderItemSprite : public GraphicsItem {
 public:
 
   FolderItemSprite(GraphicsWindow* parentWindow);
+  ~FolderItemSprite();
 
   void setFolderItem(int folderItemId);
   FolderItem* folderItem() const;
