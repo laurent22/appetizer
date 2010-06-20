@@ -16,6 +16,17 @@ IconStyle Style::icon;
 BackgroundStyle Style::background;
 TabStyle Style::tab;
 IconPanelStyle Style::iconPanel;
+FloatingButtonStyle Style::floatingButtonStyle;
+
+
+RectangleStyle::RectangleStyle() {
+  left = 0;
+  top = 0;
+  bottom = 0;
+  right = 0;
+  width = 0;
+  height = 0;
+}
 
 
 void RectangleStyle::fromRect(const QRect& rect) {
@@ -29,6 +40,7 @@ void RectangleStyle::fromRect(const QRect& rect) {
 
 
 QRect BackgroundStyle::getContentRectangle(int width, int height) const { return Style::calculateContentRectangle(width, height, shadowPadding, padding); };
+QRect FloatingButtonStyle::getContentRectangle(int width, int height) const { return Style::calculateContentRectangle(width, height, shadowPadding, RectangleStyle()); };
 
 
 TextFormat::TextFormat() {
@@ -141,6 +153,11 @@ void Style::loadSkinFile(const QString& filePath) {
       resultRect = QRect(0,0,0,0);
       XmlUtil::readElementTextAsRect(handle, "ShadowPadding", resultRect);
       Style::background.shadowPadding.fromRect(resultRect);
+
+    } else if (elementName == "FloatingButton") {
+
+      XmlUtil::readElementTextAsRect(handle, "ShadowPadding", resultRect);
+      Style::floatingButtonStyle.shadowPadding.fromRect(resultRect);
 
     } else if (elementName == "IconPanel") {
       

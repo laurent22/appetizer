@@ -20,11 +20,11 @@ public:
 
   FloatingButton(GraphicsWindow* parentWindow);
   void applySkin();
+  inline int width() const;
+  inline int height() const;
   inline QString action() const { return action_; }
   void setAction(const QString& action);
-  int defaultWidth() const;
-  int defaultHeight() const;
-  
+
 protected:
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

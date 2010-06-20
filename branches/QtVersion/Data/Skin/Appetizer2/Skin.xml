@@ -22,6 +22,10 @@
 		<ShadowPadding>12,8,12,16</ShadowPadding>
 	</Background>
 	
+	<FloatingButton>
+		<ShadowPadding>4,2,4,6</ShadowPadding>
+	</FloatingButton>
+	
 	<IconPanel>
 		<Padding>0,5,0,0</Padding>
 	</IconPanel>

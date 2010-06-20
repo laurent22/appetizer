@@ -18,6 +18,7 @@ class Style; // Forward declaration
 
 
 class RectangleStyle { public:
+  RectangleStyle();
   int left;
   int right;
   int bottom;
@@ -54,6 +55,11 @@ class BackgroundStyle { public:
   QRect getContentRectangle(int width, int height) const;
 };
 
+class FloatingButtonStyle { public:
+  RectangleStyle shadowPadding;
+  QRect getContentRectangle(int width, int height) const;
+};
+
 class IconPanelStyle { public:
   RectangleStyle padding;
 };
@@ -80,6 +86,7 @@ public:
   static BackgroundStyle background;
   static TabStyle tab;
   static IconPanelStyle iconPanel;
+  static FloatingButtonStyle floatingButtonStyle;
 
   static void loadSkinFile(const QString& filePath);
   static SkinMetadata getSkinMetadata(TiXmlElement* skinDocumentRoot);

@@ -8,6 +8,7 @@
 
 #include <FilePaths.h>
 #include <FloatingButton.h>
+#include <Style.h>
 
 using namespace appetizer;
 
@@ -17,15 +18,17 @@ FloatingButton::FloatingButton(GraphicsWindow* parentWindow): GraphicsItem(paren
 }
 
 
-int FloatingButton::defaultWidth() const {
-  if (background_.isNull()) return 0;
-  return background_.width();
+int FloatingButton::width() const {
+  if (background_.isNull()) return 22;
+  QRect contentRect = Style::floatingButtonStyle.getContentRectangle(background_.width(), background_.height());
+  return contentRect.width();
 }
 
 
-int FloatingButton::defaultHeight() const {
-  if (background_.isNull()) return 0;
-  return background_.height();
+int FloatingButton::height() const {
+  if (background_.isNull()) return 22;
+  QRect contentRect = Style::floatingButtonStyle.getContentRectangle(background_.width(), background_.height());
+  return contentRect.height();
 }
 
 
@@ -42,5 +45,7 @@ void FloatingButton::applySkin() {
 void FloatingButton::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   GraphicsItem::paint(painter, option, widget);
   	
-  painter->drawPixmap(0, 0, background_);
+  QRect contentRect = Style::floatingButtonStyle.getContentRectangle(width(), height());
+
+  painter->drawPixmap(-contentRect.x(), -contentRect.y(), background_);
 }

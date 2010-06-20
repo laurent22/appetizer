@@ -21,8 +21,8 @@ public:
 
   GraphicsItem(GraphicsWindow* parentWindow);
   ~GraphicsItem();
-  inline int width() const;
-  inline int height() const;
+  virtual inline int width() const;
+  virtual inline int height() const;
   virtual int defaultWidth() const;
   virtual int defaultHeight() const;
   void setWidth(int width);
