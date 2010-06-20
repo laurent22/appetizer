@@ -17,6 +17,23 @@ FloatingButton::FloatingButton(GraphicsWindow* parentWindow): GraphicsItem(paren
 }
 
 
+int FloatingButton::defaultWidth() const {
+  if (background_.isNull()) return 0;
+  return background_.width();
+}
+
+
+int FloatingButton::defaultHeight() const {
+  if (background_.isNull()) return 0;
+  return background_.height();
+}
+
+
+void FloatingButton::setAction(const QString& action) {
+  action_ = action;
+}
+
+
 void FloatingButton::applySkin() {
   background_.load(FilePaths::GetSkinFile("FloatingButtonBackground.png"));
 }

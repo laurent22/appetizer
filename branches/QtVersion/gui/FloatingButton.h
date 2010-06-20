@@ -20,6 +20,10 @@ public:
 
   FloatingButton(GraphicsWindow* parentWindow);
   void applySkin();
+  inline QString action() const { return action_; }
+  void setAction(const QString& action);
+  int defaultWidth() const;
+  int defaultHeight() const;
   
 protected:
 
@@ -29,6 +33,7 @@ private:
 	
 	QPixmap background_;
 	QPixmap icon_;
+  QString action_;
 
 };
 

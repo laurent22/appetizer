@@ -24,6 +24,8 @@ public:
   void applySkin();
   
 private:
+
+  std::vector<FloatingButton*> buttons_;
 	
 };
 

@@ -12,6 +12,8 @@
 
 using namespace appetizer;
 
+#include <FloatingButton.h>
+
 MainScene::MainScene(GraphicsWindow* parentWindow): GraphicsScene(parentWindow) {
   mainPanel_ = new MainPanel(this->parentWindow());
   addItem(mainPanel_);
@@ -25,6 +27,10 @@ MainScene::MainScene(GraphicsWindow* parentWindow): GraphicsScene(parentWindow) 
   QObject::connect(resizeSprite_, SIGNAL(mouseMoved()), this, SLOT(resizeSprite_mouseMoved()));
 
   mainPanel_->loadFolderItems(Application::instance()->rootFolderItem()->id());
+
+  buttonBar_ = new FloatingButtonBar(this->parentWindow());
+  buttonBar_->applySkin();
+  addItem(buttonBar_);
 }
 
 
@@ -58,6 +64,6 @@ void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 
   mainPanel_->resize(width(), height());
-
   resizeSprite_->move(width() - Style::background.padding.right, height() - Style::background.padding.bottom);
+  buttonBar_->move(width(), 0);
 }

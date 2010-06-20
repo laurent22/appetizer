@@ -9,6 +9,7 @@
 #ifndef MainScene_H
 #define MainScene_H
 
+#include <FloatingButtonBar.h>
 #include <GraphicsScene.h>
 #include <GraphicsWindow.h>
 #include <MainPanel.h>
@@ -25,6 +26,11 @@ public:
   MainScene(GraphicsWindow* parentWindow);
   MainPanel* mainPanel() const;
 
+public slots:
+
+  void resizeSprite_mousePressed();
+  void resizeSprite_mouseMoved();
+
 protected:
 
   void drawBackground(QPainter* painter, const QRectF& rect);
@@ -39,11 +45,7 @@ private:
   MainPanel* mainPanel_;
   GraphicsItem* resizeSprite_;
   ResizeDragData resizeDragData_;
-
-public slots:
-
-  void resizeSprite_mousePressed();
-  void resizeSprite_mouseMoved();
+  FloatingButtonBar* buttonBar_;
 
 };
 
