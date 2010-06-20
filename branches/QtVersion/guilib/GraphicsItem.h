@@ -45,11 +45,11 @@ public:
   void setMaxWidth(int v);
   void setMinHeight(int v);
   void setMaxHeight(int v);
-  virtual void updateDisplay();
   inline GraphicsWindow* parentWindow() { return parentWindow_; }
   void setOpacity(qreal opacity);
   void setX(qreal x);
   void setY(qreal y);
+  void updateNow(bool onlyIfInvalidated = true);
 
 signals:
 
@@ -67,6 +67,7 @@ protected:
   void mousePressEvent(QGraphicsSceneMouseEvent* event);
   void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
   void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+  virtual void updateDisplay();
 
 private:
 

@@ -209,6 +209,15 @@ void GraphicsItem::mouseMoveEvent(QGraphicsSceneMouseEvent* /* event */) {
 }
 
 
+void GraphicsItem::updateNow(bool onlyIfInvalidated) {
+  if (onlyIfInvalidated && !invalidated_) return;
+
+  invalidated_ = false;
+  updateDisplay();
+  parentWindow()->invalidateDisplay();
+}
+
+
 void GraphicsItem::updateDisplay() {
 
 }

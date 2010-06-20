@@ -22,6 +22,8 @@ public:
   FloatingButtonBar(GraphicsWindow* parentWindow);
   void updateDisplay();
   void applySkin();
+  inline int width() const;
+  inline int height() const;
   
 private:
 

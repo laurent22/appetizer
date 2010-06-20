@@ -59,7 +59,7 @@ void ScrollPane::updateDisplay() {
   if (content_) {
     content_->setY(scrollBar_->value() * (height() - contentHeight()));
     content_->setWidth(width() - scrollBar_->width() - scrollBarGap_);
-    content_->updateDisplay();
+    content_->updateNow();
   } 
   
   scrollBar_->move(width() - scrollBar_->width(), 0);

@@ -23,6 +23,18 @@ FloatingButtonBar::FloatingButtonBar(GraphicsWindow* parentWindow): GraphicsItem
 }
 
 
+int FloatingButtonBar::width() const {
+  if (buttons_.size() == 0) return 0;
+  return buttons_.size() * buttons_[0]->width();
+}
+
+
+int FloatingButtonBar::height() const {
+  if (buttons_.size() == 0) return 0;
+  return buttons_[0]->height();
+}
+
+
 void FloatingButtonBar::applySkin() {
   for (int i = (int)buttons_.size() - 1; i >= 0; i--) {
     FloatingButton* b = buttons_.at(i);
@@ -34,11 +46,11 @@ void FloatingButtonBar::applySkin() {
 void FloatingButtonBar::updateDisplay() {
 	GraphicsItem::updateDisplay();
 	
-  int buttonRight = 0;
-  int buttonTop = 0;
+  int buttonX = 0;
+  int buttonY = 0;
   for (int i = (int)buttons_.size() - 1; i >= 0; i--) {
     FloatingButton* b = buttons_.at(i);
-    b->move(buttonRight - b->width(), buttonTop);
-    buttonRight -= b->width();
+    b->move(buttonX, buttonY);
+    buttonX += b->height();
   }
 }

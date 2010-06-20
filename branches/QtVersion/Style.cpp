@@ -123,7 +123,6 @@ void Style::loadSkinFile(const QString& filePath) {
   SkinMetadata skinMetadata = Style::getSkinMetadata(root);
 
   if (!Style::isSkinVersionCompatible(skinMetadata.compatibleVersion)) {
-    // TODO: Show error message
     MessageBoxes::error(StringUtil::convertFields(_("This skin is not compatible with the current version of %s.")).arg(APPLICATION_NAME));
     return;
   }

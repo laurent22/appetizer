@@ -5,11 +5,11 @@
 	
 	Some general notes about the Skin.xml file:
 	
-	- The paddings are expressed as (Left, Top, Right, Bottom)
+	- Paddings are expressed as (Left, Top, Right, Bottom)
 			
-	- The colors are expressed as (Red, Green, Blue, Alpha), each value being between 0 and 255. The Alpha value is optional.
+	- Colors are expressed as (Red, Green, Blue, Alpha), each value being between 0 and 255. The Alpha value is optional.
 	
-	- Many skin files are optional - see the BlueGlass skin for the files that are actually required.
+	- Many skin files are optional - see the Appetizer 2 skin for the files that are actually required.
 	
 	-->
 	
@@ -33,7 +33,7 @@
 	<Tab>
 		<TextFormat>
 			<Size>10</Size>
-			<Color>0, 39, 79</Color>
+			<Color>0, 44, 88</Color>
 		</TextFormat>
 		<HGap>5</HGap>
 	</Tab>
