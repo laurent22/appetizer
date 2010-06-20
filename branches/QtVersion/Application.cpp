@@ -52,6 +52,7 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
 
   ConfigDialog* d = new ConfigDialog();
   d->resize(500,500);
+  d->loadSettings(UserSettings::instance());
   d->show();
 }
 

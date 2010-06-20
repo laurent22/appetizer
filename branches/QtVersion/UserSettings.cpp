@@ -167,8 +167,16 @@ QString UserSettings::getGroupLabelAt(int index) const {
 }
 
 
-std::vector<UserSetting*> UserSettings::getSettingsByGroup(int index) {
-  return std::vector<UserSetting*>();
+UserSettingsVector UserSettings::getSettingsByGroup(const QString& groupName) {
+  UserSettingsVector output;
+
+  UserSettingsMap::iterator i;
+  for (i = settings_.begin(); i != settings_.end(); ++i) {
+    UserSetting* s = i->second;
+    if (s->group() == groupName) output.push_back(s);
+  }
+
+  return output;
 }
 
 

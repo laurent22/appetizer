@@ -22,11 +22,15 @@ public:
 
   ConfigDialog(QWidget* parent = NULL);
   ~ConfigDialog();
+  void loadSettings(UserSettings* settings); 
 
 private:
 
   QTabWidget* tabWidget_;
   QBoxLayout* topLayout_;
+  UserSettings* settings_;
+  std::vector<QWidget*> tabPanels_;
+  void addSettingControlToLayout_(UserSetting* setting, QFormLayout* layout);
 
 };
 

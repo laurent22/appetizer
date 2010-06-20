@@ -38,6 +38,7 @@ private:
 
 
 typedef std::map<QString, UserSetting*> UserSettingsMap;
+typedef std::vector<UserSetting*> UserSettingsVector;
 
 class UserSettings {
 
@@ -76,7 +77,7 @@ public:
 
   std::vector<QString> getGroupLabels() const;
   QString getGroupLabelAt(int index) const;
-  std::vector<UserSetting*> getSettingsByGroup(int index);  
+  UserSettingsVector getSettingsByGroup(const QString& groupName);  
 
   inline UserSettingsMap settings() const { return settings_; }
 
