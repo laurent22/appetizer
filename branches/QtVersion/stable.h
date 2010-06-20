@@ -63,6 +63,7 @@
 #include <QTime>
 #include <QTimer>
 #include <QVariant>
+#include <QVBoxLayout>
 #include <QWidget>
 
 #include <tinyxml/tinyxml.h>

@@ -5,8 +5,11 @@
 */
 
 #include <stable.h>
+
+#include <Constants.h>
 #include <Style.h>
 #include <XmlUtil.h>
+
 using namespace appetizer;
 
 IconStyle Style::icon;
@@ -98,7 +101,7 @@ void Style::loadSkinFile(const QString& filePath) {
 
   if (!Style::isSkinVersionCompatible(skinMetadata.compatibleVersion)) {
     // TODO: Show error message
-    //MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
+    MessageBoxes::error(StringUtil::convertFields(_("This skin is not compatible with the current version of %s.")).arg(APPLICATION_NAME));
     return;
   }
 

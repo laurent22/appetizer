@@ -37,6 +37,8 @@ public:
   inline QVariant value() const { return value_; }
   inline QString label() const { return label_; }
   inline QString group() const { return group_; }
+  inline int minValue() const { return minValue_; }
+  inline int maxValue() const { return maxValue_; }
   ControlType controlType() const;
   inline UserSettingOptions options() const { return options_; }
 
@@ -45,6 +47,8 @@ public:
   void setGroup(const QString& group);
   void setControlType(UserSetting::ControlType type);
   void setOptions(const UserSettingOptions& options);
+  void setMinValue(int v);
+  void setMaxValue(int v);
 
 private:
 
@@ -54,6 +58,8 @@ private:
   QString group_;
   ControlType controlType_;
   UserSettingOptions options_;
+  int minValue_;
+  int maxValue_;
 
 };
 

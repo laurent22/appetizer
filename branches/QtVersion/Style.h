@@ -9,6 +9,8 @@
 #ifndef Appetizer_Style_H
 #define Appetizer_Style_H
 
+#include <MessageBoxes.h>
+
 namespace appetizer {
 
 

@@ -27,9 +27,12 @@ public:
 private:
 
   QTabWidget* tabWidget_;
-  QBoxLayout* topLayout_;
+  QVBoxLayout* topLayout_;
+  QHBoxLayout* buttonBarLayout_;
   UserSettings* settings_;
   std::vector<QWidget*> tabPanels_;
+  QPushButton* saveButton_;
+  QPushButton* cancelButton_;
   void addSettingControlToLayout_(UserSetting* setting, QFormLayout* layout);
 
 };

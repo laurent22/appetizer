@@ -35,6 +35,8 @@ UserSetting::UserSetting(const QString& name) {
   name_ = name;
   group_ = _("General");
   controlType_ = Undefined;
+  minValue_ = 0;
+  maxValue_ = 100;
 }
 
 
@@ -73,6 +75,16 @@ void UserSetting::setControlType(UserSetting::ControlType type) {
 
 void UserSetting::setOptions(const UserSettingOptions& options) {
   options_ = options;
+}
+
+
+void UserSetting::setMinValue(int v) {
+  minValue_ = v;
+}
+
+
+void UserSetting::setMaxValue(int v) {
+  maxValue_ = v;
 }
 
 
@@ -121,6 +133,8 @@ UserSettings::UserSettings() {
   s = setInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
   s->setLabel(_("Icon size:"));
   s->setGroup(_("Appearance"));
+  s->setMinValue(1);
+  s->setMaxValue(512);
 
   s = setInt("WindowTransparency", 235);
   s->setLabel(_("Opacity:"));

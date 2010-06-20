@@ -12,11 +12,26 @@ using namespace appetizer;
 
 
 ConfigDialog::ConfigDialog(QWidget* parent): QDialog(parent) {
-  topLayout_ = new QBoxLayout(QBoxLayout::Up, this);
+  topLayout_ = new QVBoxLayout(this);
   setLayout(topLayout_);
 
   tabWidget_ = new QTabWidget(this);
   topLayout_->addWidget(tabWidget_);
+
+  buttonBarLayout_ = new QHBoxLayout(this);
+  topLayout_->addLayout(buttonBarLayout_);
+
+  buttonBarLayout_->addStretch();
+
+  saveButton_ = new QPushButton(_("Save"));
+  saveButton_->adjustSize();
+  saveButton_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+  buttonBarLayout_->addWidget(saveButton_);
+
+  cancelButton_ = new QPushButton(_("Cancel"));
+  cancelButton_->adjustSize();
+  cancelButton_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+  buttonBarLayout_->addWidget(cancelButton_);
 }
 
 
@@ -57,29 +72,51 @@ void ConfigDialog::addSettingControlToLayout_(UserSetting* setting, QFormLayout*
 
   QWidget* control = NULL;
   
-  if (controlType == UserSetting::CheckBox) {
+  if (controlType == UserSetting::CheckBox) { // CHECKBOX
+
     QCheckBox* c = new QCheckBox(label);
+    c->setChecked(setting->value().toBool());
     label = "";
     control = static_cast<QWidget*>(c);
-  } else if (controlType == UserSetting::TextBox) {
+
+  } else if (controlType == UserSetting::TextBox) { // TEXTBOX
+
     QLineEdit* c = new QLineEdit();
+    c->setText(setting->value().toString());
     control = static_cast<QWidget*>(c);
-  } else if (controlType == UserSetting::SpinBox) {
+
+  } else if (controlType == UserSetting::SpinBox) { // SPINBOX
+
     QSpinBox* c = new QSpinBox();
+    c->setValue(setting->value().toInt());
+    c->setMinimum(setting->minValue());
+    c->setMaximum(setting->maxValue());
     control = static_cast<QSpinBox*>(c);
-  } else if (controlType == UserSetting::ComboBox) {
+
+  } else if (controlType == UserSetting::ComboBox) { // COMBOBOX
+
     QComboBox* c = new QComboBox();
     control = static_cast<QComboBox*>(c);
+    int selectedIndex = 0;
 
     for (int i = 0; i < (int)setting->options().size(); i++) {
       std::pair<QString, QString> option = setting->options().at(i);
+      if (selectedIndex <= 0) {
+        if (option.second != "") {
+          if (option.second == setting->value().toString()) selectedIndex = i;
+        } else {
+          if (option.first == setting->value().toString()) selectedIndex = i;
+        }
+      }
       c->addItem(option.first, QVariant(option.second));
     }
+
+    c->setCurrentIndex(selectedIndex);
+
   }
 
   if (control) {
     layout->addRow(label, control);
   }
 
-  
 }
