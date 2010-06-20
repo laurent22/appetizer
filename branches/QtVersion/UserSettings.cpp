@@ -10,6 +10,7 @@
 #include <UserSettings.h>
 #include <Constants.h>
 #include <FilePaths.h>
+#include <gettext_lib/QtLocaleUtil.h>
 
 using namespace appetizer;
 
@@ -70,6 +71,11 @@ void UserSetting::setControlType(UserSetting::ControlType type) {
 }
 
 
+void UserSetting::setOptions(const UserSettingOptions& options) {
+  options_ = options;
+}
+
+
 UserSettings::UserSettings() {
   UserSetting* s = NULL;
 
@@ -79,6 +85,17 @@ UserSettings::UserSettings() {
   s = setString("Locale", "en");
   s->setLabel(_("Language"));
   s->setControlType(UserSetting::ComboBox);
+
+  QStringList locales = QtGettext::instance()->availableLocales();
+  UserSettingOptions options;
+  QtLocaleUtil localeUtil;
+  for (int i = 0; i < locales.size(); i++) {
+    QString localeCode = locales[i];
+    std::pair<QString, QString> option(localeUtil.getDisplayName(localeCode), localeCode);
+    options.push_back(option);
+  }
+  s->setOptions(options);
+
 
   s = setString("PortableAppsPath", "$(Drive/PortableApps");
   s = setString("DocumentsPath", "$(Drive/Documents");

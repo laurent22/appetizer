@@ -209,7 +209,7 @@ QString QtLocaleUtil::getDisplayName(const QString& canonicalName) const {
 
 QString QtLocaleUtil::getCountryName(const QString& countryCode) const {
   if (codeToCountry_.find(countryCode) == codeToCountry_.end()) return "";
-  return codeToCountry_[countryCode];
+  return QString::fromUtf8(codeToCountry_[countryCode].toAscii());
 }
 
 
@@ -224,7 +224,7 @@ QString QtLocaleUtil::getLanguageName(const QString& languageCode, bool defaultT
     if (defaultToEnglish) return getLanguageNameInEnglish(languageCode);
     return "";
   }
-  return codeToLanguage_[languageCode];
+  return QString::fromUtf8(codeToLanguage_[languageCode].toAscii());
 }
 
 

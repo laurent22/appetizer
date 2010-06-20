@@ -13,6 +13,7 @@
 
 
 #include <ConfigDialog.h>
+#include <gettext_lib/QtLocaleUtil.h>
 
 
 using namespace appetizer;
@@ -36,7 +37,6 @@ Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
   QtGettext::instance()->setLocale("fr");
   QtGettext::instance()->setCatalogueName("appetizer");
   QtGettext::instance()->setCatalogueLocation(FilePaths::GetLocalesDirectory());
-
   UserSettings::instance()->Load();
   
   loadFolderItems();

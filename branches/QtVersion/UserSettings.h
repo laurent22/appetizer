@@ -13,6 +13,10 @@
 namespace appetizer {
 
 
+
+typedef std::vector<std::pair<QString, QString>> UserSettingOptions;
+
+
 class UserSetting {
   
 public:
@@ -34,11 +38,13 @@ public:
   inline QString label() const { return label_; }
   inline QString group() const { return group_; }
   ControlType controlType() const;
+  inline UserSettingOptions options() const { return options_; }
 
   void setValue(const QVariant& variant);
   void setLabel(const QString& label);
   void setGroup(const QString& group);
   void setControlType(UserSetting::ControlType type);
+  void setOptions(const UserSettingOptions& options);
 
 private:
 
@@ -47,6 +53,7 @@ private:
   QString label_;
   QString group_;
   ControlType controlType_;
+  UserSettingOptions options_;
 
 };
 
