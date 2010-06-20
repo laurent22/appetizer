@@ -74,6 +74,7 @@ MainPanel::MainPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   lastDrawnMaskSize_ = QSize(0, 0);
 
   maskNineSlicePainter_.loadImage(backgroundFile);
+  updateIconSize_ = true;
 
   QObject::connect(UserSettings::instance(), SIGNAL(settingChanged(UserSetting*)), this, SLOT(userSettings_settingChanged(UserSetting*)));
 }
@@ -86,12 +87,7 @@ MainPanel::~MainPanel() {
 
 void MainPanel::userSettings_settingChanged(UserSetting* setting) {
   if (setting->name() == "IconSize") {
-    for (int i = 0; i < (int)pages_.size(); i++) {
-      PageData* page = pages_[i];
-      if (page->iconPanel() && page->folderItem()) {
-        page->iconPanel()->setIconSize(page->folderItem()->displayIconSize());
-      }
-    }
+    updateIconSize_ = true;
     invalidate();
   }
 }
@@ -239,6 +235,17 @@ void MainPanel::updateDisplay() {
 
     tabX += tab->width() + Style::tab.margin.right;
     panelY = tab->y() + tab->height();
+  }
+
+  if (updateIconSize_) {
+    for (int i = 0; i < (int)pages_.size(); i++) {
+      PageData* page = pages_[i];
+      if (page->iconPanel() && page->folderItem()) {
+        page->iconPanel()->setIconSize(page->folderItem()->displayIconSize());
+      }
+    }
+
+    updateIconSize_ = false;
   }
 
   panelY = panelY + Style::iconPanel.padding.top;

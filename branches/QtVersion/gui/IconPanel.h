@@ -39,6 +39,7 @@ private:
   bool rebuildFolderItems_;
   std::vector<FolderItemSprite*> folderItemRenderers_;
   bool updateLayout_;
+  bool updateIconSize_;
   int contentHeight_;
   int iconSize_;
 

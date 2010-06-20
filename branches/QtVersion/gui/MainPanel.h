@@ -72,6 +72,7 @@ private:
   int pageIndex_;
   ScrollPane* scrollPane_;
   void clearPageData_();
+  bool updateIconSize_;
 
 public slots:
 

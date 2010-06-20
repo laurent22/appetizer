@@ -18,6 +18,7 @@ IconPanel::IconPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   contentHeight_ = 0;
   rebuildFolderItems_ = false;
   updateLayout_ = false;
+  updateIconSize_ = false;
   iconSize_ = SMALL_ICON_SIZE;
 }
 
@@ -25,13 +26,7 @@ IconPanel::IconPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
 void IconPanel::setIconSize(int iconSize) {
   if (iconSize == iconSize_) return;
   iconSize_ = iconSize;
-
-  for (int i = 0; i < (int)folderItemRenderers_.size(); i++) {
-    FolderItemSprite* r = folderItemRenderers_.at(i);
-    r->setIconSize(iconSize_);
-  }
-
-  updateLayout_ = true;
+  updateIconSize_ = true;
   invalidate();
 }
 
@@ -81,14 +76,22 @@ void IconPanel::updateDisplay() {
         FolderItemSprite* r = new FolderItemSprite(parentWindow());
         r->setFolderItem(folderItem->id());
         folderItemRenderers_.push_back(r);
-
-        r->setIconSize(iconSize());
-
         addItem(r);
       }
     }
 
+    updateIconSize_ = true;
     rebuildFolderItems_ = false;
+  }
+
+  if (updateIconSize_) {
+    for (int i = 0; i < (int)folderItemRenderers_.size(); i++) {
+      FolderItemSprite* r = folderItemRenderers_.at(i);
+      r->setIconSize(iconSize());
+    }
+
+    updateLayout_ = true;
+    updateIconSize_ = false;
   }
 
   if (updateLayout_) {
