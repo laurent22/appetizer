@@ -21,7 +21,7 @@ static const uint qt_meta_data_appetizer__MainPanel[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -30,12 +30,14 @@ static const uint qt_meta_data_appetizer__MainPanel[] = {
 
  // slots: signature, parameters, type, tag, flags
       22,   21,   21,   21, 0x0a,
+      44,   36,   21,   21, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_appetizer__MainPanel[] = {
     "appetizer::MainPanel\0\0tab_clicked()\0"
+    "setting\0userSettings_settingChanged(UserSetting*)\0"
 };
 
 const QMetaObject appetizer::MainPanel::staticMetaObject = {
@@ -68,9 +70,10 @@ int appetizer::MainPanel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: tab_clicked(); break;
+        case 1: userSettings_settingChanged((*reinterpret_cast< UserSetting*(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

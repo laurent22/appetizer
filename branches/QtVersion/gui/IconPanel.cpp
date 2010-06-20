@@ -25,6 +25,13 @@ IconPanel::IconPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
 void IconPanel::setIconSize(int iconSize) {
   if (iconSize == iconSize_) return;
   iconSize_ = iconSize;
+
+  for (int i = 0; i < (int)folderItemRenderers_.size(); i++) {
+    FolderItemSprite* r = folderItemRenderers_.at(i);
+    r->setIconSize(iconSize_);
+  }
+
+  updateLayout_ = true;
   invalidate();
 }
 

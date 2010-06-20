@@ -15,6 +15,7 @@
 #include <NineSliceItem.h>
 #include <ScrollPane.h>
 #include <TabSprite.h>
+#include <UserSettings.h>
 
 namespace appetizer {
 
@@ -75,6 +76,7 @@ private:
 public slots:
 
   void tab_clicked();
+  void userSettings_settingChanged(UserSetting* setting);
 
 };
 

@@ -21,10 +21,8 @@ MainScene::MainScene(GraphicsWindow* parentWindow): GraphicsScene(parentWindow) 
   resizeSprite_->resize(16, 16);
   addItem(resizeSprite_);
 
-  QObject::connect(resizeSprite_, SIGNAL(mousePressed()),
-                   this, SLOT(resizeSprite_mousePressed()));
-  QObject::connect(resizeSprite_, SIGNAL(mouseMoved()),
-                   this, SLOT(resizeSprite_mouseMoved()));
+  QObject::connect(resizeSprite_, SIGNAL(mousePressed()), this, SLOT(resizeSprite_mousePressed()));
+  QObject::connect(resizeSprite_, SIGNAL(mouseMoved()), this, SLOT(resizeSprite_mouseMoved()));
 
   mainPanel_->loadFolderItems(Application::instance()->rootFolderItem()->id());
 }
