@@ -14,6 +14,15 @@
 namespace appetizer {
 
 
+struct SettingWidgetInfo {
+  UserSetting* setting;
+  QWidget* control;
+};
+
+
+typedef std::vector<SettingWidgetInfo> SettingWidgetVector;
+
+
 class ConfigDialog : public QDialog {
 
   Q_OBJECT
@@ -23,6 +32,7 @@ public:
   ConfigDialog(QWidget* parent = NULL);
   ~ConfigDialog();
   void loadSettings(UserSettings* settings); 
+  inline UserSettingsVector modifiedSettings() const { return modifiedSettings_; }
 
 private:
 
@@ -34,6 +44,13 @@ private:
   QPushButton* saveButton_;
   QPushButton* cancelButton_;
   void addSettingControlToLayout_(UserSetting* setting, QFormLayout* layout);
+  SettingWidgetVector settingControls_;
+  UserSettingsVector modifiedSettings_;
+
+private slots:
+
+  void saveButton_clicked();
+  void cancelButton_clicked();
 
 };
 

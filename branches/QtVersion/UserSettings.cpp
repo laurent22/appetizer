@@ -54,7 +54,9 @@ UserSetting::ControlType UserSetting::controlType() const {
 
 
 void UserSetting::setValue(const QVariant& value) {
+  if (value == value_) return;
   value_ = value;
+  emit valueChanged();
 }
 
 
@@ -252,11 +254,18 @@ UserSetting* UserSettings::setSetting(const QString& name, const QVariant& varia
   } else {
     setting = new UserSetting(name);
     settings_[name] = setting;
+    QObject::connect(setting, SIGNAL(valueChanged()), this, SLOT(setting_valueChanged()));
   }
 
   setting->setValue(variant);
 
   return setting;
+}
+
+
+void UserSettings::setting_valueChanged() {
+  UserSetting* setting = static_cast<UserSetting*>(QObject::sender());
+  qDebug() << setting->name() << ":" << setting->value();
 }
 
 

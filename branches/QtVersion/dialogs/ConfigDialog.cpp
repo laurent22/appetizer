@@ -26,11 +26,13 @@ ConfigDialog::ConfigDialog(QWidget* parent): QDialog(parent) {
   saveButton_ = new QPushButton(_("Save"));
   saveButton_->adjustSize();
   saveButton_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+  QObject::connect(saveButton_, SIGNAL(clicked()), this, SLOT(saveButton_clicked()));
   buttonBarLayout_->addWidget(saveButton_);
 
   cancelButton_ = new QPushButton(_("Cancel"));
   cancelButton_->adjustSize();
   cancelButton_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+  QObject::connect(cancelButton_, SIGNAL(clicked()), this, SLOT(cancelButton_clicked()));
   buttonBarLayout_->addWidget(cancelButton_);
 }
 
@@ -40,8 +42,27 @@ ConfigDialog::~ConfigDialog() {
 }
 
 
+void ConfigDialog::saveButton_clicked() {
+  modifiedSettings_.clear();
+
+  for (int i = 0; i < (int)settingControls_.size(); i++) {
+    SettingWidgetInfo info = settingControls_[i];
+    //if (info.setting->value() == info.initialValue) modifiedSettings_.push_back(info.setting);
+  }
+
+  close();
+}
+
+
+void ConfigDialog::cancelButton_clicked() {
+  close();
+}
+
+
 void ConfigDialog::loadSettings(UserSettings* settings) {
   settings_ = settings;
+
+  // TODO: delete existing controls? or reuse existing ones?
 
   std::vector<QString> labels = UserSettings::instance()->getGroupLabels();
 
@@ -117,6 +138,11 @@ void ConfigDialog::addSettingControlToLayout_(UserSetting* setting, QFormLayout*
 
   if (control) {
     layout->addRow(label, control);
+
+    SettingWidgetInfo info;
+    info.setting = setting;
+    info.control = control;
+    settingControls_.push_back(info);
   }
 
 }

@@ -453,6 +453,10 @@
 					RelativePath=".\moc\moc_ScrollPane.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\moc\moc_UserSettings.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="guilib"

@@ -17,7 +17,9 @@ namespace appetizer {
 typedef std::vector<std::pair<QString, QString>> UserSettingOptions;
 
 
-class UserSetting {
+class UserSetting: public QObject {
+
+  Q_OBJECT
   
 public:
 
@@ -50,6 +52,10 @@ public:
   void setMinValue(int v);
   void setMaxValue(int v);
 
+signals:
+
+  void valueChanged();
+
 private:
 
   QString name_;
@@ -67,7 +73,9 @@ private:
 typedef std::map<QString, UserSetting*> UserSettingsMap;
 typedef std::vector<UserSetting*> UserSettingsVector;
 
-class UserSettings {
+class UserSettings: public QObject {
+
+  Q_OBJECT
 
 public:
 
@@ -84,7 +92,6 @@ public:
   void FromXml(TiXmlElement* xml);
 
   UserSetting* getSetting(const QString& name) const;
-  
   
   QVariant::Type getSettingType(const QString& name) const;
   QString typeToString(QVariant::Type type) const;
@@ -114,6 +121,10 @@ private:
 
   mutable UserSettingsMap settings_;
   static UserSettings* instance_;
+
+private slots:
+
+  void setting_valueChanged();
 
 };
 

@@ -21,18 +21,23 @@ static const uint qt_meta_data_appetizer__ConfigDialog[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      25,   24,   24,   24, 0x08,
+      46,   24,   24,   24, 0x08,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_appetizer__ConfigDialog[] = {
-    "appetizer::ConfigDialog\0"
+    "appetizer::ConfigDialog\0\0saveButton_clicked()\0"
+    "cancelButton_clicked()\0"
 };
 
 const QMetaObject appetizer::ConfigDialog::staticMetaObject = {
@@ -62,6 +67,14 @@ int appetizer::ConfigDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: saveButton_clicked(); break;
+        case 1: cancelButton_clicked(); break;
+        default: ;
+        }
+        _id -= 2;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE
