@@ -63,7 +63,9 @@ void MainScene::resizeSprite_mouseMoved() {
 void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 
+  QRect r = Style::background.getContentRectangle(width(), height());
+
   mainPanel_->resize(width(), height());
-  resizeSprite_->move(width() - Style::background.padding.right, height() - Style::background.padding.bottom);
+  resizeSprite_->move(r.right(), r.bottom());
   buttonBar_->move(width(), 0);
 }
