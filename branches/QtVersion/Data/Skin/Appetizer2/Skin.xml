@@ -18,7 +18,8 @@
 	</Icon>
 	
 	<Background>
-		<Padding>24,21,24,26</Padding>
+		<Padding>10,10,10,10</Padding>
+		<ShadowPadding>12,8,12,16</ShadowPadding>
 	</Background>
 	
 	<IconPanel>
@@ -30,7 +31,7 @@
 			<Size>10</Size>
 			<Color>0, 39, 79</Color>
 		</TextFormat>
-		<Margin>0,0,5,0</Margin>
+		<HGap>5</HGap>
 	</Tab>
 	
 </Skin>

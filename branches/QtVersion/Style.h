@@ -14,6 +14,9 @@
 namespace appetizer {
 
 
+class Style; // Forward declaration
+
+
 class RectangleStyle { public:
   int left;
   int right;
@@ -47,6 +50,8 @@ class IconStyle { public:
 
 class BackgroundStyle { public:
   RectangleStyle padding;
+  RectangleStyle shadowPadding;
+  QRect getContentRectangle(int width, int height) const;
 };
 
 class IconPanelStyle { public:
@@ -55,7 +60,7 @@ class IconPanelStyle { public:
 
 class TabStyle { public:
   RectangleStyle padding;
-  RectangleStyle margin;
+  int hGap;
   TextFormat textFormat;
 };
 
@@ -80,6 +85,7 @@ public:
   static SkinMetadata getSkinMetadata(TiXmlElement* skinDocumentRoot);
   static SkinMetadata getSkinMetadata(const QString& filePath);
   static bool isSkinVersionCompatible(const QString& skinVersion);
+  static QRect calculateContentRectangle(int width, int height, const RectangleStyle& shadowPadding, const RectangleStyle& padding);
 
 };
 

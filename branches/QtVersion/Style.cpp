@@ -28,6 +28,9 @@ void RectangleStyle::fromRect(const QRect& rect) {
 }
 
 
+QRect BackgroundStyle::getContentRectangle(int width, int height) const { return Style::calculateContentRectangle(width, height, shadowPadding, padding); };
+
+
 TextFormat::TextFormat() {
   family = "Arial";
   bold = false;
@@ -87,6 +90,14 @@ bool Style::isSkinVersionCompatible(const QString& skinVersion) {
 }
 
 
+QRect Style::calculateContentRectangle(int width, int height, const RectangleStyle& shadowPadding, const RectangleStyle& padding) {
+  return QRect(shadowPadding.left + padding.left,
+               shadowPadding.top + padding.top,
+               width - shadowPadding.width - padding.width,
+               height - shadowPadding.height - padding.height);
+}
+
+
 void Style::loadSkinFile(const QString& filePath) {
   TiXmlDocument doc(filePath.toUtf8());
   doc.LoadFile(TIXML_ENCODING_UTF8);
@@ -127,6 +138,9 @@ void Style::loadSkinFile(const QString& filePath) {
       
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::background.padding.fromRect(resultRect);
+      resultRect = QRect(0,0,0,0);
+      XmlUtil::readElementTextAsRect(handle, "ShadowPadding", resultRect);
+      Style::background.shadowPadding.fromRect(resultRect);
 
     } else if (elementName == "IconPanel") {
       
@@ -137,9 +151,7 @@ void Style::loadSkinFile(const QString& filePath) {
 
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::tab.padding.fromRect(resultRect);
-      resultRect = QRect(0,0,0,0);
-      XmlUtil::readElementTextAsRect(handle, "Margin", resultRect);
-      Style::tab.margin.fromRect(resultRect);
+      Style::tab.hGap = XmlUtil::readElementTextAsInt(handle, "HGap");
       if (handle.Child("TextFormat", 0).ToElement()) Style::tab.textFormat.fromXml(handle.Child("TextFormat", 0));
 
     }

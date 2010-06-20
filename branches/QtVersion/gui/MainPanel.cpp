@@ -219,12 +219,15 @@ void MainPanel::updateDisplay() {
 
   backgroundSprite_->resize(width(), height());
 
-  int tabX = Style::background.padding.left + Style::tab.margin.left;
-  int tabY = Style::background.padding.top + Style::tab.margin.top;
-  int panelY = tabY;
+  QRect contentRect = Style::background.getContentRectangle(width(), height());
+
+  int tabX = contentRect.x();
+  int tabY = contentRect.y();
   int tabWidth = 0;
+  int tabHeight = 0;
   if (pages_.size() > 0) {
-    tabWidth = (width() - Style::background.padding.width - Style::tab.margin.width * pages_.size() + Style::tab.margin.right) / pages_.size();
+    tabWidth = (contentRect.width() - (Style::tab.hGap * (pages_.size() - 1))) / pages_.size();
+    tabHeight = pages_[0]->tab()->height();
   }
   
   for (int i = 0; i < (int)(pages_.size()); i++) {
@@ -233,8 +236,7 @@ void MainPanel::updateDisplay() {
     tab->move(tabX, tabY);
     tab->setWidth(tabWidth);
 
-    tabX += tab->width() + Style::tab.margin.right;
-    panelY = tab->y() + tab->height();
+    tabX += tab->width() + Style::tab.hGap;
   }
 
   if (updateIconSize_) {
@@ -248,12 +250,10 @@ void MainPanel::updateDisplay() {
     updateIconSize_ = false;
   }
 
-  panelY = panelY + Style::iconPanel.padding.top;
-
-  int scrollPaneWidth = width() - Style::background.padding.width;
-  int scrollPaneHeight = height() - panelY - Style::background.padding.bottom;
-  scrollPane_->setX(Style::background.padding.left);
-  scrollPane_->setY(panelY);
+  int scrollPaneWidth = contentRect.width();
+  int scrollPaneHeight = contentRect.height() - tabHeight;
+  scrollPane_->setX(contentRect.x());
+  scrollPane_->setY(contentRect.y() + tabHeight);
   scrollPane_->resize(scrollPaneWidth, scrollPaneHeight);
   scrollPane_->setVisible(scrollPaneWidth > 0 && scrollPaneHeight > 0);
 }
