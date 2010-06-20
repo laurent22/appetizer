@@ -330,6 +330,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\utils\MessageBoxes.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\utils\NineSlicePainter.cpp"
 					>
 				</File>
@@ -589,6 +593,10 @@
 				</File>
 				<File
 					RelativePath=".\utils\IconUtil.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utils\MessageBoxes.h"
 					>
 				</File>
 				<File

@@ -78,20 +78,9 @@ SkinMetadata Style::getSkinMetadata(const QString& filePath) {
 
 
 bool Style::isSkinVersionCompatible(const QString& skinVersion) {
-  bool ok;
-  double dSkinVersion = skinVersion.toDouble(&ok);
-  if (!ok) return true; // We don't know the version number so the skin may or may not load
-  
-  //double dThisVersion;
-  //wxString fullVersion = VersionInfo::GetVersionString();
-  //wxArrayString splitted;
-  //StringUtil::Split(fullVersion, splitted, _T("."));
-  //wxString tdVersion = splitted[0] + _T(".") + splitted[1];
-  //tdVersion.ToDouble(&dThisVersion);
-
-  //if (dSkinVersion < 1.3 && dThisVersion >= 1.3) return false;
-
-  return true;
+  QStringList splitted = skinVersion.split(".");
+  if (splitted.length() <= 0) return true; // Try to load it anyway
+  return splitted[0] == "2";
 }
 
 

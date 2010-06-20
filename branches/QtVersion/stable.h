@@ -51,6 +51,7 @@
 #include <QPen>
 #include <QPixmap>
 #include <QPropertyAnimation>
+#include <QPushButton>
 #include <QRect>
 #include <QRegExp>
 #include <QResizeEvent>
