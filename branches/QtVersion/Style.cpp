@@ -51,6 +51,50 @@ QFont TextFormat::font() {
 }
 
 
+SkinMetadata Style::getSkinMetadata(TiXmlElement* skinDocumentRoot) {
+  SkinMetadata skinMetadata;
+  skinMetadata.compatibleVersion = QString::fromUtf8(skinDocumentRoot->Attribute("compatibleVersion"));
+  skinMetadata.name = QString::fromUtf8(skinDocumentRoot->Attribute("name"));
+  skinMetadata.author = QString::fromUtf8(skinDocumentRoot->Attribute("author"));
+  skinMetadata.isNull = false;
+  return skinMetadata;
+}
+
+
+SkinMetadata Style::getSkinMetadata(const QString& filePath) {
+  TiXmlDocument doc(filePath.toAscii());
+  doc.LoadFile();
+
+  TiXmlElement* root = doc.FirstChildElement("Skin");
+  if (!root) {
+    qWarning() << "Styles::LoadSkinFile: Could not load XML. No Skin element found:" << filePath;
+    SkinMetadata output;
+    output.isNull = true;
+    return output;
+  }
+
+  return Style::getSkinMetadata(root);
+}
+
+
+bool Style::isSkinVersionCompatible(const QString& skinVersion) {
+  bool ok;
+  double dSkinVersion = skinVersion.toDouble(&ok);
+  if (!ok) return true; // We don't know the version number so the skin may or may not load
+  
+  //double dThisVersion;
+  //wxString fullVersion = VersionInfo::GetVersionString();
+  //wxArrayString splitted;
+  //StringUtil::Split(fullVersion, splitted, _T("."));
+  //wxString tdVersion = splitted[0] + _T(".") + splitted[1];
+  //tdVersion.ToDouble(&dThisVersion);
+
+  //if (dSkinVersion < 1.3 && dThisVersion >= 1.3) return false;
+
+  return true;
+}
+
+
 void Style::loadSkinFile(const QString& filePath) {
   TiXmlDocument doc(filePath.toUtf8());
   doc.LoadFile(TIXML_ENCODING_UTF8);
@@ -61,13 +105,13 @@ void Style::loadSkinFile(const QString& filePath) {
     return;
   }
 
-  //SkinMetadata skinMetadata;
-  //Styles::GetSkinMetadata(root, skinMetadata);
+  SkinMetadata skinMetadata = Style::getSkinMetadata(root);
 
-  //if (!Styles::IsSkinVersionCompatible(skinMetadata.CompatibleVersion)) {
-  //  MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
-  //  return;
-  //}
+  if (!Style::isSkinVersionCompatible(skinMetadata.compatibleVersion)) {
+    // TODO: Show error message
+    //MessageBoxes::ShowError(wxString::Format(_("This skin is not compatible with the current version of %s."), APPLICATION_NAME));
+    return;
+  }
 
   // *****************************************************************
   // Set default values

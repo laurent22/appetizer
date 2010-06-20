@@ -71,7 +71,7 @@ void ConfigDialog::addSettingControlToLayout_(UserSetting* setting, QFormLayout*
     QComboBox* c = new QComboBox();
     control = static_cast<QComboBox*>(c);
 
-    for (int i = 0; i < setting->options().size(); i++) {
+    for (int i = 0; i < (int)setting->options().size(); i++) {
       std::pair<QString, QString> option = setting->options().at(i);
       c->addItem(option.first, QVariant(option.second));
     }

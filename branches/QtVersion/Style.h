@@ -57,6 +57,13 @@ class TabStyle { public:
   TextFormat textFormat;
 };
 
+struct SkinMetadata {
+  QString name;
+  QString compatibleVersion;
+  QString author;
+  bool isNull;
+};
+
 
 class Style {
 
@@ -68,6 +75,9 @@ public:
   static IconPanelStyle iconPanel;
 
   static void loadSkinFile(const QString& filePath);
+  static SkinMetadata getSkinMetadata(TiXmlElement* skinDocumentRoot);
+  static SkinMetadata getSkinMetadata(const QString& filePath);
+  static bool isSkinVersionCompatible(const QString& skinVersion);
 
 };
 
