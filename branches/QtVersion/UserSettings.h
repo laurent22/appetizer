@@ -20,12 +20,19 @@ public:
   UserSetting(const QString& name);
   inline QString name() const { return name_; }
   inline QVariant value() const { return value_; }
+  inline QString label() const { return label_; }
+  inline QString group() const { return group_; }
+  
   void setValue(const QVariant& variant);
+  void setLabel(const QString& label);
+  void setGroup(const QString& group);
 
 private:
 
   QString name_;
   QVariant value_;
+  QString label_;
+  QString group_;
 
 };
 
@@ -48,10 +55,8 @@ public:
   TiXmlElement* ToXml();
   void FromXml(TiXmlElement* xml);
 
-  int GetValidatedIconSize(int iconSize = -1);
-
   UserSetting* getSetting(const QString& name) const;
-  void setSetting(const QString& name, const QVariant& variant);
+  
   
   QVariant::Type getSettingType(const QString& name) const;
   QString typeToString(QVariant::Type type) const;
@@ -62,11 +67,18 @@ public:
   QDateTime getDateTime(const QString& name) const;
   QColor getColor(const QString& name) const;
 
-  void setInt(const QString& name, int value);
-  void setString(const QString& name, const QString& value);
-  void setBool(const QString& name, bool value);
-  void setDateTime(const QString& name, const QDateTime& dateTime);
-  void setColor(const QString& name, const QColor& color);
+  UserSetting* setSetting(const QString& name, const QVariant& variant);
+  UserSetting* setInt(const QString& name, int value);
+  UserSetting* setString(const QString& name, const QString& value);
+  UserSetting* setBool(const QString& name, bool value);
+  UserSetting* setDateTime(const QString& name, const QDateTime& dateTime);
+  UserSetting* setColor(const QString& name, const QColor& color);
+
+  std::vector<QString> getGroupLabels() const;
+  QString getGroupLabelAt(int index) const;
+  std::vector<UserSetting*> getSettingsByGroup(int index);  
+
+  inline UserSettingsMap settings() const { return settings_; }
 
 private:
 

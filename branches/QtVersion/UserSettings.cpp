@@ -32,6 +32,7 @@ void UserSettings::destroyInstance() {
 
 UserSetting::UserSetting(const QString& name) {
   name_ = name;
+  group_ = _("General");
 }
 
 
@@ -40,42 +41,102 @@ void UserSetting::setValue(const QVariant& value) {
 }
 
 
+void UserSetting::setLabel(const QString& label) {
+  label_ = label;
+}
+
+
+void UserSetting::setGroup(const QString& group) {
+  group_ = group;
+}
+
+
 UserSettings::UserSettings() {
-  setInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
-  setString("Locale", "en");
-  setString("PortableAppsPath", "$(Drive/PortableApps");
-  setString("DocumentsPath", "$(Drive/Documents");
-  setString("MusicPath", "$(Drive/Documents/Music");
-  setString("PicturesPath", "$(Drive/Documents/Pictures");
-  setString("VideosPath", "$(Drive/Documents/Videos");
-  setString("Skin", "Default");
-  setBool("Rotated", false);
-  setBool("AlwaysOnTop", false);
-  setBool("MinimizeOnClose", true);
-  setBool("UniqueApplicationInstance", true);
-  setBool("AutoHideApplication", false);
-  setBool("RunMultiLaunchOnStartUp", false);
-  setBool("CloseAppsOnEject", false);
-  setBool("HotKeyControl", false);
-  setBool("HotKeyAlt", false);
-  setBool("HotKeyShift", false);
-  setInt("HotKeyKey", 0);
-  setBool("LaunchAppHotKeyControl", false);
-  setBool("LaunchAppHotKeyAlt", false);
-  setBool("LaunchAppHotKeyShift", false);
-  setInt("LaunchAppHotKeyKey", 0);
-  setInt("WindowTransparency", 235);
-  setBool("OptionPanelOpen", true);
-  setBool("TaskBarIcon", false);
-  setBool("TrayIcon", true);
-  setBool("IconLabelPosition", "bottom");
-  setBool("ShowDeleteIconMessage", true);
-  setBool("ShowEjectDriveMessage", true);
-  setBool("ShowMinimizeMessage", true);
+  UserSetting* s = NULL;
+
+  s = setInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
+  s->setLabel(_("Icon size"));
+
+  s = setString("Locale", "en");
+  s->setLabel(_(""));
+
+  s = setString("PortableAppsPath", "$(Drive/PortableApps");
+  s = setString("DocumentsPath", "$(Drive/Documents");
+  s = setString("MusicPath", "$(Drive/Documents/Music");
+  s = setString("PicturesPath", "$(Drive/Documents/Pictures");
+  s = setString("VideosPath", "$(Drive/Documents/Videos");
+
+  s = setString("Skin", "Default");
+  s->setLabel(_("Skin"));
+  s->setGroup(_("Appearance"));
+
+  s = setBool("Rotated", false);
+  s->setLabel(_("Rotated"));
+  s->setGroup(_("Appearance"));
+
+  s = setBool("AlwaysOnTop", false);
+  s->setLabel(_("Always on top"));
+
+  s = setBool("MinimizeOnClose", true);
+  s->setLabel(_("Minimize on close"));
+
+  s = setBool("UniqueApplicationInstance", true);
+  s->setLabel(_("Only one instance of Appetizer"));
+
+  s = setBool("AutoHideApplication", false);
+  s->setLabel(_("Auto hide application"));
+
+  s = setBool("RunMultiLaunchOnStartUp", false);
+
+  s = setBool("CloseAppsOnEject", false);
+  s->setLabel(_(""));
+
+  s = setBool("HotKeyControl", false);
+  s->setLabel(_(""));
+
+  s = setBool("HotKeyAlt", false);
+  s->setLabel(_(""));
+
+  s = setBool("HotKeyShift", false);
+  s->setLabel(_(""));
+
+  s = setInt("HotKeyKey", 0);
+  s->setLabel(_(""));
+
+  s = setBool("LaunchAppHotKeyControl", false);
+  s->setLabel(_(""));
+
+  s = setBool("LaunchAppHotKeyAlt", false);
+  s->setLabel(_(""));
+
+  s = setBool("LaunchAppHotKeyShift", false);
+  s->setLabel(_(""));
+
+  s = setInt("LaunchAppHotKeyKey", 0);
+  s->setLabel(_(""));
+
+  s = setInt("WindowTransparency", 235);
+  s->setLabel(_(""));
+
+  s = setBool("OptionPanelOpen", true);
+  s->setLabel(_(""));
+
+  s = setBool("TaskBarIcon", false);
+  s->setLabel(_(""));
+
+  s = setBool("TrayIcon", true);
+  s->setLabel(_(""));
+
+  s = setBool("IconLabelPosition", "bottom");
+  s->setLabel(_(""));
+
+  s = setBool("ShowDeleteIconMessage", true);
+  s = setBool("ShowEjectDriveMessage", true);
+  s = setBool("ShowMinimizeMessage", true);
 
   QDateTime now = QDateTime::currentDateTime();
   now.addMonths(-1); // This is just to force an update check the first time the app is launched.
-  setDateTime("NextUpdateCheckTime", now);
+  s = setDateTime("NextUpdateCheckTime", now);
 }
 
 
@@ -88,6 +149,29 @@ UserSettings::~UserSettings() {
 }
 
 
+std::vector<QString> UserSettings::getGroupLabels() const {
+  std::vector<QString> output;
+
+  for (UserSettingsMap::iterator i = settings_.begin(); i != settings_.end(); ++i) {
+    UserSetting* s = i->second;
+    if (VectorUtil::getElementIndex(output, s->group()) >= 0) continue;
+    output.push_back(s->group());
+  }
+
+  return output;
+}
+
+
+QString UserSettings::getGroupLabelAt(int index) const {
+  return "";
+}
+
+
+std::vector<UserSetting*> UserSettings::getSettingsByGroup(int index) {
+  return std::vector<UserSetting*>();
+}
+
+
 TiXmlElement* UserSettings::ToXml() {
   TiXmlElement* xml = new TiXmlElement("Settings");
 
@@ -97,11 +181,6 @@ TiXmlElement* UserSettings::ToXml() {
   //}
 
   return xml;
-}
-
-
-int UserSettings::GetValidatedIconSize(int iconSize) {
-  return 16;//Application::instance()->getValidIconSize(iconSize > 0 ? iconSize : GetInt("IconSize"));
 }
 
 
@@ -118,7 +197,7 @@ UserSetting* UserSettings::getSetting(const QString& name) const {
 }
 
 
-void UserSettings::setSetting(const QString& name, const QVariant& variant) {
+UserSetting* UserSettings::setSetting(const QString& name, const QVariant& variant) {
   UserSetting* setting = NULL;
   
   if (settings_.find(name) != settings_.end()) {
@@ -129,14 +208,16 @@ void UserSettings::setSetting(const QString& name, const QVariant& variant) {
   }
 
   setting->setValue(variant);
+
+  return setting;
 }
 
 
-void UserSettings::setInt(const QString& name, int value) { setSetting(name, QVariant(value)); }
-void UserSettings::setString(const QString& name, const QString& value) { setSetting(name, QVariant(value)); }
-void UserSettings::setBool(const QString& name, bool value) { setSetting(name, QVariant(value)); }
-void UserSettings::setDateTime(const QString& name, const QDateTime& value) { setSetting(name, QVariant(value)); }
-void UserSettings::setColor(const QString& name, const QColor& value) { setSetting(name, value); }
+UserSetting* UserSettings::setInt(const QString& name, int value) { return setSetting(name, QVariant(value)); }
+UserSetting* UserSettings::setString(const QString& name, const QString& value) { return setSetting(name, QVariant(value)); }
+UserSetting* UserSettings::setBool(const QString& name, bool value) { return setSetting(name, QVariant(value)); }
+UserSetting* UserSettings::setDateTime(const QString& name, const QDateTime& value) { return setSetting(name, QVariant(value)); }
+UserSetting* UserSettings::setColor(const QString& name, const QColor& value) { return setSetting(name, value); }
 
 
 int UserSettings::getInt(const QString& name) const {
@@ -209,7 +290,6 @@ void UserSettings::FromXml(TiXmlElement* xml) {
 
     if (t == "") t = typeToString(getSettingType(n));
 
-    int typeInt = 0;
     if (t == "String") {
       setString(n, v);
     } else if (t == "Int") {

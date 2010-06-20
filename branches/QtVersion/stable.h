@@ -20,21 +20,27 @@
 #include <Guiddef.h>
 #endif // __WINDOWS__
 
+#include <algorithm>
 #include <cmath>
 
 #include <QApplication>
 #include <QBitmap>
+#include <QBoxLayout>
 #include <QBrush>
 #include <QDate>
 #include <QDebug>
+#include <QDialog>
 #include <QDir>
 #include <QFileInfo>
 #include <QFont>
+#include <QFormLayout>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsView>
 #include <QIcon>
+#include <QLabel>
+#include <QLineEdit>
 #include <QImage>
 #include <QMenu>
 #include <QMessageBox>
@@ -49,6 +55,7 @@
 #include <QRegExp>
 #include <QResizeEvent>
 #include <QSettings>
+#include <QTabWidget>
 #include <QThread>
 #include <QTime>
 #include <QTimer>
@@ -58,6 +65,7 @@
 #include <tinyxml/tinyxml.h>
 
 #include <gettext_lib/QtGettext.h>
+#include <VectorUtil.h>
 
 #if defined(__WINDOWS__) && defined(__DEBUG__)
 // Libraries and macros to detect memory leaks

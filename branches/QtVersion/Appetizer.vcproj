@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm200 -w34100 -w34189 -w34100 -w34189"
 				Optimization="4"
-				AdditionalIncludeDirectories="c:\Qt\2010.02.1\qt\include\QtCore;c:\Qt\2010.02.1\qt\include\QtGui;c:\Qt\2010.02.1\qt\include;c:\Qt\2010.02.1\qt\include\ActiveQt;tmp\moc\debug_static;&quot;c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008&quot;;.;./gui;./utils;./third_party;./guilib"
+				AdditionalIncludeDirectories="c:\Qt\2010.02.1\qt\include\QtCore;c:\Qt\2010.02.1\qt\include\QtGui;c:\Qt\2010.02.1\qt\include;c:\Qt\2010.02.1\qt\include\ActiveQt;tmp\moc\debug_static;&quot;c:\Qt\2010.02.1\qt\mkspecs\win32-msvc2008&quot;;.;./gui;./utils;./third_party;./guilib;./dialogs"
 				PreprocessorDefinitions="_WINDOWS;UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_GUI_LIB;QT_CORE_LIB;QT_THREAD_SUPPORT;__WINDOWS__;__DEBUG__"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="1"
@@ -332,6 +332,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\utils\VectorUtil.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\utils\XmlUtil.cpp"
 					>
 				</File>
@@ -395,6 +399,10 @@
 			<Filter
 				Name="_moc"
 				>
+				<File
+					RelativePath=".\moc\moc_ConfigDialog.cpp"
+					>
+				</File>
 				<File
 					RelativePath=".\moc\moc_FolderItem.cpp"
 					>
@@ -461,6 +469,14 @@
 				</File>
 				<File
 					RelativePath=".\gettext_lib\QtGettext.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="dialogs"
+				>
+				<File
+					RelativePath=".\dialogs\ConfigDialog.cpp"
 					>
 				</File>
 			</Filter>
@@ -566,6 +582,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\utils\VectorUtil.h"
+					>
+				</File>
+				<File
 					RelativePath=".\utils\XmlUtil.h"
 					>
 				</File>
@@ -615,6 +635,14 @@
 				</File>
 				<File
 					RelativePath=".\gettext_lib\QtGettext.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="dialogs"
+				>
+				<File
+					RelativePath=".\dialogs\ConfigDialog.h"
 					>
 				</File>
 			</Filter>

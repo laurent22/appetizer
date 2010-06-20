@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mocPath=/cygdrive/c/Qt/2010.02.1/qt/bin/moc.exe
-filePaths="guilib/GraphicsItem.h,gui/MainWindow.h,gui/MainScene.h,FolderItem.h,gui/IconSprite.h,gui/MainPanel.h,gui/ScrollBar.h,gui/ScrollPane.h,guilib/GraphicsWindow.h"
+filePaths="guilib/GraphicsItem.h,gui/MainWindow.h,gui/MainScene.h,FolderItem.h,gui/IconSprite.h,gui/MainPanel.h,gui/ScrollBar.h,gui/ScrollPane.h,guilib/GraphicsWindow.h,dialogs/ConfigDialog.h"
 
 filePathsArray=$(echo $filePaths | tr "," "\n")
 
