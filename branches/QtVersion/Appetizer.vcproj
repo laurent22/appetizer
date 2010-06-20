@@ -332,6 +332,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\utils\StringUtil.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\utils\VectorUtil.cpp"
 					>
 				</File>
@@ -583,6 +587,10 @@
 				</File>
 				<File
 					RelativePath=".\utils\NineSlicePainter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\utils\StringUtil.h"
 					>
 				</File>
 				<File

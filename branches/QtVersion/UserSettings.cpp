@@ -79,8 +79,9 @@ void UserSetting::setOptions(const UserSettingOptions& options) {
 UserSettings::UserSettings() {
   UserSetting* s = NULL;
 
-  s = setInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
-  s->setLabel(_("Icon size"));
+  // =================================================================
+  // GENERAL
+  // =================================================================
 
   s = setString("Locale", "en");
   s->setLabel(_("Language"));
@@ -96,80 +97,67 @@ UserSettings::UserSettings() {
   }
   s->setOptions(options);
 
+  s = setBool("AlwaysOnTop", false);
+  s->setLabel(_("Always on top"));
 
+  s = setBool("UniqueApplicationInstance", true);
+  s->setLabel(StringUtil::convertFields(_("Allow only one instance of %s at a time")).arg(APPLICATION_NAME));
+
+  s = setBool("TaskBarIcon", false);
+  s->setLabel(_("Show taskbar icon"));
+
+  s = setBool("TrayIcon", true);
+  s->setLabel(_("Show tray icon"));
+
+  
+  // =================================================================
+  // APPEARANCE
+  // =================================================================
+
+  s = setString("Skin", "Default");
+  s->setLabel(_("Skin:"));
+  s->setGroup(_("Appearance"));
+
+  s = setInt("IconSize", Application::instance()->getValidIconSize(LARGE_ICON_SIZE));
+  s->setLabel(_("Icon size:"));
+  s->setGroup(_("Appearance"));
+
+  s = setInt("WindowTransparency", 235);
+  s->setLabel(_("Opacity:"));
+  s->setGroup(_("Appearance"));
+
+  s = setString("IconLabelPosition", "bottom");
+  s->setControlType(UserSetting::ComboBox);
+  s->setLabel(_("Label position:"));
+  s->setGroup(_("Appearance"));
+
+
+  // =================================================================
+  // OPERATIONS
+  // =================================================================
+
+  s = setBool("AutoHideApplication", false);
+  s->setLabel(_("Auto-hide after launching an application"));
+  s->setGroup(_("Operations"));
+
+  s = setBool("CloseAppsOnEject", false);
+  s->setLabel(_("When ejecting the drive, close the apps that are locking it"));
+  s->setGroup(_("Operations"));
+  
+  
+  // =================================================================
+  // HIDDEN
+  // =================================================================
+
+  s = setBool("ShowDeleteIconMessage", true);
+  s = setBool("ShowEjectDriveMessage", true);
+  s = setBool("ShowMinimizeMessage", true);
   s = setString("PortableAppsPath", "$(Drive/PortableApps");
   s = setString("DocumentsPath", "$(Drive/Documents");
   s = setString("MusicPath", "$(Drive/Documents/Music");
   s = setString("PicturesPath", "$(Drive/Documents/Pictures");
   s = setString("VideosPath", "$(Drive/Documents/Videos");
-
-  s = setString("Skin", "Default");
-  s->setLabel(_("Skin"));
-  s->setGroup(_("Appearance"));
-
-  s = setBool("Rotated", false);
-  s->setLabel(_("Rotated"));
-  s->setGroup(_("Appearance"));
-
-  s = setBool("AlwaysOnTop", false);
-  s->setLabel(_("Always on top"));
-
-  s = setBool("MinimizeOnClose", true);
-  s->setLabel(_("Minimize on close"));
-
-  s = setBool("UniqueApplicationInstance", true);
-  s->setLabel(_("Only one instance of Appetizer"));
-
-  s = setBool("AutoHideApplication", false);
-  s->setLabel(_("Auto hide application"));
-
-  s = setBool("RunMultiLaunchOnStartUp", false);
-
-  s = setBool("CloseAppsOnEject", false);
-  s->setLabel(_(""));
-
-  s = setBool("HotKeyControl", false);
-  s->setLabel(_(""));
-
-  s = setBool("HotKeyAlt", false);
-  s->setLabel(_(""));
-
-  s = setBool("HotKeyShift", false);
-  s->setLabel(_(""));
-
-  s = setInt("HotKeyKey", 0);
-  s->setLabel(_(""));
-
-  s = setBool("LaunchAppHotKeyControl", false);
-  s->setLabel(_(""));
-
-  s = setBool("LaunchAppHotKeyAlt", false);
-  s->setLabel(_(""));
-
-  s = setBool("LaunchAppHotKeyShift", false);
-  s->setLabel(_(""));
-
-  s = setInt("LaunchAppHotKeyKey", 0);
-  s->setLabel(_(""));
-
-  s = setInt("WindowTransparency", 235);
-  s->setLabel(_(""));
-
   s = setBool("OptionPanelOpen", true);
-  s->setLabel(_(""));
-
-  s = setBool("TaskBarIcon", false);
-  s->setLabel(_(""));
-
-  s = setBool("TrayIcon", true);
-  s->setLabel(_(""));
-
-  s = setBool("IconLabelPosition", "bottom");
-  s->setLabel(_(""));
-
-  s = setBool("ShowDeleteIconMessage", true);
-  s = setBool("ShowEjectDriveMessage", true);
-  s = setBool("ShowMinimizeMessage", true);
 
   QDateTime now = QDateTime::currentDateTime();
   now.addMonths(-1); // This is just to force an update check the first time the app is launched.

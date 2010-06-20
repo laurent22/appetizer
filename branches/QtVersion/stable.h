@@ -67,6 +67,7 @@
 
 #include <gettext_lib/QtGettext.h>
 #include <VectorUtil.h>
+#include <StringUtil.h>
 
 #if defined(__WINDOWS__) && defined(__DEBUG__)
 // Libraries and macros to detect memory leaks
