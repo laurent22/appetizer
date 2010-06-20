@@ -47,7 +47,34 @@ void ConfigDialog::saveButton_clicked() {
 
   for (int i = 0; i < (int)settingControls_.size(); i++) {
     SettingWidgetInfo info = settingControls_[i];
-    //if (info.setting->value() == info.initialValue) modifiedSettings_.push_back(info.setting);
+    QWidget* control = info.control;
+    UserSetting* setting = info.setting;
+
+    QCheckBox* checkbox = dynamic_cast<QCheckBox*>(control);
+    if (checkbox) {
+      setting->setValue(QVariant(checkbox->isChecked()));
+      continue;
+    }
+
+    QLineEdit* textBox = dynamic_cast<QLineEdit*>(control);
+    if (textBox) {
+      setting->setValue(QVariant(textBox->text()));
+      continue;
+    }
+
+    QSpinBox* spinBox = dynamic_cast<QSpinBox*>(control);
+    if (spinBox) {
+      setting->setValue(QVariant(spinBox->value()));
+      continue;
+    }
+
+    QComboBox* comboBox = dynamic_cast<QComboBox*>(control);
+    if (comboBox) {
+      QVariant userData = comboBox->itemData(comboBox->currentIndex());
+      setting->setValue(userData);
+      continue;
+    }
+
   }
 
   close();
@@ -123,11 +150,7 @@ void ConfigDialog::addSettingControlToLayout_(UserSetting* setting, QFormLayout*
     for (int i = 0; i < (int)setting->options().size(); i++) {
       std::pair<QString, QString> option = setting->options().at(i);
       if (selectedIndex <= 0) {
-        if (option.second != "") {
-          if (option.second == setting->value().toString()) selectedIndex = i;
-        } else {
-          if (option.first == setting->value().toString()) selectedIndex = i;
-        }
+        if (option.second == setting->value().toString()) selectedIndex = i;
       }
       c->addItem(option.first, QVariant(option.second));
     }

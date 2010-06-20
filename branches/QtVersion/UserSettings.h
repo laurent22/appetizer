@@ -115,6 +115,10 @@ public:
 
   inline UserSettingsMap settings() const { return settings_; }
 
+signals:
+
+  void settingChanged(UserSetting* setting);
+
 private:
 
   void AppendSettingToXml_(TiXmlElement* element, const char* name, const char* value, int type);

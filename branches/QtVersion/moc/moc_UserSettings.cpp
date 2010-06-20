@@ -86,21 +86,25 @@ static const uint qt_meta_data_appetizer__UserSettings[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      33,   25,   24,   24, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      25,   24,   24,   24, 0x08,
+      62,   24,   24,   24, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_appetizer__UserSettings[] = {
-    "appetizer::UserSettings\0\0"
+    "appetizer::UserSettings\0\0setting\0"
+    "settingChanged(UserSetting*)\0"
     "setting_valueChanged()\0"
 };
 
@@ -133,11 +137,19 @@ int appetizer::UserSettings::qt_metacall(QMetaObject::Call _c, int _id, void **_
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: setting_valueChanged(); break;
+        case 0: settingChanged((*reinterpret_cast< UserSetting*(*)>(_a[1]))); break;
+        case 1: setting_valueChanged(); break;
         default: ;
         }
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
+}
+
+// SIGNAL 0
+void appetizer::UserSettings::settingChanged(UserSetting * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

@@ -249,15 +249,19 @@ UserSetting* UserSettings::getSetting(const QString& name) const {
 UserSetting* UserSettings::setSetting(const QString& name, const QVariant& variant) {
   UserSetting* setting = NULL;
   
+  bool isNew = false;
+  
   if (settings_.find(name) != settings_.end()) {
     setting = settings_[name];
   } else {
     setting = new UserSetting(name);
     settings_[name] = setting;
-    QObject::connect(setting, SIGNAL(valueChanged()), this, SLOT(setting_valueChanged()));
+    isNew = true;
   }
 
   setting->setValue(variant);
+
+  if (isNew) QObject::connect(setting, SIGNAL(valueChanged()), this, SLOT(setting_valueChanged()));
 
   return setting;
 }
@@ -265,7 +269,8 @@ UserSetting* UserSettings::setSetting(const QString& name, const QVariant& varia
 
 void UserSettings::setting_valueChanged() {
   UserSetting* setting = static_cast<UserSetting*>(QObject::sender());
-  qDebug() << setting->name() << ":" << setting->value();
+  qDebug() << "Setting changed:" << setting->name() << ":" << setting->value();
+  emit settingChanged(setting);
 }
 
 
