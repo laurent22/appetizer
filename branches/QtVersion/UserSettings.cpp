@@ -33,6 +33,20 @@ void UserSettings::destroyInstance() {
 UserSetting::UserSetting(const QString& name) {
   name_ = name;
   group_ = _("General");
+  controlType_ = Undefined;
+}
+
+
+UserSetting::ControlType UserSetting::controlType() const {
+  if (controlType_ != Undefined) return controlType_;
+  
+  QVariant::Type type = value().type();
+  
+  if (type == QVariant::String) return TextBox;
+  if (type == QVariant::Int) return SpinBox;
+  if (type == QVariant::Bool) return CheckBox;
+
+  return TextBox;
 }
 
 
@@ -51,6 +65,11 @@ void UserSetting::setGroup(const QString& group) {
 }
 
 
+void UserSetting::setControlType(UserSetting::ControlType type) {
+  controlType_ = type;
+}
+
+
 UserSettings::UserSettings() {
   UserSetting* s = NULL;
 
@@ -58,7 +77,8 @@ UserSettings::UserSettings() {
   s->setLabel(_("Icon size"));
 
   s = setString("Locale", "en");
-  s->setLabel(_(""));
+  s->setLabel(_("Language"));
+  s->setControlType(UserSetting::ComboBox);
 
   s = setString("PortableAppsPath", "$(Drive/PortableApps");
   s = setString("DocumentsPath", "$(Drive/Documents");

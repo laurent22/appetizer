@@ -471,6 +471,10 @@
 					RelativePath=".\gettext_lib\QtGettext.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\gettext_lib\QtLocaleUtil.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="dialogs"
@@ -635,6 +639,10 @@
 				</File>
 				<File
 					RelativePath=".\gettext_lib\QtGettext.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gettext_lib\QtLocaleUtil.h"
 					>
 				</File>
 			</Filter>

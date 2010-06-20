@@ -26,12 +26,23 @@ void QtGettext::destroyInstance() {
 
 
 QtGettext::QtGettext() {
-
+  gotAvailableLocales_ = false;
 }
 
 
 QtGettext::~QtGettext() {
 
+}
+
+
+QStringList QtGettext::availableLocales() const {
+  if (gotAvailableLocales_) return availableLocales_;
+
+  QDir dir(catalogueLocation());
+  availableLocales_ = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+  gotAvailableLocales_ = true;
+
+  return availableLocales_;
 }
 
 

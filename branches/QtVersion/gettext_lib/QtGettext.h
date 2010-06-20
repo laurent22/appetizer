@@ -37,12 +37,15 @@ public:
   inline QString catalogueLocation() const { return QString::fromStdString(LauGettext::catalogueLocation()); }
 
   QString getTranslation(const QString& originalString) const; 
+  QStringList availableLocales() const;
 
   QString charset() const;
 
 private:
 
   static QtGettext* instance_;
+  mutable bool gotAvailableLocales_;
+  mutable QStringList availableLocales_;
 
 };
 

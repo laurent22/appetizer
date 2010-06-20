@@ -17,15 +17,28 @@ class UserSetting {
   
 public:
 
+  enum ControlType {
+    Undefined,
+    CheckBox,
+    TextBox,
+    SpinBox,
+    ComboBox,
+    FileSelector,
+    FolderSelector
+  };
+
   UserSetting(const QString& name);
+
   inline QString name() const { return name_; }
   inline QVariant value() const { return value_; }
   inline QString label() const { return label_; }
   inline QString group() const { return group_; }
-  
+  ControlType controlType() const;
+
   void setValue(const QVariant& variant);
   void setLabel(const QString& label);
   void setGroup(const QString& group);
+  void setControlType(UserSetting::ControlType type);
 
 private:
 
@@ -33,6 +46,7 @@ private:
   QVariant value_;
   QString label_;
   QString group_;
+  ControlType controlType_;
 
 };
 

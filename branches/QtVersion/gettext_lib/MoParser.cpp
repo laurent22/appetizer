@@ -166,6 +166,8 @@ char* GettextMoParser::charset() const {
 
 GettextMessage* GettextMoParser::getTranslation(const char* originalString, int originalLength) {
 
+  if (originalLength <= 0) return NULL;
+
   // Check if the string has already been looked up, in which case it is in the messages_
   // vector. If found, return it and exit now.
 

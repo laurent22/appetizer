@@ -34,14 +34,14 @@ void ConfigDialog::loadSettings(UserSettings* settings) {
     QString label = labels[i];
     QWidget* panel = new QWidget(this);
     QFormLayout* layout = new QFormLayout(this);
-    panel->setLayout(layout);
-
     UserSettingsVector groupSettings = settings_->getSettingsByGroup(label);
 
     for (int j = 0; j < (int)groupSettings.size(); j++) {
       UserSetting* setting = groupSettings[j];
       addSettingControlToLayout_(setting, layout);
     }
+
+    panel->setLayout(layout);
 
     tabWidget_->addTab(panel, label);
     tabPanels_.push_back(panel);
@@ -50,6 +50,31 @@ void ConfigDialog::loadSettings(UserSettings* settings) {
 
 
 void ConfigDialog::addSettingControlToLayout_(UserSetting* setting, QFormLayout* layout) {
-  QVariant::Type type = setting->value().type();
+  if (setting->label() == "") return;
 
+  UserSetting::ControlType controlType = setting->controlType();
+  QString label = setting->label();
+
+  QWidget* control = NULL;
+  
+  if (controlType == UserSetting::CheckBox) {
+    QCheckBox* c = new QCheckBox(label);
+    label = "";
+    control = static_cast<QWidget*>(c);
+  } else if (controlType == UserSetting::TextBox) {
+    QLineEdit* c = new QLineEdit();
+    control = static_cast<QWidget*>(c);
+  } else if (controlType == UserSetting::SpinBox) {
+    QSpinBox* c = new QSpinBox();
+    control = static_cast<QSpinBox*>(c);
+  } else if (controlType == UserSetting::ComboBox) {
+    QComboBox* c = new QComboBox();
+    control = static_cast<QComboBox*>(c);
+  }
+
+  if (control) {
+    layout->addRow(label, control);
+  }
+
+  
 }

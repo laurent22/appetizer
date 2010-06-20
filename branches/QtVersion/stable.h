@@ -27,7 +27,8 @@
 #include <QBitmap>
 #include <QBoxLayout>
 #include <QBrush>
-#include <QDate>
+#include <QCheckBox>
+#include <QComboBox>
 #include <QDebug>
 #include <QDialog>
 #include <QDir>
@@ -47,7 +48,6 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <QPainter>
-#include <QPainterPath>
 #include <QPen>
 #include <QPixmap>
 #include <QPropertyAnimation>
@@ -55,6 +55,7 @@
 #include <QRegExp>
 #include <QResizeEvent>
 #include <QSettings>
+#include <QSpinBox>
 #include <QTabWidget>
 #include <QThread>
 #include <QTime>
