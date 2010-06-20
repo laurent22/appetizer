@@ -21,12 +21,9 @@ MainWindow::MainWindow(): GraphicsWindow() {
   view_->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   view_->show();
 
-  QObject::connect(scene_, SIGNAL(sceneRectChanged(const QRectF&)),
-                   this, SLOT(scene_sceneRectChanged(const QRectF&)));
-  QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mousePressed()),
-                   this, SLOT(backgroundSprite_mousePressed()));
-  QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mouseMoved()),
-                   this, SLOT(backgroundSprite_mouseMoved()));
+  QObject::connect(scene_, SIGNAL(sceneRectChanged(const QRectF&)), this, SLOT(scene_sceneRectChanged(const QRectF&)));
+  QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mousePressed()), this, SLOT(backgroundSprite_mousePressed()));
+  QObject::connect(scene_->mainPanel()->backgroundSprite(), SIGNAL(mouseMoved()), this, SLOT(backgroundSprite_mouseMoved()));
 }
 
 

@@ -270,6 +270,14 @@
 				Name="gui"
 				>
 				<File
+					RelativePath=".\gui\FloatingButton.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\FloatingButtonBar.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\gui\FolderItemSprite.cpp"
 					>
 				</File>
@@ -547,6 +555,14 @@
 			<Filter
 				Name="gui"
 				>
+				<File
+					RelativePath=".\gui\FloatingButton.h"
+					>
+				</File>
+				<File
+					RelativePath=".\gui\FloatingButtonBar.h"
+					>
+				</File>
 				<File
 					RelativePath=".\gui\FolderItemSprite.h"
 					>
