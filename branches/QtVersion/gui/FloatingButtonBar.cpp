@@ -7,6 +7,7 @@
 #include <stable.h>
 
 #include <FloatingButtonBar.h>
+#include <Style.h>
 
 using namespace appetizer;
 
@@ -24,8 +25,9 @@ FloatingButtonBar::FloatingButtonBar(GraphicsWindow* parentWindow): GraphicsItem
 
 
 int FloatingButtonBar::width() const {
-  if (buttons_.size() == 0) return 0;
-  return buttons_.size() * buttons_[0]->width();
+  int count = (int)buttons_.size();
+  if (count == 0) return 0;
+  return count * buttons_[0]->width() + (count - 1) * Style::floatingButton.hGap;
 }
 
 
@@ -48,9 +50,9 @@ void FloatingButtonBar::updateDisplay() {
 	
   int buttonX = 0;
   int buttonY = 0;
-  for (int i = (int)buttons_.size() - 1; i >= 0; i--) {
+  for (int i = 0; i < (int)buttons_.size(); i++) {
     FloatingButton* b = buttons_.at(i);
     b->move(buttonX, buttonY);
-    buttonX += b->height();
+    buttonX += b->width() + Style::floatingButton.hGap;
   }
 }

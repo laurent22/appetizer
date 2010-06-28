@@ -63,9 +63,10 @@ void MainScene::resizeSprite_mouseMoved() {
 void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 
-  QRect r = Style::background.getContentRectangle(width(), height());
+  int padding = 50; // Arbitray padding to allow for shadows and other effects that appear outside the object's rectangles
 
-  mainPanel_->resize(width(), height());
-  resizeSprite_->move(r.right(), r.bottom());
-  buttonBar_->move(width(), 0);
+  mainPanel_->move(padding, padding);
+  mainPanel_->resize(width() - padding * 2, height() - padding * 2);
+  resizeSprite_->move(mainPanel_->x() + mainPanel_->width() - Style::background.padding.right, mainPanel_->y() + mainPanel_->height() - Style::background.padding.bottom);
+  buttonBar_->move(mainPanel_->x() + mainPanel_->width() - buttonBar_->width(), mainPanel_->y() - buttonBar_->height() - Style::floatingButton.vGap);
 }

@@ -18,12 +18,25 @@
 	</Icon>
 	
 	<Background>
-		<Padding>10,10,10,10</Padding>
-		<ShadowPadding>12,8,12,16</ShadowPadding>
+		<Padding>18,18,18,18</Padding>
+		<Shadow>
+			<XOffset>0</XOffset>
+			<YOffset>3</YOffset>
+			<BlurRadius>8</BlurRadius>
+			<Color>0,0,0,90</Color>
+		</Shadow>
 	</Background>
 	
 	<FloatingButton>
 		<ShadowPadding>4,2,4,6</ShadowPadding>
+		<HGap>3</HGap>
+		<VGap>3</VGap>
+		<Shadow>
+			<XOffset>0</XOffset>
+			<YOffset>3</YOffset>
+			<BlurRadius>8</BlurRadius>
+			<Color>0,0,0,90</Color>
+		</Shadow>
 	</FloatingButton>
 	
 	<IconPanel>

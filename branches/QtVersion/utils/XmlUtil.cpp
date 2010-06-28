@@ -90,23 +90,22 @@ bool XmlUtil::readElementTextAsPoint(TiXmlHandle handle, const QString& elementN
 
 
 
-bool XmlUtil::readElementTextAsColor(TiXmlHandle handle, const QString& elementName, QColor& result) {
+QColor XmlUtil::readElementTextAsColor(TiXmlHandle handle, const QString& elementName, QColor& defaultColor) {
   QString s = readElementText(handle, elementName);
   QStringList list = s.split(",");
-  if (list.size() < 3) return false;
+  if (list.size() < 3) return defaultColor;
 
   bool ok;
-  int r = list[0].toInt(&ok); if (!ok) return false;
-  int g = list[1].toInt(&ok); if (!ok) return false;
-  int b = list[2].toInt(&ok); if (!ok) return false;
+  int r = list[0].toInt(&ok); if (!ok) return defaultColor;
+  int g = list[1].toInt(&ok); if (!ok) return defaultColor;
+  int b = list[2].toInt(&ok); if (!ok) return defaultColor;
   int a = 255;
   if (list.size() >= 4) {
     a = list[3].toInt(&ok);
-    if (!ok) return false;
+    if (!ok) return defaultColor;
   }
 
-  result = QColor(r, g, b, a);
-  return true;
+  return QColor(r, g, b, a);
 }
 
 

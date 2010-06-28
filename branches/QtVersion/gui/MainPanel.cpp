@@ -66,6 +66,7 @@ MainPanel::MainPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
 
   backgroundSprite_ = new NineSliceItem(this->parentWindow());
   backgroundSprite_->loadBackgroundImage(backgroundFile);
+  if (Style::background.shadow) backgroundSprite_->setGraphicsEffect(Style::cloneShadow(Style::background.shadow));
   addItem(backgroundSprite_);
 
   scrollPane_ = new ScrollPane(this->parentWindow());

@@ -50,14 +50,17 @@ class IconStyle { public:
 };
 
 class BackgroundStyle { public:
+  BackgroundStyle();
   RectangleStyle padding;
-  RectangleStyle shadowPadding;
+  QGraphicsDropShadowEffect* shadow;
   QRect getContentRectangle(int width, int height) const;
 };
 
 class FloatingButtonStyle { public:
-  RectangleStyle shadowPadding;
-  QRect getContentRectangle(int width, int height) const;
+  FloatingButtonStyle();
+  int hGap;
+  int vGap;
+  QGraphicsDropShadowEffect* shadow;
 };
 
 class IconPanelStyle { public:
@@ -86,13 +89,15 @@ public:
   static BackgroundStyle background;
   static TabStyle tab;
   static IconPanelStyle iconPanel;
-  static FloatingButtonStyle floatingButtonStyle;
+  static FloatingButtonStyle floatingButton;
 
   static void loadSkinFile(const QString& filePath);
   static SkinMetadata getSkinMetadata(TiXmlElement* skinDocumentRoot);
   static SkinMetadata getSkinMetadata(const QString& filePath);
   static bool isSkinVersionCompatible(const QString& skinVersion);
-  static QRect calculateContentRectangle(int width, int height, const RectangleStyle& shadowPadding, const RectangleStyle& padding);
+  static QRect calculateContentRectangle(int width, int height, const RectangleStyle& padding);
+  static QGraphicsDropShadowEffect* parseShadowXml(TiXmlHandle handle);
+  static QGraphicsDropShadowEffect* cloneShadow(QGraphicsDropShadowEffect* s);
 
 };
 

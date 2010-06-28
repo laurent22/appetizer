@@ -16,7 +16,7 @@ IconStyle Style::icon;
 BackgroundStyle Style::background;
 TabStyle Style::tab;
 IconPanelStyle Style::iconPanel;
-FloatingButtonStyle Style::floatingButtonStyle;
+FloatingButtonStyle Style::floatingButton;
 
 
 RectangleStyle::RectangleStyle() {
@@ -38,9 +38,15 @@ void RectangleStyle::fromRect(const QRect& rect) {
   height = top + bottom;
 }
 
+BackgroundStyle::BackgroundStyle() {
+  shadow = NULL;
+}
 
-QRect BackgroundStyle::getContentRectangle(int width, int height) const { return Style::calculateContentRectangle(width, height, shadowPadding, padding); };
-QRect FloatingButtonStyle::getContentRectangle(int width, int height) const { return Style::calculateContentRectangle(width, height, shadowPadding, RectangleStyle()); };
+FloatingButtonStyle::FloatingButtonStyle() {
+  shadow = NULL;
+}
+
+QRect BackgroundStyle::getContentRectangle(int width, int height) const { return Style::calculateContentRectangle(width, height, padding); };
 
 
 TextFormat::TextFormat() {
@@ -66,6 +72,26 @@ QFont TextFormat::font() {
   font_ = QFont(family, size, bold ? QFont::Bold : QFont::Normal);
   fontInitialized_ = true;
   return font_;
+}
+
+
+QGraphicsDropShadowEffect* Style::parseShadowXml(TiXmlHandle handle) {
+  QGraphicsDropShadowEffect* output = new QGraphicsDropShadowEffect();
+  output->setXOffset(XmlUtil::readElementTextAsInt(handle, "XOffset", 4));
+  output->setYOffset(XmlUtil::readElementTextAsInt(handle, "YOffset", 4));
+  output->setBlurRadius(XmlUtil::readElementTextAsInt(handle, "BlurRadius", 2));
+  output->setColor(XmlUtil::readElementTextAsColor(handle, "Color", QColor(0,0,0,127)));
+  return output;
+}
+
+
+QGraphicsDropShadowEffect* Style::cloneShadow(QGraphicsDropShadowEffect* s) {
+  QGraphicsDropShadowEffect* output = new QGraphicsDropShadowEffect();
+  output->setXOffset(s->xOffset());
+  output->setYOffset(s->yOffset());
+  output->setBlurRadius(s->blurRadius());
+  output->setColor(QColor(s->color().red(), s->color().green(), s->color().blue(), s->color().alpha()));
+  return output;
 }
 
 
@@ -102,11 +128,11 @@ bool Style::isSkinVersionCompatible(const QString& skinVersion) {
 }
 
 
-QRect Style::calculateContentRectangle(int width, int height, const RectangleStyle& shadowPadding, const RectangleStyle& padding) {
-  return QRect(shadowPadding.left + padding.left,
-               shadowPadding.top + padding.top,
-               width - shadowPadding.width - padding.width,
-               height - shadowPadding.height - padding.height);
+QRect Style::calculateContentRectangle(int width, int height, const RectangleStyle& padding) {
+  return QRect(padding.left,
+               padding.top,
+               width - padding.width,
+               height - padding.height);
 }
 
 
@@ -130,7 +156,11 @@ void Style::loadSkinFile(const QString& filePath) {
   // *****************************************************************
   // Set default values
   // *****************************************************************
+  SAFE_DELETE(Style::background.shadow);
+  SAFE_DELETE(Style::floatingButton.shadow);
   Style::icon.labelGap = 10;
+  Style::floatingButton.hGap = 4;
+  Style::floatingButton.vGap = 4;
   
   // *****************************************************************
   // Load the XML
@@ -149,14 +179,13 @@ void Style::loadSkinFile(const QString& filePath) {
       
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::background.padding.fromRect(resultRect);
-      resultRect = QRect(0,0,0,0);
-      XmlUtil::readElementTextAsRect(handle, "ShadowPadding", resultRect);
-      Style::background.shadowPadding.fromRect(resultRect);
+      if (handle.Child("Shadow", 0).ToElement()) Style::background.shadow = Style::parseShadowXml(handle.Child("Shadow", 0));
 
     } else if (elementName == "FloatingButton") {
 
-      XmlUtil::readElementTextAsRect(handle, "ShadowPadding", resultRect);
-      Style::floatingButtonStyle.shadowPadding.fromRect(resultRect);
+      Style::floatingButton.hGap = XmlUtil::readElementTextAsInt(handle, "HGap");
+      Style::floatingButton.vGap = XmlUtil::readElementTextAsInt(handle, "VGap");
+      if (handle.Child("Shadow", 0).ToElement()) Style::floatingButton.shadow = Style::parseShadowXml(handle.Child("Shadow", 0));
 
     } else if (elementName == "IconPanel") {
       

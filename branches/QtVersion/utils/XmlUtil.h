@@ -24,7 +24,7 @@ public:
   static int readElementTextAsInt(TiXmlHandle handle, const QString& elementName, int defaultValue = 0);
   static bool readElementTextAsRect(TiXmlHandle handle, const QString& elementName, QRect& result);
   static bool readElementTextAsPoint(TiXmlHandle handle, const QString& elementName, QPoint& result);
-  static bool readElementTextAsColor(TiXmlHandle handle, const QString& elementName, QColor& result);
+  static QColor readElementTextAsColor(TiXmlHandle handle, const QString& elementName, QColor& defaultColor);
   static bool readElementTextAsStringList(TiXmlHandle handle, const QString& elementName, QStringList& result);
 
 };

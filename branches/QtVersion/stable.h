@@ -35,6 +35,7 @@
 #include <QFileInfo>
 #include <QFont>
 #include <QFormLayout>
+#include <QGraphicsDropShadowEffect>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QGraphicsSimpleTextItem>
