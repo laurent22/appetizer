@@ -50,6 +50,7 @@ public:
   void setX(qreal x);
   void setY(qreal y);
   void updateNow(bool onlyIfInvalidated = true);
+  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 signals:
 
@@ -58,10 +59,10 @@ signals:
   void mousePressed();
   void mouseReleased();
   void mouseMoved();
+  void clicked();
 
 protected:
-
-  void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  
   virtual void resizeEvent();
   virtual void moveEvent();
   void mousePressEvent(QGraphicsSceneMouseEvent* event);

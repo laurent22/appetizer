@@ -6,6 +6,7 @@
 
 #include <stable.h>
 
+#include <Application.h>
 #include <FloatingButtonBar.h>
 #include <Style.h>
 
@@ -15,11 +16,23 @@ using namespace appetizer;
 FloatingButtonBar::FloatingButtonBar(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
   for (int i = 0; i < 3; i++) {
     FloatingButton* b = new FloatingButton(this->parentWindow());
-    if (i == 0) b->setAction("eject");
-    if (i == 1) b->setAction("minimize");
-    if (i == 2) b->setAction("close");
+    if (i == 0) b->setAction("Eject");
+    if (i == 1) b->setAction("Minimize");
+    if (i == 2) b->setAction("Close");
     buttons_.push_back(b);
+    QObject::connect(b, SIGNAL(clicked()), this, SLOT(button_clicked()));
     addItem(b);
+  }
+}
+
+
+void FloatingButtonBar::button_clicked() {
+  FloatingButton* button = static_cast<FloatingButton*>(QObject::sender());
+
+  if (button->action() == "Minimize") {
+    Application::instance()->scheduleMinimize();
+  } else if (button->action() == "Close") {
+    Application::instance()->scheduleClose();
   }
 }
 

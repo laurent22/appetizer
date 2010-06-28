@@ -10,6 +10,7 @@
 #define Appetizer_MainPanel_H
 
 #include <GraphicsItem.h>
+#include <GraphicsShadowItem.h>
 #include <GraphicsWindow.h>
 #include <IconPanel.h>
 #include <NineSliceItem.h>
@@ -73,6 +74,7 @@ private:
   ScrollPane* scrollPane_;
   void clearPageData_();
   bool updateIconSize_;
+  GraphicsShadowItem* shadowItem_;
 
 public slots:
 

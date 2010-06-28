@@ -75,23 +75,32 @@ QFont TextFormat::font() {
 }
 
 
-QGraphicsDropShadowEffect* Style::parseShadowXml(TiXmlHandle handle) {
-  QGraphicsDropShadowEffect* output = new QGraphicsDropShadowEffect();
-  output->setXOffset(XmlUtil::readElementTextAsInt(handle, "XOffset", 4));
-  output->setYOffset(XmlUtil::readElementTextAsInt(handle, "YOffset", 4));
-  output->setBlurRadius(XmlUtil::readElementTextAsInt(handle, "BlurRadius", 2));
-  output->setColor(XmlUtil::readElementTextAsColor(handle, "Color", QColor(0,0,0,127)));
-  return output;
+ShadowStyle::ShadowStyle() {
+  xOffset = 3;
+  yOffset = 3;
+  blurRadius = 2;
+  color = QColor(0,0,0,100);
 }
 
 
-QGraphicsDropShadowEffect* Style::cloneShadow(QGraphicsDropShadowEffect* s) {
-  QGraphicsDropShadowEffect* output = new QGraphicsDropShadowEffect();
-  output->setXOffset(s->xOffset());
-  output->setYOffset(s->yOffset());
-  output->setBlurRadius(s->blurRadius());
-  output->setColor(QColor(s->color().red(), s->color().green(), s->color().blue(), s->color().alpha()));
-  return output;
+ShadowStyle::ShadowStyle(TiXmlHandle handle) {
+  fromXml(handle);
+}
+
+
+void ShadowStyle::fromXml(TiXmlHandle handle) {
+  xOffset = XmlUtil::readElementTextAsInt(handle, "XOffset", 4);
+  yOffset = XmlUtil::readElementTextAsInt(handle, "YOffset", 4);
+  blurRadius = XmlUtil::readElementTextAsInt(handle, "BlurRadius", 2);
+  color = XmlUtil::readElementTextAsColor(handle, "Color", QColor(0,0,0,127));
+}
+
+
+void ShadowStyle::applyToGraphicsShadowItem(GraphicsShadowItem* item) {
+  item->setBlurRadius(blurRadius);
+  item->setXOffset(xOffset);
+  item->setYOffset(yOffset);
+  item->setColor(color);
 }
 
 
@@ -118,6 +127,12 @@ SkinMetadata Style::getSkinMetadata(const QString& filePath) {
   }
 
   return Style::getSkinMetadata(root);
+}
+
+
+void Style::destroyStaticData() {
+  SAFE_DELETE(Style::background.shadow);
+  SAFE_DELETE(Style::floatingButton.shadow);
 }
 
 
@@ -179,13 +194,13 @@ void Style::loadSkinFile(const QString& filePath) {
       
       XmlUtil::readElementTextAsRect(handle, "Padding", resultRect);
       Style::background.padding.fromRect(resultRect);
-      if (handle.Child("Shadow", 0).ToElement()) Style::background.shadow = Style::parseShadowXml(handle.Child("Shadow", 0));
+      if (handle.Child("Shadow", 0).ToElement()) Style::background.shadow = new ShadowStyle(handle.Child("Shadow", 0));
 
     } else if (elementName == "FloatingButton") {
 
       Style::floatingButton.hGap = XmlUtil::readElementTextAsInt(handle, "HGap");
       Style::floatingButton.vGap = XmlUtil::readElementTextAsInt(handle, "VGap");
-      if (handle.Child("Shadow", 0).ToElement()) Style::floatingButton.shadow = Style::parseShadowXml(handle.Child("Shadow", 0));
+      if (handle.Child("Shadow", 0).ToElement()) Style::floatingButton.shadow = new ShadowStyle(handle.Child("Shadow", 0));
 
     } else if (elementName == "IconPanel") {
       

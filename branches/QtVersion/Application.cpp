@@ -19,6 +19,8 @@
 using namespace appetizer;
 
 Application::Application(int argc, char *argv[]) : QApplication(argc, argv) {
+  closingTimer_ = NULL;
+  minimizingTimer_ = NULL;
 
   #ifdef __WINDOWS__
   osInfo_.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -56,6 +58,46 @@ Application::~Application() {
   FolderItem::destroyStaticData();
   UserSettings::destroyInstance();
   QtGettext::destroyInstance();
+  Style::destroyStaticData();
+  SAFE_DELETE(minimizingTimer_);
+  SAFE_DELETE(closingTimer_);
+}
+
+
+void Application::scheduleMinimize() {
+  // When showMinimized() is called from within a paint event, subsequent paint events
+  // are either randomly dispatched a not dispatched at all. So we use scheduleMinimize()
+  // to make sure showMinimized() is called at a time it's not going to mess up anything.
+
+  if (isMinimizing()) return;
+
+  minimizingTimer_ = new QTimer();
+  minimizingTimer_->setSingleShot(true);
+  minimizingTimer_->setInterval(50);
+  QObject::connect(minimizingTimer_, SIGNAL(timeout()), this, SLOT(minimizingTimer_timeout()));
+  minimizingTimer_->start();
+}
+
+
+void Application::minimizingTimer_timeout() {
+  if (!isClosing() && mainWindow()) mainWindow()->showMinimized();
+  SAFE_DELETE(minimizingTimer_);
+}
+
+
+void Application::scheduleClose() {
+  if (isClosing()) return;
+
+  closingTimer_ = new QTimer();
+  closingTimer_->setSingleShot(true);
+  closingTimer_->setInterval(50);
+  QObject::connect(closingTimer_, SIGNAL(timeout()), this, SLOT(closingTimer_timeout()));
+  closingTimer_->start();
+}
+
+
+void Application::closingTimer_timeout() {
+  mainWindow()->close();
 }
 
 

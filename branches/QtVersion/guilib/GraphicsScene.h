@@ -22,10 +22,12 @@ public:
   ~GraphicsScene();
   inline GraphicsWindow* parentWindow() { return parentWindow_; }
   QList<QGraphicsItem*> topLevelItems();
+  void paintAll(QPainter* painter);
   
 private:
 	
-	GraphicsWindow* parentWindow_;
+  GraphicsWindow* parentWindow_;
+  void paintAll_(QPainter* painter, QGraphicsItem* item, int x, int y);
 
 };
 

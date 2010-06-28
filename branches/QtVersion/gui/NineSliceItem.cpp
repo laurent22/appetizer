@@ -11,7 +11,13 @@
 using namespace appetizer;
 
 NineSliceItem::NineSliceItem(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
-  
+  pixmap_ = NULL;
+  setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+}
+
+
+NineSliceItem::~NineSliceItem() {
+  SAFE_DELETE(pixmap_);
 }
 
 
@@ -27,8 +33,22 @@ void NineSliceItem::loadBackgroundImage(QString backgroundFilePath) {
 }
 
 
+void NineSliceItem::resizeEvent() {
+  GraphicsItem::resizeEvent();
+  SAFE_DELETE(pixmap_);
+}
+
+
 void NineSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
   GraphicsItem::paint(painter, option, widget);
 
-  nineSlicePainter_.drawImage(painter, 0, 0, width(), height());
+  if (!pixmap_) {
+    pixmap_ = new QPixmap(width(), height());
+    pixmap_->fill(QColor(0,0,0,0));
+    QPainter p(pixmap_);
+    nineSlicePainter_.drawImage(&p, 0, 0, width(), height());
+    p.end();
+  }
+
+  painter->drawPixmap(QPoint(0,0), *pixmap_);
 }

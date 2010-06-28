@@ -16,6 +16,8 @@ namespace appetizer {
 
 class Application : public QApplication {
 
+  Q_OBJECT
+
 public:
 
   Application(int argc, char *argv[]);
@@ -24,6 +26,10 @@ public:
   int getValidIconSize(int requiredIconSize) const;
   int getNextValidIconSize(int requiredIconSize) const;
   FolderItem* rootFolderItem() const;
+  void scheduleClose();
+  void scheduleMinimize();
+  inline bool isClosing() const { return closingTimer_ != NULL; }
+  inline bool isMinimizing() const { return minimizingTimer_ != NULL; }
 
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo();
@@ -36,10 +42,17 @@ private:
   MainWindow* mainWindow_;
   FolderItem* rootFolderItem_;
   void loadFolderItems();
+  QTimer* closingTimer_;
+  QTimer* minimizingTimer_;
 
   #ifdef __WINDOWS__
   OSVERSIONINFO osInfo_;
   #endif // __WINDOWS__
+
+private slots:
+
+  void closingTimer_timeout();
+  void minimizingTimer_timeout();
 
 };
 

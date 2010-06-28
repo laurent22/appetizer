@@ -20,14 +20,20 @@ class NineSliceItem : public GraphicsItem {
 public:
 
   NineSliceItem(GraphicsWindow* parentWindow);
+  ~NineSliceItem();
   void loadBackgroundImage(QString backgroundFilePath);
   NineSlicePainter& nineSlicePainter();
   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+protected:
+
+  void resizeEvent();
 
 private:
 
   NineSlicePainter nineSlicePainter_;
   QString backgroundFilePath_;
+  QPixmap* pixmap_;
 
 };
 

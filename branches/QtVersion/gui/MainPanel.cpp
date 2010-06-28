@@ -66,7 +66,6 @@ MainPanel::MainPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
 
   backgroundSprite_ = new NineSliceItem(this->parentWindow());
   backgroundSprite_->loadBackgroundImage(backgroundFile);
-  if (Style::background.shadow) backgroundSprite_->setGraphicsEffect(Style::cloneShadow(Style::background.shadow));
   addItem(backgroundSprite_);
 
   scrollPane_ = new ScrollPane(this->parentWindow());
@@ -76,6 +75,13 @@ MainPanel::MainPanel(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
 
   maskNineSlicePainter_.loadImage(backgroundFile);
   updateIconSize_ = true;
+
+  if (Style::background.shadow) {
+    shadowItem_ = new GraphicsShadowItem(this->parentWindow());
+    Style::background.shadow->applyToGraphicsShadowItem(shadowItem_);
+    shadowItem_->setSource(backgroundSprite_);
+    addItem(shadowItem_);
+  }
 
   QObject::connect(UserSettings::instance(), SIGNAL(settingChanged(UserSetting*)), this, SLOT(userSettings_settingChanged(UserSetting*)));
 }
@@ -205,6 +211,7 @@ PageData* MainPanel::showPage(int index) {
   }
 
   invalidate();
+  updateNow();
 
   return page;
 }

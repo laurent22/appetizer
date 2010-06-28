@@ -1,0 +1,37 @@
+#include "winver.h"
+
+IDI_ICON1 ICON DISCARDABLE "Data/Skin/Application.ico"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 2,0,0,497
+ PRODUCTVERSION 2,0,0,497
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "A portable dock for your applications.\0"
+            VALUE "CompanyName", "Appetizer Project\0"
+            VALUE "FileDescription", "Appetizer\0"
+            VALUE "FileVersion", "2.0.0.497 "
+            VALUE "InternalName", "MiniLaunchBar\0"
+            VALUE "LegalCopyright", "Copyright (C) 2008-2010 Laurent Cozic\0"
+            VALUE "OriginalFilename", "Appetizer.exe\0"
+            VALUE "ProductName", "Appetizer\0"
+            VALUE "ProductVersion", "2.0.0.497 "
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x000, 1252
+    END
+END

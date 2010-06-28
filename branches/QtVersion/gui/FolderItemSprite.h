@@ -10,6 +10,7 @@
 #define FolderItemRenderer_H
 
 #include <FolderItem.h>
+#include <GraphicsButtonBase.h>
 #include <GraphicsWindow.h>
 #include <IconSprite.h>
 #include <NineSliceItem.h>
@@ -17,7 +18,7 @@
 
 namespace appetizer {
 
-class FolderItemSprite : public GraphicsItem {
+class FolderItemSprite : public GraphicsButtonBase {
 
 public:
 
@@ -41,7 +42,6 @@ private:
   int iconSize_;
   NineSliceItem* selectionSprite_;
   IconSprite* iconSprite_;
-  bool mouseInside_;
   QPropertyAnimation* selectionSpriteAnimation_;
 
 };

@@ -9,12 +9,12 @@
 #ifndef Appetizer_FloatingButton_H
 #define Appetizer_FloatingButton_H
 
-#include <GraphicsItem.h>
+#include <GraphicsButtonBase.h>
 #include <GraphicsWindow.h>
 
 namespace appetizer {
 
-class FloatingButton : public GraphicsItem {
+class FloatingButton : public GraphicsButtonBase {
 
 public:
 
@@ -28,6 +28,7 @@ public:
 protected:
 
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+  void updateDisplay();
 
 private:
 	

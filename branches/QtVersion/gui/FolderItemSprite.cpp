@@ -15,10 +15,9 @@
 using namespace appetizer;
 
 
-FolderItemSprite::FolderItemSprite(GraphicsWindow* parentWindow): GraphicsItem(parentWindow) {
+FolderItemSprite::FolderItemSprite(GraphicsWindow* parentWindow): GraphicsButtonBase(parentWindow) {
   folderItemId_ = -1;
   iconSize_ = -1;
-  mouseInside_ = false;
   selectionSprite_ = NULL;
   selectionSpriteAnimation_ = NULL;
 
@@ -26,8 +25,6 @@ FolderItemSprite::FolderItemSprite(GraphicsWindow* parentWindow): GraphicsItem(p
   addItem(iconSprite_);
 
   setIconSize(SMALL_ICON_SIZE);
-  
-  setAcceptHoverEvents(true);
 }
 
 
@@ -61,12 +58,13 @@ FolderItem* FolderItemSprite::folderItem() const {
 }
 
 
-void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
-  mouseInside_ = true;
+void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* event) {
+  GraphicsButtonBase::hoverEnterEvent(event);  
 
   if (!selectionSprite_) {
     selectionSprite_ = new NineSliceItem(parentWindow());  
     selectionSprite_->loadBackgroundImage(FilePaths::GetSkinFile("IconOverlayUp.png"));
+    selectionSprite_->resize(width(), height());
     addItemAt(selectionSprite_, 0);
 
     selectionSpriteAnimation_ = new QPropertyAnimation(selectionSprite_, "opacity");
@@ -76,21 +74,21 @@ void FolderItemSprite::hoverEnterEvent(QGraphicsSceneHoverEvent* /* event */) {
   selectionSpriteAnimation_->setDuration(100);
   selectionSpriteAnimation_->setStartValue(0);
   selectionSpriteAnimation_->setEndValue(1);
-  selectionSpriteAnimation_->start(QAbstractAnimation::KeepWhenStopped);
+  selectionSpriteAnimation_->start();
 
   updateDisplay();
 }
 
 
-void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* /* event */) {
-  mouseInside_ = false;
+void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
+  GraphicsButtonBase::hoverLeaveEvent(event);  
 
   if (selectionSprite_ && selectionSpriteAnimation_) {
     selectionSpriteAnimation_->stop();
     selectionSpriteAnimation_->setDuration(400);
     selectionSpriteAnimation_->setStartValue(1);
     selectionSpriteAnimation_->setEndValue(0);
-    selectionSpriteAnimation_->start(QAbstractAnimation::KeepWhenStopped);
+    selectionSpriteAnimation_->start();
   }
 
   updateDisplay();
@@ -98,10 +96,11 @@ void FolderItemSprite::hoverLeaveEvent(QGraphicsSceneHoverEvent* /* event */) {
 
 
 void FolderItemSprite::updateDisplay() {
-  GraphicsItem::updateDisplay();  
+  GraphicsButtonBase::updateDisplay();  
 
-  if (mouseInside_ && selectionSprite_) {
+  if (isUnderMouse() && selectionSprite_) {
     selectionSprite_->resize(width(), height());
+    selectionSprite_->updateNow();
   }
 
   iconSprite_->move(Style::icon.padding.left, Style::icon.padding.top);

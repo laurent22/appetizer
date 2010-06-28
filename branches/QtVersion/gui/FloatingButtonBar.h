@@ -17,6 +17,8 @@ namespace appetizer {
 
 class FloatingButtonBar : public GraphicsItem {
 
+  Q_OBJECT
+
 public:
 
   FloatingButtonBar(GraphicsWindow* parentWindow);
@@ -28,6 +30,10 @@ public:
 private:
 
   std::vector<FloatingButton*> buttons_;
+
+private slots:
+
+  void button_clicked();
 	
 };
 

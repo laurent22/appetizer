@@ -338,6 +338,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\utils\ImagingUtil.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\utils\MessageBoxes.cpp"
 					>
 				</File>
@@ -422,7 +426,15 @@
 				Name="_moc"
 				>
 				<File
+					RelativePath=".\moc\moc_Application.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\moc\moc_ConfigDialog.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\moc\moc_FloatingButtonBar.cpp"
 					>
 				</File>
 				<File
@@ -430,7 +442,15 @@
 					>
 				</File>
 				<File
+					RelativePath=".\moc\moc_GraphicsButtonBase.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\moc\moc_GraphicsItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\moc\moc_GraphicsShadowItem.cpp"
 					>
 				</File>
 				<File
@@ -470,11 +490,19 @@
 				Name="guilib"
 				>
 				<File
+					RelativePath=".\guilib\GraphicsButtonBase.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\guilib\GraphicsItem.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\guilib\GraphicsScene.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\guilib\GraphicsShadowItem.cpp"
 					>
 				</File>
 				<File
@@ -616,6 +644,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\utils\ImagingUtil.h"
+					>
+				</File>
+				<File
 					RelativePath=".\utils\MessageBoxes.h"
 					>
 				</File>
@@ -660,11 +692,19 @@
 				Name="guilib"
 				>
 				<File
+					RelativePath=".\guilib\GraphicsButtonBase.h"
+					>
+				</File>
+				<File
 					RelativePath=".\guilib\GraphicsItem.h"
 					>
 				</File>
 				<File
 					RelativePath=".\guilib\GraphicsScene.h"
+					>
+				</File>
+				<File
+					RelativePath=".\guilib\GraphicsShadowItem.h"
 					>
 				</File>
 				<File

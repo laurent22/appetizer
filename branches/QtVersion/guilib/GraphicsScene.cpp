@@ -30,6 +30,27 @@ QList<QGraphicsItem*> GraphicsScene::topLevelItems() {
 }
 
 
+void GraphicsScene::paintAll_(QPainter* painter, QGraphicsItem* item, int x, int y) {
+  QStyleOptionGraphicsItem options;
+  item->paint(painter, &options);
+
+  QList<QGraphicsItem*> childItems = item->childItems();
+  for (int i = 0; i < childItems.size(); i++) {
+    QGraphicsItem* childItem = childItems.at(i);
+    paintAll_(painter, childItem, 0, 0);
+  }
+}
+
+
+void GraphicsScene::paintAll(QPainter* painter) {
+  QList<QGraphicsItem*> items = topLevelItems();
+  for (int i = 0; i < items.size(); i++) {
+    QGraphicsItem* item = items.at(i);
+    paintAll_(painter, item, 0, 0);
+  }
+}
+
+
 GraphicsScene::~GraphicsScene() {
   QList<QGraphicsItem*> items = topLevelItems();
   for (int i = 0; i < items.size(); i++) {

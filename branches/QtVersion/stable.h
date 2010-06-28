@@ -11,6 +11,8 @@
 #define _CRT_SECURE_NO_DEPRECATE 1
 #define _(x)       x
 #define SAFE_DELETE(x)   if (x) { delete x; x = NULL; }
+#define START_TIMER(x) QString currentFunctionTimerName = x; QTime currentFunctionTimer; currentFunctionTimer.start();
+#define PRINT_TIMER() qDebug() << "Timer -" << currentFunctionTimerName << "=" << currentFunctionTimer.elapsed();
 
 #ifdef __WINDOWS__
 #include <windows.h>
@@ -63,6 +65,7 @@
 #include <QThread>
 #include <QTime>
 #include <QTimer>
+#include <QTransform>
 #include <QVariant>
 #include <QVBoxLayout>
 #include <QWidget>

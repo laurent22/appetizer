@@ -201,6 +201,7 @@ void GraphicsItem::mousePressEvent(QGraphicsSceneMouseEvent* /* event */) {
 
 void GraphicsItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* /* event */) {
   emit mouseReleased();
+  if (isUnderMouse()) emit clicked();
 }
 
 

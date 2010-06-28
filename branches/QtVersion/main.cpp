@@ -68,11 +68,52 @@ int customReportHook(int /* reportType */, char* message, int* /* returnValue */
 
 
 
-int main(int argc, char *argv[]) {
+
+#ifdef __DEBUG__
+
+void appetizerMessageOutput(QtMsgType type, const char* msg) {
+  QString s(msg);
+
+  if (type == QtWarningMsg && s.indexOf("QPainter::") >= 0) return; // Skip annoying painter warnings
+
+  switch (type) {
+    case QtDebugMsg:
+      s = "[Info] " + s;
+      break;
+    case QtWarningMsg:
+      s = "[Warning] " + s;
+      break;
+    case QtCriticalMsg:
+      s = "[Error] " + s;
+      break;
+    case QtFatalMsg:
+      s = "[Fatal] " + s;
+      abort();
+  }
+
+  s = s + "\n";
+  
+  #ifdef __WINDOWS__
+  OutputDebugString(s.toStdWString().c_str());
+  #else
+  sprintf("%s", s.toAscii());
+  #endif // __WINDOWS__
+}
+
+#endif // __DEBUG__
+
+
+
+
+int main(int argc, char* argv[]) {
   #if defined(__WINDOWS__) && defined(__DEBUG__)
   _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
   prevHook = _CrtSetReportHook(customReportHook);
   #endif // __WINDOWS__ && __DEBUG__
+
+  #ifdef __DEBUG__
+  qInstallMsgHandler(appetizerMessageOutput);
+  #endif // __DEBUG__
 
   Application app(argc, argv);
   app.setOrganizationName("Appetizer Project");

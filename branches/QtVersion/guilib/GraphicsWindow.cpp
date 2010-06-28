@@ -58,7 +58,7 @@ void GraphicsWindow::invalidateDisplay() {
 }
 
 
-void GraphicsWindow::updateDisplay(QPixmap& pixmap) {	
+void GraphicsWindow::updateDisplay(QPixmap& pixmap) {
   HBITMAP oldBitmap;
   HBITMAP hBitmap;	
   SIZE size;

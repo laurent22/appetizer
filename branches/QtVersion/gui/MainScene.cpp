@@ -63,7 +63,7 @@ void MainScene::resizeSprite_mouseMoved() {
 void MainScene::drawBackground(QPainter* painter, const QRectF& rect) {
   QGraphicsScene::drawBackground(painter, rect);
 
-  int padding = 50; // Arbitray padding to allow for shadows and other effects that appear outside the object's rectangles
+  int padding = 50; // Arbitrary padding to allow for shadows and other effects that appear outside the object's rectangles
 
   mainPanel_->move(padding, padding);
   mainPanel_->resize(width() - padding * 2, height() - padding * 2);

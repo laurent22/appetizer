@@ -9,6 +9,7 @@
 #ifndef Appetizer_Style_H
 #define Appetizer_Style_H
 
+#include <GraphicsShadowItem.h>
 #include <MessageBoxes.h>
 
 namespace appetizer {
@@ -26,6 +27,18 @@ class RectangleStyle { public:
   int width;
   int height;
   void fromRect(const QRect& rect);
+};
+
+
+class ShadowStyle { public:
+  ShadowStyle();
+  ShadowStyle(TiXmlHandle handle);
+  void fromXml(TiXmlHandle handle);
+  void applyToGraphicsShadowItem(GraphicsShadowItem* item);
+  int xOffset;
+  int yOffset;
+  int blurRadius;
+  QColor color;
 };
 
 class TextFormat { public:
@@ -52,7 +65,7 @@ class IconStyle { public:
 class BackgroundStyle { public:
   BackgroundStyle();
   RectangleStyle padding;
-  QGraphicsDropShadowEffect* shadow;
+  ShadowStyle* shadow;
   QRect getContentRectangle(int width, int height) const;
 };
 
@@ -60,7 +73,7 @@ class FloatingButtonStyle { public:
   FloatingButtonStyle();
   int hGap;
   int vGap;
-  QGraphicsDropShadowEffect* shadow;
+  ShadowStyle* shadow;
 };
 
 class IconPanelStyle { public:
@@ -85,6 +98,8 @@ class Style {
 
 public:
 
+  static void destroyStaticData();
+
   static IconStyle icon;
   static BackgroundStyle background;
   static TabStyle tab;
@@ -96,8 +111,6 @@ public:
   static SkinMetadata getSkinMetadata(const QString& filePath);
   static bool isSkinVersionCompatible(const QString& skinVersion);
   static QRect calculateContentRectangle(int width, int height, const RectangleStyle& padding);
-  static QGraphicsDropShadowEffect* parseShadowXml(TiXmlHandle handle);
-  static QGraphicsDropShadowEffect* cloneShadow(QGraphicsDropShadowEffect* s);
 
 };
 

@@ -22,12 +22,12 @@ static const uint qt_meta_data_appetizer__GraphicsItem[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
-       1,   39, // properties
+       6,   14, // methods
+       1,   44, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       5,       // signalCount
+       6,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       25,   24,   24,   24, 0x05,
@@ -35,9 +35,10 @@ static const uint qt_meta_data_appetizer__GraphicsItem[] = {
       43,   24,   24,   24, 0x05,
       58,   24,   24,   24, 0x05,
       74,   24,   24,   24, 0x05,
+      87,   24,   24,   24, 0x05,
 
  // properties: name, type, flags
-      93,   87, (QMetaType::QReal << 24) | 0x00095103,
+     103,   97, (QMetaType::QReal << 24) | 0x00095103,
 
        0        // eod
 };
@@ -45,7 +46,7 @@ static const uint qt_meta_data_appetizer__GraphicsItem[] = {
 static const char qt_meta_stringdata_appetizer__GraphicsItem[] = {
     "appetizer::GraphicsItem\0\0moved()\0"
     "resized()\0mousePressed()\0mouseReleased()\0"
-    "mouseMoved()\0qreal\0opacity\0"
+    "mouseMoved()\0clicked()\0qreal\0opacity\0"
 };
 
 const QMetaObject appetizer::GraphicsItem::staticMetaObject = {
@@ -84,9 +85,10 @@ int appetizer::GraphicsItem::qt_metacall(QMetaObject::Call _c, int _id, void **_
         case 2: mousePressed(); break;
         case 3: mouseReleased(); break;
         case 4: mouseMoved(); break;
+        case 5: clicked(); break;
         default: ;
         }
-        _id -= 5;
+        _id -= 6;
     }
 #ifndef QT_NO_PROPERTIES
       else if (_c == QMetaObject::ReadProperty) {
@@ -146,5 +148,11 @@ void appetizer::GraphicsItem::mouseReleased()
 void appetizer::GraphicsItem::mouseMoved()
 {
     QMetaObject::activate(this, &staticMetaObject, 4, 0);
+}
+
+// SIGNAL 5
+void appetizer::GraphicsItem::clicked()
+{
+    QMetaObject::activate(this, &staticMetaObject, 5, 0);
 }
 QT_END_MOC_NAMESPACE
