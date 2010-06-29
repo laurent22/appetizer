@@ -32,13 +32,28 @@ QList<QGraphicsItem*> GraphicsScene::topLevelItems() {
 
 void GraphicsScene::paintAll_(QPainter* painter, QGraphicsItem* item, int x, int y) {
   QStyleOptionGraphicsItem options;
+  qreal saveOpacity = painter->opacity();
+  bool itemChildrenToShape = item->flags().testFlag(QGraphicsItem::ItemClipsChildrenToShape);
+  
+  painter->translate(x, y);
+  painter->setOpacity(item->opacity()); // TODO: maybe the opacity needs to be multiplied by that of its parent
+  
+  if (itemChildrenToShape) {
+    painter->setClipRect(item->boundingRect());
+    painter->setClipping(true);
+  }
+  
   item->paint(painter, &options);
-
+  
   QList<QGraphicsItem*> childItems = item->childItems();
   for (int i = 0; i < childItems.size(); i++) {
     QGraphicsItem* childItem = childItems.at(i);
-    paintAll_(painter, childItem, 0, 0);
+    paintAll_(painter, childItem, childItem->x(), childItem->y());
   }
+
+  painter->translate(-x, -y);
+  painter->setOpacity(saveOpacity);
+  if (itemChildrenToShape) painter->setClipping(false);
 }
 
 
@@ -46,7 +61,7 @@ void GraphicsScene::paintAll(QPainter* painter) {
   QList<QGraphicsItem*> items = topLevelItems();
   for (int i = 0; i < items.size(); i++) {
     QGraphicsItem* item = items.at(i);
-    paintAll_(painter, item, 0, 0);
+    paintAll_(painter, item, item->x(), item->y());
   }
 }
 

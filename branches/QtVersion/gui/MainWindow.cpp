@@ -44,7 +44,7 @@ QPixmap* MainWindow::getWindowPixmap() {
   windowPixmap_->fill(QColor(0,0,0,0));
   QPainter painter(windowPixmap_);
   painter.begin(this);
-  scene_->render(&painter);
+  scene_->paintAll(&painter);
   painter.end();
 
   return windowPixmap_;
