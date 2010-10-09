@@ -37,7 +37,7 @@ NineSlicesPanel(owner, id, point, size) {
   buttonNames.Add(_T("Config"));
   buttonNames.Add(_T("MultiLaunch"));
   buttonNames.Add(_T("Import"));
-  buttonNames.Add(_T("LaunchApp"));
+  //buttonNames.Add(_T("LaunchApp"));
 
   for (int i = 0; i < buttonNames.size(); i++) { 
     wxString n = buttonNames[i];
